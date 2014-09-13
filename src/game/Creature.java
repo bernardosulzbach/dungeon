@@ -127,7 +127,7 @@ public class Creature implements Serializable {
 
     public void addExperience(int amount) {
         this.experience += amount;
-        Game.writeString(name + " got " + amount + " experience points.");
+        IO.writeString(name + " got " + amount + " experience points.");
         if (this.experience >= getExperienceToNextLevel()) {
             levelUp();
         }
@@ -138,7 +138,7 @@ public class Creature implements Serializable {
      */
     public void levelUp() {
         this.level++;
-        Game.writeString(String.format("%s leveld up. %s is now level %d", name, name, level));
+        IO.writeString(String.format("%s leveld up. %s is now level %d", name, name, level));
     }
 
     public int getGold() {
@@ -154,7 +154,7 @@ public class Creature implements Serializable {
     public void addGold(int amount) {
         if (amount > 0) {
             this.gold += amount;
-            Game.writeString(name + " got " + amount + " gold coins.");
+            IO.writeString(name + " got " + amount + " gold coins.");
         }
     }
 
@@ -162,6 +162,7 @@ public class Creature implements Serializable {
      * Reduces the creature gold by a given amount.
      *
      * Gold will never become negative, so you should check that the creature has enough gold before subtracting any.
+     *
      * @param amount
      */
     public void subtractGold(int amount) {
@@ -219,16 +220,16 @@ public class Creature implements Serializable {
     public void dropWeapon() {
         if (weapon != null) {
             location.addItem(weapon);
-            Game.writeString(name + " dropped " + weapon.getName() + ".");
+            IO.writeString(name + " dropped " + weapon.getName() + ".");
             weapon = null;
         } else {
-            Game.writeString("You are not currently carrying a weapon.");
+            IO.writeString("You are not currently carrying a weapon.");
         }
     }
 
     public void equipWeapon(Weapon weapon) {
         this.weapon = weapon;
-        Game.writeString(name + " equipped " + weapon.getName() + ".");
+        IO.writeString(name + " equipped " + weapon.getName() + ".");
     }
 
     public Location getLocation() {
@@ -251,7 +252,7 @@ public class Creature implements Serializable {
         if (weapon != null && !weapon.isBroken()) {
             // Check if the attack is a miss.
             if (weapon.isMiss()) {
-                Game.writeString(name + " missed.");
+                IO.writeString(name + " missed.");
             } else {
                 hitDamage = weapon.getDamage();
                 target.takeDamage(hitDamage);
@@ -272,7 +273,7 @@ public class Creature implements Serializable {
             curHealth -= damage;
         }
     }
-    
+
     public String toShortString() {
         return String.format("%-20s Level %2d", name, level);
     }

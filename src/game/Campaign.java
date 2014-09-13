@@ -24,7 +24,7 @@ public class Campaign {
 
         Weapon longSword = new Weapon("Longsword", 18, 15);
         longSword.setDestructible(true);
-        
+
         world.addItem(longSword, 0);
 
         return world;
