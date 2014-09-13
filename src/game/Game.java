@@ -6,20 +6,20 @@ import utils.Utils;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
+import utils.Constants;
+import utils.DateAndTime;
 
 public class Game {
 
-    private static final String TITLE = "Dungeon";
-
-    private static final String CAMPAIGN_PATH = "campaign.dungeon";
-
-    private static final String SAVE_ERROR = "Could not save the game.";
-    private static final String LOAD_ERROR = "Could not load a saved game.";
-
-    // The Scanner the method Game.readString() uses.
+    /**
+     * The Scanner the method Game.readString() uses.
+     *
+     */
     public static final Scanner SCANNER = new Scanner(System.in);
 
-    // The Random object used to control random events.
+    /**
+     * The Random object used to control random events throughout the game.
+     */
     public static final Random RANDOM = new Random();
 
     /**
@@ -27,11 +27,10 @@ public class Game {
      */
     public static final String INVALID_INPUT = "Invalid input.";
 
-    // Two 79-character long strings used to improve readability.
-    public static final String LINE_1 = Utils.makeRepeatedCharacterString(79, '-');
-    public static final String LINE_2 = Utils.makeRepeatedCharacterString(79, '=');
-
     public static void main(String[] args) {
+        if (promptAttemptToLoad()) {
+
+        }
         gameLoop(new Campaign());
     }
 
@@ -41,10 +40,9 @@ public class Game {
      * @return true if the answer was positive, false otherwise.
      */
     private static boolean promptAttemptToLoad() {
-        Game.writeString("Attempt to load a saved world? ( Y / N )");
+        IO.writeString("Attempt to load a saved world? ( Y / N )");
         while (true) {
-            String input = Game.readString();
-            switch (input.toLowerCase()) {
+            switch (IO.readString().toLowerCase()) {
                 case "y":
                 case "yes":
                     return true;
@@ -52,7 +50,7 @@ public class Game {
                 case "no":
                     return false;
                 default:
-                    Game.writeString(Game.INVALID_INPUT);
+                    IO.writeString(Game.INVALID_INPUT);
             }
         }
     }
@@ -64,13 +62,13 @@ public class Game {
         FileInputStream fileInStream;
         ObjectInputStream objectInStream;
         try {
-            fileInStream = new FileInputStream(CAMPAIGN_PATH);
+            fileInStream = new FileInputStream(Constants.CAMPAIGN_PATH);
             objectInStream = new ObjectInputStream(fileInStream);
             Campaign loadedCampaign = (Campaign) objectInStream.readObject();
             objectInStream.close();
             return loadedCampaign;
         } catch (IOException | ClassNotFoundException ex) {
-            Game.writeString(LOAD_ERROR);
+            IO.writeString(Constants.LOAD_ERROR);
             return new Campaign();
         }
     }
@@ -82,12 +80,12 @@ public class Game {
         FileOutputStream fileOutStream;
         ObjectOutputStream objectOutStream;
         try {
-            fileOutStream = new FileOutputStream(CAMPAIGN_PATH);
+            fileOutStream = new FileOutputStream(Constants.CAMPAIGN_PATH);
             objectOutStream = new ObjectOutputStream(fileOutStream);
             objectOutStream.writeObject(campaign);
             objectOutStream.close();
         } catch (IOException ex) {
-            Game.writeString(SAVE_ERROR);
+            IO.writeString(Constants.SAVE_ERROR);
         }
     }
 
@@ -96,9 +94,9 @@ public class Game {
      */
     private static void gameLoop(Campaign campaign) {
         // Print the game heading.
-        Game.writeString(LINE_2);
-        Game.writeString(TITLE);
-        Game.writeString(LINE_2);
+        IO.writeString(Constants.LINE_2);
+        IO.writeString(Constants.TITLE);
+        IO.writeString(Constants.LINE_2);
 
         // Enter the main game loop.
         while (true) {
@@ -124,7 +122,7 @@ public class Game {
     private static boolean getTurn(Campaign campaign) {
         String[] inputWords;
         while (true) {
-            inputWords = Game.readWords();
+            inputWords = IO.readWords();
             switch (inputWords[0].toLowerCase()) {
                 // Hero-related commands.
                 case "rest":
@@ -171,10 +169,10 @@ public class Game {
                     break;
                 // Utility commands.
                 case "time":
-                    Utils.printTime();
+                    DateAndTime.printTime();
                     break;
                 case "date":
-                    Utils.printDate();
+                    DateAndTime.printDate();
                     break;
                 // Help commands.
                 case "help":
@@ -194,15 +192,20 @@ public class Game {
                         printInvalidCommandMessage(inputWords[0]);
                     } else {
                         // The user pressed enter without typing anything.
-                        Game.writeString(INVALID_INPUT);
+                        IO.writeString(Game.INVALID_INPUT);
                     }
                     break;
             }
         }
     }
 
+    /**
+     * Prints a message reporting the usage of an invalid command.
+     *
+     * @param command
+     */
     private static void printInvalidCommandMessage(String command) {
-        Game.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
+        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
     }
 
     /**
@@ -224,7 +227,7 @@ public class Game {
             survivor = defender;
             defeated = attacker;
         }
-        Game.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
+        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
         battleCleanup(survivor, defeated);
     }
 
@@ -236,42 +239,6 @@ public class Game {
         survivor.addGold(defeated.getGold());
         // Remove the dead creature from the location.
         survivor.getLocation().removeAllDeadCreatures();
-    }
-
-    /**
-     * Read a line of input from the user and returns an array with the words in that line.
-     *
-     * @return a String array.
-     */
-    public static String[] readWords() {
-        return readString().split("\\s+");
-    }
-
-    /**
-     * Read a line of input from the user.
-     *
-     * @return
-     */
-    public static String readString() {
-        String line;
-        do {
-            System.out.print("> ");
-            line = SCANNER.nextLine().trim();
-        } while (line.equals(""));
-        return line;
-    }
-
-    /**
-     * Outputs a string to the console, stripping unnecessary newlines at the end.
-     *
-     * @param string the string to be printed.
-     */
-    public static void writeString(String string) {
-        while (string.endsWith("\n")) {
-            // Remove the newline.
-            string = string.substring(0, string.length() - 1);
-        }
-        System.out.println(string);
     }
 
 }

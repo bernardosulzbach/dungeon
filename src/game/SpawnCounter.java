@@ -28,7 +28,7 @@ class SpawnCounter implements Serializable {
      */
     public void printCounters() {
         if (counters.isEmpty()) {
-            Game.writeString(EMPTY_SPAWN_COUNTER);
+            IO.writeString(EMPTY_SPAWN_COUNTER);
         } else {
             StringBuilder sb = new StringBuilder();
             for (CreatureID id : counters.keySet()) {
@@ -36,7 +36,7 @@ class SpawnCounter implements Serializable {
             }
             // Remove the last newline character.
             sb.setLength(sb.length() - 1);
-            Game.writeString(sb.toString());
+            IO.writeString(sb.toString());
         }
     }
 }

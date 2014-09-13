@@ -31,6 +31,7 @@ public class Location implements Serializable {
 
     /**
      * Attempts to find an item by its name.
+     *
      * @param name
      * @return an Item object if there is a match. null otherwise.
      */
@@ -42,7 +43,7 @@ public class Location implements Serializable {
         }
         return null;
     }
-    
+
     public void removeItem(Item item) {
         items.remove(item);
     }
@@ -80,14 +81,15 @@ public class Location implements Serializable {
     public List<Item> getItems() {
         return items;
     }
-    
-    
+
     public int getCreatureCount() {
         return creatures.size();
     }
+
     public int getItemCount() {
         return items.size();
     }
+
     /**
      * Get a list of all visible weapons to the observer.
      *

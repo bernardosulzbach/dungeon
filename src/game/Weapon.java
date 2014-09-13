@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Weapon extends Item implements Serializable {
 
     private static final String TYPE = "Weapon";
-    
+
     /**
      * How much damage the weapon makes.
      */
@@ -107,7 +107,7 @@ public class Weapon extends Item implements Serializable {
             curIntegrity -= hitDecrement;
         } else {
             curIntegrity = 0;
-            Game.writeString(getName() + " broke.");
+            IO.writeString(getName() + " broke.");
         }
     }
 
@@ -126,7 +126,7 @@ public class Weapon extends Item implements Serializable {
                 String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
         return builder.toString();
     }
-    
+
     @Override
     public String toShortString() {
         return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);

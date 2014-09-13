@@ -1,6 +1,7 @@
 package help;
 
 import game.Game;
+import game.IO;
 
 import java.util.ArrayList;
 
@@ -62,16 +63,16 @@ public class Help {
     public static void printCommandHelp(String[] words) {
         if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
-            Game.writeString(PRINT_HELP_TEXT_USAGE);
+            IO.writeString(PRINT_HELP_TEXT_USAGE);
         } else {
             for (CommandHelp command : COMMANDS) {
                 if (command.equalsIgnoreCase(words[1])) {
-                    Game.writeString(command.toString());
+                    IO.writeString(command.toString());
                     return;
                 }
             }
             // There was no match.
-            Game.writeString(String.format("  No help text for '%s' could be found.", words[1]));
+            IO.writeString(String.format("  No help text for '%s' could be found.", words[1]));
         }
     }
 
@@ -83,7 +84,7 @@ public class Help {
         for (CommandHelp command : COMMANDS) {
             builder.append(command.toOneLineString());
         }
-        Game.writeString(builder.toString());
+        IO.writeString(builder.toString());
     }
 
 }

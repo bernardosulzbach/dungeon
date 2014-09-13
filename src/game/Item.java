@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     private static final String TYPE = "Generic";
-    
+
     private String name;
     private boolean destructible;
 
@@ -35,7 +35,7 @@ public class Item implements Serializable {
     public void setDestructible(boolean destructible) {
         this.destructible = destructible;
     }
-    
+
     public String toShortString() {
         return String.format("[%s] %-20s", TYPE, getName());
     }
