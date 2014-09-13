@@ -28,19 +28,59 @@ public class Game {
     public static final String INVALID_INPUT = "Invalid input.";
 
     public static void main(String[] args) {
-        if (promptAttemptToLoad()) {
-
-        }
-        gameLoop(new Campaign());
+        Campaign gameCampaign = loadGameRoutine();
+        gameLoop(gameCampaign);
     }
 
     /**
-     * Prompts the user if he/she wants to attempt to load a serialized World object.
+     * Handles all the save loading at startup.
+     *
+     * @return a saved campaign or a new demo campaign.
+     */
+    private static Campaign loadGameRoutine() {
+        if (checkForExistingSave()) {
+            IO.writeString(Constants.SAVE_FOUND);
+            if (confirmLoad()) {
+                return loadCampaign();
+            }
+        }
+        return new Campaign();
+    }
+
+    /**
+     * Check if a saved campaign exists.
+     */
+    private static boolean checkForExistingSave() {
+        File savedCampaign = new File(Constants.CAMPAIGN_PATH);
+        return savedCampaign.exists() && savedCampaign.isFile();
+    }
+
+    /**
+     * Prompts the user if he/she wants to attempt to load a saved campaign.
      *
      * @return true if the answer was positive, false otherwise.
      */
-    private static boolean promptAttemptToLoad() {
-        IO.writeString("Attempt to load a saved world? ( Y / N )");
+    private static boolean confirmLoad() {
+        IO.writeString("Attempt to load it? ( Y / N )");
+        while (true) {
+            switch (IO.readString().toLowerCase()) {
+                case "y":
+                case "yes":
+                    return true;
+                case "n":
+                case "no":
+                    return false;
+                default:
+                    IO.writeString(Game.INVALID_INPUT);
+            }
+        }
+    }
+
+    /**
+     * Prompts the user if he/she wants to attempt to save the current state of his/hers campaign.
+     */
+    private static boolean confirmSave() {
+        IO.writeString("Save the game? ( Y / N )");
         while (true) {
             switch (IO.readString().toLowerCase()) {
                 case "y":
@@ -93,12 +133,7 @@ public class Game {
      * The main game loop. Continuously prompts the player for input.
      */
     private static void gameLoop(Campaign campaign) {
-        // Print the game heading.
-        IO.writeString(Constants.LINE_2);
-        IO.writeString(Constants.TITLE);
-        IO.writeString(Constants.LINE_2);
-
-        // Enter the main game loop.
+        Utils.printHeading();
         while (true) {
             // getTurn returns true if the Player did not issue an exit command.
             if (getTurn(campaign)) {
@@ -107,7 +142,9 @@ public class Game {
                     break;
                 }
             } else {
-                saveCampaign(campaign);
+                if (confirmSave()) {
+                    saveCampaign(campaign);
+                }
                 break;
             }
         }

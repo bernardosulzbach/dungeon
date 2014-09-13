@@ -1,5 +1,7 @@
 package utils;
 
+import game.IO;
+
 /**
  * General utility class.
  *
@@ -51,6 +53,13 @@ public class Utils {
         } else {
             return true;
         }
+    }
+
+    /**
+     * Prints the startup heading.
+     */
+    public static void printHeading() {
+        IO.writeString(Constants.HEADING);
     }
 
 }

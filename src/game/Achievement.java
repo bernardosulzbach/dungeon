@@ -2,9 +2,9 @@ package game;
 
 /**
  * A draft of what the achievement class will look like.
- * 
+ *
  * Hero will have an Achievement list (or something similar).
- * 
+ *
  * @author Bernardo Sulzbach
  */
 public class Achievement {

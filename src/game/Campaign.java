@@ -1,6 +1,8 @@
 package game;
 
-public class Campaign {
+import java.io.Serializable;
+
+public class Campaign implements Serializable {
 
     private final World campaignWorld;
     private final Hero campaignHero;
