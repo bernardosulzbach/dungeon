@@ -126,34 +126,34 @@ public class Game {
         while (true) {
             inputWords = Game.readWords();
             switch (inputWords[0].toLowerCase()) {
+                // Hero-related commands.
+                case "rest":
+                    campaign.getHero().rest();
+                    return true;
                 case "look":
                 case "peek":
                     campaign.getHero().look();
-                    break;
-                case "drop":
-                    campaign.getHero().dropWeapon();
-                    break;
-                case "spawns":
-                    campaign.getWorld().printSpawnCounters();
                     break;
                 case "loot":
                 case "pick":
                     campaign.getHero().pickWeapon(inputWords);
                     break;
-                case "hero":
-                case "char":
-                    campaign.getHero().printHeroStatus();
-                case "weapon":
-                    campaign.getHero().printWeaponStatus();
+                case "drop":
+                    campaign.getHero().dropWeapon();
                     break;
                 case "destroy":
+                case "crash":
                     campaign.getHero().destroyItem(inputWords);
                     break;
-                case "rest":
-                    campaign.getHero().rest();
-                    return true;
                 case "status":
                     campaign.getHero().printAllStatus();
+                    break;
+                case "hero":
+                case "me":
+                    campaign.getHero().printHeroStatus();
+                    break;
+                case "weapon":
+                    campaign.getHero().printWeaponStatus();
                     break;
                 case "kill":
                 case "attack":
@@ -165,12 +165,18 @@ public class Game {
                         }
                     }
                     return true;
+                // World-related commands.
+                case "spawns":
+                    campaign.getWorld().printSpawnCounters();
+                    break;
+                // Utility commands.
                 case "time":
                     Utils.printTime();
                     break;
                 case "date":
                     Utils.printDate();
                     break;
+                // Help commands.
                 case "help":
                 case "?":
                     Help.printCommandHelp(inputWords);
@@ -178,15 +184,16 @@ public class Game {
                 case "commands":
                     Help.printCommandList();
                     break;
+                // Game commands.
                 case "quit":
                 case "exit":
                     return false;
+                // The user issued a command, but it was not recognized.
                 default:
-                    // The user issued a command, but it was not recognized.
                     if (!inputWords[0].isEmpty()) {
                         printInvalidCommandMessage(inputWords[0]);
                     } else {
-                        // The user just pressed Enter.
+                        // The user pressed enter without typing anything.
                         Game.writeString(INVALID_INPUT);
                     }
                     break;
@@ -218,15 +225,16 @@ public class Game {
             defeated = attacker;
         }
         Game.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
-        aftermath(survivor, defeated);
+        battleCleanup(survivor, defeated);
     }
 
     /**
      * Add the the surviving creature the gold and experience the defeated had.
      */
-    private static void aftermath(Creature survivor, Creature defeated) {
+    private static void battleCleanup(Creature survivor, Creature defeated) {
         survivor.addExperience(defeated.getExperienceDrop());
         survivor.addGold(defeated.getGold());
+        // Remove the dead creature from the location.
         survivor.getLocation().removeAllDeadCreatures();
     }
 
