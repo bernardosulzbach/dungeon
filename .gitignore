@@ -13,4 +13,7 @@ hs_err_pid*
 
 # NetBeans
 /nbproject/private/
-/build/
+/build
+
+# Save files
+*.dungeon

@@ -13,6 +13,11 @@ import java.util.Date;
  */
 public class Utils {
 
+    /**
+     * String used to improve output readability.
+     */
+    public static final String MARGIN = "  ";
+
     // DateFormats for time and date printing.
     private static final DateFormat TIME = new SimpleDateFormat("HH:mm:ss");
     private static final DateFormat DATE = new SimpleDateFormat("dd/MM/yyyy");
@@ -33,9 +38,10 @@ public class Utils {
 
     /**
      * Creates a string of repeated characters.
+     *
      * @param repetitions
      * @param character
-     * @return 
+     * @return
      */
     public static String makeRepeatedCharacterString(int repetitions, char character) {
         StringBuilder builder = new StringBuilder();
@@ -59,17 +65,18 @@ public class Utils {
         }
         return true;
     }
-    
+
     /**
      * Checks if a string is a valid name in the game.
+     *
      * @param name
-     * @return 
+     * @return
      */
     public static boolean isValidName(String name) {
         if (name.isEmpty()) {
-            throw new IllegalArgumentException ("Names must be at least one character long.");
+            throw new IllegalArgumentException("Names must be at least one character long.");
         } else if (!Utils.isAlphabetic(name)) {
-            throw new IllegalArgumentException ("Names must contain only letters.");
+            throw new IllegalArgumentException("Names must contain only letters.");
         } else {
             return true;
         }

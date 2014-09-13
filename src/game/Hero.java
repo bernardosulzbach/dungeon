@@ -1,9 +1,10 @@
 package game;
 
 import java.util.List;
+import static utils.Utils.MARGIN;
 
 /**
- * Mage class that is the only playable creature now.
+ * Hero class that defines the creature that the player controls.
  */
 public class Hero extends Creature {
 
@@ -23,53 +24,36 @@ public class Hero extends Creature {
      * Print the name of the player's current location and list all creatures and items the player can see.
      */
     public void look() {
-        StringBuilder builder = new StringBuilder(getLocation().getName());
+        StringBuilder builder = new StringBuilder();
+        builder.append(MARGIN).append(getLocation().getName());
 
-        builder.append('\n').append(Game.LINE_1).append('\n');
+        builder.append('\n').append(Game.LINE_1);
 
         // Creature count must be greater than one in order not to take the hero into account.
         if (getLocation().getCreatureCount() > 1) {
             for (Creature aCreature : getLocation().getCreatures()) {
                 if (aCreature.getId() != CreatureID.HERO) {
-                    builder.append(aCreature.toShortString()).append('\n');
+                    builder.append('\n').append(MARGIN).append(aCreature.toShortString());
                 }
             }
         } else {
-            builder.append("You do not see any creatures here.");
+            builder.append('\n').append("You do not see any creatures here.");
         }
 
-        builder.append('\n').append(Game.LINE_1).append('\n');
+        builder.append('\n').append(Game.LINE_1);
 
         if (getLocation().getItemCount() > 0) {
             for (Item curItem : getLocation().getItems()) {
-                builder.append(curItem.toShortString()).append('\n');
+                builder.append('\n').append(MARGIN).append(curItem.toShortString());
             }
         } else {
-            builder.append("You do not see any creatures here.");
+            builder.append('\n').append("You do not see any items here.");
         }
-        
+
         builder.append('\n').append(Game.LINE_1);
-        
+
         System.out.println(builder.toString());
     }
-////
-////    private String lookCreatures() {
-////        StringBuilder builder = new StringBuilder();
-////        List<Creature> visibleCreatures = getLocation().getVisibleCreatures(this);
-////        for (Creature aCreature : visibleCreatures) {
-////            builder.append(aCreature.getName()).append('\n');
-////        }
-////        return builder.toString();
-////    }
-////
-////    private String lookItems() {
-////        StringBuilder builder = new StringBuilder();
-////        List<Weapon> visibleWeapons = getLocation().getVisibleWeapons();
-////        for (Weapon c : visibleWeapons) {
-////            builder.append(c.getName()).append('\n');
-////        }
-////        return builder.toString();
-////    }
 
     /**
      * Picks a weapon from the ground.
@@ -179,41 +163,45 @@ public class Hero extends Creature {
         return visible.get(index - 1);
     }
 
-    public void printHeroStatus() {
+    private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("  %s (%s)\n", name, this.id));
-        builder.append(String.format("  %-20s%10d\n", "Level", level));
-        builder.append(String.format("  %-20s%10s\n", "Experience",
+        builder.append(MARGIN).append(String.format("%s (%s)\n", name, this.id));
+        builder.append(MARGIN).append(String.format("%-20s%10d\n", "Level", level));
+        builder.append(MARGIN).append(String.format("%-20s%10s\n", "Experience",
                 String.format("%d/%d", experience, getExperienceToNextLevel())));
-        builder.append(String.format("  %-20s%10d\n", "Gold", gold));
-        builder.append(String.format("  %-20s%10s\n", "Health",
+        builder.append(MARGIN).append(String.format("%-20s%10d\n", "Gold", gold));
+        builder.append(MARGIN).append(String.format("%-20s%10s\n", "Health",
                 String.format("%d/%d", curHealth, maxHealth)));
-        builder.append(String.format("  %-20s%10d\n", "Attack", attack));
-        Game.writeString(builder.toString());
+        builder.append(MARGIN).append(String.format("%-20s%10d", "Attack", attack));
+        return builder.toString();
+
+    }
+
+    private String getWeaponStatusString() {
+        if (weapon == null) {
+            return "You are not carrying a weapon.";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(MARGIN).append(String.format("%-20s%10s\n", "Name", getWeapon().getName()));
+        builder.append(MARGIN).append(String.format("%-20s%10s\n", "Damage", getWeapon().getDamage()));
+        builder.append(MARGIN).append(String.format("%-20s%10s", "Integrity",
+                String.format("%d/%d", getWeapon().getCurIntegrity(), getWeapon().getMaxIntegrity())));
+        return builder.toString();
+    }
+
+    public void printHeroStatus() {
+        Game.writeString(getHeroStatusString());
     }
 
     public void printWeaponStatus() {
-        if (weapon != null) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(String.format("  %-20s%10s\n", "Name", getWeapon().getName()));
-            builder.append(String.format("  %-20s%10s\n", "Damage", getWeapon().getDamage()));
-            builder.append(String.format("  %-20s%10s\n", "Integrity",
-                    String.format("%d/%d", getWeapon().getCurIntegrity(), getWeapon().getMaxIntegrity())));
-            Game.writeString(builder.toString());
-        } else {
-            Game.writeString("You are not carrying a weapon.");
-        }
+        Game.writeString(getWeaponStatusString());
     }
 
     /**
      * Output a table with both the hero's status and his weapon's status.
      */
     public void printAllStatus() {
-        Game.writeString(Game.LINE_1);
-        printHeroStatus();
-        Game.writeString(Game.LINE_1);
-        printWeaponStatus();
-        Game.writeString(Game.LINE_1);
+        Game.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
     }
 
 }

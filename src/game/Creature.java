@@ -274,6 +274,6 @@ public class Creature implements Serializable {
     }
     
     public String toShortString() {
-        return String.format("  %-20s Level %2d", name, level);
+        return String.format("%-20s Level %2d", name, level);
     }
 }
