@@ -76,13 +76,7 @@ public class Hero extends Creature {
         if (inputWords.length == 1) {
             return selectFromList(locationCreatures);
         } else {
-            String targetName = inputWords[1];
-            for (Creature possibleTarget : getLocation().getCreatures()) {
-                if (targetName.compareToIgnoreCase(possibleTarget.getName()) == 0) {
-                    return possibleTarget;
-                }
-            }
-            return null;
+            return getLocation().findCreature(inputWords[1]);
         }
     }
 
@@ -90,8 +84,7 @@ public class Hero extends Creature {
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] words) {
-        List<Weapon> visibleWeapons = getLocation().getVisibleWeapons();
-        Weapon selectedWeapon = selectFromList(visibleWeapons);
+        Weapon selectedWeapon = selectFromList(getLocation().getVisibleWeapons());
         if (selectedWeapon != null) {
             dropWeapon();
             equipWeapon(selectedWeapon);
@@ -103,19 +96,18 @@ public class Hero extends Creature {
      * Tries to destroy an item from the current location.
      */
     public void destroyItem(String[] words) {
+        Item target;
         if (words.length == 1) {
-
+            target = selectFromList(getLocation().getItems());
         } else {
-            Item target = getLocation().findItem(words[1]);
-            if (target != null) {
-                if (target.isDestructible()) {
-                    getLocation().removeItem(target);
-                    IO.writeString(getName() + " destroyed " + target.getName() + ".");
-                } else {
-                    IO.writeString(target.getName() + " is indestructible.");
-                }
+            target = getLocation().findItem(words[1]);
+        }
+        if (target != null) {
+            if (target.isDestructible()) {
+                getLocation().removeItem(target);
+                IO.writeString(getName() + " destroyed " + target.getName() + ".");
             } else {
-
+                IO.writeString(target.getName() + " is indestructible.");
             }
         }
     }
@@ -149,67 +141,6 @@ public class Hero extends Creature {
             return null;
         }
         return list.get(choice - 1);
-    }
-
-    /**
-     * Let the user select one item from a list of options.
-     *
-     * @return the index of the item in the list. (-1 if the user aborted)
-     */
-    @Deprecated
-    private int selectWeapon(List<Weapon> options) {
-        int index;
-        StringBuilder builder = new StringBuilder("0. Abort\n");
-        for (int i = 1; i - 1 < options.size(); i++) {
-            builder.append(i).append(". ").append(options.get(i - 1).toShortString()).append("\n");
-        }
-        System.out.print(builder.toString());
-        while (true) {
-            System.out.print("> ");
-            try {
-                index = Integer.parseInt(Game.SCANNER.nextLine());
-            } catch (NumberFormatException exception) {
-                System.out.println(Constants.INVALID_INPUT);
-                continue;
-            }
-            if (0 <= index && index <= options.size()) {
-                break;
-            }
-            System.out.println(Constants.INVALID_INPUT);
-        }
-        return index - 1;
-
-    }
-
-    /**
-     * Let the player choose a target to attack.
-     */
-    @Deprecated
-    private Creature selectTargetFromList() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("0. Abort\n");
-        List<Creature> visible = this.getLocation().getCreatures();
-        for (int i = 1; i - 1 < visible.size(); i++) {
-            builder.append(i).append(". ").append(visible.get(i - 1).getName()).append("\n");
-        }
-        IO.writeString(builder.toString());
-        int index;
-        while (true) {
-            try {
-                index = Integer.parseInt(IO.readString());
-            } catch (NumberFormatException exception) {
-                IO.writeString(Constants.INVALID_INPUT);
-                continue;
-            }
-            if (0 <= index && index <= visible.size()) {
-                break;
-            }
-            IO.writeString(Constants.INVALID_INPUT);
-        }
-        if (index == 0) {
-            return null;
-        }
-        return visible.get(index - 1);
     }
 
     private String getHeroStatusString() {
