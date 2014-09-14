@@ -29,6 +29,8 @@ public class Campaign implements Serializable {
 
     private boolean saved;
 
+    private int unlockedAchievementsCounter;
+
     public Campaign() {
         campaignBattleCounter = new BattleCounter();
         campaignAchievements = createDemoAchievements();
@@ -86,12 +88,41 @@ public class Campaign implements Serializable {
         this.saved = saved;
     }
 
+    private int getUnlockedAchievementsCounter() {
+        return unlockedAchievementsCounter;
+    }
+
+    private void incrementUnlockedAchievementsCounter() {
+        this.unlockedAchievementsCounter++;
+    }
+
+    /**
+     * Prints all unlocked achievements.
+     */
+    public void printUnlockedAchievements() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Progress: ").append(getUnlockedAchievementsCounter()).append('/');
+        builder.append(campaignAchievements.size());
+        for (Achievement a : campaignAchievements) {
+            if (a.isUnlocked()) {
+                builder.append("\n").append(a.toOneLineString());
+            }
+        }
+        IO.writeString(builder.toString());
+    }
+
     /**
      * Refreshes the campaign. Should be called after the player plays a turn.
      */
     public void refresh() {
+        refreshAchievements();
+    }
+
+    private void refreshAchievements() {
         for (Achievement a : campaignAchievements) {
-            a.update(campaignBattleCounter);
+            if (a.update(campaignBattleCounter)) {
+                incrementUnlockedAchievementsCounter();
+            }
         }
     }
 
