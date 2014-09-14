@@ -161,8 +161,9 @@ public class Game {
         while (true) {
             // getTurn returns true if the Player did not issue an exit command.
             if (getTurn(campaign)) {
-                // Stop if the player died.
+                // Handle player death.
                 if (!campaign.getHero().isAlive()) {
+                    IO.writeString("You died.");
                     break;
                 }
             } else {
@@ -214,13 +215,7 @@ public class Game {
                     break;
                 case "kill":
                 case "attack":
-                    Creature target = campaign.getHero().selectTarget(inputWords);
-                    if (target != null) {
-                        Game.battle(campaign.getHero(), target);
-                        if (!campaign.getHero().isAlive()) {
-                            System.out.println("You died.");
-                        }
-                    }
+                    Game.battle(campaign.getHero(), campaign.getHero().selectTarget(inputWords));
                     return true;
                 // World-related commands.
                 case "spawns":
@@ -278,6 +273,9 @@ public class Game {
             IO.writeString("You cannot attempt suicide.");
             return;
         }
+        if (defender == null) {
+            return;
+        }
         while (attacker.isAlive() && defender.isAlive()) {
             attacker.hit(defender);
             if (defender.isAlive()) {
@@ -301,8 +299,10 @@ public class Game {
      * Add the the surviving creature the gold and experience the defeated had.
      */
     private static void battleCleanup(Creature survivor, Creature defeated) {
-        survivor.addExperience(defeated.getExperienceDrop());
-        survivor.addGold(defeated.getGold());
+        if (survivor instanceof Hero) {
+            survivor.addExperience(defeated.getExperienceDrop());
+            survivor.addGold(defeated.getGold());
+        }
         // Remove the dead creature from the location.
         survivor.getLocation().removeCreature(defeated);
     }
