@@ -60,8 +60,10 @@ public class Achievement implements Serializable {
      * Updates the state of the Achievement using another counter.
      *
      * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
+     * 
+     * @return true if the achievement was unlocked. False otherwise.
      */
-    public void update(BattleCounter battleCounter) {
+    public boolean update(BattleCounter battleCounter) {
         if (!unlocked) {
             for (CreatureID id : requirements.getCounters().keySet()) {
                 Integer battleCount = battleCounter.getCounters().get(id);
@@ -69,11 +71,12 @@ public class Achievement implements Serializable {
                     if (battleCount >= requirements.getCounters().get(id)) {
                         printAchievementUnlocked();
                         setUnlocked(true);
+                        return true;
                     }
                 }
             }
-
         }
+        return false;
     }
 
     private void printAchievementUnlocked() {
@@ -82,5 +85,9 @@ public class Achievement implements Serializable {
         achievementMessageBuilder.append(StringUtils.centerString(getName())).append("\n");
         achievementMessageBuilder.append(StringUtils.centerString(getInfo())).append("\n");
         IO.writeString(achievementMessageBuilder.toString());
+    }
+    
+    public String toOneLineString() {
+        return name + " : " + info;
     }
 }

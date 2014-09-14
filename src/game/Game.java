@@ -207,6 +207,10 @@ public class Game {
                         }
                     }
                     return true;
+                    // Campaign-related commands.
+                case "achievements":
+                    campaign.printUnlockedAchievements();
+                    break;
                 // World-related commands.
                 case "spawns":
                     campaign.getWorld().printSpawnCounters();
