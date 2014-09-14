@@ -18,11 +18,11 @@ package game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class Campaign implements Serializable {
 
-    private final ArrayList<Achievement> campaignAchievements;
+    private final List<Achievement> campaignAchievements;
     private final BattleCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
@@ -37,8 +37,8 @@ public class Campaign implements Serializable {
         campaignWorld = createDemoWorld();
     }
 
-    private ArrayList<Achievement> createDemoAchievements() {
-        ArrayList<Achievement> achievements = new ArrayList<>();
+    private List<Achievement> createDemoAchievements() {
+        List<Achievement> achievements = new ArrayList<>();
 
         BattleCounter suicideSolutionRequirements = new BattleCounter();
         suicideSolutionRequirements.setCounter(CreatureID.HERO, 1);
