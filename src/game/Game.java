@@ -38,11 +38,6 @@ public class Game {
      */
     public static final Random RANDOM = new Random();
 
-    /**
-     * The string used to alert the player about invalid input.
-     */
-    public static final String INVALID_INPUT = "Invalid input.";
-
     public static void main(String[] args) {
         Campaign gameCampaign = loadGameRoutine();
         gameLoop(gameCampaign);
@@ -98,7 +93,7 @@ public class Game {
                 case "no":
                     return false;
                 default:
-                    IO.writeString(Game.INVALID_INPUT);
+                    IO.writeString(Constants.INVALID_INPUT);
             }
         }
     }
@@ -117,7 +112,7 @@ public class Game {
                 case "no":
                     return false;
                 default:
-                    IO.writeString(Game.INVALID_INPUT);
+                    IO.writeString(Constants.INVALID_INPUT);
             }
         }
     }
@@ -259,7 +254,7 @@ public class Game {
                         printInvalidCommandMessage(inputWords[0]);
                     } else {
                         // The user pressed enter without typing anything.
-                        IO.writeString(Game.INVALID_INPUT);
+                        IO.writeString(Constants.INVALID_INPUT);
                     }
                     break;
             }
@@ -279,6 +274,10 @@ public class Game {
      * Simulates a battle between two creatures.
      */
     private static void battle(Creature attacker, Creature defender) {
+        if (attacker == defender) {
+            IO.writeString("You cannot attempt suicide.");
+            return;
+        }
         while (attacker.isAlive() && defender.isAlive()) {
             attacker.hit(defender);
             if (defender.isAlive()) {
@@ -305,7 +304,7 @@ public class Game {
         survivor.addExperience(defeated.getExperienceDrop());
         survivor.addGold(defeated.getGold());
         // Remove the dead creature from the location.
-        survivor.getLocation().removeAllDeadCreatures();
+        survivor.getLocation().removeCreature(defeated);
     }
 
 }

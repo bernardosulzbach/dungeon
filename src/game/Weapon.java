@@ -18,7 +18,7 @@ package game;
 
 import java.io.Serializable;
 
-public class Weapon extends Item implements Serializable {
+public class Weapon extends Item implements Serializable, Selectable {
 
     private static final String TYPE = "Weapon";
 
@@ -145,6 +145,11 @@ public class Weapon extends Item implements Serializable {
 
     @Override
     public String toShortString() {
+        return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);
+    }
+
+    @Override
+    public String toSelectionEntry() {
         return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);
     }
 
