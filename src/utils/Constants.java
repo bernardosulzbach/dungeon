@@ -33,17 +33,17 @@ public class Constants {
     public static final String MARGIN = "  ";
 
     public static final String CAMPAIGN_PATH = "campaign.dungeon";
-    
+
     public static final String FILE_FOUND = "A saved campaign was found.";
-    
+
     public static final String SAVE_ERROR = "Could not save the game.";
     public static final String SAVE_SUCCESS = "Successfully saved the game.";
     public static final String SAVE_CONFIRM = "Do you want to save the game?";
-    
+
     public static final String LOAD_ERROR = "Could not load the saved campaign.";
     public static final String LOAD_SUCCESS = "Successfully loaded the saved campaign.";
     public static final String LOAD_CONFIRM = "Do you want to load the game?";
-    
+
     public static final String ACHIEVEMENT_UNLOCKED = "Achievement Unlocked!";
 
     // Two 79-character long strings used to improve readability.

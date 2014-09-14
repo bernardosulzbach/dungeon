@@ -16,10 +16,9 @@
  */
 package help;
 
-import game.Game;
 import game.IO;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Help {
 
@@ -27,7 +26,7 @@ public class Help {
     /**
      * This HashMap maps all the aliases of a command to its CommandHelp object.
      */
-    private static final ArrayList<CommandHelp> COMMANDS = new ArrayList<>();
+    private static final List<CommandHelp> COMMANDS = new ArrayList<>();
 
     static {
         COMMANDS.add(new CommandHelp(
