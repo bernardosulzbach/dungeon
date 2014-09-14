@@ -18,7 +18,7 @@ TODO
 * Document the existing code.
 * Implement west and east walking.
 * Implement the 'pick \<name of item\>' syntax.
-* Encapsulate printing to the console.
+* Write a common superclass for BattleCounter and SpawnCounter.
 
 Trivia
 ------
