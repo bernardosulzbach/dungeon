@@ -21,17 +21,10 @@ import utils.Utils;
 
 import java.io.*;
 import java.util.Random;
-import java.util.Scanner;
 import utils.Constants;
 import utils.DateAndTime;
 
 public class Game {
-
-    /**
-     * The Scanner the method Game.readString() uses.
-     *
-     */
-    public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
      * The Random object used to control random events throughout the game.
@@ -58,8 +51,8 @@ public class Game {
      */
     private static Campaign loadGameRoutine() {
         if (checkForExistingSave()) {
-            IO.writeString(Constants.SAVE_FOUND);
-            if (confirmLoad()) {
+            IO.writeString(Constants.FILE_FOUND);
+            if (confirmOperation(Constants.LOAD_CONFIRM)) {
                 return loadCampaign();
             }
         }
@@ -72,37 +65,19 @@ public class Game {
      * @return a saved campaign or a new demo campaign.
      */
     private static void saveGameRoutine(Campaign campaign) {
-        if (confirmSave()) {
+        if (confirmOperation(Constants.SAVE_CONFIRM)) {
             saveCampaign(campaign);
         }
     }
 
     /**
-     * Prompts the user if he/she wants to attempt to load a saved campaign.
+     * Prompt the user to confirm an operation (as saving and loading the game).
      *
-     * @return true if the answer was positive, false otherwise.
+     * @param confirmation
+     * @return
      */
-    private static boolean confirmLoad() {
-        IO.writeString("Attempt to load it? ( Y / N )");
-        while (true) {
-            switch (IO.readString().toLowerCase()) {
-                case "y":
-                case "yes":
-                    return true;
-                case "n":
-                case "no":
-                    return false;
-                default:
-                    IO.writeString(Constants.INVALID_INPUT);
-            }
-        }
-    }
-
-    /**
-     * Prompts the user if he/she wants to attempt to save the current state of his/hers campaign.
-     */
-    private static boolean confirmSave() {
-        IO.writeString("Save the game? ( Y / N )");
+    private static boolean confirmOperation(String confirmation) {
+        IO.writeString(confirmation + " ( Y / N )");
         while (true) {
             switch (IO.readString().toLowerCase()) {
                 case "y":
@@ -147,6 +122,7 @@ public class Game {
             objectOutStream = new ObjectOutputStream(fileOutStream);
             objectOutStream.writeObject(campaign);
             objectOutStream.close();
+            campaign.setSaved(true);
             IO.writeString(Constants.SAVE_SUCCESS);
         } catch (IOException ex) {
             IO.writeString(Constants.SAVE_ERROR);
@@ -166,8 +142,14 @@ public class Game {
                     IO.writeString("You died.");
                     break;
                 }
+                // Refresh the campaign state.
+                campaign.refresh();
+                // After a turn, the campaign is not saved.
+                campaign.setSaved(false);
             } else {
-                saveGameRoutine(campaign);
+                if (!campaign.isSaved()) {
+                    saveGameRoutine(campaign);
+                }
                 break;
             }
         }
@@ -215,7 +197,15 @@ public class Game {
                     break;
                 case "kill":
                 case "attack":
-                    Game.battle(campaign.getHero(), campaign.getHero().selectTarget(inputWords));
+                    Creature target = campaign.getHero().selectTarget(inputWords);
+                    if (target != null) {
+                        // Add this battle to the battle counter.
+                        campaign.getBattleCounter().incrementCounter(target.getId());
+                        Game.battle(campaign.getHero(), target);
+                        if (!campaign.getHero().isAlive()) {
+                            IO.writeString("You died.");
+                        }
+                    }
                     return true;
                 // World-related commands.
                 case "spawns":
@@ -271,9 +261,6 @@ public class Game {
     private static void battle(Creature attacker, Creature defender) {
         if (attacker == defender) {
             IO.writeString("You cannot attempt suicide.");
-            return;
-        }
-        if (defender == null) {
             return;
         }
         while (attacker.isAlive() && defender.isAlive()) {

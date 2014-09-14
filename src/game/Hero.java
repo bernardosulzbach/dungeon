@@ -33,7 +33,7 @@ public class Hero extends Creature {
      */
     public void rest() {
         setCurHealth(getMaxHealth());
-        System.out.println("You are completely rested.");
+        IO.writeString("You are completely rested.");
     }
 
     /**
@@ -68,7 +68,7 @@ public class Hero extends Creature {
 
         builder.append('\n').append(Constants.LINE_1);
 
-        System.out.println(builder.toString());
+        IO.writeString(builder.toString());
     }
 
     public Creature selectTarget(String[] inputWords) {

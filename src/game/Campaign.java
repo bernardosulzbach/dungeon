@@ -17,16 +17,34 @@
 package game;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Campaign implements Serializable {
 
+    private final ArrayList<Achievement> campaignAchievements;
+    private final BattleCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
 
+    private boolean saved;
+
     public Campaign() {
+        campaignBattleCounter = new BattleCounter();
+        campaignAchievements = createDemoAchievements();
         campaignHero = new Hero("Seth");
         campaignHero.setWeapon(new Weapon("Stick", 6, 20));
         campaignWorld = createDemoWorld();
+    }
+
+    private ArrayList<Achievement> createDemoAchievements() {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+
+        BattleCounter suicideSolutionRequirements = new BattleCounter();
+        suicideSolutionRequirements.setCounter(CreatureID.HERO, 1);
+        achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
+
+        return achievements;
     }
 
     private World createDemoWorld() {
@@ -48,12 +66,33 @@ public class Campaign implements Serializable {
         return world;
     }
 
+    public BattleCounter getBattleCounter() {
+        return campaignBattleCounter;
+    }
+
     public World getWorld() {
         return campaignWorld;
     }
 
     public Hero getHero() {
         return campaignHero;
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
+    /**
+     * Refreshes the campaign. Should be called after the player plays a turn.
+     */
+    public void refresh() {
+        for (Achievement a : campaignAchievements) {
+            a.update(campaignBattleCounter);
+        }
     }
 
 }

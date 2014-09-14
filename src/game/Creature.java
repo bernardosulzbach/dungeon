@@ -273,17 +273,17 @@ public class Creature implements Serializable, Selectable {
             // Check if the attack is a miss.
             if (weapon.isMiss()) {
                 IO.writeString(name + " missed.");
+                return;
             } else {
                 hitDamage = weapon.getDamage();
                 target.takeDamage(hitDamage);
                 weapon.decrementIntegrity();
-                System.out.printf("%s inflicted %d damage points to %s.\n", name, hitDamage, target.getName());
             }
         } else {
             hitDamage = this.attack;
             target.takeDamage(hitDamage);
-            System.out.printf("%s inflicted %d damage points to %s.\n", name, hitDamage, target.getName());
         }
+        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", name, hitDamage, target.getName()));
     }
 
     private void takeDamage(int damage) {

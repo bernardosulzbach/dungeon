@@ -16,12 +16,19 @@
  */
 package game;
 
+import java.util.Scanner;
+
 /**
  * IO class that encapsulates all Input/Output operations.
  *
  * @author Bernardo Sulzbach - 13/09/2014
  */
 public class IO {
+
+    /**
+     * The Scanner the method used by the IO operations.
+     */
+    public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
      * Outputs a string to the console, stripping unnecessary newlines at the end.
@@ -44,7 +51,7 @@ public class IO {
         String line;
         do {
             System.out.print("> ");
-            line = Game.SCANNER.nextLine().trim();
+            line = SCANNER.nextLine().trim();
         } while (line.equals(""));
         return line;
     }
