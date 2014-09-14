@@ -33,6 +33,14 @@ public class Game {
     }
 
     /**
+     * Check if a saved campaign exists.
+     */
+    private static boolean checkForExistingSave() {
+        File savedCampaign = new File(Constants.CAMPAIGN_PATH);
+        return savedCampaign.exists() && savedCampaign.isFile();
+    }
+
+    /**
      * Handles all the save loading at startup.
      *
      * @return a saved campaign or a new demo campaign.
@@ -48,11 +56,14 @@ public class Game {
     }
 
     /**
-     * Check if a saved campaign exists.
+     * Handles all the save loading at startup.
+     *
+     * @return a saved campaign or a new demo campaign.
      */
-    private static boolean checkForExistingSave() {
-        File savedCampaign = new File(Constants.CAMPAIGN_PATH);
-        return savedCampaign.exists() && savedCampaign.isFile();
+    private static void saveGameRoutine(Campaign campaign) {
+        if (confirmSave()) {
+            saveCampaign(campaign);
+        }
     }
 
     /**
@@ -106,6 +117,7 @@ public class Game {
             objectInStream = new ObjectInputStream(fileInStream);
             Campaign loadedCampaign = (Campaign) objectInStream.readObject();
             objectInStream.close();
+            IO.writeString(Constants.LOAD_SUCCESS);
             return loadedCampaign;
         } catch (IOException | ClassNotFoundException ex) {
             IO.writeString(Constants.LOAD_ERROR);
@@ -124,6 +136,7 @@ public class Game {
             objectOutStream = new ObjectOutputStream(fileOutStream);
             objectOutStream.writeObject(campaign);
             objectOutStream.close();
+            IO.writeString(Constants.SAVE_SUCCESS);
         } catch (IOException ex) {
             IO.writeString(Constants.SAVE_ERROR);
         }
@@ -142,9 +155,7 @@ public class Game {
                     break;
                 }
             } else {
-                if (confirmSave()) {
-                    saveCampaign(campaign);
-                }
+                saveGameRoutine(campaign);
                 break;
             }
         }
@@ -220,6 +231,9 @@ public class Game {
                     Help.printCommandList();
                     break;
                 // Game commands.
+                case "save":
+                    saveGameRoutine(campaign);
+                    break;
                 case "quit":
                 case "exit":
                     return false;

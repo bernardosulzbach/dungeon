@@ -34,4 +34,34 @@ public class StringUtils {
         }
     }
 
+    /**
+     * Checks if a string is alphabetic (only contains letters).
+     *
+     * @param name
+     * @return
+     */
+    public static boolean isAlphabetic(String name) {
+        for (int i = 0; i < name.length(); i++) {
+            if (!Character.isAlphabetic(name.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Creates a string of repeated characters.
+     *
+     * @param repetitions
+     * @param character
+     * @return
+     */
+    public static String makeRepeatedCharacterString(int repetitions, char character) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < repetitions; i++) {
+            builder.append(character);
+        }
+        return builder.toString();
+    }
+
 }
