@@ -17,10 +17,9 @@
 package game;
 
 import java.io.Serializable;
-import java.util.List;
 import utils.Utils;
 
-public class Creature implements Serializable {
+public class Creature implements Serializable, Selectable {
 
     protected final CreatureID id;
     protected String name;
@@ -296,6 +295,11 @@ public class Creature implements Serializable {
     }
 
     public String toShortString() {
+        return String.format("%-20s Level %2d", name, level);
+    }
+
+    @Override
+    public String toSelectionEntry() {
         return String.format("%-20s Level %2d", name, level);
     }
 }

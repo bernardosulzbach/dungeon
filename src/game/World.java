@@ -22,8 +22,6 @@ import java.util.List;
 
 public final class World implements Serializable {
 
-    private final Hero player;
-
     private final List<Location> locations;
     private final SpawnCounter spawnCounter;
 
@@ -36,9 +34,7 @@ public final class World implements Serializable {
 
         locations = new ArrayList<>();
         locations.add(startingLocation);
-
-        player = campaignPlayer;
-        addCreature(player, 0);
+        addCreature(campaignPlayer, 0);
     }
 
     /**
@@ -65,10 +61,6 @@ public final class World implements Serializable {
         if (-1 < locationIndex && locationIndex < locations.size()) {
             locations.get(locationIndex).addItem(item);
         }
-    }
-
-    public Hero getPlayer() {
-        return player;
     }
 
     public Location getLocation(int locationIndex) {

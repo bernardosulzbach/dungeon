@@ -64,6 +64,10 @@ public class Location implements Serializable {
         items.remove(item);
     }
 
+    public void removeCreature(Creature creatureToRemove) {
+        creatures.remove(creatureToRemove);
+    }
+
     /**
      * Remove all dead creatures in the current location.
      */
@@ -78,28 +82,16 @@ public class Location implements Serializable {
         }
     }
 
-    /**
-     * Retrieves all visible creatures to the observer.
-     *
-     * @param observer the creature that is trying to look for other creatures.
-     * @return a list of all the visible creatures to this observer.
-     */
-    public List<Creature> getVisibleCreatures(Creature observer) {
-        List<Creature> allButObserver = creatures;
-        allButObserver.remove(observer);
-        return allButObserver;
-    }
-
     public List<Creature> getCreatures() {
         return creatures;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
     public int getCreatureCount() {
         return creatures.size();
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     public int getItemCount() {
@@ -121,12 +113,4 @@ public class Location implements Serializable {
         return visibleWeapons;
     }
 
-    /**
-     * Get a list of all visible items to the observer.
-     *
-     * @return a list of items.
-     */
-    public List<Item> getVisibleItems() {
-        return items;
-    }
 }

@@ -44,4 +44,9 @@ public class Constants {
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
 
     public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, WIDTH, '-') + '\n' + LINE_2;
+    public static final String SUICIDE_ATTEMPT = "Are you trying to kill yourself?";
+    /**
+     * The string used to alert the player about invalid input.
+     */
+    public static final String INVALID_INPUT = "Invalid input.";
 }

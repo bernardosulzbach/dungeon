@@ -45,25 +45,25 @@ public class Hero extends Creature {
 
         builder.append('\n').append(Constants.LINE_1);
 
-        // Creature count must be greater than one in order not to take the hero into account.
-        if (getLocation().getCreatureCount() > 1) {
+        // Creature count must be different than one in order not to take the hero into account.
+        if (getLocation().getCreatureCount() == 1) {
+            builder.append('\n').append(Constants.MARGIN).append("You do not see any creatures here.");
+        } else {
             for (Creature aCreature : getLocation().getCreatures()) {
                 if (aCreature.getId() != CreatureID.HERO) {
                     builder.append('\n').append(Constants.MARGIN).append(aCreature.toShortString());
                 }
             }
-        } else {
-            builder.append('\n').append("You do not see any creatures here.");
         }
 
         builder.append('\n').append(Constants.LINE_1);
 
-        if (getLocation().getItemCount() > 0) {
+        if (getLocation().getItemCount() == 0) {
+            builder.append('\n').append(Constants.MARGIN).append("You do not see any items here.");
+        } else {
             for (Item curItem : getLocation().getItems()) {
                 builder.append('\n').append(Constants.MARGIN).append(curItem.toShortString());
             }
-        } else {
-            builder.append('\n').append("You do not see any items here.");
         }
 
         builder.append('\n').append(Constants.LINE_1);
@@ -71,18 +71,32 @@ public class Hero extends Creature {
         System.out.println(builder.toString());
     }
 
+    public Creature selectTarget(String[] inputWords) {
+        List<Creature> locationCreatures = getLocation().getCreatures();
+        if (inputWords.length == 1) {
+            return selectFromList(locationCreatures);
+        } else {
+            String targetName = inputWords[1];
+            for (Creature possibleTarget : getLocation().getCreatures()) {
+                if (targetName.compareToIgnoreCase(possibleTarget.getName()) == 0) {
+                    return possibleTarget;
+                }
+            }
+            return null;
+        }
+    }
+
     /**
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] words) {
         List<Weapon> visibleWeapons = getLocation().getVisibleWeapons();
-        int selectedIndex = selectWeapon(visibleWeapons);
-        if (selectedIndex != -1) {
+        Weapon selectedWeapon = selectFromList(visibleWeapons);
+        if (selectedWeapon != null) {
             dropWeapon();
-            equipWeapon(visibleWeapons.get(selectedIndex));
-            getLocation().removeItem(visibleWeapons.get(selectedIndex));
+            equipWeapon(selectedWeapon);
+            getLocation().removeItem(selectedWeapon);
         }
-
     }
 
     /**
@@ -107,10 +121,42 @@ public class Hero extends Creature {
     }
 
     /**
+     * Method that let the player select a Selectable object from a List.
+     */
+    public static <T extends Selectable> T selectFromList(List<T> list) {
+        StringBuilder builder = new StringBuilder("0. Abort\n");
+        int index = 1;
+        for (Selectable aSelectable : list) {
+            builder.append(index).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
+            index++;
+        }
+        IO.writeString(builder.toString());
+        int choice = -1;
+        while (true) {
+            try {
+                choice = Integer.parseInt(IO.readString());
+            } catch (NumberFormatException exception) {
+                IO.writeString(Constants.INVALID_INPUT);
+                continue;
+            }
+            if (choice < 0 || choice > list.size()) {
+                IO.writeString(Constants.INVALID_INPUT);
+            } else {
+                break;
+            }
+        }
+        if (choice == 0) {
+            return null;
+        }
+        return list.get(choice - 1);
+    }
+
+    /**
      * Let the user select one item from a list of options.
      *
      * @return the index of the item in the list. (-1 if the user aborted)
      */
+    @Deprecated
     private int selectWeapon(List<Weapon> options) {
         int index;
         StringBuilder builder = new StringBuilder("0. Abort\n");
@@ -123,39 +169,26 @@ public class Hero extends Creature {
             try {
                 index = Integer.parseInt(Game.SCANNER.nextLine());
             } catch (NumberFormatException exception) {
-                System.out.println(Game.INVALID_INPUT);
+                System.out.println(Constants.INVALID_INPUT);
                 continue;
             }
             if (0 <= index && index <= options.size()) {
                 break;
             }
-            System.out.println(Game.INVALID_INPUT);
+            System.out.println(Constants.INVALID_INPUT);
         }
         return index - 1;
 
     }
 
-    public Creature selectTarget(String[] inputWords) {
-        if (inputWords.length == 1) {
-            return selectTargetFromList();
-        } else {
-            String targetName = inputWords[1];
-            for (Creature possibleTarget : getLocation().getVisibleCreatures(this)) {
-                if (targetName.compareToIgnoreCase(possibleTarget.getName()) == 0) {
-                    return possibleTarget;
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * Let the player choose a target to attack.
      */
+    @Deprecated
     private Creature selectTargetFromList() {
         StringBuilder builder = new StringBuilder();
         builder.append("0. Abort\n");
-        List<Creature> visible = this.getLocation().getVisibleCreatures(this);
+        List<Creature> visible = this.getLocation().getCreatures();
         for (int i = 1; i - 1 < visible.size(); i++) {
             builder.append(i).append(". ").append(visible.get(i - 1).getName()).append("\n");
         }
@@ -165,13 +198,13 @@ public class Hero extends Creature {
             try {
                 index = Integer.parseInt(IO.readString());
             } catch (NumberFormatException exception) {
-                IO.writeString(Game.INVALID_INPUT);
+                IO.writeString(Constants.INVALID_INPUT);
                 continue;
             }
             if (0 <= index && index <= visible.size()) {
                 break;
             }
-            IO.writeString(Game.INVALID_INPUT);
+            IO.writeString(Constants.INVALID_INPUT);
         }
         if (index == 0) {
             return null;

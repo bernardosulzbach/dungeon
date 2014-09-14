@@ -21,9 +21,9 @@ import java.io.Serializable;
 /**
  * Item class that defines common properties for all items.
  *
- * @author bernardo
+ * @author Bernardo Sulzbach
  */
-public class Item implements Serializable {
+public abstract class Item implements Serializable, Selectable {
 
     private static final String TYPE = "Generic";
 
