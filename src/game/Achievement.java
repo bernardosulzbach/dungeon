@@ -16,6 +16,10 @@
  */
 package game;
 
+import java.io.Serializable;
+import utils.Constants;
+import utils.StringUtils;
+
 /**
  * A draft of what the achievement class will look like.
  *
@@ -23,15 +27,17 @@ package game;
  *
  * @author Bernardo Sulzbach
  */
-public class Achievement {
+public class Achievement implements Serializable {
 
+    private final BattleCounter requirements;
     private final String name;
     private final String info;
     private boolean unlocked;
 
-    public Achievement(String name, String info) {
+    public Achievement(String name, String info, BattleCounter requirements) {
         this.name = name;
         this.info = info;
+        this.requirements = requirements;
     }
 
     public String getName() {
@@ -50,4 +56,31 @@ public class Achievement {
         this.unlocked = unlocked;
     }
 
+    /**
+     * Updates the state of the Achievement using another counter.
+     *
+     * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
+     */
+    public void update(BattleCounter battleCounter) {
+        if (!unlocked) {
+            for (CreatureID id : requirements.getCounters().keySet()) {
+                Integer battleCount = battleCounter.getCounters().get(id);
+                if (battleCount != null) {
+                    if (battleCount >= requirements.getCounters().get(id)) {
+                        printAchievementUnlocked();
+                        setUnlocked(true);
+                    }
+                }
+            }
+
+        }
+    }
+
+    private void printAchievementUnlocked() {
+        StringBuilder achievementMessageBuilder = new StringBuilder();
+        achievementMessageBuilder.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
+        achievementMessageBuilder.append(StringUtils.centerString(getName())).append("\n");
+        achievementMessageBuilder.append(StringUtils.centerString(getInfo())).append("\n");
+        IO.writeString(achievementMessageBuilder.toString());
+    }
 }
