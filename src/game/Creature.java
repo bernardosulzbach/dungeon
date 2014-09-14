@@ -16,9 +16,11 @@ public class Creature implements Serializable {
     protected int gold;
 
     protected int maxHealth;
+    private int healthIncrement;
     protected int curHealth;
 
     protected int attack;
+    private int attackIncrement;
 
     protected Weapon weapon;
     private Location location;
@@ -42,7 +44,7 @@ public class Creature implements Serializable {
             case RABBIT:
                 setName("Rabbit");
                 this.level = level;
-                this.experienceDrop = level * level * 5;
+                this.experienceDrop = level * level * 10;
                 this.curHealth = this.maxHealth = 10 + 2 * level;
                 this.attack = 5 + 2 * level;
                 break;
@@ -63,14 +65,14 @@ public class Creature implements Serializable {
             case WOLF:
                 setName("Wolf");
                 this.level = level;
-                this.experienceDrop = level * level * 15;
+                this.experienceDrop = level * level * 20;
                 this.curHealth = this.maxHealth = 24 + 6 * level;
                 this.attack = 10 + 4 * level;
                 break;
             case ZOMBIE:
                 setName("Zombie");
                 this.level = level;
-                this.experienceDrop = level * level * 20;
+                this.experienceDrop = level * level * 25;
                 this.curHealth = this.maxHealth = 30 + 6 * level;
                 this.attack = 12 + 4 * level;
                 break;
@@ -137,8 +139,11 @@ public class Creature implements Serializable {
      * Increases the creature level by one and writes a message about it.
      */
     public void levelUp() {
-        this.level++;
-        IO.writeString(String.format("%s leveld up. %s is now level %d", name, name, level));
+        level++;
+        maxHealth += healthIncrement;
+        curHealth = maxHealth;
+        attack += attackIncrement;
+        IO.writeString(String.format("%s leveld up. %s is now level %d.", name, name, level));
     }
 
     public int getGold() {
