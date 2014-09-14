@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * SpawnCounter class that is used by a World object to count its spawns.
+ *
+ * @author Bernardo Sulzbach
  */
-class SpawnCounter implements Serializable {
+public class BattleCounter implements Serializable {
 
-    private static final String EMPTY_SPAWN_COUNTER = "The spawn counter is empty.";
     private final HashMap<CreatureID, Integer> counters;
 
-    public SpawnCounter() {
+    public BattleCounter() {
         counters = new HashMap<>();
+    }
+
+    public HashMap<CreatureID, Integer> getCounters() {
+        return counters;
     }
 
     public void incrementCounter(CreatureID id) {
@@ -39,20 +43,16 @@ class SpawnCounter implements Serializable {
         }
     }
 
-    /**
-     * Send all the counters to the output.
-     */
-    public void printCounters() {
-        if (counters.isEmpty()) {
-            IO.writeString(EMPTY_SPAWN_COUNTER);
+    public void setCounter(CreatureID id, int value) {
+        counters.put(id, value);
+    }
+
+    public int getCounter(CreatureID id) {
+        Integer counter = counters.get(id);
+        if (counter == null) {
+            return 0;
         } else {
-            StringBuilder sb = new StringBuilder();
-            for (CreatureID id : counters.keySet()) {
-                sb.append(String.format("  %-20s%10d\n", id, counters.get(id)));
-            }
-            // Remove the last newline character.
-            sb.setLength(sb.length() - 1);
-            IO.writeString(sb.toString());
+            return counter;
         }
     }
 }
