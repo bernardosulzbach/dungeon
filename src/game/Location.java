@@ -52,9 +52,18 @@ public class Location implements Serializable {
      * @return an Item object if there is a match. null otherwise.
      */
     public Item findItem(String name) {
-        for (Item curItem : items) {
-            if (curItem.getName().equalsIgnoreCase(name)) {
-                return curItem;
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Creature findCreature(String name) {
+        for (Creature creature : creatures) {
+            if (creature.getName().equalsIgnoreCase(name)) {
+                return creature;
             }
         }
         return null;
