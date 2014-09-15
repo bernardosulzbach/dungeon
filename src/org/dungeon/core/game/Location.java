@@ -45,6 +45,33 @@ public class Location implements Serializable {
         items.add(item);
     }
 
+    public boolean hasCreature(Creature creature) {
+        for (Creature localCreature : creatures) {
+            if (localCreature.equals(creature)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasItem(Item item) {
+        for (Item localItem : items) {
+            if (localItem.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Creature findCreature(String name) {
+        for (Creature creature : creatures) {
+            if (creature.getName().equalsIgnoreCase(name)) {
+                return creature;
+            }
+        }
+        return null;
+    }
+
     /**
      * Attempts to find an item by its name.
      *
@@ -60,35 +87,12 @@ public class Location implements Serializable {
         return null;
     }
 
-    public Creature findCreature(String name) {
-        for (Creature creature : creatures) {
-            if (creature.getName().equalsIgnoreCase(name)) {
-                return creature;
-            }
-        }
-        return null;
-    }
-
     public void removeItem(Item item) {
         items.remove(item);
     }
 
     public void removeCreature(Creature creatureToRemove) {
         creatures.remove(creatureToRemove);
-    }
-
-    /**
-     * Remove all dead creatures in the current location.
-     */
-    public void removeAllDeadCreatures() {
-        // To safely remove from a collection we must use an iterator.
-        Iterator<Creature> i = creatures.iterator();
-        while (i.hasNext()) {
-            Creature creature = i.next();
-            if (!creature.isAlive()) {
-                i.remove();
-            }
-        }
     }
 
     public List<Creature> getCreatures() {

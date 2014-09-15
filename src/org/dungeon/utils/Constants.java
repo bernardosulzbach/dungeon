@@ -56,4 +56,9 @@ public class Constants {
      * The string used to alert the player about invalid input.
      */
     public static final String INVALID_INPUT = "Invalid input.";
+    public static final String NOT_YET_SUPPORTED = "Not yet supported.";
+    /**
+     * Movement strings.
+     */
+    public static final String WALK_BLOCKED = "The path is blocked.";
 }

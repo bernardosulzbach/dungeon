@@ -178,6 +178,9 @@ public class Game {
                 case "pick":
                     campaign.getHero().pickWeapon(inputWords);
                     break;
+                case "walk":
+                    campaign.parseHeroWalk(inputWords);
+                    break;
                 case "drop":
                     campaign.getHero().dropWeapon();
                     break;
