@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package utils;
+package org.dungeon.utils;
 
-import game.IO;
+import org.dungeon.core.game.IO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

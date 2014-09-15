@@ -14,11 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package game;
+package org.dungeon.core.achievement;
 
 import java.io.Serializable;
-import utils.Constants;
-import utils.StringUtils;
+import org.dungeon.core.game.BattleCounter;
+import org.dungeon.core.game.CreatureID;
+import org.dungeon.core.game.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.StringUtils;
 
 /**
  * A draft of what the achievement class will look like.

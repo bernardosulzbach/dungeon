@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package game;
+package org.dungeon.core.game;
 
 import java.io.Serializable;
-import utils.Utils;
+import org.dungeon.utils.Utils;
 
 public class Creature implements Serializable, Selectable {
 
