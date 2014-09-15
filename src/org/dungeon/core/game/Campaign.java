@@ -20,11 +20,12 @@ import org.dungeon.core.achievement.Achievement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.dungeon.core.counter.CreatureCounter;
 
 public class Campaign implements Serializable {
 
     private final List<Achievement> campaignAchievements;
-    private final BattleCounter campaignBattleCounter;
+    private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
 
@@ -33,7 +34,7 @@ public class Campaign implements Serializable {
     private int unlockedAchievementsCounter;
 
     public Campaign() {
-        campaignBattleCounter = new BattleCounter();
+        campaignBattleCounter = new CreatureCounter();
         campaignAchievements = createDemoAchievements();
         campaignHero = new Hero("Seth");
         campaignHero.setWeapon(new Weapon("Stick", 6, 20));
@@ -43,8 +44,11 @@ public class Campaign implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> achievements = new ArrayList<>();
 
-        BattleCounter suicideSolutionRequirements = new BattleCounter();
-        suicideSolutionRequirements.setCounter(CreatureID.HERO, 1);
+        CreatureCounter suicideSolutionRequirements = new CreatureCounter();
+
+        // Suicide Solution requires one battle against the Hero himself.
+        suicideSolutionRequirements.incrementCreatureCount(CreatureID.HERO);
+
         achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
 
         return achievements;
@@ -69,7 +73,7 @@ public class Campaign implements Serializable {
         return world;
     }
 
-    public BattleCounter getBattleCounter() {
+    public CreatureCounter getBattleCounter() {
         return campaignBattleCounter;
     }
 

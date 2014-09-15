@@ -19,18 +19,20 @@ package org.dungeon.core.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.dungeon.core.counter.CreatureCounter;
+import org.dungeon.utils.Constants;
 
 public final class World implements Serializable {
 
     private final List<Location> locations;
-    private final SpawnCounter spawnCounter;
+    private final CreatureCounter spawnCounter;
 
     /**
      * @param startingLocation
      * @param campaignPlayer
      */
     public World(Location startingLocation, Hero campaignPlayer) {
-        spawnCounter = new SpawnCounter();
+        spawnCounter = new CreatureCounter();
 
         locations = new ArrayList<>();
         locations.add(startingLocation);
@@ -45,7 +47,7 @@ public final class World implements Serializable {
      */
     public final void addCreature(Creature creature, int locationIndex) {
         if (-1 < locationIndex && locationIndex < locations.size()) {
-            spawnCounter.incrementCounter(creature.getId());
+            spawnCounter.incrementCreatureCount(creature.getId());
             locations.get(locationIndex).addCreature(creature);
             creature.setLocation(locations.get(locationIndex));
         }
@@ -72,9 +74,13 @@ public final class World implements Serializable {
     }
 
     /**
-     * Prints all the spawn counters to the console.
+     * Prints all the spawn counters.
      */
     public void printSpawnCounters() {
-        spawnCounter.printCounters();
+        StringBuilder sb = new StringBuilder();
+        for (CreatureID id : spawnCounter.getKeySet()) {
+            sb.append(Constants.MARGIN).append(String.format("%-20s%10d\n", id, spawnCounter.getCreatureCount(id)));
+        }
+        IO.writeString(sb.toString());
     }
 }
