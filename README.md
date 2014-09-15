@@ -18,7 +18,9 @@ TODO
 * Document the existing code.
 * Implement west and east walking.
 * Implement the 'pick \<name of item\>' syntax.
-* Write a common superclass for BattleCounter and SpawnCounter.
+* Create two new locations.
+* Come up with 4 more achievements.
+* Enable 'save \<name of file\>' syntax.
 
 Milestones to 0.1a
 ------------------
