@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package game;
+package org.dungeon.core.game;
 
-import help.Help;
-import utils.Utils;
+import org.dungeon.help.Help;
+import org.dungeon.utils.Utils;
 
 import java.io.*;
 import java.util.Random;
-import utils.Constants;
-import utils.DateAndTime;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.DateAndTime;
 
 public class Game {
 

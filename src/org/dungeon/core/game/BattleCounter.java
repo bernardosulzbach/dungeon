@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,45 +14,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package game;
+package org.dungeon.core.game;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
- * Item class that defines common properties for all items.
  *
  * @author Bernardo Sulzbach
  */
-public abstract class Item implements Serializable, Selectable {
+public class BattleCounter implements Serializable {
 
-    private static final String TYPE = "Generic";
+    private final HashMap<CreatureID, Integer> counters;
 
-    private String name;
-    private boolean destructible;
-
-    public Item(String name) {
-        this.name = name;
-        this.destructible = false;
+    public BattleCounter() {
+        counters = new HashMap<>();
     }
 
-    public Item(String name, boolean destructible) {
-        this.name = name;
-        this.destructible = destructible;
+    public HashMap<CreatureID, Integer> getCounters() {
+        return counters;
     }
 
-    public String getName() {
-        return name;
+    public void incrementCounter(CreatureID id) {
+        if (counters.containsKey(id)) {
+            counters.put(id, counters.get(id) + 1);
+        } else {
+            counters.put(id, 1);
+        }
     }
 
-    public boolean isDestructible() {
-        return destructible;
+    public void setCounter(CreatureID id, int value) {
+        counters.put(id, value);
     }
 
-    public void setDestructible(boolean destructible) {
-        this.destructible = destructible;
-    }
-
-    public String toShortString() {
-        return String.format("[%s] %-20s", TYPE, getName());
+    public int getCounter(CreatureID id) {
+        Integer counter = counters.get(id);
+        if (counter == null) {
+            return 0;
+        } else {
+            return counter;
+        }
     }
 }
