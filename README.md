@@ -20,6 +20,12 @@ TODO
 * Implement the 'pick \<name of item\>' syntax.
 * Write a common superclass for BattleCounter and SpawnCounter.
 
+Milestones to 0.1a
+------------------
+- [ ] Three locations (in the same row).
+- [ ] Five different achievements.
+- [ ] Custom save name.
+
 Trivia
 ------
 This project started on 04/09/2014 (dd/mm/yyyy).
