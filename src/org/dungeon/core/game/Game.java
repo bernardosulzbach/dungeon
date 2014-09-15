@@ -200,14 +200,11 @@ public class Game {
                     Creature target = campaign.getHero().selectTarget(inputWords);
                     if (target != null) {
                         // Add this battle to the battle counter.
-                        campaign.getBattleCounter().incrementCounter(target.getId());
+                        campaign.getBattleCounter().incrementCreatureCount(target.getId());
                         Game.battle(campaign.getHero(), target);
-                        if (!campaign.getHero().isAlive()) {
-                            IO.writeString("You died.");
-                        }
                     }
                     return true;
-                    // Campaign-related commands.
+                // Campaign-related commands.
                 case "achievements":
                     campaign.printUnlockedAchievements();
                     break;

@@ -17,7 +17,7 @@
 package org.dungeon.core.achievement;
 
 import java.io.Serializable;
-import org.dungeon.core.game.BattleCounter;
+import org.dungeon.core.counter.CreatureCounter;
 import org.dungeon.core.game.CreatureID;
 import org.dungeon.core.game.IO;
 import org.dungeon.utils.Constants;
@@ -32,12 +32,12 @@ import org.dungeon.utils.StringUtils;
  */
 public class Achievement implements Serializable {
 
-    private final BattleCounter requirements;
+    private final CreatureCounter requirements;
     private final String name;
     private final String info;
     private boolean unlocked;
 
-    public Achievement(String name, String info, BattleCounter requirements) {
+    public Achievement(String name, String info, CreatureCounter requirements) {
         this.name = name;
         this.info = info;
         this.requirements = requirements;
@@ -63,21 +63,21 @@ public class Achievement implements Serializable {
      * Updates the state of the Achievement using another counter.
      *
      * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
-     * 
+     *
      * @return true if the achievement was unlocked. False otherwise.
      */
-    public boolean update(BattleCounter battleCounter) {
+    public boolean update(CreatureCounter campaignCounters) {
         if (!unlocked) {
-            for (CreatureID id : requirements.getCounters().keySet()) {
-                Integer battleCount = battleCounter.getCounters().get(id);
-                if (battleCount != null) {
-                    if (battleCount >= requirements.getCounters().get(id)) {
-                        printAchievementUnlocked();
-                        setUnlocked(true);
-                        return true;
-                    }
+            for (CreatureID requirement : requirements.getKeySet()) {
+                if (campaignCounters.getCreatureCount(requirement) < requirements.getCreatureCount(requirement)) {
+                    // The campaign counter does not match the requirement.
+                    return false;
                 }
             }
+            // All the requirements OK.
+            printAchievementUnlocked();
+            setUnlocked(true);
+            return true;
         }
         return false;
     }
@@ -89,7 +89,7 @@ public class Achievement implements Serializable {
         achievementMessageBuilder.append(StringUtils.centerString(getInfo())).append("\n");
         IO.writeString(achievementMessageBuilder.toString());
     }
-    
+
     public String toOneLineString() {
         return name + " : " + info;
     }

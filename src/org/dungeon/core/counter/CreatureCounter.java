@@ -16,6 +16,9 @@
  */
 package org.dungeon.core.counter;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Set;
 import org.dungeon.core.game.CreatureID;
 
 /**
@@ -23,31 +26,38 @@ import org.dungeon.core.game.CreatureID;
  *
  * @author Bernardo Sulzbach
  */
-public class CreatureCounter {
+public class CreatureCounter implements Serializable {
 
-    private final CreatureID id;
-    private int value;
+    private final HashMap<CreatureID, Integer> map;
 
-    public CreatureCounter(CreatureID id) {
-        this.id = id;
-        this.value = 0;
+    public CreatureCounter() {
+        this.map = new HashMap<>();
     }
 
-    public CreatureCounter(CreatureID id, int value) {
-        this.id = id;
-        this.value = value;
+    public CreatureCounter(HashMap<CreatureID, Integer> map) {
+        this.map = map;
     }
 
-    public CreatureID getId() {
-        return id;
+    public Set<CreatureID> getKeySet() {
+        return map.keySet();
     }
 
-    public int getValue() {
-        return value;
-    }
-    
-    public void incrementValue() {
-        value++;
+    public int getCreatureCount(CreatureID id) {
+        if (map.containsKey(id)) {
+            return map.get(id);
+        }
+        return 0;
     }
 
+    public void incrementCreatureCount(CreatureID id) {
+        incrementCreatureCount(id, 1);
+    }
+
+    public void incrementCreatureCount(CreatureID id, int amount) {
+        if (map.containsKey(id)) {
+            map.put(id, map.get(id) + amount);
+        } else {
+            map.put(id, amount);
+        }
+    }
 }
