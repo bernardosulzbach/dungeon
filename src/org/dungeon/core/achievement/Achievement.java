@@ -37,6 +37,12 @@ public class Achievement implements Serializable {
     private final String info;
     private boolean unlocked;
 
+    public Achievement(String name, String info, CreatureID id, int amount) {
+        this.name = name;
+        this.info = info;
+        this.requirements = new CreatureCounter(id, amount);
+    }
+
     public Achievement(String name, String info, CreatureCounter requirements) {
         this.name = name;
         this.info = info;

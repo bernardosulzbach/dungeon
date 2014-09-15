@@ -25,9 +25,9 @@ import java.io.Serializable;
  */
 public abstract class Item implements Serializable, Selectable {
 
-    private static final String TYPE = "Generic";
+    private static final String TYPE = "Item";
 
-    private String name;
+    private final String name;
     private boolean destructible;
 
     public Item(String name) {

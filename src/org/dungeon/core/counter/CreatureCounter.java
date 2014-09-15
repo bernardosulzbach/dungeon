@@ -34,6 +34,11 @@ public class CreatureCounter implements Serializable {
         this.map = new HashMap<>();
     }
 
+    public CreatureCounter(CreatureID id, int amount) {
+        this.map = new HashMap<>();
+        this.map.put(id, amount);
+    }
+
     public CreatureCounter(HashMap<CreatureID, Integer> map) {
         this.map = map;
     }

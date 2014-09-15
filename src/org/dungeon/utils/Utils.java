@@ -16,7 +16,9 @@
  */
 package org.dungeon.utils;
 
+import java.util.List;
 import org.dungeon.core.game.IO;
+import org.dungeon.core.game.Selectable;
 
 /**
  * General utility class.
@@ -46,6 +48,37 @@ public class Utils {
         } else {
             return true;
         }
+    }
+
+    /**
+     * Method that let the player select a Selectable object from a List.
+     */
+    public static <T extends Selectable> T selectFromList(List<T> list) {
+        StringBuilder builder = new StringBuilder("0. Abort\n");
+        int index = 1;
+        for (Selectable aSelectable : list) {
+            builder.append(index).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
+            index++;
+        }
+        IO.writeString(builder.toString());
+        int choice = -1;
+        while (true) {
+            try {
+                choice = Integer.parseInt(IO.readString());
+            } catch (NumberFormatException exception) {
+                IO.writeString(Constants.INVALID_INPUT);
+                continue;
+            }
+            if (choice < 0 || choice > list.size()) {
+                IO.writeString(Constants.INVALID_INPUT);
+            } else {
+                break;
+            }
+        }
+        if (choice == 0) {
+            return null;
+        }
+        return list.get(choice - 1);
     }
 
 }

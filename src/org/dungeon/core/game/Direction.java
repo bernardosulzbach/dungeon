@@ -20,7 +20,7 @@ package org.dungeon.core.game;
  *
  * @author Bernardo Sulzbach
  */
-public enum Direction {
+public enum Direction implements Selectable {
 
     NORTH("North"), EAST("East"), SOUTH("South"), WEST("West");
 
@@ -32,6 +32,11 @@ public enum Direction {
 
     @Override
     public String toString() {
+        return string;
+    }
+
+    @Override
+    public String toSelectionEntry() {
         return string;
     }
 }

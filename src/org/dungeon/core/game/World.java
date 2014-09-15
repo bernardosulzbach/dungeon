@@ -35,8 +35,8 @@ public class World implements Serializable {
         locations = new HashMap<>();
     }
 
-    public void addLocation(Location locationObject, Point locationPoint) {
-        locations.put(locationPoint, locationObject);
+    public void addLocation(Location locationObject, Point coordinates) {
+        locations.put(coordinates, locationObject);
     }
 
     /**
@@ -45,8 +45,8 @@ public class World implements Serializable {
      * @param creature
      * @param locationIndex
      */
-    public void addCreature(Creature creature, Point locationPoint) {
-        locations.get(locationPoint).addCreature(creature);
+    public void addCreature(Creature creature, Point coordinates) {
+        locations.get(coordinates).addCreature(creature);
         spawnCounter.incrementCreatureCount(creature.getId());
     }
 

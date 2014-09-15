@@ -20,6 +20,7 @@ TODO
 * Implement the 'pick \<name of item\>' syntax.
 * Create two new locations.
 * Come up with 4 more achievements.
+* Remove the Location instance variable of Hero.
 * Enable 'save \<name of file\>' syntax.
 
 Milestones to 0.1a
