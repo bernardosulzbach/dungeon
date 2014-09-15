@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.dungeon.core.counter.CreatureCounter;
+import org.dungeon.utils.Constants;
 
 public class Campaign implements Serializable {
 
@@ -28,6 +29,7 @@ public class Campaign implements Serializable {
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
+    private final Point heroPoint;
 
     private boolean saved;
 
@@ -35,9 +37,13 @@ public class Campaign implements Serializable {
 
     public Campaign() {
         campaignBattleCounter = new CreatureCounter();
+
         campaignAchievements = createDemoAchievements();
+
         campaignHero = new Hero("Seth");
+        heroPoint = new Point(0, 0);
         campaignHero.setWeapon(new Weapon("Stick", 6, 20));
+
         campaignWorld = createDemoWorld();
     }
 
@@ -55,20 +61,31 @@ public class Campaign implements Serializable {
     }
 
     private World createDemoWorld() {
-        World world = new World(new Location("Training Grounds"), campaignHero);
-
-        world.addCreature(new Creature(CreatureID.BAT, 1), 0);
-        world.addCreature(new Creature(CreatureID.BEAR, 1), 0);
-        world.addCreature(new Creature(CreatureID.RABBIT, 1), 0);
-        world.addCreature(new Creature(CreatureID.RAT, 1), 0);
-        world.addCreature(new Creature(CreatureID.SPIDER, 1), 0);
-        world.addCreature(new Creature(CreatureID.WOLF, 1), 0);
-        world.addCreature(new Creature(CreatureID.ZOMBIE, 1), 0);
-
+        World world = new World();
+        Point startingPoint = new Point(0, 0);
+        world.addLocation(new Location("Clearing"), startingPoint);
+        // The hero
+        world.addCreature(campaignHero, startingPoint);
+        campaignHero.setLocation(world.getLocation(startingPoint));
+        // Beasts
+        world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.BEAR, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.SPIDER, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.WOLF, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.ZOMBIE, 1), startingPoint);
+        // Items
         Weapon longSword = new Weapon("Longsword", 18, 15);
         longSword.setDestructible(true);
+        world.addItem(longSword, startingPoint);
 
-        world.addItem(longSword, 0);
+        Point rightPoint = new Point(1, 0);
+        world.addLocation(new Location("Road to The Fort"), rightPoint);
+        // Beasts
+        world.addCreature(new Creature(CreatureID.RAT, 1), rightPoint);
+        // Items
+        world.addItem(new Weapon("Mace", 20, 10), rightPoint);
 
         return world;
     }
@@ -128,6 +145,30 @@ public class Campaign implements Serializable {
             if (a.update(campaignBattleCounter)) {
                 incrementUnlockedAchievementsCounter();
             }
+        }
+    }
+
+    public void parseHeroWalk(String[] inputWords) {
+        if (inputWords.length == 1) {
+        } else {
+            String secondWord = inputWords[1];
+            for (Direction dir : Direction.values()) {
+                if (dir.toString().equalsIgnoreCase(secondWord)) {
+                    heroWalk(dir);
+                    return;
+                }
+            }
+        }
+        IO.writeString(Constants.INVALID_INPUT);
+    }
+
+    public void heroWalk(Direction dir) {
+        Point destination = new Point(heroPoint, dir);
+        if (getWorld().hasLocation(destination)) {
+            getWorld().moveCreature(campaignHero, heroPoint, destination);
+            campaignHero.setLocation(getWorld().getLocation(destination));
+        } else {
+            IO.writeString(Constants.WALK_BLOCKED);
         }
     }
 

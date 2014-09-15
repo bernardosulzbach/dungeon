@@ -17,26 +17,26 @@
 package org.dungeon.core.game;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import org.dungeon.core.counter.CreatureCounter;
 import org.dungeon.utils.Constants;
 
-public final class World implements Serializable {
+public class World implements Serializable {
 
-    private final List<Location> locations;
+    private final HashMap<Point, Location> locations;
     private final CreatureCounter spawnCounter;
 
     /**
      * @param startingLocation
      * @param campaignPlayer
      */
-    public World(Location startingLocation, Hero campaignPlayer) {
+    public World() {
         spawnCounter = new CreatureCounter();
+        locations = new HashMap<>();
+    }
 
-        locations = new ArrayList<>();
-        locations.add(startingLocation);
-        addCreature(campaignPlayer, 0);
+    public void addLocation(Location locationObject, Point locationPoint) {
+        locations.put(locationPoint, locationObject);
     }
 
     /**
@@ -45,12 +45,9 @@ public final class World implements Serializable {
      * @param creature
      * @param locationIndex
      */
-    public final void addCreature(Creature creature, int locationIndex) {
-        if (-1 < locationIndex && locationIndex < locations.size()) {
-            spawnCounter.incrementCreatureCount(creature.getId());
-            locations.get(locationIndex).addCreature(creature);
-            creature.setLocation(locations.get(locationIndex));
-        }
+    public void addCreature(Creature creature, Point locationPoint) {
+        locations.get(locationPoint).addCreature(creature);
+        spawnCounter.incrementCreatureCount(creature.getId());
     }
 
     /**
@@ -59,18 +56,32 @@ public final class World implements Serializable {
      * @param item
      * @param locationIndex
      */
-    public void addItem(Item item, int locationIndex) {
-        if (-1 < locationIndex && locationIndex < locations.size()) {
-            locations.get(locationIndex).addItem(item);
+    public void addItem(Item item, Point locationPoint) {
+        locations.get(locationPoint).addItem(item);
+    }
+
+    /**
+     * Move a Creature from origin to destination.
+     *
+     * @param creature
+     * @param origin
+     * @param destination
+     */
+    public void moveCreature(Creature creature, Point origin, Point destination) {
+        if (locations.get(origin).hasCreature(creature)) {
+            locations.get(origin).removeCreature(creature);
+            locations.get(destination).addCreature(creature);
+        } else {
+            throw new IllegalArgumentException("Creature is not in the origin.");
         }
     }
 
-    public Location getLocation(int locationIndex) {
-        if (-1 < locationIndex && locationIndex < locations.size()) {
-            return locations.get(locationIndex);
-        } else {
-            return null;
-        }
+    public boolean hasLocation(Point point) {
+        return locations.containsKey(point);
+    }
+
+    public Location getLocation(Point point) {
+        return locations.get(point);
     }
 
     /**
