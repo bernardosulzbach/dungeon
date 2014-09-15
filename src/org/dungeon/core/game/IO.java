@@ -26,7 +26,7 @@ import java.util.Scanner;
 public class IO {
 
     /**
-     * The Scanner the method used by the IO operations.
+     * The Scanner used for all the IO operations.
      */
     public static final Scanner SCANNER = new Scanner(System.in);
 

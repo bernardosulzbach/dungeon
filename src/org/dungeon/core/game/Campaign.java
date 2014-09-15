@@ -19,9 +19,11 @@ package org.dungeon.core.game;
 import org.dungeon.core.achievement.Achievement;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.dungeon.core.counter.CreatureCounter;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.Utils;
 
 public class Campaign implements Serializable {
 
@@ -150,6 +152,11 @@ public class Campaign implements Serializable {
 
     public void parseHeroWalk(String[] inputWords) {
         if (inputWords.length == 1) {
+            Direction walkDirection = Utils.selectFromList(Arrays.asList(Direction.values()));
+            if (walkDirection != null) {
+                heroWalk(walkDirection);
+            }
+            return;
         } else {
             String secondWord = inputWords[1];
             for (Direction dir : Direction.values()) {

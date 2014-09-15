@@ -18,6 +18,7 @@ package org.dungeon.core.game;
 
 import java.util.List;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.Utils;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -74,7 +75,7 @@ public class Hero extends Creature {
     public Creature selectTarget(String[] inputWords) {
         List<Creature> locationCreatures = getLocation().getCreatures();
         if (inputWords.length == 1) {
-            return selectFromList(locationCreatures);
+            return Utils.selectFromList(locationCreatures);
         } else {
             return getLocation().findCreature(inputWords[1]);
         }
@@ -84,7 +85,7 @@ public class Hero extends Creature {
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] words) {
-        Weapon selectedWeapon = selectFromList(getLocation().getVisibleWeapons());
+        Weapon selectedWeapon = Utils.selectFromList(getLocation().getVisibleWeapons());
         if (selectedWeapon != null) {
             dropWeapon();
             equipWeapon(selectedWeapon);
@@ -98,7 +99,7 @@ public class Hero extends Creature {
     public void destroyItem(String[] words) {
         Item target;
         if (words.length == 1) {
-            target = selectFromList(getLocation().getItems());
+            target = Utils.selectFromList(getLocation().getItems());
         } else {
             target = getLocation().findItem(words[1]);
         }
@@ -112,36 +113,6 @@ public class Hero extends Creature {
         }
     }
 
-    /**
-     * Method that let the player select a Selectable object from a List.
-     */
-    public static <T extends Selectable> T selectFromList(List<T> list) {
-        StringBuilder builder = new StringBuilder("0. Abort\n");
-        int index = 1;
-        for (Selectable aSelectable : list) {
-            builder.append(index).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
-            index++;
-        }
-        IO.writeString(builder.toString());
-        int choice = -1;
-        while (true) {
-            try {
-                choice = Integer.parseInt(IO.readString());
-            } catch (NumberFormatException exception) {
-                IO.writeString(Constants.INVALID_INPUT);
-                continue;
-            }
-            if (choice < 0 || choice > list.size()) {
-                IO.writeString(Constants.INVALID_INPUT);
-            } else {
-                break;
-            }
-        }
-        if (choice == 0) {
-            return null;
-        }
-        return list.get(choice - 1);
-    }
 
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
