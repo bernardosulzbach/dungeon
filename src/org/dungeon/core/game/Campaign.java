@@ -58,7 +58,7 @@ public class Campaign implements Serializable {
     }
 
     private List<Achievement> createDemoAchievements() {
-        List<Achievement> achievements = new ArrayList<>();
+        List<Achievement> achievements = new ArrayList<Achievement>();
 
         CreatureCounter suicideSolutionRequirements = new CreatureCounter();
         CreatureCounter baneRequirements = new CreatureCounter();

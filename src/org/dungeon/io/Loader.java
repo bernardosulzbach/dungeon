@@ -37,8 +37,6 @@ public class Loader {
 
     /**
      * Handles all the saving process.
-     *
-     * @return a saved campaign or a new demo campaign.
      */
     public static void saveGameRoutine(Campaign campaign) {
         if (confirmOperation(Constants.SAVE_CONFIRM)) {
@@ -48,8 +46,6 @@ public class Loader {
 
     /**
      * Handles all the saving process, assigning a new name for the save file, if provided.
-     *
-     * @return a saved campaign or a new demo campaign.
      */
     public static void saveGameRoutine(Campaign campaign, String[] inputWords) {
         if (inputWords.length == 1) {
@@ -70,14 +66,12 @@ public class Loader {
     public static boolean confirmOperation(String confirmation) {
         IO.writeString(confirmation + " ( Y / N )");
         while (true) {
-            switch (IO.readString().toLowerCase()) {
-            case "y":
-            case "yes":
+            String input = IO.readString().toLowerCase();
+            if (input.equals("y") || input.equals("yes")) {
                 return true;
-            case "n":
-            case "no":
+            } else if (input.equals("n") || input.equals("no")) {
                 return false;
-            default:
+            } else {
                 IO.writeString(Constants.INVALID_INPUT);
             }
         }
@@ -96,7 +90,10 @@ public class Loader {
             objectInStream.close();
             IO.writeString(Constants.LOAD_SUCCESS);
             return loadedCampaign;
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            IO.writeString(Constants.LOAD_ERROR);
+            return new Campaign();
+        } catch (ClassNotFoundException ex) {
             IO.writeString(Constants.LOAD_ERROR);
             return new Campaign();
         }
