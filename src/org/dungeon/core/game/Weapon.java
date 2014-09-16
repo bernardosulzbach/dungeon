@@ -144,11 +144,6 @@ public class Weapon extends Item implements Serializable, Selectable {
     }
 
     @Override
-    public String toShortString() {
-        return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);
-    }
-
-    @Override
     public String toSelectionEntry() {
         return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);
     }

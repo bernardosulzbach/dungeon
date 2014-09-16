@@ -18,23 +18,38 @@ package org.dungeon.core.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Location implements Serializable {
 
     private final String name;
     private final List<Creature> creatures;
-    private final List<Item> items;
+    private final List<Item> inventory;
 
     public Location(String name) {
-        creatures = new ArrayList<>();
-        items = new ArrayList<>();
         this.name = name;
+        this.creatures = new ArrayList<>();
+        this.inventory = new ArrayList<>();
     }
 
     public String getName() {
         return name;
+    }
+
+    public List<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public List<Item> getItems() {
+        return inventory;
+    }
+    public int getCreatureCount() {
+        return creatures.size();
+    }
+
+
+    public int getItemCount() {
+        return inventory.size();
     }
 
     public void addCreature(Creature creature) {
@@ -42,7 +57,7 @@ public class Location implements Serializable {
     }
 
     public void addItem(Item item) {
-        items.add(item);
+        inventory.add(item);
     }
 
     public boolean hasCreature(Creature creature) {
@@ -55,7 +70,7 @@ public class Location implements Serializable {
     }
 
     public boolean hasItem(Item item) {
-        for (Item localItem : items) {
+        for (Item localItem : inventory) {
             if (localItem.equals(item)) {
                 return true;
             }
@@ -63,6 +78,9 @@ public class Location implements Serializable {
         return false;
     }
 
+    /**
+     * Attempts to find a creature by its name.
+     */
     public Creature findCreature(String name) {
         for (Creature creature : creatures) {
             if (creature.getName().equalsIgnoreCase(name)) {
@@ -79,7 +97,7 @@ public class Location implements Serializable {
      * @return an Item object if there is a match. null otherwise.
      */
     public Item findItem(String name) {
-        for (Item item : items) {
+        for (Item item : inventory) {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
@@ -88,27 +106,11 @@ public class Location implements Serializable {
     }
 
     public void removeItem(Item item) {
-        items.remove(item);
+        inventory.remove(item);
     }
 
     public void removeCreature(Creature creatureToRemove) {
         creatures.remove(creatureToRemove);
-    }
-
-    public List<Creature> getCreatures() {
-        return creatures;
-    }
-
-    public int getCreatureCount() {
-        return creatures.size();
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public int getItemCount() {
-        return items.size();
     }
 
     /**
@@ -118,7 +120,7 @@ public class Location implements Serializable {
      */
     public List<Weapon> getVisibleWeapons() {
         List<Weapon> visibleWeapons = new ArrayList<>();
-        for (Item visibleItem : items) {
+        for (Item visibleItem : inventory) {
             if (visibleItem instanceof Weapon) {
                 visibleWeapons.add((Weapon) visibleItem);
             }

@@ -295,10 +295,6 @@ public class Creature implements Serializable, Selectable {
         }
     }
 
-    public String toShortString() {
-        return String.format("%-20s Level %2d", name, level);
-    }
-
     @Override
     public String toSelectionEntry() {
         return String.format("%-20s Level %2d", name, level);

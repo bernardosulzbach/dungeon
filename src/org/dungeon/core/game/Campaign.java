@@ -16,12 +16,12 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.core.achievement.Achievement;
+import org.dungeon.core.achievements.Achievement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.dungeon.core.counter.CreatureCounter;
+import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
@@ -119,6 +119,12 @@ public class Campaign implements Serializable {
     public Hero getHero() {
         return campaignHero;
     }
+
+    public Point getHeroPoint() {
+        return heroPoint;
+    }
+    
+    
 
     public boolean isSaved() {
         return saved;
