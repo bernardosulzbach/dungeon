@@ -53,14 +53,30 @@ public class Campaign implements Serializable {
         List<Achievement> achievements = new ArrayList<>();
 
         CreatureCounter suicideSolutionRequirements = new CreatureCounter();
+        CreatureCounter baneRequirements = new CreatureCounter();
+        CreatureCounter catRequirements = new CreatureCounter();
+        CreatureCounter evilBastardRequirements = new CreatureCounter();
+        CreatureCounter stayDeadRequirements = new CreatureCounter();
 
         // Suicide Solution requires one battle against the Hero himself.
         suicideSolutionRequirements.incrementCreatureCount(CreatureID.HERO);
+        // Bane requires six battles against bats.
+        baneRequirements.incrementCreatureCount(CreatureID.BAT, 6);
+        // Cat requires four battles against rats.
+        catRequirements.incrementCreatureCount(CreatureID.RAT, 4);
+        // Evil Bastard requires one battle against a rabbit.
+        evilBastardRequirements.incrementCreatureCount(CreatureID.RABBIT);
+        // Stay Dead requires three battles zombies.
+        stayDeadRequirements.incrementCreatureCount(CreatureID.ZOMBIE, 3);
 
         achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
+        achievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
+        achievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
+        achievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
+        achievements.add(new Achievement("Stay Dead", "Kill 3 zombies.", stayDeadRequirements));
 
         return achievements;
-    }
+    }   
 
     private World createDemoWorld() {
         World world = new World();
