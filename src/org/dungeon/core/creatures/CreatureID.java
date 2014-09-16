@@ -25,7 +25,6 @@ public enum CreatureID {
     CreatureID(String name) {
         this.name = name;
     }
-    
     public String getName() {
         return name;
     }

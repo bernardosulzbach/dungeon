@@ -17,7 +17,6 @@
 package org.dungeon.utils;
 
 /**
- *
  * @author Bernardo Sulzbach
  */
 public class Settings {
