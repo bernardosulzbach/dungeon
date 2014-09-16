@@ -86,25 +86,41 @@ public class Campaign implements Serializable {
         world.addCreature(campaignHero, startingPoint);
         campaignHero.setLocation(world.getLocation(startingPoint));
         // Beasts
-        world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
-        world.addCreature(new Creature(CreatureID.BEAR, 1), startingPoint);
-        world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
-        world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);
-        world.addCreature(new Creature(CreatureID.SPIDER, 1), startingPoint);
+        world.addCreature(new Creature(CreatureID.BAT, 2), startingPoint);
+        world.addCreature(new Creature(CreatureID.RABBIT, 4), startingPoint);
+        world.addCreature(new Creature(CreatureID.RAT, 3), startingPoint);
+        world.addCreature(new Creature(CreatureID.SPIDER, 2), startingPoint);
         world.addCreature(new Creature(CreatureID.WOLF, 1), startingPoint);
-        world.addCreature(new Creature(CreatureID.ZOMBIE, 1), startingPoint);
         // Items
-        Weapon longSword = new Weapon("Longsword", 18, 15);
-        longSword.setDestructible(true);
-        world.addItem(longSword, startingPoint);
-
+        world.addItem(new Weapon("Dagger", 15, 20), startingPoint);
+        
         Point rightPoint = new Point(1, 0);
+        
         world.addLocation(new Location("Road to The Fort"), rightPoint);
         // Beasts
-        world.addCreature(new Creature(CreatureID.RAT, 1), rightPoint);
+        world.addCreature(new Creature(CreatureID.RAT, 4), rightPoint);
+        world.addCreature(new Creature(CreatureID.RABBIT, 2), rightPoint);
+        world.addCreature(new Creature(CreatureID.BEAR, 2), rightPoint);
+        world.addCreature(new Creature(CreatureID.WOLF, 2), rightPoint);
+        world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);
+        world.addCreature(new Creature(CreatureID.ZOMBIE, 3), rightPoint);
         // Items
-        world.addItem(new Weapon("Mace", 20, 10), rightPoint);
+        world.addItem(new Weapon("Mace", 18, 15), rightPoint);
 
+        Point leftPoint = new Point(-1, 0);
+        
+        world.addLocation(new Location("Cave"), leftPoint);
+        
+        world.addCreature(new Creature(CreatureID.RAT, 3), leftPoint);
+        world.addCreature(new Creature(CreatureID.BAT, 4), leftPoint);
+        world.addCreature(new Creature(CreatureID.ZOMBIE, 2), leftPoint);
+        world.addCreature(new Creature(CreatureID.BEAR, 3), leftPoint);
+        world.addCreature(new Creature(CreatureID.WOLF, 2), leftPoint);
+        world.addCreature(new Creature(CreatureID.SPIDER, 4), rightPoint);
+
+        
+        world.addItem(new Weapon("Longsword", 25, 17), leftPoint);
+        
         return world;
     }
 
