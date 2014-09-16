@@ -11,50 +11,30 @@ public class TESTCreature {
     private CreatureID id;
     private String name;
     private int gold;
+    private int level;
     private int health;
     private int healthIncrement;
     private int attack;
     private int attackIncrement;
     private int experienceDropFactor;
-    private Weapon weapon;
 
-    private static TESTCreature createCreature(
-            CreatureType type,
-            CreatureID id,
-            String name,
-            int health,
-            int healthIncrement,
-            int attack,
-            int attackIncrement,
-            int experienceDropFactor) {
+    private static TESTCreature createCreature(CreatureType type, CreatureID id, String name, int health,
+            int healthIncrement, int attack, int attackIncrement, int experienceDropFactor) {
         return new TESTCreature(type, id, name, health, healthIncrement, attack, attackIncrement, experienceDropFactor);
     }
 
     private static TESTCreature createCreature(CreaturePreset preset) {
-        return new TESTCreature(
-                preset.getType(),
-                preset.getId(),
-                preset.getId().getName(),
-                preset.getHealth(),
-                preset.getHealthIncrement(),
-                preset.getAttack(),
-                preset.getAttackIncrement(),
+        return new TESTCreature(preset.getType(), preset.getId(), preset.getId().getName(), preset.getHealth(),
+                preset.getHealthIncrement(), preset.getAttack(), preset.getAttackIncrement(),
                 preset.getExperienceDropFactor());
     }
-    
+
     public TESTCreature() {
-        
+
     }
 
-    private TESTCreature(
-            CreatureType type,
-            CreatureID id,
-            String name,
-            int health,
-            int healthIncrement,
-            int attack,
-            int attackIncrement,
-            int experienceDropFactor) {
+    private TESTCreature(CreatureType type, CreatureID id, String name, int health, int healthIncrement, int attack,
+            int attackIncrement, int experienceDropFactor) {
         this.type = type;
         this.id = id;
         this.name = name;
@@ -79,6 +59,10 @@ public class TESTCreature {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public void setHealth(int health) {
@@ -115,6 +99,10 @@ public class TESTCreature {
 
     public int getGold() {
         return gold;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public int getHealth() {
