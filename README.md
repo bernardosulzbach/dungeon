@@ -9,10 +9,17 @@ Screenshots
 
 Running the game
 ----------------
-1. Download [our latest JAR file.](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true)
-1. a) You may prefer [a release version.](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true)
+1. Download [our latest build](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true) or [our latest release](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true).*
 2. Browse to the directory where you downloaded the file.
-3. Lastly, issue `java -jar java-dungeon.jar`
+3. Open the command line and issue `java -jar dungeon.jar`
+
+Reporting bugs
+--------------
+Bug reports are welcome in our [issue tracker](https://github.com/mafagafogigante/dungeon/issues).
+
+System requirements
+-------------------
+Java 7 (or newer).
 
 Trivia
 ------

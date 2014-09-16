@@ -24,6 +24,11 @@ import org.dungeon.core.game.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
+/**
+ * The Creature class.
+ *
+ * @author Bernardo Sulzbach
+ */
 public class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
@@ -39,8 +44,8 @@ public class Creature implements Serializable, Selectable {
     private int gold;
 
     private int maxHealth;
-    private int healthIncrement;
     private int curHealth;
+    private int healthIncrement;
 
     private int attack;
     private int attackIncrement;
@@ -52,15 +57,11 @@ public class Creature implements Serializable, Selectable {
 
     }
 
-    public Creature(CreatureID id, String name, int level, int health, int attack) {
-        this.id = id;
-        setName(name);
-        setLevel(level);
-        setCurHealth(health);
-        setMaxHealth(health);
-        setAttack(attack);
-    }
-
+    //
+    //
+    // Factory methods.
+    //
+    //
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature = new Creature();
         creature.setId(preset.getId());
@@ -75,13 +76,7 @@ public class Creature implements Serializable, Selectable {
     public static Creature[] createCreatureArray(CreaturePreset preset, int level, int amount) {
         Creature[] array = new Creature[amount];
         for (int i = 0; i < amount; i++) {
-            array[i] = new Creature();
-            array[i].setId(preset.getId());
-            array[i].setName(preset.getId().getName());
-            array[i].setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-            array[i].setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-            array[i].setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
-            array[i].setExperienceDrop(level * preset.getExperienceDropFactor());
+            array[i] = createCreature(preset, level);
         }
         return array;
     }
@@ -151,6 +146,11 @@ public class Creature implements Serializable, Selectable {
         this.id = id;
     }
 
+    //
+    //
+    // Getters and setters.
+    //
+    //
     public CreatureID getId() {
         return id;
     }
@@ -171,12 +171,70 @@ public class Creature implements Serializable, Selectable {
         }
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public int getExperienceDrop() {
+        return experienceDrop;
+    }
+
+    public void setExperienceDrop(int experienceDrop) {
+        this.experienceDrop = experienceDrop;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        if (this.gold < 0) {
+            this.gold = 0;
+        }
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getCurHealth() {
+        return curHealth;
+    }
+
+    public void setCurHealth(int curHealth) {
+        this.curHealth = curHealth;
+    }
+
     public int getHealthIncrement() {
         return healthIncrement;
     }
 
     public void setHealthIncrement(int healthIncrement) {
         this.healthIncrement = healthIncrement;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public int getAttackIncrement() {
@@ -187,28 +245,29 @@ public class Creature implements Serializable, Selectable {
         this.attackIncrement = attackIncrement;
     }
 
-    public void setExperienceDrop(int experienceDrop) {
-        this.experienceDrop = experienceDrop;
+    public Weapon getWeapon() {
+        return weapon;
     }
 
-    public int getLevel() {
-        return level;
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
-    public int getExperience() {
-        return experience;
+    public Location getLocation() {
+        return location;
     }
 
-    public int getExperienceDrop() {
-        return experienceDrop;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
+    //
+    //
+    // Leveling methods.
+    //
+    //
     public int getExperienceToNextLevel() {
         return getLevel() * getLevel() * 100;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
     }
 
     public void addExperience(int amount) {
@@ -230,16 +289,11 @@ public class Creature implements Serializable, Selectable {
         IO.writeString(String.format("%s leveld up. %s is now level %d.", getName(), getName(), getLevel()));
     }
 
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        if (this.gold < 0) {
-            this.gold = 0;
-        }
-    }
-
+    //
+    //
+    // Finance methods.
+    //
+    //
     public void addGold(int amount) {
         if (amount > 0) {
             this.setGold(this.getGold() + amount);
@@ -248,11 +302,8 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Reduces the creature gold by a given amount.
-     * <p/>
-     * Gold will never become negative, so you should check that the creature has enough gold before subtracting any.
-     *
-     * @param amount
+     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the creature has enough gold
+     * before subtracting any.
      */
     public void subtractGold(int amount) {
         if (this.getGold() - amount > 0) {
@@ -262,47 +313,11 @@ public class Creature implements Serializable, Selectable {
         }
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public int getCurHealth() {
-        return curHealth;
-    }
-
-    public void setCurHealth(int curHealth) {
-        this.curHealth = curHealth;
-    }
-
-    /**
-     * Check if the creature is alive.
-     *
-     * @return
-     */
-    public boolean isAlive() {
-        return getCurHealth() > 0;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
+    //
+    //
+    // Weapon methods.
+    //
+    //
     /**
      * Disarm the creature. Placing its current weapon, if any, in the ground.
      */
@@ -321,17 +336,14 @@ public class Creature implements Serializable, Selectable {
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
+    //
+    //
+    // Combat methods.
+    //
+    //
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature
-     * will attack with its bare hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
+     * its bare hands.
      *
      * @param target
      */
@@ -363,12 +375,28 @@ public class Creature implements Serializable, Selectable {
         }
     }
 
+    //
+    //
+    // Helper methods.
+    //
+    //
+    /**
+     * Check if the creature is alive.
+     *
+     * @return
+     */
+    public boolean isAlive() {
+        return getCurHealth() > 0;
+    }
+
+    //
+    //
+    // Selectable implementation.
+    //
+    //
     @Override
     public String toSelectionEntry() {
         return String.format("%-20s Level %2d", getName(), getLevel());
     }
 
-    protected void setLevel(int level) {
-        this.level = level;
-    }
 }

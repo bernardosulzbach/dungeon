@@ -31,7 +31,22 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-public class Campaign implements Serializable {
+//
+// Why is this calss marked final?
+//
+// A quote from Effective Java (2nd)
+//
+// There are a few more restrictions that a class must obey to allow inheritance.
+//
+// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure will result. The
+// superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be invoked before the subclass
+// constructor has run. If the overriding method depends on any initialization performed by the subclass constructor, the method will not
+// behave as expected.
+//
+// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I decided to follow the 
+// item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
+//
+public final class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,19 +54,23 @@ public class Campaign implements Serializable {
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
-    private Point heroPoint;
+    private Point heroPosition;
 
     private boolean saved;
 
-    private int unlockedAchievementsCounter;
+    private int totalAchievementsCount;
+    private int unlockedAchievementsCount;
 
     public Campaign() {
         campaignBattleCounter = new CreatureCounter();
 
         campaignAchievements = createDemoAchievements();
 
+        // Set the number of achievements the campaign has.
+        setTotalAchievementsCount(campaignAchievements.size());
+
         campaignHero = new Hero("Seth");
-        heroPoint = new Point(0, 0);
+        heroPosition = new Point(0, 0);
         campaignHero.setWeapon(new Weapon("Stick", 6, 20));
 
         campaignWorld = createDemoWorld();
@@ -93,17 +112,15 @@ public class Campaign implements Serializable {
         // The hero
         world.addCreature(campaignHero, startingPoint);
         // Beasts
-//        for (int i = 0; i < 2; i++) {
-//            world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
-//        }
 
         // Jeito atual
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), startingPoint);
-        
+
         // Jeito antigo
         for (int i = 0; i < 4; i++) {
             world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
         }
+
         for (int i = 0; i < 3; i++) {
             world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);
         }
@@ -178,7 +195,7 @@ public class Campaign implements Serializable {
     }
 
     public Point getHeroPoint() {
-        return heroPoint;
+        return heroPosition;
     }
 
     public boolean isSaved() {
@@ -189,12 +206,20 @@ public class Campaign implements Serializable {
         this.saved = saved;
     }
 
-    private int getUnlockedAchievementsCounter() {
-        return unlockedAchievementsCounter;
+    public int getTotalAchievementsCount() {
+        return totalAchievementsCount;
     }
 
-    private void incrementUnlockedAchievementsCounter() {
-        this.unlockedAchievementsCounter++;
+    public void setTotalAchievementsCount(int totalAchievementsCount) {
+        this.totalAchievementsCount = totalAchievementsCount;
+    }
+
+    public int getUnlockedAchievementsCount() {
+        return unlockedAchievementsCount;
+    }
+
+    private void incrementUnlockedAchievementsCount() {
+        this.unlockedAchievementsCount++;
     }
 
     /**
@@ -202,8 +227,7 @@ public class Campaign implements Serializable {
      */
     public void printUnlockedAchievements() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Progress: ").append(getUnlockedAchievementsCounter()).append('/');
-        builder.append(campaignAchievements.size());
+        builder.append("Progress: ").append(getUnlockedAchievementsCount()).append('/').append(getTotalAchievementsCount());
         for (Achievement a : campaignAchievements) {
             if (a.isUnlocked()) {
                 builder.append("\n").append(a.toOneLineString());
@@ -222,7 +246,7 @@ public class Campaign implements Serializable {
     private void refreshAchievements() {
         for (Achievement a : campaignAchievements) {
             if (a.update(campaignBattleCounter)) {
-                incrementUnlockedAchievementsCounter();
+                incrementUnlockedAchievementsCount();
             }
         }
     }
@@ -247,10 +271,10 @@ public class Campaign implements Serializable {
     }
 
     public void heroWalk(Direction dir) {
-        Point destination = new Point(heroPoint, dir);
+        Point destination = new Point(heroPosition, dir);
         if (getWorld().hasLocation(destination)) {
-            getWorld().moveCreature(campaignHero, heroPoint, destination);
-            heroPoint = destination;
+            getWorld().moveCreature(campaignHero, heroPosition, destination);
+            heroPosition = destination;
             campaignHero.setLocation(getWorld().getLocation(destination));
         } else {
             IO.writeString(Constants.WALK_BLOCKED);
