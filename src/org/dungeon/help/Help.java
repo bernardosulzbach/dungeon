@@ -36,12 +36,6 @@ public class Help {
                 "achievements"));
         
         COMMANDS.add(new CommandHelp(
-                "attack",
-                null,
-                "Enters target chooser to perform an attack.",
-                "attack"));
-        
-        COMMANDS.add(new CommandHelp(
                 "commands",
                 null,
                 "Display a list of valid commands.",
@@ -85,7 +79,7 @@ public class Help {
         
         COMMANDS.add(new CommandHelp(
                 "kill",
-                null,
+                "attack",
                 "Attacks the target chosen by the player.",
                 "kill [target]"));
 
