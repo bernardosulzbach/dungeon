@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,30 +16,23 @@
  */
 package org.dungeon.core.creatures;
 
-public enum CreatureID {
+/**
+ *
+ * @author Bernardo Sulzbach
+ */
+public class TESTHero extends TESTCreature {
 
-    BAT("Bat"),
-    BEAR("Bear"),
-    HERO("Hero"),
-    MAGE("Mage"),
-    RABBIT("Rabbit"),
-    RAT("Rat"),
-    SPIDER("Spider"),
-    WOLF("Wolf"),
-    ZOMBIE("Zombie");
-
-    private final String name;
-
-    CreatureID(String name) {
-        this.name = name;
+    private int Experience;
+    
+    public TESTHero() {
     }
     
-    public String getName() {
-        return name;
+    public void addExperience(int amount) {
+        if (amount > 0) {
+            setExperience(getExperience() + amount);
+        } else {
+            throw new IllegalArgumentException("Experience amount should be positive.");
+        }
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }
