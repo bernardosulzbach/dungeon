@@ -16,11 +16,14 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.core.counters.CreatureCounter;
+import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.utils.Constants;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.dungeon.core.counters.CreatureCounter;
-import org.dungeon.utils.Constants;
 
 public class Location implements Serializable {
 

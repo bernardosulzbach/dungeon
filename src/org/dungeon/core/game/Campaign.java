@@ -17,13 +17,18 @@
 package org.dungeon.core.game;
 
 import org.dungeon.core.achievements.Achievement;
+import org.dungeon.core.counters.CreatureCounter;
+import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.Hero;
+import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.Utils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.dungeon.core.counters.CreatureCounter;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
 
 public class Campaign implements Serializable {
 
@@ -84,7 +89,6 @@ public class Campaign implements Serializable {
         world.addLocation(new Location("Clearing"), startingPoint);
         // The hero
         world.addCreature(campaignHero, startingPoint);
-        campaignHero.setLocation(world.getLocation(startingPoint));
         // Beasts
         for (int i = 0; i < 2; i++) {
             world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);

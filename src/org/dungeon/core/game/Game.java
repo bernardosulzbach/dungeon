@@ -16,13 +16,16 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
+import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.DateAndTime;
 import org.dungeon.utils.Utils;
 
 import java.io.*;
 import java.util.Random;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.DateAndTime;
 
 public class Game {
 
@@ -268,8 +271,6 @@ public class Game {
 
     /**
      * Prints a message reporting the usage of an invalid command.
-     *
-     * @param command
      */
     private static void printInvalidCommandMessage(String command) {
         IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");

@@ -16,7 +16,7 @@
  */
 package org.dungeon.help;
 
-import org.dungeon.core.game.IO;
+import org.dungeon.io.IO;
 import java.util.ArrayList;
 import java.util.List;
 

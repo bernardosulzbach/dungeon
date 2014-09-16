@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,23 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.game;
+package org.dungeon.core.creatures;
 
-public enum CreatureID {
+/**
+ * @author Bernardo Sulzbach
+ */
+public enum CreatureType {
 
-    BAT("Bat"),
-    BEAR("Bear"),
-    HERO("Hero"),
-    MAGE("Mage"),
-    RABBIT("Rabbit"),
-    RAT("Rat"),
-    SPIDER("Spider"),
-    WOLF("Wolf"),
-    ZOMBIE("Zombie");
+    CRITTER("Critter"), BEAST("Beast"), ZOMBIE("Zombie"), VAMPIRE("Vampire"), HERO("Hero");
 
     private final String stringRepresentation;
 
-    CreatureID(String stringRepresentation) {
+    CreatureType(String stringRepresentation) {
         this.stringRepresentation = stringRepresentation;
     }
 

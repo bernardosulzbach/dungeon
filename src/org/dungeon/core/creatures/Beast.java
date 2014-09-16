@@ -14,24 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.game;
+package org.dungeon.core.creatures;
 
 /**
- *
  * @author Bernardo Sulzbach
  */
-public enum CreatureType {
+public class Beast extends Creature {
+    public static final CreatureType TYPE = CreatureType.BEAST;
 
-    CRITTER("Critter"), BEAST("Beast"), ZOMBIE("Zombie"), VAMPIRE("Vampire"), HERO("Hero");
-
-    private final String stringRepresentation;
-
-    CreatureType(String stringRepresentation) {
-        this.stringRepresentation = stringRepresentation;
+    public Beast(CreatureID id, int level) {
+        super(id, level);
     }
 
-    @Override
-    public String toString() {
-        return stringRepresentation;
-    }
+
 }
