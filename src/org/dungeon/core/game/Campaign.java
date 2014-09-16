@@ -76,7 +76,7 @@ public class Campaign implements Serializable {
         achievements.add(new Achievement("Stay Dead", "Kill 3 zombies.", stayDeadRequirements));
 
         return achievements;
-    }   
+    }
 
     private World createDemoWorld() {
         World world = new World();
@@ -86,41 +86,70 @@ public class Campaign implements Serializable {
         world.addCreature(campaignHero, startingPoint);
         campaignHero.setLocation(world.getLocation(startingPoint));
         // Beasts
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);}
-        for (int i = 0; i < 4; i++){world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);}
-        for (int i = 0; i < 3; i++){world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.SPIDER, 1), startingPoint);}
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
+        }
+        for (int i = 0; i < 4; i++) {
+            world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
+        }
+        for (int i = 0; i < 3; i++) {
+            world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.SPIDER, 1), startingPoint);
+        }
         world.addCreature(new Creature(CreatureID.WOLF, 1), startingPoint);
         // Items
         world.addItem(new Weapon("Dagger", 15, 20), startingPoint);
-        
+
         Point rightPoint = new Point(1, 0);
-        
+
         world.addLocation(new Location("Road to The Fort"), rightPoint);
         // Beasts
-        for (int i = 0; i < 4; i++){world.addCreature(new Creature(CreatureID.RAT, 1), rightPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.RABBIT, 1), rightPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.BEAR, 1), rightPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.WOLF, 1), rightPoint);}
-        for (int i = 0; i < 3; i++){world.addCreature(new Creature(CreatureID.ZOMBIE, 1), rightPoint);}
+        for (int i = 0; i < 4; i++) {
+            world.addCreature(new Creature(CreatureID.RAT, 1), rightPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.RABBIT, 1), rightPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.BEAR, 1), rightPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.WOLF, 1), rightPoint);
+        }
+        for (int i = 0; i < 3; i++) {
+            world.addCreature(new Creature(CreatureID.ZOMBIE, 1), rightPoint);
+        }
         world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);
         // Items
         world.addItem(new Weapon("Mace", 18, 15), rightPoint);
 
         Point leftPoint = new Point(-1, 0);
-        
-        world.addLocation(new Location("Cave"), leftPoint);
-        
-        for (int i = 0; i < 3; i++){world.addCreature(new Creature(CreatureID.RAT, 1), leftPoint);}
-        for (int i = 0; i < 4; i++){world.addCreature(new Creature(CreatureID.BAT, 1), leftPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.ZOMBIE, 1), leftPoint);}
-        for (int i = 0; i < 3; i++){world.addCreature(new Creature(CreatureID.BEAR, 1), leftPoint);}
-        for (int i = 0; i < 2; i++){world.addCreature(new Creature(CreatureID.WOLF, 1), leftPoint);}
-        for (int i = 0; i < 4; i++){world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);}
 
-        
+        world.addLocation(new Location("Cave"), leftPoint);
+
+        for (int i = 0; i < 3; i++) {
+            world.addCreature(new Creature(CreatureID.RAT, 1), leftPoint);
+        }
+        for (int i = 0; i < 4; i++) {
+            world.addCreature(new Creature(CreatureID.BAT, 1), leftPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.ZOMBIE, 1), leftPoint);
+        }
+        for (int i = 0; i < 3; i++) {
+            world.addCreature(new Creature(CreatureID.BEAR, 1), leftPoint);
+        }
+        for (int i = 0; i < 2; i++) {
+            world.addCreature(new Creature(CreatureID.WOLF, 1), leftPoint);
+        }
+        for (int i = 0; i < 4; i++) {
+            world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);
+        }
+
         world.addItem(new Weapon("Longsword", 25, 17), leftPoint);
-        
+
         return world;
     }
 
@@ -139,8 +168,6 @@ public class Campaign implements Serializable {
     public Point getHeroPoint() {
         return heroPoint;
     }
-    
-    
 
     public boolean isSaved() {
         return saved;

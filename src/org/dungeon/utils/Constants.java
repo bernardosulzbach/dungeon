@@ -63,4 +63,6 @@ public class Constants {
      * Movement strings.
      */
     public static final String WALK_BLOCKED = "The path is blocked.";
+    public static final String NO_CREATURES = "You do not see any creatures here.";
+    public static final String NO_ITEMS = "You do not see any items here.";
 }

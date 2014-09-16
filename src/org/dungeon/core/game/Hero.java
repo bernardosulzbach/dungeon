@@ -51,20 +51,21 @@ public class Hero extends Creature {
         builder.append('\n').append(Constants.LINE_1);
 
         // Creature count must be different than one in order not to take the hero into account.
-        if (getLocation().getCreatureCount() == 1) {
-            builder.append('\n').append(Constants.MARGIN).append("You do not see any creatures here.");
-        } else {
-            for (Creature aCreature : getLocation().getCreatures()) {
-                if (aCreature.getId() != CreatureID.HERO) {
-                    builder.append('\n').append(Constants.MARGIN).append(aCreature.toSelectionEntry());
-                }
-            }
-        }
+//        if (getLocation().getCreatureCount() == 1) {
+//            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_CREATURES);
+//        } else {
+//            for (Creature aCreature : getLocation().getCreatures()) {
+//                if (aCreature.getId() != CreatureID.HERO) {
+//                    builder.append('\n').append(Constants.MARGIN).append(aCreature.toSelectionEntry());
+//                }
+//            }
+//        }
+        builder.append(getLocation().getCreaturesString());
 
         builder.append('\n').append(Constants.LINE_1);
 
         if (getLocation().getItemCount() == 0) {
-            builder.append('\n').append(Constants.MARGIN).append("You do not see any items here.");
+            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_ITEMS);
         } else {
             for (Item curItem : getLocation().getItems()) {
                 builder.append('\n').append(Constants.MARGIN).append(curItem.toSelectionEntry());

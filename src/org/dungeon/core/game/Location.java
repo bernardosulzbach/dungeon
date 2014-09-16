@@ -19,6 +19,8 @@ package org.dungeon.core.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.dungeon.core.counters.CreatureCounter;
+import org.dungeon.utils.Constants;
 
 public class Location implements Serializable {
 
@@ -43,10 +45,10 @@ public class Location implements Serializable {
     public List<Item> getItems() {
         return inventory;
     }
+
     public int getCreatureCount() {
         return creatures.size();
     }
-
 
     public int getItemCount() {
         return inventory.size();
@@ -126,6 +128,23 @@ public class Location implements Serializable {
             }
         }
         return visibleWeapons;
+    }
+
+    public String getCreaturesString() {
+        CreatureCounter counter = new CreatureCounter();
+        for (Creature creature : getCreatures()) {
+            counter.incrementCreatureCount(creature.getId());
+        }
+        StringBuilder builder = new StringBuilder();
+        for (CreatureID id : counter.getKeySet()) {
+            builder.append('\n').append(Constants.MARGIN).append(id.toString());
+            builder.append(" (").append(counter.getCreatureCount(id)).append(")");
+        }
+        if (builder.length() == 0) {
+            return Constants.NO_CREATURES;
+        } else {
+            return builder.toString();
+        }
     }
 
 }
