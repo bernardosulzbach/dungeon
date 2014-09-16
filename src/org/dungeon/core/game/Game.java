@@ -66,12 +66,10 @@ public class Game {
     }
 
     /**
-     * Let the player play a turn. Many actions are not considered a turn (e.g.:
-     * look).
+     * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
      *
      * @param campaign
-     * @return false if the player issued an exit command. True if the player
-     *         played a turn.
+     * @return false if the player issued an exit command. True if the player played a turn.
      */
     private static boolean getTurn(Campaign campaign) {
         String[] inputWords;

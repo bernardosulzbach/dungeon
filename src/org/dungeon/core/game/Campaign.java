@@ -25,6 +25,7 @@ import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -33,7 +34,7 @@ import org.dungeon.utils.Utils;
 public class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private final List<Achievement> campaignAchievements;
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
@@ -92,8 +93,11 @@ public class Campaign implements Serializable {
         // The hero
         world.addCreature(campaignHero, startingPoint);
         // Beasts
+//        for (int i = 0; i < 2; i++) {
+//            world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
+//        }
         for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
+            world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), startingPoint);
         }
         for (int i = 0; i < 4; i++) {
             world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);

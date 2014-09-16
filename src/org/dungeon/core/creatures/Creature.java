@@ -27,97 +27,124 @@ import org.dungeon.utils.Utils;
 public class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
-    
-    protected final CreatureID id;
 
-    protected String name;
+    private CreatureID id;
+
+    private String name;
 
     private int level;
     private int experience;
     private int experienceDrop;
 
-    protected int gold;
+    private int gold;
 
-    protected int maxHealth;
+    private int maxHealth;
     private int healthIncrement;
-    protected int curHealth;
+    private int curHealth;
 
-    protected int attack;
+    private int attack;
     private int attackIncrement;
 
-    protected Weapon weapon;
+    private Weapon weapon;
     private Location location;
 
+    public Creature() {
+        
+    }
+
+    public Creature(CreatureID id, String name, int level, int health, int attack) {
+        this.id = id;
+        setName(name);
+        setLevel(level);
+        setCurHealth(health);
+        setMaxHealth(health);
+        setAttack(attack);
+    }
+
+    public static Creature createCreature(CreaturePreset preset, int level) {
+        Creature creature = new Creature();
+        creature.setId(preset.getId());
+        creature.setName(preset.getId().getName());
+        creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+        creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+        creature.setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
+        creature.setExperienceDrop(level * preset.getExperienceDropFactor());
+        return creature;
+    }
+
+    @Deprecated
     public Creature(CreatureID id, int level) {
         switch (id) {
         case BAT:
             setName("Bat");
             this.setLevel(level);
             this.experienceDrop = level * level * 15;
-            this.curHealth = this.maxHealth = 12 + 3 * level;
-            this.attack = 5 + 2 * level;
+            this.setCurHealth(12 + 3 * level);
+            this.setMaxHealth(12 + 3 * level);
+            this.setAttack(5 + 2 * level);
             break;
         case BEAR:
             setName("Bear");
             this.setLevel(level);
             this.experienceDrop = level * level * 40;
-            this.curHealth = this.maxHealth = 30 + 10 * level;
-            this.attack = 13 + 7 * level;
+            this.setCurHealth(30 + 10 * level);
+            this.setMaxHealth(30 + 10 * level);
+            this.setAttack(13 + 7 * level);
             break;
         case RABBIT:
             setName("Rabbit");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.curHealth = this.maxHealth = 10 + 2 * level;
-            this.attack = 5 + 2 * level;
+            this.setCurHealth(10 + 2 * level);
+            this.setMaxHealth(10 + 2 * level);
+            this.setAttack(5 + 2 * level);
             break;
         case RAT:
             setName("Rat");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.curHealth = this.maxHealth = 15 + 5 * level;
-            this.attack = 6 + 4 * level;
+            this.setCurHealth(15 + 5 * level);
+            this.setMaxHealth(15 + 5 * level);
+            this.setAttack(6 + 4 * level);
             break;
         case SPIDER:
             setName("Spider");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.curHealth = this.maxHealth = 17 + 8 * level;
-            this.attack = 10 + 5 * level;
+            this.setCurHealth(17 + 8 * level);
+            this.setMaxHealth(17 + 8 * level);
+            this.setAttack(10 + 5 * level);
             break;
         case WOLF:
             setName("Wolf");
             this.setLevel(level);
             this.experienceDrop = level * level * 20;
-            this.curHealth = this.maxHealth = 24 + 6 * level;
-            this.attack = 10 + 4 * level;
+            this.setCurHealth(24 + 6 * level);
+            this.setMaxHealth(24 + 6 * level);
+            this.setAttack(10 + 4 * level);
             break;
         case ZOMBIE:
             setName("Zombie");
             this.setLevel(level);
             this.experienceDrop = level * level * 25;
-            this.curHealth = this.maxHealth = 30 + 6 * level;
-            this.attack = 12 + 4 * level;
+            this.setCurHealth(30 + 6 * level);
+            this.setMaxHealth(30 + 6 * level);
+            this.setAttack(12 + 4 * level);
             break;
         default:
             break;
         }
         this.id = id;
     }
-
-    public Creature(String name, int level, int health, int attack, CreatureID id) {
-        this.name = name;
-        this.setLevel(level);
-        this.curHealth = health;
-        this.maxHealth = health;
-        this.attack = attack;
-        this.id = id;
-    }
-
+    
     public CreatureID getId() {
         return id;
     }
 
+    public void setId(CreatureID id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
@@ -128,6 +155,26 @@ public class Creature implements Serializable, Selectable {
         } else {
             throw new IllegalArgumentException("Invalid name.");
         }
+    }
+
+    public int getHealthIncrement() {
+        return healthIncrement;
+    }
+
+    public void setHealthIncrement(int healthIncrement) {
+        this.healthIncrement = healthIncrement;
+    }
+
+    public int getAttackIncrement() {
+        return attackIncrement;
+    }
+
+    public void setAttackIncrement(int attackIncrement) {
+        this.attackIncrement = attackIncrement;
+    }
+
+    public void setExperienceDrop(int experienceDrop) {
+        this.experienceDrop = experienceDrop;
     }
 
     public int getLevel() {
@@ -152,7 +199,7 @@ public class Creature implements Serializable, Selectable {
 
     public void addExperience(int amount) {
         this.experience += amount;
-        IO.writeString(name + " got " + amount + " experience points.");
+        IO.writeString(getName() + " got " + amount + " experience points.");
         if (this.experience >= getExperienceToNextLevel()) {
             levelUp();
         }
@@ -163,10 +210,10 @@ public class Creature implements Serializable, Selectable {
      */
     public void levelUp() {
         setLevel(getLevel() + 1);
-        maxHealth += healthIncrement;
-        curHealth = maxHealth;
-        attack += attackIncrement;
-        IO.writeString(String.format("%s leveld up. %s is now level %d.", name, name, getLevel()));
+        setMaxHealth(getMaxHealth() + healthIncrement);
+        setCurHealth(getMaxHealth());
+        setAttack(getAttack() + attackIncrement);
+        IO.writeString(String.format("%s leveld up. %s is now level %d.", getName(), getName(), getLevel()));
     }
 
     public int getGold() {
@@ -181,24 +228,23 @@ public class Creature implements Serializable, Selectable {
 
     public void addGold(int amount) {
         if (amount > 0) {
-            this.gold += amount;
-            IO.writeString(name + " got " + amount + " gold coins.");
+            this.setGold(this.getGold() + amount);
+            IO.writeString(getName() + " got " + amount + " gold coins.");
         }
     }
 
     /**
      * Reduces the creature gold by a given amount.
      * <p/>
-     * Gold will never become negative, so you should check that the creature
-     * has enough gold before subtracting any.
+     * Gold will never become negative, so you should check that the creature has enough gold before subtracting any.
      *
      * @param amount
      */
     public void subtractGold(int amount) {
-        if (this.gold - amount > 0) {
-            this.gold = this.gold - amount;
+        if (this.getGold() - amount > 0) {
+            this.setGold(this.getGold() - amount);
         } else {
-            this.gold = 0;
+            this.setGold(0);
         }
     }
 
@@ -224,7 +270,7 @@ public class Creature implements Serializable, Selectable {
      * @return
      */
     public boolean isAlive() {
-        return curHealth > 0;
+        return getCurHealth() > 0;
     }
 
     public int getAttack() {
@@ -247,18 +293,18 @@ public class Creature implements Serializable, Selectable {
      * Disarm the creature. Placing its current weapon, if any, in the ground.
      */
     public void dropWeapon() {
-        if (weapon != null) {
-            location.addItem(weapon);
-            IO.writeString(name + " dropped " + weapon.getName() + ".");
-            weapon = null;
+        if (getWeapon() != null) {
+            location.addItem(getWeapon());
+            IO.writeString(getName() + " dropped " + getWeapon().getName() + ".");
+            setWeapon(null);
         } else {
             IO.writeString("You are not currently carrying a weapon.");
         }
     }
 
     public void equipWeapon(Weapon weapon) {
-        this.weapon = weapon;
-        IO.writeString(name + " equipped " + weapon.getName() + ".");
+        this.setWeapon(weapon);
+        IO.writeString(getName() + " equipped " + weapon.getName() + ".");
     }
 
     public Location getLocation() {
@@ -270,43 +316,42 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to
-     * perform the attack. Otherwise, the creature will attack with its bare
-     * hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
+     * its bare hands.
      *
      * @param target
      */
     public void hit(Creature target) {
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
-        if (weapon != null && !weapon.isBroken()) {
+        if (getWeapon() != null && !getWeapon().isBroken()) {
             // Check if the attack is a miss.
-            if (weapon.isMiss()) {
-                IO.writeString(name + " missed.");
+            if (getWeapon().isMiss()) {
+                IO.writeString(getName() + " missed.");
                 return;
             } else {
-                hitDamage = weapon.getDamage();
+                hitDamage = getWeapon().getDamage();
                 target.takeDamage(hitDamage);
-                weapon.decrementIntegrity();
+                getWeapon().decrementIntegrity();
             }
         } else {
-            hitDamage = this.attack;
+            hitDamage = this.getAttack();
             target.takeDamage(hitDamage);
         }
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", name, hitDamage, target.getName()));
+        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
     }
 
     private void takeDamage(int damage) {
-        if (damage > curHealth) {
-            curHealth = 0;
+        if (damage > getCurHealth()) {
+            setCurHealth(0);
         } else {
-            curHealth -= damage;
+            setCurHealth(getCurHealth() - damage);
         }
     }
 
     @Override
     public String toSelectionEntry() {
-        return String.format("%-20s Level %2d", name, getLevel());
+        return String.format("%-20s Level %2d", getName(), getLevel());
     }
 
     protected void setLevel(int level) {

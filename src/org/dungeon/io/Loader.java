@@ -47,8 +47,7 @@ public class Loader {
     }
 
     /**
-     * Handles all the saving process, assigning a new name for the save file,
-     * if provided.
+     * Handles all the saving process, assigning a new name for the save file, if provided.
      *
      * @return a saved campaign or a new demo campaign.
      */
