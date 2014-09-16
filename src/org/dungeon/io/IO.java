@@ -31,9 +31,11 @@ public class IO {
     public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
-     * Outputs a string to the console, stripping unnecessary newlines at the end.
+     * Outputs a string to the console, stripping unnecessary newlines at the
+     * end.
      *
-     * @param string the string to be printed.
+     * @param string
+     *            the string to be printed.
      */
     public static void writeString(String string) {
         while (string.endsWith("\n")) {
@@ -57,7 +59,8 @@ public class IO {
     }
 
     /**
-     * Read a line of input from the user and returns an array with the words in that line.
+     * Read a line of input from the user and returns an array with the words in
+     * that line.
      *
      * @return a String array.
      */

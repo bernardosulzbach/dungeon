@@ -16,16 +16,16 @@
  */
 package org.dungeon.core.game;
 
+import java.util.Random;
+
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
+import org.dungeon.io.Loader;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.DateAndTime;
 import org.dungeon.utils.Utils;
-
-import java.io.*;
-import java.util.Random;
 
 public class Game {
 
@@ -35,116 +35,8 @@ public class Game {
     public static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        Campaign gameCampaign = loadGameRoutine();
+        Campaign gameCampaign = Loader.loadGameRoutine();
         gameLoop(gameCampaign);
-    }
-
-    /**
-     * Check if a saved campaign exists.
-     */
-    private static boolean checkForExistingSave() {
-        File savedCampaign = new File(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
-        return savedCampaign.exists() && savedCampaign.isFile();
-    }
-
-    /**
-     * Handles all the save loading at startup.
-     *
-     * @return a saved campaign or a new demo campaign.
-     */
-    private static Campaign loadGameRoutine() {
-        if (checkForExistingSave()) {
-            IO.writeString(Constants.FILE_FOUND);
-            if (confirmOperation(Constants.LOAD_CONFIRM)) {
-                return loadCampaign();
-            }
-        }
-        return new Campaign();
-    }
-
-    /**
-     * Handles all the saving process.
-     *
-     * @return a saved campaign or a new demo campaign.
-     */
-    private static void saveGameRoutine(Campaign campaign) {
-        if (confirmOperation(Constants.SAVE_CONFIRM)) {
-            saveCampaign(campaign, Constants.SAVE_NAME);
-        }
-    }
-
-    /**
-     * Handles all the saving process, assigning a new name for the save file, if provided.
-     *
-     * @return a saved campaign or a new demo campaign.
-     */
-    private static void saveGameRoutine(Campaign campaign, String[] inputWords) {
-        if (inputWords.length == 1) {
-            saveGameRoutine(campaign);
-        } else {
-            if (confirmOperation(Constants.SAVE_CONFIRM)) {
-                saveCampaign(campaign, inputWords[1]);
-            }
-        }
-    }
-
-    /**
-     * Prompt the user to confirm an operation (as saving and loading the game).
-     *
-     * @param confirmation
-     * @return
-     */
-    private static boolean confirmOperation(String confirmation) {
-        IO.writeString(confirmation + " ( Y / N )");
-        while (true) {
-            switch (IO.readString().toLowerCase()) {
-                case "y":
-                case "yes":
-                    return true;
-                case "n":
-                case "no":
-                    return false;
-                default:
-                    IO.writeString(Constants.INVALID_INPUT);
-            }
-        }
-    }
-
-    /**
-     * Attempts to load a serialized Campaign object.
-     */
-    private static Campaign loadCampaign() {
-        FileInputStream fileInStream;
-        ObjectInputStream objectInStream;
-        try {
-            fileInStream = new FileInputStream(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
-            objectInStream = new ObjectInputStream(fileInStream);
-            Campaign loadedCampaign = (Campaign) objectInStream.readObject();
-            objectInStream.close();
-            IO.writeString(Constants.LOAD_SUCCESS);
-            return loadedCampaign;
-        } catch (IOException | ClassNotFoundException ex) {
-            IO.writeString(Constants.LOAD_ERROR);
-            return new Campaign();
-        }
-    }
-
-    /**
-     * Saves a Campaign object to a file.
-     */
-    private static void saveCampaign(Campaign campaign, String saveName) {
-        FileOutputStream fileOutStream;
-        ObjectOutputStream objectOutStream;
-        try {
-            fileOutStream = new FileOutputStream(saveName + Constants.SAVE_EXTENSION);
-            objectOutStream = new ObjectOutputStream(fileOutStream);
-            objectOutStream.writeObject(campaign);
-            objectOutStream.close();
-            campaign.setSaved(true);
-            IO.writeString(Constants.SAVE_SUCCESS);
-        } catch (IOException ex) {
-            IO.writeString(Constants.SAVE_ERROR);
-        }
     }
 
     /**
@@ -166,7 +58,7 @@ public class Game {
                 campaign.setSaved(false);
             } else {
                 if (!campaign.isSaved()) {
-                    saveGameRoutine(campaign);
+                    Loader.saveGameRoutine(campaign);
                 }
                 break;
             }
@@ -174,97 +66,99 @@ public class Game {
     }
 
     /**
-     * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
+     * Let the player play a turn. Many actions are not considered a turn (e.g.:
+     * look).
      *
      * @param campaign
-     * @return false if the player issued an exit command. True if the player played a turn.
+     * @return false if the player issued an exit command. True if the player
+     *         played a turn.
      */
     private static boolean getTurn(Campaign campaign) {
         String[] inputWords;
         while (true) {
             inputWords = IO.readWords();
             switch (inputWords[0].toLowerCase()) {
-                // Hero-related commands.
-                case "rest":
-                    campaign.getHero().rest();
-                    return true;
-                case "look":
-                case "peek":
-                    campaign.getHero().look();
-                    break;
-                case "loot":
-                case "pick":
-                    campaign.getHero().pickWeapon(inputWords);
-                    break;
-                case "walk":
-                case "go":
-                    campaign.parseHeroWalk(inputWords);
-                    break;
-                case "drop":
-                    campaign.getHero().dropWeapon();
-                    break;
-                case "destroy":
-                case "crash":
-                    campaign.getHero().destroyItem(inputWords);
-                    break;
-                case "status":
-                    campaign.getHero().printAllStatus();
-                    break;
-                case "hero":
-                case "me":
-                    campaign.getHero().printHeroStatus();
-                    break;
-                case "weapon":
-                    campaign.getHero().printWeaponStatus();
-                    break;
-                case "kill":
-                case "attack":
-                    Creature target = campaign.getHero().selectTarget(inputWords);
-                    if (target != null) {
-                        // Add this battle to the battle counter.
-                        campaign.getBattleCounter().incrementCreatureCount(target.getId());
-                        Game.battle(campaign.getHero(), target);
-                    }
-                    return true;
+            // Hero-related commands.
+            case "rest":
+                campaign.getHero().rest();
+                return true;
+            case "look":
+            case "peek":
+                campaign.getHero().look();
+                break;
+            case "loot":
+            case "pick":
+                campaign.getHero().pickWeapon(inputWords);
+                break;
+            case "walk":
+            case "go":
+                campaign.parseHeroWalk(inputWords);
+                break;
+            case "drop":
+                campaign.getHero().dropWeapon();
+                break;
+            case "destroy":
+            case "crash":
+                campaign.getHero().destroyItem(inputWords);
+                break;
+            case "status":
+                campaign.getHero().printAllStatus();
+                break;
+            case "hero":
+            case "me":
+                campaign.getHero().printHeroStatus();
+                break;
+            case "weapon":
+                campaign.getHero().printWeaponStatus();
+                break;
+            case "kill":
+            case "attack":
+                Creature target = campaign.getHero().selectTarget(inputWords);
+                if (target != null) {
+                    // Add this battle to the battle counter.
+                    campaign.getBattleCounter().incrementCreatureCount(target.getId());
+                    Game.battle(campaign.getHero(), target);
+                }
+                return true;
                 // Campaign-related commands.
-                case "achievements":
-                    campaign.printUnlockedAchievements();
-                    break;
-                // World-related commands.
-                case "spawns":
-                    campaign.getWorld().printSpawnCounters();
-                    break;
-                // Utility commands.
-                case "time":
-                    DateAndTime.printTime();
-                    break;
-                case "date":
-                    DateAndTime.printDate();
-                    break;
-                // Help commands.
-                case "help":
-                case "?":
-                    Help.printCommandHelp(inputWords);
-                    break;
-                case "commands":
-                    Help.printCommandList();
-                    break;
-                // Game commands.
-                case "save":
-                    saveGameRoutine(campaign, inputWords);
-                    break;
-                case "quit":
-                case "exit":
-                    return false;
+            case "achievements":
+                campaign.printUnlockedAchievements();
+                break;
+            // World-related commands.
+            case "spawns":
+                campaign.getWorld().printSpawnCounters();
+                break;
+            // Utility commands.
+            case "time":
+                DateAndTime.printTime();
+                break;
+            case "date":
+                DateAndTime.printDate();
+                break;
+            // Help commands.
+            case "help":
+            case "?":
+                Help.printCommandHelp(inputWords);
+                break;
+            case "commands":
+                Help.printCommandList();
+                break;
+            // Game commands.
+            case "save":
+                Loader.saveGameRoutine(campaign, inputWords);
+                break;
+            case "quit":
+            case "exit":
+                return false;
                 // The user issued a command, but it was not recognized.
-                default:
-                    if (!inputWords[0].isEmpty()) {
-                        printInvalidCommandMessage(inputWords[0]);
-                    } else {
-                        // The user pressed enter without typing anything.
-                        IO.writeString(Constants.INVALID_INPUT);
-                    }
-                    break;
+            default:
+                if (!inputWords[0].isEmpty()) {
+                    printInvalidCommandMessage(inputWords[0]);
+                } else {
+                    // The user pressed enter without typing anything.
+                    IO.writeString(Constants.INVALID_INPUT);
+                }
+                break;
             }
         }
     }

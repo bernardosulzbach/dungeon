@@ -16,25 +16,23 @@
  */
 package org.dungeon.core.creatures;
 
-import org.dungeon.io.IO;
+import java.util.List;
+
 import org.dungeon.core.game.Item;
 import org.dungeon.core.game.Weapon;
+import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Hero class that defines the creature that the player controls.
  */
 public class Hero extends Creature {
 
-    private final List<Item> inventory;
+    private static final long serialVersionUID = 1L;
 
     public Hero(String name) {
         super(name, 1, 50, 4, CreatureID.HERO);
-        inventory = new ArrayList<>();
     }
 
     /**
@@ -46,24 +44,15 @@ public class Hero extends Creature {
     }
 
     /**
-     * Print the name of the player's current location and list all creatures and items the player can see.
+     * Print the name of the player's current location and list all creatures
+     * and items the player can see.
      */
     public void look() {
         StringBuilder builder = new StringBuilder();
         builder.append(Constants.MARGIN).append(getLocation().getName());
 
         builder.append('\n').append(Constants.LINE_1);
-
-        // Creature count must be different than one in order not to take the hero into account.
-//        if (getLocation().getCreatureCount() == 1) {
-//            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_CREATURES);
-//        } else {
-//            for (Creature aCreature : getLocation().getCreatures()) {
-//                if (aCreature.getId() != CreatureID.HERO) {
-//                    builder.append('\n').append(Constants.MARGIN).append(aCreature.toSelectionEntry());
-//                }
-//            }
-//        }
+        
         builder.append(getLocation().getCreaturesString());
 
         builder.append('\n').append(Constants.LINE_1);
@@ -129,12 +118,11 @@ public class Hero extends Creature {
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
         builder.append(Constants.MARGIN).append(String.format("%s (%s)\n", name, this.id));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Level", level));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Experience",
-                String.format("%d/%d", experience, getExperienceToNextLevel())));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Level", getLevel()));
+        builder.append(Constants.MARGIN).append(
+                String.format("%-20s%10s\n", "Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel())));
         builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Gold", gold));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Health",
-                String.format("%d/%d", curHealth, maxHealth)));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Health", String.format("%d/%d", curHealth, maxHealth)));
         builder.append(Constants.MARGIN).append(String.format("%-20s%10d", "Attack", attack));
         return builder.toString();
 
@@ -147,8 +135,9 @@ public class Hero extends Creature {
         StringBuilder builder = new StringBuilder();
         builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Name", getWeapon().getName()));
         builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Damage", getWeapon().getDamage()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s", "Integrity",
-                String.format("%d/%d", getWeapon().getCurIntegrity(), getWeapon().getMaxIntegrity())));
+        builder.append(Constants.MARGIN).append(
+                String.format("%-20s%10s", "Integrity",
+                        String.format("%d/%d", getWeapon().getCurIntegrity(), getWeapon().getMaxIntegrity())));
         return builder.toString();
     }
 

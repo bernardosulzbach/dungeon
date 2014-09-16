@@ -25,6 +25,8 @@ import java.io.Serializable;
  */
 public class Point implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private int x;
     private int y;
 
@@ -44,18 +46,18 @@ public class Point implements Serializable {
         this.x = originalPoint.getX();
         this.y = originalPoint.getY();
         switch (shift) {
-            case NORTH:
-                this.y++;
-                break;
-            case EAST:
-                this.x++;
-                break;
-            case SOUTH:
-                this.y--;
-                break;
-            case WEST:
-                this.x--;
-                break;
+        case NORTH:
+            this.y++;
+            break;
+        case EAST:
+            this.x++;
+            break;
+        case SOUTH:
+            this.y--;
+            break;
+        case WEST:
+            this.x--;
+            break;
         }
     }
 
