@@ -35,10 +35,10 @@ public class Weapon extends Item implements Serializable, Selectable {
     /**
      * Weapon integrity variables.
      */
-    private int maxIntegrity;
+    private final int maxIntegrity;
     private int curIntegrity;
     // How much integrity is lost per hit.
-    private int hitDecrement;
+    private final int hitDecrement;
 
     public Weapon(String name, int damage) {
         this(name, damage, 0, 100, 100, 1);

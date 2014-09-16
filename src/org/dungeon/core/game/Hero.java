@@ -26,7 +26,7 @@ import org.dungeon.utils.Utils;
  */
 public class Hero extends Creature {
 
-    private List<Item> inventory;
+    private final List<Item> inventory;
 
     public Hero(String name) {
         super(name, 1, 50, 4, CreatureID.HERO);
