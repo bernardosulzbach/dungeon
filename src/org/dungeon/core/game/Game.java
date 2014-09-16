@@ -40,7 +40,7 @@ public class Game {
      * Check if a saved campaign exists.
      */
     private static boolean checkForExistingSave() {
-        File savedCampaign = new File(Constants.CAMPAIGN_PATH);
+        File savedCampaign = new File(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
         return savedCampaign.exists() && savedCampaign.isFile();
     }
 
@@ -60,13 +60,28 @@ public class Game {
     }
 
     /**
-     * Handles all the save loading at startup.
+     * Handles all the saving process.
      *
      * @return a saved campaign or a new demo campaign.
      */
     private static void saveGameRoutine(Campaign campaign) {
         if (confirmOperation(Constants.SAVE_CONFIRM)) {
-            saveCampaign(campaign);
+            saveCampaign(campaign, Constants.SAVE_NAME);
+        }
+    }
+
+    /**
+     * Handles all the saving process, assigning a new name for the save file, if provided.
+     *
+     * @return a saved campaign or a new demo campaign.
+     */
+    private static void saveGameRoutine(Campaign campaign, String[] inputWords) {
+        if (inputWords.length == 1) {
+            saveGameRoutine(campaign);
+        } else {
+            if (confirmOperation(Constants.SAVE_CONFIRM)) {
+                saveCampaign(campaign, inputWords[1]);
+            }
         }
     }
 
@@ -99,7 +114,7 @@ public class Game {
         FileInputStream fileInStream;
         ObjectInputStream objectInStream;
         try {
-            fileInStream = new FileInputStream(Constants.CAMPAIGN_PATH);
+            fileInStream = new FileInputStream(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
             objectInStream = new ObjectInputStream(fileInStream);
             Campaign loadedCampaign = (Campaign) objectInStream.readObject();
             objectInStream.close();
@@ -114,11 +129,11 @@ public class Game {
     /**
      * Saves a Campaign object to a file.
      */
-    private static void saveCampaign(Campaign campaign) {
+    private static void saveCampaign(Campaign campaign, String saveName) {
         FileOutputStream fileOutStream;
         ObjectOutputStream objectOutStream;
         try {
-            fileOutStream = new FileOutputStream(Constants.CAMPAIGN_PATH);
+            fileOutStream = new FileOutputStream(saveName + Constants.SAVE_EXTENSION);
             objectOutStream = new ObjectOutputStream(fileOutStream);
             objectOutStream.writeObject(campaign);
             objectOutStream.close();
@@ -232,7 +247,7 @@ public class Game {
                     break;
                 // Game commands.
                 case "save":
-                    saveGameRoutine(campaign);
+                    saveGameRoutine(campaign, inputWords);
                     break;
                 case "quit":
                 case "exit":
