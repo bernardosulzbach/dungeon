@@ -25,9 +25,7 @@ import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
 
 /**
- * A draft of what the achievement class will look like.
- * <p/>
- * Hero will have an Achievement list (or something similar).
+ * Achievement class that defines achievements.
  *
  * @author Bernardo Sulzbach
  */

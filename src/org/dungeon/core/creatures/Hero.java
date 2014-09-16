@@ -33,15 +33,34 @@ public class Hero extends Creature {
     private static final long serialVersionUID = 1L;
 
     public Hero(String name) {
-        super(CreatureID.HERO, name, 1, 50, 4);
+        setId(CreatureID.HERO);
+        setName(name);
+        setLevel(1);
+        setMaxHealth(50);
+        setCurHealth(50);
+        setAttack(4);
+        setHealthIncrement(10);
+        setAttackIncrement(4);
+    }
+
+    /**
+     * Checks if the Hero is completely healed.
+     */
+    private boolean isCompletelyHealed() {
+        return getMaxHealth() == getCurHealth();
     }
 
     /**
      * Rest until the creature is completely healed.
      */
     public void rest() {
-        setCurHealth(getMaxHealth());
-        IO.writeString("You are completely rested.");
+        if (isCompletelyHealed()) {
+            IO.writeString("You are already completely healed.");
+        } else {
+            IO.writeString("Resting...");
+            setCurHealth(getMaxHealth());
+            IO.writeString("You are completely rested.");
+        }
     }
 
     /**
@@ -99,7 +118,9 @@ public class Hero extends Creature {
         Item selectedWeapon = Utils.selectFromList(getLocation().getItems());
         if (selectedWeapon != null) {
             if (selectedWeapon instanceof Weapon) {
-                dropWeapon();
+                if (getWeapon() != null) {
+                    dropWeapon();
+                }
                 equipWeapon((Weapon) selectedWeapon);
                 getLocation().removeItem(selectedWeapon);
             } else {
@@ -167,7 +188,13 @@ public class Hero extends Creature {
      * Output a table with both the hero's status and his weapon's status.
      */
     public void printAllStatus() {
-        IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
+        // Check to see if there is a weapon.
+        if (getWeapon() != null) {
+            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
+        } else {
+            // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
+            printHeroStatus();
+        }
     }
 
 }
