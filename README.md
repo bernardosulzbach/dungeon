@@ -16,18 +16,16 @@ Running the game
 TODO
 ----
 * Document the existing code.
-* Implement west and east walking.
 * Implement the 'pick \<name of item\>' syntax.
 * Create two new locations.
-* Come up with 4 more achievements.
 * Remove the Location instance variable of Hero.
-* Enable 'save \<name of file\>' syntax.
 
-Milestones to 0.1a
+Milestones to 0.0.1
 ------------------
-- [ ] Three locations (in the same row).
-- [ ] Five different achievements.
-- [ ] Custom save name.
+- [x] Three locations (in the same row).
+- [x] Five different achievements.
+- [x] Custom save name.
+- [ ] Wrap it all up.
 
 Trivia
 ------
