@@ -74,14 +74,14 @@ public class Campaign implements Serializable {
         catRequirements.incrementCreatureCount(CreatureID.RAT, 4);
         // Evil Bastard requires one battle against a rabbit.
         evilBastardRequirements.incrementCreatureCount(CreatureID.RABBIT);
-        // Stay Dead requires three battles zombies.
-        stayDeadRequirements.incrementCreatureCount(CreatureID.ZOMBIE, 3);
+        // Stay Dead requires two battles against a zombie.
+        stayDeadRequirements.incrementCreatureCount(CreatureID.ZOMBIE, 2);
 
         achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
         achievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
         achievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
         achievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
-        achievements.add(new Achievement("Stay Dead", "Kill 3 zombies.", stayDeadRequirements));
+        achievements.add(new Achievement("Stay Dead", "Kill 2 zombies.", stayDeadRequirements));
 
         return achievements;
     }
