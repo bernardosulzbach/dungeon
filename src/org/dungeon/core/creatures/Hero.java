@@ -18,6 +18,7 @@ package org.dungeon.core.creatures;
 
 import java.util.List;
 
+import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.game.Item;
 import org.dungeon.core.game.Weapon;
 import org.dungeon.io.IO;
@@ -32,7 +33,7 @@ public class Hero extends Creature {
     private static final long serialVersionUID = 1L;
 
     public Hero(String name) {
-        super(name, 1, 50, 4, CreatureID.HERO);
+        super(CreatureID.HERO, name, 1, 50, 4);
     }
 
     /**
@@ -52,7 +53,20 @@ public class Hero extends Creature {
 
         builder.append('\n').append(Constants.LINE_1);
 
-        builder.append(getLocation().getCreaturesString());
+        if (getLocation().getCreatureCount() == 1) {
+            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_CREATURES);
+        } else {
+            CreatureCounter counter = new CreatureCounter();
+            for (Creature creature : getLocation().getCreatures()) {
+                if (creature.getId() != CreatureID.HERO) {
+                    counter.incrementCreatureCount(creature.getId());
+                }
+            }
+            for (CreatureID id : counter.getKeySet()) {
+                String line = String.format("%-20s(%d)", id.toString(), counter.getCreatureCount(id));
+                builder.append('\n').append(Constants.MARGIN).append(line);
+            }
+        }
 
         builder.append('\n').append(Constants.LINE_1);
 
@@ -121,7 +135,8 @@ public class Hero extends Creature {
         builder.append(Constants.MARGIN).append(
                 String.format("%-20s%10s\n", "Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel())));
         builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Gold", getGold()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Health", String.format("%d/%d", getCurHealth(), getMaxHealth())));
+        builder.append(Constants.MARGIN).append(
+                String.format("%-20s%10s\n", "Health", String.format("%d/%d", getCurHealth(), getMaxHealth())));
         builder.append(Constants.MARGIN).append(String.format("%-20s%10d", "Attack", getAttack()));
         return builder.toString();
 
