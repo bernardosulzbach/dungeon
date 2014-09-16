@@ -16,12 +16,14 @@
  */
 package org.dungeon.core.game;
 
+import java.io.Serializable;
+
 /**
  * Point class that defines a simple point in a 2D plane.
  *
  * @author Bernardo Sulzbach
  */
-class Point {
+public class Point implements Serializable {
 
     private int x;
     private int y;

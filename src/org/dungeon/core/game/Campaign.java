@@ -31,7 +31,7 @@ public class Campaign implements Serializable {
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
-    private final Point heroPoint;
+    private Point heroPoint;
 
     private boolean saved;
 
@@ -205,6 +205,7 @@ public class Campaign implements Serializable {
         Point destination = new Point(heroPoint, dir);
         if (getWorld().hasLocation(destination)) {
             getWorld().moveCreature(campaignHero, heroPoint, destination);
+            heroPoint = destination;
             campaignHero.setLocation(getWorld().getLocation(destination));
         } else {
             IO.writeString(Constants.WALK_BLOCKED);
