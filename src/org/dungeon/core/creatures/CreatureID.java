@@ -20,14 +20,18 @@ public enum CreatureID {
 
     BAT("Bat"), BEAR("Bear"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"), SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
 
-    private final String stringRepresentation;
+    private final String name;
 
-    CreatureID(String stringRepresentation) {
-        this.stringRepresentation = stringRepresentation;
+    CreatureID(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
-        return stringRepresentation;
+        return name;
     }
 }
