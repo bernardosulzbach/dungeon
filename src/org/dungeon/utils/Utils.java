@@ -17,8 +17,9 @@
 package org.dungeon.utils;
 
 import java.util.List;
-import org.dungeon.io.IO;
+
 import org.dungeon.core.game.Selectable;
+import org.dungeon.io.IO;
 
 /**
  * General utility class.

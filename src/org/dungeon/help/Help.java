@@ -16,120 +16,54 @@
  */
 package org.dungeon.help;
 
-import org.dungeon.io.IO;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dungeon.io.IO;
+
 public class Help {
 
-    // HashMap is not synchronized, what makes it better for non-threaded applications.
+    // HashMap is not synchronized, what makes it better for non-threaded
+    // applications.
     /**
      * This HashMap maps all the aliases of a command to its CommandHelp object.
      */
     private static final List<CommandHelp> COMMANDS = new ArrayList<>();
 
     static {
-        COMMANDS.add(new CommandHelp(
-                "achievements",
-                null,
-                "Shows unlocked achievments.",
-                "achievements"));
-        
-        COMMANDS.add(new CommandHelp(
-                "commands",
-                null,
-                "Display a list of valid commands.",
-                "commands"));
-        
-        COMMANDS.add(new CommandHelp(
-                "date",
-                null,
-                "Prints the current date.",
-                "date"));
-        
-        COMMANDS.add(new CommandHelp(
-                "destroy",
-                "crash",
-                "Destroys a item on the ground.",
-                "destroy [item]"));
-        
-        COMMANDS.add(new CommandHelp(
-                "drop",
-                null,
-                "Drops your current weapon.",
-                "drop"));
-        
-        COMMANDS.add(new CommandHelp(
-                "exit",
-                "quit",
-                "Exits the game.",
-                "exit"));
-        
-        COMMANDS.add(new CommandHelp(
-                "help",
-                "?",
-                "Displays the help text for a given command.",
-                "help [command]"));
-        
-        COMMANDS.add(new CommandHelp(
-                "hero",
-                "me",
-                "Shows the status of your hero.",
-                "hero"));
-        
-        COMMANDS.add(new CommandHelp(
-                "kill",
-                "attack",
-                "Attacks the target chosen by the player.",
-                "kill [target]"));
+        COMMANDS.add(new CommandHelp("achievements", null, "Shows unlocked achievments.", "achievements"));
 
-        COMMANDS.add(new CommandHelp(
-                "look",
-                "peek",
-                "Looks around, describing what your character can see.",
-                "look"));
-        
-        COMMANDS.add(new CommandHelp(
-                "pick",
-                "loot",
-                "Enters item chooser to swap your current weapon.",
-                "pick"));
-        
-        COMMANDS.add(new CommandHelp(
-                "rest",
-                null,
-                "Rest until you are completely healed.",
-                "rest"));
-        
-        COMMANDS.add(new CommandHelp(
-                "save",
-                null,
-                "Saves the game.",
-                "save"));
-        
-        COMMANDS.add(new CommandHelp(
-                "spawns",
-                null,
-                "Shows the spawn counters.",
-                "spawns"));
-        
-        COMMANDS.add(new CommandHelp(
-                "status",
-                null,
-                "Prints the campaign's character current status.",
-                "status"));
-        
-        COMMANDS.add(new CommandHelp(
-                "time",
-                null,
-                "Prints the current time.",
-                "time"));
-        
-        COMMANDS.add(new CommandHelp(
-                "walk",
-                "go",
-                "Move to the direction chosen.",
-                "walk [direction]"));
+        COMMANDS.add(new CommandHelp("commands", null, "Display a list of valid commands.", "commands"));
+
+        COMMANDS.add(new CommandHelp("date", null, "Prints the current date.", "date"));
+
+        COMMANDS.add(new CommandHelp("destroy", "crash", "Destroys a item on the ground.", "destroy [item]"));
+
+        COMMANDS.add(new CommandHelp("drop", null, "Drops your current weapon.", "drop"));
+
+        COMMANDS.add(new CommandHelp("exit", "quit", "Exits the game.", "exit"));
+
+        COMMANDS.add(new CommandHelp("help", "?", "Displays the help text for a given command.", "help [command]"));
+
+        COMMANDS.add(new CommandHelp("hero", "me", "Shows the status of your hero.", "hero"));
+
+        COMMANDS.add(new CommandHelp("kill", "attack", "Attacks the target chosen by the player.", "kill [target]"));
+
+        COMMANDS.add(new CommandHelp("look", "peek", "Looks around, describing what your character can see.", "look"));
+
+        COMMANDS.add(new CommandHelp("pick", "loot", "Enters item chooser to swap your current weapon.", "pick"));
+
+        COMMANDS.add(new CommandHelp("rest", null, "Rest until you are completely healed.", "rest"));
+
+        COMMANDS.add(new CommandHelp("save", null, "Saves the game.", "save"));
+
+        COMMANDS.add(new CommandHelp("spawns", null, "Shows the spawn counters.", "spawns"));
+
+        COMMANDS.add(new CommandHelp("status", null, "Prints the campaign's character current status.", "status"));
+
+        COMMANDS.add(new CommandHelp("time", null, "Prints the current time.", "time"));
+
+        COMMANDS.add(new CommandHelp("walk", "go", "Move to the direction chosen.", "walk [direction]"));
     }
 
     /**

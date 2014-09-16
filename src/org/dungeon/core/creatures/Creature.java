@@ -16,20 +16,24 @@
  */
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.game.*;
+import java.io.Serializable;
+
+import org.dungeon.core.game.Location;
+import org.dungeon.core.game.Selectable;
+import org.dungeon.core.game.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
-import java.io.Serializable;
-
 public class Creature implements Serializable, Selectable {
 
+    private static final long serialVersionUID = 1L;
+    
     protected final CreatureID id;
 
     protected String name;
 
-    protected int level;
-    protected int experience;
+    private int level;
+    private int experience;
     private int experienceDrop;
 
     protected int gold;
@@ -46,64 +50,64 @@ public class Creature implements Serializable, Selectable {
 
     public Creature(CreatureID id, int level) {
         switch (id) {
-            case BAT:
-                setName("Bat");
-                this.level = level;
-                this.experienceDrop = level * level * 15;
-                this.curHealth = this.maxHealth = 12 + 3 * level;
-                this.attack = 5 + 2 * level;
-                break;
-            case BEAR:
-                setName("Bear");
-                this.level = level;
-                this.experienceDrop = level * level * 40;
-                this.curHealth = this.maxHealth = 30 + 10 * level;
-                this.attack = 13 + 7 * level;
-                break;
-            case RABBIT:
-                setName("Rabbit");
-                this.level = level;
-                this.experienceDrop = level * level * 10;
-                this.curHealth = this.maxHealth = 10 + 2 * level;
-                this.attack = 5 + 2 * level;
-                break;
-            case RAT:
-                setName("Rat");
-                this.level = level;
-                this.experienceDrop = level * level * 10;
-                this.curHealth = this.maxHealth = 15 + 5 * level;
-                this.attack = 6 + 4 * level;
-                break;
-            case SPIDER:
-                setName("Spider");
-                this.level = level;
-                this.experienceDrop = level * level * 10;
-                this.curHealth = this.maxHealth = 17 + 8 * level;
-                this.attack = 10 + 5 * level;
-                break;
-            case WOLF:
-                setName("Wolf");
-                this.level = level;
-                this.experienceDrop = level * level * 20;
-                this.curHealth = this.maxHealth = 24 + 6 * level;
-                this.attack = 10 + 4 * level;
-                break;
-            case ZOMBIE:
-                setName("Zombie");
-                this.level = level;
-                this.experienceDrop = level * level * 25;
-                this.curHealth = this.maxHealth = 30 + 6 * level;
-                this.attack = 12 + 4 * level;
-                break;
-            default:
-                break;
+        case BAT:
+            setName("Bat");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 15;
+            this.curHealth = this.maxHealth = 12 + 3 * level;
+            this.attack = 5 + 2 * level;
+            break;
+        case BEAR:
+            setName("Bear");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 40;
+            this.curHealth = this.maxHealth = 30 + 10 * level;
+            this.attack = 13 + 7 * level;
+            break;
+        case RABBIT:
+            setName("Rabbit");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 10;
+            this.curHealth = this.maxHealth = 10 + 2 * level;
+            this.attack = 5 + 2 * level;
+            break;
+        case RAT:
+            setName("Rat");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 10;
+            this.curHealth = this.maxHealth = 15 + 5 * level;
+            this.attack = 6 + 4 * level;
+            break;
+        case SPIDER:
+            setName("Spider");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 10;
+            this.curHealth = this.maxHealth = 17 + 8 * level;
+            this.attack = 10 + 5 * level;
+            break;
+        case WOLF:
+            setName("Wolf");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 20;
+            this.curHealth = this.maxHealth = 24 + 6 * level;
+            this.attack = 10 + 4 * level;
+            break;
+        case ZOMBIE:
+            setName("Zombie");
+            this.setLevel(level);
+            this.experienceDrop = level * level * 25;
+            this.curHealth = this.maxHealth = 30 + 6 * level;
+            this.attack = 12 + 4 * level;
+            break;
+        default:
+            break;
         }
         this.id = id;
     }
 
     public Creature(String name, int level, int health, int attack, CreatureID id) {
         this.name = name;
-        this.level = level;
+        this.setLevel(level);
         this.curHealth = health;
         this.maxHealth = health;
         this.attack = attack;
@@ -139,7 +143,7 @@ public class Creature implements Serializable, Selectable {
     }
 
     public int getExperienceToNextLevel() {
-        return level * level * 100;
+        return getLevel() * getLevel() * 100;
     }
 
     public void setExperience(int experience) {
@@ -158,11 +162,11 @@ public class Creature implements Serializable, Selectable {
      * Increases the creature level by one and writes a message about it.
      */
     public void levelUp() {
-        level++;
+        setLevel(getLevel() + 1);
         maxHealth += healthIncrement;
         curHealth = maxHealth;
         attack += attackIncrement;
-        IO.writeString(String.format("%s leveld up. %s is now level %d.", name, name, level));
+        IO.writeString(String.format("%s leveld up. %s is now level %d.", name, name, getLevel()));
     }
 
     public int getGold() {
@@ -185,7 +189,8 @@ public class Creature implements Serializable, Selectable {
     /**
      * Reduces the creature gold by a given amount.
      * <p/>
-     * Gold will never become negative, so you should check that the creature has enough gold before subtracting any.
+     * Gold will never become negative, so you should check that the creature
+     * has enough gold before subtracting any.
      *
      * @param amount
      */
@@ -265,8 +270,9 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature
-     * will attack with its bare hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to
+     * perform the attack. Otherwise, the creature will attack with its bare
+     * hands.
      *
      * @param target
      */
@@ -300,6 +306,10 @@ public class Creature implements Serializable, Selectable {
 
     @Override
     public String toSelectionEntry() {
-        return String.format("%-20s Level %2d", name, level);
+        return String.format("%-20s Level %2d", name, getLevel());
+    }
+
+    protected void setLevel(int level) {
+        this.level = level;
     }
 }

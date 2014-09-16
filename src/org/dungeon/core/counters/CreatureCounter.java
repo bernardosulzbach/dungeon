@@ -16,11 +16,11 @@
  */
 package org.dungeon.core.counters;
 
-import org.dungeon.core.creatures.CreatureID;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
+
+import org.dungeon.core.creatures.CreatureID;
 
 /**
  * CreatureCounter class.
@@ -28,6 +28,8 @@ import java.util.Set;
  * @author Bernardo Sulzbach
  */
 public class CreatureCounter implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final HashMap<CreatureID, Integer> map;
 

@@ -16,12 +16,14 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.io.IO;
-
 import java.io.Serializable;
+
+import org.dungeon.io.IO;
 
 public class Weapon extends Item implements Serializable, Selectable {
 
+    private static final long serialVersionUID = 1L;
+    
     private static final String TYPE = "Weapon";
 
     /**
@@ -106,13 +108,16 @@ public class Weapon extends Item implements Serializable, Selectable {
         /**
          * Implementation info.
          *
-         * 0, for instance, will never be greater than 0 (the smallest possible value on the right-hand side).
+         * 0, for instance, will never be greater than 0 (the smallest possible
+         * value on the right-hand side).
          *
          * So a missRate of 0 works as intended [isMiss always returns false].
          *
-         * 100 will, on the other hand, always be bigger than 99 (the biggest possible value on the right-hand side).
+         * 100 will, on the other hand, always be bigger than 99 (the biggest
+         * possible value on the right-hand side).
          *
-         * So a missRate of 100 also works as intended [isMiss always returns true].
+         * So a missRate of 100 also works as intended [isMiss always returns
+         * true].
          */
         return missRate > Game.RANDOM.nextInt(100);
     }
@@ -140,8 +145,7 @@ public class Weapon extends Item implements Serializable, Selectable {
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("%-20s%10s\n", "Weapon", getName()));
         builder.append(String.format("%-20s%10s\n", "Weapon damage", getDamage()));
-        builder.append(String.format("%-20s%10s\n", "Weapon integrity",
-                String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
+        builder.append(String.format("%-20s%10s\n", "Weapon integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
         return builder.toString();
     }
 

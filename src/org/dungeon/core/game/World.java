@@ -16,17 +16,19 @@
  */
 package org.dungeon.core.game;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
 public class World implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private final HashMap<Point, Location> locations;
     private final CreatureCounter spawnCounter;
 

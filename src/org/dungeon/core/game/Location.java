@@ -16,16 +16,18 @@
  */
 package org.dungeon.core.game;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.utils.Constants;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Location implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final List<Creature> creatures;

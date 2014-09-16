@@ -16,6 +16,11 @@
  */
 package org.dungeon.core.game;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
@@ -25,13 +30,10 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Campaign implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private final List<Achievement> campaignAchievements;
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
