@@ -47,9 +47,6 @@ public class World implements Serializable {
 
     /**
      * Add a creature to a specific location.
-     *
-     * @param creature
-     * @param locationIndex
      */
     public void addCreature(Creature creature, Point coordinates) {
         locations.get(coordinates).addCreature(creature);
@@ -57,11 +54,16 @@ public class World implements Serializable {
         spawnCounter.incrementCreatureCount(creature.getId());
     }
 
+    public void addCreatureArray(Creature[] creatures, Point coordinates) {
+        locations.get(coordinates).addCreatureArray(creatures);
+        for (Creature creature : creatures) {
+            creature.setLocation(getLocation(coordinates));
+        }
+        spawnCounter.incrementCreatureCount(creatures[0].getId(), creatures.length);
+    }
+
     /**
      * Add an item to a specific location.
-     *
-     * @param item
-     * @param locationIndex
      */
     public void addItem(Item item, Point locationPoint) {
         locations.get(locationPoint).addItem(item);
