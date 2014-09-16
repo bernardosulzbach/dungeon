@@ -30,44 +30,111 @@ public class Help {
 
     static {
         COMMANDS.add(new CommandHelp(
+                "achievements",
+                null,
+                "Shows unlocked achievments.",
+                "achievements"));
+        
+        COMMANDS.add(new CommandHelp(
+                "attack",
+                null,
+                "Enters target chooser to perform an attack.",
+                "attack"));
+        
+        COMMANDS.add(new CommandHelp(
                 "commands",
                 null,
                 "Display a list of valid commands.",
                 "commands"));
-
+        
+        COMMANDS.add(new CommandHelp(
+                "date",
+                null,
+                "Prints the current date.",
+                "date"));
+        
+        COMMANDS.add(new CommandHelp(
+                "destroy",
+                "crash",
+                "Destroys your current weapon.",
+                "destroy"));
+        
+        COMMANDS.add(new CommandHelp(
+                "drop",
+                null,
+                "Drops your current weapon.",
+                "drop"));
+        
+        COMMANDS.add(new CommandHelp(
+                "exit",
+                "quit",
+                "Exits the game.",
+                "exit"));
+        
         COMMANDS.add(new CommandHelp(
                 "help",
                 "?",
-                "Display the help text for a given command.",
+                "Displays the help text for a given command.",
                 "help [command]"));
+        
+        COMMANDS.add(new CommandHelp(
+                "hero",
+                "me",
+                "Shows the status of your hero.",
+                "hero"));
+        
+        COMMANDS.add(new CommandHelp(
+                "kill",
+                null,
+                "Attacks the target chosen by the player.",
+                "kill [target]"));
 
         COMMANDS.add(new CommandHelp(
                 "look",
                 "peek",
-                "Look around, describing what your character can see.",
+                "Looks around, describing what your character can see.",
                 "look"));
-
+        
+        COMMANDS.add(new CommandHelp(
+                "pick",
+                "loot",
+                "Enters item chooser to swap your current weapon.",
+                "pick"));
+        
+        COMMANDS.add(new CommandHelp(
+                "rest",
+                null,
+                "Fills your health points.",
+                "rest"));
+        
+        COMMANDS.add(new CommandHelp(
+                "save",
+                null,
+                "Saves the game.",
+                "save"));
+        
+        COMMANDS.add(new CommandHelp(
+                "spawns",
+                null,
+                "Shows the spawn counters.",
+                "spawns"));
+        
+        COMMANDS.add(new CommandHelp(
+                "status",
+                null,
+                "Prints the campaign's character current status.",
+                "status"));
+        
+        COMMANDS.add(new CommandHelp(
+                "time",
+                null,
+                "Prints the current time.",
+                "time"));
     }
 
     /**
      * A complete command list.
      */
-    public static final String COMMAND_LIST
-            = "  Command List\n"
-            + "    Exploration\n"
-            + "      look                   Looks around, describing what the player sees.\n"
-            + "      pick                   Pick an item from the ground..\n"
-            + "      status                 Prints the player's character current status.\n"
-            + "    Combat\n"
-            + "      attack                 Enters target chooser to perform an attack.\n"
-            + "      kill                   Enters target chooser to perform an attack.\n"
-            + "    Other\n"
-            + "      time                   Get the current time.\n"
-            + "      date                   Get the current date.\n"
-            + "      exit                   Exit the game.\n"
-            + "        aliases: quit\n"
-            + "      quit                   Exit the game.\n"
-            + "      spawns                 Get the spawn counters.";
 
     // The correct usage of printHelp.
     private static final String PRINT_HELP_TEXT_USAGE = "  Usage: help (command)";
