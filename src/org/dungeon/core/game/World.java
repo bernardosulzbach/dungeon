@@ -18,7 +18,7 @@ package org.dungeon.core.game;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import org.dungeon.core.counter.CreatureCounter;
+import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.utils.Constants;
 
 public class World implements Serializable {

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.achievement;
+package org.dungeon.core.achievements;
 
 import java.io.Serializable;
-import org.dungeon.core.counter.CreatureCounter;
+import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.game.CreatureID;
 import org.dungeon.core.game.IO;
 import org.dungeon.utils.Constants;

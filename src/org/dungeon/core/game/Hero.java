@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -25,8 +26,11 @@ import org.dungeon.utils.Utils;
  */
 public class Hero extends Creature {
 
+    private List<Item> inventory;
+
     public Hero(String name) {
         super(name, 1, 50, 4, CreatureID.HERO);
+        inventory = new ArrayList<>();
     }
 
     /**
@@ -52,7 +56,7 @@ public class Hero extends Creature {
         } else {
             for (Creature aCreature : getLocation().getCreatures()) {
                 if (aCreature.getId() != CreatureID.HERO) {
-                    builder.append('\n').append(Constants.MARGIN).append(aCreature.toShortString());
+                    builder.append('\n').append(Constants.MARGIN).append(aCreature.toSelectionEntry());
                 }
             }
         }
@@ -63,7 +67,7 @@ public class Hero extends Creature {
             builder.append('\n').append(Constants.MARGIN).append("You do not see any items here.");
         } else {
             for (Item curItem : getLocation().getItems()) {
-                builder.append('\n').append(Constants.MARGIN).append(curItem.toShortString());
+                builder.append('\n').append(Constants.MARGIN).append(curItem.toSelectionEntry());
             }
         }
 
@@ -85,11 +89,15 @@ public class Hero extends Creature {
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] words) {
-        Weapon selectedWeapon = Utils.selectFromList(getLocation().getVisibleWeapons());
+        Item selectedWeapon = Utils.selectFromList(getLocation().getItems());
         if (selectedWeapon != null) {
-            dropWeapon();
-            equipWeapon(selectedWeapon);
-            getLocation().removeItem(selectedWeapon);
+            if (selectedWeapon instanceof Weapon) {
+                dropWeapon();
+                equipWeapon((Weapon) selectedWeapon);
+                getLocation().removeItem(selectedWeapon);
+            } else {
+                IO.writeString("You cannot equip that.");
+            }
         }
     }
 
@@ -112,7 +120,6 @@ public class Hero extends Creature {
             }
         }
     }
-
 
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
