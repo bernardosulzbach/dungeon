@@ -16,6 +16,8 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.io.IO;
+
 import java.io.Serializable;
 
 public class Weapon extends Item implements Serializable, Selectable {

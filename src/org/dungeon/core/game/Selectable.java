@@ -17,7 +17,6 @@
 package org.dungeon.core.game;
 
 /**
- *
  * @author Bernardo Sulzbach
  */
 public interface Selectable {

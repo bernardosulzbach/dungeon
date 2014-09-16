@@ -14,15 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.game;
+package org.dungeon.core.creatures;
+
+import org.dungeon.core.game.*;
+import org.dungeon.io.IO;
+import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
-import org.dungeon.utils.Utils;
 
 public class Creature implements Serializable, Selectable {
 
     protected final CreatureID id;
-    
+
     protected String name;
 
     protected int level;
@@ -181,7 +184,7 @@ public class Creature implements Serializable, Selectable {
 
     /**
      * Reduces the creature gold by a given amount.
-     *
+     * <p/>
      * Gold will never become negative, so you should check that the creature has enough gold before subtracting any.
      *
      * @param amount

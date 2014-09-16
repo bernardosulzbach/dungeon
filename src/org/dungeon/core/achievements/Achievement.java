@@ -16,16 +16,17 @@
  */
 package org.dungeon.core.achievements;
 
-import java.io.Serializable;
 import org.dungeon.core.counters.CreatureCounter;
-import org.dungeon.core.game.CreatureID;
-import org.dungeon.core.game.IO;
+import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
 
+import java.io.Serializable;
+
 /**
  * A draft of what the achievement class will look like.
- *
+ * <p/>
  * Hero will have an Achievement list (or something similar).
  *
  * @author Bernardo Sulzbach
@@ -67,7 +68,7 @@ public class Achievement implements Serializable {
 
     /**
      * Updates the state of the Achievement using another counter.
-     *
+     * <p/>
      * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
      *
      * @return true if the achievement was unlocked. False otherwise.

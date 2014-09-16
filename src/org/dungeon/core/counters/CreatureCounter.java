@@ -16,10 +16,11 @@
  */
 package org.dungeon.core.counters;
 
+import org.dungeon.core.creatures.CreatureID;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
-import org.dungeon.core.game.CreatureID;
 
 /**
  * CreatureCounter class.

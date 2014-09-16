@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.game;
+package org.dungeon.core.creatures;
 
-/**
- *
- * @author Bernardo Sulzbach
- */
-public class Beast extends Creature {
-    public static final CreatureType TYPE = CreatureType.BEAST;
+public enum CreatureID {
 
-    public Beast(CreatureID id, int level) {
-        super(id, level);
+    BAT("Bat"),
+    BEAR("Bear"),
+    HERO("Hero"),
+    MAGE("Mage"),
+    RABBIT("Rabbit"),
+    RAT("Rat"),
+    SPIDER("Spider"),
+    WOLF("Wolf"),
+    ZOMBIE("Zombie");
+
+    private final String stringRepresentation;
+
+    CreatureID(String stringRepresentation) {
+        this.stringRepresentation = stringRepresentation;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return stringRepresentation;
+    }
 }

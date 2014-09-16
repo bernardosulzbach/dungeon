@@ -14,12 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.game;
+package org.dungeon.core.creatures;
+
+import org.dungeon.io.IO;
+import org.dungeon.core.game.Item;
+import org.dungeon.core.game.Weapon;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
 
 /**
  * Hero class that defines the creature that the player controls.
