@@ -56,8 +56,8 @@ public class Help {
         COMMANDS.add(new CommandHelp(
                 "destroy",
                 "crash",
-                "Destroys your current weapon.",
-                "destroy"));
+                "Destroys a item on the ground.",
+                "destroy [item]"));
         
         COMMANDS.add(new CommandHelp(
                 "drop",
@@ -104,7 +104,7 @@ public class Help {
         COMMANDS.add(new CommandHelp(
                 "rest",
                 null,
-                "Fills your health points.",
+                "Rest until you are completely healed.",
                 "rest"));
         
         COMMANDS.add(new CommandHelp(
