@@ -1,8 +1,7 @@
 package org.dungeon.core.creatures;
 
 /**
- * An enumerated type of presets for creature creation.
- * Created by Bernardo Sulzbach on 16/09/14.
+ * An enumerated type of presets for creature creation. Created by Bernardo Sulzbach on 16/09/14.
  */
 public enum CreaturePreset {
 
@@ -16,13 +15,8 @@ public enum CreaturePreset {
     private final int attackIncrement;
     private final int experienceDropFactor;
 
-    CreaturePreset(CreatureType type,
-                   CreatureID id,
-                   int health,
-                   int healthIncrement,
-                   int attack,
-                   int attackIncrement,
-                   int experienceDropFactor) {
+    CreaturePreset(CreatureType type, CreatureID id, int health, int healthIncrement, int attack, int attackIncrement,
+            int experienceDropFactor) {
         this.type = type;
         this.id = id;
         this.health = health;

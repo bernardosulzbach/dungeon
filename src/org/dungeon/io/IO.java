@@ -31,11 +31,7 @@ public class IO {
     public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
-     * Outputs a string to the console, stripping unnecessary newlines at the
-     * end.
-     *
-     * @param string
-     *            the string to be printed.
+     * Outputs a string to the console, stripping unnecessary newlines at the end.
      */
     public static void writeString(String string) {
         while (string.endsWith("\n")) {
@@ -46,8 +42,6 @@ public class IO {
 
     /**
      * Read a line of input from the user.
-     *
-     * @return
      */
     public static String readString() {
         String line;
@@ -59,10 +53,7 @@ public class IO {
     }
 
     /**
-     * Read a line of input from the user and returns an array with the words in
-     * that line.
-     *
-     * @return a String array.
+     * Read a line of input from the user and returns an array with the words in that line.
      */
     public static String[] readWords() {
         return readString().split("\\s+");

@@ -33,7 +33,7 @@ import org.dungeon.utils.Utils;
 public class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private final List<Achievement> campaignAchievements;
     private final CreatureCounter campaignBattleCounter;
     private final World campaignWorld;
