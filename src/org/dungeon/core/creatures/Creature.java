@@ -28,7 +28,7 @@ public class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
 
-    private final CreatureID id;
+    private CreatureID id;
 
     private String name;
 
@@ -48,6 +48,31 @@ public class Creature implements Serializable, Selectable {
     private Weapon weapon;
     private Location location;
 
+    public Creature() {
+        
+    }
+
+    public Creature(CreatureID id, String name, int level, int health, int attack) {
+        this.id = id;
+        setName(name);
+        setLevel(level);
+        setCurHealth(health);
+        setMaxHealth(health);
+        setAttack(attack);
+    }
+
+    public static Creature createCreature(CreaturePreset preset, int level) {
+        Creature creature = new Creature();
+        creature.setId(preset.getId());
+        creature.setName(preset.getId().getName());
+        creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+        creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+        creature.setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
+        creature.setExperienceDrop(level * preset.getExperienceDropFactor());
+        return creature;
+    }
+
+    @Deprecated
     public Creature(CreatureID id, int level) {
         switch (id) {
         case BAT:
@@ -55,49 +80,55 @@ public class Creature implements Serializable, Selectable {
             this.setLevel(level);
             this.experienceDrop = level * level * 15;
             this.setCurHealth(12 + 3 * level);
-this.setMaxHealth(12 + 3 * level);
+            this.setMaxHealth(12 + 3 * level);
             this.setAttack(5 + 2 * level);
             break;
         case BEAR:
             setName("Bear");
             this.setLevel(level);
             this.experienceDrop = level * level * 40;
-            this.setCurHealth(30 + 10 * level);this.setMaxHealth(30 + 10 * level);
+            this.setCurHealth(30 + 10 * level);
+            this.setMaxHealth(30 + 10 * level);
             this.setAttack(13 + 7 * level);
             break;
         case RABBIT:
             setName("Rabbit");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.setCurHealth(10 + 2 * level);this.setMaxHealth(10 + 2 * level);
+            this.setCurHealth(10 + 2 * level);
+            this.setMaxHealth(10 + 2 * level);
             this.setAttack(5 + 2 * level);
             break;
         case RAT:
             setName("Rat");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.setCurHealth(15 + 5 * level);this.setMaxHealth(15 + 5 * level);
+            this.setCurHealth(15 + 5 * level);
+            this.setMaxHealth(15 + 5 * level);
             this.setAttack(6 + 4 * level);
             break;
         case SPIDER:
             setName("Spider");
             this.setLevel(level);
             this.experienceDrop = level * level * 10;
-            this.setCurHealth(17 + 8 * level);this.setMaxHealth(17 + 8 * level);
+            this.setCurHealth(17 + 8 * level);
+            this.setMaxHealth(17 + 8 * level);
             this.setAttack(10 + 5 * level);
             break;
         case WOLF:
             setName("Wolf");
             this.setLevel(level);
             this.experienceDrop = level * level * 20;
-            this.setCurHealth(24 + 6 * level);this.setMaxHealth(24 + 6 * level);
+            this.setCurHealth(24 + 6 * level);
+            this.setMaxHealth(24 + 6 * level);
             this.setAttack(10 + 4 * level);
             break;
         case ZOMBIE:
             setName("Zombie");
             this.setLevel(level);
             this.experienceDrop = level * level * 25;
-            this.setCurHealth(30 + 6 * level); this.setMaxHealth(30 + 6 * level);
+            this.setCurHealth(30 + 6 * level);
+            this.setMaxHealth(30 + 6 * level);
             this.setAttack(12 + 4 * level);
             break;
         default:
@@ -105,20 +136,15 @@ this.setMaxHealth(12 + 3 * level);
         }
         this.id = id;
     }
-
-    public Creature(String name, int level, int health, int attack, CreatureID id) {
-        setName(name);
-        setLevel(level);
-        setCurHealth(health);
-        setMaxHealth(health);
-        setAttack(attack);
-        this.id = id;
-    }
-
+    
     public CreatureID getId() {
         return id;
     }
 
+    public void setId(CreatureID id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
@@ -129,6 +155,26 @@ this.setMaxHealth(12 + 3 * level);
         } else {
             throw new IllegalArgumentException("Invalid name.");
         }
+    }
+
+    public int getHealthIncrement() {
+        return healthIncrement;
+    }
+
+    public void setHealthIncrement(int healthIncrement) {
+        this.healthIncrement = healthIncrement;
+    }
+
+    public int getAttackIncrement() {
+        return attackIncrement;
+    }
+
+    public void setAttackIncrement(int attackIncrement) {
+        this.attackIncrement = attackIncrement;
+    }
+
+    public void setExperienceDrop(int experienceDrop) {
+        this.experienceDrop = experienceDrop;
     }
 
     public int getLevel() {

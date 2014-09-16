@@ -5,9 +5,8 @@ package org.dungeon.core.creatures;
  */
 public enum CreaturePreset {
 
-    BAT(CreatureType.BEAST, CreatureID.BAT, 12, 4, 5, 2, 15);
+    BAT(CreatureID.BAT, 12, 4, 5, 2, 15);
 
-    private final CreatureType type;
     private final CreatureID id;
     private final int health;
     private final int healthIncrement;
@@ -15,19 +14,13 @@ public enum CreaturePreset {
     private final int attackIncrement;
     private final int experienceDropFactor;
 
-    CreaturePreset(CreatureType type, CreatureID id, int health, int healthIncrement, int attack, int attackIncrement,
-            int experienceDropFactor) {
-        this.type = type;
+    CreaturePreset(CreatureID id, int health, int healthIncrement, int attack, int attackIncrement, int experienceDropFactor) {
         this.id = id;
         this.health = health;
         this.healthIncrement = healthIncrement;
         this.attack = attack;
         this.attackIncrement = attackIncrement;
         this.experienceDropFactor = experienceDropFactor;
-    }
-
-    public CreatureType getType() {
-        return type;
     }
 
     public CreatureID getId() {
