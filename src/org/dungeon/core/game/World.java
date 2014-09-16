@@ -28,7 +28,7 @@ import org.dungeon.utils.Constants;
 public class World implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private final HashMap<Point, Location> locations;
     private final CreatureCounter spawnCounter;
 

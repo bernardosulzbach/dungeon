@@ -21,9 +21,7 @@ package org.dungeon.core.creatures;
  */
 public enum CreatureType {
 
-    CRITTER("Critter"),
-    BEAST("Beast"),
-    HERO("Hero");
+    CRITTER("Critter"), BEAST("Beast"), HERO("Hero");
 
     private final String stringRepresentation;
 

@@ -26,7 +26,7 @@ import java.io.Serializable;
 public abstract class Item implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final String TYPE = "Item";
 
     private final String name;

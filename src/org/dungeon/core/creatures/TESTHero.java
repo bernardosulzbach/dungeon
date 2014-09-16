@@ -16,23 +16,50 @@
  */
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.game.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.StringUtils;
+
 /**
- *
  * @author Bernardo Sulzbach
  */
-public class TESTHero extends TESTCreature {
+public class TESTHero extends TESTCreature implements Levelling {
 
-    private int Experience;
-    
+    private int experience;
+
     public TESTHero() {
     }
-    
+
+    @Override
+    public int getExperience() {
+        return experience;
+
+    }
+
+    private void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    @Override
+    public int getRequiredExperience() {
+        return (int) Math.pow(getLevel(), 2) * 100;
+    }
+
+    private void levelUp() {
+        setLevel(getLevel() + 1);
+        IO.writeString(StringUtils.centerString(Constants.LEVEL_UP, '-'));
+        IO.writeString(getName() + " is now level " + getLevel() + ".");
+    }
+
+    @Override
     public void addExperience(int amount) {
         if (amount > 0) {
             setExperience(getExperience() + amount);
+            if (getExperience() >= getRequiredExperience()) {
+                levelUp();
+            }
         } else {
             throw new IllegalArgumentException("Experience amount should be positive.");
         }
     }
-
 }
