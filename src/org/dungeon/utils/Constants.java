@@ -47,6 +47,7 @@ public class Constants {
     public static final String LOAD_CONFIRM = "Do you want to load the game?";
 
     public static final String ACHIEVEMENT_UNLOCKED = "Achievement Unlocked!";
+    public static final String LEVEL_UP = "Level up!";
 
     // Two 79-character long strings used to improve readability.
     public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
