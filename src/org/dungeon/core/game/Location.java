@@ -36,8 +36,8 @@ public class Location implements Serializable {
 
     public Location(String name) {
         this.name = name;
-        this.creatures = new ArrayList<>();
-        this.inventory = new ArrayList<>();
+        this.creatures = new ArrayList<Creature>();
+        this.inventory = new ArrayList<Item>();
     }
 
     public String getName() {
@@ -135,7 +135,7 @@ public class Location implements Serializable {
      * @return a list of weapons.
      */
     public List<Weapon> getVisibleWeapons() {
-        List<Weapon> visibleWeapons = new ArrayList<>();
+        List<Weapon> visibleWeapons = new ArrayList<Weapon>();
         for (Item visibleItem : inventory) {
             if (visibleItem instanceof Weapon) {
                 visibleWeapons.add((Weapon) visibleItem);

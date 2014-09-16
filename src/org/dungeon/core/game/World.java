@@ -32,13 +32,9 @@ public class World implements Serializable {
     private final HashMap<Point, Location> locations;
     private final CreatureCounter spawnCounter;
 
-    /**
-     * @param startingLocation
-     * @param campaignPlayer
-     */
     public World() {
         spawnCounter = new CreatureCounter();
-        locations = new HashMap<>();
+        locations = new HashMap<Point, Location>();
     }
 
     public void addLocation(Location locationObject, Point coordinates) {
