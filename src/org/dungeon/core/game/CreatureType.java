@@ -22,7 +22,7 @@ package org.dungeon.core.game;
  */
 public enum CreatureType {
 
-    CRITTER(""), BEAST(""), ZOMBIE(""), VAMPIRE(""), HERO("");
+    CRITTER("Critter"), BEAST("Beast"), ZOMBIE("Zombie"), VAMPIRE("Vampire"), HERO("Hero");
 
     private final String stringRepresentation;
 
