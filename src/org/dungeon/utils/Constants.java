@@ -32,7 +32,9 @@ public class Constants {
      */
     public static final String MARGIN = "  ";
 
-    public static final String CAMPAIGN_PATH = "campaign.dungeon";
+    public static final String SAVE_PATH = "savefiles/";
+    public static final String SAVE_NAME = "campaign";
+    public static final String SAVE_EXTENSION = ".dungeon";
 
     public static final String FILE_FOUND = "A saved campaign was found.";
 

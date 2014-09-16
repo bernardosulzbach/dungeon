@@ -22,6 +22,7 @@ import org.dungeon.utils.Utils;
 public class Creature implements Serializable, Selectable {
 
     protected final CreatureID id;
+    
     protected String name;
 
     protected int level;
