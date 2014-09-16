@@ -32,7 +32,7 @@ public abstract class Item implements Serializable, Selectable {
 
     public Item(String name) {
         this.name = name;
-        this.destructible = false;
+        this.destructible = true;
     }
 
     public Item(String name, boolean destructible) {
