@@ -124,6 +124,12 @@ public class Help {
                 null,
                 "Prints the current time.",
                 "time"));
+        
+        COMMANDS.add(new CommandHelp(
+                "walk",
+                "go",
+                "Move to the direction chosen.",
+                "walk [direction]"));
     }
 
     /**
