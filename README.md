@@ -13,20 +13,6 @@ Running the game
 2. Browse to the directory where you downloaded the file.
 3. Lastly, issue `java -jar java-dungeon.jar`
 
-TODO
-----
-* Document the existing code.
-* Implement the 'pick \<name of item\>' syntax.
-* Create two new locations.
-* Remove the Location instance variable of Hero.
-
-Milestones to 0.0.1
-------------------
-- [x] Three locations (in the same row).
-- [x] Five different achievements.
-- [x] Custom save name.
-- [ ] Wrap it all up.
-
 Trivia
 ------
 This project started on 04/09/2014 (dd/mm/yyyy).
