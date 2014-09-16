@@ -47,6 +47,7 @@ public class World implements Serializable {
      */
     public void addCreature(Creature creature, Point coordinates) {
         locations.get(coordinates).addCreature(creature);
+        creature.setLocation(getLocation(coordinates));
         spawnCounter.incrementCreatureCount(creature.getId());
     }
 
