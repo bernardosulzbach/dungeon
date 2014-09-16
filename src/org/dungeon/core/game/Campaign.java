@@ -96,9 +96,11 @@ public class Campaign implements Serializable {
 //        for (int i = 0; i < 2; i++) {
 //            world.addCreature(new Creature(CreatureID.BAT, 1), startingPoint);
 //        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), startingPoint);
-        }
+
+        // Jeito atual
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), startingPoint);
+        
+        // Jeito antigo
         for (int i = 0; i < 4; i++) {
             world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
         }

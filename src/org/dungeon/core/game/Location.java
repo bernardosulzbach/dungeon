@@ -18,6 +18,7 @@ package org.dungeon.core.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.dungeon.core.counters.CreatureCounter;
@@ -61,6 +62,14 @@ public class Location implements Serializable {
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
+    }
+
+    /**
+     * Adds all the creatures in an array of creatures to this Location object.
+     * @param creatureArray the array of creatures.
+     */
+    public void addCreatureArray(Creature[] creatureArray) {
+        creatures.addAll(Arrays.asList(creatureArray));
     }
 
     public void addItem(Item item) {

@@ -49,7 +49,7 @@ public class Creature implements Serializable, Selectable {
     private Location location;
 
     public Creature() {
-        
+
     }
 
     public Creature(CreatureID id, String name, int level, int health, int attack) {
@@ -72,71 +72,85 @@ public class Creature implements Serializable, Selectable {
         return creature;
     }
 
+    public static Creature[] createCreatureArray(CreaturePreset preset, int level, int amount) {
+        Creature[] array = new Creature[amount];
+        for (int i = 0; i < amount; i++) {
+            array[i] = new Creature();
+            array[i].setId(preset.getId());
+            array[i].setName(preset.getId().getName());
+            array[i].setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+            array[i].setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
+            array[i].setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
+            array[i].setExperienceDrop(level * preset.getExperienceDropFactor());
+        }
+        return array;
+    }
+
     @Deprecated
     public Creature(CreatureID id, int level) {
         switch (id) {
-        case BAT:
-            setName("Bat");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 15;
-            this.setCurHealth(12 + 3 * level);
-            this.setMaxHealth(12 + 3 * level);
-            this.setAttack(5 + 2 * level);
-            break;
-        case BEAR:
-            setName("Bear");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 40;
-            this.setCurHealth(30 + 10 * level);
-            this.setMaxHealth(30 + 10 * level);
-            this.setAttack(13 + 7 * level);
-            break;
-        case RABBIT:
-            setName("Rabbit");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 10;
-            this.setCurHealth(10 + 2 * level);
-            this.setMaxHealth(10 + 2 * level);
-            this.setAttack(5 + 2 * level);
-            break;
-        case RAT:
-            setName("Rat");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 10;
-            this.setCurHealth(15 + 5 * level);
-            this.setMaxHealth(15 + 5 * level);
-            this.setAttack(6 + 4 * level);
-            break;
-        case SPIDER:
-            setName("Spider");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 10;
-            this.setCurHealth(17 + 8 * level);
-            this.setMaxHealth(17 + 8 * level);
-            this.setAttack(10 + 5 * level);
-            break;
-        case WOLF:
-            setName("Wolf");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 20;
-            this.setCurHealth(24 + 6 * level);
-            this.setMaxHealth(24 + 6 * level);
-            this.setAttack(10 + 4 * level);
-            break;
-        case ZOMBIE:
-            setName("Zombie");
-            this.setLevel(level);
-            this.experienceDrop = level * level * 25;
-            this.setCurHealth(30 + 6 * level);
-            this.setMaxHealth(30 + 6 * level);
-            this.setAttack(12 + 4 * level);
-            break;
-        default:
-            break;
+            case BAT:
+                setName("Bat");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 15;
+                this.setCurHealth(12 + 3 * level);
+                this.setMaxHealth(12 + 3 * level);
+                this.setAttack(5 + 2 * level);
+                break;
+            case BEAR:
+                setName("Bear");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 40;
+                this.setCurHealth(30 + 10 * level);
+                this.setMaxHealth(30 + 10 * level);
+                this.setAttack(13 + 7 * level);
+                break;
+            case RABBIT:
+                setName("Rabbit");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 10;
+                this.setCurHealth(10 + 2 * level);
+                this.setMaxHealth(10 + 2 * level);
+                this.setAttack(5 + 2 * level);
+                break;
+            case RAT:
+                setName("Rat");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 10;
+                this.setCurHealth(15 + 5 * level);
+                this.setMaxHealth(15 + 5 * level);
+                this.setAttack(6 + 4 * level);
+                break;
+            case SPIDER:
+                setName("Spider");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 10;
+                this.setCurHealth(17 + 8 * level);
+                this.setMaxHealth(17 + 8 * level);
+                this.setAttack(10 + 5 * level);
+                break;
+            case WOLF:
+                setName("Wolf");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 20;
+                this.setCurHealth(24 + 6 * level);
+                this.setMaxHealth(24 + 6 * level);
+                this.setAttack(10 + 4 * level);
+                break;
+            case ZOMBIE:
+                setName("Zombie");
+                this.setLevel(level);
+                this.experienceDrop = level * level * 25;
+                this.setCurHealth(30 + 6 * level);
+                this.setMaxHealth(30 + 6 * level);
+                this.setAttack(12 + 4 * level);
+                break;
+            default:
+                break;
         }
         this.id = id;
     }
-    
+
     public CreatureID getId() {
         return id;
     }
@@ -144,7 +158,7 @@ public class Creature implements Serializable, Selectable {
     public void setId(CreatureID id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -316,8 +330,8 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature
+     * will attack with its bare hands.
      *
      * @param target
      */
