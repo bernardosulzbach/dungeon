@@ -16,7 +16,10 @@
  */
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.core.creatures.enums.CreaturePreset;
 import java.io.Serializable;
+import org.dungeon.core.creatures.enums.CreatureType;
 
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
@@ -33,6 +36,7 @@ public class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
 
+    private CreatureType type;
     private CreatureID id;
 
     private String name;
@@ -81,6 +85,14 @@ public class Creature implements Serializable, Selectable {
             array[i] = createCreature(preset, level);
         }
         return array;
+    }
+
+    public CreatureType getType() {
+        return type;
+    }
+
+    public void setType(CreatureType type) {
+        this.type = type;
     }
 
     //
@@ -328,22 +340,22 @@ public class Creature implements Serializable, Selectable {
 
     /**
      * Checks if the creature is dead.
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isDead() {
         return getCurHealth() == 0;
     }
-    
+
     /**
      * Checks if the creature has a weapon.
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean hasWeapon() {
         return getWeapon() != null;
     }
-    
+
     //
     //
     // Selectable implementation.

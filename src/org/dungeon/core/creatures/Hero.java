@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.creatures.enums.CreatureID;
 import java.util.List;
 import org.dungeon.core.counters.CounterMap;
 

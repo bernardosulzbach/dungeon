@@ -114,7 +114,7 @@ public class Game {
                     Creature target = campaign.getHero().selectTarget(inputWords);
                     if (target != null) {
                         // Add this battle to the battle counter.
-                        campaign.getBattleCounter().incrementCounter(target.getId());
+                        campaign.addBattle(target);
                         Game.battle(campaign.getHero(), target);
                     }
                     return true;

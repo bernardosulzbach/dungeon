@@ -25,7 +25,7 @@ import java.util.List;
 import org.dungeon.core.counters.CounterMap;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.utils.Constants;
 
 public class Location implements Serializable {
