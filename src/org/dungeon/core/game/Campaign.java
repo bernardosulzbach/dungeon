@@ -107,31 +107,32 @@ public final class Campaign implements Serializable {
 
     private World createDemoWorld() {
         World world = new World();
-        Point startingPoint = new Point(0, 0);
-        world.addLocation(new Location("Forest"), startingPoint);
+        
+        // Create a location on the hero's position.
+        world.addLocation(new Location("Forest"), heroPosition);
         // The hero
-        world.addCreature(campaignHero, startingPoint);
+        world.addCreature(campaignHero, heroPosition);
         // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), startingPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), startingPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), startingPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), startingPoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), heroPosition);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), heroPosition);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), heroPosition);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), heroPosition);
 
         //Items
-        world.addItem(new Weapon("Spear", 10, 5), startingPoint);
+        world.addItem(new Weapon("Spear", 10, 5), heroPosition);
 
-        Point upPoint = new Point(0, 1);
-        world.addLocation(new Location("Clearing"), upPoint);
+        Point middlePoint = new Point(0, 1);
+        world.addLocation(new Location("Clearing"), middlePoint);
 
         //Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), upPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), upPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), upPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), upPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 1), upPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), middlePoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), middlePoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), middlePoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), middlePoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), middlePoint);
 
         // Items
-        world.addItem(new Weapon("Dagger", 15, 20), upPoint);
+        world.addItem(new Weapon("Dagger", 15, 20), middlePoint);
 
         Point rightPoint = new Point(1, 1);
         world.addLocation(new Location("Road to The Fort"), rightPoint);
@@ -143,7 +144,7 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), rightPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), rightPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), rightPoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), middlePoint);
 
         // Items
         world.addItem(new Weapon("Mace", 18, 15), rightPoint);
@@ -157,7 +158,7 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 2), leftPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), leftPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), leftPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), leftPoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), leftPoint);
 
         //Items
         world.addItem(new Weapon("Longsword", 25, 17), leftPoint);

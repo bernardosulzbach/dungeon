@@ -64,8 +64,7 @@ public class Hero extends Creature {
     }
 
     /**
-     * Print the name of the player's current location and list all creatures
-     * and items the player can see.
+     * Print the name of the player's current location and list all creatures and items the player can see.
      */
     public void look() {
         StringBuilder builder = new StringBuilder();
