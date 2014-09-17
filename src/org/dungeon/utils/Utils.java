@@ -55,10 +55,21 @@ public class Utils {
      * Method that let the player select a Selectable object from a List.
      */
     public static <T extends Selectable> T selectFromList(List<T> list) {
-        StringBuilder builder = new StringBuilder("0. Abort\n");
+        int size = list.size();
+        String indexFormat;
+        if (list.isEmpty()) {
+            IO.writeString("No options available.");
+            return null;
+        } else if (size < 10) {
+            indexFormat = "%1d";
+        } else {
+            indexFormat = "%2d";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(indexFormat, 0)).append(". ").append("Abort").append('\n');
         int index = 1;
         for (Selectable aSelectable : list) {
-            builder.append(index).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
+            builder.append(String.format(indexFormat, index)).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
             index++;
         }
         IO.writeString(builder.toString());

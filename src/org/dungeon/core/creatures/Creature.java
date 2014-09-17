@@ -66,10 +66,11 @@ public class Creature implements Serializable, Selectable {
         Creature creature = new Creature();
         creature.setId(preset.getId());
         creature.setName(preset.getId().getName());
+        creature.setLevel(level);
+        creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
-        creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         return creature;
     }
 
