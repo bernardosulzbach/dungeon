@@ -25,8 +25,9 @@ import org.dungeon.io.IO;
 public class Beast extends Creature {
 
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to
+     * perform the attack. Otherwise, the creature will attack with its bare
+     * hands.
      *
      * @param target
      */

@@ -303,8 +303,9 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the creature has enough gold
-     * before subtracting any.
+     * Reduces the creature gold by a given amount. Gold will never become
+     * negative, so you should check that the creature has enough gold before
+     * subtracting any.
      */
     public void subtractGold(int amount) {
         if (this.getGold() - amount > 0) {
@@ -343,8 +344,9 @@ public class Creature implements Serializable, Selectable {
     //
     //
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to
+     * perform the attack. Otherwise, the creature will attack with its bare
+     * hands.
      *
      * @param target
      */

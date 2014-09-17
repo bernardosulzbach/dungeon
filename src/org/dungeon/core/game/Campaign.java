@@ -108,75 +108,58 @@ public final class Campaign implements Serializable {
     private World createDemoWorld() {
         World world = new World();
         Point startingPoint = new Point(0, 0);
-        world.addLocation(new Location("Clearing"), startingPoint);
+        world.addLocation(new Location("Forest"), startingPoint);
         // The hero
         world.addCreature(campaignHero, startingPoint);
         // Beasts
-
-        // Jeito atual
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), startingPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), startingPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), startingPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), startingPoint);
 
-        // Jeito antigo
-        for (int i = 0; i < 4; i++) {
-            world.addCreature(new Creature(CreatureID.RABBIT, 1), startingPoint);
-        }
+        //Items
+        world.addItem(new Weapon("Spear", 10, 5), startingPoint);
 
-        for (int i = 0; i < 3; i++) {
-            world.addCreature(new Creature(CreatureID.RAT, 1), startingPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.SPIDER, 1), startingPoint);
-        }
-        world.addCreature(new Creature(CreatureID.WOLF, 1), startingPoint);
+        Point upPoint = new Point(0, 1);
+        world.addLocation(new Location("Clearing"), upPoint);
+
+        //Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), upPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), upPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), upPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), upPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 1), upPoint);
+
         // Items
-        world.addItem(new Weapon("Dagger", 15, 20), startingPoint);
+        world.addItem(new Weapon("Dagger", 15, 20), upPoint);
 
-        Point rightPoint = new Point(1, 0);
-
+        Point rightPoint = new Point(1, 1);
         world.addLocation(new Location("Road to The Fort"), rightPoint);
-        // Beasts
-        for (int i = 0; i < 4; i++) {
-            world.addCreature(new Creature(CreatureID.RAT, 1), rightPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.RABBIT, 1), rightPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.BEAR, 1), rightPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.WOLF, 1), rightPoint);
-        }
-        for (int i = 0; i < 3; i++) {
-            world.addCreature(new Creature(CreatureID.ZOMBIE, 1), rightPoint);
-        }
-        world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);
+
+        //Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 4), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), rightPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), rightPoint);
+
         // Items
         world.addItem(new Weapon("Mace", 18, 15), rightPoint);
 
-        Point leftPoint = new Point(-1, 0);
-
+        Point leftPoint = new Point(-1, 1);
         world.addLocation(new Location("Cave"), leftPoint);
 
-        for (int i = 0; i < 3; i++) {
-            world.addCreature(new Creature(CreatureID.RAT, 1), leftPoint);
-        }
-        for (int i = 0; i < 4; i++) {
-            world.addCreature(new Creature(CreatureID.BAT, 1), leftPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.ZOMBIE, 1), leftPoint);
-        }
-        for (int i = 0; i < 3; i++) {
-            world.addCreature(new Creature(CreatureID.BEAR, 1), leftPoint);
-        }
-        for (int i = 0; i < 2; i++) {
-            world.addCreature(new Creature(CreatureID.WOLF, 1), leftPoint);
-        }
-        for (int i = 0; i < 4; i++) {
-            world.addCreature(new Creature(CreatureID.SPIDER, 1), rightPoint);
-        }
+        //Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), leftPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 5), leftPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 2), leftPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), leftPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), leftPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 1), leftPoint);
 
+        //Items
         world.addItem(new Weapon("Longsword", 25, 17), leftPoint);
 
         return world;

@@ -106,9 +106,12 @@ public class Weapon extends Item implements Serializable, Selectable {
      */
     public final boolean isMiss() {
         /**
-         * Implementation info. 0, for instance, will never be greater than 0 (the smallest possible value on the right-hand side). So a
-         * missRate of 0 works as intended [isMiss always returns false]. 100 will, on the other hand, always be bigger than 99 (the biggest
-         * possible value on the right-hand side). So a missRate of 100 also works as intended [isMiss always returns true].
+         * Implementation info. 0, for instance, will never be greater than 0
+         * (the smallest possible value on the right-hand side). So a missRate
+         * of 0 works as intended [isMiss always returns false]. 100 will, on
+         * the other hand, always be bigger than 99 (the biggest possible value
+         * on the right-hand side). So a missRate of 100 also works as intended
+         * [isMiss always returns true].
          */
         return missRate > Game.RANDOM.nextInt(100);
     }
