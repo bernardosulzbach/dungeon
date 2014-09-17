@@ -367,7 +367,7 @@ public class Creature implements Serializable, Selectable {
         IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
     }
 
-    private void takeDamage(int damage) {
+    public void takeDamage(int damage) {
         if (damage > getCurHealth()) {
             setCurHealth(0);
         } else {

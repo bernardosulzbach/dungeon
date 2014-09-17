@@ -18,8 +18,8 @@ package org.dungeon.core.game;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.io.IO;
@@ -30,10 +30,10 @@ public class World implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final HashMap<Point, Location> locations;
-    private final CreatureCounter spawnCounter;
+    private final CounterMap<CreatureID> spawnCounter;
 
     public World() {
-        spawnCounter = new CreatureCounter();
+        spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
     }
 
@@ -47,7 +47,7 @@ public class World implements Serializable {
     public void addCreature(Creature creature, Point coordinates) {
         locations.get(coordinates).addCreature(creature);
         creature.setLocation(getLocation(coordinates));
-        spawnCounter.incrementCreatureCount(creature.getId());
+        spawnCounter.incrementCounter(creature.getId());
     }
 
     public void addCreatureArray(Creature[] creatures, Point coordinates) {
@@ -55,7 +55,7 @@ public class World implements Serializable {
         for (Creature creature : creatures) {
             creature.setLocation(getLocation(coordinates));
         }
-        spawnCounter.incrementCreatureCount(creatures[0].getId(), creatures.length);
+        spawnCounter.incrementCounter(creatures[0].getId(), creatures.length);
     }
 
     /**
@@ -94,8 +94,8 @@ public class World implements Serializable {
      */
     public void printSpawnCounters() {
         StringBuilder sb = new StringBuilder();
-        for (CreatureID id : spawnCounter.getKeySet()) {
-            sb.append(Constants.MARGIN).append(String.format("%-20s%10d\n", id, spawnCounter.getCreatureCount(id)));
+        for (CreatureID id : spawnCounter.keySet()) {
+            sb.append(Constants.MARGIN).append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
         }
         IO.writeString(sb.toString());
     }

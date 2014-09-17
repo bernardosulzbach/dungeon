@@ -17,8 +17,8 @@
 package org.dungeon.core.achievements;
 
 import java.io.Serializable;
+import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -33,7 +33,7 @@ public class Achievement implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final CreatureCounter requirements;
+    private final CounterMap<CreatureID> requirements;
     private final String name;
     private final String info;
     private boolean unlocked;
@@ -41,10 +41,10 @@ public class Achievement implements Serializable {
     public Achievement(String name, String info, CreatureID id, int amount) {
         this.name = name;
         this.info = info;
-        this.requirements = new CreatureCounter(id, amount);
+        this.requirements = new CounterMap(id, amount);
     }
 
-    public Achievement(String name, String info, CreatureCounter requirements) {
+    public Achievement(String name, String info, CounterMap requirements) {
         this.name = name;
         this.info = info;
         this.requirements = requirements;
@@ -73,10 +73,10 @@ public class Achievement implements Serializable {
      *
      * @return true if the achievement was unlocked. False otherwise.
      */
-    public boolean update(CreatureCounter campaignCounters) {
+    public boolean update(CounterMap<CreatureID> campaignCounters) {
         if (!unlocked) {
-            for (CreatureID requirement : requirements.getKeySet()) {
-                if (campaignCounters.getCreatureCount(requirement) < requirements.getCreatureCount(requirement)) {
+            for (CreatureID requirement : requirements.keySet()) {
+                if (campaignCounters.getCounter(requirement) < requirements.getCounter(requirement)) {
                     // The campaign counter does not match the requirement.
                     return false;
                 }

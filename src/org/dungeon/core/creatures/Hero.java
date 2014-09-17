@@ -17,8 +17,8 @@
 package org.dungeon.core.creatures;
 
 import java.util.List;
+import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.game.Item;
 import org.dungeon.core.game.Weapon;
 import org.dungeon.io.IO;
@@ -75,14 +75,14 @@ public class Hero extends Creature {
         if (getLocation().getCreatureCount() == 1) {
             builder.append('\n').append(Constants.MARGIN).append(Constants.NO_CREATURES);
         } else {
-            CreatureCounter counter = new CreatureCounter();
+            CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
             for (Creature creature : getLocation().getCreatures()) {
                 if (creature.getId() != CreatureID.HERO) {
-                    counter.incrementCreatureCount(creature.getId());
+                    counter.incrementCounter(creature.getId());
                 }
             }
-            for (CreatureID id : counter.getKeySet()) {
-                String line = String.format("%-20s(%d)", id.toString(), counter.getCreatureCount(id));
+            for (CreatureID id : counter.keySet()) {
+                String line = String.format("%-20s(%d)", id.toString(), counter.getCounter(id));
                 builder.append('\n').append(Constants.MARGIN).append(line);
             }
         }

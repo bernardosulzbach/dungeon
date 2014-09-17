@@ -37,26 +37,26 @@ public class Help {
                 "achievements"));
 
         COMMANDS.add(new CommandHelp(
-                "commands", 
-                null, 
-                "Display a list of valid commands.", 
+                "commands",
+                null,
+                "Display a list of valid commands.",
                 "commands"));
 
         COMMANDS.add(new CommandHelp(
-                "date", 
+                "date",
                 null,
-                "Prints the current date.", 
+                "Prints the current date.",
                 "date"));
 
         COMMANDS.add(new CommandHelp(
                 "destroy",
-                "crash", 
-                "Destroys a item on the ground.", 
+                "crash",
+                "Destroys a item on the ground.",
                 "destroy [item]"));
 
         COMMANDS.add(new CommandHelp(
-                "drop", 
-                null, 
+                "drop",
+                null,
                 "Drops your current weapon.",
                 "drop"));
 
@@ -73,10 +73,10 @@ public class Help {
                 "kill", "attack", "Attacks the target chosen by the player.", "kill [target]"));
 
         COMMANDS.add(new CommandHelp(
-                "look", "peek", "Looks around, describing what your character can see.", "look"));
+                "look", "peek", "Describes what your character can see.", "look"));
 
         COMMANDS.add(new CommandHelp(
-                "pick", "loot", "Enters item chooser to swap your current weapon.", "pick"));
+                "pick", "loot", "Swap your current weapon.", "pick"));
 
         COMMANDS.add(new CommandHelp(
                 "rest", null, "Rest until you are completely healed.", "rest"));
@@ -88,7 +88,7 @@ public class Help {
                 "spawns", null, "Shows the spawn counters.", "spawns"));
 
         COMMANDS.add(new CommandHelp(
-                "status", null, "Prints the campaign's character current status.", "status"));
+                "status", null, "Prints the hero's current status.", "status"));
 
         COMMANDS.add(new CommandHelp(
                 "time", null, "Prints the current time.", "time"));
