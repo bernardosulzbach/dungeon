@@ -16,6 +16,8 @@
  */
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.io.IO;
 
 /**
@@ -23,6 +25,10 @@ import org.dungeon.io.IO;
  * @author Bernardo Sulzbach
  */
 public class Beast extends Creature {
+
+    public Beast(CreatureID id, String name) {
+        super(CreatureType.BEAST, id, name);
+    }
 
     /**
      * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
@@ -34,14 +40,5 @@ public class Beast extends Creature {
     public void hit(Creature target) {
         target.takeDamage(getAttack());
         IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        if (damage > getCurHealth()) {
-            setCurHealth(0);
-        } else {
-            setCurHealth(getCurHealth() - damage);
-        }
     }
 }

@@ -16,6 +16,9 @@
  */
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
 /**
@@ -25,11 +28,21 @@ import org.dungeon.io.IO;
  */
 public class Critter extends Creature {
 
-    @Override
-    public void hit(Creature target) {
-        IO.writeString(getName() + " does nothing.");
+    public Critter(CreatureID id, String name) {
+        super(CreatureType.CRITTER, id, name);
     }
 
+    @Override
+    public void hit(Creature target) {
+        // Two different output strings are possible for critters.
+        if (Game.RANDOM.nextBoolean()) {
+            IO.writeString(getName() + " does nothing.");
+        } else {
+            IO.writeString(getName() + " tries to run away.");
+        }
+    }
+
+    @Override
     public void takeDamage(int damage) {
         // Attacks against critters have 100% bonus damage.
         damage = damage * 2;

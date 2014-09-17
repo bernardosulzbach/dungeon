@@ -16,9 +16,11 @@
  */
 package org.dungeon.core.creatures;
 
+import java.util.ArrayList;
 import org.dungeon.core.creatures.enums.CreatureID;
 import java.util.List;
 import org.dungeon.core.counters.CounterMap;
+import org.dungeon.core.creatures.enums.CreatureType;
 
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
@@ -34,8 +36,7 @@ public class Hero extends Creature {
     private static final long serialVersionUID = 1L;
 
     public Hero(String name) {
-        setId(CreatureID.HERO);
-        setName(name);
+        super(CreatureType.HERO, CreatureID.HERO, name);
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
@@ -105,7 +106,8 @@ public class Hero extends Creature {
 
     public Creature selectTarget(String[] inputWords) {
         if (inputWords.length == 1) {
-            List<Creature> locationCreatures = getLocation().getCreatures();
+            List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
+            locationCreatures.remove(this);
             return Utils.selectFromList(locationCreatures);
         } else {
             return getLocation().findCreature(inputWords[1]);
@@ -201,6 +203,34 @@ public class Hero extends Creature {
             // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
             printHeroStatus();
         }
+    }
+
+    @Override
+    /**
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
+     * its bare hands.
+     *
+     * @param target
+     */
+    public void hit(Creature target) {
+        int hitDamage;
+        // Check that there is a weapon and that it is not broken.
+        if (getWeapon() != null && !getWeapon().isBroken()) {
+            // Check if the attack is a miss.
+            if (getWeapon().isMiss()) {
+                IO.writeString(getName() + " misses.");
+                return;
+            } else {
+                hitDamage = getWeapon().getDamage();
+                target.takeDamage(hitDamage);
+                getWeapon().decrementIntegrity();
+            }
+        } else {
+            hitDamage = this.getAttack();
+            target.takeDamage(hitDamage);
+        }
+        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
+
     }
 
 }

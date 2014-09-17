@@ -25,21 +25,19 @@ import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Utils;
 
 /**
  * The Creature class.
  *
  * @author Bernardo Sulzbach
  */
-public class Creature implements Serializable, Selectable {
+public abstract class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
 
-    private CreatureType type;
-    private CreatureID id;
-
-    private String name;
+    private final CreatureType type;
+    private final CreatureID id;
+    private final String name;
 
     private int level;
     private int experience;
@@ -57,9 +55,10 @@ public class Creature implements Serializable, Selectable {
     private Weapon weapon;
     private Location location;
 
-    // The empty constructor
-    public Creature() {
-
+    public Creature(CreatureType type, CreatureID id, String name) {
+        this.type = type;
+        this.id = id;
+        this.name = name;
     }
 
     //
@@ -68,9 +67,17 @@ public class Creature implements Serializable, Selectable {
     //
     //
     public static Creature createCreature(CreaturePreset preset, int level) {
-        Creature creature = new Creature();
-        creature.setId(preset.getId());
-        creature.setName(preset.getId().getName());
+        Creature creature;
+        switch (preset.getType()) {
+            case CRITTER:
+                creature = new Critter(preset.getId(), preset.getId().getName());
+                break;
+            case BEAST:
+                creature = new Beast(preset.getId(), preset.getId().getName());
+                break;
+            default:
+                return null;
+        }
         creature.setLevel(level);
         creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
@@ -87,37 +94,21 @@ public class Creature implements Serializable, Selectable {
         return array;
     }
 
-    public CreatureType getType() {
-        return type;
-    }
-
-    public void setType(CreatureType type) {
-        this.type = type;
-    }
-
     //
     //
     // Getters and setters.
     //
     //
+    public CreatureType getType() {
+        return type;
+    }
+
     public CreatureID getId() {
         return id;
     }
 
-    public void setId(CreatureID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public final void setName(String name) {
-        if (Utils.isValidName(name)) {
-            this.name = name;
-        } else {
-            throw new IllegalArgumentException("Invalid name.");
-        }
     }
 
     public int getLevel() {
@@ -290,31 +281,7 @@ public class Creature implements Serializable, Selectable {
     // Combat methods.
     //
     //
-    /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
-     *
-     * @param target
-     */
-    public void hit(Creature target) {
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (getWeapon() != null && !getWeapon().isBroken()) {
-            // Check if the attack is a miss.
-            if (getWeapon().isMiss()) {
-                IO.writeString(getName() + " missed.");
-                return;
-            } else {
-                hitDamage = getWeapon().getDamage();
-                target.takeDamage(hitDamage);
-                getWeapon().decrementIntegrity();
-            }
-        } else {
-            hitDamage = this.getAttack();
-            target.takeDamage(hitDamage);
-        }
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-    }
+    public abstract void hit(Creature target);
 
     public void takeDamage(int damage) {
         if (damage > getCurHealth()) {
@@ -363,7 +330,7 @@ public class Creature implements Serializable, Selectable {
     //
     @Override
     public String toSelectionEntry() {
-        return String.format("%-20s Level %2d", getName(), getLevel());
+        return String.format("%-12s%-24s Level %2d", String.format("[%s]", getType()), getName(), getLevel());
     }
 
 }
