@@ -61,7 +61,10 @@ public class Help {
                 "drop"));
 
         COMMANDS.add(new CommandHelp(
-                "exit", "quit", "Exits the game.", "exit"));
+                "exit",
+                "quit",
+                "Exits the game.",
+                "exit"));
 
         COMMANDS.add(new CommandHelp(
                 "help", "?", "Displays the help text for a given command.", "help [command]"));

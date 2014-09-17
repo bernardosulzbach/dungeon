@@ -5,14 +5,17 @@ package org.dungeon.core.creatures.enums;
  */
 public enum CreaturePreset {
 
-    BAT(CreatureID.BAT, 12, 4, 6, 4, 15),
-    BEAR(CreatureID.BEAR, 20, 10, 10, 7, 40),
-    RABBIT(CreatureID.RABBIT, 10, 5, 3, 2, 10),
-    RAT(CreatureID.RAT, 14, 4, 8, 5, 20),
-    SPIDER(CreatureID.SPIDER, 16, 6, 7, 7, 25),
-    WOLF(CreatureID.WOLF, 18, 7, 6, 8, 30),
-    ZOMBIE(CreatureID.ZOMBIE, 22, 8, 7, 8, 35);
+    FROG(CreatureType.CRITTER, CreatureID.FROG, 10, 5, 3, 2, 12),
+    RABBIT(CreatureType.CRITTER, CreatureID.RABBIT, 10, 5, 3, 2, 10),
+    
+    BAT(CreatureType.BEAST, CreatureID.BAT, 12, 4, 6, 4, 15),
+    BEAR(CreatureType.BEAST, CreatureID.BEAR, 20, 10, 10, 7, 40),
+    RAT(CreatureType.BEAST, CreatureID.RAT, 14, 4, 8, 5, 20),
+    SPIDER(CreatureType.BEAST, CreatureID.SPIDER, 16, 6, 7, 7, 25),
+    WOLF(CreatureType.BEAST, CreatureID.WOLF, 18, 7, 6, 8, 30),
+    ZOMBIE(CreatureType.BEAST, CreatureID.ZOMBIE, 22, 8, 7, 8, 35);
 
+    private final CreatureType type;
     private final CreatureID id;
     private final int health;
     private final int healthIncrement;
@@ -20,13 +23,18 @@ public enum CreaturePreset {
     private final int attackIncrement;
     private final int experienceDropFactor;
 
-    CreaturePreset(CreatureID id, int health, int healthIncrement, int attack, int attackIncrement, int experienceDropFactor) {
+    CreaturePreset(CreatureType type, CreatureID id, int health, int healthIncrement, int attack, int attackIncrement, int experienceDropFactor) {
+        this.type = type;
         this.id = id;
         this.health = health;
         this.healthIncrement = healthIncrement;
         this.attack = attack;
         this.attackIncrement = attackIncrement;
         this.experienceDropFactor = experienceDropFactor;
+    }
+
+    public CreatureType getType() {
+        return type;
     }
 
     public CreatureID getId() {

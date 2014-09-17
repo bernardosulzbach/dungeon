@@ -18,7 +18,8 @@ package org.dungeon.core.creatures.enums;
 
 public enum CreatureID {
 
-    BAT("Bat"), BEAR("Bear"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"), SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
+    BAT("Bat"), BEAR("Bear"), FROG("Frog"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"),
+    SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
 
     private final String name;
 
