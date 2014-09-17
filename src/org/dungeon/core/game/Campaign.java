@@ -111,7 +111,7 @@ public final class Campaign implements Serializable {
 
         // Create a location on the hero's position.
         Point startingPoint = new Point(0, 0);
-        
+
         world.addLocation(new Location("Forest"), startingPoint);
         // The hero
         world.addCreature(campaignHero, startingPoint);

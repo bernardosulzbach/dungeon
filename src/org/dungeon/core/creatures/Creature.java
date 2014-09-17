@@ -328,22 +328,22 @@ public class Creature implements Serializable, Selectable {
 
     /**
      * Checks if the creature is dead.
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isDead() {
         return getCurHealth() == 0;
     }
-    
+
     /**
      * Checks if the creature has a weapon.
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean hasWeapon() {
         return getWeapon() != null;
     }
-    
+
     //
     //
     // Selectable implementation.
