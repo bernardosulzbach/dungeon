@@ -1,11 +1,18 @@
 package org.dungeon.core.creatures;
 
 /**
- * An enumerated type of presets for creature creation. Created by Bernardo Sulzbach on 16/09/14.
+ * An enumerated type of presets for creature creation. Created by Bernardo
+ * Sulzbach on 16/09/14.
  */
 public enum CreaturePreset {
 
-    BAT(CreatureID.BAT, 12, 4, 5, 2, 15);
+    BAT(CreatureID.BAT, 12, 4, 6, 4, 15),
+    BEAR(CreatureID.BEAR, 20, 10, 10, 7, 40),
+    RABBIT(CreatureID.RABBIT, 10, 5, 3, 2, 10),
+    RAT(CreatureID.RAT, 14, 4, 8, 5, 20),
+    SPIDER(CreatureID.SPIDER, 16, 6, 7, 7, 25),
+    WOLF(CreatureID.WOLF, 18, 7, 6, 8, 30),
+    ZOMBIE(CreatureID.ZOMBIE, 22, 8, 7, 8, 35);
 
     private final CreatureID id;
     private final int health;
