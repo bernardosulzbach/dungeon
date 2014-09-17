@@ -103,8 +103,8 @@ public class Hero extends Creature {
     }
 
     public Creature selectTarget(String[] inputWords) {
-        List<Creature> locationCreatures = getLocation().getCreatures();
         if (inputWords.length == 1) {
+            List<Creature> locationCreatures = getLocation().getCreatures();
             return Utils.selectFromList(locationCreatures);
         } else {
             return getLocation().findCreature(inputWords[1]);
