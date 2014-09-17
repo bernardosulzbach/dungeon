@@ -16,6 +16,8 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.core.items.Weapon;
+import org.dungeon.core.items.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

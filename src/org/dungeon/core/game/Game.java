@@ -66,12 +66,10 @@ public class Game {
     }
 
     /**
-     * Let the player play a turn. Many actions are not considered a turn (e.g.:
-     * look).
+     * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
      *
      * @param campaign
-     * @return false if the player issued an exit command. True if the player
-     * played a turn.
+     * @return false if the player issued an exit command. True if the player played a turn.
      */
     private static boolean getTurn(Campaign campaign) {
         String[] inputWords;
@@ -153,7 +151,7 @@ public class Game {
                 // The user issued a command, but it was not recognized.
                 default:
                     if (!inputWords[0].isEmpty()) {
-                        printInvalidCommandMessage(inputWords[0]);
+                        Utils.printInvalidCommandMessage(inputWords[0]);
                     } else {
                         // The user pressed enter without typing anything.
                         IO.writeString(Constants.INVALID_INPUT);
@@ -161,13 +159,6 @@ public class Game {
                     break;
             }
         }
-    }
-
-    /**
-     * Prints a message reporting the usage of an invalid command.
-     */
-    private static void printInvalidCommandMessage(String command) {
-        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
     }
 
     /**

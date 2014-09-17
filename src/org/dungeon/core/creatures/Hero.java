@@ -19,8 +19,8 @@ package org.dungeon.core.creatures;
 import java.util.List;
 import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.game.Item;
-import org.dungeon.core.game.Weapon;
+import org.dungeon.core.items.Item;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -115,14 +115,19 @@ public class Hero extends Creature {
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] words) {
-        Item selectedWeapon = Utils.selectFromList(getLocation().getItems());
-        if (selectedWeapon != null) {
-            if (selectedWeapon instanceof Weapon) {
-                if (getWeapon() != null) {
+        Item selectedItem;
+        if (words.length == 1) {
+            selectedItem = Utils.selectFromList(getLocation().getItems());
+        } else {
+            selectedItem = getLocation().findItem(words[1]);
+        }
+        if (selectedItem != null) {
+            if (selectedItem instanceof Weapon) {
+                if (hasWeapon()) {
                     dropWeapon();
                 }
-                equipWeapon((Weapon) selectedWeapon);
-                getLocation().removeItem(selectedWeapon);
+                equipWeapon((Weapon) selectedItem);
+                getLocation().removeItem(selectedItem);
             } else {
                 IO.writeString("You cannot equip that.");
             }

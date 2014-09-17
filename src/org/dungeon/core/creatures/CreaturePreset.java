@@ -1,8 +1,7 @@
 package org.dungeon.core.creatures;
 
 /**
- * An enumerated type of presets for creature creation. Created by Bernardo
- * Sulzbach on 16/09/14.
+ * An enumerated type of presets for creature creation. Created by Bernardo Sulzbach on 16/09/14.
  */
 public enum CreaturePreset {
 

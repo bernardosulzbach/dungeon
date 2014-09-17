@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.core.items.Weapon;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +108,7 @@ public final class Campaign implements Serializable {
 
     private World createDemoWorld() {
         World world = new World();
-        
+
         // Create a location on the hero's position.
         world.addLocation(new Location("Forest"), heroPosition);
         // The hero

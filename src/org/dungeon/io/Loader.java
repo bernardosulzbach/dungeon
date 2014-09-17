@@ -45,8 +45,7 @@ public class Loader {
     }
 
     /**
-     * Handles all the saving process, assigning a new name for the save file,
-     * if provided.
+     * Handles all the saving process, assigning a new name for the save file, if provided.
      */
     public static void saveGameRoutine(Campaign campaign, String[] inputWords) {
         if (inputWords.length == 1) {
