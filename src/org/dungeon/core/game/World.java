@@ -77,6 +77,7 @@ public class World implements Serializable {
         if (locations.get(origin).hasCreature(creature)) {
             locations.get(origin).removeCreature(creature);
             locations.get(destination).addCreature(creature);
+            System.out.printf("You arrive at %s.\n",locations.get(destination).getName());
         } else {
             throw new IllegalArgumentException("Creature is not in the origin.");
         }
