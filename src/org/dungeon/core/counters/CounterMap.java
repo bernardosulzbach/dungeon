@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Counter class that maps a generic key to an integer and provides methods
- * manipulate this integer.
+ * Counter class that maps a generic key to an integer and provides methods manipulate this integer.
  *
  * @author Bernardo Sulzbach
  */
@@ -66,8 +65,7 @@ public class CounterMap<K> implements Serializable {
     /**
      * Increments the count of a given key in the CounterMap by a given amount.
      *
-     * If the key does not exist, it will be created an assigned the added
-     * value.
+     * If the key does not exist, it will be created an assigned the added value.
      *
      * @return the final value of the counter.
      */
@@ -83,8 +81,7 @@ public class CounterMap<K> implements Serializable {
     }
 
     /**
-     * Retrieves the counter mapped to a certain key. If no counter is mapped to
-     * the provided key, 0 will be returned.
+     * Retrieves the counter mapped to a certain key. If no counter is mapped to the provided key, 0 will be returned.
      */
     public int getCounter(K key) {
         Integer counter = map.get(key);

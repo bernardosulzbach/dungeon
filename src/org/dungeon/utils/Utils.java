@@ -93,4 +93,11 @@ public class Utils {
         return list.get(choice - 1);
     }
 
+    /**
+     * Prints a message reporting the usage of an invalid command.
+     */
+    public static void printInvalidCommandMessage(String command) {
+        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
+    }
+
 }

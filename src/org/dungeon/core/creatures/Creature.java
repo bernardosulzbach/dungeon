@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
-import org.dungeon.core.game.Weapon;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
@@ -53,6 +53,7 @@ public class Creature implements Serializable, Selectable {
     private Weapon weapon;
     private Location location;
 
+    // The empty constructor
     public Creature() {
 
     }
@@ -238,9 +239,8 @@ public class Creature implements Serializable, Selectable {
     }
 
     /**
-     * Reduces the creature gold by a given amount. Gold will never become
-     * negative, so you should check that the creature has enough gold before
-     * subtracting any.
+     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the creature has enough gold
+     * before subtracting any.
      */
     public void subtractGold(int amount) {
         if (this.getGold() - amount > 0) {
@@ -279,9 +279,8 @@ public class Creature implements Serializable, Selectable {
     //
     //
     /**
-     * Try to hit a target. If the creature has a weapon, it will be used to
-     * perform the attack. Otherwise, the creature will attack with its bare
-     * hands.
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
+     * its bare hands.
      *
      * @param target
      */
@@ -319,7 +318,7 @@ public class Creature implements Serializable, Selectable {
     //
     //
     /**
-     * Check if the creature is alive.
+     * Checks if the creature is alive.
      *
      * @return
      */
@@ -327,6 +326,24 @@ public class Creature implements Serializable, Selectable {
         return getCurHealth() > 0;
     }
 
+    /**
+     * Checks if the creature is dead.
+     * 
+     * @return 
+     */
+    public boolean isDead() {
+        return getCurHealth() == 0;
+    }
+    
+    /**
+     * Checks if the creature has a weapon.
+     * 
+     * @return 
+     */
+    public boolean hasWeapon() {
+        return getWeapon() != null;
+    }
+    
     //
     //
     // Selectable implementation.

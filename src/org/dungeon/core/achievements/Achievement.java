@@ -69,8 +69,7 @@ public class Achievement implements Serializable {
     /**
      * Updates the state of the Achievement using another counter.
      * <p/>
-     * If all the requirements are met, the achievement is unlocked and its name
-     * and info are displayed to to player.
+     * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
      *
      * @return true if the achievement was unlocked. False otherwise.
      */

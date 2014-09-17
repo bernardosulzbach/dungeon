@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.core.items.Item;
 import java.io.Serializable;
 import java.util.HashMap;
 import org.dungeon.core.counters.CounterMap;
