@@ -22,7 +22,7 @@ import java.util.HashMap;
 import org.dungeon.core.counters.CounterMap;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
