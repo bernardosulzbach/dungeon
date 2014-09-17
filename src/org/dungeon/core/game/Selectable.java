@@ -21,5 +21,10 @@ package org.dungeon.core.game;
  */
 public interface Selectable {
 
-    public String toSelectionEntry();
+    /*
+     * In the Chapter 9 of the Java Language Specification: declare an interface’s methods without keywords public and abstract, because
+     * they are redundant in interface method declarations. Similarly, constants should be declared without keywords public, static and
+     * final, because they are redundant as well.
+     */
+    String toSelectionEntry();
 }
