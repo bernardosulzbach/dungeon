@@ -115,17 +115,19 @@ public final class Campaign implements Serializable {
         World world = new World();
 
         // Create a location on the hero's position.
-        world.addLocation(new Location("Forest"), heroPosition);
+        Point startingPoint = new Point(0, 0);
+
+        world.addLocation(new Location("Forest"), startingPoint);
         // The hero
-        world.addCreature(campaignHero, heroPosition);
+        world.addCreature(campaignHero, startingPoint);
         // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), heroPosition);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), heroPosition);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), heroPosition);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), heroPosition);
+        world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), startingPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), startingPoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), startingPoint);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), startingPoint);
 
         //Items
-        world.addItem(new Weapon("Spear", 10, 5), heroPosition);
+        world.addItem(new Weapon("Spear", 13, 5), startingPoint);
 
         Point middlePoint = new Point(0, 1);
         world.addLocation(new Location("Clearing"), middlePoint);
