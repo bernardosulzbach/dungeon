@@ -20,8 +20,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.counters.CreatureCounter;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.utils.Constants;
@@ -66,6 +66,7 @@ public class Location implements Serializable {
 
     /**
      * Adds all the creatures in an array of creatures to this Location object.
+     *
      * @param creatureArray the array of creatures.
      */
     public void addCreatureArray(Creature[] creatureArray) {
@@ -145,14 +146,14 @@ public class Location implements Serializable {
     }
 
     public String getCreaturesString() {
-        CreatureCounter counter = new CreatureCounter();
+        CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
         for (Creature creature : getCreatures()) {
-            counter.incrementCreatureCount(creature.getId());
+            counter.incrementCounter(creature.getId());
         }
         StringBuilder builder = new StringBuilder();
-        for (CreatureID id : counter.getKeySet()) {
+        for (CreatureID id : counter.keySet()) {
             builder.append('\n').append(Constants.MARGIN).append(id.toString());
-            builder.append(" (").append(counter.getCreatureCount(id)).append(")");
+            builder.append(" (").append(counter.getCounter(id)).append(")");
         }
         if (builder.length() == 0) {
             return Constants.NO_CREATURES;

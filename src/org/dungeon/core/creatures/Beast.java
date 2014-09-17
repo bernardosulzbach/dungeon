@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,22 +16,32 @@
  */
 package org.dungeon.core.creatures;
 
-public enum CreatureID {
+import org.dungeon.io.IO;
 
-    BAT("Bat"), BEAR("Bear"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"), SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
+/**
+ *
+ * @author Bernardo Sulzbach
+ */
+public class Beast extends Creature {
 
-    private final String name;
-
-    CreatureID(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    /**
+     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
+     * its bare hands.
+     *
+     * @param target
+     */
+    @Override
+    public void hit(Creature target) {
+        target.takeDamage(getAttack());
+        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
     }
 
     @Override
-    public String toString() {
-        return name;
+    public void takeDamage(int damage) {
+        if (damage > getCurHealth()) {
+            setCurHealth(0);
+        } else {
+            setCurHealth(getCurHealth() - damage);
+        }
     }
 }

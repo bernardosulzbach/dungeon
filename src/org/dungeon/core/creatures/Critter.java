@@ -14,12 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.utils;
+package org.dungeon.core.creatures;
+
+import org.dungeon.io.IO;
 
 /**
+ * Defines critters.
+ *
  * @author Bernardo Sulzbach
  */
-public class Settings {
+public class Critter extends Creature {
 
-    public static String userDefinedSavePath = null;
+    @Override
+    public void hit(Creature target) {
+        IO.writeString(getName() + " does nothing.");
+    }
+
+    public void takeDamage(int damage) {
+        // Attacks against critters have 100% bonus damage.
+        damage = damage * 2;
+        if (damage > getCurHealth()) {
+            setCurHealth(0);
+        } else {
+            setCurHealth(getCurHealth() - damage);
+        }
+    }
 }

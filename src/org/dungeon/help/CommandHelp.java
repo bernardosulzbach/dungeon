@@ -16,6 +16,8 @@
  */
 package org.dungeon.help;
 
+import org.dungeon.utils.Constants;
+
 /**
  * @author Bernardo Sulzbach
  */
@@ -72,9 +74,9 @@ public class CommandHelp {
 
     public String toOneLineString() {
         if (alias != null) {
-            return String.format("  %-10s%-10s%s\n", name, alias, help);
+            return String.format("%s%-16s%-16s%s\n", Constants.MARGIN, name, alias, help);
         } else {
-            return String.format("  %-20s%s\n", name, help);
+            return String.format("%s%-32s%s\n", Constants.MARGIN, name, help);
         }
 
     }

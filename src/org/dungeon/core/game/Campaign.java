@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.dungeon.core.achievements.Achievement;
-import org.dungeon.core.counters.CreatureCounter;
+import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.core.creatures.CreaturePreset;
@@ -51,7 +51,7 @@ public final class Campaign implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final List<Achievement> campaignAchievements;
-    private final CreatureCounter campaignBattleCounter;
+    private final CounterMap<CreatureID> campaignBattleCounter;
     private final World campaignWorld;
     private final Hero campaignHero;
     private Point heroPosition;
@@ -62,7 +62,7 @@ public final class Campaign implements Serializable {
     private int unlockedAchievementsCount;
 
     public Campaign() {
-        campaignBattleCounter = new CreatureCounter();
+        campaignBattleCounter = new CounterMap<CreatureID>();
 
         campaignAchievements = createDemoAchievements();
 
@@ -79,22 +79,22 @@ public final class Campaign implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> achievements = new ArrayList<Achievement>();
 
-        CreatureCounter suicideSolutionRequirements = new CreatureCounter();
-        CreatureCounter baneRequirements = new CreatureCounter();
-        CreatureCounter catRequirements = new CreatureCounter();
-        CreatureCounter evilBastardRequirements = new CreatureCounter();
-        CreatureCounter stayDeadRequirements = new CreatureCounter();
+        CounterMap suicideSolutionRequirements = new CounterMap<CreatureID>();
+        CounterMap baneRequirements = new CounterMap<CreatureID>();
+        CounterMap catRequirements = new CounterMap<CreatureID>();
+        CounterMap evilBastardRequirements = new CounterMap<CreatureID>();
+        CounterMap stayDeadRequirements = new CounterMap<CreatureID>();
 
         // Suicide Solution requires one battle against the Hero himself.
-        suicideSolutionRequirements.incrementCreatureCount(CreatureID.HERO);
+        suicideSolutionRequirements.incrementCounter(CreatureID.HERO);
         // Bane requires six battles against bats.
-        baneRequirements.incrementCreatureCount(CreatureID.BAT, 6);
+        baneRequirements.incrementCounter(CreatureID.BAT, 6);
         // Cat requires four battles against rats.
-        catRequirements.incrementCreatureCount(CreatureID.RAT, 4);
+        catRequirements.incrementCounter(CreatureID.RAT, 4);
         // Evil Bastard requires one battle against a rabbit.
-        evilBastardRequirements.incrementCreatureCount(CreatureID.RABBIT);
+        evilBastardRequirements.incrementCounter(CreatureID.RABBIT);
         // Stay Dead requires two battles against a zombie.
-        stayDeadRequirements.incrementCreatureCount(CreatureID.ZOMBIE, 2);
+        stayDeadRequirements.incrementCounter(CreatureID.ZOMBIE, 2);
 
         achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
         achievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
@@ -182,7 +182,7 @@ public final class Campaign implements Serializable {
         return world;
     }
 
-    public CreatureCounter getBattleCounter() {
+    public CounterMap getBattleCounter() {
         return campaignBattleCounter;
     }
 
