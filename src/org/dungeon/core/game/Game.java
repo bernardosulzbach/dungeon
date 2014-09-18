@@ -75,95 +75,85 @@ public class Game {
         String[] inputWords;
         while (true) {
             inputWords = IO.readWords();
-            switch (inputWords[0].toLowerCase()) {
-                // Hero-related commands.
-                case "rest":
-                    campaign.getHero().rest();
-                    return true;
-                case "look":
-                case "peek":
-                    campaign.getHero().look();
-                    break;
-                case "loot":
-                case "pick":
-                    campaign.getHero().pickWeapon(inputWords);
-                    break;
-                case "walk":
-                case "go":
-                    campaign.parseHeroWalk(inputWords);
-                    break;
-                case "drop":
-                    campaign.getHero().dropWeapon();
-                    break;
-                case "destroy":
-                case "crash":
-                    campaign.getHero().destroyItem(inputWords);
-                    break;
-                case "status":
-                    campaign.getHero().printAllStatus();
-                    break;
-                case "hero":
-                case "me":
-                    campaign.getHero().printHeroStatus();
-                    break;
-                case "weapon":
-                    campaign.getHero().printWeaponStatus();
-                    break;
-                case "kill":
-                case "attack":
-                    Creature target = campaign.getHero().selectTarget(inputWords);
-                    if (target != null) {
-                        // Add this battle to the battle counter.
-                        campaign.addBattle(target);
-                        Game.battle(campaign.getHero(), target);
-                    }
-                    return true;
+            String s = inputWords[0].toLowerCase();
+            if (s.equals("rest")) {
+                campaign.getHero().rest();
+                return true;
+            } else if (s.equals("look") || s.equals("peek")) {
+                campaign.getHero().look();
+
+            } else if (s.equals("loot") || s.equals("pick")) {
+                campaign.getHero().pickWeapon(inputWords);
+
+            } else if (s.equals("walk") || s.equals("go")) {
+                campaign.parseHeroWalk(inputWords);
+
+            } else if (s.equals("drop")) {
+                campaign.getHero().dropWeapon();
+
+            } else if (s.equals("destroy") || s.equals("crash")) {
+                campaign.getHero().destroyItem(inputWords);
+
+            } else if (s.equals("status")) {
+                campaign.getHero().printAllStatus();
+
+            } else if (s.equals("hero") || s.equals("me")) {
+                campaign.getHero().printHeroStatus();
+
+            } else if (s.equals("weapon")) {
+                campaign.getHero().printWeaponStatus();
+
+            } else if (s.equals("kill") || s.equals("attack")) {
+                Creature target = campaign.getHero().selectTarget(inputWords);
+                if (target != null) {
+                    // Add this battle to the battle counter.
+                    campaign.addBattle(target);
+                    Game.battle(campaign.getHero(), target);
+                }
+                return true;
                 // Campaign-related commands.
-                case "achievements":
-                    campaign.printUnlockedAchievements();
-                    break;
+            } else if (s.equals("achievements")) {
+                campaign.printUnlockedAchievements();
+
                 // World-related commands.
-                case "spawns":
-                    campaign.getWorld().printSpawnCounters();
-                    break;
+            } else if (s.equals("spawns")) {
+                campaign.getWorld().printSpawnCounters();
+
                 // Utility commands.
-                case "time":
-                    DateAndTime.printTime();
-                    break;
-                case "date":
-                    DateAndTime.printDate();
-                    break;
+            } else if (s.equals("time")) {
+                DateAndTime.printTime();
+
+            } else if (s.equals("date")) {
+                DateAndTime.printDate();
+
                 // Help commands.
-                case "help":
-                case "?":
-                    Help.printCommandHelp(inputWords);
-                    break;
-                case "commands":
-                    Help.printCommandList();
-                    break;
+            } else if (s.equals("help") || s.equals("?")) {
+                Help.printCommandHelp(inputWords);
+
+            } else if (s.equals("commands")) {
+                Help.printCommandList();
+
                 // Game commands.
-                case "save":
-                    Loader.saveGameRoutine(campaign, inputWords);
-                    break;
-                case "quit":
-                case "exit":
-                    return false;
-                case "credits":
-                case "about":
-                    Utils.printCredits();
-                    break;
-                case "hint":
-                    Utils.printRandomHint();
-                    break;
+            } else if (s.equals("save")) {
+                Loader.saveGameRoutine(campaign, inputWords);
+
+            } else if (s.equals("quit") || s.equals("exit")) {
+                return false;
+            } else if (s.equals("credits") || s.equals("about")) {
+                Utils.printCredits();
+
+            } else if (s.equals("hint")) {
+                Utils.printRandomHint();
+
                 // The user issued a command, but it was not recognized.
-                default:
-                    if (!inputWords[0].isEmpty()) {
-                        Utils.printInvalidCommandMessage(inputWords[0]);
-                    } else {
-                        // The user pressed enter without typing anything.
-                        IO.writeString(Constants.INVALID_INPUT);
-                    }
-                    break;
+            } else {
+                if (!inputWords[0].isEmpty()) {
+                    Utils.printInvalidCommandMessage(inputWords[0]);
+                } else {
+                    // The user pressed enter without typing anything.
+                    IO.writeString(Constants.INVALID_INPUT);
+                }
+
             }
         }
     }
