@@ -16,7 +16,6 @@
  */
 package org.dungeon.core.items;
 
-import org.dungeon.core.items.Item;
 import java.io.Serializable;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.game.Selectable;

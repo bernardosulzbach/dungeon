@@ -148,6 +148,13 @@ public class Game {
                 case "quit":
                 case "exit":
                     return false;
+                case "credits":
+                case "about":
+                    Utils.printCredits();
+                    break;
+                case "hint":
+                    Utils.printRandomHint();
+                    break;
                 // The user issued a command, but it was not recognized.
                 default:
                     if (!inputWords[0].isEmpty()) {
