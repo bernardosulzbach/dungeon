@@ -16,17 +16,17 @@
  */
 package org.dungeon.core.creatures;
 
-import java.util.ArrayList;
-import org.dungeon.core.creatures.enums.CreatureID;
-import java.util.List;
 import org.dungeon.core.counters.CounterMap;
+import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -34,7 +34,7 @@ import org.dungeon.utils.Utils;
 public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
-    
+
     // Has the player already attempted suicide?
     private boolean attemptedSuicide;
 
@@ -95,7 +95,14 @@ public class Hero extends Creature {
                 }
             }
             for (CreatureID id : counter.keySet()) {
-                String line = String.format("%-20s(%d)", id.toString(), counter.getCounter(id));
+                String line;
+                int creatureCount = counter.getCounter(id);
+                // If there is only one creature, do not print its count.
+                if (creatureCount == 1) {
+                    line = String.format("%-20s", id.toString());
+                } else {
+                    line = String.format("%-20s(%d)", id.toString(), creatureCount);
+                }
                 builder.append('\n').append(Constants.MARGIN).append(line);
             }
         }
@@ -216,13 +223,11 @@ public class Hero extends Creature {
         }
     }
 
-    @Override
     /**
      * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
      * its bare hands.
-     *
-     * @param target
      */
+    @Override
     public void hit(Creature target) {
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
