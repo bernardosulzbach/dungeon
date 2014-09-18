@@ -1,0 +1,11 @@
+This file contains a list of all the contributors to this project.
+
+Dungeon (from
+
+Creator and maintainer
+    Bernardo Sulzbach
+Developers
+    Gabriel B. Bohmer
+Sponsors
+
+Testers

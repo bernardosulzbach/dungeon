@@ -32,7 +32,7 @@ Code Style
 
 Contributors
 ------------
-Name                     |GitHub                   |E-mail
--------------------------|-------------------------|-------------------------
-Bernardo Sulzbach        |mafagafogigante          | mafagafogigante@gmail.com
-Gabriel Bohmer           |gabriel200899            | gabriel.bohmer@hotmail.com
+Name                     |GitHub                   |E-mail                     |Role
+-------------------------|-------------------------|---------------------------|---------------------------
+Bernardo Sulzbach        |mafagafogigante          | mafagafogigante@gmail.com-|Creator and main programmer
+Gabriel Bohmer           |gabriel200899            | gabriel.bohmer@hotmail.com|Assistant programmer
