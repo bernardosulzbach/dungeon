@@ -17,6 +17,7 @@
 package org.dungeon.utils;
 
 import java.util.List;
+import org.dungeon.core.game.Game;
 
 import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
@@ -27,6 +28,9 @@ import org.dungeon.io.IO;
  * @author Bernardo Sulzbach
  */
 public class Utils {
+
+    static String[] hints = {"Attacks against critters have 100% bonus damage.",
+        "If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with its bare hands."};
 
     /**
      * Prints the startup heading.
@@ -98,6 +102,14 @@ public class Utils {
      */
     public static void printInvalidCommandMessage(String command) {
         IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
+    }
+
+    public static void credits() {
+        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n");
+    }
+
+    public static void hint() {
+        IO.writeString(hints[Game.RANDOM.nextInt(hints.length)]);
     }
 
 }
