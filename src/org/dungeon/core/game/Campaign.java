@@ -16,18 +16,18 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.core.items.Weapon;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
-import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.creatures.Hero;
+import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.core.creatures.enums.CreaturePreset;
+import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -51,9 +51,13 @@ public final class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<Achievement> campaignAchievements;
-    private final CounterMap<CreatureID> campaignBattleCounter;
+    private final List<Achievement> achievements;
+    
+    private final CounterMap<CreatureID> battleIDCounter;
+    private final CounterMap<CreatureType> battleTypeCounter;
+    
     private final World campaignWorld;
+    
     private final Hero campaignHero;
     private Point heroPosition;
 
@@ -63,12 +67,13 @@ public final class Campaign implements Serializable {
     private int unlockedAchievementsCount;
 
     public Campaign() {
-        campaignBattleCounter = new CounterMap<CreatureID>();
+        battleIDCounter = new CounterMap<CreatureID>();
+        battleTypeCounter = new CounterMap<CreatureType>();
 
-        campaignAchievements = createDemoAchievements();
+        achievements = createDemoAchievements();
 
         // Set the number of achievements the campaign has.
-        setTotalAchievementsCount(campaignAchievements.size());
+        setTotalAchievementsCount(achievements.size());
 
         campaignHero = new Hero("Seth");
         heroPosition = new Point(0, 0);
@@ -78,7 +83,7 @@ public final class Campaign implements Serializable {
     }
 
     private List<Achievement> createDemoAchievements() {
-        List<Achievement> achievements = new ArrayList<Achievement>();
+        List<Achievement> demoAchievements = new ArrayList<Achievement>();
 
         CounterMap suicideSolutionRequirements = new CounterMap<CreatureID>();
         CounterMap baneRequirements = new CounterMap<CreatureID>();
@@ -97,13 +102,13 @@ public final class Campaign implements Serializable {
         // Stay Dead requires two battles against a zombie.
         stayDeadRequirements.incrementCounter(CreatureID.ZOMBIE, 2);
 
-        achievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
-        achievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
-        achievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
-        achievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
-        achievements.add(new Achievement("Stay Dead", "Kill 2 zombies.", stayDeadRequirements));
+        demoAchievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
+        demoAchievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
+        demoAchievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
+        demoAchievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
+        demoAchievements.add(new Achievement("Stay Dead", "Kill 2 zombies.", stayDeadRequirements));
 
-        return achievements;
+        return demoAchievements;
     }
 
     private World createDemoWorld() {
@@ -168,11 +173,7 @@ public final class Campaign implements Serializable {
 
         return world;
     }
-
-    public CounterMap getBattleCounter() {
-        return campaignBattleCounter;
-    }
-
+    
     public World getWorld() {
         return campaignWorld;
     }
@@ -215,7 +216,7 @@ public final class Campaign implements Serializable {
     public void printUnlockedAchievements() {
         StringBuilder builder = new StringBuilder();
         builder.append("Progress: ").append(getUnlockedAchievementsCount()).append('/').append(getTotalAchievementsCount());
-        for (Achievement a : campaignAchievements) {
+        for (Achievement a : achievements) {
             if (a.isUnlocked()) {
                 builder.append("\n").append(a.toOneLineString());
             }
@@ -231,8 +232,8 @@ public final class Campaign implements Serializable {
     }
 
     private void refreshAchievements() {
-        for (Achievement a : campaignAchievements) {
-            if (a.update(campaignBattleCounter)) {
+        for (Achievement a : achievements) {
+            if (a.update(battleIDCounter)) {
                 incrementUnlockedAchievementsCount();
             }
         }
@@ -266,6 +267,11 @@ public final class Campaign implements Serializable {
         } else {
             IO.writeString(Constants.WALK_BLOCKED);
         }
+    }
+
+    void addBattle(Creature target) {
+        this.battleIDCounter.incrementCounter(target.getId());
+        this.battleTypeCounter.incrementCounter(target.getType());
     }
 
 }

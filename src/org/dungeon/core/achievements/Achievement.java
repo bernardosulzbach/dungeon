@@ -19,7 +19,7 @@ package org.dungeon.core.achievements;
 import java.io.Serializable;
 import org.dungeon.core.counters.CounterMap;
 
-import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
