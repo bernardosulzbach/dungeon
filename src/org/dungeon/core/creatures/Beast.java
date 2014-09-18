@@ -18,10 +18,11 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
 /**
- *
+ * Beast class.
  * @author Bernardo Sulzbach
  */
 public class Beast extends Creature {
@@ -33,12 +34,16 @@ public class Beast extends Creature {
     /**
      * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
      * its bare hands.
-     *
-     * @param target
      */
     @Override
     public void hit(Creature target) {
         target.takeDamage(getAttack());
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
+        // Hardcoded miss rate of 10%.
+        // TODO: extract this to a specific method.
+        if (10 > Game.RANDOM.nextInt(100)) {
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
+        } else {
+            IO.writeString(String.format("%s tried to hit %s but missed.", getName(), target.getName()));
+        }
     }
 }
