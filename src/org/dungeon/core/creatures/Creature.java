@@ -75,6 +75,9 @@ public abstract class Creature implements Serializable, Selectable {
             case BEAST:
                 creature = new Beast(preset.getId(), preset.getId().getName());
                 break;
+            case UNDEAD:
+                creature = new Undead(preset.getId(), preset.getId().getName());
+                break;
             default:
                 return null;
         }
