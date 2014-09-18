@@ -19,7 +19,7 @@ Bug reports are welcome in our [issue tracker](https://github.com/mafagafogigant
 
 System requirements
 -------------------
-Java 7 (or newer).
+Java 6.
 
 Trivia
 ------
