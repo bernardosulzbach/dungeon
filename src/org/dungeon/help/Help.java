@@ -39,8 +39,14 @@ public class Help {
         COMMANDS.add(new CommandHelp(
                 "commands",
                 null,
-                "Display a list of valid commands.",
+                "Displays a list of valid commands.",
                 "commands"));
+
+        COMMANDS.add(new CommandHelp(
+                "credits",
+                "about",
+                "Displays information about the game and its creators.",
+                "credits"));
 
         COMMANDS.add(new CommandHelp(
                 "date",
@@ -76,7 +82,7 @@ public class Help {
                 "look", "peek", "Describes what your character can see.", "look"));
 
         COMMANDS.add(new CommandHelp(
-                "pick", "loot", "Swap your current weapon.", "pick"));
+                "pick", "loot", "Swap your current weapon.", "pick [item]"));
 
         COMMANDS.add(new CommandHelp(
                 "rest", null, "Rest until you are completely healed.", "rest"));
