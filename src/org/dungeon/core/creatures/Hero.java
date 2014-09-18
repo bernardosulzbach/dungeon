@@ -34,6 +34,9 @@ import org.dungeon.utils.Utils;
 public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
+    
+    // Has the player already attempted suicide?
+    private boolean attemptedSuicide;
 
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
@@ -43,6 +46,14 @@ public class Hero extends Creature {
         setAttack(4);
         setHealthIncrement(10);
         setAttackIncrement(4);
+    }
+
+    public boolean isAttemptedSuicide() {
+        return attemptedSuicide;
+    }
+
+    public void setAttemptedSuicide(boolean attemptedSuicide) {
+        this.attemptedSuicide = attemptedSuicide;
     }
 
     /**

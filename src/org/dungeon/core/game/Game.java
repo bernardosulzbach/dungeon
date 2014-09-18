@@ -171,9 +171,10 @@ public class Game {
     /**
      * Simulates a battle between two creatures.
      */
-    private static void battle(Creature attacker, Creature defender) {
+    private static void battle(Hero attacker, Creature defender) {
         if (attacker == defender) {
             IO.writeString("You cannot attempt suicide.");
+            attacker.setAttemptedSuicide(true);
             return;
         }
         while (attacker.isAlive() && defender.isAlive()) {
