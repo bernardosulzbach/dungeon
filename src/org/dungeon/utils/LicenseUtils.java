@@ -27,17 +27,15 @@ import org.dungeon.io.IO;
  */
 public class LicenseUtils {
 
-    public static final String LICENSE_STRING = " * Copyright (C) 2014 Bernardo Sulzbach\n" +
-            " \n" +
-            " This program is free software: you can redistribute it and/or modify\n" +
-            " it under the terms of the GNU General Public License as published by\n" +
-            " the Free Software Foundation, either version 3 of the License, or\n" +
-            " (at your option) any later version.\n" +
-            " \n" +
-            " This program is distributed in the hope that it will be useful,\n" +
-            " but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
-            " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
-            " GNU General Public License for more details.";
+    public static final String LICENSE_STRING = "    Copyright (C) 2014 Bernardo Sulznbach\n\n" +
+            "  This program is free software: you can redistribute it and/or modify\n" +
+            "  it under the terms of the GNU General Public License as published by\n" +
+            "  the Free Software Foundation, either version 3 of the License, or\n" +
+            "  (at your option) any later version.\n\n" +
+            "  This program is distributed in the hope that it will be useful,\n" +
+            "  but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+            "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+            "  GNU General Public License for more details.";
 
     public static void printLicense() {
         IO.writeString(LICENSE_STRING);
