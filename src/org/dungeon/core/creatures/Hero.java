@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.items.Food;
+import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
@@ -47,6 +49,7 @@ public class Hero extends Creature {
         setAttack(4);
         setHealthIncrement(20);
         setAttackIncrement(4);
+        setInventory(new Inventory(4));
     }
 
     public boolean isAttemptedSuicide() {
@@ -128,7 +131,15 @@ public class Hero extends Creature {
     // Selection methods.
     //
     //
-    public Item selectItem(String[] inputWords) {
+    public Item selectInventoryItem(String[] inputWords) {
+        if (inputWords.length == 1) {
+            return Utils.selectFromList(getInventory().getItems());
+        } else {
+            return getInventory().findItem(inputWords[1]);
+        }
+    }
+
+    public Item selectLocationItem(String[] inputWords) {
         if (inputWords.length == 1) {
             return Utils.selectFromList(getLocation().getItems());
         } else {
@@ -147,10 +158,41 @@ public class Hero extends Creature {
     }
 
     /**
+     * Attempts to pick and item and add it to the inventory.
+     */
+    public void pickItem(String[] inputWords) {
+        Item selectedItem = selectLocationItem(inputWords);
+        if (selectedItem != null) {
+            getInventory().addItem(selectedItem);
+            getLocation().removeItem(selectedItem);
+        }
+    }
+
+    public void printInventory() {
+        getInventory().printItems();
+    }
+
+    /**
+     * Tries to equip an item from the inventory.
+     *
+     * @param inputWords
+     */
+    public void parseEquip(String[] inputWords) {
+        Item selectedItem = selectInventoryItem(inputWords);
+        if (selectedItem instanceof Weapon) {
+            equipWeapon((Weapon) selectedItem);
+        } else if (selectedItem != null) {
+            IO.writeString("You can only equip weapons.");
+        } else {
+            IO.writeString("Item not found in inventory.");
+        }
+    }
+
+    /**
      * Picks a weapon from the ground.
      */
     public void pickWeapon(String[] inputWords) {
-        Item selectedItem = selectItem(inputWords);
+        Item selectedItem = selectLocationItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem instanceof Weapon) {
                 if (hasWeapon()) {
@@ -168,13 +210,13 @@ public class Hero extends Creature {
      * Attempts to eat an item from the ground.
      */
     public void eatItem(String[] inputWords) {
-        Item selectedItem = selectItem(inputWords);
+        Item selectedItem = selectInventoryItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem instanceof Food) {
                 ingest((Food) selectedItem);
                 getLocation().removeItem(selectedItem);
             } else {
-                IO.writeString("You cannot eat that.");
+                IO.writeString("You can only eat food.");
             }
         }
     }
