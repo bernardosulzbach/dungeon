@@ -4,13 +4,14 @@ A simple text-based RPG using Java
 
 Screenshots
 -----------
+![18-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/18-09-14.png)
 ![14-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/14-09-14.png)
 ![07-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/07-09-14.png)
 
 Running the game
 ----------------
-1. Download [our latest build](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true) or [our latest release](https://github.com/mafagafogigante/dungeon/blob/master/dist/dungeon.jar?raw=true).
-2. Browse to the directory where you downloaded the file.
+1. Download [one of our releases](https://github.com/mafagafogigante/dungeon/releases).
+2. Browse to the directory where you downloaded the jar file.
 3. Open the command line and issue `java -jar dungeon.jar`
 
 Reporting bugs
@@ -19,7 +20,7 @@ Bug reports are welcome in our [issue tracker](https://github.com/mafagafogigant
 
 System requirements
 -------------------
-Java 6.
+Java 6 or newer.
 
 Trivia
 ------
