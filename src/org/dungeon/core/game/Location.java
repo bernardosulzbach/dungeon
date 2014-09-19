@@ -26,6 +26,7 @@ import org.dungeon.core.counters.CounterMap;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
 public class Location implements Serializable {
@@ -106,6 +107,7 @@ public class Location implements Serializable {
                 return creature;
             }
         }
+        IO.writeString("Creature not found.");
         return null;
     }
 
@@ -121,6 +123,7 @@ public class Location implements Serializable {
                 return item;
             }
         }
+        IO.writeString("Item not found.");
         return null;
     }
 
