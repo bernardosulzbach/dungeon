@@ -18,13 +18,13 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreaturePreset;
-import java.io.Serializable;
 import org.dungeon.core.creatures.enums.CreatureType;
-
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
+
+import java.io.Serializable;
 
 /**
  * The Creature class.
@@ -206,6 +206,24 @@ public abstract class Creature implements Serializable, Selectable {
 
     //
     //
+    // General methods.
+    //
+    //
+
+    /**
+     * Increments the creature's health by a certain amount, never exceeding its maximum health.
+     */
+    public void addHealth(int amount) {
+        int sum = amount + getCurHealth();
+        if (sum > getMaxHealth()) {
+            setCurHealth(getMaxHealth());
+        } else {
+            setCurHealth(sum);
+        }
+    }
+
+    //
+    //
     // Leveling methods.
     //
     //
@@ -226,9 +244,9 @@ public abstract class Creature implements Serializable, Selectable {
      */
     public void levelUp() {
         setLevel(getLevel() + 1);
-        setMaxHealth(getMaxHealth() + healthIncrement);
+        setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
-        setAttack(getAttack() + attackIncrement);
+        setAttack(getAttack() + getAttackIncrement());
         IO.writeString(String.format("%s leveld up. %s is now level %d.", getName(), getName(), getLevel()));
     }
 
@@ -296,7 +314,7 @@ public abstract class Creature implements Serializable, Selectable {
 
     //
     //
-    // Helper methods.
+    // Predicate methods.
     //
     //
     /**
