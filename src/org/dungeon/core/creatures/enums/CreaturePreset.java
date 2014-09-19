@@ -7,12 +7,13 @@ public enum CreaturePreset {
 
     FROG(CreatureType.CRITTER, CreatureID.FROG, 10, 5, 3, 2, 12),
     RABBIT(CreatureType.CRITTER, CreatureID.RABBIT, 10, 5, 3, 2, 10),
-    
+
     BAT(CreatureType.BEAST, CreatureID.BAT, 12, 4, 6, 4, 15),
     BEAR(CreatureType.BEAST, CreatureID.BEAR, 20, 10, 10, 7, 40),
     RAT(CreatureType.BEAST, CreatureID.RAT, 14, 4, 8, 5, 20),
     SPIDER(CreatureType.BEAST, CreatureID.SPIDER, 16, 6, 7, 7, 25),
     WOLF(CreatureType.BEAST, CreatureID.WOLF, 18, 7, 6, 8, 30),
+
     ZOMBIE(CreatureType.UNDEAD, CreatureID.ZOMBIE, 22, 8, 7, 8, 35);
 
     private final CreatureType type;
