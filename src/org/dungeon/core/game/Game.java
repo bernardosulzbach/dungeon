@@ -81,31 +81,26 @@ public class Game {
                 return true;
             } else if (s.equals("look") || s.equals("peek")) {
                 campaign.getHero().look();
-
+            } else if (s.equals("inventory") || s.equals("items")) {
+                campaign.getHero().printInventory();
             } else if (s.equals("loot") || s.equals("pick")) {
-                campaign.getHero().pickWeapon(inputWords);
-
+                campaign.getHero().pickItem(inputWords);
+            } else if (s.equals("equip")) {
+                campaign.getHero().parseEquip(inputWords);
             } else if (s.equals("eat") || s.equals("devour")) {
                 campaign.getHero().eatItem(inputWords);
-            }
-            else if (s.equals("walk") || s.equals("go")) {
+            } else if (s.equals("walk") || s.equals("go")) {
                 campaign.parseHeroWalk(inputWords);
-
             } else if (s.equals("drop")) {
                 campaign.getHero().dropWeapon();
-
             } else if (s.equals("destroy") || s.equals("crash")) {
                 campaign.getHero().destroyItem(inputWords);
-
             } else if (s.equals("status")) {
                 campaign.getHero().printAllStatus();
-
             } else if (s.equals("hero") || s.equals("me")) {
                 campaign.getHero().printHeroStatus();
-
             } else if (s.equals("weapon")) {
                 campaign.getHero().printWeaponStatus();
-
             } else if (s.equals("kill") || s.equals("attack")) {
                 Creature target = campaign.getHero().selectTarget(inputWords);
                 if (target != null) {
@@ -117,37 +112,28 @@ public class Game {
                 // Campaign-related commands.
             } else if (s.equals("achievements")) {
                 campaign.printUnlockedAchievements();
-
                 // World-related commands.
             } else if (s.equals("spawns")) {
                 campaign.getWorld().printSpawnCounters();
-
                 // Utility commands.
             } else if (s.equals("time")) {
                 DateAndTime.printTime();
-
             } else if (s.equals("date")) {
                 DateAndTime.printDate();
-
                 // Help commands.
             } else if (s.equals("help") || s.equals("?")) {
                 Help.printCommandHelp(inputWords);
-
             } else if (s.equals("commands")) {
                 Help.printCommandList();
-
                 // Game commands.
             } else if (s.equals("save")) {
                 Loader.saveGameRoutine(campaign, inputWords);
-
             } else if (s.equals("quit") || s.equals("exit")) {
                 return false;
             } else if (s.equals("credits") || s.equals("about")) {
                 Utils.printCredits();
-
             } else if (s.equals("hint")) {
                 Utils.printRandomHint();
-
                 // The user issued a command, but it was not recognized.
             } else {
                 if (!inputWords[0].isEmpty()) {

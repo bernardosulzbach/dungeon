@@ -21,6 +21,7 @@ import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
+import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 
@@ -39,6 +40,7 @@ public abstract class Creature implements Serializable, Selectable {
     private final CreatureID id;
     private final String name;
 
+
     private int level;
     private int experience;
     private int experienceDrop;
@@ -52,6 +54,7 @@ public abstract class Creature implements Serializable, Selectable {
     private int attack;
     private int attackIncrement;
 
+    private Inventory inventory;
     private Weapon weapon;
     private Location location;
 
@@ -188,6 +191,14 @@ public abstract class Creature implements Serializable, Selectable {
         this.attackIncrement = attackIncrement;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     public Weapon getWeapon() {
         return weapon;
     }
@@ -279,16 +290,18 @@ public abstract class Creature implements Serializable, Selectable {
     // Weapon methods.
     //
     //
+
     /**
      * Disarm the creature. Placing its current weapon, if any, in the ground.
      */
     public void dropWeapon() {
         if (getWeapon() != null) {
-            location.addItem(getWeapon());
+            getInventory().removeItem(getWeapon());
+            getLocation().addItem(getWeapon());
             IO.writeString(getName() + " dropped " + getWeapon().getName() + ".");
             setWeapon(null);
         } else {
-            IO.writeString("You are not currently carrying a weapon.");
+            IO.writeString("You are not currently equipping a weapon.");
         }
     }
 
@@ -317,6 +330,7 @@ public abstract class Creature implements Serializable, Selectable {
     // Predicate methods.
     //
     //
+
     /**
      * Checks if the creature is alive.
      *
@@ -344,6 +358,13 @@ public abstract class Creature implements Serializable, Selectable {
         return getWeapon() != null;
     }
 
+    /**
+     * Checks if the creature has an inventory.
+     */
+    public boolean hasInventory() {
+        return getInventory() != null;
+    }
+
     //
     //
     // Selectable implementation.
@@ -353,5 +374,6 @@ public abstract class Creature implements Serializable, Selectable {
     public String toSelectionEntry() {
         return String.format("%-12s%-24s Level %2d", String.format("[%s]", getType()), getName(), getLevel());
     }
+
 
 }
