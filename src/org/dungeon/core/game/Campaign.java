@@ -16,10 +16,6 @@
  */
 package org.dungeon.core.game;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
@@ -146,18 +142,20 @@ public final class Campaign implements Serializable {
         Point clearing = new Point(0, 2);
         world.addLocation(new Location("Clearing"), clearing);
 
-        //Beasts
+        // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), clearing);
         world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), clearing);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
         world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
         // Items
         world.addItem(new Weapon("Dagger", 13, 15), clearing);
+        // Food
+        world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
 
         Point roadToTheFort = new Point(1, 2);
         world.addLocation(new Location("Road to The Fort"), roadToTheFort);
 
-        //Beasts
+        // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), roadToTheFort);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), roadToTheFort);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
@@ -180,8 +178,6 @@ public final class Campaign implements Serializable {
         // Items
         world.addItem(new Weapon("Longsword", 18, 25), cave);
 
-        // Food
-        world.addItem(Item.createItem(FoodPreset.CHERRY), leftPoint);
         return world;
     }
 
@@ -191,10 +187,6 @@ public final class Campaign implements Serializable {
 
     public Hero getHero() {
         return campaignHero;
-    }
-
-    public Point getHeroPoint() {
-        return heroPosition;
     }
 
     public boolean isSaved() {
