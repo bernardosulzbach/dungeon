@@ -41,9 +41,9 @@ public class Beast extends Creature {
         // Hardcoded miss rate of 10%.
         // TODO: extract this to a specific method.
         if (10 > Game.RANDOM.nextInt(100)) {
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
-        } else {
             IO.writeString(String.format("%s tried to hit %s but missed.", getName(), target.getName()));
+        } else {
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
         }
     }
 }
