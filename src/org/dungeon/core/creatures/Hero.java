@@ -123,6 +123,19 @@ public class Hero extends Creature {
         IO.writeString(builder.toString());
     }
 
+    //
+    //
+    // Selection methods.
+    //
+    //
+    public Item selectItem(String[] inputWords) {
+        if (inputWords.length == 1) {
+            return Utils.selectFromList(getLocation().getItems());
+        } else {
+            return getLocation().findItem(inputWords[1]);
+        }
+    }
+
     public Creature selectTarget(String[] inputWords) {
         if (inputWords.length == 1) {
             List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
@@ -133,17 +146,11 @@ public class Hero extends Creature {
         }
     }
 
-    // TODO: extract the duplicated code in the following methods to a separate method.
     /**
      * Picks a weapon from the ground.
      */
-    public void pickWeapon(String[] words) {
-        Item selectedItem;
-        if (words.length == 1) {
-            selectedItem = Utils.selectFromList(getLocation().getItems());
-        } else {
-            selectedItem = getLocation().findItem(words[1]);
-        }
+    public void pickWeapon(String[] inputWords) {
+        Item selectedItem = selectItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem instanceof Weapon) {
                 if (hasWeapon()) {
@@ -154,25 +161,14 @@ public class Hero extends Creature {
             } else {
                 IO.writeString("You cannot equip that.");
             }
-        } else {
-            IO.writeString("Item not found.");
         }
     }
 
     /**
      * Attempts to eat an item from the ground.
      */
-    public void eatItem(String[] words) {
-        Item selectedItem;
-        if (words.length == 1) {
-            selectedItem = Utils.selectFromList(getLocation().getItems());
-            // If the player aborted, do not display an error message.
-            if (selectedItem == null) {
-                return;
-            }
-        } else {
-            selectedItem = getLocation().findItem(words[1]);
-        }
+    public void eatItem(String[] inputWords) {
+        Item selectedItem = selectItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem instanceof Food) {
                 ingest((Food) selectedItem);
@@ -180,8 +176,6 @@ public class Hero extends Creature {
             } else {
                 IO.writeString("You cannot eat that.");
             }
-        } else {
-            IO.writeString("Item not found.");
         }
     }
 
@@ -230,7 +224,7 @@ public class Hero extends Creature {
 
     private String getWeaponStatusString() {
         if (getWeapon() == null) {
-            return "You are not carrying a weapon.";
+            return "You are not equipping a weapon.";
         } else {
             return getWeapon().getStatusString();
         }
