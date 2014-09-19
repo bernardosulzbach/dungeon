@@ -132,36 +132,4 @@ public class Location implements Serializable {
         creatures.remove(creatureToRemove);
     }
 
-    /**
-     * Get a list of all visible weapons to the observer.
-     *
-     * @return a list of weapons.
-     */
-    public List<Weapon> getVisibleWeapons() {
-        List<Weapon> visibleWeapons = new ArrayList<Weapon>();
-        for (Item visibleItem : inventory) {
-            if (visibleItem instanceof Weapon) {
-                visibleWeapons.add((Weapon) visibleItem);
-            }
-        }
-        return visibleWeapons;
-    }
-
-    public String getCreaturesString() {
-        CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
-        for (Creature creature : getCreatures()) {
-            counter.incrementCounter(creature.getId());
-        }
-        StringBuilder builder = new StringBuilder();
-        for (CreatureID id : counter.keySet()) {
-            builder.append('\n').append(Constants.MARGIN).append(id.toString());
-            builder.append(" (").append(counter.getCounter(id)).append(")");
-        }
-        if (builder.length() == 0) {
-            return Constants.NO_CREATURES;
-        } else {
-            return builder.toString();
-        }
-    }
-
 }
