@@ -16,10 +16,6 @@
  */
 package org.dungeon.core.game;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
@@ -32,8 +28,13 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 //
-// Why is this calss marked final?
+// Why is this class marked final?
 //
 // A quote from Effective Java (2nd)
 //
@@ -52,12 +53,12 @@ public final class Campaign implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final List<Achievement> achievements;
-    
+
     private final CounterMap<CreatureID> battleIDCounter;
     private final CounterMap<CreatureType> battleTypeCounter;
-    
+
     private final World campaignWorld;
-    
+
     private final Hero campaignHero;
     private Point heroPosition;
 
@@ -77,7 +78,6 @@ public final class Campaign implements Serializable {
 
         campaignHero = new Hero("Seth");
         heroPosition = new Point(0, 0);
-        campaignHero.setWeapon(new Weapon("Stick", 6, 20));
 
         campaignWorld = createDemoWorld();
     }
@@ -114,33 +114,33 @@ public final class Campaign implements Serializable {
     private World createDemoWorld() {
         World world = new World();
 
-        Point forest = new Point(0, 0);
-        
-        world.addLocation(new Location("Forest"), forest);
-        
-        // The hero
-        world.addCreature(campaignHero, forest);
-        
         // Create a location on the hero's position.
-        Point forest2 = new Point(0, 1);
+        Point forest = new Point(0, 0);
+        world.addLocation(new Location("Forest"), forest);
 
+        world.addCreature(campaignHero, forest);
+        world.addItem(new Weapon("Stick", 6, 20), forest);
+
+        // Another forest location.
+        Point forest2 = new Point(0, 1);
         world.addLocation(new Location("Forest"), forest2);
-        
+
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), forest2);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), forest2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 1), forest2);
+        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), forest2);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), forest2);
 
-        //Items
+        // Items
         world.addItem(new Weapon("Spear", 10, 12), forest2);
 
+        // A clearing.
         Point clearing = new Point(0, 2);
         world.addLocation(new Location("Clearing"), clearing);
 
         //Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), clearing);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 1), clearing);
+        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), clearing);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
         world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
         // Items
@@ -150,8 +150,8 @@ public final class Campaign implements Serializable {
         world.addLocation(new Location("Road to The Fort"), roadToTheFort);
 
         //Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), roadToTheFort);
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), roadToTheFort);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), roadToTheFort);
 
@@ -161,20 +161,20 @@ public final class Campaign implements Serializable {
         Point cave = new Point(-1, 2);
         world.addLocation(new Location("Cave"), cave);
 
-        //Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), cave);
+        // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 4), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), cave);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), cave);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), cave);
 
-        //Items
+        // Items
         world.addItem(new Weapon("Longsword", 18, 25), cave);
 
         return world;
     }
-    
+
     public World getWorld() {
         return campaignWorld;
     }
