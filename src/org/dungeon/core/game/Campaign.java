@@ -16,6 +16,10 @@
  */
 package org.dungeon.core.game;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
@@ -119,62 +123,62 @@ public final class Campaign implements Serializable {
         World world = new World();
 
         // Create a location on the hero's position.
-        Point startingPoint = new Point(0, 0);
+        Point forest = new Point(0, 0);
+        world.addLocation(new Location("Forest"), forest);
 
-        world.addLocation(new Location("Forest"), startingPoint);
-        // The hero
-        world.addCreature(campaignHero, startingPoint);
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BAT, 1), startingPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), startingPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), startingPoint);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), startingPoint);
+        world.addCreature(campaignHero, forest);
+        world.addItem(new Weapon("Stick", 6, 20), forest);
 
-        // Items
-        world.addItem(new Weapon("Spear", 13, 5), startingPoint);
-
-        Point middlePoint = new Point(0, 1);
-        world.addLocation(new Location("Clearing"), middlePoint);
+        // Another forest location.
+        Point forest2 = new Point(0, 1);
+        world.addLocation(new Location("Forest"), forest2);
 
         // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), middlePoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), middlePoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), middlePoint);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), middlePoint);
-        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), middlePoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), forest2);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), forest2);
+        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), forest2);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), forest2);
 
         // Items
-        world.addItem(new Weapon("Dagger", 15, 20), middlePoint);
+        world.addItem(new Weapon("Spear", 10, 12), forest2);
 
-        Point rightPoint = new Point(1, 1);
-        world.addLocation(new Location("Road to The Fort"), rightPoint);
+        // A clearing.
+        Point clearing = new Point(0, 2);
+        world.addLocation(new Location("Clearing"), clearing);
+
+        //Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), clearing);
+        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), clearing);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
+        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
+        // Items
+        world.addItem(new Weapon("Dagger", 13, 15), clearing);
+
+        Point roadToTheFort = new Point(1, 2);
+        world.addLocation(new Location("Road to The Fort"), roadToTheFort);
+
+        //Beasts
+        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), roadToTheFort);
+
+        // Items
+        world.addItem(new Weapon("Mace", 15, 20), roadToTheFort);
+
+        Point cave = new Point(-1, 2);
+        world.addLocation(new Location("Cave"), cave);
 
         // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 4), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), rightPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 4), rightPoint);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), middlePoint);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 4), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), cave);
 
         // Items
-        world.addItem(new Weapon("Mace", 18, 15), rightPoint);
-
-        // Cave
-        Point leftPoint = new Point(-1, 1);
-        world.addLocation(new Location("Cave"), leftPoint);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), leftPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 5), leftPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 2), leftPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), leftPoint);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), leftPoint);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), leftPoint);
-
-        // Items
-        world.addItem(new Weapon("Longsword", 25, 17), leftPoint);
+        world.addItem(new Weapon("Longsword", 18, 25), cave);
 
         // Food
         world.addItem(Item.createItem(FoodPreset.CHERRY), leftPoint);
