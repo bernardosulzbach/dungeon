@@ -81,7 +81,6 @@ public final class Campaign implements Serializable {
 
         campaignHero = new Hero("Seth");
         heroPosition = new Point(0, 0);
-        campaignHero.setWeapon(new Weapon("Stick", 6, 20));
 
         campaignWorld = createDemoWorld();
     }
