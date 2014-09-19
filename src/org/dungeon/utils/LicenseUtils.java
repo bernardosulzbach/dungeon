@@ -19,9 +19,6 @@ package org.dungeon.utils;
 
 import org.dungeon.io.IO;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 /**
  * Utility methods related to this project licensing.
  * <p/>
@@ -30,23 +27,20 @@ import java.io.InputStreamReader;
  */
 public class LicenseUtils {
 
-    // The path to the license text file.
-    public static final String LICENSE_PATH = "/org/dungeon/res/LICENSE.txt";
+    public static final String LICENSE_STRING = " * Copyright (C) 2014 Bernardo Sulzbach\n" +
+            " \n" +
+            " This program is free software: you can redistribute it and/or modify\n" +
+            " it under the terms of the GNU General Public License as published by\n" +
+            " the Free Software Foundation, either version 3 of the License, or\n" +
+            " (at your option) any later version.\n" +
+            " \n" +
+            " This program is distributed in the hope that it will be useful,\n" +
+            " but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+            " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+            " GNU General Public License for more details.";
 
     public static void printLicense() {
-        // TODO: stop reading the LICENSE.txt file in every execution.
-        try {
-            InputStreamReader inputStream = new InputStreamReader(LicenseUtils.class.getResourceAsStream(LICENSE_PATH));
-            BufferedReader bufferedReader = new BufferedReader(inputStream);
-            StringBuilder builder = new StringBuilder();
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                builder.append(currentLine).append(System.lineSeparator());
-            }
-            IO.writeString(builder.toString());
-        } catch (Exception e) {
-            IO.writeString("Failed to read the license file.");
-        }
+        IO.writeString(LICENSE_STRING);
     }
 
 }
