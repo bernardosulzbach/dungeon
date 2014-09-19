@@ -16,10 +16,6 @@
  */
 package org.dungeon.core.game;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
@@ -27,22 +23,30 @@ import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.items.FoodPreset;
+import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 //
-// Why is this calss marked final?
+// Why is this class marked final?
 //
 // A quote from Effective Java (2nd)
 //
 // There are a few more restrictions that a class must obey to allow inheritance.
 //
-// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure will result. The
-// superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be invoked before the subclass
-// constructor has run. If the overriding method depends on any initialization performed by the subclass constructor, the method will not
-// behave as expected.
+// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure will result.
+//
+// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be invoked before the
+// subclass constructor has run. If the overriding method depends on any initialization performed by the subclass constructor, the method
+// will not behave as expected.
 //
 // Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I decided to follow the 
 // item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
@@ -52,12 +56,12 @@ public final class Campaign implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final List<Achievement> achievements;
-    
+
     private final CounterMap<CreatureID> battleIDCounter;
     private final CounterMap<CreatureType> battleTypeCounter;
-    
+
     private final World campaignWorld;
-    
+
     private final Hero campaignHero;
     private Point heroPosition;
 
@@ -85,11 +89,11 @@ public final class Campaign implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> demoAchievements = new ArrayList<Achievement>();
 
-        CounterMap suicideSolutionRequirements = new CounterMap<CreatureID>();
-        CounterMap baneRequirements = new CounterMap<CreatureID>();
-        CounterMap catRequirements = new CounterMap<CreatureID>();
-        CounterMap evilBastardRequirements = new CounterMap<CreatureID>();
-        CounterMap stayDeadRequirements = new CounterMap<CreatureID>();
+        CounterMap<CreatureID> suicideSolutionRequirements = new CounterMap<CreatureID>();
+        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>();
+        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>();
+        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>();
+        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>();
 
         // Suicide Solution requires one battle against the Hero himself.
         suicideSolutionRequirements.incrementCounter(CreatureID.HERO);
@@ -126,13 +130,13 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), startingPoint);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), startingPoint);
 
-        //Items
+        // Items
         world.addItem(new Weapon("Spear", 13, 5), startingPoint);
 
         Point middlePoint = new Point(0, 1);
         world.addLocation(new Location("Clearing"), middlePoint);
 
-        //Beasts
+        // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), middlePoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 3), middlePoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), middlePoint);
@@ -145,7 +149,7 @@ public final class Campaign implements Serializable {
         Point rightPoint = new Point(1, 1);
         world.addLocation(new Location("Road to The Fort"), rightPoint);
 
-        //Beasts
+        // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 4), rightPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), rightPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), rightPoint);
@@ -157,10 +161,11 @@ public final class Campaign implements Serializable {
         // Items
         world.addItem(new Weapon("Mace", 18, 15), rightPoint);
 
+        // Cave
         Point leftPoint = new Point(-1, 1);
         world.addLocation(new Location("Cave"), leftPoint);
 
-        //Beasts
+        // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 3), leftPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 5), leftPoint);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 2), leftPoint);
@@ -168,12 +173,14 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), leftPoint);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), leftPoint);
 
-        //Items
+        // Items
         world.addItem(new Weapon("Longsword", 25, 17), leftPoint);
 
+        // Food
+        world.addItem(Item.createItem(FoodPreset.CHERRY), leftPoint);
         return world;
     }
-    
+
     public World getWorld() {
         return campaignWorld;
     }

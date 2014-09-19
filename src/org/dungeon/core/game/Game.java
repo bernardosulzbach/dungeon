@@ -16,8 +16,6 @@
  */
 package org.dungeon.core.game;
 
-import java.util.Random;
-
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
@@ -26,6 +24,8 @@ import org.dungeon.io.Loader;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.DateAndTime;
 import org.dungeon.utils.Utils;
+
+import java.util.Random;
 
 public class Game {
 
@@ -48,7 +48,7 @@ public class Game {
             // getTurn returns true if the Player did not issue an exit command.
             if (getTurn(campaign)) {
                 // Handle player death.
-                if (!campaign.getHero().isAlive()) {
+                if (campaign.getHero().isDead()) {
                     IO.writeString("You died.");
                     break;
                 }

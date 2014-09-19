@@ -192,14 +192,9 @@ public class Hero extends Creature {
     private String getWeaponStatusString() {
         if (getWeapon() == null) {
             return "You are not carrying a weapon.";
+        } else {
+            return getWeapon().getStatusString();
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Name", getWeapon().getName()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10s\n", "Damage", getWeapon().getDamage()));
-        builder.append(Constants.MARGIN).append(
-                String.format("%-20s%10s", "Integrity",
-                        String.format("%d/%d", getWeapon().getCurIntegrity(), getWeapon().getMaxIntegrity())));
-        return builder.toString();
     }
 
     public void printHeroStatus() {

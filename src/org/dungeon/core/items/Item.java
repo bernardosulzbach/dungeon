@@ -16,30 +16,41 @@
  */
 package org.dungeon.core.items;
 
-import java.io.Serializable;
 import org.dungeon.core.game.Selectable;
 
+import java.io.Serializable;
+
 /**
- * Item class that defines common properties for all items.
+ * Item abstract class that defines common properties for all items.
  *
  * @author Bernardo Sulzbach
+ *         <p/>
+ *         Change log
+ *         Sulzbach, 18/09/2014: added the type field.
  */
-public abstract class Item implements Serializable, Selectable {
+public abstract class Item implements Cloneable, Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String TYPE = "Item";
-
     private final String name;
+    private final String type;
     private boolean destructible;
 
-    public Item(String name) {
-        this.name = name;
-        this.destructible = true;
+    public static Item createItem(FoodPreset preset) {
+        return Food.createFood(preset);
     }
 
-    public Item(String name, boolean destructible) {
+    public static Item createItem(WeaponPreset preset) {
+        return Weapon.createWeapon(preset);
+    }
+
+    protected Item(String name, String type) {
+        this(name, type, true);
+    }
+
+    protected Item(String name, String type, boolean destructible) {
         this.name = name;
+        this.type = type;
         this.destructible = destructible;
     }
 
@@ -47,15 +58,15 @@ public abstract class Item implements Serializable, Selectable {
         return name;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public boolean isDestructible() {
         return destructible;
     }
 
-    public void setDestructible(boolean destructible) {
-        this.destructible = destructible;
-    }
-
-    public String toShortString() {
-        return String.format("[%s] %-20s", TYPE, getName());
+    public String toSelectionEntry() {
+        return String.format("%-12s%-24s", String.format("[%s]", getType()), getName());
     }
 }

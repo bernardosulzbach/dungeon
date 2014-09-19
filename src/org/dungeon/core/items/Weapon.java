@@ -16,21 +16,15 @@
  */
 package org.dungeon.core.items;
 
-import java.io.Serializable;
 import org.dungeon.core.game.Game;
-import org.dungeon.core.game.Selectable;
-
 import org.dungeon.io.IO;
 
-public class Weapon extends Item implements Serializable, Selectable {
+public class Weapon extends Item {
 
     private static final long serialVersionUID = 1L;
 
     private static final String TYPE = "Weapon";
 
-    /**
-     * How much damage the weapon makes.
-     */
     private int damage;
 
     /**
@@ -38,16 +32,17 @@ public class Weapon extends Item implements Serializable, Selectable {
      */
     private int missRate;
 
-    /**
-     * Weapon integrity variables.
-     */
-    private final int maxIntegrity;
+    // Weapon integrity variables.
+    private int maxIntegrity;
     private int curIntegrity;
-    // How much integrity is lost per hit.
-    private final int hitDecrement;
 
-    public Weapon(String name, int damage) {
-        this(name, damage, 0, 100, 100, 1);
+    /**
+     * How much integrity is lost per hit.
+     */
+    private int hitDecrement;
+
+    protected static Weapon createWeapon(WeaponPreset preset) {
+        return new Weapon(preset.name, preset.damage, preset.missRate, preset.startingIntegrity, preset.startingIntegrity, preset.hitDecrement);
     }
 
     public Weapon(String name, int damage, int missRate) {
@@ -55,7 +50,7 @@ public class Weapon extends Item implements Serializable, Selectable {
     }
 
     public Weapon(String name, int damage, int missRate, int maxIntegrity, int curIntegrity, int hitDecrement) {
-        super(name);
+        super(name, TYPE);
         this.damage = damage;
         this.missRate = missRate;
         this.maxIntegrity = maxIntegrity;
@@ -72,20 +67,6 @@ public class Weapon extends Item implements Serializable, Selectable {
             this.damage = 0;
         } else {
             this.damage = damage;
-        }
-    }
-
-    public int getMissRate() {
-        return missRate;
-    }
-
-    public final void setMissRate(int missRate) {
-        if (missRate < 0) {
-            this.missRate = 0;
-        } else if (missRate > 100) {
-            this.missRate = 100;
-        } else {
-            this.missRate = missRate;
         }
     }
 
@@ -136,15 +117,16 @@ public class Weapon extends Item implements Serializable, Selectable {
 
     public final String getStatusString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%-20s%10s\n", "Weapon", getName()));
-        builder.append(String.format("%-20s%10s\n", "Weapon damage", getDamage()));
-        builder.append(String.format("%-20s%10s\n", "Weapon integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
+        builder.append(String.format("%-20s%10s\n", "Name", getName()));
+        builder.append(String.format("%-20s%10s\n", "Damage", getDamage()));
+        builder.append(String.format("%-20s%10s\n", "Integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
         return builder.toString();
     }
 
     @Override
     public String toSelectionEntry() {
-        return String.format("[%s] %-20s Damage: %d", TYPE, getName(), damage);
+        // Use the Item.toSelectionEntry method to avoid code repetition.
+        return super.toSelectionEntry() + "Damage: " + getDamage();
     }
 
 }
