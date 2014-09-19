@@ -40,7 +40,6 @@ public abstract class Creature implements Serializable, Selectable {
     private final CreatureID id;
     private final String name;
 
-
     private int level;
     private int experience;
     private int experienceDrop;
@@ -56,6 +55,7 @@ public abstract class Creature implements Serializable, Selectable {
 
     private Inventory inventory;
     private Weapon weapon;
+
     private Location location;
 
     public Creature(CreatureType type, CreatureID id, String name) {
@@ -258,7 +258,7 @@ public abstract class Creature implements Serializable, Selectable {
         setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
         setAttack(getAttack() + getAttackIncrement());
-        IO.writeString(String.format("%s leveld up. %s is now level %d.", getName(), getName(), getLevel()));
+        IO.writeString(String.format("%s leveled up. %s is now level %d.", getName(), getName(), getLevel()));
     }
 
     //
