@@ -19,6 +19,7 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.items.Food;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
@@ -132,6 +133,7 @@ public class Hero extends Creature {
         }
     }
 
+    // TODO: extract the duplicated code in the following methods to a separate method.
     /**
      * Picks a weapon from the ground.
      */
@@ -152,6 +154,43 @@ public class Hero extends Creature {
             } else {
                 IO.writeString("You cannot equip that.");
             }
+        } else {
+            IO.writeString("Item not found.");
+        }
+    }
+
+    /**
+     * Attempts to eat an item from the ground.
+     */
+    public void eatItem(String[] words) {
+        Item selectedItem;
+        if (words.length == 1) {
+            selectedItem = Utils.selectFromList(getLocation().getItems());
+            // If the player aborted, do not display an error message.
+            if (selectedItem == null) {
+                return;
+            }
+        } else {
+            selectedItem = getLocation().findItem(words[1]);
+        }
+        if (selectedItem != null) {
+            if (selectedItem instanceof Food) {
+                ingest((Food) selectedItem);
+                getLocation().removeItem(selectedItem);
+            } else {
+                IO.writeString("You cannot eat that.");
+            }
+        } else {
+            IO.writeString("Item not found.");
+        }
+    }
+
+    // Ingests an aliment.
+    private void ingest(Food food) {
+        IO.writeString("You ate " + food.getName() + ".");
+        addHealth(food.getNutrition());
+        if (isCompletelyHealed()) {
+            IO.writeString("You are completely healed.");
         }
     }
 

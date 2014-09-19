@@ -85,7 +85,10 @@ public class Game {
             } else if (s.equals("loot") || s.equals("pick")) {
                 campaign.getHero().pickWeapon(inputWords);
 
-            } else if (s.equals("walk") || s.equals("go")) {
+            } else if (s.equals("eat") || s.equals("devour")) {
+                campaign.getHero().eatItem(inputWords);
+            }
+            else if (s.equals("walk") || s.equals("go")) {
                 campaign.parseHeroWalk(inputWords);
 
             } else if (s.equals("drop")) {

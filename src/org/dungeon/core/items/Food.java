@@ -7,7 +7,7 @@ package org.dungeon.core.items;
  * Change log
  * Created by Bernardo on 18/09/2014.
  */
-class Food extends Item {
+public class Food extends Item {
 
     private static final String TYPE = "Food";
 
