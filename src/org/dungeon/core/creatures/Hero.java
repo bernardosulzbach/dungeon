@@ -44,7 +44,7 @@ public class Hero extends Creature {
         setMaxHealth(50);
         setCurHealth(50);
         setAttack(4);
-        setHealthIncrement(10);
+        setHealthIncrement(20);
         setAttackIncrement(4);
     }
 
