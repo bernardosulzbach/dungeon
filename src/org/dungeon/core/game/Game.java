@@ -23,6 +23,7 @@ import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.DateAndTime;
+import org.dungeon.utils.LicenseUtils;
 import org.dungeon.utils.Utils;
 
 import java.util.Random;
@@ -132,6 +133,8 @@ public class Game {
                 return false;
             } else if (s.equals("credits") || s.equals("about")) {
                 Utils.printCredits();
+            } else if (s.equals("license") || s.equals("copyright")) {
+                LicenseUtils.printLicense();
             } else if (s.equals("hint")) {
                 Utils.printRandomHint();
                 // The user issued a command, but it was not recognized.
