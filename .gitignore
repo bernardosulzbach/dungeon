@@ -11,8 +11,13 @@
 hs_err_pid*
 
 # NetBeans
-/nbproject/private/
-/build
+nbproject/
+build/
+
+# IntelliJ IDEA
+.idea/
+out/
+src/META-INF/
 
 # Save files
 *.dungeon
