@@ -291,23 +291,17 @@ public abstract class Creature implements Serializable, Selectable {
     //
     //
 
-    /**
-     * Disarm the creature. Placing its current weapon, if any, in the ground.
-     */
-    public void dropWeapon() {
-        if (getWeapon() != null) {
-            getInventory().removeItem(getWeapon());
-            getLocation().addItem(getWeapon());
-            IO.writeString(getName() + " dropped " + getWeapon().getName() + ".");
-            setWeapon(null);
-        } else {
-            IO.writeString("You are not currently equipping a weapon.");
-        }
-    }
 
     public void equipWeapon(Weapon weapon) {
         this.setWeapon(weapon);
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");
+    }
+
+    public void unequipWeapon() {
+        if (hasWeapon()) {
+            IO.writeString("Unequipped " + getWeapon().getName() + ".");
+            this.weapon = null;
+        }
     }
 
     //

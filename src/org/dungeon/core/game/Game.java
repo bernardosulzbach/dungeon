@@ -93,7 +93,7 @@ public class Game {
             } else if (s.equals("walk") || s.equals("go")) {
                 campaign.parseHeroWalk(inputWords);
             } else if (s.equals("drop")) {
-                campaign.getHero().dropWeapon();
+                campaign.getHero().dropItem(inputWords);
             } else if (s.equals("destroy") || s.equals("crash")) {
                 campaign.getHero().destroyItem(inputWords);
             } else if (s.equals("status")) {

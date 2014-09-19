@@ -157,6 +157,11 @@ public class Hero extends Creature {
         }
     }
 
+    //
+    //
+    // Inventory methods.
+    //
+    //
     /**
      * Attempts to pick and item and add it to the inventory.
      */
@@ -168,14 +173,13 @@ public class Hero extends Creature {
         }
     }
 
-    public void printInventory() {
-        getInventory().printItems();
-    }
-
+    //
+    //
+    // Weapon methods.
+    //
+    //
     /**
      * Tries to equip an item from the inventory.
-     *
-     * @param inputWords
      */
     public void parseEquip(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
@@ -183,27 +187,28 @@ public class Hero extends Creature {
             equipWeapon((Weapon) selectedItem);
         } else if (selectedItem != null) {
             IO.writeString("You can only equip weapons.");
+        }
+    }
+
+    /**
+     * Attempts to drop an item from the hero's inventory.
+     */
+    public void dropItem(String[] inputWords) {
+        Item selectedItem = selectInventoryItem(inputWords);
+        if (selectedItem != null) {
+            if (selectedItem == getWeapon()) {
+                unequipWeapon();
+            }
+            getInventory().removeItem(selectedItem);
+            getLocation().addItem(selectedItem);
+            IO.writeString("Dropped " + selectedItem.getName() + ".");
         } else {
             IO.writeString("Item not found in inventory.");
         }
     }
 
-    /**
-     * Picks a weapon from the ground.
-     */
-    public void pickWeapon(String[] inputWords) {
-        Item selectedItem = selectLocationItem(inputWords);
-        if (selectedItem != null) {
-            if (selectedItem instanceof Weapon) {
-                if (hasWeapon()) {
-                    dropWeapon();
-                }
-                equipWeapon((Weapon) selectedItem);
-                getLocation().removeItem(selectedItem);
-            } else {
-                IO.writeString("You cannot equip that.");
-            }
-        }
+    public void printInventory() {
+        getInventory().printItems();
     }
 
     /**
@@ -249,6 +254,12 @@ public class Hero extends Creature {
             }
         }
     }
+
+    //
+    //
+    // Status methods.
+    //
+    //
 
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
