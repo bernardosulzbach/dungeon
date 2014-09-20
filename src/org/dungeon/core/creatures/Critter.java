@@ -44,7 +44,7 @@ public class Critter extends Creature {
 
     @Override
     public void takeDamage(int damage) {
-        // Attacks against critters have 100% bonus damage.
+        // Attacks against critters deal 100% bonus damage.
         damage = damage * 2;
         if (damage > getCurHealth()) {
             setCurHealth(0);
