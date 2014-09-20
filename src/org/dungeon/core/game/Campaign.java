@@ -188,6 +188,10 @@ public final class Campaign implements Serializable {
         return campaignHero;
     }
 
+    public Point getHeroPosition() {
+        return heroPosition;
+    }
+
     public boolean isSaved() {
         return saved;
     }
@@ -276,4 +280,12 @@ public final class Campaign implements Serializable {
         this.battleTypeCounter.incrementCounter(target.getType());
     }
 
+    /**
+     * Returns some basic information about the hero.
+     * Used by the 'whoami' command.
+     */
+    public String getHeroInfo() {
+        // TODO: consider returning something a bit more substantial.
+        return getHero().getName();
+    }
 }

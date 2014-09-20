@@ -97,4 +97,8 @@ public class Point implements Serializable {
         return hash;
     }
 
+    @Override
+    public String toString() {
+        return String.format("{%d,%d}", getX(), getY());
+    }
 }

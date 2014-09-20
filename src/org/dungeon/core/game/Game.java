@@ -111,6 +111,10 @@ public class Game {
                 }
                 return true;
                 // Campaign-related commands.
+            } else if (s.equals("whoami")) {
+                IO.writeString(campaign.getHeroInfo());
+            } else if (s.equals("whereami")) {
+                IO.writeString(campaign.getHeroPosition().toString());
             } else if (s.equals("achievements")) {
                 campaign.printUnlockedAchievements();
                 // World-related commands.
