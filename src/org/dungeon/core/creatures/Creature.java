@@ -290,8 +290,6 @@ public abstract class Creature implements Serializable, Selectable {
     // Weapon methods.
     //
     //
-
-
     public void equipWeapon(IWeapon weapon) {
         this.setWeapon(weapon);
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");

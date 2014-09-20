@@ -262,14 +262,19 @@ public class Hero extends Creature {
 
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
+
         builder.append(Constants.MARGIN).append(String.format("%s (%s)\n", getName(), getId()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Level", getLevel()));
-        builder.append(Constants.MARGIN).append(
-                String.format("%-20s%10s\n", "Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel())));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Gold", getGold()));
-        builder.append(Constants.MARGIN).append(
-                String.format("%-20s%10s\n", "Health", String.format("%d/%d", getCurHealth(), getMaxHealth())));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d", "Attack", getAttack()));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Level", getLevel()));
+
+        String experienceFraction = String.format("%d/%d", getExperience(), getExperienceToNextLevel());
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Experience", experienceFraction));
+
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Gold", getGold()));
+
+        String healthFraction = String.format("%d/%d", getCurHealth(), getMaxHealth());
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Health", healthFraction));
+
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d", "Attack", getAttack()));
         return builder.toString();
 
     }
