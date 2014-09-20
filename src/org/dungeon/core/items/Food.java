@@ -20,6 +20,7 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
 
 /**
  * Food class.
@@ -81,11 +82,17 @@ public class Food extends Item implements IWeapon, Breakable {
 
     @Override
     public String getStatusString() {
-
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%-20s%10s\n", "Name", getName()));
-        builder.append(String.format("%-20s%10s\n", "Damage", getDamage()));
-        builder.append(String.format("%-20s%10s\n", "Integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
+        String nameString = getName();
+        if (isBroken()) {
+            nameString += " (Broken)";
+        }
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Name", nameString));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Damage", getDamage()));
+        // Uses three lines to build the integrity line to improve code readability.
+        String integrityFraction = String.format("%d/%d", getCurIntegrity(), getMaxIntegrity());
+        String integrityString = String.format("%-20s%20s\n", "Integrity", integrityFraction);
+        builder.append(Constants.MARGIN).append(integrityString);
         return builder.toString();
     }
 

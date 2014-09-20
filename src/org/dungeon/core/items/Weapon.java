@@ -18,6 +18,7 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
 
 public class Weapon extends Item implements IWeapon, Breakable {
 
@@ -60,14 +61,6 @@ public class Weapon extends Item implements IWeapon, Breakable {
 
     public int getDamage() {
         return damage;
-    }
-
-    public final void setDamage(int damage) {
-        if (damage < 0) {
-            this.damage = 0;
-        } else {
-            this.damage = damage;
-        }
     }
 
     public int getMaxIntegrity() {
@@ -115,11 +108,21 @@ public class Weapon extends Item implements IWeapon, Breakable {
         curIntegrity = maxIntegrity;
     }
 
-    public final String getStatusString() {
+    // TODO: this code is repeated in Food.java, consider refactoring
+    // Maybe food should extend weapon. I cannot think of a food that should not be usable as a weapon.
+    @Override
+    public String getStatusString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%-20s%10s\n", "Name", getName()));
-        builder.append(String.format("%-20s%10s\n", "Damage", getDamage()));
-        builder.append(String.format("%-20s%10s\n", "Integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
+        String nameString = getName();
+        if (isBroken()) {
+            nameString += " (Broken)";
+        }
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Name", nameString));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Damage", getDamage()));
+        // Uses three lines to build the integrity line to improve code readability.
+        String integrityFraction = String.format("%d/%d", getCurIntegrity(), getMaxIntegrity());
+        String integrityString = String.format("%-20s%20s\n", "Integrity", integrityFraction);
+        builder.append(Constants.MARGIN).append(integrityString);
         return builder.toString();
     }
 
