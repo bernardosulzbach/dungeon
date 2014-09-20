@@ -18,6 +18,8 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.items.Breakable;
+import org.dungeon.core.items.IWeapon;
 import org.dungeon.io.IO;
 
 /**
@@ -34,28 +36,40 @@ public class Undead extends Creature {
      * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
      * its bare hands.
      *
-     * @param target
      */
     @Override
     public void hit(Creature target) {
+        IWeapon heroWeapon = getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
-        if (getWeapon() != null && !getWeapon().isBroken()) {
-            // Check if the attack is a miss.
-            if (getWeapon().isMiss()) {
-                IO.writeString(getName() + " misses.");
-                return;
+        if (heroWeapon != null) {
+            if (heroWeapon instanceof Breakable) {
+                Breakable breakableWeapon = (Breakable) heroWeapon;
+                if (!breakableWeapon.isBroken()) {
+                    if (!heroWeapon.isMiss()) {
+                        breakableWeapon.decrementIntegrity();
+                        hitDamage = heroWeapon.getDamage();
+                    } else {
+                        IO.writeString(getName() + " misses.");
+                        return;
+                    }
+                } else {
+                    hitDamage = getAttack();
+                }
             } else {
-                hitDamage = getWeapon().getDamage();
-                target.takeDamage(hitDamage);
-                getWeapon().decrementIntegrity();
+                if (!heroWeapon.isMiss()) {
+                    hitDamage = heroWeapon.getDamage();
+                } else {
+                    IO.writeString(getName() + " misses.");
+                    return;
+
+                }
             }
         } else {
-            hitDamage = this.getAttack();
-            target.takeDamage(hitDamage);
+            hitDamage = getAttack();
         }
+        target.takeDamage(hitDamage);
         IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-
     }
 
 }

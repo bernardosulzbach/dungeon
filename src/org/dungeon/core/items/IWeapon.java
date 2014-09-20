@@ -9,6 +9,8 @@ public interface IWeapon {
 
     String getName();
 
+    String getStatusString();
+
     int getDamage();
 
     boolean isMiss();

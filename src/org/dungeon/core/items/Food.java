@@ -56,6 +56,10 @@ public class Food extends Item implements IWeapon, Breakable {
         return nutrition;
     }
 
+    public int getMaxIntegrity() {
+        return maxIntegrity;
+    }
+
     public int getCurIntegrity() {
         return curIntegrity;
     }
@@ -76,6 +80,16 @@ public class Food extends Item implements IWeapon, Breakable {
     }
 
     @Override
+    public String getStatusString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("%-20s%10s\n", "Name", getName()));
+        builder.append(String.format("%-20s%10s\n", "Damage", getDamage()));
+        builder.append(String.format("%-20s%10s\n", "Integrity", String.format("%d/%d", getCurIntegrity(), getMaxIntegrity())));
+        return builder.toString();
+    }
+
+    @Override
     public int getDamage() {
         return damage;
     }
@@ -93,6 +107,9 @@ public class Food extends Item implements IWeapon, Breakable {
     @Override
     public void decrementIntegrity() {
         setCurIntegrity(getCurIntegrity() - getHitDecrement());
+        if (isBroken()) {
+            IO.writeString(getName() + " broke.");
+        }
     }
 
     @Override

@@ -21,8 +21,8 @@ import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
+import org.dungeon.core.items.IWeapon;
 import org.dungeon.core.items.Inventory;
-import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -54,7 +54,7 @@ public abstract class Creature implements Serializable, Selectable {
     private int attackIncrement;
 
     private Inventory inventory;
-    private Weapon weapon;
+    private IWeapon weapon;
 
     private Location location;
 
@@ -199,11 +199,11 @@ public abstract class Creature implements Serializable, Selectable {
         this.inventory = inventory;
     }
 
-    public Weapon getWeapon() {
+    public IWeapon getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(Weapon weapon) {
+    public void setWeapon(IWeapon weapon) {
         this.weapon = weapon;
     }
 
@@ -292,7 +292,7 @@ public abstract class Creature implements Serializable, Selectable {
     //
 
 
-    public void equipWeapon(Weapon weapon) {
+    public void equipWeapon(IWeapon weapon) {
         this.setWeapon(weapon);
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");
     }

@@ -20,10 +20,7 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.Food;
-import org.dungeon.core.items.Inventory;
-import org.dungeon.core.items.Item;
-import org.dungeon.core.items.Weapon;
+import org.dungeon.core.items.*;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -162,6 +159,7 @@ public class Hero extends Creature {
     // Inventory methods.
     //
     //
+
     /**
      * Attempts to pick and item and add it to the inventory.
      */
@@ -178,13 +176,14 @@ public class Hero extends Creature {
     // Weapon methods.
     //
     //
+
     /**
      * Tries to equip an item from the inventory.
      */
     public void parseEquip(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem instanceof Weapon) {
-            equipWeapon((Weapon) selectedItem);
+        if (selectedItem instanceof IWeapon) {
+            equipWeapon((IWeapon) selectedItem);
         } else if (selectedItem != null) {
             IO.writeString("You can only equip weapons.");
         }
@@ -310,22 +309,36 @@ public class Hero extends Creature {
      */
     @Override
     public void hit(Creature target) {
+        IWeapon heroWeapon = getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
-        if (getWeapon() != null && !getWeapon().isBroken()) {
-            // Check if the attack is a miss.
-            if (getWeapon().isMiss()) {
-                IO.writeString(getName() + " misses.");
-                return;
+        if (heroWeapon != null) {
+            if (heroWeapon instanceof Breakable) {
+                Breakable breakableWeapon = (Breakable) heroWeapon;
+                if (!breakableWeapon.isBroken()) {
+                    if (!heroWeapon.isMiss()) {
+                        breakableWeapon.decrementIntegrity();
+                        hitDamage = heroWeapon.getDamage();
+                    } else {
+                        IO.writeString(getName() + " misses.");
+                        return;
+                    }
+                } else {
+                    hitDamage = getAttack();
+                }
             } else {
-                hitDamage = getWeapon().getDamage();
-                target.takeDamage(hitDamage);
-                getWeapon().decrementIntegrity();
+                if (!heroWeapon.isMiss()) {
+                    hitDamage = heroWeapon.getDamage();
+                } else {
+                    IO.writeString(getName() + " misses.");
+                    return;
+
+                }
             }
         } else {
-            hitDamage = this.getAttack();
-            target.takeDamage(hitDamage);
+            hitDamage = getAttack();
         }
+        target.takeDamage(hitDamage);
         IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
 
     }
