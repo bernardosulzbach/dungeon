@@ -100,4 +100,7 @@ public class StringUtils {
         return builder.toString();
     }
 
+    public static boolean firstEqualsIgnoreCase(String s1, String s2) {
+        return Character.toLowerCase(s1.charAt(0)) == Character.toLowerCase(s2.charAt(0));
+    }
 }
