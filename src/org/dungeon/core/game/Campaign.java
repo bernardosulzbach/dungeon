@@ -29,6 +29,7 @@ import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Hints;
+import org.dungeon.utils.StringUtils;
 import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
@@ -272,9 +273,10 @@ public final class Campaign implements Serializable {
             }
             return;
         } else {
-            String secondWord = inputWords[1];
+            String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
-                if (dir.toString().equalsIgnoreCase(secondWord)) {
+                // if ( (the strings are equal) or (the first characters are equal) )
+                if (dir.toString().equalsIgnoreCase(arg) || StringUtils.firstEqualsIgnoreCase(dir.toString(), arg)) {
                     heroWalk(dir);
                     return;
                 }
