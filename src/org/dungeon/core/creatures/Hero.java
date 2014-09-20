@@ -318,34 +318,30 @@ public class Hero extends Creature {
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
         if (heroWeapon != null) {
-            if (heroWeapon instanceof Breakable) {
-                Breakable breakableWeapon = (Breakable) heroWeapon;
-                if (!breakableWeapon.isBroken()) {
-                    if (!heroWeapon.isMiss()) {
-                        breakableWeapon.decrementIntegrity();
-                        hitDamage = heroWeapon.getDamage();
-                    } else {
-                        IO.writeString(getName() + " misses.");
-                        return;
+            if (!heroWeapon.isMiss()) {
+                hitDamage = heroWeapon.getDamage();
+                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
+                if (heroWeapon instanceof Breakable) {
+                    Breakable breakableWeapon = (Breakable) heroWeapon;
+                    breakableWeapon.decrementIntegrity();
+                    if (breakableWeapon.isBroken()) {
+                        setWeapon(null);
+                        // TODO: fix this cast. All IWeapon (now) is-a item.
+                        // This reinforces the idea that I should be using inheritance?
+                        getInventory().removeItem((Item) getWeapon());
                     }
-                } else {
-                    hitDamage = getAttack();
                 }
             } else {
-                if (!heroWeapon.isMiss()) {
-                    hitDamage = heroWeapon.getDamage();
-                } else {
-                    IO.writeString(getName() + " misses.");
-                    return;
-
-                }
+                IO.writeString(getName() + " misses.");
+                return;
             }
         } else {
             hitDamage = getAttack();
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
         }
         target.takeDamage(hitDamage);
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-
+        // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
+        // after an eventual "weaponName broke" message, what looks really weird.
     }
 
 }
