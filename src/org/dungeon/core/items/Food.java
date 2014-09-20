@@ -18,29 +18,86 @@
 package org.dungeon.core.items;
 
 
+import org.dungeon.core.game.Game;
+import org.dungeon.io.IO;
+
 /**
  * Food class.
  * <p/>
  * Change log
  * Created by Bernardo on 18/09/2014.
  */
-public class Food extends Item {
+public class Food extends Item implements IWeapon, Breakable {
 
     private static final String TYPE = "Food";
 
-    private final int nutrition;
+    private int damage;
+    private int missRate;
+    private int maxIntegrity;
+    private int curIntegrity;
+    private int hitDecrement;
+    private int nutrition;
 
     protected static Food createFood(FoodPreset preset) {
-        return new Food(preset.name, preset.nutrition);
+        return new Food(preset.name, preset.damage, preset.missRate, preset.integrity, preset.decrement, preset.nutrition);
     }
 
-    private Food(String name, int nutrition) {
+    private Food(String name, int damage, int missRate, int integrity, int decrement, int nutrition) {
         super(name, TYPE);
+        this.damage = damage;
+        this.missRate = missRate;
+        this.maxIntegrity = integrity;
+        this.curIntegrity = integrity;
+        this.hitDecrement = decrement;
         this.nutrition = nutrition;
     }
 
     public int getNutrition() {
         return nutrition;
+    }
+
+    public int getCurIntegrity() {
+        return curIntegrity;
+    }
+
+    /**
+     * Sets the current integrity to a given value, validating it to avoid negative values.
+     */
+    public void setCurIntegrity(int curIntegrity) {
+        if (curIntegrity < 0) {
+            this.curIntegrity = 0;
+        } else {
+            this.curIntegrity = curIntegrity;
+        }
+    }
+
+    public int getHitDecrement() {
+        return hitDecrement;
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public boolean isMiss() {
+        return missRate > Game.RANDOM.nextInt(100);
+    }
+
+    @Override
+    public boolean isBroken() {
+        return getCurIntegrity() == 0;
+    }
+
+    @Override
+    public void decrementIntegrity() {
+        setCurIntegrity(getCurIntegrity() - getHitDecrement());
+    }
+
+    @Override
+    public void repair() {
+        IO.writeString("You cannot repair this item.");
     }
 
     @Override

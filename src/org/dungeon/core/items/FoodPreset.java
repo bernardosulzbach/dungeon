@@ -24,15 +24,23 @@ package org.dungeon.core.items;
  * Created by Bernardo on 18/09/2014.
  */
 public enum FoodPreset {
-    CHERRY("Cherry", 5),
-    APPLE("Apple", 10),
-    WATERMELON("Watermelon", 15);
+    CHERRY("Cherry", 2, 50, 4, 2, 8),
+    APPLE("Apple", 4, 40, 24, 8, 14),
+    WATERMELON("Watermelon", 10, 30, 40, 10, 26);
 
     protected final String name;
+    protected final int damage;
+    protected final int missRate;
+    protected final int integrity;
+    protected final int decrement;
     protected final int nutrition;
 
-    FoodPreset(String name, int nutrition) {
+    FoodPreset(String name, int damage, int missRate, int integrity, int decrement, int nutrition) {
         this.name = name;
+        this.damage = damage;
+        this.missRate = missRate;
+        this.integrity = integrity;
+        this.decrement = decrement;
         this.nutrition = nutrition;
     }
 }

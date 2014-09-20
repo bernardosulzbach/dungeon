@@ -12,6 +12,4 @@ public interface IWeapon {
     int getDamage();
 
     boolean isMiss();
-
-    void repair();
 }

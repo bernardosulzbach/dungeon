@@ -19,7 +19,7 @@ package org.dungeon.core.items;
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
-public class Weapon extends Item {
+public class Weapon extends Item implements IWeapon, Breakable {
 
     private static final long serialVersionUID = 1L;
 
