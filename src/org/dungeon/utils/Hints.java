@@ -25,7 +25,7 @@ package org.dungeon.utils;
 public class Hints {
 
     public static final String[] hintsArray = {
-            "Attacks against critters have 100% bonus damage.",
+            "Attacks against critters deal 100% bonus damage.",
             "If the creature has a weapon, it will be used to perform the attack.\n" +
                     "Otherwise, the creature will attack with its bare hands.",
             "The command 'achievements' will also show the total number of achievements.",
