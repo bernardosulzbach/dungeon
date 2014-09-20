@@ -28,6 +28,7 @@ import org.dungeon.core.items.Item;
 import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.Hints;
 import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
@@ -66,6 +67,7 @@ public final class Campaign implements Serializable {
     private Point heroPosition;
 
     private boolean saved;
+    private int nextHintIndex;
 
     private int totalAchievementsCount;
     private int unlockedAchievementsCount;
@@ -200,6 +202,23 @@ public final class Campaign implements Serializable {
         this.saved = saved;
     }
 
+    public int getNextHintIndex() {
+        return nextHintIndex;
+    }
+
+    public void setNextHintIndex(int nextHintIndex) {
+        this.nextHintIndex = nextHintIndex;
+    }
+
+    private void incrementNextHintIndex() {
+        int newIndex = getNextHintIndex() + 1;
+        if (newIndex == Hints.hintsArray.length) {
+            setNextHintIndex(0);
+        } else {
+            setNextHintIndex(newIndex);
+        }
+    }
+
     public int getTotalAchievementsCount() {
         return totalAchievementsCount;
     }
@@ -275,9 +294,17 @@ public final class Campaign implements Serializable {
         }
     }
 
-    void addBattle(Creature target) {
+    public void addBattle(Creature target) {
         this.battleIDCounter.incrementCounter(target.getId());
         this.battleTypeCounter.incrementCounter(target.getType());
+    }
+
+    /**
+     * Prints the next hint.
+     */
+    public void printNextHint() {
+        IO.writeString(Hints.hintsArray[getNextHintIndex()]);
+        incrementNextHintIndex();
     }
 
     /**

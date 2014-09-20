@@ -69,7 +69,6 @@ public class Game {
     /**
      * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
      *
-     * @param campaign
      * @return false if the player issued an exit command. True if the player played a turn.
      */
     private static boolean getTurn(Campaign campaign) {
@@ -140,7 +139,7 @@ public class Game {
             } else if (s.equals("license") || s.equals("copyright")) {
                 LicenseUtils.printLicense();
             } else if (s.equals("hint")) {
-                Utils.printRandomHint();
+                campaign.printNextHint();
                 // The user issued a command, but it was not recognized.
             } else {
                 if (!inputWords[0].isEmpty()) {
