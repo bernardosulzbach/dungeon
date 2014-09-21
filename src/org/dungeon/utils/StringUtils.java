@@ -35,7 +35,7 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param fill the filling character.
+     * @param fill   the filling character.
      * @return a centered string.
      */
     public static String centerString(String string, char fill) {
@@ -46,8 +46,8 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param width the width of the resulting string.
-     * @param fill the filling character.
+     * @param width  the width of the resulting string.
+     * @param fill   the filling character.
      * @return a centered string.
      */
     public static String centerString(String string, int width, char fill) {
@@ -72,9 +72,6 @@ public class StringUtils {
 
     /**
      * Checks if a string is alphabetic (only contains letters).
-     *
-     * @param name
-     * @return
      */
     public static boolean isAlphabetic(String name) {
         for (int i = 0; i < name.length(); i++) {
@@ -87,10 +84,6 @@ public class StringUtils {
 
     /**
      * Creates a string of repeated characters.
-     *
-     * @param repetitions
-     * @param character
-     * @return
      */
     public static String makeRepeatedCharacterString(int repetitions, char character) {
         StringBuilder builder = new StringBuilder();
@@ -100,7 +93,15 @@ public class StringUtils {
         return builder.toString();
     }
 
+    /**
+     * Verifies if the first character of a string matches the first character of the first character of another string.
+     * Ignores case.
+     * Throws IllegalArgumentException.
+     */
     public static boolean firstEqualsIgnoreCase(String s1, String s2) {
+        if (s1.length() == 0 || s2.length() == 0) {
+            throw new IllegalArgumentException("Strings must have at least one character.");
+        }
         return Character.toLowerCase(s1.charAt(0)) == Character.toLowerCase(s2.charAt(0));
     }
 }

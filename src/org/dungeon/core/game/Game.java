@@ -158,14 +158,24 @@ public class Game {
      */
     private static void battle(Hero attacker, Creature defender) {
         if (attacker == defender) {
-            IO.writeString("You cannot attempt suicide.");
-            attacker.setAttemptedSuicide(true);
+            // Two different messages.
+            if (RANDOM.nextBoolean()) {
+                IO.writeString("You cannot attempt suicide.");
+            } else {
+                IO.writeString("You cannot target yourself.");
+            }
             return;
         }
+        /**
+         * A counter variable that register how many turns the battle had.
+         */
+        int turns = 0;
         while (attacker.isAlive() && defender.isAlive()) {
             attacker.hit(defender);
+            turns++;
             if (defender.isAlive()) {
                 defender.hit(attacker);
+                turns++;
             }
         }
         Creature survivor;
@@ -178,6 +188,8 @@ public class Game {
             defeated = attacker;
         }
         IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
+        // Add information about this battle to the Hero's battle log.
+        attacker.getBattleLog().addBattle(attacker, defender, attacker == survivor, turns);
         battleCleanup(survivor, defeated);
     }
 
