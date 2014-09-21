@@ -17,6 +17,7 @@
 
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
@@ -35,8 +36,7 @@ public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
 
-    // Has the player already attempted suicide?
-    private boolean attemptedSuicide;
+    private BattleLog battleLog;
 
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
@@ -47,14 +47,15 @@ public class Hero extends Creature {
         setHealthIncrement(20);
         setAttackIncrement(4);
         setInventory(new Inventory(4));
+        setBattleLog(new BattleLog());
     }
 
-    public boolean isAttemptedSuicide() {
-        return attemptedSuicide;
+    public BattleLog getBattleLog() {
+        return battleLog;
     }
 
-    public void setAttemptedSuicide(boolean attemptedSuicide) {
-        this.attemptedSuicide = attemptedSuicide;
+    public void setBattleLog(BattleLog battleLog) {
+        this.battleLog = battleLog;
     }
 
     /**

@@ -275,7 +275,7 @@ public final class Campaign implements Serializable {
         } else {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
-                // if ( (the strings are equal) or (the first characters are equal) )
+                // (the strings are equal) or (the first characters of each string are equal)
                 if (dir.toString().equalsIgnoreCase(arg) || StringUtils.firstEqualsIgnoreCase(dir.toString(), arg)) {
                     heroWalk(dir);
                     return;
