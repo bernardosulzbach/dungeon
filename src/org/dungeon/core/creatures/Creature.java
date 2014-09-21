@@ -24,6 +24,8 @@ import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.IWeapon;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.StringUtils;
 
 import java.io.Serializable;
 
@@ -258,7 +260,13 @@ public abstract class Creature implements Serializable, Selectable {
         setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
         setAttack(getAttack() + getAttackIncrement());
-        IO.writeString(String.format("%s leveled up. %s is now level %d.", getName(), getName(), getLevel()));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
+        sb.append(StringUtils.centerString(String.format("%s is now level %d.", getName(), getLevel()))).append("\n");
+        String nextLevelProgress = String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel());
+        sb.append(StringUtils.centerString(String.format(nextLevelProgress))).append("\n");
+        IO.writeString(sb.toString());
     }
 
     //
