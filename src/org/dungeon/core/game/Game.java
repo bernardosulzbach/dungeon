@@ -140,6 +140,8 @@ public class Game {
                 LicenseUtils.printLicense();
             } else if (s.equals("hint")) {
                 campaign.printNextHint();
+            } else if (s.equals("version")) {
+                Utils.printVersion();
                 // The user issued a command, but it was not recognized.
             } else {
                 if (!inputWords[0].isEmpty()) {

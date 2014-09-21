@@ -16,11 +16,11 @@
  */
 package org.dungeon.utils;
 
-import java.util.List;
-import org.dungeon.core.game.Game;
-
 import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * General utility class.
@@ -34,6 +34,13 @@ public class Utils {
      */
     public static void printHeading() {
         IO.writeString(Constants.HEADING);
+    }
+
+    /**
+     * Prints the game's name followed by the version and its codename.
+     */
+    public static void printVersion() {
+        IO.writeString(Constants.TITLE + " " + Constants.VERSION + " - " + Constants.CODENAME);
     }
 
     /**
