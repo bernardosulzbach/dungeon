@@ -162,9 +162,9 @@ public class Game {
         if (attacker == defender) {
             // Two different messages.
             if (RANDOM.nextBoolean()) {
-                IO.writeString("You cannot attempt suicide.");
+                IO.writeString(Constants.SUICIDE_ATTEMPT_1);
             } else {
-                IO.writeString("You cannot target yourself.");
+                IO.writeString(Constants.SUICIDE_ATTEMPT_2);
             }
             return;
         }
