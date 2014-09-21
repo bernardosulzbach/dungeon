@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Hero class that defines the creature that the player controls.
  */
-public class Hero extends Creature {
+public class Hero extends ArmedCreature {
 
     private static final long serialVersionUID = 1L;
 
@@ -313,40 +313,5 @@ public class Hero extends Creature {
         }
     }
 
-    /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
-     */
-    @Override
-    public void hit(Creature target) {
-        Weapon heroWeapon = getWeapon();
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (heroWeapon != null) {
-            if (!heroWeapon.isMiss()) {
-                hitDamage = heroWeapon.getDamage();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-                if (heroWeapon instanceof Breakable) {
-                    Breakable breakableWeapon = (Breakable) heroWeapon;
-                    breakableWeapon.decrementIntegrity();
-                    if (breakableWeapon.isBroken()) {
-                        setWeapon(null);
-                        // TODO: fix this cast. All IWeapon (now) is-a item.
-                        // This reinforces the idea that I should be using inheritance?
-                        getInventory().removeItem((Item) getWeapon());
-                    }
-                }
-            } else {
-                IO.writeString(getName() + " misses.");
-                return;
-            }
-        } else {
-            hitDamage = getAttack();
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-        }
-        target.takeDamage(hitDamage);
-        // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-        // after an eventual "weaponName broke" message, what looks really weird.
-    }
 
 }

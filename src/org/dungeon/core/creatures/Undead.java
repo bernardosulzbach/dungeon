@@ -18,58 +18,13 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.Breakable;
-import org.dungeon.core.items.Weapon;
-import org.dungeon.io.IO;
 
 /**
- *
  * @author Bernardo Sulzbach
  */
-public class Undead extends Creature {
+public class Undead extends ArmedCreature {
 
     public Undead(CreatureID id, String name) {
         super(CreatureType.UNDEAD, id, name);
     }
-
-    /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
-     *
-     */
-    @Override
-    public void hit(Creature target) {
-        Weapon heroWeapon = getWeapon();
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (heroWeapon != null) {
-            if (heroWeapon instanceof Breakable) {
-                Breakable breakableWeapon = (Breakable) heroWeapon;
-                if (!breakableWeapon.isBroken()) {
-                    if (!heroWeapon.isMiss()) {
-                        breakableWeapon.decrementIntegrity();
-                        hitDamage = heroWeapon.getDamage();
-                    } else {
-                        IO.writeString(getName() + " misses.");
-                        return;
-                    }
-                } else {
-                    hitDamage = getAttack();
-                }
-            } else {
-                if (!heroWeapon.isMiss()) {
-                    hitDamage = heroWeapon.getDamage();
-                } else {
-                    IO.writeString(getName() + " misses.");
-                    return;
-
-                }
-            }
-        } else {
-            hitDamage = getAttack();
-        }
-        target.takeDamage(hitDamage);
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-    }
-
 }
