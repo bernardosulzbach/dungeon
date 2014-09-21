@@ -40,8 +40,8 @@ public abstract class Item implements Cloneable, Serializable, Selectable {
         return Food.createFood(preset);
     }
 
-    public static Item createItem(WeaponPreset preset) {
-        return Weapon.createWeapon(preset);
+    public static Item createItem(SimpleWeaponPreset preset) {
+        return SimpleWeapon.createWeapon(preset);
     }
 
     protected Item(String name, String type) {

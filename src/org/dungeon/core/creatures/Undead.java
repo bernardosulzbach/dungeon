@@ -19,7 +19,7 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.items.Breakable;
-import org.dungeon.core.items.IWeapon;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 
 /**
@@ -39,7 +39,7 @@ public class Undead extends Creature {
      */
     @Override
     public void hit(Creature target) {
-        IWeapon heroWeapon = getWeapon();
+        Weapon heroWeapon = getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
         if (heroWeapon != null) {

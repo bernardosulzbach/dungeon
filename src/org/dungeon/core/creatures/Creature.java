@@ -21,7 +21,7 @@ import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
-import org.dungeon.core.items.IWeapon;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -56,7 +56,7 @@ public abstract class Creature implements Serializable, Selectable {
     private int attackIncrement;
 
     private Inventory inventory;
-    private IWeapon weapon;
+    private Weapon weapon;
 
     private Location location;
 
@@ -201,11 +201,11 @@ public abstract class Creature implements Serializable, Selectable {
         this.inventory = inventory;
     }
 
-    public IWeapon getWeapon() {
+    public Weapon getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(IWeapon weapon) {
+    public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
 
@@ -298,14 +298,22 @@ public abstract class Creature implements Serializable, Selectable {
     // Weapon methods.
     //
     //
-    public void equipWeapon(IWeapon weapon) {
+    public void equipWeapon(Weapon weapon) {
+        if (hasWeapon()) {
+            if (getWeapon() == weapon) {
+                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
+                return;
+            } else {
+                unequipWeapon();
+            }
+        }
         this.setWeapon(weapon);
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");
     }
 
     public void unequipWeapon() {
         if (hasWeapon()) {
-            IO.writeString("Unequipped " + getWeapon().getName() + ".");
+            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
             this.weapon = null;
         }
     }

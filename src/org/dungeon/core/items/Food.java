@@ -28,7 +28,7 @@ import org.dungeon.utils.Constants;
  * Change log
  * Created by Bernardo on 18/09/2014.
  */
-public class Food extends Item implements IWeapon, Breakable {
+public class Food extends Item implements Weapon, Edible, Breakable {
 
     private static final String TYPE = "Food";
 
@@ -38,12 +38,19 @@ public class Food extends Item implements IWeapon, Breakable {
     private int curIntegrity;
     private int hitDecrement;
     private int nutrition;
+    private int experience;
 
     protected static Food createFood(FoodPreset preset) {
-        return new Food(preset.name, preset.damage, preset.missRate, preset.integrity, preset.decrement, preset.nutrition);
+        return new Food(preset.name,
+                preset.damage,
+                preset.missRate,
+                preset.integrity,
+                preset.decrement,
+                preset.nutrition,
+                preset.experience);
     }
 
-    private Food(String name, int damage, int missRate, int integrity, int decrement, int nutrition) {
+    private Food(String name, int damage, int missRate, int integrity, int decrement, int nutrition, int experience) {
         super(name, TYPE);
         this.damage = damage;
         this.missRate = missRate;
@@ -51,10 +58,17 @@ public class Food extends Item implements IWeapon, Breakable {
         this.curIntegrity = integrity;
         this.hitDecrement = decrement;
         this.nutrition = nutrition;
+        this.experience = experience;
     }
 
+    @Override
     public int getNutrition() {
         return nutrition;
+    }
+
+    @Override
+    public int getExperience() {
+        return experience;
     }
 
     public int getMaxIntegrity() {

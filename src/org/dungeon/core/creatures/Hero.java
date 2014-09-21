@@ -183,8 +183,8 @@ public class Hero extends Creature {
      */
     public void parseEquip(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem instanceof IWeapon) {
-            equipWeapon((IWeapon) selectedItem);
+        if (selectedItem instanceof Weapon) {
+            equipWeapon((Weapon) selectedItem);
         } else if (selectedItem != null) {
             IO.writeString("You can only equip weapons.");
         }
@@ -230,12 +230,13 @@ public class Hero extends Creature {
     }
 
     // Ingests an aliment.
-    private void ingest(Food food) {
-        IO.writeString("You ate " + food.getName() + ".");
-        addHealth(food.getNutrition());
+    private void ingest(Edible edible) {
+        IO.writeString("You ate " + edible.getName() + ".");
+        addHealth(edible.getNutrition());
         if (isCompletelyHealed()) {
             IO.writeString("You are completely healed.");
         }
+        addExperience(edible.getExperience());
     }
 
     /**
@@ -318,7 +319,7 @@ public class Hero extends Creature {
      */
     @Override
     public void hit(Creature target) {
-        IWeapon heroWeapon = getWeapon();
+        Weapon heroWeapon = getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
         if (heroWeapon != null) {

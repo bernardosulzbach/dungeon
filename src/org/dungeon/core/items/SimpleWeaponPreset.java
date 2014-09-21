@@ -23,7 +23,7 @@ package org.dungeon.core.items;
  * Change log
  * Created by Bernardo on 18/09/2014.
  */
-public enum WeaponPreset {
+public enum SimpleWeaponPreset {
     SPEAR("Spear", 13, 5, 100, 1);
 
     protected final String name;
@@ -32,7 +32,7 @@ public enum WeaponPreset {
     protected final int startingIntegrity;
     protected final int hitDecrement;
 
-    WeaponPreset(String name, int damage, int missRate, int startingIntegrity, int hitDecrement) {
+    SimpleWeaponPreset(String name, int damage, int missRate, int startingIntegrity, int hitDecrement) {
         this.name = name;
         this.damage = damage;
         this.missRate = missRate;
