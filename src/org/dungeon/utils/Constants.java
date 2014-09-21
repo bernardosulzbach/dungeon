@@ -24,6 +24,8 @@ package org.dungeon.utils;
 public class Constants {
 
     public static final String TITLE = "Dungeon";
+    public static final String VERSION = "v0.0.2";
+    public static final String CODENAME = "Mandolim";
 
     public static final int WIDTH = 79;
 
