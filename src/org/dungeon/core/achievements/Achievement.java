@@ -19,6 +19,7 @@ package org.dungeon.core.achievements;
 import java.io.Serializable;
 import org.dungeon.core.counters.CounterMap;
 
+import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -29,25 +30,23 @@ import org.dungeon.utils.StringUtils;
  *
  * @author Bernardo Sulzbach
  */
-public class Achievement implements Serializable {
+public abstract class Achievement implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final CounterMap<CreatureID> requirements;
     private final String name;
     private final String info;
+    private final int experienceReward;
     private boolean unlocked;
 
-    public Achievement(String name, String info, CreatureID id, int amount) {
-        this.name = name;
-        this.info = info;
-        this.requirements = new CounterMap(id, amount);
+    public Achievement(String name, String info) {
+        this(name, info, 0);
     }
 
-    public Achievement(String name, String info, CounterMap requirements) {
+    public Achievement(String name, String info, int experienceReward) {
         this.name = name;
         this.info = info;
-        this.requirements = requirements;
+        this.experienceReward = experienceReward;
     }
 
     public String getName() {
@@ -56,6 +55,10 @@ public class Achievement implements Serializable {
 
     public String getInfo() {
         return info;
+    }
+
+    public int getExperienceReward() {
+        return experienceReward;
     }
 
     public boolean isUnlocked() {
@@ -67,34 +70,21 @@ public class Achievement implements Serializable {
     }
 
     /**
-     * Updates the state of the Achievement using another counter.
-     * <p/>
-     * If all the requirements are met, the achievement is unlocked and its name and info are displayed to to player.
+     * Updates the state of the Achievement.
      *
      * @return true if the achievement was unlocked. False otherwise.
      */
-    public boolean update(CounterMap<CreatureID> campaignCounters) {
-        if (!unlocked) {
-            for (CreatureID requirement : requirements.keySet()) {
-                if (campaignCounters.getCounter(requirement) < requirements.getCounter(requirement)) {
-                    // The campaign counter does not match the requirement.
-                    return false;
-                }
-            }
-            // All the requirements OK.
-            printAchievementUnlocked();
-            setUnlocked(true);
-            return true;
-        }
-        return false;
-    }
+    public abstract boolean update(Hero hero);
 
-    private void printAchievementUnlocked() {
-        StringBuilder achievementMessageBuilder = new StringBuilder();
-        achievementMessageBuilder.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
-        achievementMessageBuilder.append(StringUtils.centerString(getName())).append("\n");
-        achievementMessageBuilder.append(StringUtils.centerString(getInfo())).append("\n");
-        IO.writeString(achievementMessageBuilder.toString());
+    public void printAchievementUnlocked() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
+        sb.append(StringUtils.centerString(getName())).append("\n");
+        sb.append(StringUtils.centerString(getInfo())).append("\n");
+        if (getExperienceReward() != 0) {
+            sb.append(StringUtils.centerString(String.format("+ %d Experience Points", getExperienceReward())));
+        }
+        IO.writeString(sb.toString());
     }
 
     public String toOneLineString() {
