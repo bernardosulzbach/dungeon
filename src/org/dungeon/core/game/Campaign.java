@@ -17,6 +17,7 @@
 package org.dungeon.core.game;
 
 import org.dungeon.core.achievements.Achievement;
+import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
@@ -91,28 +92,43 @@ public final class Campaign implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> demoAchievements = new ArrayList<Achievement>();
 
-        CounterMap<CreatureID> suicideSolutionRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>();
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that do not require specific kills.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Suicide Solution requires one battle against the Hero himself.
-        suicideSolutionRequirements.incrementCounter(CreatureID.HERO);
+        demoAchievements.add(new BattleAchievement("First Blood", "Kill a creature.", 10, 1, 0, null, null));
+        demoAchievements.add(new BattleAchievement("Killer", "Kill 10 creatures.", 100, 10, 0, null, null));
+        demoAchievements.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 50, 0, 10, null, null));
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that rely on the kill count of a specific creature ID.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Bane requires six battles against bats.
+        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>();
         baneRequirements.incrementCounter(CreatureID.BAT, 6);
+        demoAchievements.add(new BattleAchievement("Bane", "Kill 6 bats.", 50, 0, 0, baneRequirements, null));
         // Cat requires four battles against rats.
+        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>();
         catRequirements.incrementCounter(CreatureID.RAT, 4);
+        demoAchievements.add(new BattleAchievement("Cat", "Kill 4 rats.", 40, 0, 0, catRequirements, null));
         // Evil Bastard requires one battle against a rabbit.
+        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>();
         evilBastardRequirements.incrementCounter(CreatureID.RABBIT);
+        demoAchievements.add(new BattleAchievement("Evil Bastard", "Kill an innocent rabbit.", 5, 0, 0, evilBastardRequirements, null));
         // Stay Dead requires two battles against a zombie.
+        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>();
         stayDeadRequirements.incrementCounter(CreatureID.ZOMBIE, 2);
+        demoAchievements.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.", 50, 0, 0, stayDeadRequirements, null));
 
-        demoAchievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
-        demoAchievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
-        demoAchievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
-        demoAchievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
-        demoAchievements.add(new Achievement("Stay Dead", "Kill 2 zombies.", stayDeadRequirements));
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that rely on the kill count of a specific type.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Professional Coward requires killing 10 critters.
+        CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>();
+        professionalCowardRequirements.incrementCounter(CreatureType.CRITTER, 10);
+        demoAchievements.add(new BattleAchievement("Professional Coward", "Kill 10 critters.", 100, 0, 0, null, professionalCowardRequirements));
 
         return demoAchievements;
     }
@@ -259,7 +275,7 @@ public final class Campaign implements Serializable {
 
     private void refreshAchievements() {
         for (Achievement a : achievements) {
-            if (a.update(battleIDCounter)) {
+            if (a.update(getHero())) {
                 incrementUnlockedAchievementsCount();
             }
         }

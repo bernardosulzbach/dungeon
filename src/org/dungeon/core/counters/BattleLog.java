@@ -71,6 +71,32 @@ public class BattleLog implements Serializable {
         return longest;
     }
 
+    /**
+     * Return the kill count for a certain CreatureType.
+     */
+    public int getKills(CreatureType type) {
+        int kills = 0;
+        for (BattleLogEntry entry : entries) {
+            if (entry.attackerWon && entry.defenderType == type) {
+                kills++;
+            }
+        }
+        return kills;
+    }
+
+    /**
+     * Return the kill count for a certain CreatureID.
+     */
+    public int getKills(CreatureID id) {
+        int kills = 0;
+        for (BattleLogEntry entry : entries) {
+            if (entry.attackerWon && entry.defenderID == id) {
+                kills++;
+            }
+        }
+        return kills;
+    }
+
 }
 
 class BattleLogEntry implements Serializable {
