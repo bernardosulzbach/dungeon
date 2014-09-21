@@ -218,8 +218,11 @@ public class Hero extends Creature {
         Item selectedItem = selectInventoryItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem instanceof Food) {
+                if (getWeapon() == selectedItem) {
+                    unequipWeapon();
+                }
                 ingest((Food) selectedItem);
-                getLocation().removeItem(selectedItem);
+                getInventory().removeItem(selectedItem);
             } else {
                 IO.writeString("You can only eat food.");
             }
