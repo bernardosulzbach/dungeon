@@ -45,14 +45,19 @@ import java.util.List;
 //
 // There are a few more restrictions that a class must obey to allow inheritance.
 //
-// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure will result.
+// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure
+// will result.
 //
-// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be invoked before the
-// subclass constructor has run. If the overriding method depends on any initialization performed by the subclass constructor, the method
-// will not behave as expected.
+// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be
+// invoked before the subclass constructor has run. If the overriding method depends on any initialization performed by
+// the subclass constructor, the method will not behave as expected.
 //
-// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I decided to follow the 
-// item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
+// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I
+// will follow the item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
+//
+// Bernardo Sulzbach (mafagafogigante) [20/09/2014]: there is no reason to still mark this class final. As I do not plan
+// to ever inherit from it and changing the final modifier is something ridiculously simple, I will just leave it the
+// way it is.
 //
 public final class Campaign implements Serializable {
 
@@ -98,7 +103,7 @@ public final class Campaign implements Serializable {
 
         demoAchievements.add(new BattleAchievement("First Blood", "Kill a creature.", 10, 1, 0, null, null));
         demoAchievements.add(new BattleAchievement("Killer", "Kill 10 creatures.", 100, 10, 0, null, null));
-        demoAchievements.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 50, 0, 10, null, null));
+        demoAchievements.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 150, 0, 10, null, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific creature ID.
@@ -136,6 +141,9 @@ public final class Campaign implements Serializable {
     private World createDemoWorld() {
         World world = new World();
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Forest (two locations)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Create a location on the hero's position.
         Point forest = new Point(0, 0);
         world.addLocation(new Location("Forest"), forest);
@@ -156,7 +164,9 @@ public final class Campaign implements Serializable {
         // Items
         world.addItem(new Weapon("Spear", 10, 12), forest2);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // A clearing.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point clearing = new Point(0, 2);
         world.addLocation(new Location("Clearing"), clearing);
 
@@ -170,6 +180,9 @@ public final class Campaign implements Serializable {
         // Food
         world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Road to The Fort
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point roadToTheFort = new Point(1, 2);
         world.addLocation(new Location("Road to The Fort"), roadToTheFort);
 
@@ -182,19 +195,39 @@ public final class Campaign implements Serializable {
         // Items
         world.addItem(new Weapon("Mace", 15, 20), roadToTheFort);
 
-        Point cave = new Point(-1, 2);
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Cave entrance
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Point caveEntrance = new Point(-1, 2);
+        world.addLocation(new Location("Cave Entrance"), caveEntrance);
+
+        // Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 1), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 2, 4), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), caveEntrance);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), caveEntrance);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), caveEntrance);
+
+        // Items
+        world.addItem(new Weapon("Longsword", 18, 20), caveEntrance);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Cave
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Point cave = new Point(-2, 2);
         world.addLocation(new Location("Cave"), cave);
 
         // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 4), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 2, 6), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 4), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 3), cave);
 
         // Items
-        world.addItem(new Weapon("Longsword", 18, 25), cave);
+        world.addItem(new Weapon("Staff", 15, 15), cave);
 
         return world;
     }
