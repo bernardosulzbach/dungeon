@@ -28,7 +28,8 @@ This project started on 04/09/2014 (dd/mm/yyyy).
 
 Code Style
 ----------
-* 140 characters per line.
+* Four spaces instead of tabs.
+* 120 characters per line.
 * Final variables and enumeration constants should be UPPERCASE.
 
 Contributors
