@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@ import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
-import org.dungeon.core.items.Weapon;
 import org.dungeon.core.items.Inventory;
+import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
@@ -34,7 +34,7 @@ import java.io.Serializable;
  *
  * @author Bernardo Sulzbach
  */
-public abstract class Creature implements Serializable, Selectable {
+public class Creature implements Serializable, Selectable {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,8 @@ public abstract class Creature implements Serializable, Selectable {
     private int curHealth;
     private int healthIncrement;
 
-    private int attack;
+    private CreatureAttack creatureAttack;
+
     private int attackIncrement;
 
     private Inventory inventory;
@@ -73,15 +74,16 @@ public abstract class Creature implements Serializable, Selectable {
     //
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature;
+        creature = new Creature(preset.getType(), preset.getId(), preset.getId().getName());
         switch (preset.getType()) {
             case CRITTER:
-                creature = new Critter(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackNone();
                 break;
             case BEAST:
-                creature = new Beast(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackUnarmed(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
                 break;
             case UNDEAD:
-                creature = new Undead(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackWeapon(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
                 break;
             default:
                 return null;
@@ -90,7 +92,6 @@ public abstract class Creature implements Serializable, Selectable {
         creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-        creature.setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
         return creature;
     }
 
@@ -178,11 +179,15 @@ public abstract class Creature implements Serializable, Selectable {
     }
 
     public int getAttack() {
-        return attack;
+        return creatureAttack.getBaseAttack();
     }
 
     public void setAttack(int attack) {
-        this.attack = attack;
+        creatureAttack.setBaseAttack(attack);
+    }
+
+    public void setCreatureAttack(CreatureAttack creatureAttack) {
+        this.creatureAttack = creatureAttack;
     }
 
     public int getAttackIncrement() {
@@ -323,7 +328,9 @@ public abstract class Creature implements Serializable, Selectable {
     // Combat methods.
     //
     //
-    public abstract void hit(Creature target);
+    public void hit(Creature target) {
+        creatureAttack.attack(this, target);
+    }
 
     public void takeDamage(int damage) {
         if (damage > getCurHealth()) {

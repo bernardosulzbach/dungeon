@@ -14,36 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
-/**
- * Beast class.
- * @author Bernardo Sulzbach
- */
-public class Beast extends Creature {
+class CreatureAttackUnarmed implements CreatureAttack {
 
-    public Beast(CreatureID id, String name) {
-        super(CreatureType.BEAST, id, name);
+    private int baseAttack;
+
+    public CreatureAttackUnarmed(int attack) {
+        this.baseAttack = attack;
     }
 
-    /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
-     */
+    public int getBaseAttack() {
+        return baseAttack;
+    }
+
+    public void setBaseAttack(int baseAttack) {
+        this.baseAttack = baseAttack;
+    }
+
     @Override
-    public void hit(Creature target) {
-        target.takeDamage(getAttack());
+    public void attack(Creature attacker, Creature target) {
         // Hardcoded miss rate of 10%.
-        // TODO: extract this to a specific method.
         if (10 > Game.RANDOM.nextInt(100)) {
-            IO.writeString(String.format("%s tried to hit %s but missed.", getName(), target.getName()));
+            IO.writeString(String.format("%s tried to hit %s but missed.", attacker.getName(), target.getName()));
         } else {
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), getAttack(), target.getName()));
+            target.takeDamage(attacker.getAttack());
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), getBaseAttack(), target.getName()));
         }
     }
 }

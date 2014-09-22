@@ -43,7 +43,7 @@ public class Hero extends ArmedCreature {
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
-        setAttack(4);
+        setCreatureAttack(new CreatureAttackWeapon(4));
         setHealthIncrement(20);
         setAttackIncrement(4);
         setInventory(new Inventory(4));
