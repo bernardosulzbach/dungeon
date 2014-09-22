@@ -14,17 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreatureType;
+interface CreatureAttack {
 
-/**
- * @author Bernardo Sulzbach
- */
-public class Undead extends ArmedCreature {
+    void setBaseAttack(int baseAttack);
 
-    public Undead(CreatureID id, String name) {
-        super(CreatureType.UNDEAD, id, name);
-    }
+    int getBaseAttack();
+
+    void attack(Creature attacker, Creature target);
+
 }
