@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -65,9 +65,6 @@ public final class Campaign implements Serializable {
 
     private final List<Achievement> achievements;
 
-    private final CounterMap<CreatureID> battleIDCounter;
-    private final CounterMap<CreatureType> battleTypeCounter;
-
     private final World campaignWorld;
 
     private final Hero campaignHero;
@@ -80,9 +77,6 @@ public final class Campaign implements Serializable {
     private int unlockedAchievementsCount;
 
     public Campaign() {
-        battleIDCounter = new CounterMap<CreatureID>();
-        battleTypeCounter = new CounterMap<CreatureType>();
-
         achievements = createDemoAchievements();
 
         // Set the number of achievements the campaign has.
@@ -345,11 +339,6 @@ public final class Campaign implements Serializable {
         } else {
             IO.writeString(Constants.WALK_BLOCKED);
         }
-    }
-
-    public void addBattle(Creature target) {
-        this.battleIDCounter.incrementCounter(target.getId());
-        this.battleTypeCounter.incrementCounter(target.getType());
     }
 
     /**

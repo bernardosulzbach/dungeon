@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -105,7 +105,6 @@ public class Game {
                 Creature target = campaign.getHero().selectTarget(inputWords);
                 if (target != null) {
                     // Add this battle to the battle counter.
-                    campaign.addBattle(target);
                     Game.battle(campaign.getHero(), target);
                 }
                 return true;
