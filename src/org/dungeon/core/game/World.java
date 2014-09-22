@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,10 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class World implements Serializable {
@@ -33,9 +37,23 @@ public class World implements Serializable {
     private final HashMap<Point, Location> locations;
     private final CounterMap<CreatureID> spawnCounter;
 
+    private Calendar calendar;
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
+        initializeCalendar();
+    }
+
+    private void initializeCalendar() {
+        calendar = new GregorianCalendar();
+        calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
+        dateFormat.setCalendar(calendar);
+    }
+
+    public void printDateAndTime() {
+        IO.writeString(dateFormat.format(calendar.getTime()));
     }
 
     public void addLocation(Location locationObject, Point coordinates) {
@@ -68,10 +86,6 @@ public class World implements Serializable {
 
     /**
      * Move a Creature from origin to destination.
-     *
-     * @param creature
-     * @param origin
-     * @param destination
      */
     public void moveCreature(Creature creature, Point origin, Point destination) {
         if (locations.get(origin).hasCreature(creature)) {

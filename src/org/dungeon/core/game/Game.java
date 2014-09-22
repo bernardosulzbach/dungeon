@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
@@ -116,6 +117,8 @@ public class Game {
             } else if (s.equals("achievements")) {
                 campaign.printUnlockedAchievements();
                 // World-related commands.
+            } else if (s.equals("now")) {
+                campaign.getWorld().printDateAndTime();
             } else if (s.equals("spawns")) {
                 campaign.getWorld().printSpawnCounters();
                 // Utility commands.
