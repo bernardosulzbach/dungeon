@@ -16,14 +16,12 @@
  */
 package org.dungeon.core.achievements;
 
-import java.io.Serializable;
-import org.dungeon.core.counters.CounterMap;
-
 import org.dungeon.core.creatures.Hero;
-import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
+
+import java.io.Serializable;
 
 /**
  * Achievement class that defines achievements.
@@ -39,13 +37,12 @@ public abstract class Achievement implements Serializable {
     private final int experienceReward;
     private boolean unlocked;
 
-    public Achievement(String name, String info) {
-        this(name, info, 0);
-    }
-
     public Achievement(String name, String info, int experienceReward) {
         this.name = name;
         this.info = info;
+        if (experienceReward < 0) {
+            throw new IllegalArgumentException("experienceReward should be nonnegative.");
+        }
         this.experienceReward = experienceReward;
     }
 
@@ -76,13 +73,16 @@ public abstract class Achievement implements Serializable {
      */
     public abstract boolean update(Hero hero);
 
+    /**
+     * Outputs an achievement unlocked message with some information about the unlocked achievement.
+     */
     public void printAchievementUnlocked() {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
-        sb.append(StringUtils.centerString(getName())).append("\n");
-        sb.append(StringUtils.centerString(getInfo())).append("\n");
+        sb.append(Constants.MARGIN).append(getName()).append("\n");
+        sb.append(Constants.MARGIN).append(getInfo()).append("\n");
         if (getExperienceReward() != 0) {
-            sb.append(StringUtils.centerString(String.format("+ %d Experience Points", getExperienceReward())));
+            sb.append(Constants.MARGIN).append(String.format("+ %d Experience Points", getExperienceReward()));
         }
         IO.writeString(sb.toString());
     }
