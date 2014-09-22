@@ -54,7 +54,7 @@ public class BattleAchievement extends Achievement {
         if (!isUnlocked()) {
             BattleLog log = hero.getBattleLog();
             if (log.getLongestBattleLength() >= longestBattleLength) {
-                if (log.getWonBattlesCount() >= battleCount) {
+                if (log.getBattlesWonByAttacker() >= battleCount) {
                     if (idKills != null) {
                         for (CreatureID id : idKills.keySet()) {
                             if (log.getKills(id) < idKills.getCounter(id)) {
