@@ -32,6 +32,10 @@ import java.util.List;
  */
 public class BattleLog implements Serializable {
 
+    private int totalBattles;
+    private int battlesWonByAttacker;
+    private int longestBattleLength;
+
     private List<BattleLogEntry> entries;
 
     public BattleLog() {
@@ -43,32 +47,51 @@ public class BattleLog implements Serializable {
      */
     public void addBattle(Creature attacker, Creature defender, boolean attackerWon, int turns) {
         entries.add(new BattleLogEntry(attacker, defender, attackerWon, turns));
+        //
+        // After creating the fields totalBattles, battlesWonByAttacker and longestBattleLength, this method also needs
+        // to set these values appropriately.
+        //
+        // Bernardo Sulzbach (mafagafogigante @ 21/09/2014): querying private int fields with their respective getters
+        //   should have much better performance than unnecessarily iterating over all the elements of a list of
+        //   BattleLogEntry objects just to get how many battles the attacker won.
+        //
+        setTotalBattles(getTotalBattles() + 1);
+        if (attackerWon) {
+            setBattlesWonByAttacker(getBattlesWonByAttacker());
+        }
+        if (turns > getLongestBattleLength()) {
+            setLongestBattleLength(turns);
+        }
+    }
+
+    public int getTotalBattles() {
+        return totalBattles;
+    }
+
+    public void setTotalBattles(int totalBattles) {
+        this.totalBattles = totalBattles;
     }
 
     /**
      * Return the amount of battles that the attacker won.
      */
-    public int getWonBattlesCount() {
-        int counter = 0;
-        for (BattleLogEntry entry : entries) {
-            if (entry.attackerWon) {
-                counter += 1;
-            }
-        }
-        return counter;
+    public int getBattlesWonByAttacker() {
+        return battlesWonByAttacker;
+    }
+
+    public void setBattlesWonByAttacker(int battlesWonByAttacker) {
+        this.battlesWonByAttacker = battlesWonByAttacker;
     }
 
     /**
      * Returns the length of the longest battle in this battle log.
      */
     public int getLongestBattleLength() {
-        int longest = 0;
-        for (BattleLogEntry entry : entries) {
-            if (entry.turns > longest) {
-                longest = entry.turns;
-            }
-        }
-        return longest;
+        return longestBattleLength;
+    }
+
+    public void setLongestBattleLength(int longestBattleLength) {
+        this.longestBattleLength = longestBattleLength;
     }
 
     /**
@@ -99,21 +122,3 @@ public class BattleLog implements Serializable {
 
 }
 
-class BattleLogEntry implements Serializable {
-
-    protected final CreatureID attackerID;
-    protected final CreatureID defenderID;
-    protected final CreatureType attackerType;
-    protected final CreatureType defenderType;
-    protected final boolean attackerWon;
-    protected final int turns;
-
-    public BattleLogEntry(Creature attacker, Creature defender, boolean attackerWon, int turns) {
-        this.attackerID = attacker.getId();
-        this.defenderID = defender.getId();
-        this.attackerType = attacker.getType();
-        this.defenderType = defender.getType();
-        this.attackerWon = attackerWon;
-        this.turns = turns;
-    }
-}
