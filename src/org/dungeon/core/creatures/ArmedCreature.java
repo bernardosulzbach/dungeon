@@ -25,6 +25,8 @@ import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 
 /**
+ * "Temporary" abstract class.
+ * <p/>
  * Created by Bernardo on 21/09/2014.
  */
 public abstract class ArmedCreature extends Creature {
@@ -32,6 +34,8 @@ public abstract class ArmedCreature extends Creature {
     public ArmedCreature(CreatureType type, CreatureID id, String name) {
         super(type, id, name);
     }
+
+    // TODO: try to apply the strategy design pattern here. Every creature could have an CreatureAttack field.
 
     /**
      * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
@@ -51,8 +55,6 @@ public abstract class ArmedCreature extends Creature {
                     breakableWeapon.decrementIntegrity();
                     if (breakableWeapon.isBroken()) {
                         setWeapon(null);
-                        // TODO: fix this cast. All IWeapon (now) is-a item.
-                        // This reinforces the idea that I should be using inheritance?
                         getInventory().removeItem((Item) getWeapon());
                     }
                 }
