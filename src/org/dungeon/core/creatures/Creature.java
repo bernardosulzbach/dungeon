@@ -133,10 +133,6 @@ public class Creature implements Selectable, Serializable {
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
     public int getExperienceDrop() {
         return experienceDrop;
     }
@@ -349,8 +345,6 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature is alive.
-     *
-     * @return
      */
     public boolean isAlive() {
         return getCurHealth() > 0;
@@ -358,8 +352,6 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature is dead.
-     *
-     * @return
      */
     public boolean isDead() {
         return getCurHealth() == 0;
@@ -367,19 +359,11 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature has a weapon.
-     *
-     * @return
      */
     public boolean hasWeapon() {
         return getWeapon() != null;
     }
 
-    /**
-     * Checks if the creature has an inventory.
-     */
-    public boolean hasInventory() {
-        return getInventory() != null;
-    }
 
     //
     //
