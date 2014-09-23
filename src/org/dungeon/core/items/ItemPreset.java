@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.core.test;
+package org.dungeon.core.items;
 
 public enum ItemPreset {
     SPEAR("SPEAR", "Weapon", "Spear", 80, 80, true, true, 10, 0.85, 1, false, 0, 0);

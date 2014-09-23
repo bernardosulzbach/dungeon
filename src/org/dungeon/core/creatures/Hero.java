@@ -21,7 +21,8 @@ import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.*;
+import org.dungeon.core.items.Inventory;
+import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Hero class that defines the creature that the player controls.
  */
-public class Hero extends ArmedCreature {
+public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +47,7 @@ public class Hero extends ArmedCreature {
         setCreatureAttack(new CreatureAttackWeapon(4));
         setHealthIncrement(20);
         setAttackIncrement(4);
-        setInventory(new Inventory(4));
+        setInventory(new Inventory(this, 4));
         setBattleLog(new BattleLog());
     }
 
@@ -183,10 +184,10 @@ public class Hero extends ArmedCreature {
      */
     public void parseEquip(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem instanceof Weapon) {
-            equipWeapon((Weapon) selectedItem);
-        } else if (selectedItem != null) {
-            IO.writeString("You can only equip weapons.");
+        if (selectedItem.isWeapon()) {
+            equipWeapon(selectedItem);
+        } else {
+            IO.writeString("You cannot equip that.");
         }
     }
 
@@ -216,27 +217,20 @@ public class Hero extends ArmedCreature {
      */
     public void eatItem(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem != null) {
-            if (selectedItem instanceof Food) {
-                if (getWeapon() == selectedItem) {
-                    unequipWeapon();
-                }
-                ingest((Food) selectedItem);
-                getInventory().removeItem(selectedItem);
-            } else {
-                IO.writeString("You can only eat food.");
+        if (selectedItem.isFood()) {
+            IO.writeString("You ate " + selectedItem.getName() + ".");
+            addHealth(selectedItem.getNutrition());
+            if (isCompletelyHealed()) {
+                IO.writeString("You are completely healed.");
             }
+            // TODO: re-implement eating experience here.
+            if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
+                getInventory().removeItem(selectedItem);
+            }
+        } else {
+            IO.writeString("You can only eat food.");
         }
-    }
 
-    // Ingests an aliment.
-    private void ingest(Edible edible) {
-        IO.writeString("You ate " + edible.getName() + ".");
-        addHealth(edible.getNutrition());
-        if (isCompletelyHealed()) {
-            IO.writeString("You are completely healed.");
-        }
-        addExperience(edible.getExperience());
     }
 
     /**
@@ -250,11 +244,15 @@ public class Hero extends ArmedCreature {
             target = getLocation().findItem(words[1]);
         }
         if (target != null) {
-            if (target.isDestructible()) {
+            if (target.isRepairable()) {
+                if (!target.isBroken()) {
+
+                    target.setCurIntegrity(0);
+                    IO.writeString(getName() + " crashed " + target.getName() + ".");
+                }
+            } else {
                 getLocation().removeItem(target);
                 IO.writeString(getName() + " destroyed " + target.getName() + ".");
-            } else {
-                IO.writeString(target.getName() + " is indestructible.");
             }
         }
     }

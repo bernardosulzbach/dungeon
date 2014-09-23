@@ -23,9 +23,6 @@ import org.dungeon.core.creatures.enums.CreatureType;
 
 import java.io.Serializable;
 
-/**
- * Created by Bernardo on 21/09/2014.
- */
 class BattleLogEntry implements Serializable {
 
     protected final CreatureID attackerID;

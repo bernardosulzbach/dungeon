@@ -17,6 +17,7 @@
 
 package org.dungeon.core.items;
 
+import org.dungeon.core.creatures.Creature;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -32,27 +33,19 @@ import java.util.List;
 public class Inventory implements Serializable {
 
     private int itemLimit;
+
     private final List<Item> itemList;
 
-    public Inventory(int itemLimit) {
+    private final Creature owner;
+
+    public Inventory(Creature owner, int itemLimit) {
+        this.owner = owner;
         this.itemLimit = itemLimit;
         this.itemList = new ArrayList<Item>();
     }
 
-    public Inventory(int itemLimit, List<Item> itemList) {
-        if (itemLimit < itemList.size()) {
-            throw new IllegalArgumentException("itemLimit is smaller than the size of the itemList.");
-        }
-        this.itemLimit = itemLimit;
-        this.itemList = itemList;
-    }
-
     public List<Item> getItems() {
         return itemList;
-    }
-
-    public int getItemLimit() {
-        return itemLimit;
     }
 
     public void printItems() {
@@ -103,8 +96,11 @@ public class Inventory implements Serializable {
         }
     }
 
-    public void removeItem(Item itemObject) {
-        itemList.remove(itemObject);
+    public void removeItem(Item item) {
+        if (owner.getWeapon() == item) {
+            owner.setWeapon(null);
+        }
+        itemList.remove(item);
     }
 
 }
