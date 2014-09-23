@@ -160,7 +160,7 @@ public final class Campaign implements Serializable {
         // Weapons
         // world.addItem(new SimpleWeapon("Spear", 10, 12), forest2);
         // Food
-        // world.addItem(Item.createItem(FoodPreset.APPLE), forest2);
+        world.addItem(Item.createItem(ItemPreset.APPLE), forest2);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // A clearing.
@@ -175,7 +175,7 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
         // Weapons
         // world.addItem(new SimpleWeapon("Dagger", 13, 15), clearing);
-        // world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
+        world.addItem(Item.createItem(ItemPreset.CHERRY), clearing);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Road to The Fort
@@ -225,7 +225,7 @@ public final class Campaign implements Serializable {
 
         // Items
         // world.addItem(new SimpleWeapon("Staff", 15, 15), cave);
-        // world.addItem(Item.createItem(FoodPreset.WATERMELON), cave);
+        world.addItem(Item.createItem(ItemPreset.WATERMELON), cave);
 
         return world;
     }

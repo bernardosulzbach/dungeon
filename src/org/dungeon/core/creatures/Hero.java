@@ -217,20 +217,24 @@ public class Hero extends Creature {
      */
     public void eatItem(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem.isFood()) {
-            IO.writeString("You ate " + selectedItem.getName() + ".");
-            addHealth(selectedItem.getNutrition());
-            if (isCompletelyHealed()) {
-                IO.writeString("You are completely healed.");
+        if (selectedItem != null) {
+            if (selectedItem.isFood()) {
+                addHealth(selectedItem.getNutrition());
+                selectedItem.decrementIntegrityByEat();
+                // TODO: re-implement eating experience here.
+                if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
+                    IO.writeString("You ate " + selectedItem.getName() + ".");
+                    getInventory().removeItem(selectedItem);
+                } else {
+                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
+                }
+                if (isCompletelyHealed()) {
+                    IO.writeString("You are completely healed.");
+                }
+            } else {
+                IO.writeString("You can only eat food.");
             }
-            // TODO: re-implement eating experience here.
-            if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
-                getInventory().removeItem(selectedItem);
-            }
-        } else {
-            IO.writeString("You can only eat food.");
         }
-
     }
 
     /**
