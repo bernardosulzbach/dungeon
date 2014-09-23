@@ -22,10 +22,7 @@ import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.DateAndTime;
-import org.dungeon.utils.LicenseUtils;
-import org.dungeon.utils.Utils;
+import org.dungeon.utils.*;
 
 import java.util.Random;
 
@@ -73,10 +70,17 @@ public class Game {
      * @return false if the player issued an exit command. True if the player played a turn.
      */
     private static boolean getTurn(Campaign campaign) {
+        String s;
+        String inputString;
         String[] inputWords;
         while (true) {
-            inputWords = IO.readWords();
-            String s = inputWords[0].toLowerCase();
+            // IO.readString() never returns a blank string.
+            inputString = IO.readString();
+            // Add the command the user entered to the campaign's command history.
+            campaign.getCommandHistory().addCommand(inputString);
+            // Split the command into words.
+            inputWords = StringUtils.split(inputString);
+            s = inputWords[0].toLowerCase();
             if (s.equals("rest")) {
                 campaign.getHero().rest();
                 return true;
@@ -110,6 +114,9 @@ public class Game {
                 }
                 return true;
                 // Campaign-related commands.
+                // TODO: think of a better name for this.
+            } else if (s.equals("commandcount")) {
+                campaign.printCommandCount();
             } else if (s.equals("whoami")) {
                 IO.writeString(campaign.getHeroInfo());
             } else if (s.equals("whereami")) {
@@ -146,13 +153,7 @@ public class Game {
                 Utils.printVersion();
                 // The user issued a command, but it was not recognized.
             } else {
-                if (!inputWords[0].isEmpty()) {
-                    Utils.printInvalidCommandMessage(inputWords[0]);
-                } else {
-                    // The user pressed enter without typing anything.
-                    IO.writeString(Constants.INVALID_INPUT);
-                }
-
+                Utils.printInvalidCommandMessage(inputWords[0]);
             }
         }
     }

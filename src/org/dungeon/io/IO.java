@@ -16,6 +16,8 @@
  */
 package org.dungeon.io;
 
+import org.dungeon.utils.StringUtils;
+
 import java.util.Scanner;
 
 /**
@@ -56,7 +58,7 @@ public class IO {
      * Read a line of input from the user and returns an array with the words in that line.
      */
     public static String[] readWords() {
-        return readString().split("\\s+");
+        return StringUtils.split(readString());
     }
 
 }
