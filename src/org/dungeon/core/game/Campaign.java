@@ -28,10 +28,7 @@ import org.dungeon.core.items.FoodPreset;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.SimpleWeapon;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Hints;
-import org.dungeon.utils.StringUtils;
-import org.dungeon.utils.Utils;
+import org.dungeon.utils.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,6 +60,8 @@ public final class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private final CommandHistory commandHistory;
+
     private final List<Achievement> achievements;
 
     private final World campaignWorld;
@@ -77,6 +76,8 @@ public final class Campaign implements Serializable {
     private int unlockedAchievementsCount;
 
     public Campaign() {
+        commandHistory = new CommandHistory();
+
         achievements = createDemoAchievements();
 
         // Set the number of achievements the campaign has.
@@ -226,6 +227,14 @@ public final class Campaign implements Serializable {
         world.addItem(Item.createItem(FoodPreset.WATERMELON), cave);
 
         return world;
+    }
+
+    public CommandHistory getCommandHistory() {
+        return commandHistory;
+    }
+
+    public void printCommandCount() {
+        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount());
     }
 
     public World getWorld() {
