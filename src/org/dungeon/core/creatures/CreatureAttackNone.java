@@ -20,12 +20,9 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
-class CreatureAttackNone implements CreatureAttack {
+import java.io.Serializable;
 
-    @Override
-    public void setBaseAttack(int baseAttack) {
-
-    }
+class CreatureAttackNone implements CreatureAttack, Serializable {
 
     @Override
     public int getBaseAttack() {
@@ -33,11 +30,16 @@ class CreatureAttackNone implements CreatureAttack {
     }
 
     @Override
+    public void setBaseAttack(int baseAttack) {
+
+    }
+
+    @Override
     public void attack(Creature attacker, Creature target) {
         if (Game.RANDOM.nextBoolean()) {
             IO.writeString(attacker.getName() + " does nothing.");
         } else {
-            IO.writeString(attacker.getName()+ " tries to run away.");
+            IO.writeString(attacker.getName() + " tries to run away.");
         }
     }
 }

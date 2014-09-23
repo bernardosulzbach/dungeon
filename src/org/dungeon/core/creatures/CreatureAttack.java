@@ -19,9 +19,9 @@ package org.dungeon.core.creatures;
 
 interface CreatureAttack {
 
-    void setBaseAttack(int baseAttack);
-
     int getBaseAttack();
+
+    void setBaseAttack(int baseAttack);
 
     void attack(Creature attacker, Creature target);
 
