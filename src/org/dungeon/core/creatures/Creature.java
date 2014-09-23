@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
@@ -22,7 +23,7 @@ import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Inventory;
-import org.dungeon.core.items.Weapon;
+import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
@@ -57,7 +58,7 @@ public class Creature implements Serializable, Selectable {
     private int attackIncrement;
 
     private Inventory inventory;
-    private Weapon weapon;
+    private Item weapon;
 
     private Location location;
 
@@ -206,12 +207,14 @@ public class Creature implements Serializable, Selectable {
         this.inventory = inventory;
     }
 
-    public Weapon getWeapon() {
+    public Item getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
+    public void setWeapon(Item weapon) {
+        if (weapon.isWeapon()) {
+            this.weapon = weapon;
+        }
     }
 
     public Location getLocation() {
@@ -303,7 +306,7 @@ public class Creature implements Serializable, Selectable {
     // Weapon methods.
     //
     //
-    public void equipWeapon(Weapon weapon) {
+    public void equipWeapon(Item weapon) {
         if (hasWeapon()) {
             if (getWeapon() == weapon) {
                 IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");

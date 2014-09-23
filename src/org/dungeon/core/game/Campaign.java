@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.game;
 
 import org.dungeon.core.achievements.Achievement;
@@ -24,9 +25,8 @@ import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.FoodPreset;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.SimpleWeapon;
+import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.utils.*;
 
@@ -144,7 +144,8 @@ public final class Campaign implements Serializable {
         world.addLocation(new Location("Forest"), forest);
 
         world.addCreature(campaignHero, forest);
-        world.addItem(new SimpleWeapon("Stick", 6, 20), forest);
+        world.addItem(Item.createItem(ItemPreset.SPEAR), forest);
+        // new SimpleWeapon("Stick", 6, 20), forest);
 
         // Another forest location.
         Point forest2 = new Point(0, 1);
@@ -157,9 +158,9 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), forest2);
 
         // Weapons
-        world.addItem(new SimpleWeapon("Spear", 10, 12), forest2);
+        // world.addItem(new SimpleWeapon("Spear", 10, 12), forest2);
         // Food
-        world.addItem(Item.createItem(FoodPreset.APPLE), forest2);
+        // world.addItem(Item.createItem(FoodPreset.APPLE), forest2);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // A clearing.
@@ -173,8 +174,8 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
         world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
         // Weapons
-        world.addItem(new SimpleWeapon("Dagger", 13, 15), clearing);
-        world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
+        // world.addItem(new SimpleWeapon("Dagger", 13, 15), clearing);
+        // world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Road to The Fort
@@ -189,7 +190,7 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), roadToTheFort);
 
         // Items
-        world.addItem(new SimpleWeapon("Mace", 15, 20), roadToTheFort);
+        // world.addItem(new SimpleWeapon("Mace", 15, 20), roadToTheFort);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Cave entrance
@@ -207,7 +208,7 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), caveEntrance);
 
         // Items
-        world.addItem(new SimpleWeapon("Longsword", 18, 20), caveEntrance);
+        // world.addItem(new SimpleWeapon("Longsword", 18, 20), caveEntrance);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Cave
@@ -223,8 +224,8 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 3), cave);
 
         // Items
-        world.addItem(new SimpleWeapon("Staff", 15, 15), cave);
-        world.addItem(Item.createItem(FoodPreset.WATERMELON), cave);
+        // world.addItem(new SimpleWeapon("Staff", 15, 15), cave);
+        // world.addItem(Item.createItem(FoodPreset.WATERMELON), cave);
 
         return world;
     }

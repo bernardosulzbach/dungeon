@@ -17,9 +17,7 @@
 
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.items.Breakable;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 
 class CreatureAttackWeapon implements CreatureAttack {
@@ -40,20 +38,16 @@ class CreatureAttackWeapon implements CreatureAttack {
 
     @Override
     public void attack(Creature attacker, Creature target) {
-        Weapon weapon = attacker.getWeapon();
+        Item weapon = attacker.getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
         if (weapon != null) {
-            if (!weapon.isMiss()) {
+            if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage();
                 IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage, target.getName()));
-                if (weapon instanceof Breakable) {
-                    Breakable breakableWeapon = (Breakable) weapon;
-                    breakableWeapon.decrementIntegrity();
-                    if (breakableWeapon.isBroken()) {
-                        attacker.setWeapon(null);
-                        attacker.getInventory().removeItem((Item) attacker.getWeapon());
-                    }
+                weapon.decrementIntegrityByHit();
+                if (weapon.isBroken()) {
+                    attacker.getInventory().removeItem(weapon);
                 }
             } else {
                 IO.writeString(attacker.getName() + " misses.");
