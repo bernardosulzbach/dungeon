@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -69,4 +69,6 @@ public class Constants {
     public static final String WALK_BLOCKED = "The path is blocked.";
     public static final String NO_CREATURES = "You do not see any creatures here.";
     public static final String NO_ITEMS = "You do not see any items here.";
+
+    public static final String SELECTION_ENTRY_FORMAT = "%-10s %-15s %-15s";
 }
