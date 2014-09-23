@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.game;
 
 import org.dungeon.core.counters.CounterMap;
@@ -52,9 +53,6 @@ public class World implements Serializable {
         dateFormat.setCalendar(calendar);
     }
 
-    public void printDateAndTime() {
-        IO.writeString(dateFormat.format(calendar.getTime()));
-    }
 
     public void addLocation(Location locationObject, Point coordinates) {
         locations.put(coordinates, locationObject);
@@ -106,6 +104,30 @@ public class World implements Serializable {
     }
 
     /**
+     * Returns a string corresponding to the current part of the day.
+     */
+    public String getDayPartString() {
+        int hour = calendar.get(Calendar.HOUR);
+        if (hour == 0) {
+            return "Midnight";
+        } else if (1 <= hour && hour <= 5) {
+            return "Night";
+        } else if (hour == 6) {
+            return "Dawn";
+        } else if (7 <= hour && hour <= 11) {
+            return "Morning";
+        } else if (hour == 12) {
+            return "Noon";
+        } else if (13 <= hour && hour <= 17) {
+            return "Afternoon";
+        } else if (hour == 18) {
+            return "Dusk";
+        } else {
+            return "Evening";
+        }
+    }
+
+    /**
      * Prints all the spawn counters.
      */
     public void printSpawnCounters() {
@@ -115,4 +137,12 @@ public class World implements Serializable {
         }
         IO.writeString(sb.toString());
     }
+
+    /**
+     * Prints the current date and time of the world.
+     */
+    public void printDateAndTime() {
+        IO.writeString(dateFormat.format(calendar.getTime()) + " (" + getDayPartString() + ") ");
+    }
+
 }
