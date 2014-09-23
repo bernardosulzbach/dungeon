@@ -104,4 +104,12 @@ public class StringUtils {
         }
         return Character.toLowerCase(s1.charAt(0)) == Character.toLowerCase(s2.charAt(0));
     }
+
+    /**
+     *
+     */
+    public static String[] split(String string) {
+        String[] returnArray = string.split("\\s+");
+        return returnArray;
+    }
 }
