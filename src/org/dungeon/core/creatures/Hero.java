@@ -168,8 +168,10 @@ public class Hero extends Creature {
     public void pickItem(String[] inputWords) {
         Item selectedItem = selectLocationItem(inputWords);
         if (selectedItem != null) {
-            getInventory().addItem(selectedItem);
-            getLocation().removeItem(selectedItem);
+            // addItem returns false if the item was not added to the inventory.
+            if (getInventory().addItem(selectedItem)) {
+                getLocation().removeItem(selectedItem);
+            }
         }
     }
 

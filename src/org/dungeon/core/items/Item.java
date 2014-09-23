@@ -208,7 +208,14 @@ public class Item implements Selectable, Serializable {
     // Selectable implementation
     @Override
     public String toSelectionEntry() {
-        return String.format("[%s] %s Damage: %d", type, name, damage);
+        String typeString = String.format("[%s]", getType());
+        String extraString;
+        if (isFood()) {
+            extraString = String.format("Nutrition: %4d", getNutrition());
+        } else {
+            extraString = String.format("Damage: %7d", getDamage());
+        }
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, typeString, getName(), extraString);
     }
 
     // Printing methods

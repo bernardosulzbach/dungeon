@@ -57,7 +57,7 @@ public class BattleLog implements Serializable {
         //
         setTotalBattles(getTotalBattles() + 1);
         if (attackerWon) {
-            setBattlesWonByAttacker(getBattlesWonByAttacker());
+            setBattlesWonByAttacker(getBattlesWonByAttacker() + 1);
         }
         if (turns > getLongestBattleLength()) {
             setLongestBattleLength(turns);
