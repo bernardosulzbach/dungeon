@@ -157,7 +157,7 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), forest2);
 
         // Weapons
-        world.addItem(Item.createItem(ItemPreset.SPEAR), forest);
+        world.addItem(Item.createItem(ItemPreset.SPEAR), forest2);
         // Food
         world.addItem(Item.createItem(ItemPreset.APPLE), forest2);
 
