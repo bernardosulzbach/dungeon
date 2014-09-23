@@ -88,7 +88,7 @@ public class Inventory implements Serializable {
             throw new IllegalArgumentException("newItem is already in the inventory.");
         }
         if (itemLimit == itemList.size()) {
-            IO.writeString("Inventory full.");
+            printInventoryFull();
             return false;
         } else {
             itemList.add(newItem);
@@ -102,6 +102,10 @@ public class Inventory implements Serializable {
             owner.setWeapon(null);
         }
         itemList.remove(item);
+    }
+
+    public void printInventoryFull() {
+        IO.writeString("Inventory full.");
     }
 
 }
