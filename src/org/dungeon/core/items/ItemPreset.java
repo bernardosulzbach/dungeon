@@ -18,7 +18,10 @@
 package org.dungeon.core.items;
 
 public enum ItemPreset {
-    SPEAR("SPEAR", "Weapon", "Spear", 80, 80, true, true, 10, 0.85, 1, false, 0, 0);
+    APPLE("APPLE", "Food", "Apple", 12, 12, false, true, 6, 0.7, 4, true, 8, 6),
+    CHERRY("CHERRY", "Food", "Cherry", 4, 4, false, true, 2, 0.8, 4, true, 4, 4),
+    SPEAR("SPEAR", "Weapon", "Spear", 80, 80, true, true, 10, 0.85, 1, false, 0, 0),
+    WATERMELON("WATERMELON", "Food", "Watermelon", 40, 40, false, true, 8, 0.6, 8, true, 10, 10);
 
     // Identification fields.
     protected String id;

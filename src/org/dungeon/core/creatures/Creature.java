@@ -35,7 +35,7 @@ import java.io.Serializable;
  *
  * @author Bernardo Sulzbach
  */
-public class Creature implements Serializable, Selectable {
+public class Creature implements Selectable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -212,9 +212,7 @@ public class Creature implements Serializable, Selectable {
     }
 
     public void setWeapon(Item weapon) {
-        if (weapon.isWeapon()) {
-            this.weapon = weapon;
-        }
+        this.weapon = weapon;
     }
 
     public Location getLocation() {
