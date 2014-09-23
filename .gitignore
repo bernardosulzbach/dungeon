@@ -18,6 +18,7 @@ build/
 .idea/
 out/
 src/META-INF/
+*.iml
 
 # Save files
 *.dungeon

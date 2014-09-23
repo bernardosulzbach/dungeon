@@ -14,42 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
-/**
- * Defines critters.
- *
- * @author Bernardo Sulzbach
- */
-public class Critter extends Creature {
+import java.io.Serializable;
 
-    public Critter(CreatureID id, String name) {
-        super(CreatureType.CRITTER, id, name);
+class CreatureAttackNone implements CreatureAttack, Serializable {
+
+    @Override
+    public int getBaseAttack() {
+        return 0;
     }
 
     @Override
-    public void hit(Creature target) {
-        // Two different output strings are possible for critters.
+    public void setBaseAttack(int baseAttack) {
+
+    }
+
+    @Override
+    public void attack(Creature attacker, Creature target) {
         if (Game.RANDOM.nextBoolean()) {
-            IO.writeString(getName() + " does nothing.");
+            IO.writeString(attacker.getName() + " does nothing.");
         } else {
-            IO.writeString(getName() + " tries to run away.");
-        }
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        // Attacks against critters have 100% bonus damage.
-        damage = damage * 2;
-        if (damage > getCurHealth()) {
-            setCurHealth(0);
-        } else {
-            setCurHealth(getCurHealth() - damage);
+            IO.writeString(attacker.getName() + " tries to run away.");
         }
     }
 }

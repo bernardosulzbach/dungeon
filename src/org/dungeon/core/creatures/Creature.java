@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
 import org.dungeon.core.creatures.enums.CreatureID;
@@ -21,8 +22,11 @@ import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
-import org.dungeon.core.items.Weapon;
+import org.dungeon.core.items.Inventory;
+import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.StringUtils;
 
 import java.io.Serializable;
 
@@ -31,7 +35,7 @@ import java.io.Serializable;
  *
  * @author Bernardo Sulzbach
  */
-public abstract class Creature implements Serializable, Selectable {
+public class Creature implements Selectable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,10 +53,13 @@ public abstract class Creature implements Serializable, Selectable {
     private int curHealth;
     private int healthIncrement;
 
-    private int attack;
+    private CreatureAttack creatureAttack;
+
     private int attackIncrement;
 
-    private Weapon weapon;
+    private Inventory inventory;
+    private Item weapon;
+
     private Location location;
 
     public Creature(CreatureType type, CreatureID id, String name) {
@@ -68,15 +75,16 @@ public abstract class Creature implements Serializable, Selectable {
     //
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature;
+        creature = new Creature(preset.getType(), preset.getId(), preset.getId().getName());
         switch (preset.getType()) {
             case CRITTER:
-                creature = new Critter(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackNone();
                 break;
             case BEAST:
-                creature = new Beast(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackUnarmed(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
                 break;
             case UNDEAD:
-                creature = new Undead(preset.getId(), preset.getId().getName());
+                creature.creatureAttack = new CreatureAttackWeapon(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
                 break;
             default:
                 return null;
@@ -85,7 +93,6 @@ public abstract class Creature implements Serializable, Selectable {
         creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-        creature.setAttack(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
         return creature;
     }
 
@@ -173,11 +180,15 @@ public abstract class Creature implements Serializable, Selectable {
     }
 
     public int getAttack() {
-        return attack;
+        return creatureAttack.getBaseAttack();
     }
 
     public void setAttack(int attack) {
-        this.attack = attack;
+        creatureAttack.setBaseAttack(attack);
+    }
+
+    public void setCreatureAttack(CreatureAttack creatureAttack) {
+        this.creatureAttack = creatureAttack;
     }
 
     public int getAttackIncrement() {
@@ -188,11 +199,19 @@ public abstract class Creature implements Serializable, Selectable {
         this.attackIncrement = attackIncrement;
     }
 
-    public Weapon getWeapon() {
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public Item getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(Weapon weapon) {
+    public void setWeapon(Item weapon) {
         this.weapon = weapon;
     }
 
@@ -247,7 +266,13 @@ public abstract class Creature implements Serializable, Selectable {
         setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
         setAttack(getAttack() + getAttackIncrement());
-        IO.writeString(String.format("%s leveld up. %s is now level %d.", getName(), getName(), getLevel()));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
+        sb.append(StringUtils.centerString(String.format("%s is now level %d.", getName(), getLevel()))).append("\n");
+        String nextLevelProgress = String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel());
+        sb.append(StringUtils.centerString(String.format(nextLevelProgress))).append("\n");
+        IO.writeString(sb.toString());
     }
 
     //
@@ -279,22 +304,24 @@ public abstract class Creature implements Serializable, Selectable {
     // Weapon methods.
     //
     //
-    /**
-     * Disarm the creature. Placing its current weapon, if any, in the ground.
-     */
-    public void dropWeapon() {
-        if (getWeapon() != null) {
-            location.addItem(getWeapon());
-            IO.writeString(getName() + " dropped " + getWeapon().getName() + ".");
-            setWeapon(null);
-        } else {
-            IO.writeString("You are not currently carrying a weapon.");
+    public void equipWeapon(Item weapon) {
+        if (hasWeapon()) {
+            if (getWeapon() == weapon) {
+                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
+                return;
+            } else {
+                unequipWeapon();
+            }
         }
-    }
-
-    public void equipWeapon(Weapon weapon) {
         this.setWeapon(weapon);
         IO.writeString(getName() + " equipped " + weapon.getName() + ".");
+    }
+
+    public void unequipWeapon() {
+        if (hasWeapon()) {
+            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
+            this.weapon = null;
+        }
     }
 
     //
@@ -302,7 +329,9 @@ public abstract class Creature implements Serializable, Selectable {
     // Combat methods.
     //
     //
-    public abstract void hit(Creature target);
+    public void hit(Creature target) {
+        creatureAttack.attack(this, target);
+    }
 
     public void takeDamage(int damage) {
         if (damage > getCurHealth()) {
@@ -317,6 +346,7 @@ public abstract class Creature implements Serializable, Selectable {
     // Predicate methods.
     //
     //
+
     /**
      * Checks if the creature is alive.
      *
@@ -344,6 +374,13 @@ public abstract class Creature implements Serializable, Selectable {
         return getWeapon() != null;
     }
 
+    /**
+     * Checks if the creature has an inventory.
+     */
+    public boolean hasInventory() {
+        return getInventory() != null;
+    }
+
     //
     //
     // Selectable implementation.
@@ -353,5 +390,6 @@ public abstract class Creature implements Serializable, Selectable {
     public String toSelectionEntry() {
         return String.format("%-12s%-24s Level %2d", String.format("[%s]", getType()), getName(), getLevel());
     }
+
 
 }

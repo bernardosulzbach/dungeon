@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.creatures;
 
+import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.Food;
+import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.Weapon;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -36,25 +37,26 @@ public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
 
-    // Has the player already attempted suicide?
-    private boolean attemptedSuicide;
+    private BattleLog battleLog;
 
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
-        setAttack(4);
+        setCreatureAttack(new CreatureAttackWeapon(4));
         setHealthIncrement(20);
         setAttackIncrement(4);
+        setInventory(new Inventory(this, 4));
+        setBattleLog(new BattleLog());
     }
 
-    public boolean isAttemptedSuicide() {
-        return attemptedSuicide;
+    public BattleLog getBattleLog() {
+        return battleLog;
     }
 
-    public void setAttemptedSuicide(boolean attemptedSuicide) {
-        this.attemptedSuicide = attemptedSuicide;
+    public void setBattleLog(BattleLog battleLog) {
+        this.battleLog = battleLog;
     }
 
     /**
@@ -128,7 +130,15 @@ public class Hero extends Creature {
     // Selection methods.
     //
     //
-    public Item selectItem(String[] inputWords) {
+    public Item selectInventoryItem(String[] inputWords) {
+        if (inputWords.length == 1) {
+            return Utils.selectFromList(getInventory().getItems());
+        } else {
+            return getInventory().findItem(inputWords[1]);
+        }
+    }
+
+    public Item selectLocationItem(String[] inputWords) {
         if (inputWords.length == 1) {
             return Utils.selectFromList(getLocation().getItems());
         } else {
@@ -146,45 +156,84 @@ public class Hero extends Creature {
         }
     }
 
+    //
+    //
+    // Inventory methods.
+    //
+    //
+
     /**
-     * Picks a weapon from the ground.
+     * Attempts to pick and item and add it to the inventory.
      */
-    public void pickWeapon(String[] inputWords) {
-        Item selectedItem = selectItem(inputWords);
+    public void pickItem(String[] inputWords) {
+        Item selectedItem = selectLocationItem(inputWords);
         if (selectedItem != null) {
-            if (selectedItem instanceof Weapon) {
-                if (hasWeapon()) {
-                    dropWeapon();
-                }
-                equipWeapon((Weapon) selectedItem);
-                getLocation().removeItem(selectedItem);
-            } else {
-                IO.writeString("You cannot equip that.");
-            }
+            getInventory().addItem(selectedItem);
+            getLocation().removeItem(selectedItem);
         }
+    }
+
+    //
+    //
+    // Weapon methods.
+    //
+    //
+
+    /**
+     * Tries to equip an item from the inventory.
+     */
+    public void parseEquip(String[] inputWords) {
+        Item selectedItem = selectInventoryItem(inputWords);
+        if (selectedItem.isWeapon()) {
+            equipWeapon(selectedItem);
+        } else {
+            IO.writeString("You cannot equip that.");
+        }
+    }
+
+    /**
+     * Attempts to drop an item from the hero's inventory.
+     */
+    public void dropItem(String[] inputWords) {
+        Item selectedItem = selectInventoryItem(inputWords);
+        if (selectedItem != null) {
+            if (selectedItem == getWeapon()) {
+                unequipWeapon();
+            }
+            getInventory().removeItem(selectedItem);
+            getLocation().addItem(selectedItem);
+            IO.writeString("Dropped " + selectedItem.getName() + ".");
+        } else {
+            IO.writeString("Item not found in inventory.");
+        }
+    }
+
+    public void printInventory() {
+        getInventory().printItems();
     }
 
     /**
      * Attempts to eat an item from the ground.
      */
     public void eatItem(String[] inputWords) {
-        Item selectedItem = selectItem(inputWords);
+        Item selectedItem = selectInventoryItem(inputWords);
         if (selectedItem != null) {
-            if (selectedItem instanceof Food) {
-                ingest((Food) selectedItem);
-                getLocation().removeItem(selectedItem);
+            if (selectedItem.isFood()) {
+                addHealth(selectedItem.getNutrition());
+                selectedItem.decrementIntegrityByEat();
+                // TODO: re-implement eating experience here.
+                if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
+                    IO.writeString("You ate " + selectedItem.getName() + ".");
+                    getInventory().removeItem(selectedItem);
+                } else {
+                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
+                }
+                if (isCompletelyHealed()) {
+                    IO.writeString("You are completely healed.");
+                }
             } else {
-                IO.writeString("You cannot eat that.");
+                IO.writeString("You can only eat food.");
             }
-        }
-    }
-
-    // Ingests an aliment.
-    private void ingest(Food food) {
-        IO.writeString("You ate " + food.getName() + ".");
-        addHealth(food.getNutrition());
-        if (isCompletelyHealed()) {
-            IO.writeString("You are completely healed.");
         }
     }
 
@@ -199,25 +248,40 @@ public class Hero extends Creature {
             target = getLocation().findItem(words[1]);
         }
         if (target != null) {
-            if (target.isDestructible()) {
+            if (target.isRepairable()) {
+                if (!target.isBroken()) {
+
+                    target.setCurIntegrity(0);
+                    IO.writeString(getName() + " crashed " + target.getName() + ".");
+                }
+            } else {
                 getLocation().removeItem(target);
                 IO.writeString(getName() + " destroyed " + target.getName() + ".");
-            } else {
-                IO.writeString(target.getName() + " is indestructible.");
             }
         }
     }
 
+    //
+    //
+    // Status methods.
+    //
+    //
+
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
+
         builder.append(Constants.MARGIN).append(String.format("%s (%s)\n", getName(), getId()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Level", getLevel()));
-        builder.append(Constants.MARGIN).append(
-                String.format("%-20s%10s\n", "Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel())));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d\n", "Gold", getGold()));
-        builder.append(Constants.MARGIN).append(
-                String.format("%-20s%10s\n", "Health", String.format("%d/%d", getCurHealth(), getMaxHealth())));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%10d", "Attack", getAttack()));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Level", getLevel()));
+
+        String experienceFraction = String.format("%d/%d", getExperience(), getExperienceToNextLevel());
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Experience", experienceFraction));
+
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Gold", getGold()));
+
+        String healthFraction = String.format("%d/%d", getCurHealth(), getMaxHealth());
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Health", healthFraction));
+
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20d", "Attack", getAttack()));
         return builder.toString();
 
     }
@@ -251,30 +315,5 @@ public class Hero extends Creature {
         }
     }
 
-    /**
-     * Try to hit a target. If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with
-     * its bare hands.
-     */
-    @Override
-    public void hit(Creature target) {
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (getWeapon() != null && !getWeapon().isBroken()) {
-            // Check if the attack is a miss.
-            if (getWeapon().isMiss()) {
-                IO.writeString(getName() + " misses.");
-                return;
-            } else {
-                hitDamage = getWeapon().getDamage();
-                target.takeDamage(hitDamage);
-                getWeapon().decrementIntegrity();
-            }
-        } else {
-            hitDamage = this.getAttack();
-            target.takeDamage(hitDamage);
-        }
-        IO.writeString(String.format("%s inflicted %d damage points to %s.\n", getName(), hitDamage, target.getName()));
-
-    }
 
 }

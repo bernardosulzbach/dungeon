@@ -28,12 +28,13 @@ This project started on 04/09/2014 (dd/mm/yyyy).
 
 Code Style
 ----------
-* 140 characters per line.
+* Four spaces instead of tabs.
+* 120 characters per line.
 * Final variables and enumeration constants should be UPPERCASE.
 
 Contributors
 ------------
 Name                 |GitHub                   |E-mail                    |Role
----------------------|-------------------------|--------------------------|-----------------
+---------------------|-------------------------|--------------------------|------------------
 Bernardo Sulzbach    |mafagafogigante          |mafagafogigante@gmail.com |Creator and coder
-Gabriel Bohmer       |gabriel200899            |gabriel.bohmer@hotmail.com|Coder
+Gabriel Bohmer       |gabriel200899            |gabriel.bohmer@hotmail.com|Coder and designer

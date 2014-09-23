@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,59 +14,216 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.items;
 
+import org.dungeon.core.game.Game;
 import org.dungeon.core.game.Selectable;
+import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
 
-/**
- * Item abstract class that defines common properties for all items.
- *
- * @author Bernardo Sulzbach
- *         <p/>
- *         Change log
- *         Sulzbach, 18/09/2014: added the type field.
- */
-public abstract class Item implements Cloneable, Serializable, Selectable {
+public class Item implements Selectable, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    // Identification fields.
+    private String id;
+    private String type;
+    private String name;
 
-    private final String name;
-    private final String type;
-    private boolean destructible;
+    // Durability fields.
+    private int maxIntegrity;
+    private int curIntegrity;
+    private boolean repairable;
 
-    public static Item createItem(FoodPreset preset) {
-        return Food.createFood(preset);
+    // Weapon fields.
+    private boolean weapon;
+    private int damage;
+    private double hitRate;
+    private int integrityDecrementOnHit;
+
+    // Food fields.
+    private boolean food;
+    private int nutrition;
+    private int integrityDecrementOnEat;
+
+    private Item() {
+
     }
 
-    public static Item createItem(WeaponPreset preset) {
-        return Weapon.createWeapon(preset);
+    public static Item createItem(ItemPreset preset) {
+        Item result = new Item();
+
+        result.id = preset.id;
+        result.type = preset.type;
+        result.name = preset.name;
+
+        result.repairable = preset.repairable;
+        result.maxIntegrity = preset.maxIntegrity;
+        result.curIntegrity = preset.curIntegrity;
+
+        result.weapon = preset.weapon;
+        result.damage = preset.damage;
+        result.hitRate = preset.hitRate;
+        result.integrityDecrementOnHit = preset.integrityDecrementOnHit;
+
+        result.food = preset.food;
+        result.nutrition = preset.nutrition;
+        result.integrityDecrementOnEat = preset.integrityDecrementOnEat;
+
+        return result;
     }
 
-    protected Item(String name, String type) {
-        this(name, type, true);
+    // Getters and setters
+
+    public String getId() {
+        return id;
     }
 
-    protected Item(String name, String type, boolean destructible) {
-        this.name = name;
-        this.type = type;
-        this.destructible = destructible;
-    }
-
-    public String getName() {
-        return name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {
         return type;
     }
 
-    public boolean isDestructible() {
-        return destructible;
+    public void setType(String type) {
+        this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMaxIntegrity() {
+        return maxIntegrity;
+    }
+
+    public void setMaxIntegrity(int maxIntegrity) {
+        this.maxIntegrity = maxIntegrity;
+    }
+
+    public int getCurIntegrity() {
+        return curIntegrity;
+    }
+
+    public void setCurIntegrity(int curIntegrity) {
+        if (curIntegrity < 0) {
+            this.curIntegrity = 0;
+        } else {
+            this.curIntegrity = curIntegrity;
+        }
+    }
+
+    public boolean isRepairable() {
+        return repairable;
+    }
+
+    public void setRepairable(boolean repairable) {
+        this.repairable = repairable;
+    }
+
+    public boolean isWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(boolean weapon) {
+        this.weapon = weapon;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public double getHitRate() {
+        return hitRate;
+    }
+
+    public void setHitRate(double hitRate) {
+        this.hitRate = hitRate;
+    }
+
+    public int getIntegrityDecrementOnHit() {
+        return integrityDecrementOnHit;
+    }
+
+    public void setIntegrityDecrementOnHit(int integrityDecrementOnHit) {
+        this.integrityDecrementOnHit = integrityDecrementOnHit;
+    }
+
+    public boolean isFood() {
+        return food;
+    }
+
+    public void setFood(boolean food) {
+        this.food = food;
+    }
+
+    public int getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(int nutrition) {
+        this.nutrition = nutrition;
+    }
+
+    public int getIntegrityDecrementOnEat() {
+        return integrityDecrementOnEat;
+    }
+
+    public void setIntegrityDecrementOnEat(int integrityDecrementOnEat) {
+        this.integrityDecrementOnEat = integrityDecrementOnEat;
+    }
+
+    // Durability methods
+    public boolean isBroken() {
+        return getCurIntegrity() == 0;
+    }
+
+    public void decrementIntegrityByHit() {
+        setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
+    }
+
+    public void decrementIntegrityByEat() {
+        setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnEat());
+    }
+
+    // Weapon methods
+    public boolean rollForHit() {
+        return getHitRate() > Game.RANDOM.nextDouble();
+    }
+
+
+    // Food methods
+
+
+    // Selectable implementation
+    @Override
     public String toSelectionEntry() {
-        return String.format("%-12s%-24s", String.format("[%s]", getType()), getName());
+        return String.format("[%s] %s Damage: %d", type, name, damage);
+    }
+
+    // Printing methods
+    public String getStatusString() {
+        StringBuilder builder = new StringBuilder();
+        String nameString = getName();
+        if (isBroken()) {
+            nameString += " (Broken)";
+        }
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Name", nameString));
+        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Damage", getDamage()));
+        // Uses three lines to build the integrity line to improve code readability.
+        String integrityFraction = String.format("%d/%d", getCurIntegrity(), getMaxIntegrity());
+        String integrityString = String.format("%-20s%20s\n", "Integrity", integrityFraction);
+        builder.append(Constants.MARGIN).append(integrityString);
+        return builder.toString();
     }
 }
