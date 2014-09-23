@@ -24,6 +24,8 @@ package org.dungeon.utils;
 public class Constants {
 
     public static final String TITLE = "Dungeon";
+    public static final String VERSION = "v0.0.2";
+    public static final String CODENAME = "Mandolim";
 
     public static final int WIDTH = 79;
 
@@ -32,7 +34,6 @@ public class Constants {
      */
     public static final String MARGIN = "  ";
 
-    public static final String SAVE_PATH = "savefiles/";
     public static final String SAVE_NAME = "campaign";
     public static final String SAVE_EXTENSION = ".dungeon";
 
@@ -49,17 +50,19 @@ public class Constants {
     public static final String ACHIEVEMENT_UNLOCKED = "Achievement Unlocked!";
     public static final String LEVEL_UP = "Level up!";
 
-    // Two 79-character long strings used to improve readability.
     public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
 
     public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, WIDTH, '-') + '\n' + LINE_2;
-    public static final String SUICIDE_ATTEMPT = "Are you trying to kill yourself?";
+
+    public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
+    public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
+
     /**
      * The string used to alert the player about invalid input.
      */
     public static final String INVALID_INPUT = "Invalid input.";
-    public static final String NOT_YET_SUPPORTED = "Not yet supported.";
+
     /**
      * Movement strings.
      */

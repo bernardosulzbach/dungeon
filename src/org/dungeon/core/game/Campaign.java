@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.game;
 
 import org.dungeon.core.achievements.Achievement;
+import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreaturePreset;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.items.FoodPreset;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.Weapon;
+import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
+import org.dungeon.utils.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,23 +42,27 @@ import java.util.List;
 //
 // There are a few more restrictions that a class must obey to allow inheritance.
 //
-// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure will result.
+// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure
+// will result.
 //
-// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be invoked before the
-// subclass constructor has run. If the overriding method depends on any initialization performed by the subclass constructor, the method
-// will not behave as expected.
+// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be
+// invoked before the subclass constructor has run. If the overriding method depends on any initialization performed by
+// the subclass constructor, the method will not behave as expected.
 //
-// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I decided to follow the 
-// item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
+// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I
+// will follow the item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
+//
+// Bernardo Sulzbach (mafagafogigante) [20/09/2014]: there is no reason to still mark this class final. As I do not plan
+// to ever inherit from it and changing the final modifier is something ridiculously simple, I will just leave it the
+// way it is.
 //
 public final class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<Achievement> achievements;
+    private final CommandHistory commandHistory;
 
-    private final CounterMap<CreatureID> battleIDCounter;
-    private final CounterMap<CreatureType> battleTypeCounter;
+    private final List<Achievement> achievements;
 
     private final World campaignWorld;
 
@@ -66,13 +70,13 @@ public final class Campaign implements Serializable {
     private Point heroPosition;
 
     private boolean saved;
+    private int nextHintIndex;
 
     private int totalAchievementsCount;
     private int unlockedAchievementsCount;
 
     public Campaign() {
-        battleIDCounter = new CounterMap<CreatureID>();
-        battleTypeCounter = new CounterMap<CreatureType>();
+        commandHistory = new CommandHistory();
 
         achievements = createDemoAchievements();
 
@@ -88,28 +92,43 @@ public final class Campaign implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> demoAchievements = new ArrayList<Achievement>();
 
-        CounterMap<CreatureID> suicideSolutionRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>();
-        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>();
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that do not require specific kills.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Suicide Solution requires one battle against the Hero himself.
-        suicideSolutionRequirements.incrementCounter(CreatureID.HERO);
+        demoAchievements.add(new BattleAchievement("First Blood", "Kill a creature.", 10, 1, 0, null, null));
+        demoAchievements.add(new BattleAchievement("Killer", "Kill 10 creatures.", 100, 10, 0, null, null));
+        demoAchievements.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 150, 0, 10, null, null));
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that rely on the kill count of a specific creature ID.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Bane requires six battles against bats.
+        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>();
         baneRequirements.incrementCounter(CreatureID.BAT, 6);
+        demoAchievements.add(new BattleAchievement("Bane", "Kill 6 bats.", 50, 0, 0, baneRequirements, null));
         // Cat requires four battles against rats.
+        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>();
         catRequirements.incrementCounter(CreatureID.RAT, 4);
+        demoAchievements.add(new BattleAchievement("Cat", "Kill 4 rats.", 40, 0, 0, catRequirements, null));
         // Evil Bastard requires one battle against a rabbit.
+        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>();
         evilBastardRequirements.incrementCounter(CreatureID.RABBIT);
+        demoAchievements.add(new BattleAchievement("Evil Bastard", "Kill an innocent rabbit.", 5, 0, 0, evilBastardRequirements, null));
         // Stay Dead requires two battles against a zombie.
+        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>();
         stayDeadRequirements.incrementCounter(CreatureID.ZOMBIE, 2);
+        demoAchievements.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.", 50, 0, 0, stayDeadRequirements, null));
 
-        demoAchievements.add(new Achievement("Suicide Solution", "Attempt to kill yourself.", suicideSolutionRequirements));
-        demoAchievements.add(new Achievement("Bane", "Kill 6 bats.", baneRequirements));
-        demoAchievements.add(new Achievement("Cat", "Kill 4 rats.", catRequirements));
-        demoAchievements.add(new Achievement("Evil Bastard", "Kill an innocent rabbit.", evilBastardRequirements));
-        demoAchievements.add(new Achievement("Stay Dead", "Kill 2 zombies.", stayDeadRequirements));
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Battle achievements that rely on the kill count of a specific type.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Professional Coward requires killing 10 critters.
+        CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>();
+        professionalCowardRequirements.incrementCounter(CreatureType.CRITTER, 10);
+        demoAchievements.add(new BattleAchievement("Professional Coward", "Kill 10 critters.", 100, 0, 0, null, professionalCowardRequirements));
 
         return demoAchievements;
     }
@@ -117,12 +136,15 @@ public final class Campaign implements Serializable {
     private World createDemoWorld() {
         World world = new World();
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Forest (two locations)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Create a location on the hero's position.
         Point forest = new Point(0, 0);
         world.addLocation(new Location("Forest"), forest);
 
         world.addCreature(campaignHero, forest);
-        world.addItem(new Weapon("Stick", 6, 20), forest);
+        world.addItem(Item.createItem(ItemPreset.STICK), forest);
 
         // Another forest location.
         Point forest2 = new Point(0, 1);
@@ -134,10 +156,14 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), forest2);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), forest2);
 
-        // Items
-        world.addItem(new Weapon("Spear", 10, 12), forest2);
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.SPEAR), forest2);
+        // Food
+        world.addItem(Item.createItem(ItemPreset.APPLE), forest2);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // A clearing.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point clearing = new Point(0, 2);
         world.addLocation(new Location("Clearing"), clearing);
 
@@ -146,11 +172,15 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), clearing);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
         world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing);
-        // Items
-        world.addItem(new Weapon("Dagger", 13, 15), clearing);
-        // Food
-        world.addItem(Item.createItem(FoodPreset.CHERRY), clearing);
 
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.DAGGER), clearing);
+        // Food
+        world.addItem(Item.createItem(ItemPreset.CHERRY), clearing);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Road to The Fort
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point roadToTheFort = new Point(1, 2);
         world.addLocation(new Location("Road to The Fort"), roadToTheFort);
 
@@ -160,24 +190,54 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 1, 3), roadToTheFort);
 
-        // Items
-        world.addItem(new Weapon("Mace", 15, 20), roadToTheFort);
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.MACE), roadToTheFort);
 
-        Point cave = new Point(-1, 2);
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Cave entrance
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Point caveEntrance = new Point(-1, 2);
+        world.addLocation(new Location("Cave Entrance"), caveEntrance);
+
+        // Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 1), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 2, 4), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), caveEntrance);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), caveEntrance);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), caveEntrance);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), caveEntrance);
+
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.LONGSWORD), caveEntrance);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Cave
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Point cave = new Point(-2, 2);
         world.addLocation(new Location("Cave"), cave);
 
         // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 4), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 3), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 1, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 2, 6), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 4), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), cave);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 3), cave);
 
-        // Items
-        world.addItem(new Weapon("Longsword", 18, 25), cave);
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.STAFF), cave);
+        // Food
+        world.addItem(Item.createItem(ItemPreset.WATERMELON), cave);
 
         return world;
+    }
+
+    public CommandHistory getCommandHistory() {
+        return commandHistory;
+    }
+
+    public void printCommandCount() {
+        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount());
     }
 
     public World getWorld() {
@@ -188,12 +248,33 @@ public final class Campaign implements Serializable {
         return campaignHero;
     }
 
+    public Point getHeroPosition() {
+        return heroPosition;
+    }
+
     public boolean isSaved() {
         return saved;
     }
 
     public void setSaved(boolean saved) {
         this.saved = saved;
+    }
+
+    public int getNextHintIndex() {
+        return nextHintIndex;
+    }
+
+    public void setNextHintIndex(int nextHintIndex) {
+        this.nextHintIndex = nextHintIndex;
+    }
+
+    private void incrementNextHintIndex() {
+        int newIndex = getNextHintIndex() + 1;
+        if (newIndex == Hints.hintsArray.length) {
+            setNextHintIndex(0);
+        } else {
+            setNextHintIndex(newIndex);
+        }
     }
 
     public int getTotalAchievementsCount() {
@@ -235,7 +316,7 @@ public final class Campaign implements Serializable {
 
     private void refreshAchievements() {
         for (Achievement a : achievements) {
-            if (a.update(battleIDCounter)) {
+            if (a.update(getHero())) {
                 incrementUnlockedAchievementsCount();
             }
         }
@@ -249,9 +330,10 @@ public final class Campaign implements Serializable {
             }
             return;
         } else {
-            String secondWord = inputWords[1];
+            String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
-                if (dir.toString().equalsIgnoreCase(secondWord)) {
+                // (the strings are equal) or (the first characters of each string are equal)
+                if (dir.toString().equalsIgnoreCase(arg) || StringUtils.firstEqualsIgnoreCase(dir.toString(), arg)) {
                     heroWalk(dir);
                     return;
                 }
@@ -271,9 +353,20 @@ public final class Campaign implements Serializable {
         }
     }
 
-    void addBattle(Creature target) {
-        this.battleIDCounter.incrementCounter(target.getId());
-        this.battleTypeCounter.incrementCounter(target.getType());
+    /**
+     * Prints the next hint.
+     */
+    public void printNextHint() {
+        IO.writeString(Hints.hintsArray[getNextHintIndex()]);
+        incrementNextHintIndex();
     }
 
+    /**
+     * Returns some basic information about the hero.
+     * Used by the 'whoami' command.
+     */
+    public String getHeroInfo() {
+        // TODO: consider returning something a bit more substantial.
+        return getHero().getName();
+    }
 }

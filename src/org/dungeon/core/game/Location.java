@@ -16,18 +16,14 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.core.items.Weapon;
+import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.items.Item;
+import org.dungeon.io.IO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.dungeon.core.counters.CounterMap;
-
-import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
 
 public class Location implements Serializable {
 
@@ -114,7 +110,6 @@ public class Location implements Serializable {
     /**
      * Attempts to find an item by its name.
      *
-     * @param name
      * @return an Item object if there is a match. null otherwise.
      */
     public Item findItem(String name) {

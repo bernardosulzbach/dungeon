@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,17 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.core.game;
 
-import org.dungeon.core.items.Item;
-import java.io.Serializable;
-import java.util.HashMap;
 import org.dungeon.core.counters.CounterMap;
-
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.enums.CreatureID;
+import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class World implements Serializable {
 
@@ -33,10 +38,21 @@ public class World implements Serializable {
     private final HashMap<Point, Location> locations;
     private final CounterMap<CreatureID> spawnCounter;
 
+    private Calendar calendar;
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
+        initializeCalendar();
     }
+
+    private void initializeCalendar() {
+        calendar = new GregorianCalendar();
+        calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
+        dateFormat.setCalendar(calendar);
+    }
+
 
     public void addLocation(Location locationObject, Point coordinates) {
         locations.put(coordinates, locationObject);
@@ -68,10 +84,6 @@ public class World implements Serializable {
 
     /**
      * Move a Creature from origin to destination.
-     *
-     * @param creature
-     * @param origin
-     * @param destination
      */
     public void moveCreature(Creature creature, Point origin, Point destination) {
         if (locations.get(origin).hasCreature(creature)) {
@@ -92,6 +104,30 @@ public class World implements Serializable {
     }
 
     /**
+     * Returns a string corresponding to the current part of the day.
+     */
+    public String getDayPartString() {
+        int hour = calendar.get(Calendar.HOUR);
+        if (hour == 0) {
+            return "Midnight";
+        } else if (1 <= hour && hour <= 5) {
+            return "Night";
+        } else if (hour == 6) {
+            return "Dawn";
+        } else if (7 <= hour && hour <= 11) {
+            return "Morning";
+        } else if (hour == 12) {
+            return "Noon";
+        } else if (13 <= hour && hour <= 17) {
+            return "Afternoon";
+        } else if (hour == 18) {
+            return "Dusk";
+        } else {
+            return "Evening";
+        }
+    }
+
+    /**
      * Prints all the spawn counters.
      */
     public void printSpawnCounters() {
@@ -101,4 +137,12 @@ public class World implements Serializable {
         }
         IO.writeString(sb.toString());
     }
+
+    /**
+     * Prints the current date and time of the world.
+     */
+    public void printDateAndTime() {
+        IO.writeString(dateFormat.format(calendar.getTime()) + " (" + getDayPartString() + ") ");
+    }
+
 }
