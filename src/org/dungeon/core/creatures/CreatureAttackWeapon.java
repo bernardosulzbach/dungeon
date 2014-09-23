@@ -20,7 +20,9 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 
-class CreatureAttackWeapon implements CreatureAttack {
+import java.io.Serializable;
+
+class CreatureAttackWeapon implements CreatureAttack, Serializable {
 
     private int baseAttack;
 
