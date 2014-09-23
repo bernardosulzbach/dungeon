@@ -19,6 +19,7 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class Inventory implements Serializable {
         } else {
             StringBuilder builder = new StringBuilder();
             for (Item itemInInventory : itemList) {
-                builder.append(itemInInventory.toSelectionEntry()).append('\n');
+                builder.append(Constants.MARGIN).append(itemInInventory.toSelectionEntry()).append('\n');
             }
             IO.writeString(builder.toString());
         }
