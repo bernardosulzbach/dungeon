@@ -22,7 +22,7 @@ import org.dungeon.io.IO;
 
 import java.io.Serializable;
 
-class CreatureAttackNone implements CreatureAttack, Serializable {
+class   CreatureAttackNone implements CreatureAttack, Serializable {
 
     @Override
     public int getBaseAttack() {
