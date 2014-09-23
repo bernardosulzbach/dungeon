@@ -24,7 +24,12 @@ package org.dungeon.core.items;
  * Created by Bernardo on 18/09/2014.
  */
 public enum SimpleWeaponPreset {
-    SPEAR("Spear", 13, 5, 100, 1);
+    DAGGER("Dagger", 13, 15, 80, 1),
+    LONGSWORD("Longsword", 18, 20, 100, 1),
+    MACE("Mace", 15, 20, 90, 1),
+    SPEAR("Spear", 10, 12, 70, 1),
+    STAFF("Staff", 14, 20, 75, 1),
+    STICK("Stick", 6, 22, 30, 1);
 
     protected final String name;
     protected final int damage;
