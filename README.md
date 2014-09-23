@@ -35,6 +35,6 @@ Code Style
 Contributors
 ------------
 Name                 |GitHub                   |E-mail                    |Role
----------------------|-------------------------|--------------------------|-----------------
+---------------------|-------------------------|--------------------------|------------------
 Bernardo Sulzbach    |mafagafogigante          |mafagafogigante@gmail.com |Creator and coder
-Gabriel Bohmer       |gabriel200899            |gabriel.bohmer@hotmail.com|Coder
+Gabriel Bohmer       |gabriel200899            |gabriel.bohmer@hotmail.com|Coder and designer
