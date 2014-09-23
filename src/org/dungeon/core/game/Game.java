@@ -150,13 +150,7 @@ public class Game {
                 Utils.printVersion();
                 // The user issued a command, but it was not recognized.
             } else {
-                if (!inputWords[0].isEmpty()) {
-                    Utils.printInvalidCommandMessage(inputWords[0]);
-                } else {
-                    // The user pressed enter without typing anything.
-                    IO.writeString(Constants.INVALID_INPUT);
-                }
-
+                Utils.printInvalidCommandMessage(inputWords[0]);
             }
         }
     }
