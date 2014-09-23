@@ -133,10 +133,6 @@ public class Creature implements Selectable, Serializable {
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
     public int getExperienceDrop() {
         return experienceDrop;
     }
@@ -349,8 +345,6 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature is alive.
-     *
-     * @return
      */
     public boolean isAlive() {
         return getCurHealth() > 0;
@@ -358,8 +352,6 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature is dead.
-     *
-     * @return
      */
     public boolean isDead() {
         return getCurHealth() == 0;
@@ -367,19 +359,11 @@ public class Creature implements Selectable, Serializable {
 
     /**
      * Checks if the creature has a weapon.
-     *
-     * @return
      */
     public boolean hasWeapon() {
         return getWeapon() != null;
     }
 
-    /**
-     * Checks if the creature has an inventory.
-     */
-    public boolean hasInventory() {
-        return getInventory() != null;
-    }
 
     //
     //
@@ -388,8 +372,9 @@ public class Creature implements Selectable, Serializable {
     //
     @Override
     public String toSelectionEntry() {
-        return String.format("%-12s%-24s Level %2d", String.format("[%s]", getType()), getName(), getLevel());
+        String typeString = String.format("[%s]", getType());
+        String levelString = String.format("Level: %2d", getLevel());
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, typeString, getName(), levelString);
     }
-
 
 }
