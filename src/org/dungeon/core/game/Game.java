@@ -44,32 +44,35 @@ public class Game {
     private static void gameLoop(Campaign campaign) {
         Utils.printHeading();
         while (true) {
-            // getTurn returns true if the Player did not issue an exit command.
-            if (getTurn(campaign)) {
-                // Handle player death.
-                if (campaign.getHero().isDead()) {
-                    IO.writeString("You died.");
-                    break;
-                }
-                // Refresh the campaign state.
-                campaign.refresh();
-                // After a turn, the campaign is not saved.
-                campaign.setSaved(false);
-            } else {
+            // Let the player play a turn and get its length (in minutes).
+            int turnLength = getTurn(campaign);
+            if (turnLength == -1) {
                 if (!campaign.isSaved()) {
                     Loader.saveGameRoutine(campaign);
                 }
                 break;
             }
+            if (campaign.getHero().isDead()) {
+                IO.writeString("You died.");
+                break;
+                // TODO: prompt about loading from the last saved game.
+            }
+            // Advance the campaign's world date.
+            campaign.getWorld().rollDate(turnLength);
+            // Refresh the campaign state.
+            campaign.refresh();
+            // After a turn, the campaign is not saved anymore.
+            campaign.setSaved(false);
         }
     }
 
     /**
      * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
      *
-     * @return false if the player issued an exit command. True if the player played a turn.
+     * Returns how many minutes the player's turn took.
+     * Returns -1 if the player issued a quit command.
      */
-    private static boolean getTurn(Campaign campaign) {
+    private static int getTurn(Campaign campaign) {
         String s;
         String inputString;
         String[] inputWords;
@@ -83,23 +86,29 @@ public class Game {
             s = inputWords[0].toLowerCase();
             if (s.equals("rest")) {
                 campaign.getHero().rest();
-                return true;
+                // TODO: rewrite rest so that it returns a value.
+                return 30;
             } else if (s.equals("look") || s.equals("peek")) {
                 campaign.getHero().look();
             } else if (s.equals("inventory") || s.equals("items")) {
                 campaign.getHero().printInventory();
             } else if (s.equals("loot") || s.equals("pick")) {
                 campaign.getHero().pickItem(inputWords);
+                return 2;
             } else if (s.equals("equip")) {
                 campaign.getHero().parseEquip(inputWords);
             } else if (s.equals("eat") || s.equals("devour")) {
                 campaign.getHero().eatItem(inputWords);
+                return 2;
             } else if (s.equals("walk") || s.equals("go")) {
+                // TODO: rewrite walk and loot methods so that they only consume time if the action was successful.
                 campaign.parseHeroWalk(inputWords);
+                return 5;
             } else if (s.equals("drop")) {
                 campaign.getHero().dropItem(inputWords);
             } else if (s.equals("destroy") || s.equals("crash")) {
                 campaign.getHero().destroyItem(inputWords);
+                return 2;
             } else if (s.equals("status")) {
                 campaign.getHero().printAllStatus();
             } else if (s.equals("hero") || s.equals("me")) {
@@ -110,12 +119,13 @@ public class Game {
                 Creature target = campaign.getHero().selectTarget(inputWords);
                 if (target != null) {
                     // Add this battle to the battle counter.
-                    Game.battle(campaign.getHero(), target);
+                    int lastBattleTurns = Game.battle(campaign.getHero(), target);
+                    // A battle turn takes one minute to be processed.
+                    return lastBattleTurns;
                 }
-                return true;
                 // Campaign-related commands.
-                // TODO: think of a better name for this.
-            } else if (s.equals("commandcount")) {
+
+            } else if (s.equals("commandcount")) {// TODO: think of a better name for this.
                 campaign.printCommandCount();
             } else if (s.equals("whoami")) {
                 IO.writeString(campaign.getHeroInfo());
@@ -142,7 +152,7 @@ public class Game {
             } else if (s.equals("save")) {
                 Loader.saveGameRoutine(campaign, inputWords);
             } else if (s.equals("quit") || s.equals("exit")) {
-                return false;
+                return -1;
             } else if (s.equals("credits") || s.equals("about")) {
                 Utils.printCredits();
             } else if (s.equals("license") || s.equals("copyright")) {
@@ -159,9 +169,11 @@ public class Game {
     }
 
     /**
-     * Simulates a battle between two creatures.
+     * Simulates a battle between a Hero and a Creature.
+     * <p/>
+     * Returns the number of turns the battle had.
      */
-    private static void battle(Hero attacker, Creature defender) {
+    private static int battle(Hero attacker, Creature defender) {
         if (attacker == defender) {
             // Two different messages.
             if (RANDOM.nextBoolean()) {
@@ -169,7 +181,7 @@ public class Game {
             } else {
                 IO.writeString(Constants.SUICIDE_ATTEMPT_2);
             }
-            return;
+            return 0;
         }
         /**
          * A counter variable that register how many turns the battle had.
@@ -196,6 +208,7 @@ public class Game {
         // Add information about this battle to the Hero's battle log.
         attacker.getBattleLog().addBattle(attacker, defender, attacker == survivor, turns);
         battleCleanup(survivor, defeated);
+        return turns;
     }
 
     /**
