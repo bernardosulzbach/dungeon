@@ -149,10 +149,10 @@ public class World implements Serializable {
     }
 
     /**
-     * Rolls the world date a given amount of minutes forward.
+     * Rolls the world date a given amount of seconds forward.
      */
-    public void rollDate(int minutes) {
-        int milliseconds = 1000 * 60 * minutes;
+    public void rollDate(int seconds) {
+        int milliseconds = 1000 * seconds;
         worldDate.setTime(worldDate.getTime() + milliseconds);
     }
 
