@@ -76,4 +76,8 @@ public enum ItemPreset {
         this.nutrition = nutrition;
         this.integrityDecrementOnEat = integrityDecrementOnEat;
     }
+
+    public String getId() {
+        return this.id;
+    }
 }
