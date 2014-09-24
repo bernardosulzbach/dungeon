@@ -186,10 +186,14 @@ public class Hero extends Creature {
      */
     public void parseEquip(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
-        if (selectedItem.isWeapon()) {
-            equipWeapon(selectedItem);
+        if (selectedItem != null) {
+            if (selectedItem.isWeapon()) {
+                equipWeapon(selectedItem);
+            } else {
+                IO.writeString("You cannot equip that.");
+            }
         } else {
-            IO.writeString("You cannot equip that.");
+            IO.writeString("Item not found.");
         }
     }
 
