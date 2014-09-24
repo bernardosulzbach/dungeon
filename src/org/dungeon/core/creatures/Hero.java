@@ -67,15 +67,20 @@ public class Hero extends Creature {
     }
 
     /**
-     * Rest until the creature is completely healed.
+     * Rest until the creature is healed to 60% of its health points.
+     * Returns the number of seconds the hero rested.
      */
-    public void rest() {
-        if (isCompletelyHealed()) {
-            IO.writeString("You are already completely healed.");
+    public int rest() {
+        if (getCurHealth() >= (int) (0.6 * getMaxHealth())) {
+            IO.writeString("You are already rested.");
+            return 0;
         } else {
+            // TODO: extract this 1 hour for 10% to Constants or somewhere else.
+            double fractionHealed = 0.6 - (double) getCurHealth() / (double) getMaxHealth();
             IO.writeString("Resting...");
-            setCurHealth(getMaxHealth());
-            IO.writeString("You are completely rested.");
+            setCurHealth((int) (0.6 * getMaxHealth()));
+            IO.writeString("You feel rested.");
+            return (int) (60 * 60 * 10 * fractionHealed);
         }
     }
 
