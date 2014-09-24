@@ -25,10 +25,9 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class World implements Serializable {
@@ -38,8 +37,8 @@ public class World implements Serializable {
     private final HashMap<Point, Location> locations;
     private final CounterMap<CreatureID> spawnCounter;
 
-    private Calendar calendar;
-    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private Date worldDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
@@ -48,9 +47,11 @@ public class World implements Serializable {
     }
 
     private void initializeCalendar() {
-        calendar = new GregorianCalendar();
+        Calendar calendar = Calendar.getInstance();
+        // Set the calendar to the starting game date.
         calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
-        dateFormat.setCalendar(calendar);
+        worldDate = new Date();
+        worldDate.setTime(calendar.getTimeInMillis());
     }
 
 
@@ -107,23 +108,25 @@ public class World implements Serializable {
      * Returns a string corresponding to the current part of the day.
      */
     public String getDayPartString() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(worldDate);
         int hour = calendar.get(Calendar.HOUR);
-        if (hour == 0) {
-            return "Midnight";
-        } else if (1 <= hour && hour <= 5) {
+        if (1 <= hour && hour <= 4) {
             return "Night";
-        } else if (hour == 6) {
+        } else if (hour == 5 || hour == 6) {
             return "Dawn";
-        } else if (7 <= hour && hour <= 11) {
+        } else if (7 <= hour && hour <= 10) {
             return "Morning";
-        } else if (hour == 12) {
+        } else if (hour == 11 || hour == 12) {
             return "Noon";
-        } else if (13 <= hour && hour <= 17) {
+        } else if (13 <= hour && hour <= 16) {
             return "Afternoon";
-        } else if (hour == 18) {
+        } else if (hour == 17 || hour == 18) {
             return "Dusk";
-        } else {
+        } else if (19 <= hour || hour <= 22) {
             return "Evening";
+        } else {
+            return "Midnight";
         }
     }
 
@@ -142,7 +145,15 @@ public class World implements Serializable {
      * Prints the current date and time of the world.
      */
     public void printDateAndTime() {
-        IO.writeString(dateFormat.format(calendar.getTime()) + " (" + getDayPartString() + ") ");
+        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPartString() + ")");
+    }
+
+    /**
+     * Rolls the world date a given amount of minutes forward.
+     */
+    public void rollDate(int minutes) {
+        int milliseconds = 1000 * 60 * minutes;
+        worldDate.setTime(worldDate.getTime() + milliseconds);
     }
 
 }
