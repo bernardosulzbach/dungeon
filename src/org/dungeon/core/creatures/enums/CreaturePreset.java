@@ -11,10 +11,12 @@ public enum CreaturePreset {
     BAT(CreatureType.BEAST, CreatureID.BAT, 12, 6, 5, 4, 15),
     BEAR(CreatureType.BEAST, CreatureID.BEAR, 30, 14, 15, 10, 40),
     RAT(CreatureType.BEAST, CreatureID.RAT, 14, 8, 7, 4, 17),
+    SNAKE(CreatureType.BEAST, CreatureID.SNAKE, 23, 14, 9, 7, 25),
     SPIDER(CreatureType.BEAST, CreatureID.SPIDER, 20, 12, 8, 5, 20),
-    WOLF(CreatureType.BEAST, CreatureID.WOLF, 30, 15, 10, 7, 30),
-    
-    ZOMBIE(CreatureType.UNDEAD, CreatureID.ZOMBIE, 34, 19, 15, 7, 55);
+    WOLF(CreatureType.BEAST, CreatureID.WOLF, 30, 15, 11, 7, 30),
+
+    SKELETON(CreatureType.UNDEAD, CreatureID.SKELETON, 34, 19, 15, 7, 55),
+    ZOMBIE(CreatureType.UNDEAD, CreatureID.ZOMBIE, 29, 17, 13, 6, 45);
 
     private final CreatureType type;
     private final CreatureID id;
