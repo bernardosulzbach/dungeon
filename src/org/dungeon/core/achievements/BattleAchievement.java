@@ -33,6 +33,7 @@ public class BattleAchievement extends Achievement {
     private final int longestBattleLength;
     private final CounterMap<CreatureID> idKills;
     private final CounterMap<CreatureType> typeKills;
+    private final CounterMap<String> weaponKills;
 
     public BattleAchievement(String name,
                              String info,
@@ -40,13 +41,15 @@ public class BattleAchievement extends Achievement {
                              int battleCount,
                              int longestBattleLength,
                              CounterMap<CreatureID> idKills,
-                             CounterMap<CreatureType> typeKills) {
+                             CounterMap<CreatureType> typeKills,
+                             CounterMap<String> weaponIdKills) {
 
         super(name, info, experienceReward);
         this.battleCount = battleCount;
         this.longestBattleLength = longestBattleLength;
         this.idKills = idKills;
         this.typeKills = typeKills;
+        this.weaponKills = weaponIdKills;
     }
 
     @Override
@@ -65,6 +68,13 @@ public class BattleAchievement extends Achievement {
                     if (typeKills != null) {
                         for (CreatureType type : typeKills.keySet()) {
                             if (log.getKills(type) < typeKills.getCounter(type)) {
+                                return false;
+                            }
+                        }
+                    }
+                    if (weaponKills != null) {
+                        for (String weapon : weaponKills.keySet()) {
+                            if (log.getKillsWithWeapon(weapon) < weaponKills.getCounter(weapon)) {
                                 return false;
                             }
                         }
