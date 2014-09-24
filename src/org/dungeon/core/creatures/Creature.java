@@ -265,9 +265,8 @@ public class Creature implements Selectable, Serializable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
-        sb.append(StringUtils.centerString(String.format("%s is now level %d.", getName(), getLevel()))).append("\n");
-        String nextLevelProgress = String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel());
-        sb.append(StringUtils.centerString(String.format(nextLevelProgress))).append("\n");
+        sb.append(Constants.MARGIN).append(String.format("%s is now level %d.", getName(), getLevel())).append("\n");
+        sb.append(Constants.MARGIN).append(String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel())).append("\n");
         IO.writeString(sb.toString());
     }
 

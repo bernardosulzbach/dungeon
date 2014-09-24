@@ -27,6 +27,8 @@ class BattleLogEntry implements Serializable {
 
     protected final CreatureID attackerID;
     protected final CreatureID defenderID;
+    protected final String attackerWeapon;
+    protected final String defenderWeapon;
     protected final CreatureType attackerType;
     protected final CreatureType defenderType;
     protected final boolean attackerWon;
@@ -35,6 +37,17 @@ class BattleLogEntry implements Serializable {
     public BattleLogEntry(Creature attacker, Creature defender, boolean attackerWon, int turns) {
         this.attackerID = attacker.getId();
         this.defenderID = defender.getId();
+        if (attacker.hasWeapon()) {
+            this.attackerWeapon = attacker.getWeapon().getId();
+        } else {
+            // If the creature was not equipping a weapon, consider an empty string as the weaponID.
+            this.attackerWeapon = "";
+        }
+        if (defender.hasWeapon()) {
+            this.defenderWeapon = defender.getWeapon().getId();
+        } else {
+            this.defenderWeapon = "";
+        }
         this.attackerType = attacker.getType();
         this.defenderType = defender.getType();
         this.attackerWon = attackerWon;
