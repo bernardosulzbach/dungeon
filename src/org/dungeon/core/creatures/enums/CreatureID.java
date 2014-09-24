@@ -19,7 +19,7 @@ package org.dungeon.core.creatures.enums;
 public enum CreatureID {
 
     BAT("Bat"), BEAR("Bear"), FROG("Frog"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"),
-    SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
+    SKELETON("Skeleton"), SNAKE("Snake"), SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
 
     private final String name;
 
