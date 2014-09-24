@@ -18,7 +18,7 @@
 package org.dungeon.core.game;
 
 /**
- * Enumerated typed of the parts of the day.
+ * Enumerated types of the parts of the day.
  *
  * Created by Bernardo on 24/09/2014.
  */
