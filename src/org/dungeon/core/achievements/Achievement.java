@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -82,7 +82,7 @@ public abstract class Achievement implements Serializable {
         sb.append(Constants.MARGIN).append(getName()).append("\n");
         sb.append(Constants.MARGIN).append(getInfo()).append("\n");
         if (getExperienceReward() != 0) {
-            sb.append(Constants.MARGIN).append(String.format("+ %d Experience Points", getExperienceReward()));
+            sb.append(Constants.MARGIN).append(String.format("+ %d experience points", getExperienceReward()));
         }
         IO.writeString(sb.toString());
     }

@@ -120,5 +120,18 @@ public class BattleLog implements Serializable {
         return kills;
     }
 
+    /**
+     * Return the kill count for a certain weapon identification string.
+     */
+    public int getKillsWithWeapon(String weaponID) {
+        int kills = 0;
+        for (BattleLogEntry entry : entries) {
+            if (entry.attackerWon && entry.attackerWeapon.equals(weaponID)) {
+                kills++;
+            }
+        }
+        return kills;
+    }
+
 }
 
