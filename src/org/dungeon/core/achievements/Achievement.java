@@ -30,6 +30,8 @@ import java.io.Serializable;
  */
 public abstract class Achievement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final String name;
     private final String info;
     private final int experienceReward;

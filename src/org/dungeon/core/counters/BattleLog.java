@@ -32,6 +32,8 @@ import java.util.List;
  */
 public class BattleLog implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private int totalBattles;
     private int battlesWonByAttacker;
     private int longestBattleLength;

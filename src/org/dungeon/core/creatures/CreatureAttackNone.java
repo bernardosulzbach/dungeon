@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 class   CreatureAttackNone implements CreatureAttack, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public int getBaseAttack() {
         return 0;
