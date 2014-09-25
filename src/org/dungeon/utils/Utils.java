@@ -20,7 +20,6 @@ import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * General utility class.

@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 class CreatureAttackWeapon implements CreatureAttack, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private int baseAttack;
 
     public CreatureAttackWeapon(int attack) {

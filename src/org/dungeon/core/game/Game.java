@@ -262,9 +262,7 @@ public class Game {
         return turns;
     }
 
-    /**
-     * Add the the surviving creature the gold and experience the defeated had.
-     */
+    /** Add the the surviving creature the gold and experience the defeated had. */
     private static void battleCleanup(Creature survivor, Creature defeated) {
         if (survivor instanceof Hero) {
             survivor.addExperience(defeated.getExperienceDrop());

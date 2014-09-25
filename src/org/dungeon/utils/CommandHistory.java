@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class CommandHistory implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private List<String> userCommands;
 
     public CommandHistory() {
@@ -23,5 +25,13 @@ public class CommandHistory implements Serializable {
 
     public int getCommandCount() {
         return userCommands.size();
+    }
+    
+    public String getLastCommand() {
+        if (!userCommands.isEmpty()) {
+            return userCommands.get(userCommands.size());
+        } else {
+            return Constants.EMPTY_COMMAND_HISTORY;
+        }
     }
 }
