@@ -117,6 +117,9 @@ public final class Campaign implements Serializable {
         CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>(CreatureID.ZOMBIE, 2);
         list.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.", 50, 0, 0, stayDeadRequirements, null, null));
 
+        CounterMap<CreatureID> dissectionRequirements = new CounterMap<CreatureID>(CreatureID.FROG, 5);
+        list.add(new BattleAchievement("Dissection", "Kill 5 frogs.", 25, 0, 0, dissectionRequirements, null, null));
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific type.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +141,13 @@ public final class Campaign implements Serializable {
 
         CounterMap<String> onTheStickReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 2);
         list.add(new BattleAchievement("On the Stick!", "Kill 2 creatures with the Stick.", 20, 0, 0, null, null, onTheStickReqs));
+
+        CounterMap<String> sticksAndStonesReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 5);
+        list.add(new BattleAchievement("Sticks and Stones", "Kill 5 creatures with the Stone and 5 creatures with the Stick.", 40, 0, 0, null, null, sticksAndStonesReqs));
+        sticksAndStonesReqs.incrementCounter(ItemPreset.STONE.getId(), 5);
+
+        CounterMap<String> lumberjackReqs = new CounterMap<String>(ItemPreset.AXE.getId(), 10);
+        list.add(new BattleAchievement("Lumberjack", "Kill 10 creatures with the Axe.", 50, 0, 0, null, null, lumberjackReqs));
 
         return list;
     }
@@ -262,7 +272,7 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 3), cave);
 
         // Weapons
-        world.addItem(Item.createItem(ItemPreset.STAFF), cave);
+        world.addItem(Item.createItem(ItemPreset.STONE), cave);
         // Food
         world.addItem(Item.createItem(ItemPreset.WATERMELON), cave);
 
@@ -288,6 +298,9 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 2, 2), lake);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 3), lake);
 
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.STAFF), lake);
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Meadow
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +324,8 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), clearing2);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 2), clearing2);
 
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.AXE), clearing2);
 
 
         return world;
