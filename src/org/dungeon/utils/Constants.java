@@ -24,7 +24,7 @@ package org.dungeon.utils;
 public class Constants {
 
     public static final String TITLE = "Dungeon";
-    
+
     /** Basic version information. */
     // Note that we do not use Semantic Versioning for a matter of style.
     public static final String VERSION = "v0.0.2";
@@ -36,6 +36,7 @@ public class Constants {
     /** String used to improve output readability. */
     public static final String MARGIN = "  ";
 
+    // Loader strings.
     public static final String SAVE_NAME = "campaign";
     public static final String SAVE_EXTENSION = ".dungeon";
 
@@ -65,10 +66,26 @@ public class Constants {
 
     /** Movement strings. */
     public static final String WALK_BLOCKED = "The path is blocked.";
+
+    // Description strings.
     public static final String NO_CREATURES = "You do not see any creatures here.";
     public static final String NO_ITEMS = "You do not see any items here.";
 
+    // Selection entry default format.
+    // Conforming to this format increases the uniformity of the output of the game, making it more readable and also
+    // more enjoyable.
     public static final String SELECTION_ENTRY_FORMAT = "%-10s %-15s %-15s";
-    
+
     public static final String EMPTY_COMMAND_HISTORY = "The command history is empty.";
+
+    // Inventory strings.
+    public static final String INVENTORY_FULL = "Inventory is full.";
+    public static final String INVENTORY_FULL_ADD_CALL_WARNING = "Called addItem on a full inventory.";
+
+    public static final String WARNING = "WARNING";
+
+    public static final String ITEM_NOT_FOUND = "Item not found.";
+    public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
+    // The correct usage of printHelp.
+    public static final String HELP_USAGE = "  Usage: help (command)";
 }

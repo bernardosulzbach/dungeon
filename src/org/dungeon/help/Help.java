@@ -20,13 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
 
 public class Help {
 
-    // HashMap is not synchronized, what makes it better for non-threaded applications.
-    /**
-     * This HashMap maps all the aliases of a command to its CommandHelp object.
-     */
     private static final List<CommandHelp> COMMANDS = new ArrayList<CommandHelp>();
 
     static {
@@ -101,18 +98,12 @@ public class Help {
     }
 
     /**
-     * A complete command list.
-     */
-    // The correct usage of printHelp.
-    private static final String PRINT_HELP_TEXT_USAGE = "  Usage: help (command)";
-
-    /**
      * Print the a help string based on the specifiers.
      */
     public static void printCommandHelp(String[] words) {
         if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
-            IO.writeString(PRINT_HELP_TEXT_USAGE);
+            IO.writeString(Constants.HELP_USAGE);
         } else {
             for (CommandHelp command : COMMANDS) {
                 if (command.equalsIgnoreCase(words[1])) {
