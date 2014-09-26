@@ -117,6 +117,9 @@ public final class Campaign implements Serializable {
         CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>(CreatureID.ZOMBIE, 2);
         list.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.", 50, 0, 0, stayDeadRequirements, null, null));
 
+        CounterMap<CreatureID> dissectionRequirements = new CounterMap<CreatureID>(CreatureID.FROG, 5);
+        list.add(new BattleAchievement("Dissection", "Kill 5 frogs.", 25, 0, 0, dissectionRequirements, null, null));
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific type.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +127,9 @@ public final class Campaign implements Serializable {
         // Professional Coward requires killing 10 critters.
         CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>(CreatureType.CRITTER, 10);
         list.add(new BattleAchievement("Professional Coward", "Kill 10 critters.", 100, 0, 0, null, professionalCowardRequirements, null));
+
+        CounterMap<CreatureType> hunterRequirements = new CounterMap<CreatureType>(CreatureType.BEAST, 10);
+        list.add(new BattleAchievement("Hunter", "Kill 10 beasts.", 125, 0, 0, null, hunterRequirements, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the number of kills with a specific weapon.
@@ -138,6 +144,13 @@ public final class Campaign implements Serializable {
 
         CounterMap<String> onTheStickReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 2);
         list.add(new BattleAchievement("On the Stick!", "Kill 2 creatures with the Stick.", 20, 0, 0, null, null, onTheStickReqs));
+
+        CounterMap<String> sticksAndStonesReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 5);
+        list.add(new BattleAchievement("Sticks and Stones", "Kill 5 creatures with the Stone and 5 creatures with the Stick.", 40, 0, 0, null, null, sticksAndStonesReqs));
+        sticksAndStonesReqs.incrementCounter(ItemPreset.STONE.getId(), 5);
+
+        CounterMap<String> lumberjackReqs = new CounterMap<String>(ItemPreset.AXE.getId(), 10);
+        list.add(new BattleAchievement("Lumberjack", "Kill 10 creatures with the Axe.", 50, 0, 0, null, null, lumberjackReqs));
 
         return list;
     }
@@ -170,7 +183,7 @@ public final class Campaign implements Serializable {
         world.addItem(Item.createItem(ItemPreset.APPLE), forest2);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // A clearing.
+        // Clearing (two locations)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point clearing = new Point(0, 2);
         world.addLocation(new Location("Clearing"), clearing);
@@ -186,41 +199,38 @@ public final class Campaign implements Serializable {
         // Food
         world.addItem(Item.createItem(ItemPreset.CHERRY), clearing);
 
+        //Second clearing location.
+        Point clearing2 = new Point(1, 2);
+        world.addLocation(new Location("Clearing"), clearing2);
+
+        // Beasts
+        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), clearing2);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 1, 2), clearing2);
+        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing2);
+        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), clearing2);
+
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.MACE), clearing2);
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Road to The Fort (three locations)
+        // Road to The Fort (two locations)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point roadToTheFort = new Point(1, 2);
+        Point roadToTheFort = new Point(2, 2);
         world.addLocation(new Location("Road to The Fort"), roadToTheFort);
 
         // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), roadToTheFort);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 1, 2), roadToTheFort);
-        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), roadToTheFort);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), roadToTheFort);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.MACE), roadToTheFort);
+        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 1), roadToTheFort);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 1), roadToTheFort);
 
         //Second roadToTheFort location.
-
-        Point roadToTheFort2 = new Point(2, 2);
+        Point roadToTheFort2 = new Point(2, 3);
         world.addLocation(new Location("Road to The Fort"), roadToTheFort2);
 
         // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 1), roadToTheFort2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort2);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 1), roadToTheFort2);
-
-
-        //Third roadToTheFort location.
-
-        Point roadToTheFort3 = new Point(2, 3);
-        world.addLocation(new Location("Road to The Fort"), roadToTheFort3);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), roadToTheFort3);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), roadToTheFort3);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 2, 2), roadToTheFort3);
+        world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), roadToTheFort2);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), roadToTheFort2);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 2, 2), roadToTheFort2);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Fort
@@ -262,7 +272,7 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 3), cave);
 
         // Weapons
-        world.addItem(Item.createItem(ItemPreset.STAFF), cave);
+        world.addItem(Item.createItem(ItemPreset.STONE), cave);
         // Food
         world.addItem(Item.createItem(ItemPreset.WATERMELON), cave);
 
@@ -288,6 +298,9 @@ public final class Campaign implements Serializable {
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 2, 2), lake);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 3), lake);
 
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.STAFF), lake);
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Meadow
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,14 +316,16 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Clearing (Tent)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point clearing2 = new Point(4, 2);
-        world.addLocation(new Location("Clearing"), clearing2);
+        Point clearing3 = new Point(4, 2);
+        world.addLocation(new Location("Clearing"), clearing3);
 
         //Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 4), clearing2);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), clearing2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 2), clearing2);
+        world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 4), clearing3);
+        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), clearing3);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 2), clearing3);
 
+        // Weapons
+        world.addItem(Item.createItem(ItemPreset.AXE), clearing3);
 
 
         return world;
