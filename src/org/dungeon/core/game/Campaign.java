@@ -421,34 +421,42 @@ public final class Campaign implements Serializable {
         }
     }
 
-    public void parseHeroWalk(String[] inputWords) {
+    /**
+     * Returns the number of seconds the player walk took.
+     */
+    public int parseHeroWalk(String[] inputWords) {
         if (inputWords.length == 1) {
             Direction walkDirection = Utils.selectFromList(Arrays.asList(Direction.values()));
             if (walkDirection != null) {
-                heroWalk(walkDirection);
+                return heroWalk(walkDirection);
             }
-            return;
         } else {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
                 // (the strings are equal) or (the first characters of each string are equal)
                 if (dir.toString().equalsIgnoreCase(arg) || StringUtils.firstEqualsIgnoreCase(dir.toString(), arg)) {
-                    heroWalk(dir);
-                    return;
+                    return heroWalk(dir);
                 }
             }
         }
         IO.writeString(Constants.INVALID_INPUT);
+        // The user entered invalid input, this wastes no time.
+        return 0;
     }
 
-    public void heroWalk(Direction dir) {
+    /**
+     * Returns the number of seconds the player walk took.
+     */
+    public int heroWalk(Direction dir) {
         Point destination = new Point(heroPosition, dir);
         if (getWorld().hasLocation(destination)) {
             getWorld().moveCreature(campaignHero, heroPosition, destination);
             heroPosition = destination;
             campaignHero.setLocation(getWorld().getLocation(destination));
+            return TimeConstants.WALK_SUCCESS;
         } else {
             IO.writeString(Constants.WALK_BLOCKED);
+            return TimeConstants.WALK_BLOCKED;
         }
     }
 

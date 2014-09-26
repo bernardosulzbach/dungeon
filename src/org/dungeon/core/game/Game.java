@@ -110,8 +110,7 @@ public class Game {
             }
             // TODO: rewrite walk and loot methods so that they only consume time if the action was successful.
             else if (s.equals("walk") || s.equals("go")) {
-                campaign.parseHeroWalk(inputWords);
-                return 600;
+                return campaign.parseHeroWalk(inputWords);
             }
             //
             else if (s.equals("drop")) {
