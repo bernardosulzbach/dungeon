@@ -96,9 +96,12 @@ public final class Campaign implements Serializable {
         // Battle achievements that do not require specific kills.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        list.add(new BattleAchievement("First Blood", "Kill a creature.", 10, 1, 0, null, null, null));
-        list.add(new BattleAchievement("Killer", "Kill 10 creatures.", 100, 10, 0, null, null, null));
-        list.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 150, 0, 10, null, null, null));
+        list.add(new BattleAchievement("First Blood", "Kill a creature.",
+                10, 1, 0, null, null, null));
+        list.add(new BattleAchievement("Killer", "Kill 10 creatures.",
+                100, 10, 0, null, null, null));
+        list.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.",
+                150, 0, 10, null, null, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific creature ID.
@@ -106,19 +109,24 @@ public final class Campaign implements Serializable {
 
         // Bane requires six battles against bats.
         CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>(CreatureID.BAT, 6);
-        list.add(new BattleAchievement("Bane", "Kill 6 bats.", 50, 0, 0, baneRequirements, null, null));
+        list.add(new BattleAchievement("Bane", "Kill 6 bats.",
+                50, 0, 0, baneRequirements, null, null));
         // Cat requires four battles against rats.
         CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>(CreatureID.RAT, 4);
-        list.add(new BattleAchievement("Cat", "Kill 4 rats.", 40, 0, 0, catRequirements, null, null));
+        list.add(new BattleAchievement("Cat", "Kill 4 rats.",
+                40, 0, 0, catRequirements, null, null));
         // Evil Bastard requires one battle against a rabbit.
         CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>(CreatureID.RABBIT, 1);
-        list.add(new BattleAchievement("Evil Bastard", "Kill an innocent rabbit.", 5, 0, 0, evilBastardRequirements, null, null));
+        list.add(new BattleAchievement("Evil Bastard", "Kill an innocent rabbit.",
+                5, 0, 0, evilBastardRequirements, null, null));
         // Stay Dead requires two battles against a zombie.
         CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>(CreatureID.ZOMBIE, 2);
-        list.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.", 50, 0, 0, stayDeadRequirements, null, null));
+        list.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.",
+                50, 0, 0, stayDeadRequirements, null, null));
 
         CounterMap<CreatureID> dissectionRequirements = new CounterMap<CreatureID>(CreatureID.FROG, 5);
-        list.add(new BattleAchievement("Dissection", "Kill 5 frogs.", 25, 0, 0, dissectionRequirements, null, null));
+        list.add(new BattleAchievement("Dissection", "Kill 5 frogs.",
+                25, 0, 0, dissectionRequirements, null, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific type.
@@ -126,10 +134,12 @@ public final class Campaign implements Serializable {
 
         // Professional Coward requires killing 10 critters.
         CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>(CreatureType.CRITTER, 10);
-        list.add(new BattleAchievement("Professional Coward", "Kill 10 critters.", 100, 0, 0, null, professionalCowardRequirements, null));
+        list.add(new BattleAchievement("Professional Coward", "Kill 10 critters.",
+                100, 0, 0, null, professionalCowardRequirements, null));
 
         CounterMap<CreatureType> hunterRequirements = new CounterMap<CreatureType>(CreatureType.BEAST, 10);
-        list.add(new BattleAchievement("Hunter", "Kill 10 beasts.", 125, 0, 0, null, hunterRequirements, null));
+        list.add(new BattleAchievement("Hunter", "Kill 10 beasts.",
+                125, 0, 0, null, hunterRequirements, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the number of kills with a specific weapon.
@@ -137,20 +147,25 @@ public final class Campaign implements Serializable {
 
         // An empty string is used to to register unarmed kills.
         CounterMap<String> fiveFingerDeathPunchReqs = new CounterMap<String>("", 1);
-        list.add(new BattleAchievement("Five Finger Death Punch", "Kill a creature unarmed.", 10, 0, 0, null, null, fiveFingerDeathPunchReqs));
+        list.add(new BattleAchievement("Five Finger Death Punch", "Kill a creature unarmed.",
+                10, 0, 0, null, null, fiveFingerDeathPunchReqs));
 
         CounterMap<String> boxer = new CounterMap<String>("", 10);
-        list.add(new BattleAchievement("Boxer", "Kill 10 creatures unarmed.", 100, 0, 0, null, null, boxer));
+        list.add(new BattleAchievement("Boxer", "Kill 10 creatures unarmed.",
+                100, 0, 0, null, null, boxer));
 
         CounterMap<String> onTheStickReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 2);
-        list.add(new BattleAchievement("On the Stick!", "Kill 2 creatures with the Stick.", 20, 0, 0, null, null, onTheStickReqs));
+        list.add(new BattleAchievement("On the Stick!", "Kill 2 creatures with the Stick.",
+                20, 0, 0, null, null, onTheStickReqs));
 
         CounterMap<String> sticksAndStonesReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 5);
-        list.add(new BattleAchievement("Sticks and Stones", "Kill 5 creatures with the Stone and 5 creatures with the Stick.", 40, 0, 0, null, null, sticksAndStonesReqs));
+        list.add(new BattleAchievement("Sticks and Stones", "Kill 5 creatures with the Stone and 5 with the Stick.",
+                40, 0, 0, null, null, sticksAndStonesReqs));
         sticksAndStonesReqs.incrementCounter(ItemPreset.STONE.getId(), 5);
 
         CounterMap<String> lumberjackReqs = new CounterMap<String>(ItemPreset.AXE.getId(), 10);
-        list.add(new BattleAchievement("Lumberjack", "Kill 10 creatures with the Axe.", 50, 0, 0, null, null, lumberjackReqs));
+        list.add(new BattleAchievement("Lumberjack", "Kill 10 creatures with the Axe.",
+                50, 0, 0, null, null, lumberjackReqs));
 
         return list;
     }
@@ -252,7 +267,7 @@ public final class Campaign implements Serializable {
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 2, 2), caveEntrance);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), caveEntrance);
-        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), caveEntrance  );
+        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), caveEntrance);
         world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 1), caveEntrance);
 
         // Weapons
@@ -397,7 +412,7 @@ public final class Campaign implements Serializable {
      */
     public void printUnlockedAchievements() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Progress: ").append(getUnlockedAchievementsCount()).append('/').append(getTotalAchievementsCount());
+        builder.append(String.format("Progress: %s/%s", getUnlockedAchievementsCount(), getTotalAchievementsCount()));
         for (Achievement a : achievements) {
             if (a.isUnlocked()) {
                 builder.append('\n').append(a.getName());
@@ -446,6 +461,8 @@ public final class Campaign implements Serializable {
     }
 
     /**
+     * Attempts to move the hero character in a given direction.
+     * <p/>
      * Returns the number of seconds the player walk took.
      */
     public int heroWalk(Direction dir) {
@@ -470,11 +487,11 @@ public final class Campaign implements Serializable {
     }
 
     /**
-     * Returns some basic information about the hero.
+     * Returns the hero's name.
+     *
      * Used by the 'whoami' command.
      */
     public String getHeroInfo() {
-        // TODO: consider returning something a bit more substantial.
         return getHero().getName();
     }
 }
