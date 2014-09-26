@@ -24,7 +24,8 @@ package org.dungeon.core.game;
  */
 public enum PartOfDay {
 
-    NIGHT("Night");
+    NIGHT("Night"),
+    NOON("Noon");
 
     private String stringRepresentation;
 
