@@ -30,7 +30,7 @@ public class CounterMap<K> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // The encapsulated HashMap
-    private HashMap<K, Integer> map;
+    private final HashMap<K, Integer> map;
 
     // Constructors
     public CounterMap() {

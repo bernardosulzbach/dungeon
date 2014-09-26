@@ -31,25 +31,25 @@ public enum ItemPreset {
     WATERMELON("WATERMELON", "Food", "Watermelon", 40, 40, false, true, 8, 0.6, 8, true, 10, 10);
 
     // Identification fields.
-    protected String id;
-    protected String type;
-    protected String name;
+    protected final String id;
+    protected final String type;
+    protected final String name;
 
     // Durability fields.
-    protected int maxIntegrity;
-    protected int curIntegrity;
-    protected boolean repairable;
+    protected final int maxIntegrity;
+    protected final int curIntegrity;
+    protected final boolean repairable;
 
     // Weapon fields.
-    protected boolean weapon;
-    protected int damage;
-    protected double hitRate;
-    protected int integrityDecrementOnHit;
+    protected final boolean weapon;
+    protected final int damage;
+    protected final double hitRate;
+    protected final int integrityDecrementOnHit;
 
     // Food fields.
-    protected boolean food;
-    protected int nutrition;
-    protected int integrityDecrementOnEat;
+    protected final boolean food;
+    protected final int nutrition;
+    protected final int integrityDecrementOnEat;
 
     ItemPreset(String id,
                String type,

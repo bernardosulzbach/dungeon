@@ -56,7 +56,8 @@ public class Game {
             if (campaign.getHero().isDead()) {
                 IO.writeString("You died.");
                 // After the player's death, just prompt to load the default save file.
-                Loader.loadGameRoutine();
+                campaign = Loader.loadGameRoutine();
+                continue;
             }
             // Advance the campaign's world date.
             campaign.getWorld().rollDate(turnLength);

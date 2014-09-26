@@ -13,7 +13,7 @@ public class CommandHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<String> userCommands;
+    private final List<String> userCommands;
 
     public CommandHistory() {
         this.userCommands = new ArrayList<String>();

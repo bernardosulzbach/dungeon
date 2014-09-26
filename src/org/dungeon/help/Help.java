@@ -33,7 +33,7 @@ public class Help {
         COMMANDS.add(new CommandHelp(
                 "achievements",
                 null,
-                "Shows unlocked achievments.",
+                "Shows unlocked achievements.",
                 "achievements"));
 
         COMMANDS.add(new CommandHelp(

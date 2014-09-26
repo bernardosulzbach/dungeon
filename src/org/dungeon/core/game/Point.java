@@ -38,10 +38,6 @@ public class Point implements Serializable {
         this.y = y;
     }
 
-    /**
-     * @param originalPoint
-     * @param shift
-     */
     public Point(Point originalPoint, Direction shift) {
         this.x = originalPoint.getX();
         this.y = originalPoint.getY();

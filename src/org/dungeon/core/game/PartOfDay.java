@@ -33,7 +33,7 @@ public enum PartOfDay {
     NIGHT("Night"),
     NOON("Noon");
 
-    private String stringRepresentation;
+    private final String stringRepresentation;
 
     PartOfDay(String stringRepresentation) {
         this.stringRepresentation = stringRepresentation;

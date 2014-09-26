@@ -38,7 +38,7 @@ public class BattleLog implements Serializable {
     private int battlesWonByAttacker;
     private int longestBattleLength;
 
-    private List<BattleLogEntry> entries;
+    private final List<BattleLogEntry> entries;
 
     public BattleLog() {
         entries = new ArrayList<BattleLogEntry>();

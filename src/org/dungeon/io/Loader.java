@@ -47,7 +47,7 @@ public class Loader {
         // Could not load a saved campaign.
         // Instantiate a new demo campaign and save it to disk.
         Campaign demoCampaign = new Campaign();
-        saveCampaign(demoCampaign, Constants.SAVE_NAME);
+        saveCampaign(demoCampaign, Constants.SAVE_NAME, true);
         // Return the new campaign.
         return demoCampaign;
     }
@@ -57,7 +57,7 @@ public class Loader {
      */
     public static void saveGameRoutine(Campaign campaign) {
         if (confirmOperation(Constants.SAVE_CONFIRM)) {
-            saveCampaign(campaign, Constants.SAVE_NAME);
+            saveCampaign(campaign, Constants.SAVE_NAME, false);
         }
     }
 
@@ -69,7 +69,7 @@ public class Loader {
             saveGameRoutine(campaign);
         } else {
             if (confirmOperation(Constants.SAVE_CONFIRM)) {
-                saveCampaign(campaign, inputWords[1]);
+                saveCampaign(campaign, inputWords[1], false);
             }
         }
     }
@@ -116,7 +116,7 @@ public class Loader {
     /**
      * Saves a Campaign object to a file.
      */
-    private static void saveCampaign(Campaign campaign, String saveName) {
+    private static void saveCampaign(Campaign campaign, String saveName, boolean quiet) {
         FileOutputStream fileOutStream;
         ObjectOutputStream objectOutStream;
         try {
@@ -125,10 +125,14 @@ public class Loader {
             objectOutStream.writeObject(campaign);
             objectOutStream.close();
             campaign.setSaved(true);
-            IO.writeString(Constants.SAVE_SUCCESS);
+            if (!quiet) {
+                IO.writeString(Constants.SAVE_SUCCESS);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
-            IO.writeString(Constants.SAVE_ERROR);
+            if (!quiet) {
+                IO.writeString(Constants.SAVE_ERROR);
+            }
         }
     }
 

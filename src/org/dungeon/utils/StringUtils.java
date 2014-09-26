@@ -105,12 +105,10 @@ public class StringUtils {
         return Character.toLowerCase(s1.charAt(0)) == Character.toLowerCase(s2.charAt(0));
     }
 
-    // TODO: comment me
     /**
-     *
+     * Split a string of text into an array of words.
      */
     public static String[] split(String string) {
-        String[] returnArray = string.split("\\s+");
-        return returnArray;
+        return string.split("\\s+");
     }
 }

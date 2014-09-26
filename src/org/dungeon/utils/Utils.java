@@ -77,7 +77,7 @@ public class Utils {
             index++;
         }
         IO.writeString(builder.toString());
-        int choice = -1;
+        int choice;
         while (true) {
             try {
                 choice = Integer.parseInt(IO.readString());
