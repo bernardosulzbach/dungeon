@@ -86,8 +86,4 @@ public abstract class Achievement implements Serializable {
         }
         IO.writeString(sb.toString());
     }
-
-    public String toOneLineString() {
-        return name + " : " + info;
-    }
 }
