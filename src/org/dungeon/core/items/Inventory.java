@@ -33,6 +33,8 @@ import java.util.List;
  */
 public class Inventory implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private int itemLimit;
 
     private final List<Item> itemList;

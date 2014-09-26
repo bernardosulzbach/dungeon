@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 public class Item implements Selectable, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     // Identification fields.
     private String id;
     private String type;
