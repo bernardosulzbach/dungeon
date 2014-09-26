@@ -105,6 +105,9 @@ public class Game {
             else if (s.equals("equip")) {
                 campaign.getHero().parseEquip(inputWords);
             }
+            else if (s.equals("unequip")) {
+                campaign.getHero().unequipWeapon();
+            }
             //
             else if (s.equals("eat") || s.equals("devour")) {
                 campaign.getHero().eatItem(inputWords);

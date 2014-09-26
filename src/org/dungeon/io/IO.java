@@ -16,7 +16,7 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.utils.StringUtils;
+import org.dungeon.utils.Constants;
 
 import java.util.Scanner;
 
@@ -35,11 +35,20 @@ public class IO {
     /**
      * Outputs a string to the console, stripping unnecessary newlines at the end.
      */
+    // TODO: create an enumerated type for write style.
+    //       All the margins and errors indicators should be added accordingly to the write style.
+    //       This will make many parts of the code clearer and more readable.
+    //   WriteStyle.MARGIN -> add a Constants.MARGIN before all non-empty lines.
+    //   WriteStyle.WARNING -> add Constants.WARNING before the line (warnings should not have multiple lines).
     public static void writeString(String string) {
         while (string.endsWith("\n")) {
             string = string.substring(0, string.length() - 1);
         }
         System.out.println(string);
+    }
+
+    public static void writeWarningString(String warning) {
+        System.err.println(Constants.WARNING + ": " + warning);
     }
 
     /**
@@ -52,13 +61,6 @@ public class IO {
             line = SCANNER.nextLine().trim();
         } while (line.equals(""));
         return line;
-    }
-
-    /**
-     * Read a line of input from the user and returns an array with the words in that line.
-     */
-    public static String[] readWords() {
-        return StringUtils.split(readString());
     }
 
 }

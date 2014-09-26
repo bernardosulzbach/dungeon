@@ -15,7 +15,7 @@ public enum CreaturePreset {
     SPIDER(CreatureType.BEAST, CreatureID.SPIDER, 20, 12, 8, 5, 20),
     WOLF(CreatureType.BEAST, CreatureID.WOLF, 30, 15, 11, 7, 30),
 
-    SKELETON(CreatureType.UNDEAD, CreatureID.SKELETON, 34, 19, 15, 7, 55),
+    SKELETON(CreatureType.UNDEAD, CreatureID.SKELETON, 30, 18, 15, 7, 55),
     ZOMBIE(CreatureType.UNDEAD, CreatureID.ZOMBIE, 29, 17, 13, 6, 45);
 
     private final CreatureType type;

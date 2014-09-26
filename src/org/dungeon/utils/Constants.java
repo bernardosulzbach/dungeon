@@ -56,7 +56,7 @@ public class Constants {
     public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
 
-    public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, WIDTH, '-') + '\n' + LINE_2;
+    public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, '-') + '\n' + LINE_2;
 
     public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
     public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
@@ -88,4 +88,5 @@ public class Constants {
     public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
     // The correct usage of printHelp.
     public static final String HELP_USAGE = "  Usage: help (command)";
+    public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
 }

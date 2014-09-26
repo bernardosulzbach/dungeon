@@ -282,6 +282,7 @@ public final class Campaign implements Serializable {
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 3, 2), cave);
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), cave);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 3, 3), cave);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), cave);
         world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 3), cave);
         world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 3), cave);
@@ -327,7 +328,6 @@ public final class Campaign implements Serializable {
         world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 3), meadow);
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), meadow);
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Clearing (Tent)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +341,6 @@ public final class Campaign implements Serializable {
 
         // Weapons
         world.addItem(Item.createItem(ItemPreset.AXE), clearing3);
-
 
         return world;
     }
@@ -412,7 +411,7 @@ public final class Campaign implements Serializable {
      */
     public void printUnlockedAchievements() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("Progress: %s/%s", getUnlockedAchievementsCount(), getTotalAchievementsCount()));
+        builder.append(String.format("Progress: %d/%d", getUnlockedAchievementsCount(), getTotalAchievementsCount()));
         for (Achievement a : achievements) {
             if (a.isUnlocked()) {
                 builder.append('\n').append(a.getName());

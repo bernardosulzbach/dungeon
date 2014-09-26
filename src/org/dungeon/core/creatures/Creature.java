@@ -296,31 +296,6 @@ public class Creature implements Selectable, Serializable {
 
     //
     //
-    // Weapon methods.
-    //
-    //
-    public void equipWeapon(Item weapon) {
-        if (hasWeapon()) {
-            if (getWeapon() == weapon) {
-                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
-                return;
-            } else {
-                unequipWeapon();
-            }
-        }
-        this.setWeapon(weapon);
-        IO.writeString(getName() + " equipped " + weapon.getName() + ".");
-    }
-
-    public void unequipWeapon() {
-        if (hasWeapon()) {
-            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
-            this.weapon = null;
-        }
-    }
-
-    //
-    //
     // Combat methods.
     //
     //

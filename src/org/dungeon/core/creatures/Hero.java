@@ -69,7 +69,7 @@ public class Hero extends Creature {
 
     /**
      * Rest until the creature is healed to 60% of its health points.
-     *
+     * <p/>
      * Returns the number of seconds the hero rested.
      */
     public int rest() {
@@ -77,7 +77,6 @@ public class Hero extends Creature {
             IO.writeString("You are already rested.");
             return 0;
         } else {
-            // TODO: extract this 1 hour for 10% to Constants or somewhere else.
             double fractionHealed = 0.6 - (double) getCurHealth() / (double) getMaxHealth();
             IO.writeString("Resting...");
             setCurHealth((int) (0.6 * getMaxHealth()));
@@ -141,7 +140,11 @@ public class Hero extends Creature {
         if (inputWords.length == 1) {
             return Utils.selectFromList(getInventory().getItems());
         } else {
-            return getInventory().findItem(inputWords[1]);
+            Item queryResult = getInventory().findItem(inputWords[1]);
+            if (queryResult == null) {
+                IO.writeString(Constants.ITEM_NOT_FOUND_IN_INVENTORY);
+            }
+            return queryResult;
         }
     }
 
@@ -175,10 +178,21 @@ public class Hero extends Creature {
     public void pickItem(String[] inputWords) {
         Item selectedItem = selectLocationItem(inputWords);
         if (selectedItem != null) {
-            // addItem returns false if the item was not added to the inventory.
-            if (getInventory().addItem(selectedItem)) {
+            //
+            // Bernardo Sulzbach (mafagafogigante): It is not necessary to check for a full inventory before trying to
+            // add an item, but attempting to add an item to a full Inventory will display a warning.
+            //
+            // This warning exists because the game should not print a inventory full message to the player when trying
+            // to add something to the full inventory of an NPC.
+            //
+            if (getInventory().isFull()) {
+                IO.writeString(Constants.INVENTORY_FULL);
+            } else {
+                getInventory().addItem(selectedItem);
                 getLocation().removeItem(selectedItem);
             }
+        } else {
+            IO.writeString(Constants.ITEM_NOT_FOUND);
         }
     }
 
@@ -200,7 +214,7 @@ public class Hero extends Creature {
                 IO.writeString("You cannot equip that.");
             }
         } else {
-            IO.writeString("Item not found.");
+            IO.writeString(Constants.ITEM_NOT_FOUND);
         }
     }
 
@@ -216,8 +230,6 @@ public class Hero extends Creature {
             getInventory().removeItem(selectedItem);
             getLocation().addItem(selectedItem);
             IO.writeString("Dropped " + selectedItem.getName() + ".");
-        } else {
-            IO.writeString("Item not found in inventory.");
         }
     }
 
@@ -235,6 +247,7 @@ public class Hero extends Creature {
                 addHealth(selectedItem.getNutrition());
                 selectedItem.decrementIntegrityByEat();
                 // TODO: re-implement eating experience here.
+                // TODO: make not-enough-for-a-full-bite food heal less than a enough-for-a-full-bite food would.
                 if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
                     IO.writeString("You ate " + selectedItem.getName() + ".");
                     getInventory().removeItem(selectedItem);
@@ -301,7 +314,7 @@ public class Hero extends Creature {
 
     private String getWeaponStatusString() {
         if (getWeapon() == null) {
-            return "You are not equipping a weapon.";
+            return Constants.NOT_EQUIPPING_A_WEAPON;
         } else {
             return getWeapon().getStatusString();
         }
@@ -328,5 +341,30 @@ public class Hero extends Creature {
         }
     }
 
+    //
+    //
+    // Weapon methods.
+    //
+    //
+    public void equipWeapon(Item weapon) {
+        if (hasWeapon()) {
+            if (getWeapon() == weapon) {
+                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
+                return;
+            } else {
+                unequipWeapon();
+            }
+        }
+        this.setWeapon(weapon);
+        IO.writeString(getName() + " equipped " + weapon.getName() + ".");
+    }
 
+    public void unequipWeapon() {
+        if (hasWeapon()) {
+            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
+            setWeapon(null);
+        } else {
+            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
+        }
+    }
 }

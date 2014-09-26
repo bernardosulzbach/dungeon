@@ -25,16 +25,6 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @return a centered string.
-     */
-    public static String centerString(String string) {
-        return centerString(string, Constants.WIDTH, ' ');
-    }
-
-    /**
-     * Centers a string.
-     *
-     * @param string the string to be centered.
      * @param fill   the filling character.
      * @return a centered string.
      */

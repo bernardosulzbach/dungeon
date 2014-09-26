@@ -51,6 +51,10 @@ public class Inventory implements Serializable {
         return itemList;
     }
 
+    public boolean isFull() {
+        return this.itemList.size() == this.itemLimit;
+    }
+
     public void printItems() {
         if (itemList.size() == 0) {
             IO.writeString("Inventory is empty.");
@@ -81,21 +85,21 @@ public class Inventory implements Serializable {
 
     /**
      * Attempts to add an item object to the inventory.
-     *
-     * @return true if the item was successfully added to the inventory; false otherwise.
+     * Prints a warning if the inventory was full.
      */
-    public boolean addItem(Item newItem) {
+    public void addItem(Item newItem) {
         // Check that the new item is not already in the inventory.
         if (hasItem(newItem)) {
             throw new IllegalArgumentException("newItem is already in the inventory.");
         }
-        if (itemLimit == itemList.size()) {
-            printInventoryFull();
-            return false;
+        if (isFull()) {
+            // Print the default inventory full message.
+            IO.writeString(Constants.INVENTORY_FULL);
+            // Print the warning about calling addItem on a full Inventory object.
+            IO.writeWarningString(Constants.INVENTORY_FULL_ADD_CALL_WARNING);
         } else {
             itemList.add(newItem);
             IO.writeString("Added " + newItem.getName() + " to the inventory.");
-            return true;
         }
     }
 

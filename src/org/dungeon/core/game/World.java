@@ -34,15 +34,18 @@ public class World implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final HashMap<Point, Location> locations;
     private final CounterMap<CreatureID> spawnCounter;
 
-    private Date worldDate;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private final HashMap<Point, Location> locations;
+
+    private final Date worldDate;
+    
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
+        worldDate = new Date();
         initializeCalendar();
     }
 
@@ -50,7 +53,6 @@ public class World implements Serializable {
         Calendar calendar = Calendar.getInstance();
         // Set the calendar to the starting game date.
         calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
-        worldDate = new Date();
         worldDate.setTime(calendar.getTimeInMillis());
     }
 
@@ -105,28 +107,29 @@ public class World implements Serializable {
     }
 
     /**
-     * Returns a string corresponding to the current part of the day.
+     * Returns the PartOfDay constant that represents the current part of the day.
      */
-    public String getDayPartString() {
+    // TODO: consider moving this method to PartOfDay
+    public PartOfDay getDayPart() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(worldDate);
         int hour = calendar.get(Calendar.HOUR);
         if (1 <= hour && hour <= 4) {
-            return "Night";
+            return PartOfDay.NIGHT;
         } else if (hour == 5 || hour == 6) {
-            return "Dawn";
+            return PartOfDay.DAWN;
         } else if (7 <= hour && hour <= 10) {
-            return "Morning";
+            return PartOfDay.MORNING;
         } else if (hour == 11 || hour == 12) {
-            return "Noon";
+            return PartOfDay.NOON;
         } else if (13 <= hour && hour <= 16) {
-            return "Afternoon";
+            return PartOfDay.AFTERNOON;
         } else if (hour == 17 || hour == 18) {
-            return "Dusk";
+            return PartOfDay.DUSK;
         } else if (19 <= hour || hour <= 22) {
-            return "Evening";
+            return PartOfDay.EVENING;
         } else {
-            return "Midnight";
+            return PartOfDay.MIDNIGHT;
         }
     }
 
@@ -145,7 +148,7 @@ public class World implements Serializable {
      * Prints the current date and time of the world.
      */
     public void printDateAndTime() {
-        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPartString() + ")");
+        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPart() + ")");
     }
 
     /**

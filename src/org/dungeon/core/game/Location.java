@@ -118,7 +118,6 @@ public class Location implements Serializable {
                 return item;
             }
         }
-        IO.writeString("Item not found.");
         return null;
     }
 
