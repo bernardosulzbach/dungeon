@@ -33,22 +33,43 @@ public class IO {
     public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
-     * Outputs a string to the console, stripping unnecessary newlines at the end.
+     * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
      */
-    // TODO: create an enumerated type for write style.
-    //       All the margins and errors indicators should be added accordingly to the write style.
-    //       This will make many parts of the code clearer and more readable.
-    //   WriteStyle.MARGIN -> add a Constants.MARGIN before all non-empty lines.
-    //   WriteStyle.WARNING -> add Constants.WARNING before the line (warnings should not have multiple lines).
-    public static void writeString(String string) {
-        while (string.endsWith("\n")) {
+    public static void writeString(String string, WriteStyle style) {
+        switch (style) {
+            case COMMAND:
+                string = insertBeforeLines(string, Constants.MARGIN + Constants.MARGIN);
+                string = string.replaceAll("\n", "\n\n");
+                break;
+            case MARGIN:
+                string = insertBeforeLines(string, Constants.MARGIN);
+                break;
+            case WARNING:
+                System.err.println(Constants.WARNING + ": " + string);
+                return;
+        }
+        // Remove extra newlines at the end.
+        while (string.charAt(string.length() - 1) == '\n' || Character.isSpaceChar(string.charAt(string.length() - 1))) {
             string = string.substring(0, string.length() - 1);
         }
         System.out.println(string);
     }
 
-    public static void writeWarningString(String warning) {
-        System.err.println(Constants.WARNING + ": " + warning);
+    public static String insertBeforeLines(String text, String word) {
+        if (text.isEmpty()) {
+            throw new IllegalArgumentException("text should be a non-empty String.");
+        }
+        if (word.isEmpty()) {
+            throw new IllegalArgumentException("word should be a non-empty String.");
+        }
+        StringBuilder builder = new StringBuilder(text);
+        builder.insert(0, word);
+        int index = builder.indexOf("\n");
+        while (index != -1) {
+            builder.insert(index + 1, word);
+            index = builder.indexOf("\n", index + word.length() + 1);
+        }
+        return builder.toString();
     }
 
     /**

@@ -18,6 +18,7 @@ package org.dungeon.utils;
 
 import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class Utils {
      * Prints the startup heading.
      */
     public static void printHeading() {
-        IO.writeString(Constants.HEADING);
+        IO.writeString(Constants.HEADING, WriteStyle.MARGIN);
     }
 
     /**
      * Prints the game's name followed by the version and its codename.
      */
     public static void printVersion() {
-        IO.writeString(Constants.TITLE + " " + Constants.VERSION + " - " + Constants.CODENAME);
+        IO.writeString(Constants.TITLE + " " + Constants.VERSION + " - " + Constants.CODENAME, WriteStyle.MARGIN);
     }
 
     /**
@@ -62,7 +63,7 @@ public class Utils {
         int size = list.size();
         String indexFormat;
         if (list.isEmpty()) {
-            IO.writeString("No options available.");
+            IO.writeString("No options available.", WriteStyle.MARGIN);
             return null;
         } else if (size < 10) {
             indexFormat = "%1d";
@@ -76,17 +77,17 @@ public class Utils {
             builder.append(String.format(indexFormat, index)).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
             index++;
         }
-        IO.writeString(builder.toString());
+        IO.writeString(builder.toString(), WriteStyle.MARGIN);
         int choice;
         while (true) {
             try {
                 choice = Integer.parseInt(IO.readString());
             } catch (NumberFormatException exception) {
-                IO.writeString(Constants.INVALID_INPUT);
+                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
                 continue;
             }
             if (choice < 0 || choice > list.size()) {
-                IO.writeString(Constants.INVALID_INPUT);
+                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
             } else {
                 break;
             }
@@ -101,11 +102,11 @@ public class Utils {
      * Prints a message reporting the usage of an invalid command.
      */
     public static void printInvalidCommandMessage(String command) {
-        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
+        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.", WriteStyle.MARGIN);
     }
 
     public static void printCredits() {
-        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n");
+        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n", WriteStyle.MARGIN);
     }
 
 }

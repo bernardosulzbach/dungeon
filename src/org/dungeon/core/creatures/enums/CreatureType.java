@@ -17,7 +17,6 @@
 package org.dungeon.core.creatures.enums;
 
 /**
- *
  * @author Bernardo Sulzbach
  */
 public enum CreatureType {

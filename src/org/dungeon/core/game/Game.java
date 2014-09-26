@@ -22,6 +22,7 @@ import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.*;
 
 import java.util.Random;
@@ -54,7 +55,7 @@ public class Game {
                 break;
             }
             if (campaign.getHero().isDead()) {
-                IO.writeString("You died.");
+                IO.writeString("You died.", WriteStyle.MARGIN);
                 // After the player's death, just prompt to load the default save file.
                 campaign = Loader.loadGameRoutine();
                 continue;
@@ -70,7 +71,7 @@ public class Game {
 
     /**
      * Let the player play a turn. Many actions are not considered a turn (e.g.: look).
-     *
+     * <p/>
      * Returns how many seconds the player's turn took. Returns -1 if the player issued a quit command.
      */
     private static int getTurn(Campaign campaign) {
@@ -104,16 +105,14 @@ public class Game {
             //
             else if (s.equals("equip")) {
                 campaign.getHero().parseEquip(inputWords);
-            }
-            else if (s.equals("unequip")) {
+            } else if (s.equals("unequip")) {
                 campaign.getHero().unequipWeapon();
             }
             //
             else if (s.equals("eat") || s.equals("devour")) {
                 campaign.getHero().eatItem(inputWords);
                 return 120;
-            }
-            else if (s.equals("walk") || s.equals("go")) {
+            } else if (s.equals("walk") || s.equals("go")) {
                 return campaign.parseHeroWalk(inputWords);
             }
             //
@@ -154,11 +153,11 @@ public class Game {
             }
             //
             else if (s.equals("whoami")) {
-                IO.writeString(campaign.getHeroInfo());
+                IO.writeString(campaign.getHeroInfo(), WriteStyle.MARGIN);
             }
             //
             else if (s.equals("whereami")) {
-                IO.writeString(campaign.getHeroPosition().toString());
+                IO.writeString(campaign.getHeroPosition().toString(), WriteStyle.MARGIN);
             }
             //
             else if (s.equals("achievements")) {
@@ -233,9 +232,9 @@ public class Game {
         if (attacker == defender) {
             // Two different messages.
             if (RANDOM.nextBoolean()) {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_1);
+                IO.writeString(Constants.SUICIDE_ATTEMPT_1, WriteStyle.MARGIN);
             } else {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_2);
+                IO.writeString(Constants.SUICIDE_ATTEMPT_2, WriteStyle.MARGIN);
             }
             return 0;
         }
@@ -258,14 +257,16 @@ public class Game {
             survivor = defender;
             defeated = attacker;
         }
-        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
+        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", WriteStyle.MARGIN);
         // Add information about this battle to the Hero's battle log.
         attacker.getBattleLog().addBattle(attacker, defender, attacker == survivor, turns);
         battleCleanup(survivor, defeated);
         return turns;
     }
 
-    /** Add the the surviving creature the gold and experience the defeated had. */
+    /**
+     * Add the the surviving creature the gold and experience the defeated had.
+     */
     private static void battleCleanup(Creature survivor, Creature defeated) {
         if (survivor instanceof Hero) {
             survivor.addExperience(defeated.getExperienceDrop());

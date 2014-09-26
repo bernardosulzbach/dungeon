@@ -19,6 +19,7 @@ package org.dungeon.core.game;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class Location implements Serializable {
                 return creature;
             }
         }
-        IO.writeString("Creature not found.");
+        IO.writeString("Creature not found.", WriteStyle.MARGIN);
         return null;
     }
 

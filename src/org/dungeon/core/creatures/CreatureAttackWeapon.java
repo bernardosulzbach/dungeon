@@ -19,6 +19,7 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 
 import java.io.Serializable;
 
@@ -48,18 +49,18 @@ class CreatureAttackWeapon implements CreatureAttack, Serializable {
         if (weapon != null) {
             if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage, target.getName()));
+                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage, target.getName()), WriteStyle.MARGIN);
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
                     attacker.getInventory().removeItem(weapon);
                 }
             } else {
-                IO.writeString(attacker.getName() + " misses.");
+                IO.writeString(attacker.getName() + " misses.", WriteStyle.MARGIN);
                 return;
             }
         } else {
             hitDamage = getBaseAttack();
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage, target.getName()));
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage, target.getName()), WriteStyle.MARGIN);
         }
         target.takeDamage(hitDamage);
         // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear

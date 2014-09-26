@@ -227,12 +227,12 @@ public class Item implements Selectable, Serializable {
         if (isBroken()) {
             nameString += " (Broken)";
         }
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Name", nameString));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Damage", getDamage()));
+        builder.append(String.format("%-20s%20s\n", "Name", nameString));
+        builder.append(String.format("%-20s%20s\n", "Damage", getDamage()));
         // Uses three lines to build the integrity line to improve code readability.
         String integrityFraction = String.format("%d/%d", getCurIntegrity(), getMaxIntegrity());
         String integrityString = String.format("%-20s%20s\n", "Integrity", integrityFraction);
-        builder.append(Constants.MARGIN).append(integrityString);
+        builder.append(integrityString);
         return builder.toString();
     }
 }

@@ -2,7 +2,7 @@ package org.dungeon.core.game;
 
 /**
  * The constants that determine the time flow of the game.
- *
+ * <p/>
  * Created by Bernardo on 25/09/2014.
  */
 public class TimeConstants {

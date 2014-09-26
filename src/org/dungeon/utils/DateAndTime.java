@@ -16,11 +16,12 @@
  */
 package org.dungeon.utils;
 
+import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.dungeon.io.IO;
 
 public class DateAndTime {
 
@@ -32,14 +33,14 @@ public class DateAndTime {
      * Print the current time according to the final SimpleDateFormat TIME.
      */
     public static void printTime() {
-        IO.writeString(TIME.format(new Date()));
+        IO.writeString(TIME.format(new Date()), WriteStyle.MARGIN);
     }
 
     /**
      * Print the current date according to the final SimpleDateFormat DATE.
      */
     public static void printDate() {
-        IO.writeString(DATE.format(new Date()));
+        IO.writeString(DATE.format(new Date()), WriteStyle.MARGIN);
     }
 
 }

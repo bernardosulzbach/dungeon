@@ -18,6 +18,7 @@
 package org.dungeon.utils;
 
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 
 /**
  * Utility methods related to this project licensing.
@@ -38,7 +39,7 @@ public class LicenseUtils {
             "  GNU General Public License for more details.";
 
     public static void printLicense() {
-        IO.writeString(LICENSE_STRING);
+        IO.writeString(LICENSE_STRING, WriteStyle.MARGIN);
     }
 
 }

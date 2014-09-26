@@ -18,6 +18,7 @@ package org.dungeon.core.achievements;
 
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
 
@@ -79,11 +80,11 @@ public abstract class Achievement implements Serializable {
     public void printAchievementUnlocked() {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
-        sb.append(Constants.MARGIN).append(getName()).append("\n");
-        sb.append(Constants.MARGIN).append(getInfo()).append("\n");
+        sb.append(getName()).append("\n");
+        sb.append(getInfo()).append("\n");
         if (getExperienceReward() != 0) {
-            sb.append(Constants.MARGIN).append(String.format("+ %d experience points", getExperienceReward()));
+            sb.append(String.format("+ %d experience points", getExperienceReward()));
         }
-        IO.writeString(sb.toString());
+        IO.writeString(sb.toString(), WriteStyle.MARGIN);
     }
 }

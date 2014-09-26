@@ -19,6 +19,7 @@ package org.dungeon.core.creatures;
 
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 
 import java.io.Serializable;
 
@@ -44,10 +45,10 @@ class CreatureAttackUnarmed implements CreatureAttack, Serializable {
     public void attack(Creature attacker, Creature target) {
         // Hardcoded miss rate of 10%.
         if (10 > Game.RANDOM.nextInt(100)) {
-            IO.writeString(String.format("%s tried to hit %s but missed.", attacker.getName(), target.getName()));
+            IO.writeString(String.format("%s tried to hit %s but missed.", attacker.getName(), target.getName()), WriteStyle.MARGIN);
         } else {
             target.takeDamage(attacker.getAttack());
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), getBaseAttack(), target.getName()));
+            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), getBaseAttack(), target.getName()), WriteStyle.MARGIN);
         }
     }
 }

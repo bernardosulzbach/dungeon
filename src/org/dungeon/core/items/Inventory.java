@@ -19,6 +19,7 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
@@ -57,13 +58,13 @@ public class Inventory implements Serializable {
 
     public void printItems() {
         if (itemList.size() == 0) {
-            IO.writeString("Inventory is empty.");
+            IO.writeString("Inventory is empty.", WriteStyle.MARGIN);
         } else {
             StringBuilder builder = new StringBuilder();
             for (Item itemInInventory : itemList) {
-                builder.append(Constants.MARGIN).append(itemInInventory.toSelectionEntry()).append('\n');
+                builder.append(itemInInventory.toSelectionEntry()).append('\n');
             }
-            IO.writeString(builder.toString());
+            IO.writeString(builder.toString(), WriteStyle.MARGIN);
         }
     }
 
@@ -94,12 +95,12 @@ public class Inventory implements Serializable {
         }
         if (isFull()) {
             // Print the default inventory full message.
-            IO.writeString(Constants.INVENTORY_FULL);
+            IO.writeString(Constants.INVENTORY_FULL, WriteStyle.MARGIN);
             // Print the warning about calling addItem on a full Inventory object.
-            IO.writeWarningString(Constants.INVENTORY_FULL_ADD_CALL_WARNING);
+            IO.writeString(Constants.INVENTORY_FULL_ADD_CALL_WARNING, WriteStyle.WARNING);
         } else {
             itemList.add(newItem);
-            IO.writeString("Added " + newItem.getName() + " to the inventory.");
+            IO.writeString("Added " + newItem.getName() + " to the inventory.", WriteStyle.MARGIN);
         }
     }
 
@@ -111,7 +112,7 @@ public class Inventory implements Serializable {
     }
 
     public void printInventoryFull() {
-        IO.writeString("Inventory full.");
+        IO.writeString("Inventory full.", WriteStyle.MARGIN);
     }
 
 }

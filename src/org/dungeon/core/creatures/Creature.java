@@ -25,6 +25,7 @@ import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
 
@@ -248,7 +249,7 @@ public class Creature implements Selectable, Serializable {
 
     public void addExperience(int amount) {
         this.experience += amount;
-        IO.writeString(getName() + " got " + amount + " experience points.");
+        IO.writeString(getName() + " got " + amount + " experience points.", WriteStyle.MARGIN);
         if (this.experience >= getExperienceToNextLevel()) {
             levelUp();
         }
@@ -265,9 +266,9 @@ public class Creature implements Selectable, Serializable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
-        sb.append(Constants.MARGIN).append(String.format("%s is now level %d.", getName(), getLevel())).append("\n");
-        sb.append(Constants.MARGIN).append(String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel())).append("\n");
-        IO.writeString(sb.toString());
+        sb.append(String.format("%s is now level %d.", getName(), getLevel())).append("\n");
+        sb.append(String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel())).append("\n");
+        IO.writeString(sb.toString(), WriteStyle.MARGIN);
     }
 
     //
@@ -278,7 +279,7 @@ public class Creature implements Selectable, Serializable {
     public void addGold(int amount) {
         if (amount > 0) {
             this.setGold(this.getGold() + amount);
-            IO.writeString(getName() + " got " + amount + " gold coins.");
+            IO.writeString(getName() + " got " + amount + " gold coins.", WriteStyle.MARGIN);
         }
     }
 

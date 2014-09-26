@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * Point class that defines a a point in a 2D plane.
- *
+ * <p/>
  * Its objects are used by the World to map coordinates to Location objects.
  * Campaign also uses Point objects to store the position of some creatures in the world.
  *

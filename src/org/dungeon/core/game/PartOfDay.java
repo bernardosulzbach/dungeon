@@ -19,7 +19,7 @@ package org.dungeon.core.game;
 
 /**
  * Enumerated types of the parts of the day.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 24/09/2014.
  */
 public enum PartOfDay {

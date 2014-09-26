@@ -23,48 +23,51 @@ package org.dungeon.utils;
  */
 public class Constants {
 
-    public static final String TITLE = "Dungeon";
+    /**
+     * Line width, fixed at 75 to avoid output problems on smaller console windows.
+     */
+    // This variable is used as a guide to some methods, not as a rule to output operations.
+    // Therefore, some lines may have more than 75 characters.
+    // Note, though, that lines (produced by the game) any longer than this are considered bugs and should be reported.
 
-    /** Basic version information. */
+    public static final int WIDTH = 75;
+    public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
+    public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
+    public static final String TITLE = "Dungeon";
+    public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, '-') + '\n' + LINE_2;
+    /**
+     * Basic version information.
+     */
     // Note that we do not use Semantic Versioning for a matter of style.
     public static final String VERSION = "v0.0.2";
     public static final String CODENAME = "Mandolim";
-
-    /** Console width, currently fixed at 79 to avoid bugs on the Windows console. */
-    public static final int WIDTH = 79;
-
-    /** String used to improve output readability. */
+    /**
+     * String used to improve output readability.
+     */
     public static final String MARGIN = "  ";
-
     // Loader strings.
     public static final String SAVE_NAME = "campaign";
     public static final String SAVE_EXTENSION = ".dungeon";
-
     public static final String FILE_FOUND = "A saved campaign was found.";
-
     public static final String SAVE_ERROR = "Could not save the game.";
     public static final String SAVE_SUCCESS = "Successfully saved the game.";
     public static final String SAVE_CONFIRM = "Do you want to save the game?";
-
     public static final String LOAD_ERROR = "Could not load the saved campaign.";
     public static final String LOAD_SUCCESS = "Successfully loaded the saved campaign.";
     public static final String LOAD_CONFIRM = "Do you want to load the game?";
-
     public static final String ACHIEVEMENT_UNLOCKED = "Achievement Unlocked!";
     public static final String LEVEL_UP = "Level up!";
-
-    public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
-    public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
-
-    public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, '-') + '\n' + LINE_2;
-
     public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
     public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
 
-    /** The string used to alert the player about invalid input. */
+    /**
+     * The string used to alert the player about invalid input.
+     */
     public static final String INVALID_INPUT = "Invalid input.";
 
-    /** Movement strings. */
+    /**
+     * Movement strings.
+     */
     public static final String WALK_BLOCKED = "The path is blocked.";
 
     // Description strings.
@@ -72,8 +75,8 @@ public class Constants {
     public static final String NO_ITEMS = "You do not see any items here.";
 
     // Selection entry default format.
-    // Conforming to this format increases the uniformity of the output of the game, making it more readable and also
-    // more enjoyable.
+    // Conforming to this format increases the uniformity of the output of the game, making it more readable.
+    // This format is also used by CommandHelp.
     public static final String SELECTION_ENTRY_FORMAT = "%-10s %-15s %-15s";
 
     public static final String EMPTY_COMMAND_HISTORY = "The command history is empty.";
@@ -84,9 +87,16 @@ public class Constants {
 
     public static final String WARNING = "WARNING";
 
+    // Item not found messages.
     public static final String ITEM_NOT_FOUND = "Item not found.";
     public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
+    public static final String ITEM_NOT_FOUND_IN_LOCATION = "Item not found in the current location.";
+
     // The correct usage of printHelp.
     public static final String HELP_USAGE = "  Usage: help (command)";
     public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
+
+    // Strings used by the Help class.
+    public static final String NO_USAGE_INFORMATION = "No usage information.";
+
 }

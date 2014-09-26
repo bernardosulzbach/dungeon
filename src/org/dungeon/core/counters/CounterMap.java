@@ -55,7 +55,7 @@ public class CounterMap<K> implements Serializable {
 
     /**
      * Increments the count of a given key in the CounterMap by 1.
-     *
+     * <p/>
      * If the key does not exist, it will be created an assigned a value of 1.
      *
      * @return the final value of the counter.
@@ -66,7 +66,7 @@ public class CounterMap<K> implements Serializable {
 
     /**
      * Increments the count of a given key in the CounterMap by a given amount.
-     *
+     * <p/>
      * If the key does not exist, it will be created an assigned the added value.
      *
      * @return the final value of the counter.

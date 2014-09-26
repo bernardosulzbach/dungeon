@@ -23,12 +23,13 @@ import org.dungeon.utils.Constants;
  */
 public class CommandHelp {
 
+    // Do not set any of the field to null. Use a blank string ("") instead.
     /**
      * The command "official" name.
      */
     private final String name;
     /**
-     * [OPTIONAL] An alias to the command.
+     * An alias to the command.
      */
     private final String alias;
     /**
@@ -36,7 +37,7 @@ public class CommandHelp {
      */
     private final String help;
     /**
-     * [OPTIONAL] An example of the proper syntax for the command.
+     * An example of the proper syntax for the command.
      */
     private final String usage;
 
@@ -51,7 +52,7 @@ public class CommandHelp {
      * Verifies if any of the command aliases matches a string.
      */
     protected boolean equalsIgnoreCase(String command) {
-        if (alias != null) {
+        if (!alias.isEmpty()) {
             return name.equalsIgnoreCase(command) || alias.equalsIgnoreCase(command);
         } else {
             return name.equalsIgnoreCase(command);
@@ -61,24 +62,21 @@ public class CommandHelp {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("    ").append(name);
-        builder.append("\n\n").append("    ").append("Action: ").append(help);
-        if (usage != null) {
-            builder.append("\n\n").append("    ").append("Usage: ").append(usage);
+        builder.append(name);
+        builder.append('\n').append("Action: ").append(help);
+        if (usage.isEmpty()) {
+            builder.append('\n').append(Constants.NO_USAGE_INFORMATION);
+        } else {
+            builder.append('\n').append("Usage: ").append(usage);
         }
-        if (alias != null) {
-            builder.append("\n\n").append("    ").append("Alias: ").append(alias);
+        if (!alias.isEmpty()) {
+            builder.append('\n').append("Alias: ").append(alias);
         }
         return builder.toString();
     }
 
     public String toOneLineString() {
-        if (alias != null) {
-            return String.format("%s%-16s%-16s%s\n", Constants.MARGIN, name, alias, help);
-        } else {
-            return String.format("%s%-32s%s\n", Constants.MARGIN, name, help);
-        }
-
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, name, alias, help);
     }
 
 }

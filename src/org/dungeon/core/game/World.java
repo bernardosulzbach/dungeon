@@ -22,7 +22,7 @@ import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
+import org.dungeon.io.WriteStyle;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -39,7 +39,7 @@ public class World implements Serializable {
     private final HashMap<Point, Location> locations;
 
     private final Date worldDate;
-    
+
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public World() {
@@ -92,7 +92,6 @@ public class World implements Serializable {
         if (locations.get(origin).hasCreature(creature)) {
             locations.get(origin).removeCreature(creature);
             locations.get(destination).addCreature(creature);
-            System.out.printf("You arrive at %s.\n", locations.get(destination).getName());
         } else {
             throw new IllegalArgumentException("Creature is not in the origin.");
         }
@@ -139,16 +138,16 @@ public class World implements Serializable {
     public void printSpawnCounters() {
         StringBuilder sb = new StringBuilder();
         for (CreatureID id : spawnCounter.keySet()) {
-            sb.append(Constants.MARGIN).append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
+            sb.append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
         }
-        IO.writeString(sb.toString());
+        IO.writeString(sb.toString(), WriteStyle.MARGIN);
     }
 
     /**
      * Prints the current date and time of the world.
      */
     public void printDateAndTime() {
-        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPart() + ")");
+        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPart() + ")", WriteStyle.MARGIN);
     }
 
     /**

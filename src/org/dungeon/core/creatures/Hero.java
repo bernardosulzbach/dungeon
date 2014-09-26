@@ -25,6 +25,7 @@ import org.dungeon.core.game.TimeConstants;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
@@ -74,13 +75,13 @@ public class Hero extends Creature {
      */
     public int rest() {
         if (getCurHealth() >= (int) (0.6 * getMaxHealth())) {
-            IO.writeString("You are already rested.");
+            IO.writeString("You are already rested.", WriteStyle.MARGIN);
             return 0;
         } else {
             double fractionHealed = 0.6 - (double) getCurHealth() / (double) getMaxHealth();
-            IO.writeString("Resting...");
+            IO.writeString("Resting...", WriteStyle.MARGIN);
             setCurHealth((int) (0.6 * getMaxHealth()));
-            IO.writeString("You feel rested.");
+            IO.writeString("You feel rested.", WriteStyle.MARGIN);
             return (int) (TimeConstants.REST_COMPLETE * fractionHealed);
         }
     }
@@ -90,12 +91,12 @@ public class Hero extends Creature {
      */
     public void look() {
         StringBuilder builder = new StringBuilder();
-        builder.append(Constants.MARGIN).append(getLocation().getName());
+        builder.append(getLocation().getName());
 
         builder.append('\n').append(Constants.LINE_1);
 
         if (getLocation().getCreatureCount() == 1) {
-            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_CREATURES);
+            builder.append('\n').append(Constants.NO_CREATURES);
         } else {
             CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
             for (Creature creature : getLocation().getCreatures()) {
@@ -112,23 +113,23 @@ public class Hero extends Creature {
                 } else {
                     line = String.format("%-20s(%d)", id.toString(), creatureCount);
                 }
-                builder.append('\n').append(Constants.MARGIN).append(line);
+                builder.append('\n').append(line);
             }
         }
 
         builder.append('\n').append(Constants.LINE_1);
 
         if (getLocation().getItemCount() == 0) {
-            builder.append('\n').append(Constants.MARGIN).append(Constants.NO_ITEMS);
+            builder.append('\n').append(Constants.NO_ITEMS);
         } else {
             for (Item curItem : getLocation().getItems()) {
-                builder.append('\n').append(Constants.MARGIN).append(curItem.toSelectionEntry());
+                builder.append('\n').append(curItem.toSelectionEntry());
             }
         }
 
         builder.append('\n').append(Constants.LINE_1);
 
-        IO.writeString(builder.toString());
+        IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
     //
@@ -142,7 +143,7 @@ public class Hero extends Creature {
         } else {
             Item queryResult = getInventory().findItem(inputWords[1]);
             if (queryResult == null) {
-                IO.writeString(Constants.ITEM_NOT_FOUND_IN_INVENTORY);
+                IO.writeString(Constants.ITEM_NOT_FOUND_IN_INVENTORY, WriteStyle.MARGIN);
             }
             return queryResult;
         }
@@ -152,7 +153,11 @@ public class Hero extends Creature {
         if (inputWords.length == 1) {
             return Utils.selectFromList(getLocation().getItems());
         } else {
-            return getLocation().findItem(inputWords[1]);
+            Item queryResult = getLocation().findItem(inputWords[1]);
+            if (queryResult == null) {
+                IO.writeString(Constants.ITEM_NOT_FOUND_IN_LOCATION, WriteStyle.MARGIN);
+            }
+            return queryResult;
         }
     }
 
@@ -186,13 +191,11 @@ public class Hero extends Creature {
             // to add something to the full inventory of an NPC.
             //
             if (getInventory().isFull()) {
-                IO.writeString(Constants.INVENTORY_FULL);
+                IO.writeString(Constants.INVENTORY_FULL, WriteStyle.MARGIN);
             } else {
                 getInventory().addItem(selectedItem);
                 getLocation().removeItem(selectedItem);
             }
-        } else {
-            IO.writeString(Constants.ITEM_NOT_FOUND);
         }
     }
 
@@ -211,10 +214,8 @@ public class Hero extends Creature {
             if (selectedItem.isWeapon()) {
                 equipWeapon(selectedItem);
             } else {
-                IO.writeString("You cannot equip that.");
+                IO.writeString("You cannot equip that.", WriteStyle.MARGIN);
             }
-        } else {
-            IO.writeString(Constants.ITEM_NOT_FOUND);
         }
     }
 
@@ -229,7 +230,7 @@ public class Hero extends Creature {
             }
             getInventory().removeItem(selectedItem);
             getLocation().addItem(selectedItem);
-            IO.writeString("Dropped " + selectedItem.getName() + ".");
+            IO.writeString("Dropped " + selectedItem.getName() + ".", WriteStyle.MARGIN);
         }
     }
 
@@ -249,16 +250,16 @@ public class Hero extends Creature {
                 // TODO: re-implement eating experience here.
                 // TODO: make not-enough-for-a-full-bite food heal less than a enough-for-a-full-bite food would.
                 if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
-                    IO.writeString("You ate " + selectedItem.getName() + ".");
+                    IO.writeString("You ate " + selectedItem.getName() + ".", WriteStyle.MARGIN);
                     getInventory().removeItem(selectedItem);
                 } else {
-                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
+                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".", WriteStyle.MARGIN);
                 }
                 if (isCompletelyHealed()) {
-                    IO.writeString("You are completely healed.");
+                    IO.writeString("You are completely healed.", WriteStyle.MARGIN);
                 }
             } else {
-                IO.writeString("You can only eat food.");
+                IO.writeString("You can only eat food.", WriteStyle.MARGIN);
             }
         }
     }
@@ -278,15 +279,41 @@ public class Hero extends Creature {
                 if (!target.isBroken()) {
 
                     target.setCurIntegrity(0);
-                    IO.writeString(getName() + " crashed " + target.getName() + ".");
+                    IO.writeString(getName() + " crashed " + target.getName() + ".", WriteStyle.MARGIN);
                 }
             } else {
                 getLocation().removeItem(target);
-                IO.writeString(getName() + " destroyed " + target.getName() + ".");
+                IO.writeString(getName() + " destroyed " + target.getName() + ".", WriteStyle.MARGIN);
             }
         }
     }
 
+    //
+    //
+    // Weapon methods.
+    //
+    //
+    public void equipWeapon(Item weapon) {
+        if (hasWeapon()) {
+            if (getWeapon() == weapon) {
+                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".", WriteStyle.MARGIN);
+                return;
+            } else {
+                unequipWeapon();
+            }
+        }
+        this.setWeapon(weapon);
+        IO.writeString(getName() + " equipped " + weapon.getName() + ".", WriteStyle.MARGIN);
+    }
+
+    public void unequipWeapon() {
+        if (hasWeapon()) {
+            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".", WriteStyle.MARGIN);
+            setWeapon(null);
+        } else {
+            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON, WriteStyle.MARGIN);
+        }
+    }
     //
     //
     // Status methods.
@@ -296,18 +323,18 @@ public class Hero extends Creature {
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(Constants.MARGIN).append(String.format("%s (%s)\n", getName(), getId()));
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Level", getLevel()));
+        builder.append(String.format("%s (%s)\n", getName(), getId()));
+        builder.append(String.format("%-20s%20d\n", "Level", getLevel()));
 
         String experienceFraction = String.format("%d/%d", getExperience(), getExperienceToNextLevel());
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Experience", experienceFraction));
+        builder.append(String.format("%-20s%20s\n", "Experience", experienceFraction));
 
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20d\n", "Gold", getGold()));
+        builder.append(String.format("%-20s%20d\n", "Gold", getGold()));
 
         String healthFraction = String.format("%d/%d", getCurHealth(), getMaxHealth());
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20s\n", "Health", healthFraction));
+        builder.append(String.format("%-20s%20s\n", "Health", healthFraction));
 
-        builder.append(Constants.MARGIN).append(String.format("%-20s%20d", "Attack", getAttack()));
+        builder.append(String.format("%-20s%20d", "Attack", getAttack()));
         return builder.toString();
 
     }
@@ -321,11 +348,11 @@ public class Hero extends Creature {
     }
 
     public void printHeroStatus() {
-        IO.writeString(getHeroStatusString());
+        IO.writeString(getHeroStatusString(), WriteStyle.MARGIN);
     }
 
     public void printWeaponStatus() {
-        IO.writeString(getWeaponStatusString());
+        IO.writeString(getWeaponStatusString(), WriteStyle.MARGIN);
     }
 
     /**
@@ -334,37 +361,11 @@ public class Hero extends Creature {
     public void printAllStatus() {
         // Check to see if there is a weapon.
         if (getWeapon() != null) {
-            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
+            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString(), WriteStyle.MARGIN);
         } else {
             // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
             printHeroStatus();
         }
     }
 
-    //
-    //
-    // Weapon methods.
-    //
-    //
-    public void equipWeapon(Item weapon) {
-        if (hasWeapon()) {
-            if (getWeapon() == weapon) {
-                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
-                return;
-            } else {
-                unequipWeapon();
-            }
-        }
-        this.setWeapon(weapon);
-        IO.writeString(getName() + " equipped " + weapon.getName() + ".");
-    }
-
-    public void unequipWeapon() {
-        if (hasWeapon()) {
-            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
-            setWeapon(null);
-        } else {
-            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
-        }
-    }
 }

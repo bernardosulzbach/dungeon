@@ -41,7 +41,7 @@ public class Loader {
     // TODO: add support to load 'filename' syntax.
     public static Campaign loadGameRoutine() {
         if (checkForExistingSave()) {
-            IO.writeString(Constants.FILE_FOUND);
+            IO.writeString(Constants.FILE_FOUND, WriteStyle.MARGIN);
             if (confirmOperation(Constants.LOAD_CONFIRM)) {
                 return loadCampaign();
             }
@@ -83,7 +83,7 @@ public class Loader {
      * Prompt the user to confirm an operation (as saving and loading the game).
      */
     public static boolean confirmOperation(String confirmation) {
-        IO.writeString(confirmation + " ( Y / N )");
+        IO.writeString(confirmation + " ( Y / N )", WriteStyle.MARGIN);
         while (true) {
             String input = IO.readString().toLowerCase();
             if (input.equals("y") || input.equals("yes")) {
@@ -91,7 +91,7 @@ public class Loader {
             } else if (input.equals("n") || input.equals("no")) {
                 return false;
             } else {
-                IO.writeString(Constants.INVALID_INPUT);
+                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
             }
         }
     }
@@ -107,13 +107,13 @@ public class Loader {
             objectInStream = new ObjectInputStream(fileInStream);
             Campaign loadedCampaign = (Campaign) objectInStream.readObject();
             objectInStream.close();
-            IO.writeString(Constants.LOAD_SUCCESS);
+            IO.writeString(Constants.LOAD_SUCCESS, WriteStyle.MARGIN);
             return loadedCampaign;
         } catch (IOException ex) {
-            IO.writeString(Constants.LOAD_ERROR);
+            IO.writeString(Constants.LOAD_ERROR, WriteStyle.MARGIN);
             return new Campaign();
         } catch (ClassNotFoundException ex) {
-            IO.writeString(Constants.LOAD_ERROR);
+            IO.writeString(Constants.LOAD_ERROR, WriteStyle.MARGIN);
             return new Campaign();
         }
     }
@@ -131,12 +131,12 @@ public class Loader {
             objectOutStream.close();
             campaign.setSaved(true);
             if (!quiet) {
-                IO.writeString(Constants.SAVE_SUCCESS);
+                IO.writeString(Constants.SAVE_SUCCESS, WriteStyle.MARGIN);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
             if (!quiet) {
-                IO.writeString(Constants.SAVE_ERROR);
+                IO.writeString(Constants.SAVE_ERROR, WriteStyle.MARGIN);
             }
         }
     }

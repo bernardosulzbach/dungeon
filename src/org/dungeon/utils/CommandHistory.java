@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * CommandHistory class that is used to keep track of all the commands issued by the player.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 23/09/2014.
  */
 public class CommandHistory implements Serializable {
@@ -26,7 +26,7 @@ public class CommandHistory implements Serializable {
     public int getCommandCount() {
         return userCommands.size();
     }
-    
+
     public String getLastCommand() {
         if (!userCommands.isEmpty()) {
             return userCommands.get(userCommands.size());

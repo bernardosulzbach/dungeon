@@ -16,11 +16,12 @@
  */
 package org.dungeon.help;
 
+import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
+import org.dungeon.utils.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
 
 public class Help {
 
@@ -29,19 +30,19 @@ public class Help {
     static {
         COMMANDS.add(new CommandHelp(
                 "achievements",
-                null,
+                "",
                 "Shows unlocked achievements.",
                 "achievements"));
 
         COMMANDS.add(new CommandHelp(
                 "commands",
-                null,
+                "",
                 "Displays a list of valid commands.",
                 "commands"));
 
         COMMANDS.add(new CommandHelp(
                 "date",
-                null,
+                "",
                 "Prints the current date.",
                 "date"));
 
@@ -53,7 +54,7 @@ public class Help {
 
         COMMANDS.add(new CommandHelp(
                 "drop",
-                null,
+                "",
                 "Drops your current weapon.",
                 "drop"));
 
@@ -79,19 +80,19 @@ public class Help {
                 "pick", "loot", "Swap your current weapon.", "pick [item]"));
 
         COMMANDS.add(new CommandHelp(
-                "rest", null, "Rest until you are completely healed.", "rest"));
+                "rest", "", "Rest until you are completely healed.", "rest"));
 
         COMMANDS.add(new CommandHelp(
-                "save", null, "Saves the game.", "save"));
+                "save", "", "Saves the game.", "save"));
 
         COMMANDS.add(new CommandHelp(
-                "spawns", null, "Shows the spawn counters.", "spawns"));
+                "spawns", "", "Shows the spawn counters.", "spawns"));
 
         COMMANDS.add(new CommandHelp(
-                "status", null, "Prints the hero's current status.", "status"));
+                "status", "", "Prints the hero's current status.", "status"));
 
         COMMANDS.add(new CommandHelp(
-                "time", null, "Prints the current time.", "time"));
+                "time", "", "Prints the current time.", "time"));
 
         COMMANDS.add(new CommandHelp(
                 "walk", "go", "Move to the direction chosen.", "walk [direction]"));
@@ -103,16 +104,18 @@ public class Help {
     public static void printCommandHelp(String[] words) {
         if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
-            IO.writeString(Constants.HELP_USAGE);
+            IO.writeString(Constants.HELP_USAGE, WriteStyle.MARGIN);
         } else {
+
             for (CommandHelp command : COMMANDS) {
                 if (command.equalsIgnoreCase(words[1])) {
-                    IO.writeString(command.toString());
+                    // Output to toString method of the first command that matches the input.
+                    IO.writeString(command.toString(), WriteStyle.COMMAND);
                     return;
                 }
             }
             // There was no match.
-            IO.writeString(String.format("  No help text for '%s' could be found.", words[1]));
+            IO.writeString(String.format("No help text for '%s' could be found.", words[1]), WriteStyle.MARGIN);
         }
     }
 
@@ -123,8 +126,9 @@ public class Help {
         StringBuilder builder = new StringBuilder();
         for (CommandHelp command : COMMANDS) {
             builder.append(command.toOneLineString());
+            builder.append('\n');
         }
-        IO.writeString(builder.toString());
+        IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
 }

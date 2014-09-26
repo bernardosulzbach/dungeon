@@ -28,6 +28,7 @@ import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
+import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.*;
 
 import java.io.Serializable;
@@ -350,7 +351,7 @@ public final class Campaign implements Serializable {
     }
 
     public void printCommandCount() {
-        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount());
+        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount(), WriteStyle.MARGIN);
     }
 
     public World getWorld() {
@@ -418,7 +419,7 @@ public final class Campaign implements Serializable {
                 builder.append('\n').append(Constants.MARGIN).append(a.getInfo());
             }
         }
-        IO.writeString(builder.toString());
+        IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
     /**
@@ -454,7 +455,7 @@ public final class Campaign implements Serializable {
                 }
             }
         }
-        IO.writeString(Constants.INVALID_INPUT);
+        IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
         // The user entered invalid input, this wastes no time.
         return 0;
     }
@@ -470,9 +471,10 @@ public final class Campaign implements Serializable {
             getWorld().moveCreature(campaignHero, heroPosition, destination);
             heroPosition = destination;
             campaignHero.setLocation(getWorld().getLocation(destination));
+            IO.writeString("You arrive at " + getWorld().getLocation(destination).getName(), WriteStyle.MARGIN);
             return TimeConstants.WALK_SUCCESS;
         } else {
-            IO.writeString(Constants.WALK_BLOCKED);
+            IO.writeString(Constants.WALK_BLOCKED, WriteStyle.MARGIN);
             return TimeConstants.WALK_BLOCKED;
         }
     }
@@ -481,13 +483,13 @@ public final class Campaign implements Serializable {
      * Prints the next hint.
      */
     public void printNextHint() {
-        IO.writeString(Hints.hintsArray[getNextHintIndex()]);
+        IO.writeString(Hints.hintsArray[getNextHintIndex()], WriteStyle.MARGIN);
         incrementNextHintIndex();
     }
 
     /**
      * Returns the hero's name.
-     *
+     * <p/>
      * Used by the 'whoami' command.
      */
     public String getHeroInfo() {
