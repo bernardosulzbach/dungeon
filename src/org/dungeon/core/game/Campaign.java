@@ -201,7 +201,7 @@ public final class Campaign implements Serializable {
 
         //Second clearing location.
         Point clearing2 = new Point(1, 2);
-        world.addLocation(new Location("Road to The Fort"), clearing2);
+        world.addLocation(new Location("Clearing"), clearing2);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), clearing2);
