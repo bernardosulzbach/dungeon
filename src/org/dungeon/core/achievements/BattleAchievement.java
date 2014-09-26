@@ -24,10 +24,13 @@ import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
 
 /**
- * Class BattleAchievement that defines a general-purpose battle-related achievement.
- * Created by Bernardo on 20/09/2014.
+ * Class BattleAchievement that defines a general-purpose battle-related achievements.
+ * 
+ * Created by Bernardo Sulzbach on 20/09/2014.
  */
 public class BattleAchievement extends Achievement {
+
+    private static final long serialVersionUID = 1L;
 
     private final int battleCount;
     private final int longestBattleLength;
@@ -35,14 +38,8 @@ public class BattleAchievement extends Achievement {
     private final CounterMap<CreatureType> typeKills;
     private final CounterMap<String> weaponKills;
 
-    public BattleAchievement(String name,
-                             String info,
-                             int experienceReward,
-                             int battleCount,
-                             int longestBattleLength,
-                             CounterMap<CreatureID> idKills,
-                             CounterMap<CreatureType> typeKills,
-                             CounterMap<String> weaponIdKills) {
+    public BattleAchievement(String name, String info, int experienceReward, int battleCount, int longestBattleLength,
+            CounterMap<CreatureID> idKills, CounterMap<CreatureType> typeKills, CounterMap<String> weaponIdKills) {
 
         super(name, info, experienceReward);
         this.battleCount = battleCount;
