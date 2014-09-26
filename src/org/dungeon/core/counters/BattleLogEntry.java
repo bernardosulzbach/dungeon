@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 class BattleLogEntry implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     protected final CreatureID attackerID;
     protected final CreatureID defenderID;
     protected final String attackerWeapon;
