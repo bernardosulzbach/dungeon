@@ -27,6 +27,7 @@ public class Loader {
     /**
      * Check if a saved campaign exists.
      */
+    // TODO: implement this method with an argument for the save name.
     private static boolean checkForExistingSave() {
         File savedCampaign = new File(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
         return savedCampaign.exists() && savedCampaign.isFile();
@@ -37,19 +38,23 @@ public class Loader {
      *
      * @return a saved campaign or a new demo campaign.
      */
+    // TODO: add support to load 'filename' syntax.
     public static Campaign loadGameRoutine() {
         if (checkForExistingSave()) {
             IO.writeString(Constants.FILE_FOUND);
             if (confirmOperation(Constants.LOAD_CONFIRM)) {
                 return loadCampaign();
             }
+            // There is a save. Do not save the new demo campaign.
+            return new Campaign();
+        } else {
+            // Could not find a saved campaign.
+            // Instantiate a new demo campaign and save it to disk.
+            Campaign demoCampaign = new Campaign();
+            saveCampaign(demoCampaign, Constants.SAVE_NAME, true);
+            // Return the new campaign.
+            return demoCampaign;
         }
-        // Could not load a saved campaign.
-        // Instantiate a new demo campaign and save it to disk.
-        Campaign demoCampaign = new Campaign();
-        saveCampaign(demoCampaign, Constants.SAVE_NAME, true);
-        // Return the new campaign.
-        return demoCampaign;
     }
 
     /**
