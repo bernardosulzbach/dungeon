@@ -44,7 +44,12 @@ public class Loader {
                 return loadCampaign();
             }
         }
-        return new Campaign();
+        // Could not load a saved campaign.
+        // Instantiate a new demo campaign and save it to disk.
+        Campaign demoCampaign = new Campaign();
+        saveCampaign(demoCampaign, Constants.SAVE_NAME);
+        // Return the new campaign.
+        return demoCampaign;
     }
 
     /**

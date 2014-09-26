@@ -21,6 +21,7 @@ import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.game.TimeConstants;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
@@ -68,6 +69,7 @@ public class Hero extends Creature {
 
     /**
      * Rest until the creature is healed to 60% of its health points.
+     *
      * Returns the number of seconds the hero rested.
      */
     public int rest() {
@@ -80,7 +82,7 @@ public class Hero extends Creature {
             IO.writeString("Resting...");
             setCurHealth((int) (0.6 * getMaxHealth()));
             IO.writeString("You feel rested.");
-            return (int) (60 * 60 * 10 * fractionHealed);
+            return (int) (TimeConstants.REST_COMPLETE * fractionHealed);
         }
     }
 

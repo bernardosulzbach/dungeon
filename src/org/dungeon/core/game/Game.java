@@ -46,6 +46,7 @@ public class Game {
         while (true) {
             // Let the player play a turn and get its length (in seconds).
             int turnLength = getTurn(campaign);
+            // -1 is returned by getTurn when the player issues a quit command.
             if (turnLength == -1) {
                 if (!campaign.isSaved()) {
                     Loader.saveGameRoutine(campaign);
@@ -108,7 +109,6 @@ public class Game {
                 campaign.getHero().eatItem(inputWords);
                 return 120;
             }
-            // TODO: rewrite walk and loot methods so that they only consume time if the action was successful.
             else if (s.equals("walk") || s.equals("go")) {
                 return campaign.parseHeroWalk(inputWords);
             }
@@ -142,8 +142,8 @@ public class Game {
                     // A battle turn takes half a minute.
                     return lastBattleTurns * 30;
                 }
-                // Campaign-related commands.
             }
+            // Campaign-related commands.
             //
             else if (s.equals("commandcount")) { // TODO: think of a better name for this.
                 campaign.printCommandCount();
