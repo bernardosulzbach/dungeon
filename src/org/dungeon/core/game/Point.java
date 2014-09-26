@@ -19,7 +19,10 @@ package org.dungeon.core.game;
 import java.io.Serializable;
 
 /**
- * Point class that defines a simple point in a 2D plane.
+ * Point class that defines a a point in a 2D plane.
+ *
+ * Its objects are used by the World to map coordinates to Location objects.
+ * Campaign also uses Point objects to store the position of some creatures in the world.
  *
  * @author Bernardo Sulzbach
  */
@@ -29,9 +32,6 @@ public class Point implements Serializable {
 
     private int x;
     private int y;
-
-    public Point() {
-    }
 
     public Point(int x, int y) {
         this.x = x;
@@ -61,16 +61,8 @@ public class Point implements Serializable {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     @Override
