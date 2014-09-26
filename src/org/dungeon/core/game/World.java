@@ -38,7 +38,7 @@ public class World implements Serializable {
     private final CounterMap<CreatureID> spawnCounter;
 
     private Date worldDate;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
