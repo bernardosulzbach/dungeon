@@ -24,14 +24,16 @@ package org.dungeon.utils;
 public class Constants {
 
     public static final String TITLE = "Dungeon";
+    
+    /** Basic version information. */
+    // Note that we do not use Semantic Versioning for a matter of style.
     public static final String VERSION = "v0.0.2";
     public static final String CODENAME = "Mandolim";
 
+    /** Console width, currently fixed at 79 to avoid bugs on the Windows console. */
     public static final int WIDTH = 79;
 
-    /**
-     * String used to improve output readability.
-     */
+    /** String used to improve output readability. */
     public static final String MARGIN = "  ";
 
     public static final String SAVE_NAME = "campaign";
@@ -58,17 +60,15 @@ public class Constants {
     public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
     public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
 
-    /**
-     * The string used to alert the player about invalid input.
-     */
+    /** The string used to alert the player about invalid input. */
     public static final String INVALID_INPUT = "Invalid input.";
 
-    /**
-     * Movement strings.
-     */
+    /** Movement strings. */
     public static final String WALK_BLOCKED = "The path is blocked.";
     public static final String NO_CREATURES = "You do not see any creatures here.";
     public static final String NO_ITEMS = "You do not see any items here.";
 
     public static final String SELECTION_ENTRY_FORMAT = "%-10s %-15s %-15s";
+    
+    public static final String EMPTY_COMMAND_HISTORY = "The command history is empty.";
 }
