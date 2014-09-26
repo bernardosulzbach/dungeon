@@ -24,6 +24,12 @@ package org.dungeon.core.game;
  */
 public enum PartOfDay {
 
+    AFTERNOON("Afternoon"),
+    DAWN("Dawn"),
+    DUSK("Dusk"),
+    EVENING("Evening"),
+    MIDNIGHT("Midnight"),
+    MORNING("Morning"),
     NIGHT("Night"),
     NOON("Noon");
 
