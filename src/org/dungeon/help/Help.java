@@ -98,6 +98,11 @@ public class Help {
                 "walk", "go", "Move to the direction chosen.", "walk [direction]"));
     }
 
+    // Attempts to load the help strings from the hard drive.
+    public static void initializeCommandList() {
+        // TODO: write it.
+    }
+
     /**
      * Print the a help string based on the specifiers.
      */

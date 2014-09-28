@@ -35,6 +35,7 @@ public class Game {
     public static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
+        Help.initializeCommandList();
         Campaign gameCampaign = Loader.loadGameRoutine();
         gameLoop(gameCampaign);
     }
