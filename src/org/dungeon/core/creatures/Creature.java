@@ -54,9 +54,9 @@ public class Creature implements Selectable, Serializable {
     private int curHealth;
     private int healthIncrement;
 
-    private CreatureAttack creatureAttack;
-
+    private int attack;
     private int attackIncrement;
+    private AttackAlgorithmID attackAlgorithm;
 
     private Inventory inventory;
     private Item weapon;
@@ -67,6 +67,7 @@ public class Creature implements Selectable, Serializable {
         this.type = type;
         this.id = id;
         this.name = name;
+        this.attackAlgorithm = AttackAlgorithmID.CRITTER;
     }
 
     //
@@ -77,20 +78,10 @@ public class Creature implements Selectable, Serializable {
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature;
         creature = new Creature(preset.getType(), preset.getId(), preset.getId().getName());
-        switch (preset.getType()) {
-            case CRITTER:
-                creature.creatureAttack = new CreatureAttackNone();
-                break;
-            case BEAST:
-                creature.creatureAttack = new CreatureAttackUnarmed(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
-                break;
-            case UNDEAD:
-                creature.creatureAttack = new CreatureAttackWeapon(preset.getAttack() + (level - 1) * preset.getAttackIncrement());
-                break;
-            default:
-                return null;
-        }
+        creature.setAttackAlgorithm(preset.getAttackAlgorithm());
         creature.setLevel(level);
+        creature.setAttack(preset.getAttack());
+        creature.setAttackIncrement(preset.getAttackIncrement());
         creature.setExperienceDrop(level * preset.getExperienceDropFactor());
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
@@ -177,16 +168,13 @@ public class Creature implements Selectable, Serializable {
     }
 
     public int getAttack() {
-        return creatureAttack.getBaseAttack();
+        return attack;
     }
 
     public void setAttack(int attack) {
-        creatureAttack.setBaseAttack(attack);
+        this.attack = attack;
     }
 
-    public void setCreatureAttack(CreatureAttack creatureAttack) {
-        this.creatureAttack = creatureAttack;
-    }
 
     public int getAttackIncrement() {
         return attackIncrement;
@@ -194,6 +182,14 @@ public class Creature implements Selectable, Serializable {
 
     public void setAttackIncrement(int attackIncrement) {
         this.attackIncrement = attackIncrement;
+    }
+
+    public AttackAlgorithmID getAttackAlgorithm() {
+        return attackAlgorithm;
+    }
+
+    public void setAttackAlgorithm(AttackAlgorithmID attackAlgorithm) {
+        this.attackAlgorithm = attackAlgorithm;
     }
 
     public Inventory getInventory() {
@@ -301,7 +297,7 @@ public class Creature implements Selectable, Serializable {
     //
     //
     public void hit(Creature target) {
-        creatureAttack.attack(this, target);
+        AttackAlgorithm.attack(this, target, getAttackAlgorithm());
     }
 
     public void takeDamage(int damage) {

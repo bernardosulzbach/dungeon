@@ -51,7 +51,7 @@ public class Hero extends Creature {
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
-        setCreatureAttack(new CreatureAttackWeapon(4));
+        setAttackAlgorithm(AttackAlgorithmID.HERO);
         setHealthIncrement(20);
         setAttackIncrement(4);
         setInventory(new Inventory(this, 4));
