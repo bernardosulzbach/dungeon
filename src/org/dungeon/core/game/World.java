@@ -56,9 +56,13 @@ public class World implements Serializable {
         worldDate.setTime(calendar.getTimeInMillis());
     }
 
+    public Date getWorldDate() {
+        return worldDate;
+    }
 
     public void addLocation(Location locationObject, Point coordinates) {
         locations.put(coordinates, locationObject);
+        locationObject.setWorld(this);
     }
 
     /**

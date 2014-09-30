@@ -34,6 +34,8 @@ public class Location implements Serializable {
     private final List<Creature> creatures;
     private final List<Item> inventory;
 
+    private World world;
+
     public Location(String name) {
         this.name = name;
         this.creatures = new ArrayList<Creature>();
@@ -130,4 +132,11 @@ public class Location implements Serializable {
         creatures.remove(creatureToRemove);
     }
 
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
 }

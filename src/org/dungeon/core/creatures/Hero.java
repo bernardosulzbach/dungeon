@@ -28,8 +28,11 @@ import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
+import org.joda.time.Period;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +44,8 @@ public class Hero extends Creature {
 
     private BattleLog battleLog;
 
+    private Date dateOfBirth;
+
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
         setLevel(1);
@@ -51,6 +56,11 @@ public class Hero extends Creature {
         setAttackIncrement(4);
         setInventory(new Inventory(this, 4));
         setBattleLog(new BattleLog());
+
+        // Currently, the hero's birthday is hardcoded.
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1952, Calendar.JUNE, 4, 8, 32, 55);  // Yes, I know his date of birth THIS precisely.
+        dateOfBirth = calendar.getTime();
     }
 
     public BattleLog getBattleLog() {
@@ -59,6 +69,10 @@ public class Hero extends Creature {
 
     public void setBattleLog(BattleLog battleLog) {
         this.battleLog = battleLog;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
     /**
@@ -314,12 +328,12 @@ public class Hero extends Creature {
             IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON, WriteStyle.MARGIN);
         }
     }
+
     //
     //
     // Status methods.
     //
     //
-
     private String getHeroStatusString() {
         StringBuilder builder = new StringBuilder();
 
@@ -366,6 +380,15 @@ public class Hero extends Creature {
             // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
             printHeroStatus();
         }
+    }
+
+    /**
+     * Prints the hero's age.
+     */
+    public void printAge() {
+        Period p = new Period(getDateOfBirth().getTime(), getLocation().getWorld().getWorldDate().getTime());
+        IO.writeString(p.getYears() + " years, " + p.getMonths() + " months and " + p.getDays() + " days.",
+                WriteStyle.MARGIN);
     }
 
 }
