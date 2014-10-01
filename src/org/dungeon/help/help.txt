@@ -14,6 +14,16 @@
 # effect = "A good description of the command starting with uppercase and using decent English."
 
 command = "age"
+info = "Displays the hero's age."
 aliases = ""
 arguments = ""
-effect = "Displays the hero's age."
+
+command = "look"
+info = "Describes what the hero can see."
+aliases = "peek"
+arguments = ""
+
+command = "destroy"
+info = "Destroys an item on the ground."
+aliases = "crash"
+arguments = "item"

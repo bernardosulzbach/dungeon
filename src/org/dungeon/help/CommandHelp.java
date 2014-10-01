@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,11 @@ package org.dungeon.help;
 import org.dungeon.utils.Constants;
 
 /**
+ * CommandHelp class that defines a common structure of the help strings for a command and a few methods that enable
+ * easy printing of those strings.
+ *
+ * Edited on 01/10/2014 by Bernardo Sulzbach : implemented a builder and aliases and arguments are now arrays.
+ *
  * @author Bernardo Sulzbach
  */
 public class CommandHelp {
@@ -29,54 +34,90 @@ public class CommandHelp {
      */
     private final String name;
     /**
-     * An alias to the command.
-     */
-    private final String alias;
-    /**
      * A brief comment on what the command does.
      */
-    private final String help;
+    private final String info;
+    /**
+     * An alias to the command.
+     */
+    private final String[] aliases;
     /**
      * An example of the proper syntax for the command.
      */
-    private final String usage;
+    private final String[] arguments;
 
-    public CommandHelp(String name, String alias, String help, String usage) {
+    public CommandHelp(String name, String info, String[] aliases, String[] arguments) {
         this.name = name;
-        this.alias = alias;
-        this.help = help;
-        this.usage = usage;
+        this.info = info;
+        this.aliases = aliases;
+        this.arguments = arguments;
     }
 
     /**
      * Verifies if any of the command aliases matches a string.
      */
     protected boolean equalsIgnoreCase(String command) {
-        if (!alias.isEmpty()) {
-            return name.equalsIgnoreCase(command) || alias.equalsIgnoreCase(command);
-        } else {
-            return name.equalsIgnoreCase(command);
+        if (name.equalsIgnoreCase(command)) {
+            return true;
         }
+        // Name was not equal, perform a linear search on the aliases.
+        for (String alias : aliases) {
+            if (alias.equalsIgnoreCase(command)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+
+        // Name
+        // Should never be an empty string.
         builder.append(name);
-        builder.append('\n').append("Action: ").append(help);
-        if (usage.isEmpty()) {
-            builder.append('\n').append(Constants.NO_USAGE_INFORMATION);
+
+        // Info
+        builder.append('\n');
+        if (info.isEmpty()) {
+            builder.append(HelpConstants.NO_INFO);
         } else {
-            builder.append('\n').append("Usage: ").append(usage);
+            builder.append("Info: ").append(info);
         }
-        if (!alias.isEmpty()) {
-            builder.append('\n').append("Alias: ").append(alias);
+
+        // Aliases
+        builder.append('\n');
+        if (aliases.length == 0) {
+            builder.append(HelpConstants.NO_ALIASES);
+        } else {
+            builder.append("Aliases: ");
+            // Append the first alias before the loop so we avoid preceding commas.
+            builder.append(aliases[0]);
+            for (int i = 1; i < aliases.length; i++) {
+                builder.append(", ").append(aliases[i]);
+            }
         }
+
+        // Arguments (usage information)
+        builder.append('\n');
+        if (arguments.length == 0) {
+            builder.append(HelpConstants.NO_ARGUMENTS);
+        } else {
+            builder.append("Usage: ");
+            // Append the first alias before the loop so we avoid preceding commas.
+            builder.append(name).append(" [").append(arguments[0]).append("]");
+            for (int i = 1; i < arguments.length; i++) {
+                builder.append(", ").append(name).append(" [").append(arguments[i]).append("]");
+            }
+        }
+
+        // Return what it made.
         return builder.toString();
     }
 
     public String toOneLineString() {
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, name, alias, help);
+        // TODO: use the aliases (or at least one of them) too.
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, name, "", info);
     }
 
 }

@@ -18,8 +18,11 @@ package org.dungeon.help;
 
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
-import org.dungeon.utils.Constants;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,80 +30,99 @@ public class Help {
 
     private static final List<CommandHelp> COMMANDS = new ArrayList<CommandHelp>();
 
-    static {
-        COMMANDS.add(new CommandHelp(
-                "achievements",
-                "",
-                "Shows unlocked achievements.",
-                "achievements"));
+    // Attempts to load the help strings from a text file.
+    public static void initializeCommandList() {
+        // TODO: write this parser as if I was a programmer (not a monkey).
+        // Damn fool.
+        BufferedReader bufferedReader;
+        try {
+            // TODO: move this text file to a resource folder?
+            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.HELP_FILE_PATH);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
 
-        COMMANDS.add(new CommandHelp(
-                "commands",
-                "",
-                "Displays a list of valid commands.",
-                "commands"));
+            CommandHelpBuilder commandBuilder = null;
+            String line;
 
-        COMMANDS.add(new CommandHelp(
-                "date",
-                "",
-                "Prints the current date.",
-                "date"));
+            while ((line = bufferedReader.readLine()) != null) {
+                // Trim possible excessive spaces and convert the string to lowercase.
+                line = line.trim();
+                if (!line.isEmpty()) {
+                    if (line.charAt(0) == '#') {
+                        continue;
+                    }
+                    if (line.contains("command")) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        line = line.trim().replace("\"", "");
+                        if (!line.isEmpty()) {
+                            if (commandBuilder != null) {
+                                COMMANDS.add(commandBuilder.createCommandHelp());
+                            }
+                            commandBuilder = new CommandHelpBuilder();
+                            commandBuilder.setName(line);
+                        } else {
+                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                        }
+                    } else if (line.contains("info")) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        line = line.trim().replace("\"", "");
+                        if (!line.isEmpty()) {
+                            if (commandBuilder != null) {
+                                commandBuilder.setInfo(line);
+                            }
+                        } else {
+                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                        }
+                    } else if (line.contains("aliases")) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        if (commandBuilder != null) {
+                            if (!line.isEmpty()) {
+                                commandBuilder.setAliases(parseStringArray(line));
+                            } else {
+                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            }
+                        }
+                    } else if (line.contains("arguments")) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        if (commandBuilder != null) {
+                            if (!line.isEmpty()) {
+                                commandBuilder.setArguments(parseStringArray(line));
+                            } else {
+                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            }
+                        }
 
-        COMMANDS.add(new CommandHelp(
-                "destroy",
-                "crash",
-                "Destroys a item on the ground.",
-                "destroy [item]"));
-
-        COMMANDS.add(new CommandHelp(
-                "drop",
-                "",
-                "Drops your current weapon.",
-                "drop"));
-
-        COMMANDS.add(new CommandHelp(
-                "exit",
-                "quit",
-                "Exits the game.",
-                "exit"));
-
-        COMMANDS.add(new CommandHelp(
-                "help", "?", "Displays the help text for a given command.", "help [command]"));
-
-        COMMANDS.add(new CommandHelp(
-                "hero", "me", "Shows the status of your hero.", "hero"));
-
-        COMMANDS.add(new CommandHelp(
-                "kill", "attack", "Attacks the target chosen by the player.", "kill [target]"));
-
-        COMMANDS.add(new CommandHelp(
-                "look", "peek", "Describes what your character can see.", "look"));
-
-        COMMANDS.add(new CommandHelp(
-                "pick", "loot", "Swap your current weapon.", "pick [item]"));
-
-        COMMANDS.add(new CommandHelp(
-                "rest", "", "Rest until you are completely healed.", "rest"));
-
-        COMMANDS.add(new CommandHelp(
-                "save", "", "Saves the game.", "save"));
-
-        COMMANDS.add(new CommandHelp(
-                "spawns", "", "Shows the spawn counters.", "spawns"));
-
-        COMMANDS.add(new CommandHelp(
-                "status", "", "Prints the hero's current status.", "status"));
-
-        COMMANDS.add(new CommandHelp(
-                "time", "", "Prints the current time.", "time"));
-
-        COMMANDS.add(new CommandHelp(
-                "walk", "go", "Move to the direction chosen.", "walk [direction]"));
+                    }
+                }
+            }
+            // Add our current command.
+            if (commandBuilder != null) {
+                COMMANDS.add(commandBuilder.createCommandHelp());
+            }
+        } catch (IOException ignored) {
+        }
     }
 
-    // Attempts to load the help strings from the hard drive.
-    public static void initializeCommandList() {
-        // TODO: write it.
+    /**
+     * Parses an array of strings and returns the individual strings.
+     * <p/>
+     * For instance, passing
+     * "\"word\", \"another\", \"more three words.\""
+     * to this method will result in
+     * ["word", "another", "more three words"]
+     */
+    private static String[] parseStringArray(String line) {
+        List<String> innerStrings = new ArrayList<String>();
+        for (String substring : line.split("\"")) {
+            substring = substring.trim();
+            if (!substring.isEmpty()) {
+                innerStrings.add(substring);
+            }
+        }
+        String[] aliasArray = new String[innerStrings.size()];
+        innerStrings.toArray(aliasArray);
+        return aliasArray;
+
     }
 
     /**
@@ -109,9 +131,8 @@ public class Help {
     public static void printCommandHelp(String[] words) {
         if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
-            IO.writeString(Constants.HELP_USAGE, WriteStyle.MARGIN);
+            IO.writeString(HelpConstants.HELP_USAGE, WriteStyle.MARGIN);
         } else {
-
             for (CommandHelp command : COMMANDS) {
                 if (command.equalsIgnoreCase(words[1])) {
                     // Output to toString method of the first command that matches the input.
@@ -136,4 +157,9 @@ public class Help {
         IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
+    private static class IllegalHelpFormatException extends RuntimeException {
+        private IllegalHelpFormatException(String message) {
+            super(message);
+        }
+    }
 }

@@ -92,11 +92,6 @@ public class Constants {
     public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
     public static final String ITEM_NOT_FOUND_IN_LOCATION = "Item not found in the current location.";
 
-    // The correct usage of printHelp.
-    public static final String HELP_USAGE = "  Usage: help (command)";
     public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
-
-    // Strings used by the Help class.
-    public static final String NO_USAGE_INFORMATION = "No usage information.";
 
 }
