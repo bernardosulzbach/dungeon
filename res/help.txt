@@ -1,0 +1,19 @@
+# This is the file that contains help text for all the commands.
+# Lines starting with '#' are ignored.
+# Blank lines are ignored.
+#
+# All commands must be registered using the following structure:
+#
+# command = "command_name"
+#
+# aliases = "alias1", "alias2", ...
+# Note that if there are not any aliases, an empty string ("") should be used.
+#
+# arguments = "", "target", "item", ...
+#
+# effect = "A good description of the command starting with uppercase and using decent English."
+
+command = "age"
+aliases = ""
+arguments = ""
+effect = "Displays the hero's age."
