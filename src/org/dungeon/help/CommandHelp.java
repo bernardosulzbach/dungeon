@@ -87,27 +87,30 @@ public class CommandHelp {
 
         // Aliases
         builder.append('\n');
-        if (aliases.length == 0) {
+        if (aliases[0].isEmpty()) {
             builder.append(HelpConstants.NO_ALIASES);
         } else {
             builder.append("Aliases: ");
-            // Append the first alias before the loop so we avoid preceding commas.
-            builder.append(aliases[0]);
-            for (int i = 1; i < aliases.length; i++) {
-                builder.append(", ").append(aliases[i]);
+            for (int i = 0; i < aliases.length; i++) {
+                // If it is not the first usage example, append a comma.
+                if (i != 0) {
+                    builder.append(", ");
+                }
+                builder.append(aliases[i]);
             }
         }
 
         // Arguments (usage information)
         builder.append('\n');
-        if (arguments.length == 0) {
-            builder.append(HelpConstants.NO_ARGUMENTS);
-        } else {
-            builder.append("Usage: ");
-            // Append the first alias before the loop so we avoid preceding commas.
-            builder.append(name).append(" [").append(arguments[0]).append("]");
-            for (int i = 1; i < arguments.length; i++) {
-                builder.append(", ").append(name).append(" [").append(arguments[i]).append("]");
+        builder.append("Usage: ");
+        for (int i = 0; i < arguments.length; i++) {
+            // If it is not the first usage example, append a comma.
+            if (i != 0) {
+                builder.append(", ");
+            }
+            builder.append(name);
+            if (!arguments[i].isEmpty()) {
+                builder.append(" [").append(arguments[i]).append("]");
             }
         }
 

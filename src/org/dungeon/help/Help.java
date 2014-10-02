@@ -113,10 +113,20 @@ public class Help {
      */
     private static String[] parseStringArray(String line) {
         List<String> innerStrings = new ArrayList<String>();
-        for (String substring : line.split("\"")) {
-            substring = substring.trim();
-            if (!substring.isEmpty()) {
-                innerStrings.add(substring);
+        StringBuilder builder = new StringBuilder();
+        boolean insideString = false;
+        for (int i = 0; i < line.length(); i++) {
+            if (line.charAt(i) == '"') {
+                insideString = !insideString;
+                // Just finished a string.
+                if (!insideString) {
+                    innerStrings.add(builder.toString());
+                    builder.setLength(0);
+                }
+            } else {
+                if (insideString) {
+                    builder.append(line.charAt(i));
+                }
             }
         }
         String[] aliasArray = new String[innerStrings.size()];

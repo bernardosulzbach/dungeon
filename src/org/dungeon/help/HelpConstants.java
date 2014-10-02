@@ -16,5 +16,4 @@ class HelpConstants {
     // Strings used by the Help class.
     public static final String NO_INFO = "No info available.";
     public static final String NO_ALIASES = "No aliases.";
-    public static final String NO_ARGUMENTS = "No usage information.";
 }
