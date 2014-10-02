@@ -5,7 +5,7 @@ package org.dungeon.core.game;
  * <p/>
  * Created by Bernardo on 25/09/2014.
  */
-public class TimeConstants {
+public class    TimeConstants {
 
     // How many seconds the player needs to cross a location.
     public static final int WALK_SUCCESS = 200;

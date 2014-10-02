@@ -26,7 +26,7 @@ import org.dungeon.utils.Constants;
  *
  * @author Bernardo Sulzbach
  */
-public class CommandHelp {
+public class    CommandHelp {
 
     // Do not set any of the field to null. Use a blank string ("") instead.
     /**

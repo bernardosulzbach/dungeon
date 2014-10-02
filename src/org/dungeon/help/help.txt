@@ -13,9 +13,84 @@
 #
 # effect = "A good description of the command starting with uppercase and using decent English."
 
+command = "achievements"
+info = "Shows unlocked achievements."
+aliases = ""
+arguments = ""
+
 command = "age"
 info = "Displays the hero's age."
 aliases = ""
+arguments = ""
+
+command = "commands"
+info = "Displays a list of valid commands."
+aliases = ""
+arguments = ""
+
+command = "commandcounter"
+info = "Displays the counters."
+aliases = ""
+arguments = ""
+
+command = "credits"
+info = "Displays information about the game and its creators."
+aliases = "about"
+arguments = ""
+
+command = "date"
+info = "Prints the current date."
+aliases = ""
+arguments = ""
+
+command = "destroy"
+info = "Destroys an item on the ground."
+aliases = "crash"
+arguments = "item"
+
+command = "drop"
+info = "Drops the item chosen."
+aliases = ""
+arguments = "item"
+
+command = "eat"
+info = "Eat the item chosen by the player."
+aliases = "devour"
+arguments = "item"
+
+command = "equip"
+info = "Equip the item chosen by the player."
+aliases = ""
+arguments = "item"
+
+command = "help"
+info = "Displays the help text for a given command."
+aliases = "?"
+arguments = "command"
+
+command = "hero"
+info = "Shows the status of your hero."
+aliases = "me"
+arguments = ""
+
+command = "hint"
+info = "Displays a random hint of the game."
+aliases = "tip"
+arguments = ""
+
+command = "inventory"
+info = "See the items in your inventory."
+aliases = "items"
+arguments = ""
+
+command = "kill"
+info = "Attacks the target chosen by the player."
+aliases = "attack"
+arguments = "target"
+
+command = "license"
+info = "Displays information about the copyright and license."
+aliases = "copyright"
 arguments = ""
 
 command = "look"
@@ -23,7 +98,74 @@ info = "Describes what the hero can see."
 aliases = "peek"
 arguments = ""
 
-command = "destroy"
-info = "Destroys an item on the ground."
-aliases = "crash"
+command = "loot"
+info = "Adds to your inventory the item chosen by the player."
+aliases = "pick"
 arguments = "item"
+
+command = "now"
+info = "Prints the current date and time."
+aliases = ""
+arguments = ""
+
+command = "quit"
+info = "Exits the game."
+aliases = "exit"
+arguments = ""
+
+command = "rest"
+info = "Rests to fill about 60% of your health."
+aliases = ""
+arguments = ""
+
+command = "save"
+info = "Saves the game."
+aliases = ""
+arguments = ""
+
+command = "spawns"
+info = "Shows the spawn counters."
+aliases = ""
+arguments = ""
+
+command = "status"
+info = "Prints the hero's current status."
+aliases = ""
+arguments = ""
+
+command = "time"
+info = "Prints the current time."
+aliases = ""
+arguments = ""
+
+command = "unequip"
+info = "Unequips the current item."
+aliases = ""
+arguments = ""
+
+command = "version"
+info = "Shows the current version of the game."
+aliases = ""
+arguments = ""
+
+command = "walk"
+info = "Move to the direction chosen."
+aliases = "go"
+arguments = "direction"
+
+command = "weapon"
+info = "Shows the equipped weapon stats."
+aliases = ""
+arguments = ""
+
+command = "whereami"
+info = "Shows where the player is."
+aliases = ""
+arguments = ""
+
+command = "whoami"
+info = "Displays the player's name."
+aliases = ""
+arguments = ""
+
+
