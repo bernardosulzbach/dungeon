@@ -212,7 +212,7 @@ public class Game {
                 LicenseUtils.printLicense();
             }
             //
-            else if (s.equals("hint")) {
+            else if (s.equals("hint") || s.equals("tip")) {
                 campaign.printNextHint();
             }
             //
