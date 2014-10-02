@@ -157,6 +157,7 @@ public class Help {
         IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
+    // TODO: consider also providing the number of the line of the text file that caused the error.
     private static class IllegalHelpFormatException extends RuntimeException {
         private IllegalHelpFormatException(String message) {
             super(message);
