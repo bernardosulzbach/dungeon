@@ -110,7 +110,7 @@ aliases = "peek"
 arguments = ""
 
 command = "loot"
-info = "Adds to your inventory the item chosen by the player."
+info = "Attempts to pick up an item from the location."
 aliases = "pick"
 arguments = "item"
 
