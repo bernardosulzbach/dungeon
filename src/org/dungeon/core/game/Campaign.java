@@ -343,6 +343,15 @@ public final class Campaign implements Serializable {
         // Weapons
         world.addItem(Item.createItem(ItemPreset.AXE), clearing3);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Graveyard
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Point graveyard = new Point(4, 1);
+        world.addLocation(new Location("Cemitery"), graveyard);
+        //Beasts
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 2, 2), graveyard);
+        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 2, 2), graveyard);
+
         return world;
     }
 
