@@ -13,9 +13,84 @@
 #
 # effect = "A good description of the command starting with uppercase and using decent English."
 
+command = "achievements"
+info = ""
+aliases = ""
+arguments = ""
+
 command = "age"
 info = "Displays the hero's age."
 aliases = ""
+arguments = ""
+
+command = "commands"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "commandcounter"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "credits"
+info = ""
+aliases = "about"
+arguments = ""
+
+command = "date"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "destroy"
+info = "Destroys an item on the ground."
+aliases = "crash"
+arguments = "item"
+
+command = "drop"
+info = ""
+aliases = ""
+arguments = "item"
+
+command = "eat"
+info = ""
+aliases = "devour"
+arguments = "item"
+
+command = "equip"
+info = ""
+aliases = ""
+arguments = "item"
+
+command = "help"
+info = ""
+aliases = "?"
+arguments = ""
+
+command = "hero"
+info = ""
+aliases = "me"
+arguments = ""
+
+command = "hint"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "inventory"
+info = ""
+aliases = "items"
+arguments = "
+
+command = "kill"
+info = ""
+aliases = "attack"
+arguments = "target"
+
+command = "license"
+info = ""
+aliases = "copyright"
 arguments = ""
 
 command = "look"
@@ -23,7 +98,74 @@ info = "Describes what the hero can see."
 aliases = "peek"
 arguments = ""
 
-command = "destroy"
-info = "Destroys an item on the ground."
-aliases = "crash"
+command = "loot"
+info = ""
+aliases = "pick"
 arguments = "item"
+
+command = "now"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "quit"
+info = ""
+aliases = "exit"
+arguments = ""
+
+command = "rest"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "spawns"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "save"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "status"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "time"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "unequip"
+info = ""
+aliases = ""
+arguments = "item"
+
+command = "version"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "walk"
+info = ""
+aliases = "go"
+arguments = "direction"
+
+command = "weapon"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "whereami"
+info = ""
+aliases = ""
+arguments = ""
+
+command = "whoami"
+info = ""
+aliases = ""
+arguments = ""
+
+
