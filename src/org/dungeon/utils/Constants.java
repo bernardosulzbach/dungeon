@@ -76,7 +76,7 @@ public class Constants {
 
     // Selection entry default format.
     // Conforming to this format increases the uniformity of the output of the game, making it more readable.
-    // This format is also used by CommandHelp.
+    public static final String COMMAND_HELP_FORMAT = "%-20s %s";
     public static final String SELECTION_ENTRY_FORMAT = "%-10s %-15s %-15s";
 
     public static final String EMPTY_COMMAND_HISTORY = "The command history is empty.";

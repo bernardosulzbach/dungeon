@@ -117,7 +117,7 @@ public class CommandHelp {
 
     public String toOneLineString() {
         // TODO: use the aliases (or at least one of them) too.
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, name, "", info);
+        return String.format(Constants.COMMAND_HELP_FORMAT, name, info);
     }
 
 }

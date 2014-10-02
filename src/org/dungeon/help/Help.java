@@ -51,7 +51,7 @@ public class Help {
                     if (line.charAt(0) == '#') {
                         continue;
                     }
-                    if (line.contains("command")) {
+                    if (line.indexOf("command") == 0) {
                         line = line.substring(line.indexOf('=') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
@@ -63,7 +63,7 @@ public class Help {
                         } else {
                             throw new IllegalHelpFormatException("Missing string after '=' operand.");
                         }
-                    } else if (line.contains("info")) {
+                    } else if (line.indexOf("info") == 0) {
                         line = line.substring(line.indexOf('=') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
@@ -73,7 +73,7 @@ public class Help {
                         } else {
                             throw new IllegalHelpFormatException("Missing string after '=' operand.");
                         }
-                    } else if (line.contains("aliases")) {
+                    } else if (line.indexOf("aliases") == 0) {
                         line = line.substring(line.indexOf('=') + 1);
                         if (commandBuilder != null) {
                             if (!line.isEmpty()) {
@@ -82,7 +82,7 @@ public class Help {
                                 throw new IllegalHelpFormatException("Missing string after '=' operand.");
                             }
                         }
-                    } else if (line.contains("arguments")) {
+                    } else if (line.indexOf("arguments") == 0) {
                         line = line.substring(line.indexOf('=') + 1);
                         if (commandBuilder != null) {
                             if (!line.isEmpty()) {
