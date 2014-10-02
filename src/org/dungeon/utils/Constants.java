@@ -23,9 +23,7 @@ package org.dungeon.utils;
  */
 public class Constants {
 
-    /**
-     * Line width, fixed at 75 to avoid output problems on smaller console windows.
-     */
+    /** Line width, fixed at 75 to avoid output problems on smaller console windows. */
     // This variable is used as a guide to some methods, not as a rule to output operations.
     // Therefore, some lines may have more than 75 characters.
     // Note, though, that lines (produced by the game) any longer than this are considered bugs and should be reported.
@@ -35,16 +33,15 @@ public class Constants {
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
     public static final String TITLE = "Dungeon";
     public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, '-') + '\n' + LINE_2;
-    /**
-     * Basic version information.
-     */
+
+    /** Basic version information. (01/10/2014) */
     // Note that we do not use Semantic Versioning for a matter of style.
-    public static final String VERSION = "v0.0.2";
-    public static final String CODENAME = "Mandolim";
-    /**
-     * String used to improve output readability.
-     */
+    public static final String VERSION = "v0.0.2.2";
+    public static final String CODENAME = "Slack";
+
+    /** String used to improve output readability. */
     public static final String MARGIN = "  ";
+
     // Loader strings.
     public static final String SAVE_NAME = "campaign";
     public static final String SAVE_EXTENSION = ".dungeon";
@@ -60,14 +57,10 @@ public class Constants {
     public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
     public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
 
-    /**
-     * The string used to alert the player about invalid input.
-     */
+    /** The string used to alert the player about invalid input. */
     public static final String INVALID_INPUT = "Invalid input.";
 
-    /**
-     * Movement strings.
-     */
+    /** Movement strings. */
     public static final String WALK_BLOCKED = "The path is blocked.";
 
     // Description strings.
@@ -88,7 +81,6 @@ public class Constants {
     public static final String WARNING = "WARNING";
 
     // Item not found messages.
-    public static final String ITEM_NOT_FOUND = "Item not found.";
     public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
     public static final String ITEM_NOT_FOUND_IN_LOCATION = "Item not found in the current location.";
 
