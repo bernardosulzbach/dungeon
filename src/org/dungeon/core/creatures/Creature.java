@@ -259,7 +259,9 @@ public class Creature implements Selectable, Serializable {
         setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
         setAttack(getAttack() + getAttackIncrement());
-
+        if (this.getLevel() % 3 == 0) {
+            this.getInventory().setItemLimit(this.getInventory().getItemLimit() + 1);
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
         sb.append(String.format("%s is now level %d.", getName(), getLevel())).append("\n");

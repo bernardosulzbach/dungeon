@@ -57,7 +57,7 @@ public class Hero extends Creature {
         setAttackIncrement(4);
         setAttackAlgorithm(AttackAlgorithmID.HERO);
 
-        setInventory(new Inventory(this, 4));
+        setInventory(new Inventory(this, 2));
         setBattleLog(new BattleLog());
 
         // Currently, the hero's birthday is hardcoded.
