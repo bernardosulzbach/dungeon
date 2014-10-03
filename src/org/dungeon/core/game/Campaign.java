@@ -347,7 +347,7 @@ public final class Campaign implements Serializable {
         // Graveyard
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point graveyard = new Point(4, 1);
-        world.addLocation(new Location("Cemitery"), graveyard);
+        world.addLocation(new Location("Graveyard"), graveyard);
         //Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 2, 2), graveyard);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 2, 2), graveyard);
