@@ -111,6 +111,14 @@ public class Inventory implements Serializable {
         itemList.remove(item);
     }
 
+    public int getItemLimit() {
+        return itemLimit;
+    }
+
+    public void setItemLimit(int itemLimit) {
+        this.itemLimit = itemLimit;
+    }
+
     public void printInventoryFull() {
         IO.writeString("Inventory full.", WriteStyle.MARGIN);
     }

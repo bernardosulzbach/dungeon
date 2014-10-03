@@ -132,8 +132,7 @@ public class Game {
             //
             else if (s.equals("hero") || s.equals("me")) {
                 campaign.getHero().printHeroStatus();
-            }
-            else if (s.equals("age")) {
+            } else if (s.equals("age")) {
                 campaign.getHero().printAge();
             }
             //
