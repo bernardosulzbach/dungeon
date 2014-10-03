@@ -21,7 +21,7 @@ import org.dungeon.utils.Constants;
 /**
  * CommandHelp class that defines a common structure of the help strings for a command and a few methods that enable
  * easy printing of those strings.
- *
+ * <p/>
  * Edited on 01/10/2014 by Bernardo Sulzbach : implemented a builder and aliases and arguments are now arrays.
  *
  * @author Bernardo Sulzbach
