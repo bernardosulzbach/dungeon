@@ -34,10 +34,14 @@ public class Location implements Serializable {
     private final List<Creature> creatures;
     private final List<Item> inventory;
 
+    private double lightPermittivity;
+    private double visibility;
+
     private World world;
 
-    public Location(String name) {
+    public Location(String name, double lightPermittivity) {
         this.name = name;
+        this.lightPermittivity = lightPermittivity;
         this.creatures = new ArrayList<Creature>();
         this.inventory = new ArrayList<Item>();
     }
@@ -45,6 +49,8 @@ public class Location implements Serializable {
     public String getName() {
         return name;
     }
+
+    public double getLightPermittivity() { return lightPermittivity; }
 
     public List<Creature> getCreatures() {
         return creatures;
