@@ -16,6 +16,7 @@
  */
 package org.dungeon.utils;
 
+import org.dungeon.core.game.Game;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
@@ -107,6 +108,17 @@ public class Utils {
 
     public static void printCredits() {
         IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n", WriteStyle.MARGIN);
+    }
+
+    /**
+     * Simulates a random roll.
+     * @param chance the probability of a true result. Must be nonnegative and smaller than 1.
+     */
+    public static boolean roll(double chance) {
+        if (chance < 0 || chance > 1) {
+            throw new IllegalArgumentException("chance must be nonnegative and smaller than 1.");
+        }
+        return chance > Game.RANDOM.nextDouble();
     }
 
 }

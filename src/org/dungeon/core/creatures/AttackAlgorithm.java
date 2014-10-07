@@ -4,8 +4,12 @@ import org.dungeon.core.game.Game;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
+import org.dungeon.utils.Utils;
 
 /**
+ * AttackAlgorithm class that defines all the attack algorithms.
+ * Specific attack algorithms are used by using invoking the AttackAlgorithm.attack() method with the right parameters.
+ *
  * Created by bernardo on 29/09/14.
  */
 public class AttackAlgorithm {
@@ -30,7 +34,7 @@ public class AttackAlgorithm {
         }
     }
 
-    public static void batAttack(Creature attacker, Creature defender) {
+    private static void batAttack(Creature attacker, Creature defender) {
         // TODO: implement luminosity check here.
         beastAttack(attacker, defender);
     }
@@ -96,8 +100,15 @@ public class AttackAlgorithm {
         if (weapon != null) {
             if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage,
-                        defender.getName()), WriteStyle.MARGIN);
+                // Hardcoded 5 % chance of a critical hit (double damage).
+                if (Utils.roll(0.05)) {
+                    hitDamage *= 2;
+                    IO.writeString(String.format("%s inflicted %d damage points to %s with a critical hit!\n",
+                            attacker.getName(), hitDamage, defender.getName()), WriteStyle.MARGIN);
+                } else {
+                    IO.writeString(String.format("%s inflicted %d damage points to %s.\n",
+                            attacker.getName(), hitDamage, defender.getName()), WriteStyle.MARGIN);
+                }
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
                     attacker.getInventory().removeItem(weapon);
