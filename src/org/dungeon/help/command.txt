@@ -1,6 +1,6 @@
-# This is the file that contains help text for all the commands.
-#
-# ----------------------
+########################################################################################################################
+# This file defines all the help text about commands that can be read in-game.
+########################################################################################################################
 # USAGE AND INSTRUCTIONS
 # ----------------------
 # Lines starting with '#' are ignored.

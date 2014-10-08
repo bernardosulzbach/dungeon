@@ -35,7 +35,16 @@ public class Game {
     public static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        Help.initializeCommandList();
+        boolean initializeHelp = true;
+        // Enables the user not to load the help strings.
+        for (String arg : args) {
+            if (arg.equalsIgnoreCase("--no-help")) {
+                initializeHelp = false;
+            }
+        }
+        if (initializeHelp) {
+            Help.initialize();
+        }
         Campaign gameCampaign = Loader.loadGameRoutine();
         gameLoop(gameCampaign);
     }
@@ -187,7 +196,7 @@ public class Game {
             }
             //
             else if (s.equals("help") || s.equals("?")) {
-                Help.printCommandHelp(inputWords);
+                Help.printHelp(inputWords);
             }
             //
             else if (s.equals("commands")) {

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@ package org.dungeon.help;
 
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
+import org.dungeon.utils.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,18 +27,26 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Help {
+public final class Help {
 
     private static final List<CommandHelp> COMMANDS = new ArrayList<CommandHelp>();
+    private static final List<AspectHelp> ASPECTS = new ArrayList<AspectHelp>();
+    private static boolean initialized;
+
+    /**
+     * Method that must be called in order to initialize the help text available in-game.
+     */
+    public static void initialize() {
+        initCommandHelp();
+        initAspectHelp();
+        initialized = true;
+    }
 
     // Attempts to load the help strings from a text file.
-    public static void initializeCommandList() {
-        // TODO: write this parser as if I was a programmer (not a monkey).
-        // Damn fool.
+    private static void initCommandHelp() {
         BufferedReader bufferedReader;
         try {
-            // TODO: move this text file to a resource folder?
-            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.HELP_FILE_PATH);
+            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.COMMAND_TXT_PATH);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -47,7 +56,7 @@ public class Help {
             while ((line = bufferedReader.readLine()) != null) {
                 // Trim possible excessive spaces and convert the string to lowercase.
                 line = line.trim();
-                if (!line.isEmpty()) {
+                if (!StringUtils.isBlankString(line)) {
                     if (line.charAt(0) == '#') {
                         continue;
                     }
@@ -103,11 +112,71 @@ public class Help {
         }
     }
 
+    // TODO: this is roughly a translation of initCommandHelp, someone must rewrite both metods and extract the repeated
+    //       code.
+    private static void initAspectHelp() {
+        BufferedReader bufferedReader;
+        try {
+            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.ASPECT_TXT_PATH);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
+
+            AspectHelpBuilder aspectHelpBuilder = null;
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                // Trim excessive spaces.
+                line = line.trim();
+                if (!StringUtils.isBlankString(line)) {
+                    if (line.charAt(0) == '#') {
+                        continue;
+                    }
+                    if (line.indexOf("aspect") == 0) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        line = line.trim().replace("\"", "");
+                        if (!line.isEmpty()) {
+                            if (aspectHelpBuilder != null) {
+                                ASPECTS.add(aspectHelpBuilder.createAspectHelp());
+                            }
+                            aspectHelpBuilder = new AspectHelpBuilder();
+                            aspectHelpBuilder.setName(line);
+                        } else {
+                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                        }
+                    } else if (line.indexOf("info") == 0) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        line = line.trim().replace("\"", "");
+                        if (!line.isEmpty()) {
+                            if (aspectHelpBuilder != null) {
+                                aspectHelpBuilder.setInfo(line);
+                            }
+                        } else {
+                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                        }
+                    } else if (line.indexOf("aliases") == 0) {
+                        line = line.substring(line.indexOf('=') + 1);
+                        if (aspectHelpBuilder != null) {
+                            if (!line.isEmpty()) {
+                                aspectHelpBuilder.setAliases(parseStringArray(line));
+                            } else {
+                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            }
+                        }
+                    }
+                }
+            }
+            if (aspectHelpBuilder != null) {
+                ASPECTS.add(aspectHelpBuilder.createAspectHelp());
+            }
+        } catch (IOException ignored) {
+        }
+    }
+
     /**
      * Parses an array of strings and returns the individual strings.
      * <p/>
      * For instance, passing
-     * "\"word\", \"another\", \"more three words.\""
+     * ""word\", \"another\", \"more three words.\""
      * to this method will result in
      * ["word", "another", "more three words"]
      */
@@ -135,24 +204,49 @@ public class Help {
 
     }
 
-    /**
-     * Print the a help string based on the specifiers.
-     */
-    public static void printCommandHelp(String[] words) {
-        if (words.length == 1) {
+    public static void printHelp(String[] words) {
+        if (!initialized) {
+            IO.writeString(HelpConstants.NOT_INITIALIZED, WriteStyle.MARGIN);
+            ;
+        } else if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
             IO.writeString(HelpConstants.HELP_USAGE, WriteStyle.MARGIN);
         } else {
-            for (CommandHelp command : COMMANDS) {
-                if (command.equalsIgnoreCase(words[1])) {
-                    // Output to toString method of the first command that matches the input.
-                    IO.writeString(command.toString(), WriteStyle.COMMAND);
-                    return;
+            if (!printCommandHelp(words)) {
+                if (!printAspectHelp(words)) {
+                    // There was no match.
+                    IO.writeString(String.format("No help text for '%s' could be found.", words[1]), WriteStyle.MARGIN);
                 }
             }
-            // There was no match.
-            IO.writeString(String.format("No help text for '%s' could be found.", words[1]), WriteStyle.MARGIN);
         }
+    }
+
+    /**
+     * Prints the help string for a given game aspect.
+     */
+    public static boolean printAspectHelp(String[] words) {
+        for (AspectHelp aspectHelp : ASPECTS) {
+            if (aspectHelp.equalsIgnoreCase(words[1])) {
+                // Output to toString method of the first command that matches the input.
+                IO.writeString(aspectHelp.toString(), WriteStyle.COMMAND);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Prints the help string for a command based on the specifiers.
+     */
+    public static boolean printCommandHelp(String[] words) {
+        for (CommandHelp commandHelp : COMMANDS) {
+            if (commandHelp.equalsIgnoreCase(words[1])) {
+                // Output to toString method of the first command that matches the input.
+                IO.writeString(commandHelp.toString(), WriteStyle.COMMAND);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

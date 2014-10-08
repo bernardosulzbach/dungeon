@@ -1,0 +1,28 @@
+########################################################################################################################
+# This file defines all the help text about features that can be read in-game.
+########################################################################################################################
+# USAGE AND INSTRUCTIONS
+# ----------------------
+# Lines starting with '#' are ignored.
+# Blank lines are ignored.
+#
+# The syntax for defining a property is:
+#     property_type = "value"
+########################################################################################################################
+# ASPECTS
+# -------
+# All aspects must be registered using the following structure:
+#
+# aspect = "aspect name"
+# info = "long description of how something works."
+# aliases = "alias_1", "alias_2", ..., "alias_n"
+#   [Note that if there are not any aliases, an empty string ("") should be used.]
+########################################################################################################################
+# AUTHORS
+# -------
+# Started by Bernardo Sulzbach (08/10/2014)
+########################################################################################################################
+
+aspect = "combat"
+info = "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' with or without a target to start a combat or to pick a target from a list. Once in combat, all turns are simulated by the game engine. Your character will always try to use its more powerful attack against its opponent."
+aliases = "fight"

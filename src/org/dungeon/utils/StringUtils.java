@@ -101,4 +101,16 @@ public class StringUtils {
     public static String[] split(String string) {
         return string.split("\\s+");
     }
+
+    /**
+     * Tests if a string only contains whitespaces and returns true if it does.
+     */
+    public static boolean isBlankString(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isWhitespace(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
