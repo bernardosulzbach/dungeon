@@ -232,7 +232,7 @@ public final class Campaign implements Serializable {
         // Road to The Fort (two locations)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point roadToTheFort = new Point(2, 2);
-        world.addLocation(new Location("Road to The Fort", 1), roadToTheFort);
+        world.addLocation(new Location("Road to The Fort", 1.0), roadToTheFort);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 1), roadToTheFort);
@@ -241,7 +241,7 @@ public final class Campaign implements Serializable {
 
         //Second roadToTheFort location.
         Point roadToTheFort2 = new Point(2, 3);
-        world.addLocation(new Location("Road to The Fort", 1), roadToTheFort2);
+        world.addLocation(new Location("Road to The Fort", 1.0), roadToTheFort2);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), roadToTheFort2);
@@ -297,7 +297,7 @@ public final class Campaign implements Serializable {
         // Bridge
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point bridge = new Point(0, 3);
-        world.addLocation(new Location("Bridge", 1), bridge);
+        world.addLocation(new Location("Bridge", 1.0), bridge);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), bridge);
@@ -308,7 +308,7 @@ public final class Campaign implements Serializable {
         // Lake
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point lake = new Point(0, 4);
-        world.addLocation(new Location("Lake", 1), lake);
+        world.addLocation(new Location("Lake", 1.0), lake);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 1, 3), lake);
@@ -347,7 +347,7 @@ public final class Campaign implements Serializable {
         // Graveyard
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point graveyard = new Point(4, 1);
-        world.addLocation(new Location("Graveyard", 1), graveyard);
+        world.addLocation(new Location("Graveyard", 1.0), graveyard);
         //Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 2, 2), graveyard);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 2, 2), graveyard);
