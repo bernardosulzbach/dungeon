@@ -17,25 +17,35 @@
 package org.dungeon.core.game;
 
 /**
+ * Direction enum that implements all the possible movement directions in the game.
+ *
+ * Edited 09/10/2014 by mafagafogigante: implemented equalsIgnoreCase method and added abbreviations.
+ *
  * @author Bernardo Sulzbach
  */
 public enum Direction implements Selectable {
 
-    NORTH("North"), EAST("East"), SOUTH("South"), WEST("West");
+    NORTH("North", "N"), EAST("East", "E"), SOUTH("South", "S"), WEST("West", "W");
 
-    private final String string;
+    private final String name;
+    private final String abbreviation;
 
-    Direction(String string) {
-        this.string = string;
+    Direction(String name, String abbreviation) {
+        this.name = name;
+        this.abbreviation = abbreviation;
+    }
+
+    public boolean equalsIgnoreCase(String str) {
+        return name.equalsIgnoreCase(str) || abbreviation.equalsIgnoreCase(str);
     }
 
     @Override
     public String toString() {
-        return string;
+        return name;
     }
 
     @Override
     public String toSelectionEntry() {
-        return string;
+        return name;
     }
 }
