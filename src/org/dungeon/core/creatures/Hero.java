@@ -114,7 +114,7 @@ public class Hero extends Creature {
         builder.append(getLocation().getName());
 
         builder.append('\n').append(Constants.LINE_1);
-        if (getLocation().getVisibility() > 0.2) {
+        if (getLocation().getVisibility() > 0.3) {
             if (getLocation().getCreatureCount() == 1) {
                 builder.append('\n').append(Constants.NO_CREATURES);
             } else {

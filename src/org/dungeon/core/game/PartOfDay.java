@@ -25,12 +25,12 @@ package org.dungeon.core.game;
 public enum PartOfDay {
 
     AFTERNOON("Afternoon", 0.8),
-    DAWN("Dawn", 0.5),
-    DUSK("Dusk", 0.4),
-    EVENING("Evening", 0.3),
-    MIDNIGHT("Midnight", 0.1),
-    MORNING("Morning", 0.7),
-    NIGHT("Night", 0.2),
+    DAWN("Dawn", 0.6),
+    DUSK("Dusk", 0.6),
+    EVENING("Evening", 0.4),
+    MIDNIGHT("Midnight", 0.2),
+    MORNING("Morning", 0.8),
+    NIGHT("Night", 0.4),
     NOON("Noon", 1.0);
 
     private final String stringRepresentation;
@@ -47,6 +47,8 @@ public enum PartOfDay {
         return stringRepresentation;
     }
 
-    public double getLuminosity() { return luminosity; }
+    public double getLuminosity() {
+        return luminosity;
+    }
 
 }
