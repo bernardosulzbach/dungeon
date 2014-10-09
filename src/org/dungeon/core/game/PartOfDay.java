@@ -35,11 +35,13 @@ public enum PartOfDay {
 
     private final String stringRepresentation;
 
+    // How bright is the sun at this part of the day?
+    // Should be bigger than or equal to 0 and smaller than or equal to 1.
     private double luminosity;
 
     PartOfDay(String stringRepresentation, double luminosity) {
         this.stringRepresentation = stringRepresentation;
-        this.luminosity = luminosity;
+        setLuminosity(luminosity);
     }
 
     @Override
@@ -51,4 +53,10 @@ public enum PartOfDay {
         return luminosity;
     }
 
+    public void setLuminosity(double luminosity) {
+        if (luminosity < 0.0 || luminosity > 1.0) {
+            throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
+        }
+        this.luminosity = luminosity;
+    }
 }
