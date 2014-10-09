@@ -459,13 +459,13 @@ public final class Campaign implements Serializable {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
                 // (the strings are equal) or (the first characters of each string are equal)
-                if (dir.toString().equalsIgnoreCase(arg) || StringUtils.firstEqualsIgnoreCase(dir.toString(), arg)) {
+                if (dir.equalsIgnoreCase(arg)) {
                     return heroWalk(dir);
                 }
             }
+            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
         }
-        IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-        // The user entered invalid input, this wastes no time.
+        // The user did not walk.
         return 0;
     }
 
