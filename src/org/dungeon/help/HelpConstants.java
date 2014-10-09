@@ -11,9 +11,11 @@ class HelpConstants {
     public static final String HELP_USAGE = "  Usage: help (command)";
 
     // The path of the text file to be parsed.
-    public static final String HELP_FILE_PATH = "help.txt";
+    public static final String COMMAND_TXT_PATH = "command.txt";
+    public static final String ASPECT_TXT_PATH = "aspect.txt";
 
     // Strings used by the Help class.
     public static final String NO_INFO = "No info available.";
     public static final String NO_ALIASES = "No aliases.";
+    public static final String NOT_INITIALIZED = "Help data not initialized.";
 }
