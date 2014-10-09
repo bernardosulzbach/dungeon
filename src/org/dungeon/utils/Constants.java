@@ -96,4 +96,6 @@ public class Constants {
 
     public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
 
+    public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
+
 }

@@ -21,6 +21,7 @@ import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.game.PartOfDay;
 import org.dungeon.core.game.TimeConstants;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static org.dungeon.core.game.PartOfDay.*;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -111,37 +114,40 @@ public class Hero extends Creature {
         builder.append(getLocation().getName());
 
         builder.append('\n').append(Constants.LINE_1);
-
-        if (getLocation().getCreatureCount() == 1) {
-            builder.append('\n').append(Constants.NO_CREATURES);
-        } else {
-            CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
-            for (Creature creature : getLocation().getCreatures()) {
-                if (creature.getId() != CreatureID.HERO) {
-                    counter.incrementCounter(creature.getId());
+        if (getLocation().getVisibility() > 0.2) {
+            if (getLocation().getCreatureCount() == 1) {
+                builder.append('\n').append(Constants.NO_CREATURES);
+            } else {
+                CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
+                for (Creature creature : getLocation().getCreatures()) {
+                    if (creature.getId() != CreatureID.HERO) {
+                        counter.incrementCounter(creature.getId());
+                    }
+                }
+                for (CreatureID id : counter.keySet()) {
+                    String line;
+                    int creatureCount = counter.getCounter(id);
+                    // If there is only one creature, do not print its count.
+                    if (creatureCount == 1) {
+                        line = String.format("%-20s", id.toString());
+                    } else {
+                        line = String.format("%-20s(%d)", id.toString(), creatureCount);
+                    }
+                    builder.append('\n').append(line);
                 }
             }
-            for (CreatureID id : counter.keySet()) {
-                String line;
-                int creatureCount = counter.getCounter(id);
-                // If there is only one creature, do not print its count.
-                if (creatureCount == 1) {
-                    line = String.format("%-20s", id.toString());
-                } else {
-                    line = String.format("%-20s(%d)", id.toString(), creatureCount);
+
+            builder.append('\n').append(Constants.LINE_1);
+
+            if (getLocation().getItemCount() == 0) {
+                builder.append('\n').append(Constants.NO_ITEMS);
+            } else {
+                for (Item curItem : getLocation().getItems()) {
+                    builder.append('\n').append(curItem.toSelectionEntry());
                 }
-                builder.append('\n').append(line);
             }
-        }
-
-        builder.append('\n').append(Constants.LINE_1);
-
-        if (getLocation().getItemCount() == 0) {
-            builder.append('\n').append(Constants.NO_ITEMS);
         } else {
-            for (Item curItem : getLocation().getItems()) {
-                builder.append('\n').append(curItem.toSelectionEntry());
-            }
+            builder.append('\n').append(Constants.CANT_SEE_ANYTHING);
         }
 
         builder.append('\n').append(Constants.LINE_1);

@@ -179,14 +179,14 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Create a location on the hero's position.
         Point forest = new Point(0, 0);
-        world.addLocation(new Location("Forest"), forest);
+        world.addLocation(new Location("Forest", 0.7), forest);
 
         world.addCreature(campaignHero, forest);
         world.addItem(Item.createItem(ItemPreset.STICK), forest);
 
         // Another forest location.
         Point forest2 = new Point(0, 1);
-        world.addLocation(new Location("Forest"), forest2);
+        world.addLocation(new Location("Forest", 0.7), forest2);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), forest2);
@@ -202,7 +202,7 @@ public final class Campaign implements Serializable {
         // Clearing (two locations)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point clearing = new Point(0, 2);
-        world.addLocation(new Location("Clearing"), clearing);
+        world.addLocation(new Location("Clearing", 0.9), clearing);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.RABBIT, 1), clearing);
@@ -217,7 +217,7 @@ public final class Campaign implements Serializable {
 
         //Second clearing location.
         Point clearing2 = new Point(1, 2);
-        world.addLocation(new Location("Clearing"), clearing2);
+        world.addLocation(new Location("Clearing", 0.9), clearing2);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), clearing2);
@@ -232,7 +232,7 @@ public final class Campaign implements Serializable {
         // Road to The Fort (two locations)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point roadToTheFort = new Point(2, 2);
-        world.addLocation(new Location("Road to The Fort"), roadToTheFort);
+        world.addLocation(new Location("Road to The Fort", 1), roadToTheFort);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 1), roadToTheFort);
@@ -241,7 +241,7 @@ public final class Campaign implements Serializable {
 
         //Second roadToTheFort location.
         Point roadToTheFort2 = new Point(2, 3);
-        world.addLocation(new Location("Road to The Fort"), roadToTheFort2);
+        world.addLocation(new Location("Road to The Fort", 1), roadToTheFort2);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), roadToTheFort2);
@@ -252,7 +252,7 @@ public final class Campaign implements Serializable {
         // Fort
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point fort = new Point(2, 4);
-        world.addLocation(new Location("Fort"), fort);
+        world.addLocation(new Location("Fort", 0.6), fort);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 2, 2), fort);
@@ -263,7 +263,7 @@ public final class Campaign implements Serializable {
         // Cave entrance
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point caveEntrance = new Point(-1, 2);
-        world.addLocation(new Location("Cave Entrance"), caveEntrance);
+        world.addLocation(new Location("Cave Entrance", 0.6), caveEntrance);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 2, 2), caveEntrance);
@@ -278,7 +278,7 @@ public final class Campaign implements Serializable {
         // Cave
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point cave = new Point(-2, 2);
-        world.addLocation(new Location("Cave"), cave);
+        world.addLocation(new Location("Cave", 0.3), cave);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 3, 2), cave);
@@ -297,7 +297,7 @@ public final class Campaign implements Serializable {
         // Bridge
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point bridge = new Point(0, 3);
-        world.addLocation(new Location("Bridge"), bridge);
+        world.addLocation(new Location("Bridge", 1), bridge);
 
         // Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), bridge);
@@ -308,7 +308,7 @@ public final class Campaign implements Serializable {
         // Lake
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point lake = new Point(0, 4);
-        world.addLocation(new Location("Lake"), lake);
+        world.addLocation(new Location("Lake", 1), lake);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 1, 3), lake);
@@ -322,7 +322,7 @@ public final class Campaign implements Serializable {
         // Meadow
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point meadow = new Point(3, 2);
-        world.addLocation(new Location("Meadow"), meadow);
+        world.addLocation(new Location("Meadow", 0.8), meadow);
 
         // Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), meadow);
@@ -333,7 +333,7 @@ public final class Campaign implements Serializable {
         // Clearing (Tent)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point clearing3 = new Point(4, 2);
-        world.addLocation(new Location("Clearing"), clearing3);
+        world.addLocation(new Location("Clearing", 0.9), clearing3);
 
         //Beasts
         world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 4), clearing3);
@@ -347,7 +347,7 @@ public final class Campaign implements Serializable {
         // Graveyard
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Point graveyard = new Point(4, 1);
-        world.addLocation(new Location("Graveyard"), graveyard);
+        world.addLocation(new Location("Graveyard", 1), graveyard);
         //Beasts
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 2, 2), graveyard);
         world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 2, 2), graveyard);
