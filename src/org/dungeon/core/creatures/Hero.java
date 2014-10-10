@@ -21,7 +21,6 @@ import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
-import org.dungeon.core.game.PartOfDay;
 import org.dungeon.core.game.TimeConstants;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
@@ -35,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static org.dungeon.core.game.PartOfDay.*;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -394,10 +391,52 @@ public class Hero extends Creature {
     /**
      * Prints the hero's age.
      */
+    // TODO: Write tests to this function.
+    // TODO: Extract to ageDiffToString (an util).
     public void printAge() {
         Period p = new Period(getDateOfBirth().getTime(), getLocation().getWorld().getWorldDate().getTime());
-        IO.writeString(p.getYears() + " years, " + p.getMonths() + " months and " + p.getDays() + " days.",
-                WriteStyle.MARGIN);
+        int years = p.getYears();
+        int months = p.getMonths();
+        int days = p.getDays();
+        StringBuilder builder = new StringBuilder();
+        if (years != 0) {
+            if (years == 1) {
+                builder.append(years).append(" year");
+            } else {
+                builder.append(years).append(" years");
+            }
+        }
+        if (months != 0) {
+            if (builder.length() != 0) {
+                if (days == 0) {
+                    builder.append(" and ");
+                } else {
+                    builder.append(", ");
+                }
+            }
+            if (months == 1) {
+                builder.append(months).append(" month");
+            } else {
+                builder.append(months).append(" months");
+            }
+        }
+        if (days != 0) {
+            if (builder.length() != 0) {
+                builder.append(" and ");
+            }
+            if (days == 1) {
+                builder.append(days).append(" day");
+            } else {
+                builder.append(days).append(" days");
+            }
+
+        }
+        if (builder.length() == 0) {
+            builder.append("Less than a day.");
+        } else {
+            builder.append(".");
+        }
+        IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
 }
