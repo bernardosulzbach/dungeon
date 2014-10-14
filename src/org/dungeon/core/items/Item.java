@@ -207,13 +207,11 @@ public class Item implements Selectable, Serializable {
         String weaponIntegrity;
         if (getCurIntegrity() == getMaxIntegrity()) {
             weaponIntegrity = "Not damaged";
-        } else if (getCurIntegrity() < getMaxIntegrity() && getCurIntegrity() >= getMaxIntegrity() * 0.75) {
+        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
             weaponIntegrity = "Slightly damaged";
-        } else if (getCurIntegrity() < getMaxIntegrity() * 0.75 && getCurIntegrity() >= getMaxIntegrity() * 0.5) {
+        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
             weaponIntegrity = "Damaged";
-        } else if (getCurIntegrity() < getMaxIntegrity() * 0.5 && getCurIntegrity() >= getMaxIntegrity() * 0.25) {
-            weaponIntegrity = "Very damaged";
-        } else if (getCurIntegrity() < getMaxIntegrity() * 0.25 && getCurIntegrity() > 0) {
+        } else if (getCurIntegrity() > 0) {
             weaponIntegrity = "Severely damaged";
         } else {
             weaponIntegrity = "Broken";
