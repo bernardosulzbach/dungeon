@@ -9,7 +9,7 @@ import org.dungeon.utils.Utils;
 /**
  * AttackAlgorithm class that defines all the attack algorithms.
  * Specific attack algorithms are used by using invoking the AttackAlgorithm.attack() method with the right parameters.
- *
+ * <p/>
  * Created by bernardo on 29/09/14.
  */
 public class AttackAlgorithm {
@@ -99,7 +99,7 @@ public class AttackAlgorithm {
         // Check that there is a weapon and that it is not broken.
         if (weapon != null) {
             if (weapon.rollForHit()) {
-                hitDamage = weapon.getDamage();
+                hitDamage = weapon.getDamage() + attacker.getAttack();
                 // Hardcoded 5 % chance of a critical hit (double damage).
                 if (Utils.roll(0.05)) {
                     hitDamage *= 2;
