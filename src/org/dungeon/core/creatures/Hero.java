@@ -22,6 +22,7 @@ import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.enums.CreatureID;
 import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.TimeConstants;
+import org.dungeon.core.items.FoodComponent;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
@@ -276,9 +277,9 @@ public class Hero extends Creature {
         Item selectedItem = selectInventoryItem(inputWords);
         if (selectedItem != null) {
             if (selectedItem.isFood()) {
-                addHealth(selectedItem.getNutrition());
-                selectedItem.decrementIntegrityByEat();
-                // TODO: re-implement eating experience here.
+                FoodComponent food = selectedItem.getFood();
+                addHealth(food.getNutrition());
+                selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
                 // TODO: make not-enough-for-a-full-bite food heal less than a enough-for-a-full-bite food would.
                 if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
                     IO.writeString("You ate " + selectedItem.getName() + ".", WriteStyle.MARGIN);
@@ -289,6 +290,8 @@ public class Hero extends Creature {
                 if (isCompletelyHealed()) {
                     IO.writeString("You are completely healed.", WriteStyle.MARGIN);
                 }
+                // When addExperience() is called a message is printed, so this line must come after the eat message.
+                addExperience(food.getExperienceOnEat());
             } else {
                 IO.writeString("You can only eat food.", WriteStyle.MARGIN);
             }

@@ -44,9 +44,7 @@ public class Item implements Selectable, Serializable {
     private int integrityDecrementOnHit;
 
     // Food fields.
-    private boolean food;
-    private int nutrition;
-    private int integrityDecrementOnEat;
+    private FoodComponent food;
 
     private Item() {
 
@@ -68,9 +66,9 @@ public class Item implements Selectable, Serializable {
         result.hitRate = preset.hitRate;
         result.integrityDecrementOnHit = preset.integrityDecrementOnHit;
 
-        result.food = preset.food;
-        result.nutrition = preset.nutrition;
-        result.integrityDecrementOnEat = preset.integrityDecrementOnEat;
+        if (preset.foodComponent != null) {
+            result.food = new FoodComponent(preset.foodComponent);
+        }
 
         return result;
     }
@@ -157,32 +155,12 @@ public class Item implements Selectable, Serializable {
         return integrityDecrementOnHit;
     }
 
-    public void setIntegrityDecrementOnHit(int integrityDecrementOnHit) {
-        this.integrityDecrementOnHit = integrityDecrementOnHit;
-    }
-
     public boolean isFood() {
+        return food != null;
+    }
+
+    public FoodComponent getFood() {
         return food;
-    }
-
-    public void setFood(boolean food) {
-        this.food = food;
-    }
-
-    public int getNutrition() {
-        return nutrition;
-    }
-
-    public void setNutrition(int nutrition) {
-        this.nutrition = nutrition;
-    }
-
-    public int getIntegrityDecrementOnEat() {
-        return integrityDecrementOnEat;
-    }
-
-    public void setIntegrityDecrementOnEat(int integrityDecrementOnEat) {
-        this.integrityDecrementOnEat = integrityDecrementOnEat;
     }
 
     // Durability methods
@@ -194,8 +172,8 @@ public class Item implements Selectable, Serializable {
         setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
     }
 
-    public void decrementIntegrityByEat() {
-        setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnEat());
+    public void decrementIntegrity(int integrityDecrement) {
+        setCurIntegrity(getCurIntegrity() - integrityDecrement);
     }
 
     // Weapon methods
@@ -229,7 +207,7 @@ public class Item implements Selectable, Serializable {
         String typeString = String.format("[%s]", getType());
         String extraString;
         if (isFood()) {
-            extraString = String.format("Nutrition: %4d", getNutrition());
+            extraString = String.format("Nutrition: %4d", getFood().getNutrition());
         } else {
             extraString = String.format("Damage: %7d", getDamage());
         }
