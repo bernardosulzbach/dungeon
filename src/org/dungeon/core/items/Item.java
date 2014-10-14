@@ -203,6 +203,22 @@ public class Item implements Selectable, Serializable {
         return getHitRate() > Game.RANDOM.nextDouble();
     }
 
+    public String getWeaponIntegrity() {
+        String weaponIntegrity;
+        if (getCurIntegrity() == getMaxIntegrity()) {
+            weaponIntegrity = "Not damaged";
+        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
+            weaponIntegrity = "Slightly damaged";
+        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
+            weaponIntegrity = "Damaged";
+        } else if (getCurIntegrity() > 0) {
+            weaponIntegrity = "Severely damaged";
+        } else {
+            weaponIntegrity = "Broken";
+        }
+        weaponIntegrity = String.format("(%s)", weaponIntegrity);
+        return weaponIntegrity;
+    }
 
     // Food methods
 
@@ -224,15 +240,13 @@ public class Item implements Selectable, Serializable {
     public String getStatusString() {
         StringBuilder builder = new StringBuilder();
         String nameString = getName();
-        if (isBroken()) {
-            nameString += " (Broken)";
-        }
         builder.append(String.format("%-20s%20s\n", "Name", nameString));
         builder.append(String.format("%-20s%20s\n", "Damage", getDamage()));
         // Uses three lines to build the integrity line to improve code readability.
-        String integrityFraction = String.format("%d/%d", getCurIntegrity(), getMaxIntegrity());
-        String integrityString = String.format("%-20s%20s\n", "Integrity", integrityFraction);
-        builder.append(integrityString);
+        String weaponIntegrity = getWeaponIntegrity();
+        builder.append(String.format("%-20s%20s\n", "Integrity", weaponIntegrity));
         return builder.toString();
     }
+
+
 }
