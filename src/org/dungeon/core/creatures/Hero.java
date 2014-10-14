@@ -53,8 +53,8 @@ public class Hero extends Creature {
         setCurHealth(50);
         setHealthIncrement(20);
 
-        setAttack(6);
-        setAttackIncrement(4);
+        setAttack(3);
+        setAttackIncrement(2);
         setAttackAlgorithm(AttackAlgorithmID.HERO);
 
         setInventory(new Inventory(this, 2));
