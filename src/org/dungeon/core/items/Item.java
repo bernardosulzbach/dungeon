@@ -203,6 +203,24 @@ public class Item implements Selectable, Serializable {
         return getHitRate() > Game.RANDOM.nextDouble();
     }
 
+    public String getWeaponIntegrity() {
+        String weaponIntegrity;
+        if (getCurIntegrity() == getMaxIntegrity()) {
+            weaponIntegrity = "Not damaged";
+        } else if (getCurIntegrity() < getMaxIntegrity() && getCurIntegrity() >= getMaxIntegrity() * 0.75) {
+            weaponIntegrity = "Slightly damaged";
+        } else if (getCurIntegrity() < getMaxIntegrity() * 0.75 && getCurIntegrity() >= getMaxIntegrity() * 0.5) {
+            weaponIntegrity = "Damaged";
+        } else if (getCurIntegrity() < getMaxIntegrity() * 0.5 && getCurIntegrity() >= getMaxIntegrity() * 0.25) {
+            weaponIntegrity = "Very damaged";
+        } else if (getCurIntegrity() < getMaxIntegrity() * 0.25 && getCurIntegrity() > 0) {
+            weaponIntegrity = "Severely damaged";
+        } else {
+            weaponIntegrity = "Broken";
+        }
+        weaponIntegrity = String.format("(%s)", weaponIntegrity);
+        return weaponIntegrity;
+    }
 
     // Food methods
 
@@ -227,22 +245,10 @@ public class Item implements Selectable, Serializable {
         builder.append(String.format("%-20s%20s\n", "Name", nameString));
         builder.append(String.format("%-20s%20s\n", "Damage", getDamage()));
         // Uses three lines to build the integrity line to improve code readability.
-        String weaponIntegrity;
-            if (getCurIntegrity() == getMaxIntegrity()) {
-                weaponIntegrity = "Not damaged";
-            } else if (getCurIntegrity() < getMaxIntegrity() && getCurIntegrity() >= getMaxIntegrity() * 0.75) {
-                weaponIntegrity = "Slightly damaged";
-            } else if (getCurIntegrity() < getMaxIntegrity() * 0.75 && getCurIntegrity() >= getMaxIntegrity() * 0.5) {
-                weaponIntegrity = "Damaged";
-            } else if (getCurIntegrity() < getMaxIntegrity() * 0.5 && getCurIntegrity() >= getMaxIntegrity() * 0.25) {
-                weaponIntegrity = "Very damaged";
-            } else if (getCurIntegrity() < getMaxIntegrity() * 0.25 && getCurIntegrity() > 0) {
-                weaponIntegrity = "Severely damaged";
-            } else {
-                weaponIntegrity = "Broken";
-            }
-        weaponIntegrity = String.format("(%s)", weaponIntegrity);
+        String weaponIntegrity = getWeaponIntegrity();
         builder.append(String.format("%-20s%20s\n", "Integrity", weaponIntegrity));
         return builder.toString();
     }
+
+
 }
