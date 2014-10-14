@@ -50,9 +50,17 @@ public class Location implements Serializable {
         return name;
     }
 
-    public double getLightPermittivity() { return lightPermittivity; }
+    public double getLightPermittivity() {
+        return lightPermittivity;
+    }
 
-    public double getVisibility() { return getLightPermittivity() * getWorld().getDayPart().getLuminosity(); }
+    /**
+     * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
+     * light permittivity.
+     */
+    public double getLuminosity() {
+        return getLightPermittivity() * getWorld().getDayPart().getLuminosity();
+    }
 
     public List<Creature> getCreatures() {
         return creatures;

@@ -46,6 +46,8 @@ public class Hero extends Creature {
 
     private Date dateOfBirth;
 
+    private double minimumLuminosity = 0.3;
+
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
         setLevel(1);
@@ -76,6 +78,10 @@ public class Hero extends Creature {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public double getMinimumLuminosity() {
+        return minimumLuminosity;
     }
 
     /**
@@ -111,7 +117,7 @@ public class Hero extends Creature {
         builder.append(getLocation().getName());
 
         builder.append('\n').append(Constants.LINE_1);
-        if (getLocation().getVisibility() > 0.3) {
+        if (getLocation().getLuminosity() >= getMinimumLuminosity()) {
             if (getLocation().getCreatureCount() == 1) {
                 builder.append('\n').append(Constants.NO_CREATURES);
             } else {
@@ -182,12 +188,17 @@ public class Hero extends Creature {
     }
 
     public Creature selectTarget(String[] inputWords) {
-        if (inputWords.length == 1) {
-            List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
-            locationCreatures.remove(this);
-            return Utils.selectFromList(locationCreatures);
+        if (getLocation().getLuminosity() >= getMinimumLuminosity()) {
+            if (inputWords.length == 1) {
+                List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
+                locationCreatures.remove(this);
+                return Utils.selectFromList(locationCreatures);
+            } else {
+                return getLocation().findCreature(inputWords[1]);
+            }
         } else {
-            return getLocation().findCreature(inputWords[1]);
+            IO.writeString(Constants.CANT_SEE_ANYTHING, WriteStyle.MARGIN);
+            return null;
         }
     }
 
