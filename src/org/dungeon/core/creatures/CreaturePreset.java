@@ -1,6 +1,4 @@
-package org.dungeon.core.creatures.enums;
-
-import org.dungeon.core.creatures.AttackAlgorithmID;
+package org.dungeon.core.creatures;
 
 /**
  * An enumerated type of presets for creature creation. Created by Bernardo Sulzbach on 16/09/14.

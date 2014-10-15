@@ -18,8 +18,8 @@
 package org.dungeon.core.counters;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.CreatureType;
 
 import java.io.Serializable;
 

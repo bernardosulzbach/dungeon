@@ -17,9 +17,6 @@
 
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreaturePreset;
-import org.dungeon.core.creatures.enums.CreatureType;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Inventory;

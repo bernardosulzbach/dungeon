@@ -17,7 +17,9 @@
 package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.items.Item;
+import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
 
@@ -35,7 +37,6 @@ public class Location implements Serializable {
     private final List<Item> inventory;
 
     private double lightPermittivity;
-    private double visibility;
 
     private World world;
 
@@ -44,6 +45,19 @@ public class Location implements Serializable {
         this.lightPermittivity = lightPermittivity;
         this.creatures = new ArrayList<Creature>();
         this.inventory = new ArrayList<Item>();
+    }
+
+    public Location(LocationPreset preset) {
+        this.name = preset.getName();
+        this.lightPermittivity = preset.getLightPermittivity();
+        this.creatures = new ArrayList<Creature>();
+        this.inventory = new ArrayList<Item>();
+        for (CreaturePreset creaturePreset : preset.getCreatures()) {
+            this.addCreature(Creature.createCreature(creaturePreset, 1));
+        }
+        for (ItemPreset itemPreset : preset.getItems()) {
+            this.addItem(Item.createItem(itemPreset));
+        }
     }
 
     public String getName() {
@@ -98,15 +112,6 @@ public class Location implements Serializable {
     public boolean hasCreature(Creature creature) {
         for (Creature localCreature : creatures) {
             if (localCreature.equals(creature)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasItem(Item item) {
-        for (Item localItem : inventory) {
-            if (localItem.equals(item)) {
                 return true;
             }
         }

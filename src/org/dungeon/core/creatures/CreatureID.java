@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dungeon.core.creatures.enums;
+package org.dungeon.core.creatures;
 
-/**
- * @author Bernardo Sulzbach
- */
-public enum CreatureType {
-    BEAST("Beast"), CRITTER("Critter"), HERO("Hero"), UNDEAD("Undead");
+public enum CreatureID {
+
+    BAT("Bat"), BEAR("Bear"), FROG("Frog"), HERO("Hero"), MAGE("Mage"), RABBIT("Rabbit"), RAT("Rat"),
+    SKELETON("Skeleton"), SNAKE("Snake"), SPIDER("Spider"), WOLF("Wolf"), ZOMBIE("Zombie");
 
     private final String name;
 
-    CreatureType(String name) {
+    CreatureID(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

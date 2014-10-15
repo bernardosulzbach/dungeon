@@ -20,8 +20,8 @@ package org.dungeon.core.achievements;
 import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Hero;
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.creatures.CreatureID;
+import org.dungeon.core.creatures.CreatureType;
 
 /**
  * Class BattleAchievement that defines a general-purpose battle-related achievements.

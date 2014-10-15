@@ -20,16 +20,15 @@ package org.dungeon.core.game;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
-import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.Hero;
-import org.dungeon.core.creatures.enums.CreatureID;
-import org.dungeon.core.creatures.enums.CreaturePreset;
-import org.dungeon.core.creatures.enums.CreatureType;
+import org.dungeon.core.creatures.*;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
-import org.dungeon.utils.*;
+import org.dungeon.utils.CommandHistory;
+import org.dungeon.utils.Constants;
+import org.dungeon.utils.Hints;
+import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -87,7 +86,12 @@ public final class Campaign implements Serializable {
         campaignHero = new Hero("Seth");
         heroPosition = new Point(0, 0);
 
-        campaignWorld = createDemoWorld();
+        // campaignWorld = createDemoWorld();
+        campaignWorld = new World();
+
+        // TODO: analyze if this should be moved / refactored or done in a different way.
+        campaignWorld.expand(heroPosition);
+        campaignWorld.addCreature(campaignHero, heroPosition);
     }
 
     private List<Achievement> createDemoAchievements() {
@@ -476,16 +480,15 @@ public final class Campaign implements Serializable {
      */
     public int heroWalk(Direction dir) {
         Point destination = new Point(heroPosition, dir);
-        if (getWorld().hasLocation(destination)) {
-            getWorld().moveCreature(campaignHero, heroPosition, destination);
-            heroPosition = destination;
-            campaignHero.setLocation(getWorld().getLocation(destination));
-            IO.writeString("You arrive at " + getWorld().getLocation(destination).getName(), WriteStyle.MARGIN);
-            return TimeConstants.WALK_SUCCESS;
-        } else {
-            IO.writeString(Constants.WALK_BLOCKED, WriteStyle.MARGIN);
-            return TimeConstants.WALK_BLOCKED;
+        if (!getWorld().hasLocation(destination)) {
+
+            getWorld().expand(destination);
         }
+        getWorld().moveCreature(campaignHero, heroPosition, destination);
+        heroPosition = destination;
+        campaignHero.setLocation(getWorld().getLocation(destination));
+        IO.writeString("You arrive at " + getWorld().getLocation(destination).getName(), WriteStyle.MARGIN);
+        return TimeConstants.WALK_SUCCESS;
     }
 
     /**
