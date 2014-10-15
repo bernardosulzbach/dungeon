@@ -17,14 +17,14 @@ public class WorldGenerator implements Serializable {
     /**
      * Instantiates a new World generator. This should be called by the constructor of a World object.
      */
-    public WorldGenerator(World world, LocationPreset[] LOCATION_PRESETS) {
-        this(world, 5, LOCATION_PRESETS);
+    public WorldGenerator(World world, LocationPreset[] locationPresets) {
+        this(world, 5, locationPresets);
     }
 
-    public WorldGenerator(World world, int chunkSide, LocationPreset[] LOCATION_PRESETS) {
+    public WorldGenerator(World world, int chunkSide, LocationPreset[] locationPresets) {
         this.world = world;
         this.chunkSide = chunkSide;
-        this.locationPresets = LOCATION_PRESETS;
+        this.locationPresets = locationPresets;
     }
 
     private Location createRandomLocation() {

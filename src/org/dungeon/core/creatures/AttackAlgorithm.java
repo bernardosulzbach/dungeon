@@ -44,7 +44,7 @@ public class AttackAlgorithm {
         if (0.9 > Game.RANDOM.nextInt()) {
             defender.takeDamage(attacker.getAttack());
             // Damage == attacker's attack.
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n",
+            IO.writeString(String.format("%s inflicted %d damage points to %s.",
                     attacker.getName(), attacker.getAttack(), defender.getName()), WriteStyle.MARGIN);
         } else {
             IO.writeString(String.format("%s tried to hit %s but missed.",
@@ -64,14 +64,16 @@ public class AttackAlgorithm {
         Item weapon = attacker.getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
-        if (weapon != null) {
+        if (weapon != null && !weapon.isBroken()) {
             if (weapon.rollForHit()) {
-                hitDamage = weapon.getDamage();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage,
+                hitDamage = weapon.getDamage() + attacker.getAttack();
+                IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
                         defender.getName()), WriteStyle.MARGIN);
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
-                    attacker.getInventory().removeItem(weapon);
+                    if (!weapon.isRepairable()) {
+                        attacker.getInventory().removeItem(weapon);
+                    }
                 }
             } else {
                 IO.writeString(attacker.getName() + " misses.", WriteStyle.MARGIN);
@@ -81,7 +83,7 @@ public class AttackAlgorithm {
             // Hardcoded 15% miss chance.
             if (0.85 > Game.RANDOM.nextDouble()) {
                 hitDamage = attacker.getAttack();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage,
+                IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
                         defender.getName()), WriteStyle.MARGIN);
             } else {
                 IO.writeString(attacker.getName() + " misses.", WriteStyle.MARGIN);
@@ -97,21 +99,23 @@ public class AttackAlgorithm {
         Item weapon = attacker.getWeapon();
         int hitDamage;
         // Check that there is a weapon and that it is not broken.
-        if (weapon != null) {
+        if (weapon != null && !weapon.isBroken()) {
             if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage() + attacker.getAttack();
                 // Hardcoded 5 % chance of a critical hit (double damage).
                 if (Utils.roll(0.05)) {
                     hitDamage *= 2;
-                    IO.writeString(String.format("%s inflicted %d damage points to %s with a critical hit!\n",
+                    IO.writeString(String.format("%s inflicted %d damage points to %s with a critical hit!",
                             attacker.getName(), hitDamage, defender.getName()), WriteStyle.MARGIN);
                 } else {
-                    IO.writeString(String.format("%s inflicted %d damage points to %s.\n",
+                    IO.writeString(String.format("%s inflicted %d damage points to %s.",
                             attacker.getName(), hitDamage, defender.getName()), WriteStyle.MARGIN);
                 }
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
-                    attacker.getInventory().removeItem(weapon);
+                    if (!weapon.isRepairable()) {
+                        attacker.getInventory().removeItem(weapon);
+                    }
                 }
             } else {
                 IO.writeString(attacker.getName() + " misses.", WriteStyle.MARGIN);
@@ -119,7 +123,7 @@ public class AttackAlgorithm {
             }
         } else {
             hitDamage = attacker.getAttack();
-            IO.writeString(String.format("%s inflicted %d damage points to %s.\n", attacker.getName(), hitDamage,
+            IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
                     defender.getName()), WriteStyle.MARGIN);
         }
         defender.takeDamage(hitDamage);

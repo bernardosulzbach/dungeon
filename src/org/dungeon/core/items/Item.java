@@ -17,6 +17,7 @@
 
 package org.dungeon.core.items;
 
+import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.utils.Constants;
@@ -26,6 +27,9 @@ import java.io.Serializable;
 public class Item implements Selectable, Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    // Ownership.
+    private Creature owner;
 
     // Identification fields.
     private String id;
@@ -45,6 +49,9 @@ public class Item implements Selectable, Serializable {
 
     // Food fields.
     private FoodComponent food;
+
+    // Clocks.
+    private ClockComponent clock;
 
     private Item() {
 
@@ -70,25 +77,29 @@ public class Item implements Selectable, Serializable {
             result.food = new FoodComponent(preset.foodComponent);
         }
 
+        if (preset.clockComponent != null) {
+            result.clock = new ClockComponent(preset.clockComponent);
+            result.clock.setMaster(result);
+        }
+
         return result;
     }
 
     // Getters and setters
+    public Creature getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Creature owner) {
+        this.owner = owner;
+    }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getName() {
@@ -103,28 +114,25 @@ public class Item implements Selectable, Serializable {
         return maxIntegrity;
     }
 
-    public void setMaxIntegrity(int maxIntegrity) {
-        this.maxIntegrity = maxIntegrity;
-    }
-
     public int getCurIntegrity() {
         return curIntegrity;
     }
 
     public void setCurIntegrity(int curIntegrity) {
-        if (curIntegrity < 0) {
-            this.curIntegrity = 0;
-        } else {
+        if (curIntegrity > 0) {
             this.curIntegrity = curIntegrity;
+        } else {
+            this.curIntegrity = 0;
+            // TODO: maybe we should extract the "breaking routine" to another method.
+            if (isClock()) {
+                // A clock just broke! Update its last time record.
+                clock.setLastTime(getOwner().getLocation().getWorld().getWorldDate());
+            }
         }
     }
 
     public boolean isRepairable() {
         return repairable;
-    }
-
-    public void setRepairable(boolean repairable) {
-        this.repairable = repairable;
     }
 
     public boolean isWeapon() {
@@ -139,28 +147,30 @@ public class Item implements Selectable, Serializable {
         return damage;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
     public double getHitRate() {
         return hitRate;
-    }
-
-    public void setHitRate(double hitRate) {
-        this.hitRate = hitRate;
     }
 
     public int getIntegrityDecrementOnHit() {
         return integrityDecrementOnHit;
     }
 
+    // Food methods
     public boolean isFood() {
         return food != null;
     }
 
     public FoodComponent getFood() {
         return food;
+    }
+
+    // Clock methods
+    public boolean isClock() {
+        return clock != null;
+    }
+
+    public ClockComponent getClock() {
+        return clock;
     }
 
     // Durability methods

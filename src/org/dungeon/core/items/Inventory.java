@@ -35,12 +35,9 @@ import java.util.List;
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private int itemLimit;
-
     private final List<Item> itemList;
-
     private final Creature owner;
+    private int itemLimit;
 
     public Inventory(Creature owner, int itemLimit) {
         this.owner = owner;
@@ -100,6 +97,7 @@ public class Inventory implements Serializable {
             IO.writeString(Constants.INVENTORY_FULL_ADD_CALL_WARNING, WriteStyle.WARNING);
         } else {
             itemList.add(newItem);
+            newItem.setOwner(owner);
             IO.writeString("Added " + newItem.getName() + " to the inventory.", WriteStyle.MARGIN);
         }
     }
@@ -109,6 +107,7 @@ public class Inventory implements Serializable {
             owner.setWeapon(null);
         }
         itemList.remove(item);
+        item.setOwner(null);
     }
 
     public int getItemLimit() {
@@ -117,10 +116,6 @@ public class Inventory implements Serializable {
 
     public void setItemLimit(int itemLimit) {
         this.itemLimit = itemLimit;
-    }
-
-    public void printInventoryFull() {
-        IO.writeString("Inventory full.", WriteStyle.MARGIN);
     }
 
 }

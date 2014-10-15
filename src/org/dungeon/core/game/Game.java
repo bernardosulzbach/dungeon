@@ -178,7 +178,7 @@ public class Game {
             }
             //
             else if (s.equals("now")) {
-                campaign.getWorld().printDateAndTime();
+                campaign.getHero().printDateAndTime();
             }
             //
             else if (s.equals("spawns")) {

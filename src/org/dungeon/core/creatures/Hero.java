@@ -29,6 +29,7 @@ import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 import org.joda.time.Period;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,11 +41,9 @@ import java.util.List;
 public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
-
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private BattleLog battleLog;
-
     private Date dateOfBirth;
-
     private double minimumLuminosity = 0.3;
 
     public Hero(String name) {
@@ -229,12 +228,6 @@ public class Hero extends Creature {
         }
     }
 
-    //
-    //
-    // Weapon methods.
-    //
-    //
-
     /**
      * Tries to equip an item from the inventory.
      */
@@ -318,6 +311,24 @@ public class Hero extends Creature {
                 IO.writeString(getName() + " destroyed " + target.getName() + ".", WriteStyle.MARGIN);
             }
         }
+    }
+
+    public boolean hasClock() {
+        for (Item item : getInventory().getItems()) {
+            if (item.isClock()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Item getClock() {
+        for (Item item : getInventory().getItems()) {
+            if (item.isClock()) {
+                return item;
+            }
+        }
+        return null;
     }
 
     //
@@ -441,7 +452,6 @@ public class Hero extends Creature {
             } else {
                 builder.append(days).append(" days");
             }
-
         }
         if (builder.length() == 0) {
             builder.append("Less than a day.");
@@ -451,4 +461,14 @@ public class Hero extends Creature {
         IO.writeString(builder.toString(), WriteStyle.MARGIN);
     }
 
+    public void printDateAndTime() {
+        // TODO: checking time should cost some time.
+        long time = getLocation().getWorld().getWorldDate().getTime();
+        if (hasClock()) {
+            // TODO: this repeated getClock() is terrible. Fix it.
+            IO.writeString(getClock().getClock().getTimeString(time), WriteStyle.MARGIN);
+        } else {
+            IO.writeString(dateFormat.format(time) + " " + "(" + getLocation().getWorld().getDayPart() + ")", WriteStyle.MARGIN);
+        }
+    }
 }

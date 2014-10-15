@@ -27,7 +27,6 @@ import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,7 +43,6 @@ public class World implements Serializable {
 
     private final Date worldDate;
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
@@ -63,7 +61,7 @@ public class World implements Serializable {
 
     private LocationPreset[] getLocationPresets() {
         CreaturePreset[] forestCreatures = {CreaturePreset.RABBIT};
-        ItemPreset[] forestItems = {ItemPreset.APPLE};
+        ItemPreset[] forestItems = {ItemPreset.APPLE, ItemPreset.CLOCK};
         LocationPreset[] locationPresets = {new LocationPreset("Forest", 0.8, forestCreatures, forestItems)};
         return locationPresets;
     }
@@ -161,13 +159,6 @@ public class World implements Serializable {
             sb.append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
         }
         IO.writeString(sb.toString(), WriteStyle.MARGIN);
-    }
-
-    /**
-     * Prints the current date and time of the world.
-     */
-    public void printDateAndTime() {
-        IO.writeString(dateFormat.format(worldDate.getTime()) + " " + "(" + getDayPart() + ")", WriteStyle.MARGIN);
     }
 
     /**
