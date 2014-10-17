@@ -455,10 +455,11 @@ public final class Campaign implements Serializable {
      */
     public int parseHeroWalk(String[] inputWords) {
         if (inputWords.length == 1) {
-            Direction walkDirection = Utils.selectFromList(Arrays.asList(Direction.values()));
-            if (walkDirection != null) {
-                return heroWalk(walkDirection);
-            }
+//            Direction walkDirection = Utils.selectFromList(Arrays.asList(Direction.values()));
+//            if (walkDirection != null) {
+//                return heroWalk(walkDirection);
+//            }
+            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
         } else {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {

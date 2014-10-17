@@ -19,6 +19,7 @@ package org.dungeon.io;
 import org.dungeon.utils.Constants;
 
 import java.util.Scanner;
+import org.dungeon.core.game.Game;
 
 /**
  * IO class that encapsulates all Input/Output operations.
@@ -27,10 +28,10 @@ import java.util.Scanner;
  */
 public class IO {
 
-    /**
-     * The Scanner used for all the IO operations.
-     */
-    public static final Scanner SCANNER = new Scanner(System.in);
+//    /**
+//     * The Scanner used for all the IO operations.
+//     */
+//    public static final Scanner SCANNER = new Scanner(System.in);
 
     /**
      * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
@@ -47,12 +48,14 @@ public class IO {
             case WARNING:
                 System.err.println(Constants.WARNING + ": " + string);
                 return;
+            case NONE:
+                break;
         }
         // Remove extra newlines at the end.
         while (string.charAt(string.length() - 1) == '\n' || Character.isSpaceChar(string.charAt(string.length() - 1))) {
             string = string.substring(0, string.length() - 1);
         }
-        System.out.println(string);
+        Game.gameWindow.writeToTextPane(string);
     }
 
     public static String insertBeforeLines(String text, String word) {
@@ -72,16 +75,16 @@ public class IO {
         return builder.toString();
     }
 
-    /**
-     * Read a line of input from the user.
-     */
-    public static String readString() {
-        String line;
-        do {
-            System.out.print("> ");
-            line = SCANNER.nextLine().trim();
-        } while (line.equals(""));
-        return line;
-    }
+//    /**
+//     * Read a line of input from the user.
+//     */
+//    public static String readString() {
+//        String line;
+//        do {
+//            System.out.print("> ");
+//            line = SCANNER.nextLine().trim();
+//        } while (line.equals(""));
+//        return line;
+//    }
 
 }

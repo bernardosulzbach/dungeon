@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.dungeon.core.creatures;
 
 import org.dungeon.core.counters.BattleLog;
@@ -163,7 +162,9 @@ public class Hero extends Creature {
     //
     public Item selectInventoryItem(String[] inputWords) {
         if (inputWords.length == 1) {
-            return Utils.selectFromList(getInventory().getItems());
+//            return Utils.selectFromList(getInventory().getItems());
+            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            return null;
         } else {
             Item queryResult = getInventory().findItem(inputWords[1]);
             if (queryResult == null) {
@@ -175,7 +176,9 @@ public class Hero extends Creature {
 
     public Item selectLocationItem(String[] inputWords) {
         if (inputWords.length == 1) {
-            return Utils.selectFromList(getLocation().getItems());
+//            return Utils.selectFromList(getLocation().getItems());
+            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            return null;
         } else {
             Item queryResult = getLocation().findItem(inputWords[1]);
             if (queryResult == null) {
@@ -188,9 +191,11 @@ public class Hero extends Creature {
     public Creature selectTarget(String[] inputWords) {
         if (getLocation().getLuminosity() >= getMinimumLuminosity()) {
             if (inputWords.length == 1) {
-                List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
-                locationCreatures.remove(this);
-                return Utils.selectFromList(locationCreatures);
+//                List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
+//                locationCreatures.remove(this);
+//                return Utils.selectFromList(locationCreatures);
+                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+                return null;
             } else {
                 return getLocation().findCreature(inputWords[1]);
             }
@@ -205,7 +210,6 @@ public class Hero extends Creature {
     // Inventory methods.
     //
     //
-
     /**
      * Attempts to pick and item and add it to the inventory.
      */
@@ -295,7 +299,9 @@ public class Hero extends Creature {
     public void destroyItem(String[] words) {
         Item target;
         if (words.length == 1) {
-            target = Utils.selectFromList(getLocation().getItems());
+//            target = Utils.selectFromList(getLocation().getItems());
+            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            target = null;
         } else {
             target = getLocation().findItem(words[1]);
         }

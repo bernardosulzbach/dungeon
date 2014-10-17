@@ -21,6 +21,7 @@ import org.dungeon.core.game.Campaign;
 import org.dungeon.utils.Constants;
 
 import java.io.*;
+import javax.swing.JOptionPane;
 
 public class Loader {
 
@@ -79,23 +80,30 @@ public class Loader {
         }
     }
 
+//    /**
+//     * Prompt the user to confirm an operation (as saving and loading the game).
+//     */
+//    public static boolean confirmOperation(String confirmation) {
+//        IO.writeString(confirmation + " ( Y / N )", WriteStyle.MARGIN);
+//        while (true) {
+//            String input = IO.readString().toLowerCase();
+//            if (input.equals("y") || input.equals("yes")) {
+//                return true;
+//            } else if (input.equals("n") || input.equals("no")) {
+//                return false;
+//            } else {
+//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+//            }
+//        }
+//    }
+
     /**
-     * Prompt the user to confirm an operation (as saving and loading the game).
+     * Prompts the user to confirm an operation using a dialog window.
      */
     public static boolean confirmOperation(String confirmation) {
-        IO.writeString(confirmation + " ( Y / N )", WriteStyle.MARGIN);
-        while (true) {
-            String input = IO.readString().toLowerCase();
-            if (input.equals("y") || input.equals("yes")) {
-                return true;
-            } else if (input.equals("n") || input.equals("no")) {
-                return false;
-            } else {
-                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-            }
-        }
+        return JOptionPane.showConfirmDialog(null, confirmation) == JOptionPane.YES_OPTION;
     }
-
+    
     /**
      * Attempts to load a serialized Campaign object.
      */

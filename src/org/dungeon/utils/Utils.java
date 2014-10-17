@@ -57,47 +57,47 @@ public class Utils {
         }
     }
 
-    /**
-     * Method that let the player select a Selectable object from a List.
-     */
-    public static <T extends Selectable> T selectFromList(List<T> list) {
-        int size = list.size();
-        String indexFormat;
-        if (list.isEmpty()) {
-            IO.writeString("No options available.", WriteStyle.MARGIN);
-            return null;
-        } else if (size < 10) {
-            indexFormat = "%1d";
-        } else {
-            indexFormat = "%2d";
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format(indexFormat, 0)).append(". ").append("Abort").append('\n');
-        int index = 1;
-        for (Selectable aSelectable : list) {
-            builder.append(String.format(indexFormat, index)).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
-            index++;
-        }
-        IO.writeString(builder.toString(), WriteStyle.MARGIN);
-        int choice;
-        while (true) {
-            try {
-                choice = Integer.parseInt(IO.readString());
-            } catch (NumberFormatException exception) {
-                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-                continue;
-            }
-            if (choice < 0 || choice > list.size()) {
-                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-            } else {
-                break;
-            }
-        }
-        if (choice == 0) {
-            return null;
-        }
-        return list.get(choice - 1);
-    }
+//    /**
+//     * Method that let the player select a Selectable object from a List.
+//     */
+//    public static <T extends Selectable> T selectFromList(List<T> list) {
+//        int size = list.size();
+//        String indexFormat;
+//        if (list.isEmpty()) {
+//            IO.writeString("No options available.", WriteStyle.MARGIN);
+//            return null;
+//        } else if (size < 10) {
+//            indexFormat = "%1d";
+//        } else {
+//            indexFormat = "%2d";
+//        }
+//        StringBuilder builder = new StringBuilder();
+//        builder.append(String.format(indexFormat, 0)).append(". ").append("Abort").append('\n');
+//        int index = 1;
+//        for (Selectable aSelectable : list) {
+//            builder.append(String.format(indexFormat, index)).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
+//            index++;
+//        }
+//        IO.writeString(builder.toString(), WriteStyle.MARGIN);
+//        int choice;
+//        while (true) {
+//            try {
+//                choice = Integer.parseInt(IO.readString());
+//            } catch (NumberFormatException exception) {
+//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+//                continue;
+//            }
+//            if (choice < 0 || choice > list.size()) {
+//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+//            } else {
+//                break;
+//            }
+//        }
+//        if (choice == 0) {
+//            return null;
+//        }
+//        return list.get(choice - 1);
+//    }
 
     /**
      * Prints a message reporting the usage of an invalid command.
