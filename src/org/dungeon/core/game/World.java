@@ -42,7 +42,6 @@ public class World implements Serializable {
 
     private final Date worldDate;
 
-
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
@@ -157,7 +156,7 @@ public class World implements Serializable {
         for (CreatureID id : spawnCounter.keySet()) {
             sb.append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
         }
-        IO.writeString(sb.toString(), WriteStyle.MARGIN);
+        IO.writeString(sb.toString());
     }
 
     /**

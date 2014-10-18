@@ -24,5 +24,5 @@
 ########################################################################################################################
 
 aspect = "combat"
-info = "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' with or without a target to start a combat or to pick a target from a list. Once in combat, all turns are simulated by the game engine. Your character will always try to use its more powerful attack against its opponent."
-aliases = "fight"
+info = "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent."
+aliases = "fight", "duel"

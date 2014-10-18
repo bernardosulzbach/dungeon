@@ -18,10 +18,11 @@ package org.dungeon.io;
 
 /**
  * Enumerated type that provides a set of different writing styles that dictate how an output string will be formatted.
- * 
+ *
  * @author Bernardo Sulzbach
  */
 public enum WriteStyle {
+
     /**
      * Add a blank line between text lines and use Constants.MARGIN twice before each text line.
      */

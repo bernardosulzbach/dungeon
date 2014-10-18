@@ -21,7 +21,6 @@ import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
 
@@ -171,7 +170,6 @@ public class Creature implements Selectable, Serializable {
         this.attack = attack;
     }
 
-
     public int getAttackIncrement() {
         return attackIncrement;
     }
@@ -217,7 +215,6 @@ public class Creature implements Selectable, Serializable {
     // General methods.
     //
     //
-
     /**
      * Increments the creature's health by a certain amount, never exceeding its maximum health.
      */
@@ -241,7 +238,7 @@ public class Creature implements Selectable, Serializable {
 
     public void addExperience(int amount) {
         this.experience += amount;
-        IO.writeString(getName() + " got " + amount + " experience points.", WriteStyle.MARGIN);
+        IO.writeString(getName() + " got " + amount + " experience points.");
         if (this.experience >= getExperienceToNextLevel()) {
             levelUp();
         }
@@ -262,7 +259,7 @@ public class Creature implements Selectable, Serializable {
         sb.append(StringUtils.centerString(Constants.LEVEL_UP, '-')).append("\n");
         sb.append(String.format("%s is now level %d.", getName(), getLevel())).append("\n");
         sb.append(String.format("Level %d progress: %d / %d", getLevel() + 1, getExperience(), getExperienceToNextLevel())).append("\n");
-        IO.writeString(sb.toString(), WriteStyle.MARGIN);
+        IO.writeString(sb.toString());
     }
 
     //
@@ -273,13 +270,13 @@ public class Creature implements Selectable, Serializable {
     public void addGold(int amount) {
         if (amount > 0) {
             this.setGold(this.getGold() + amount);
-            IO.writeString(getName() + " got " + amount + " gold coins.", WriteStyle.MARGIN);
+            IO.writeString(getName() + " got " + amount + " gold coins.");
         }
     }
 
     /**
-     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the creature has enough gold
-     * before subtracting any.
+     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the
+     * creature has enough gold before subtracting any.
      */
     public void subtractGold(int amount) {
         if (this.getGold() - amount > 0) {
@@ -311,7 +308,6 @@ public class Creature implements Selectable, Serializable {
     // Predicate methods.
     //
     //
-
     /**
      * Checks if the creature is alive.
      */
@@ -332,7 +328,6 @@ public class Creature implements Selectable, Serializable {
     public boolean hasWeapon() {
         return getWeapon() != null;
     }
-
 
     //
     //

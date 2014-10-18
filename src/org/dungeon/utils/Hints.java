@@ -24,11 +24,11 @@ package org.dungeon.utils;
 public class Hints {
 
     public static final String[] hintsArray = {
-            "Attacks against critters deal 100% bonus damage.",
-            "If the creature has a weapon, it will be used to perform the attack.\n" +
-                    "Otherwise, the creature will attack with its bare hands.",
-            "The command 'achievements' will also show the total number of achievements.",
-            "You can use 'whereami' to see your coordinates.\n" +
-                    "This command is specially useful when trespassing complex parts of the world."};
+        "Attacks against critters deal 100% bonus damage.",
+        "If the creature has a weapon, it will be used to perform the attack.\n"
+        + "Otherwise, the creature will attack with its bare hands.",
+        "The command 'achievements' will also show the total number of achievements.",
+        "You can use 'whereami' to see your coordinates.\n"
+        + "This command is specially useful when trespassing complex parts of the world."};
 
 }

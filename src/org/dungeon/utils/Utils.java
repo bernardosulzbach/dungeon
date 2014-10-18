@@ -17,11 +17,8 @@
 package org.dungeon.utils;
 
 import org.dungeon.core.game.Game;
-import org.dungeon.core.game.Selectable;
 import org.dungeon.io.IO;
 import org.dungeon.io.WriteStyle;
-
-import java.util.List;
 
 /**
  * General utility class.
@@ -34,14 +31,14 @@ public class Utils {
      * Prints the startup heading.
      */
     public static void printHeading() {
-        IO.writeString(Constants.HEADING, WriteStyle.MARGIN);
+        IO.writeString(Constants.HEADING, WriteStyle.NONE);
     }
 
     /**
-     * Prints the game's name followed by the version and its codename.
+     * Prints the full name of the current version of the game.
      */
     public static void printVersion() {
-        IO.writeString(Constants.TITLE + " " + Constants.VERSION + " - " + Constants.CODENAME, WriteStyle.MARGIN);
+        IO.writeString(Constants.FULLNAME, WriteStyle.NONE);
     }
 
     /**
@@ -57,61 +54,20 @@ public class Utils {
         }
     }
 
-//    /**
-//     * Method that let the player select a Selectable object from a List.
-//     */
-//    public static <T extends Selectable> T selectFromList(List<T> list) {
-//        int size = list.size();
-//        String indexFormat;
-//        if (list.isEmpty()) {
-//            IO.writeString("No options available.", WriteStyle.MARGIN);
-//            return null;
-//        } else if (size < 10) {
-//            indexFormat = "%1d";
-//        } else {
-//            indexFormat = "%2d";
-//        }
-//        StringBuilder builder = new StringBuilder();
-//        builder.append(String.format(indexFormat, 0)).append(". ").append("Abort").append('\n');
-//        int index = 1;
-//        for (Selectable aSelectable : list) {
-//            builder.append(String.format(indexFormat, index)).append(". ").append(aSelectable.toSelectionEntry()).append('\n');
-//            index++;
-//        }
-//        IO.writeString(builder.toString(), WriteStyle.MARGIN);
-//        int choice;
-//        while (true) {
-//            try {
-//                choice = Integer.parseInt(IO.readString());
-//            } catch (NumberFormatException exception) {
-//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-//                continue;
-//            }
-//            if (choice < 0 || choice > list.size()) {
-//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-//            } else {
-//                break;
-//            }
-//        }
-//        if (choice == 0) {
-//            return null;
-//        }
-//        return list.get(choice - 1);
-//    }
-
     /**
      * Prints a message reporting the usage of an invalid command.
      */
     public static void printInvalidCommandMessage(String command) {
-        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.", WriteStyle.MARGIN);
+        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
     }
 
     public static void printCredits() {
-        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n", WriteStyle.MARGIN);
+        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n");
     }
 
     /**
      * Simulates a random roll.
+     *
      * @param chance the probability of a true result. Must be nonnegative and smaller than 1.
      */
     public static boolean roll(double chance) {

@@ -41,7 +41,7 @@ public class Loader {
     // TODO: add support to load 'filename' syntax.
     public static Campaign loadGameRoutine() {
         if (checkForExistingSave()) {
-            IO.writeString(Constants.FILE_FOUND, WriteStyle.MARGIN);
+            IO.writeString(Constants.FILE_FOUND);
             if (confirmOperation(Constants.LOAD_CONFIRM)) {
                 return loadCampaign();
             }
@@ -79,30 +79,13 @@ public class Loader {
         }
     }
 
-//    /**
-//     * Prompt the user to confirm an operation (as saving and loading the game).
-//     */
-//    public static boolean confirmOperation(String confirmation) {
-//        IO.writeString(confirmation + " ( Y / N )", WriteStyle.MARGIN);
-//        while (true) {
-//            String input = IO.readString().toLowerCase();
-//            if (input.equals("y") || input.equals("yes")) {
-//                return true;
-//            } else if (input.equals("n") || input.equals("no")) {
-//                return false;
-//            } else {
-//                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
-//            }
-//        }
-//    }
-
     /**
      * Prompts the user to confirm an operation using a dialog window.
      */
     public static boolean confirmOperation(String confirmation) {
-        return JOptionPane.showConfirmDialog(null, confirmation) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(null, confirmation, "Confirm operation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
-    
+
     /**
      * Attempts to load a serialized Campaign object.
      */
@@ -114,13 +97,13 @@ public class Loader {
             objectInStream = new ObjectInputStream(fileInStream);
             Campaign loadedCampaign = (Campaign) objectInStream.readObject();
             objectInStream.close();
-            IO.writeString(Constants.LOAD_SUCCESS, WriteStyle.MARGIN);
+            IO.writeString(Constants.LOAD_SUCCESS);
             return loadedCampaign;
         } catch (IOException ex) {
-            IO.writeString(Constants.LOAD_ERROR, WriteStyle.MARGIN);
+            IO.writeString(Constants.LOAD_ERROR);
             return new Campaign();
         } catch (ClassNotFoundException ex) {
-            IO.writeString(Constants.LOAD_ERROR, WriteStyle.MARGIN);
+            IO.writeString(Constants.LOAD_ERROR);
             return new Campaign();
         }
     }
@@ -138,12 +121,12 @@ public class Loader {
             objectOutStream.close();
             campaign.setSaved(true);
             if (!quiet) {
-                IO.writeString(Constants.SAVE_SUCCESS, WriteStyle.MARGIN);
+                IO.writeString(Constants.SAVE_SUCCESS);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
             if (!quiet) {
-                IO.writeString(Constants.SAVE_ERROR, WriteStyle.MARGIN);
+                IO.writeString(Constants.SAVE_ERROR);
             }
         }
     }

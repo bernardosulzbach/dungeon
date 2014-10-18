@@ -208,8 +208,6 @@ public class Item implements Selectable, Serializable {
     }
 
     // Food methods
-
-
     // Selectable implementation
     @Override
     public String toSelectionEntry() {
@@ -234,6 +232,5 @@ public class Item implements Selectable, Serializable {
         builder.append(String.format("%-20s%20s\n", "Integrity", weaponIntegrity));
         return builder.toString();
     }
-
 
 }

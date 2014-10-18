@@ -25,7 +25,7 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param fill   the filling character.
+     * @param fill the filling character.
      * @return a centered string.
      */
     public static String centerString(String string, char fill) {
@@ -36,8 +36,8 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param width  the width of the resulting string.
-     * @param fill   the filling character.
+     * @param width the width of the resulting string.
+     * @param fill the filling character.
      * @return a centered string.
      */
     public static String centerString(String string, int width, char fill) {
@@ -85,8 +85,7 @@ public class StringUtils {
 
     /**
      * Verifies if the first character of a string matches the first character of the first character of another string.
-     * Ignores case.
-     * Throws IllegalArgumentException.
+     * Ignores case. Throws IllegalArgumentException.
      */
     public static boolean firstEqualsIgnoreCase(String s1, String s2) {
         if (s1.length() == 0 || s2.length() == 0) {

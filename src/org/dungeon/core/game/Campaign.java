@@ -99,7 +99,6 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that do not require specific kills.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         list.add(new BattleAchievement("First Blood", "Kill a creature.",
                 10, 1, 0, null, null, null));
         list.add(new BattleAchievement("Killer", "Kill 10 creatures.",
@@ -110,7 +109,6 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific creature ID.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // Bane requires six battles against bats.
         CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>(CreatureID.BAT, 6);
         list.add(new BattleAchievement("Bane", "Kill 6 bats.",
@@ -135,7 +133,6 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific type.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // Professional Coward requires killing 10 critters.
         CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>(CreatureType.CRITTER, 10);
         list.add(new BattleAchievement("Professional Coward", "Kill 10 critters.",
@@ -148,7 +145,6 @@ public final class Campaign implements Serializable {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the number of kills with a specific weapon.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // An empty string is used to to register unarmed kills.
         CounterMap<String> fiveFingerDeathPunchReqs = new CounterMap<String>("", 1);
         list.add(new BattleAchievement("Five Finger Death Punch", "Kill a creature unarmed.",
@@ -363,7 +359,7 @@ public final class Campaign implements Serializable {
     }
 
     public void printCommandCount() {
-        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount(), WriteStyle.MARGIN);
+        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount());
     }
 
     public World getWorld() {
@@ -431,7 +427,7 @@ public final class Campaign implements Serializable {
                 builder.append('\n').append(Constants.MARGIN).append(a.getInfo());
             }
         }
-        IO.writeString(builder.toString(), WriteStyle.MARGIN);
+        IO.writeString(builder.toString());
     }
 
     /**
@@ -458,7 +454,7 @@ public final class Campaign implements Serializable {
 //            if (walkDirection != null) {
 //                return heroWalk(walkDirection);
 //            }
-            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVALID_INPUT);
         } else {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
@@ -467,7 +463,7 @@ public final class Campaign implements Serializable {
                     return heroWalk(dir);
                 }
             }
-            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVALID_INPUT);
         }
         // The user did not walk.
         return 0;
@@ -487,7 +483,7 @@ public final class Campaign implements Serializable {
         getWorld().moveCreature(campaignHero, heroPosition, destination);
         heroPosition = destination;
         campaignHero.setLocation(getWorld().getLocation(destination));
-        IO.writeString("You arrive at " + getWorld().getLocation(destination).getName(), WriteStyle.MARGIN);
+        IO.writeString("You arrive at " + getWorld().getLocation(destination).getName());
         return TimeConstants.WALK_SUCCESS;
     }
 
@@ -495,7 +491,7 @@ public final class Campaign implements Serializable {
      * Prints the next hint.
      */
     public void printNextHint() {
-        IO.writeString(Hints.hintsArray[getNextHintIndex()], WriteStyle.MARGIN);
+        IO.writeString(Hints.hintsArray[getNextHintIndex()]);
         incrementNextHintIndex();
     }
 

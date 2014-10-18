@@ -28,8 +28,7 @@ import java.util.List;
 /**
  * Inventory class that defines a common general-purpose Item storage and query structure.
  * <p/>
- * Change log
- * Created by Bernardo on 19/09/2014.
+ * Change log Created by Bernardo on 19/09/2014.
  */
 public class Inventory implements Serializable {
 
@@ -54,13 +53,13 @@ public class Inventory implements Serializable {
 
     public void printItems() {
         if (itemList.size() == 0) {
-            IO.writeString("Inventory is empty.", WriteStyle.MARGIN);
+            IO.writeString("Inventory is empty.");
         } else {
             StringBuilder builder = new StringBuilder();
             for (Item itemInInventory : itemList) {
                 builder.append(itemInInventory.toSelectionEntry()).append('\n');
             }
-            IO.writeString(builder.toString(), WriteStyle.MARGIN);
+            IO.writeString(builder.toString());
         }
     }
 
@@ -81,8 +80,7 @@ public class Inventory implements Serializable {
     }
 
     /**
-     * Attempts to add an item object to the inventory.
-     * Prints a warning if the inventory was full.
+     * Attempts to add an item object to the inventory. Prints a warning if the inventory was full.
      */
     public void addItem(Item newItem) {
         // Check that the new item is not already in the inventory.
@@ -91,13 +89,13 @@ public class Inventory implements Serializable {
         }
         if (isFull()) {
             // Print the default inventory full message.
-            IO.writeString(Constants.INVENTORY_FULL, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVENTORY_FULL);
             // Print the warning about calling addItem on a full Inventory object.
             IO.writeString(Constants.INVENTORY_FULL_ADD_CALL_WARNING, WriteStyle.WARNING);
         } else {
             itemList.add(newItem);
             newItem.setOwner(owner);
-            IO.writeString("Added " + newItem.getName() + " to the inventory.", WriteStyle.MARGIN);
+            IO.writeString("Added " + newItem.getName() + " to the inventory.");
         }
     }
 

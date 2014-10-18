@@ -18,6 +18,7 @@ package org.dungeon.help;
 
 // Generated builder for CommandHelp.
 public class CommandHelpBuilder {
+
     private String name;
     private String info;
     private String[] aliases;

@@ -17,6 +17,7 @@
 package org.dungeon.core.items;
 
 public enum ItemPreset {
+
     APPLE("APPLE", "Food", "Apple", 12, 12, false, true, 6, 0.7, 4, new FoodComponent(8, 4, 6), null),
     AXE("AXE", "Weapon", "Axe", 85, 85, false, true, 18, 0.8, 1, null, null),
     CHERRY("CHERRY", "Food", "Cherry", 4, 4, false, true, 2, 0.8, 4, new FoodComponent(4, 2, 4), null),
@@ -52,17 +53,17 @@ public enum ItemPreset {
     protected final ClockComponent clockComponent;
 
     ItemPreset(String id,
-               String type,
-               String name,
-               int maxIntegrity,
-               int curIntegrity,
-               boolean repairable,
-               boolean weapon,
-               int damage,
-               double hitRate,
-               int integrityDecrementOnHit,
-               FoodComponent foodComponent,
-               ClockComponent clockComponent) {
+            String type,
+            String name,
+            int maxIntegrity,
+            int curIntegrity,
+            boolean repairable,
+            boolean weapon,
+            int damage,
+            double hitRate,
+            int integrityDecrementOnHit,
+            FoodComponent foodComponent,
+            ClockComponent clockComponent) {
         this.id = id;
         this.type = type;
         this.name = name;

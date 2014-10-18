@@ -25,7 +25,6 @@ import java.io.Serializable;
  */
 public class WorldGenerator implements Serializable {
 
-
     private final World world;
     private final int chunkSide;
     private final LocationPreset[] locationPresets;

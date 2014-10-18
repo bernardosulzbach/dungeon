@@ -18,7 +18,6 @@ package org.dungeon.io;
 
 import org.dungeon.utils.Constants;
 
-import java.util.Scanner;
 import org.dungeon.core.game.Game;
 
 /**
@@ -28,10 +27,9 @@ import org.dungeon.core.game.Game;
  */
 public class IO {
 
-//    /**
-//     * The Scanner used for all the IO operations.
-//     */
-//    public static final Scanner SCANNER = new Scanner(System.in);
+    public static void writeString(String string) {
+        writeString(string, WriteStyle.NONE);
+    }
 
     /**
      * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
@@ -55,7 +53,7 @@ public class IO {
         while (string.charAt(string.length() - 1) == '\n' || Character.isSpaceChar(string.charAt(string.length() - 1))) {
             string = string.substring(0, string.length() - 1);
         }
-        Game.gameWindow.writeToTextPane(string);
+        Game.gameWindow.writeToTextPane(string + '\n');
     }
 
     public static String insertBeforeLines(String text, String word) {
@@ -86,5 +84,4 @@ public class IO {
 //        } while (line.equals(""));
 //        return line;
 //    }
-
 }

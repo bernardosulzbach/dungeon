@@ -33,14 +33,14 @@ public class DateAndTime {
      * Print the current time according to the final SimpleDateFormat TIME.
      */
     public static void printTime() {
-        IO.writeString(TIME.format(new Date()), WriteStyle.MARGIN);
+        IO.writeString(TIME.format(new Date()));
     }
 
     /**
      * Print the current date according to the final SimpleDateFormat DATE.
      */
     public static void printDate() {
-        IO.writeString(DATE.format(new Date()), WriteStyle.MARGIN);
+        IO.writeString(DATE.format(new Date()));
     }
 
 }

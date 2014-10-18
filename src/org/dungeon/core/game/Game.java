@@ -29,18 +29,13 @@ import org.dungeon.gui.GameWindow;
 
 public class Game {
 
-    /**
-     * The Random object used to control random events throughout the game.
-     */
+    /** The Random object used to control random events throughout the game. */
     public static final Random RANDOM = new Random();
 
-    /**
-     * The window to what the games write output and get user input.
-     *
-     * @param args
-     */
+    /** The window to what the games write output and get user input. */
     public static GameWindow gameWindow;
-    
+    public static Campaign campaign;
+
     public static void main(String[] args) {
 
         boolean initializeHelp = true;
@@ -57,29 +52,32 @@ public class Game {
 
         // Instantiate the game window.
         gameWindow = new GameWindow();
-        
-        Campaign gameCampaign = Loader.loadGameRoutine();
-        
-        gameWindow.setCampaign(gameCampaign);
-        
+
+        campaign = Loader.loadGameRoutine();
+
         Utils.printHeading();
     }
 
-    public static void renderTurn(Campaign campaign, String inputString) {
+    /**
+     * Renders a turn based on an input string.
+     *
+     * @param inputString an input string provided by the player.
+     * @return true if the game did not end. False otherwise.
+     */
+    public static boolean renderTurn(String inputString) {
         // Let the player play a turn and get its length (in seconds).
-        int turnLength = processInput(campaign, inputString);
+        int turnLength = processInput(inputString);
         // -1 is returned by getTurn when the player issues a quit command.
         if (turnLength == -1) {
             if (!campaign.isSaved()) {
                 Loader.saveGameRoutine(campaign);
             }
-            return;
+            return false;
         }
         if (campaign.getHero().isDead()) {
-            IO.writeString("You died.", WriteStyle.MARGIN);
+            IO.writeString("You died.");
             // After the player's death, just prompt to load the default save file.
             campaign = Loader.loadGameRoutine();
-            return;
         }
         // Advance the campaign's world date.
         campaign.getWorld().rollDate(turnLength);
@@ -87,6 +85,7 @@ public class Game {
         campaign.refresh();
         // After a player's turn, the campaign is not saved anymore.
         campaign.setSaved(false);
+        return true;
     }
 
     /**
@@ -94,7 +93,7 @@ public class Game {
      * <p/>
      * Returns how many seconds the player's turn took. Returns -1 if the player issued a quit command.
      */
-    private static int processInput(Campaign campaign, String inputString) {
+    private static int processInput(String inputString) {
         String firstWord;
         String[] inputWords;
         // Add the command the user entered to the campaign's command history.
@@ -158,10 +157,10 @@ public class Game {
             campaign.printCommandCount();
         } //
         else if (firstWord.equals("whoami")) {
-            IO.writeString(campaign.getHeroInfo(), WriteStyle.MARGIN);
+            IO.writeString(campaign.getHeroInfo());
         } //
         else if (firstWord.equals("whereami")) {
-            IO.writeString(campaign.getHeroPosition().toString(), WriteStyle.MARGIN);
+            IO.writeString(campaign.getHeroPosition().toString());
         } //
         else if (firstWord.equals("achievements")) {
             campaign.printUnlockedAchievements();
@@ -206,8 +205,9 @@ public class Game {
         else if (firstWord.equals("version")) {
             Utils.printVersion();
             // The user issued a command, but it was not recognized.
-        } //
-        else {
+        } else if (firstWord.equals("clear")) {
+            gameWindow.clearTextPane();
+        } else {
             Utils.printInvalidCommandMessage(inputWords[0]);
         }
         return 0;
@@ -222,9 +222,9 @@ public class Game {
         if (attacker == defender) {
             // Two different messages.
             if (RANDOM.nextBoolean()) {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_1, WriteStyle.MARGIN);
+                IO.writeString(Constants.SUICIDE_ATTEMPT_1);
             } else {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_2, WriteStyle.MARGIN);
+                IO.writeString(Constants.SUICIDE_ATTEMPT_2);
             }
             return 0;
         }
@@ -249,7 +249,7 @@ public class Game {
             survivor = defender;
             defeated = attacker;
         }
-        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", WriteStyle.MARGIN);
+        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
         // Add information about this battle to the Hero's battle log.
         attacker.getBattleLog().addBattle(attacker, defender, attacker == survivor, turns);
         battleCleanup(survivor, defeated);

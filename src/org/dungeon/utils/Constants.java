@@ -29,8 +29,7 @@ public class Constants {
     // This variable is used as a guide to some methods, not as a rule to output operations.
     // Therefore, some lines may have more than 75 characters.
     // Note, though, that lines (produced by the game) any longer than this are considered bugs and should be reported.
-
-    public static final int WIDTH = 75;
+    public static final int WIDTH = 100;
     public static final String LINE_1 = StringUtils.makeRepeatedCharacterString(WIDTH, '-');
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
     public static final String TITLE = "Dungeon";
@@ -40,8 +39,10 @@ public class Constants {
      * Basic version information. (01/10/2014)
      */
     // Note that we do not use Semantic Versioning for a matter of style.
-    public static final String VERSION = "v0.0.2.2";
-    public static final String CODENAME = "Slack";
+    public static final String VERSION = "v0.0.3";
+    public static final String CODENAME = "Bowman";
+    // The name used as the window title. Contains the game's name, version and its version's codename.
+    public static final String FULLNAME = String.format("%s %s (%s)", TITLE, VERSION, CODENAME);
 
     /**
      * String used to improve output readability.

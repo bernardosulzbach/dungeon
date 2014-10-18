@@ -127,7 +127,7 @@ public class Location implements Serializable {
                 return creature;
             }
         }
-        IO.writeString("Creature not found.", WriteStyle.MARGIN);
+        IO.writeString("Creature not found.");
         return null;
     }
 

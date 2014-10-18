@@ -175,10 +175,8 @@ public final class Help {
     /**
      * Parses an array of strings and returns the individual strings.
      * <p/>
-     * For instance, passing
-     * ""word\", \"another\", \"more three words.\""
-     * to this method will result in
-     * ["word", "another", "more three words"]
+     * For instance, passing ""word\", \"another\", \"more three words.\"" to this method will result in ["word",
+     * "another", "more three words"]
      */
     private static String[] parseStringArray(String line) {
         List<String> innerStrings = new ArrayList<String>();
@@ -206,16 +204,16 @@ public final class Help {
 
     public static void printHelp(String[] words) {
         if (!initialized) {
-            IO.writeString(HelpConstants.NOT_INITIALIZED, WriteStyle.MARGIN);
+            IO.writeString(HelpConstants.NOT_INITIALIZED);
             ;
         } else if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
-            IO.writeString(HelpConstants.HELP_USAGE, WriteStyle.MARGIN);
+            IO.writeString(HelpConstants.HELP_USAGE);
         } else {
             if (!printCommandHelp(words)) {
                 if (!printAspectHelp(words)) {
                     // There was no match.
-                    IO.writeString(String.format("No help text for '%s' could be found.", words[1]), WriteStyle.MARGIN);
+                    IO.writeString(String.format("No help text for '%s' could be found.", words[1]));
                 }
             }
         }
@@ -258,11 +256,12 @@ public final class Help {
             builder.append(command.toOneLineString());
             builder.append('\n');
         }
-        IO.writeString(builder.toString(), WriteStyle.MARGIN);
+        IO.writeString(builder.toString());
     }
 
     // TODO: consider also providing the number of the line of the text file that caused the error.
     private static class IllegalHelpFormatException extends RuntimeException {
+
         private IllegalHelpFormatException(String message) {
             super(message);
         }

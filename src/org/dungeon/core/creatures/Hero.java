@@ -23,16 +23,12 @@ import org.dungeon.core.items.FoodComponent;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
 import org.joda.time.Period;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -40,10 +36,10 @@ import java.util.List;
 public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private BattleLog battleLog;
-    private Date dateOfBirth;
-    private double minimumLuminosity = 0.3;
+    private final Date dateOfBirth;
+    private final double minimumLuminosity = 0.3;
 
     public Hero(String name) {
         super(CreatureType.HERO, CreatureID.HERO, name);
@@ -95,13 +91,13 @@ public class Hero extends Creature {
      */
     public int rest() {
         if (getCurHealth() >= (int) (0.6 * getMaxHealth())) {
-            IO.writeString("You are already rested.", WriteStyle.MARGIN);
+            IO.writeString("You are already rested.");
             return 0;
         } else {
             double fractionHealed = 0.6 - (double) getCurHealth() / (double) getMaxHealth();
-            IO.writeString("Resting...", WriteStyle.MARGIN);
+            IO.writeString("Resting...");
             setCurHealth((int) (0.6 * getMaxHealth()));
-            IO.writeString("You feel rested.", WriteStyle.MARGIN);
+            IO.writeString("You feel rested.");
             return (int) (TimeConstants.REST_COMPLETE * fractionHealed);
         }
     }
@@ -111,12 +107,12 @@ public class Hero extends Creature {
      */
     public void look() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getLocation().getName());
-
-        builder.append('\n').append(Constants.LINE_1);
+        builder.append(getLocation().getName()).append('\n');
+        builder.append(Constants.LINE_1).append('\n');
         if (getLocation().getLuminosity() >= getMinimumLuminosity()) {
             if (getLocation().getCreatureCount() == 1) {
-                builder.append('\n').append(Constants.NO_CREATURES);
+                // If there is only the hero, say that there are no creatures.
+                builder.append(Constants.NO_CREATURES).append('\n');
             } else {
                 CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
                 for (Creature creature : getLocation().getCreatures()) {
@@ -133,26 +129,25 @@ public class Hero extends Creature {
                     } else {
                         line = String.format("%-20s(%d)", id.toString(), creatureCount);
                     }
-                    builder.append('\n').append(line);
+                    builder.append(line).append('\n');
                 }
             }
-
-            builder.append('\n').append(Constants.LINE_1);
+            builder.append(Constants.LINE_1).append('\n');
 
             if (getLocation().getItemCount() == 0) {
-                builder.append('\n').append(Constants.NO_ITEMS);
+                builder.append(Constants.NO_ITEMS);
             } else {
                 for (Item curItem : getLocation().getItems()) {
-                    builder.append('\n').append(curItem.toSelectionEntry());
+                    builder.append(curItem.toSelectionEntry()).append('\n');
                 }
             }
         } else {
-            builder.append('\n').append(Constants.CANT_SEE_ANYTHING);
+            builder.append(Constants.CANT_SEE_ANYTHING).append('\n');
         }
 
-        builder.append('\n').append(Constants.LINE_1);
+        builder.append(Constants.LINE_1).append('\n');
 
-        IO.writeString(builder.toString(), WriteStyle.MARGIN);
+        IO.writeString(builder.toString());
     }
 
     //
@@ -162,13 +157,12 @@ public class Hero extends Creature {
     //
     public Item selectInventoryItem(String[] inputWords) {
         if (inputWords.length == 1) {
-//            return Utils.selectFromList(getInventory().getItems());
-            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVALID_INPUT);
             return null;
         } else {
             Item queryResult = getInventory().findItem(inputWords[1]);
             if (queryResult == null) {
-                IO.writeString(Constants.ITEM_NOT_FOUND_IN_INVENTORY, WriteStyle.MARGIN);
+                IO.writeString(Constants.ITEM_NOT_FOUND_IN_INVENTORY);
             }
             return queryResult;
         }
@@ -177,12 +171,12 @@ public class Hero extends Creature {
     public Item selectLocationItem(String[] inputWords) {
         if (inputWords.length == 1) {
 //            return Utils.selectFromList(getLocation().getItems());
-            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVALID_INPUT);
             return null;
         } else {
             Item queryResult = getLocation().findItem(inputWords[1]);
             if (queryResult == null) {
-                IO.writeString(Constants.ITEM_NOT_FOUND_IN_LOCATION, WriteStyle.MARGIN);
+                IO.writeString(Constants.ITEM_NOT_FOUND_IN_LOCATION);
             }
             return queryResult;
         }
@@ -191,16 +185,13 @@ public class Hero extends Creature {
     public Creature selectTarget(String[] inputWords) {
         if (getLocation().getLuminosity() >= getMinimumLuminosity()) {
             if (inputWords.length == 1) {
-//                List<Creature> locationCreatures = new ArrayList<Creature>(getLocation().getCreatures());
-//                locationCreatures.remove(this);
-//                return Utils.selectFromList(locationCreatures);
-                IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+                IO.writeString(Constants.INVALID_INPUT);
                 return null;
             } else {
                 return getLocation().findCreature(inputWords[1]);
             }
         } else {
-            IO.writeString(Constants.CANT_SEE_ANYTHING, WriteStyle.MARGIN);
+            IO.writeString(Constants.CANT_SEE_ANYTHING);
             return null;
         }
     }
@@ -224,7 +215,7 @@ public class Hero extends Creature {
             // to add something to the full inventory of an NPC.
             //
             if (getInventory().isFull()) {
-                IO.writeString(Constants.INVENTORY_FULL, WriteStyle.MARGIN);
+                IO.writeString(Constants.INVENTORY_FULL);
             } else {
                 getInventory().addItem(selectedItem);
                 getLocation().removeItem(selectedItem);
@@ -241,7 +232,7 @@ public class Hero extends Creature {
             if (selectedItem.isWeapon()) {
                 equipWeapon(selectedItem);
             } else {
-                IO.writeString("You cannot equip that.", WriteStyle.MARGIN);
+                IO.writeString("You cannot equip that.");
             }
         }
     }
@@ -257,7 +248,7 @@ public class Hero extends Creature {
             }
             getInventory().removeItem(selectedItem);
             getLocation().addItem(selectedItem);
-            IO.writeString("Dropped " + selectedItem.getName() + ".", WriteStyle.MARGIN);
+            IO.writeString("Dropped " + selectedItem.getName() + ".");
         }
     }
 
@@ -277,18 +268,18 @@ public class Hero extends Creature {
                 selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
                 // TODO: make not-enough-for-a-full-bite food heal less than a enough-for-a-full-bite food would.
                 if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
-                    IO.writeString("You ate " + selectedItem.getName() + ".", WriteStyle.MARGIN);
+                    IO.writeString("You ate " + selectedItem.getName() + ".");
                     getInventory().removeItem(selectedItem);
                 } else {
-                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".", WriteStyle.MARGIN);
+                    IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
                 }
                 if (isCompletelyHealed()) {
-                    IO.writeString("You are completely healed.", WriteStyle.MARGIN);
+                    IO.writeString("You are completely healed.");
                 }
                 // When addExperience() is called a message is printed, so this line must come after the eat message.
                 addExperience(food.getExperienceOnEat());
             } else {
-                IO.writeString("You can only eat food.", WriteStyle.MARGIN);
+                IO.writeString("You can only eat food.");
             }
         }
     }
@@ -299,8 +290,7 @@ public class Hero extends Creature {
     public void destroyItem(String[] words) {
         Item target;
         if (words.length == 1) {
-//            target = Utils.selectFromList(getLocation().getItems());
-            IO.writeString(Constants.INVALID_INPUT, WriteStyle.MARGIN);
+            IO.writeString(Constants.INVALID_INPUT);
             target = null;
         } else {
             target = getLocation().findItem(words[1]);
@@ -310,11 +300,11 @@ public class Hero extends Creature {
                 if (!target.isBroken()) {
 
                     target.setCurIntegrity(0);
-                    IO.writeString(getName() + " crashed " + target.getName() + ".", WriteStyle.MARGIN);
+                    IO.writeString(getName() + " crashed " + target.getName() + ".");
                 }
             } else {
                 getLocation().removeItem(target);
-                IO.writeString(getName() + " destroyed " + target.getName() + ".", WriteStyle.MARGIN);
+                IO.writeString(getName() + " destroyed " + target.getName() + ".");
             }
         }
     }
@@ -345,22 +335,22 @@ public class Hero extends Creature {
     public void equipWeapon(Item weapon) {
         if (hasWeapon()) {
             if (getWeapon() == weapon) {
-                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".", WriteStyle.MARGIN);
+                IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
                 return;
             } else {
                 unequipWeapon();
             }
         }
         this.setWeapon(weapon);
-        IO.writeString(getName() + " equipped " + weapon.getName() + ".", WriteStyle.MARGIN);
+        IO.writeString(getName() + " equipped " + weapon.getName() + ".");
     }
 
     public void unequipWeapon() {
         if (hasWeapon()) {
-            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".", WriteStyle.MARGIN);
+            IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
             setWeapon(null);
         } else {
-            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON, WriteStyle.MARGIN);
+            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
         }
     }
 
@@ -397,11 +387,11 @@ public class Hero extends Creature {
     }
 
     public void printHeroStatus() {
-        IO.writeString(getHeroStatusString(), WriteStyle.MARGIN);
+        IO.writeString(getHeroStatusString());
     }
 
     public void printWeaponStatus() {
-        IO.writeString(getWeaponStatusString(), WriteStyle.MARGIN);
+        IO.writeString(getWeaponStatusString());
     }
 
     /**
@@ -410,7 +400,7 @@ public class Hero extends Creature {
     public void printAllStatus() {
         // Check to see if there is a weapon.
         if (getWeapon() != null) {
-            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString(), WriteStyle.MARGIN);
+            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
         } else {
             // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
             printHeroStatus();
@@ -464,7 +454,7 @@ public class Hero extends Creature {
         } else {
             builder.append(".");
         }
-        IO.writeString(builder.toString(), WriteStyle.MARGIN);
+        IO.writeString(builder.toString());
     }
 
     public void printDateAndTime() {
@@ -472,9 +462,9 @@ public class Hero extends Creature {
         long time = getLocation().getWorld().getWorldDate().getTime();
         if (hasClock()) {
             // TODO: this repeated getClock() is terrible. Fix it.
-            IO.writeString(getClock().getClock().getTimeString(time), WriteStyle.MARGIN);
+            IO.writeString(getClock().getClock().getTimeString(time));
         } else {
-            IO.writeString(dateFormat.format(time) + " " + "(" + getLocation().getWorld().getDayPart() + ")", WriteStyle.MARGIN);
+            IO.writeString(dateFormat.format(time) + " " + "(" + getLocation().getWorld().getDayPart() + ")");
         }
     }
 }
