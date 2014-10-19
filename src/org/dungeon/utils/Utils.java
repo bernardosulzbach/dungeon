@@ -18,7 +18,6 @@ package org.dungeon.utils;
 
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 
 /**
  * General utility class.
@@ -31,14 +30,14 @@ public class Utils {
      * Prints the startup heading.
      */
     public static void printHeading() {
-        IO.writeString(Constants.HEADING, WriteStyle.NONE);
+        IO.writeString(Constants.HEADING);
     }
 
     /**
      * Prints the full name of the current version of the game.
      */
     public static void printVersion() {
-        IO.writeString(Constants.FULLNAME, WriteStyle.NONE);
+        IO.writeString(Constants.FULLNAME);
     }
 
     /**

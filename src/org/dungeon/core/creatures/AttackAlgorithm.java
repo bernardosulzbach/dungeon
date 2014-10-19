@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.creatures;
 
+import java.awt.Color;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
@@ -57,13 +58,11 @@ public class AttackAlgorithm {
     private static void beastAttack(Creature attacker, Creature defender) {
         // 10% miss chance.
         if (0.9 > Game.RANDOM.nextInt()) {
-            defender.takeDamage(attacker.getAttack());
-            // Damage == attacker's attack.
-            IO.writeString(String.format("%s inflicted %d damage points to %s.",
-                    attacker.getName(), attacker.getAttack(), defender.getName()));
+            int hitDamage = attacker.getAttack();
+            defender.takeDamage(hitDamage);
+            printInflictedDamage(attacker, hitDamage, defender, false);
         } else {
-            IO.writeString(String.format("%s tried to hit %s but missed.",
-                    attacker.getName(), defender.getName()));
+            printMiss(attacker);
         }
     }
 
@@ -82,8 +81,7 @@ public class AttackAlgorithm {
         if (weapon != null && !weapon.isBroken()) {
             if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage() + attacker.getAttack();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
-                        defender.getName()));
+                printInflictedDamage(attacker, hitDamage, defender, false);
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
                     if (!weapon.isRepairable()) {
@@ -91,17 +89,16 @@ public class AttackAlgorithm {
                     }
                 }
             } else {
-                IO.writeString(attacker.getName() + " misses.");
+                printMiss(attacker);
                 return;
             }
         } else {
             // Hardcoded 15% miss chance.
             if (0.85 > Game.RANDOM.nextDouble()) {
                 hitDamage = attacker.getAttack();
-                IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
-                        defender.getName()));
+                printInflictedDamage(attacker, hitDamage, defender, false);
             } else {
-                IO.writeString(attacker.getName() + " misses.");
+                printMiss(attacker);
                 return;
             }
         }
@@ -120,11 +117,9 @@ public class AttackAlgorithm {
                 // Hardcoded 5 % chance of a critical hit (double damage).
                 if (Utils.roll(0.05)) {
                     hitDamage *= 2;
-                    IO.writeString(String.format("%s inflicted %d damage points to %s with a critical hit!",
-                            attacker.getName(), hitDamage, defender.getName()));
+                    printInflictedDamage(attacker, hitDamage, defender, true);
                 } else {
-                    IO.writeString(String.format("%s inflicted %d damage points to %s.",
-                            attacker.getName(), hitDamage, defender.getName()));
+                    printInflictedDamage(attacker, hitDamage, defender, false);
                 }
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
@@ -133,17 +128,42 @@ public class AttackAlgorithm {
                     }
                 }
             } else {
-                IO.writeString(attacker.getName() + " misses.");
+                printMiss(attacker);
                 return;
             }
         } else {
             hitDamage = attacker.getAttack();
-            IO.writeString(String.format("%s inflicted %d damage points to %s.", attacker.getName(), hitDamage,
-                    defender.getName()));
+            printInflictedDamage(attacker, hitDamage, defender, false);
         }
         defender.takeDamage(hitDamage);
         // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
         // after an eventual "weaponName broke" message, what looks really weird.
+    }
+    
+    /**
+     * Prints a message about the inflicted damage based on the parameters.
+     * @param attacker the Creature that performed the attack.
+     * @param hitDamage the damage inflicted by the attacker.
+     * @param defender the target of the attack.
+     * @param criticalHit a boolean indicating if the attack was a critical hit or not.
+     */
+    public static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(attacker.getName());
+        builder.append(" inflicted ");
+        builder.append(hitDamage);
+        builder.append(" damage points to ");
+        builder.append(defender.getName());
+        if (criticalHit) {
+            builder.append(" with a critical hit");
+        }
+        builder.append(".");
+        IO.writeString(builder.toString(), attacker.getId() == CreatureID.HERO ? Color.GREEN : Color.RED);
+    }
+    
+    // Simple method that prints a miss message.
+    public static void printMiss(Creature attacker) {
+        IO.writeString(attacker.getName() + " missed.", Color.YELLOW);
     }
 
 }

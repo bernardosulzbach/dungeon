@@ -17,7 +17,6 @@
 package org.dungeon.help;
 
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.StringUtils;
 
 import java.io.BufferedReader;
@@ -226,7 +225,7 @@ public final class Help {
         for (AspectHelp aspectHelp : ASPECTS) {
             if (aspectHelp.equalsIgnoreCase(words[1])) {
                 // Output to toString method of the first command that matches the input.
-                IO.writeString(aspectHelp.toString(), WriteStyle.COMMAND);
+                IO.writeString(aspectHelp.toString());
                 return true;
             }
         }
@@ -240,7 +239,7 @@ public final class Help {
         for (CommandHelp commandHelp : COMMANDS) {
             if (commandHelp.equalsIgnoreCase(words[1])) {
                 // Output to toString method of the first command that matches the input.
-                IO.writeString(commandHelp.toString(), WriteStyle.COMMAND);
+                IO.writeString(commandHelp.toString());
                 return true;
             }
         }

@@ -22,3 +22,6 @@ src/META-INF/
 
 # Save files
 *.dungeon
+
+# NetBeans stuff
+/dist/

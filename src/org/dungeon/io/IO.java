@@ -16,8 +16,7 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.utils.Constants;
-
+import java.awt.Color;
 import org.dungeon.core.game.Game;
 
 /**
@@ -28,32 +27,18 @@ import org.dungeon.core.game.Game;
 public class IO {
 
     public static void writeString(String string) {
-        writeString(string, WriteStyle.NONE);
+        writeString(string, Color.LIGHT_GRAY);
     }
 
     /**
      * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
      */
-    public static void writeString(String string, WriteStyle style) {
-        switch (style) {
-            case COMMAND:
-                string = insertBeforeLines(string, Constants.MARGIN + Constants.MARGIN);
-                string = string.replaceAll("\n", "\n\n");
-                break;
-            case MARGIN:
-                string = insertBeforeLines(string, Constants.MARGIN);
-                break;
-            case WARNING:
-                System.err.println(Constants.WARNING + ": " + string);
-                return;
-            case NONE:
-                break;
-        }
+    public static void writeString(String string, Color color) {
         // Remove extra newlines at the end.
         while (string.charAt(string.length() - 1) == '\n' || Character.isSpaceChar(string.charAt(string.length() - 1))) {
             string = string.substring(0, string.length() - 1);
         }
-        Game.gameWindow.writeToTextPane(string + '\n');
+        Game.gameWindow.writeToTextPane(string + '\n', color);
     }
 
     public static String insertBeforeLines(String text, String word) {

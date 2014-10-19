@@ -23,15 +23,12 @@ import org.dungeon.core.creatures.*;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Hints;
-import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 //

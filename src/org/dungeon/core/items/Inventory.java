@@ -18,7 +18,6 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.io.IO;
-import org.dungeon.io.WriteStyle;
 import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
@@ -90,8 +89,6 @@ public class Inventory implements Serializable {
         if (isFull()) {
             // Print the default inventory full message.
             IO.writeString(Constants.INVENTORY_FULL);
-            // Print the warning about calling addItem on a full Inventory object.
-            IO.writeString(Constants.INVENTORY_FULL_ADD_CALL_WARNING, WriteStyle.WARNING);
         } else {
             itemList.add(newItem);
             newItem.setOwner(owner);

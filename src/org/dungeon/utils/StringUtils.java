@@ -95,6 +95,48 @@ public class StringUtils {
     }
 
     /**
+     * Wraps a string of text to the given number of columns.
+     */
+    public static String wrap(String string, int columns) {
+        if (string == null) {
+            return null;
+        }
+        if (columns < 1) {
+            columns = 1;
+        }
+        final StringBuilder stringBuilder = new StringBuilder(string);
+        boolean inAWord = false;
+        int lastLineBreak = 0;
+        int lastWordStart = 0;
+        for (int i = 0; i < string.length(); i++) {
+            // TODO: improve performance / logic.
+            //       read the wrap method of the Apache Commons Library and compare it to this one.
+            // Updates lastLineBreak.
+            if (stringBuilder.charAt(i) == '\n') {
+                lastLineBreak = i;
+                continue;
+            }
+            // This if-then-else statement is used to update lastWordStart.
+            if (inAWord) {
+                if (!Character.isAlphabetic(stringBuilder.charAt(i))) {
+                    inAWord = false;
+                }
+            } else {
+                if (Character.isAlphabetic(stringBuilder.charAt(i))) {
+                    inAWord = true;
+                    lastWordStart = i;
+                }
+            }
+            // This if-then statement verifies if a line wrapping is required.
+            if (i - lastLineBreak > columns) {
+                stringBuilder.insert(lastWordStart, '\n');
+                lastLineBreak = lastWordStart;
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
      * Split a string of text into an array of words.
      */
     public static String[] split(String string) {
