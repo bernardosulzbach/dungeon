@@ -74,13 +74,6 @@ public class GameWindow extends javax.swing.JFrame {
 
         scrollBar = scrollPane.getVerticalScrollBar();
         scrollBar.setBackground(Color.DARK_GRAY);
-        scrollBar.addAdjustmentListener(new AdjustmentListener() {
-            @Override
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                Adjustable adjustable = e.getAdjustable();
-                adjustable.setValue(adjustable.getMaximum());
-            }
-        });
 
         getContentPane().add(scrollPane, BorderLayout.CENTER);
 
@@ -118,8 +111,7 @@ public class GameWindow extends javax.swing.JFrame {
             } else {
                 document.insertString(document.getLength(), str, attributeSet);
             }
-            scrollBar = scrollPane.getVerticalScrollBar();
-            scrollBar.setValue(scrollBar.getMaximum());
+            textPane.setCaretPosition(document.getLength());
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
