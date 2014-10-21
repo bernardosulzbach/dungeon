@@ -37,7 +37,7 @@ arguments = ""
 command = "commands"
 info = "Displays a list of valid commands."
 aliases = ""
-arguments = ""
+arguments = "", "the first characters of the command"
 
 command = "commandcounter"
 info = "Displays the counters."

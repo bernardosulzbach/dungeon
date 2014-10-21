@@ -204,7 +204,6 @@ public final class Help {
     public static void printHelp(String[] words) {
         if (!initialized) {
             IO.writeString(HelpConstants.NOT_INITIALIZED);
-            ;
         } else if (words.length == 1) {
             // There are no specifiers, report the correct usage of this method.
             IO.writeString(HelpConstants.HELP_USAGE);
@@ -247,13 +246,36 @@ public final class Help {
     }
 
     /**
-     * Prints a list of commands based on the commands in COMMANDS.
+     * Prints a list of all the commands in COMMANDS.
      */
     public static void printCommandList() {
         StringBuilder builder = new StringBuilder();
-        for (CommandHelp command : COMMANDS) {
-            builder.append(command.toOneLineString());
+        for (CommandHelp commandHelp : COMMANDS) {
+            builder.append(commandHelp.toOneLineString());
             builder.append('\n');
+        }
+        IO.writeString(builder.toString());
+    }
+
+    /**
+     * Prints a list of commands based on the commands in COMMANDS.
+     * Only commands whose first characters match (not case sensitively) those in start will be listed.
+     */
+    public static void printCommandList(String start) {
+        StringBuilder builder = new StringBuilder();
+        for (CommandHelp commandHelp : COMMANDS) {
+            String[] nameAndAliases = commandHelp.getAllAliases();
+            for (String alias : nameAndAliases) {
+                if (start.length() <= alias.length()) {
+                    if (alias.substring(0, start.length()).equalsIgnoreCase(start)) {
+                        builder.append(commandHelp.toOneLineString(alias)).append('\n');
+                        break;
+                    }
+                }
+            }
+        }
+        if (builder.length() == 0) {
+            builder.append("No command starts with '").append(start).append("'.");
         }
         IO.writeString(builder.toString());
     }

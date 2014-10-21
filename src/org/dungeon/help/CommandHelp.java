@@ -54,6 +54,17 @@ public class CommandHelp {
     }
 
     /**
+     * Returns an array with the command name and all its aliases.
+     */
+    protected String[] getAllAliases() {
+        String[] allAliases = new String[aliases.length + 1];
+        allAliases[0] = name;
+        System.arraycopy(aliases, 0, allAliases, 1, allAliases.length - 1);
+        return allAliases;
+    }
+
+
+    /**
      * Verifies if any of the command aliases matches a string.
      */
     protected boolean equalsIgnoreCase(String command) {
@@ -69,6 +80,7 @@ public class CommandHelp {
         return false;
     }
 
+    // TODO: consider renaming this method. toString should be simpler, maybe.
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -119,8 +131,11 @@ public class CommandHelp {
     }
 
     public String toOneLineString() {
-        // TODO: use the aliases (or at least one of them) too.
-        return String.format(Constants.COMMAND_HELP_FORMAT, name, info);
+        return toOneLineString(name);
+    }
+
+    public String toOneLineString(String alias) {
+        return String.format(Constants.COMMAND_HELP_FORMAT, alias, info);
     }
 
 }

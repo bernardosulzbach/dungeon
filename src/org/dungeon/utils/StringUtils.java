@@ -154,4 +154,24 @@ public class StringUtils {
         }
         return true;
     }
+
+    /**
+     * Strips all newlines and spaces at the end of the string.
+     */
+    public static String clearEnd(String str) {
+        StringBuilder stringBuilder = new StringBuilder(str);
+        int length = stringBuilder.length();
+        char lastChar;
+        while (length > 0) {
+            lastChar = stringBuilder.charAt(length - 1);
+            if (Character.isSpaceChar(lastChar) || lastChar == '\n') {
+                stringBuilder.setLength(stringBuilder.length() - 1);
+            } else {
+                break;
+            }
+            length = stringBuilder.length();
+        }
+        return stringBuilder.toString();
+    }
+
 }

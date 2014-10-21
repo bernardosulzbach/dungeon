@@ -52,9 +52,9 @@ public class Game {
         // Instantiate the game window.
         gameWindow = new GameWindow();
 
-        campaign = Loader.loadGameRoutine();
-
         Utils.printHeading();
+
+        campaign = Loader.loadGameRoutine();
     }
 
     /**
@@ -183,7 +183,11 @@ public class Game {
             Help.printHelp(inputWords);
         } //
         else if (firstWord.equals("commands")) {
-            Help.printCommandList();
+            if (inputWords.length > 1) {
+                Help.printCommandList(inputWords[1]);
+            } else {
+                Help.printCommandList();
+            }
             // Game commands.
         } //
         else if (firstWord.equals("save")) {

@@ -18,6 +18,7 @@ package org.dungeon.io;
 
 import java.awt.Color;
 import org.dungeon.core.game.Game;
+import org.dungeon.utils.StringUtils;
 
 /**
  * IO class that encapsulates all Input/Output operations.
@@ -34,39 +35,6 @@ public class IO {
      * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
      */
     public static void writeString(String string, Color color) {
-        // Remove extra newlines at the end.
-        while (string.charAt(string.length() - 1) == '\n' || Character.isSpaceChar(string.charAt(string.length() - 1))) {
-            string = string.substring(0, string.length() - 1);
-        }
-        Game.gameWindow.writeToTextPane(string + '\n', color);
+        Game.gameWindow.writeToTextPane(StringUtils.clearEnd(string), color);
     }
-
-    public static String insertBeforeLines(String text, String word) {
-        if (text.isEmpty()) {
-            throw new IllegalArgumentException("text should be a non-empty String.");
-        }
-        if (word.isEmpty()) {
-            throw new IllegalArgumentException("word should be a non-empty String.");
-        }
-        StringBuilder builder = new StringBuilder(text);
-        builder.insert(0, word);
-        int index = builder.indexOf("\n");
-        while (index != -1) {
-            builder.insert(index + 1, word);
-            index = builder.indexOf("\n", index + word.length() + 1);
-        }
-        return builder.toString();
-    }
-
-//    /**
-//     * Read a line of input from the user.
-//     */
-//    public static String readString() {
-//        String line;
-//        do {
-//            System.out.print("> ");
-//            line = SCANNER.nextLine().trim();
-//        } while (line.equals(""));
-//        return line;
-//    }
 }
