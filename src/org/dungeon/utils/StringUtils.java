@@ -83,58 +83,47 @@ public class StringUtils {
         return builder.toString();
     }
 
-    /**
-     * Verifies if the first character of a string matches the first character of the first character of another string.
-     * Ignores case. Throws IllegalArgumentException.
-     */
-    public static boolean firstEqualsIgnoreCase(String s1, String s2) {
-        if (s1.length() == 0 || s2.length() == 0) {
-            throw new IllegalArgumentException("Strings must have at least one character.");
-        }
-        return Character.toLowerCase(s1.charAt(0)) == Character.toLowerCase(s2.charAt(0));
-    }
-
-    /**
-     * Wraps a string of text to the given number of columns.
-     */
-    public static String wrap(String string, int columns) {
-        if (string == null) {
-            return null;
-        }
-        if (columns < 1) {
-            columns = 1;
-        }
-        final StringBuilder stringBuilder = new StringBuilder(string);
-        boolean inAWord = false;
-        int lastLineBreak = 0;
-        int lastWordStart = 0;
-        for (int i = 0; i < string.length(); i++) {
-            // TODO: improve performance / logic.
-            //       read the wrap method of the Apache Commons Library and compare it to this one.
-            // Updates lastLineBreak.
-            if (stringBuilder.charAt(i) == '\n') {
-                lastLineBreak = i;
-                continue;
-            }
-            // This if-then-else statement is used to update lastWordStart.
-            if (inAWord) {
-                if (!Character.isAlphabetic(stringBuilder.charAt(i))) {
-                    inAWord = false;
-                }
-            } else {
-                if (Character.isAlphabetic(stringBuilder.charAt(i))) {
-                    inAWord = true;
-                    lastWordStart = i;
-                }
-            }
-            // This if-then statement verifies if a line wrapping is required.
-            if (i - lastLineBreak > columns) {
-                stringBuilder.insert(lastWordStart, '\n');
-                lastLineBreak = lastWordStart;
-            }
-        }
-        return stringBuilder.toString();
-    }
+//    /**
+//     * Wraps a string of text to the given number of columns.
+//     */
+//    public static String wrap(String string, int columns) {
+//        if (string == null) {
+//            return null;
+//        }
+//        if (columns < 1) {
+//            columns = 1;
+//        }
+//        final StringBuilder stringBuilder = new StringBuilder(string);
+//        boolean inAWord = false;
+//        int lastLineBreak = 0;
+//        int lastWordStart = 0;
+//        for (int i = 0; i < string.length(); i++) {
+//            // TODO: improve performance / logic.
+//            //       read the wrap method of the Apache Commons Library and compare it to this one.
+//            // Updates lastLineBreak.
+//            if (stringBuilder.charAt(i) == '\n') {
+//                lastLineBreak = i;
+//                continue;
+//            }
+//            // This if-then-else statement is used to update lastWordStart.
+//            if (inAWord) {
+//                if (!Character.isAlphabetic(stringBuilder.charAt(i))) {
+//                    inAWord = false;
+//                }
+//            } else {
+//                if (Character.isAlphabetic(stringBuilder.charAt(i))) {
+//                    inAWord = true;
+//                    lastWordStart = i;
+//                }
+//            }
+//            // This if-then statement verifies if a line wrapping is required.
+//            if (i - lastLineBreak > columns) {
+//                stringBuilder.insert(lastWordStart, '\n');
+//                lastLineBreak = lastWordStart;
+//            }
+//        }
+//        return stringBuilder.toString();
+//    }
 
     /**
      * Split a string of text into an array of words.

@@ -17,8 +17,6 @@
 package org.dungeon.gui;
 
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -26,7 +24,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.dungeon.core.game.Game;
 import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
 
 public class GameWindow extends javax.swing.JFrame {
 
