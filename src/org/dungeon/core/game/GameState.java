@@ -52,7 +52,7 @@ import java.util.List;
 // to ever inherit from it and changing the final modifier is something ridiculously simple, I will just leave it the
 // way it is.
 //
-public final class Campaign implements Serializable {
+public final class GameState implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,7 +71,7 @@ public final class Campaign implements Serializable {
     private int totalAchievementsCount;
     private int unlockedAchievementsCount;
 
-    public Campaign() {
+    public GameState() {
         commandHistory = new CommandHistory();
 
         achievements = createDemoAchievements();

@@ -33,7 +33,7 @@ public class Game {
 
     /** The window to what the games write output and get user input. */
     public static GameWindow gameWindow;
-    public static Campaign campaign;
+    public static GameState gameState;
 
     public static void main(String[] args) {
 
@@ -54,7 +54,7 @@ public class Game {
 
         Utils.printHeading();
 
-        campaign = Loader.loadGameRoutine();
+        gameState = Loader.loadGameRoutine();
     }
 
     /**
@@ -68,22 +68,22 @@ public class Game {
         int turnLength = processInput(inputString);
         // -1 is returned by getTurn when the player issues a quit command.
         if (turnLength == -1) {
-            if (!campaign.isSaved()) {
-                Loader.saveGameRoutine(campaign);
+            if (!gameState.isSaved()) {
+                Loader.saveGameRoutine(gameState);
             }
             return false;
         }
-        if (campaign.getHero().isDead()) {
+        if (gameState.getHero().isDead()) {
             IO.writeString("You died.");
             // After the player's death, just prompt to load the default save file.
-            campaign = Loader.loadGameRoutine();
+            gameState = Loader.loadGameRoutine();
         }
         // Advance the campaign's world date.
-        campaign.getWorld().rollDate(turnLength);
+        gameState.getWorld().rollDate(turnLength);
         // Refresh the campaign state.
-        campaign.refresh();
+        gameState.refresh();
         // After a player's turn, the campaign is not saved anymore.
-        campaign.setSaved(false);
+        gameState.setSaved(false);
         return true;
     }
 
@@ -96,80 +96,80 @@ public class Game {
         String firstWord;
         String[] inputWords;
         // Add the command the user entered to the campaign's command history.
-        campaign.getCommandHistory().addCommand(inputString);
+        gameState.getCommandHistory().addCommand(inputString);
         // Split the command into words.
         inputWords = StringUtils.split(inputString);
         firstWord = inputWords[0].toLowerCase();
         if (firstWord.equals("rest")) {
-            return campaign.getHero().rest();
+            return gameState.getHero().rest();
         } //
         else if (firstWord.equals("look") || firstWord.equals("peek")) {
-            campaign.getHero().look();
+            gameState.getHero().look();
         } //
         else if (firstWord.equals("inventory") || firstWord.equals("items")) {
-            campaign.getHero().printInventory();
+            gameState.getHero().printInventory();
         } //
         else if (firstWord.equals("loot") || firstWord.equals("pick")) {
-            campaign.getHero().pickItem(inputWords);
+            gameState.getHero().pickItem(inputWords);
             return 120;
         } //
         else if (firstWord.equals("equip")) {
-            campaign.getHero().parseEquip(inputWords);
+            gameState.getHero().parseEquip(inputWords);
         } else if (firstWord.equals("unequip")) {
-            campaign.getHero().unequipWeapon();
+            gameState.getHero().unequipWeapon();
         } //
         else if (firstWord.equals("eat") || firstWord.equals("devour")) {
-            campaign.getHero().eatItem(inputWords);
+            gameState.getHero().eatItem(inputWords);
             return 120;
         } else if (firstWord.equals("walk") || firstWord.equals("go")) {
-            return campaign.parseHeroWalk(inputWords);
+            return gameState.parseHeroWalk(inputWords);
         } //
         else if (firstWord.equals("drop")) {
-            campaign.getHero().dropItem(inputWords);
+            gameState.getHero().dropItem(inputWords);
         } //
         else if (firstWord.equals("destroy") || firstWord.equals("crash")) {
-            campaign.getHero().destroyItem(inputWords);
+            gameState.getHero().destroyItem(inputWords);
             return 120;
         } //
         else if (firstWord.equals("status")) {
-            campaign.getHero().printAllStatus();
+            gameState.getHero().printAllStatus();
         } //
         else if (firstWord.equals("hero") || firstWord.equals("me")) {
-            campaign.getHero().printHeroStatus();
+            gameState.getHero().printHeroStatus();
         } else if (firstWord.equals("age")) {
-            campaign.getHero().printAge();
+            gameState.getHero().printAge();
         } //
         else if (firstWord.equals("weapon")) {
-            campaign.getHero().printWeaponStatus();
+            gameState.getHero().printWeaponStatus();
         } //
         else if (firstWord.equals("kill") || firstWord.equals("attack")) {
-            Creature target = campaign.getHero().selectTarget(inputWords);
+            Creature target = gameState.getHero().selectTarget(inputWords);
             if (target != null) {
                 // Add this battle to the battle counter.
-                int lastBattleTurns = Game.battle(campaign.getHero(), target);
+                int lastBattleTurns = Game.battle(gameState.getHero(), target);
                 // A battle turn takes half a minute.
                 return lastBattleTurns * 30;
             }
         } // Campaign-related commands.
         //
         else if (firstWord.equals("commandcount")) { // TODO: think of a better name for this.
-            campaign.printCommandCount();
+            gameState.printCommandCount();
         } //
         else if (firstWord.equals("whoami")) {
-            IO.writeString(campaign.getHeroInfo());
+            IO.writeString(gameState.getHeroInfo());
         } //
         else if (firstWord.equals("whereami")) {
-            IO.writeString(campaign.getHeroPosition().toString());
+            IO.writeString(gameState.getHeroPosition().toString());
         } //
         else if (firstWord.equals("achievements")) {
-            campaign.printUnlockedAchievements();
+            gameState.printUnlockedAchievements();
             // World-related commands.
         } //
         else if (firstWord.equals("now")) {
-            campaign.getHero().printDateAndTime();
+            gameState.getHero().printDateAndTime();
         } //
         else if (firstWord.equals("spawns")) {
-            campaign.getWorld().printSpawnCounters();
+            gameState.getWorld().printSpawnCounters();
             // Utility commands.
         } //
         else if (firstWord.equals("time")) {
@@ -191,7 +191,7 @@ public class Game {
             // Game commands.
         } //
         else if (firstWord.equals("save")) {
-            Loader.saveGameRoutine(campaign, inputWords);
+            Loader.saveGameRoutine(gameState, inputWords);
         } //
         else if (firstWord.equals("quit") || firstWord.equals("exit")) {
             return -1;
@@ -203,7 +203,7 @@ public class Game {
             LicenseUtils.printLicense();
         } //
         else if (firstWord.equals("hint")) {
-            campaign.printNextHint();
+            gameState.printNextHint();
         } //
         else if (firstWord.equals("version")) {
             Utils.printVersion();

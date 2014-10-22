@@ -16,7 +16,7 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.core.game.Campaign;
+import org.dungeon.core.game.GameState;
 import org.dungeon.utils.Constants;
 
 import java.io.*;
@@ -40,18 +40,18 @@ public class Loader {
      * @return a saved campaign or a new demo campaign.
      */
     // TODO: add support to load 'filename' syntax.
-    public static Campaign loadGameRoutine() {
+    public static GameState loadGameRoutine() {
         if (checkForExistingSave()) {
             IO.writeString(Constants.FILE_FOUND);
             if (confirmOperation(Constants.LOAD_CONFIRM)) {
                 return loadCampaign();
             }
             // There is a save. Do not save the new demo campaign.
-            return new Campaign();
+            return new GameState();
         } else {
             // Could not find a saved campaign.
             // Instantiate a new demo campaign and save it to disk.
-            Campaign demoCampaign = new Campaign();
+            GameState demoCampaign = new GameState();
             saveCampaign(demoCampaign, Constants.SAVE_NAME, true);
             // Return the new campaign.
             return demoCampaign;
@@ -61,21 +61,21 @@ public class Loader {
     /**
      * Handles all the saving process.
      */
-    public static void saveGameRoutine(Campaign campaign) {
+    public static void saveGameRoutine(GameState gameState) {
         if (confirmOperation(Constants.SAVE_CONFIRM)) {
-            saveCampaign(campaign, Constants.SAVE_NAME, false);
+            saveCampaign(gameState, Constants.SAVE_NAME, false);
         }
     }
 
     /**
      * Handles all the saving process, assigning a new name for the save file, if provided.
      */
-    public static void saveGameRoutine(Campaign campaign, String[] inputWords) {
+    public static void saveGameRoutine(GameState gameState, String[] inputWords) {
         if (inputWords.length == 1) {
-            saveGameRoutine(campaign);
+            saveGameRoutine(gameState);
         } else {
             if (confirmOperation(Constants.SAVE_CONFIRM)) {
-                saveCampaign(campaign, inputWords[1], false);
+                saveCampaign(gameState, inputWords[1], false);
             }
         }
     }
@@ -92,37 +92,37 @@ public class Loader {
     /**
      * Attempts to load a serialized Campaign object.
      */
-    private static Campaign loadCampaign() {
+    private static GameState loadCampaign() {
         FileInputStream fileInStream;
         ObjectInputStream objectInStream;
         try {
             fileInStream = new FileInputStream(Constants.SAVE_NAME + Constants.SAVE_EXTENSION);
             objectInStream = new ObjectInputStream(fileInStream);
-            Campaign loadedCampaign = (Campaign) objectInStream.readObject();
+            GameState loadedGameState = (GameState) objectInStream.readObject();
             objectInStream.close();
             IO.writeString(Constants.LOAD_SUCCESS);
-            return loadedCampaign;
+            return loadedGameState;
         } catch (IOException ex) {
             IO.writeString(Constants.LOAD_ERROR);
-            return new Campaign();
+            return new GameState();
         } catch (ClassNotFoundException ex) {
             IO.writeString(Constants.LOAD_ERROR);
-            return new Campaign();
+            return new GameState();
         }
     }
 
     /**
      * Saves a Campaign object to a file.
      */
-    private static void saveCampaign(Campaign campaign, String saveName, boolean quiet) {
+    private static void saveCampaign(GameState gameState, String saveName, boolean quiet) {
         FileOutputStream fileOutStream;
         ObjectOutputStream objectOutStream;
         try {
             fileOutStream = new FileOutputStream(saveName + Constants.SAVE_EXTENSION);
             objectOutStream = new ObjectOutputStream(fileOutStream);
-            objectOutStream.writeObject(campaign);
+            objectOutStream.writeObject(gameState);
             objectOutStream.close();
-            campaign.setSaved(true);
+            gameState.setSaved(true);
             if (!quiet) {
                 IO.writeString(Constants.SAVE_SUCCESS);
             }
