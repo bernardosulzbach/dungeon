@@ -20,7 +20,6 @@ import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.*;
-import org.dungeon.core.items.Item;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
@@ -31,28 +30,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//
-// Why is this class marked final?
-//
-// A quote from Effective Java (2nd)
-//
-// There are a few more restrictions that a class must obey to allow inheritance.
-//
-// Constructors must not invoke overridable methods, directly or indirectly. If you violate this rule, program failure
-// will result.
-//
-// The superclass constructor runs before the subclass constructor, so the overriding method in the subclass will be
-// invoked before the subclass constructor has run. If the overriding method depends on any initialization performed by
-// the subclass constructor, the method will not behave as expected.
-//
-// Bernardo Sulzbach (mafagafogigante) [16/09/2014]: although I can avoid the usage of setters in the constructor, I
-// will follow the item 17 in the above-mentioned book "Design and document for inheritance, or else prohibit it.";
-//
-// Bernardo Sulzbach (mafagafogigante) [20/09/2014]: there is no reason to still mark this class final. As I do not plan
-// to ever inherit from it and changing the final modifier is something ridiculously simple, I will just leave it the
-// way it is.
-//
-public final class GameState implements Serializable {
+
+public class GameState implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -167,190 +146,6 @@ public final class GameState implements Serializable {
         return list;
     }
 
-    private World createDemoWorld() {
-        World world = new World();
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Forest (two locations)
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Create a location on the hero's position.
-        Point forest = new Point(0, 0);
-        world.addLocation(new Location("Forest", 0.7), forest);
-
-        world.addCreature(campaignHero, forest);
-        world.addItem(Item.createItem(ItemPreset.STICK), forest);
-
-        // Another forest location.
-        Point forest2 = new Point(0, 1);
-        world.addLocation(new Location("Forest", 0.7), forest2);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 1, 2), forest2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), forest2);
-        world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), forest2);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.SPEAR), forest2);
-        // Food
-        world.addItem(Item.createItem(ItemPreset.APPLE), forest2);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Clearing (two locations)
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point clearing = new Point(0, 2);
-        world.addLocation(new Location("Clearing", 0.9), clearing);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.RABBIT, 1), clearing);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 1, 2), clearing);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SPIDER, 1, 2), clearing);
-        world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 1), clearing);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.DAGGER), clearing);
-        // Food
-        world.addItem(Item.createItem(ItemPreset.CHERRY), clearing);
-
-        //Second clearing location.
-        Point clearing2 = new Point(1, 2);
-        world.addLocation(new Location("Clearing", 0.9), clearing2);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), clearing2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 1, 2), clearing2);
-        world.addCreature(Creature.createCreature(CreaturePreset.WOLF, 1), clearing2);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), clearing2);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.MACE), clearing2);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Road to The Fort (two locations)
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point roadToTheFort = new Point(2, 2);
-        world.addLocation(new Location("Road to The Fort", 1.0), roadToTheFort);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 1), roadToTheFort);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 1, 2), roadToTheFort);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 1), roadToTheFort);
-
-        //Second roadToTheFort location.
-        Point roadToTheFort2 = new Point(2, 3);
-        world.addLocation(new Location("Road to The Fort", 1.0), roadToTheFort2);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.FROG, 1), roadToTheFort2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 1, 2), roadToTheFort2);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.WOLF, 2, 2), roadToTheFort2);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Fort
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point fort = new Point(2, 4);
-        world.addLocation(new Location("Fort", 0.6), fort);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BEAR, 2, 2), fort);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 1, 2), fort);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 5), fort);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Cave entrance
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point caveEntrance = new Point(-1, 2);
-        world.addLocation(new Location("Cave Entrance", 0.6), caveEntrance);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 2, 2), caveEntrance);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 1), caveEntrance);
-        world.addCreature(Creature.createCreature(CreaturePreset.RAT, 1), caveEntrance);
-        world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 1), caveEntrance);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.LONGSWORD), caveEntrance);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Cave
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point cave = new Point(-2, 2);
-        world.addLocation(new Location("Cave", 0.3), cave);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.BAT, 3, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.BEAR, 2), cave);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 3, 3), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 3), cave);
-        world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 3), cave);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.STONE), cave);
-        // Food
-        world.addItem(Item.createItem(ItemPreset.WATERMELON), cave);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Bridge
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point bridge = new Point(0, 3);
-        world.addLocation(new Location("Bridge", 1.0), bridge);
-
-        // Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), bridge);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), bridge);
-        world.addCreature(Creature.createCreature(CreaturePreset.SKELETON, 2), bridge);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Lake
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point lake = new Point(0, 4);
-        world.addLocation(new Location("Lake", 1.0), lake);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.FROG, 1, 3), lake);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SNAKE, 2, 2), lake);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 3), lake);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.STAFF), lake);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Meadow
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point meadow = new Point(3, 2);
-        world.addLocation(new Location("Meadow", 0.8), meadow);
-
-        // Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RABBIT, 1, 2), meadow);
-        world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 3), meadow);
-        world.addCreature(Creature.createCreature(CreaturePreset.SPIDER, 2), meadow);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Clearing (Tent)
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point clearing3 = new Point(4, 2);
-        world.addLocation(new Location("Clearing", 0.9), clearing3);
-
-        //Beasts
-        world.addCreature(Creature.createCreature(CreaturePreset.SNAKE, 4), clearing3);
-        world.addCreature(Creature.createCreature(CreaturePreset.ZOMBIE, 2), clearing3);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.RAT, 2, 2), clearing3);
-
-        // Weapons
-        world.addItem(Item.createItem(ItemPreset.AXE), clearing3);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Graveyard
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Point graveyard = new Point(4, 1);
-        world.addLocation(new Location("Graveyard", 1.0), graveyard);
-        //Beasts
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.SKELETON, 2, 2), graveyard);
-        world.addCreatureArray(Creature.createCreatureArray(CreaturePreset.ZOMBIE, 2, 2), graveyard);
-
-        return world;
-    }
-
     public CommandHistory getCommandHistory() {
         return commandHistory;
     }
@@ -447,10 +242,6 @@ public final class GameState implements Serializable {
      */
     public int parseHeroWalk(String[] inputWords) {
         if (inputWords.length == 1) {
-//            Direction walkDirection = Utils.selectFromList(Arrays.asList(Direction.values()));
-//            if (walkDirection != null) {
-//                return heroWalk(walkDirection);
-//            }
             IO.writeString(Constants.INVALID_INPUT);
         } else {
             String arg = inputWords[1];
