@@ -4,7 +4,6 @@ import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.items.ItemPreset;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -13,19 +12,31 @@ import java.util.List;
  */
 public class GameData {
 
-    public static final List<CreaturePreset> CREATURE_PRESETS = new ArrayList<CreaturePreset>();
-    public static final List<ItemPreset> ITEM_PRESETS = new ArrayList<ItemPreset>();
+    public static LocationPreset[] LOCATION_PRESETS;
+    public static CreaturePreset[] CREATURE_PRESETS;
+    public static ItemPreset[] ITEM_PRESETS;
 
-    public static void initializeGameData() {
-        initializeCreaturePresets();
-        initializeItemPresets();
+    public static void load() {
+        LOCATION_PRESETS = loadLocationPresets();
+        loadCreaturePresets();
+        loadItemPresets();
     }
 
-    private static void initializeCreaturePresets() {
+    private static LocationPreset[] loadLocationPresets() {
+        ArrayList<LocationPreset> locationPresets = new ArrayList<LocationPreset>();
+        CreaturePreset[] forestCreatures = {CreaturePreset.RABBIT};
+        ItemPreset[] forestItems = {ItemPreset.APPLE, ItemPreset.CLOCK};
+        locationPresets.add(new LocationPreset("Forest", 0.8, forestCreatures, forestItems));
+        LocationPreset[] locationPresetsArray = new LocationPreset[locationPresets.size()];
+        locationPresets.toArray(locationPresetsArray);
+        return locationPresetsArray;
+    }
+
+    private static void loadCreaturePresets() {
 
     }
 
-    private static void initializeItemPresets() {
+    private static void loadItemPresets() {
 
     }
 

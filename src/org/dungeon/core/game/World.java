@@ -19,9 +19,7 @@ package org.dungeon.core.game;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.CreatureID;
-import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -44,7 +42,7 @@ public class World implements Serializable {
     public World() {
         spawnCounter = new CounterMap<CreatureID>();
         locations = new HashMap<Point, Location>();
-        generator = new WorldGenerator(this, getLocationPresets());
+        generator = new WorldGenerator(this, GameData.LOCATION_PRESETS);
         worldDate = new Date();
         initializeCalendar();
     }
@@ -54,13 +52,6 @@ public class World implements Serializable {
         // Set the calendar to the starting game date.
         calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
         worldDate.setTime(calendar.getTimeInMillis());
-    }
-
-    private LocationPreset[] getLocationPresets() {
-        CreaturePreset[] forestCreatures = {CreaturePreset.RABBIT};
-        ItemPreset[] forestItems = {ItemPreset.APPLE, ItemPreset.CLOCK};
-        LocationPreset[] locationPresets = {new LocationPreset("Forest", 0.8, forestCreatures, forestItems)};
-        return locationPresets;
     }
 
     public void expand(Point p) {

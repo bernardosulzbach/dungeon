@@ -54,6 +54,7 @@ public class Game {
 
         Utils.printHeading();
 
+        GameData.load();
         gameState = Loader.loadGameRoutine();
     }
 
