@@ -18,6 +18,7 @@ package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
+import org.dungeon.gui.GameWindow;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
@@ -25,7 +26,6 @@ import org.dungeon.math.Fibonacci;
 import org.dungeon.utils.*;
 
 import java.util.Random;
-import org.dungeon.gui.GameWindow;
 
 public class Game {
 
@@ -104,47 +104,36 @@ public class Game {
         firstWord = inputWords[0].toLowerCase();
         if (firstWord.equals("rest")) {
             return gameState.getHero().rest();
-        } //
-        else if (firstWord.equals("look") || firstWord.equals("peek")) {
+        } else if (firstWord.equals("look") || firstWord.equals("peek")) {
             gameState.getHero().look();
-        } //
-        else if (firstWord.equals("inventory") || firstWord.equals("items")) {
+        } else if (firstWord.equals("inventory") || firstWord.equals("items")) {
             gameState.getHero().printInventory();
-        } //
-        else if (firstWord.equals("loot") || firstWord.equals("pick")) {
+        } else if (firstWord.equals("loot") || firstWord.equals("pick")) {
             gameState.getHero().pickItem(inputWords);
             return 120;
-        } //
-        else if (firstWord.equals("equip")) {
+        } else if (firstWord.equals("equip")) {
             gameState.getHero().parseEquip(inputWords);
         } else if (firstWord.equals("unequip")) {
             gameState.getHero().unequipWeapon();
-        } //
-        else if (firstWord.equals("eat") || firstWord.equals("devour")) {
+        } else if (firstWord.equals("eat") || firstWord.equals("devour")) {
             gameState.getHero().eatItem(inputWords);
             return 120;
         } else if (firstWord.equals("walk") || firstWord.equals("go")) {
             return gameState.parseHeroWalk(inputWords);
-        } //
-        else if (firstWord.equals("drop")) {
+        } else if (firstWord.equals("drop")) {
             gameState.getHero().dropItem(inputWords);
-        } //
-        else if (firstWord.equals("destroy") || firstWord.equals("crash")) {
+        } else if (firstWord.equals("destroy") || firstWord.equals("crash")) {
             gameState.getHero().destroyItem(inputWords);
             return 120;
-        } //
-        else if (firstWord.equals("status")) {
+        } else if (firstWord.equals("status")) {
             gameState.getHero().printAllStatus();
-        } //
-        else if (firstWord.equals("hero") || firstWord.equals("me")) {
+        } else if (firstWord.equals("hero") || firstWord.equals("me")) {
             gameState.getHero().printHeroStatus();
         } else if (firstWord.equals("age")) {
             gameState.getHero().printAge();
-        } //
-        else if (firstWord.equals("weapon")) {
+        } else if (firstWord.equals("weapon")) {
             gameState.getHero().printWeaponStatus();
-        } //
-        else if (firstWord.equals("kill") || firstWord.equals("attack")) {
+        } else if (firstWord.equals("kill") || firstWord.equals("attack")) {
             Creature target = gameState.getHero().selectTarget(inputWords);
             if (target != null) {
                 // Add this battle to the battle counter.
@@ -152,69 +141,50 @@ public class Game {
                 // A battle turn takes half a minute.
                 return lastBattleTurns * 30;
             }
-        } // Campaign-related commands.
-        //
-        else if (firstWord.equals("commandcount")) { // TODO: think of a better name for this.
+        } else if (firstWord.equals("commandcount")) { // TODO: think of a better name for this.
             gameState.printCommandCount();
-        } //
-        else if (firstWord.equals("whoami")) {
+        } else if (firstWord.equals("whoami")) {
             IO.writeString(gameState.getHeroInfo());
-        } //
-        else if (firstWord.equals("whereami")) {
+        } else if (firstWord.equals("whereami")) {
             IO.writeString(gameState.getHeroPosition().toString());
-        } //
-        else if (firstWord.equals("achievements")) {
+        } else if (firstWord.equals("achievements")) {
             gameState.printUnlockedAchievements();
-            // World-related commands.
-        } //
-        else if (firstWord.equals("now")) {
+        } else if (firstWord.equals("now")) {
             gameState.getHero().printDateAndTime();
-        } //
-        else if (firstWord.equals("spawns")) {
+        } else if (firstWord.equals("spawns")) {
             gameState.getWorld().printSpawnCounters();
-            // Utility commands.
-        } //
-        else if (firstWord.equals("time")) {
+        } else if (firstWord.equals("time")) {
             DateAndTime.printTime();
-        } //
-        else if (firstWord.equals("date")) {
+        } else if (firstWord.equals("date")) {
             DateAndTime.printDate();
-            // Help commands.
-        } //
-        else if (firstWord.equals("help") || firstWord.equals("?")) {
+        } else if (firstWord.equals("help") || firstWord.equals("?")) {
             Help.printHelp(inputWords);
-        } //
-        else if (firstWord.equals("commands")) {
+        } else if (firstWord.equals("commands")) {
             if (inputWords.length > 1) {
                 Help.printCommandList(inputWords[1]);
             } else {
                 Help.printCommandList();
             }
-            // Game commands.
-        } //
-        else if (firstWord.equals("save")) {
+        } else if (firstWord.equals("save")) {
             Loader.saveGameRoutine(gameState, inputWords);
-        } //
-        else if (firstWord.equals("quit") || firstWord.equals("exit")) {
+        } else if (firstWord.equals("quit") || firstWord.equals("exit")) {
             return -1;
-        } //
-        else if (firstWord.equals("credits") || firstWord.equals("about")) {
+        } else if (firstWord.equals("credits") || firstWord.equals("about")) {
             Utils.printCredits();
-        } //
-        else if (firstWord.equals("license") || firstWord.equals("copyright")) {
+        } else if (firstWord.equals("license") || firstWord.equals("copyright")) {
             LicenseUtils.printLicense();
         } else if (firstWord.equals("fibonacci") || firstWord.equals("f")) {
             Fibonacci.evaluate(inputWords);
-        }
-        else if (firstWord.equals("hint")) {
+        } else if (firstWord.equals("hint")) {
             gameState.printNextHint();
-        } //
-        else if (firstWord.equals("version")) {
+        } else if (firstWord.equals("poem")) {
+            Poetry.printRandomPoem();
+        } else if (firstWord.equals("version")) {
             Utils.printVersion();
-            // The user issued a command, but it was not recognized.
         } else if (firstWord.equals("clear")) {
             gameWindow.clearTextPane();
         } else {
+            // The user issued a command, but it was not recognized.
             Utils.printInvalidCommandMessage(inputWords[0]);
         }
         return 0;

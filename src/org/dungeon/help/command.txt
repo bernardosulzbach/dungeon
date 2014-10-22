@@ -124,6 +124,11 @@ info = "Prints the current date and time."
 aliases = ""
 arguments = ""
 
+command = "poem"
+info = "Prints a random poem from the poem library."
+aliases = ""
+arguments = ""
+
 command = "quit"
 info = "Exits the game."
 aliases = "exit"
