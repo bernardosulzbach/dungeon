@@ -25,6 +25,7 @@ import org.dungeon.io.Loader;
 import org.dungeon.math.Fibonacci;
 import org.dungeon.utils.*;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Game {
@@ -226,7 +227,7 @@ public class Game {
             survivor = defender;
             defeated = attacker;
         }
-        IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".");
+        IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
         // Add information about this battle to the Hero's battle log.
         attacker.getBattleLog().addBattle(attacker, defender, attacker == survivor, turns);
         battleCleanup(survivor, defeated);

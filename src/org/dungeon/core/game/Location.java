@@ -33,27 +33,22 @@ public class Location implements Serializable {
 
     private final String name;
     private final List<Creature> creatures;
-    private final List<Item> inventory;
+    private final List<Item> items;
 
     private final double lightPermittivity;
 
     private World world;
 
-    public Location(String name, double lightPermittivity) {
-        this.name = name;
-        this.lightPermittivity = lightPermittivity;
-        this.creatures = new ArrayList<Creature>();
-        this.inventory = new ArrayList<Item>();
-    }
-
     public Location(LocationPreset preset) {
         this.name = preset.getName();
         this.lightPermittivity = preset.getLightPermittivity();
         this.creatures = new ArrayList<Creature>();
-        this.inventory = new ArrayList<Item>();
         for (CreaturePreset creaturePreset : preset.getCreatures()) {
-            this.addCreature(Creature.createCreature(creaturePreset, 1));
+            Creature creature = Creature.createCreature(creaturePreset, 1);
+            creature.setLocation(this);
+            this.addCreature(creature);
         }
+        this.items = new ArrayList<Item>();
         for (ItemPreset itemPreset : preset.getItems()) {
             this.addItem(Item.createItem(itemPreset));
         }
@@ -80,7 +75,7 @@ public class Location implements Serializable {
     }
 
     public List<Item> getItems() {
-        return inventory;
+        return items;
     }
 
     public int getCreatureCount() {
@@ -88,7 +83,7 @@ public class Location implements Serializable {
     }
 
     public int getItemCount() {
-        return inventory.size();
+        return items.size();
     }
 
     public void addCreature(Creature creature) {
@@ -105,7 +100,7 @@ public class Location implements Serializable {
     }
 
     public void addItem(Item item) {
-        inventory.add(item);
+        items.add(item);
     }
 
     public boolean hasCreature(Creature creature) {
@@ -136,7 +131,7 @@ public class Location implements Serializable {
      * @return an Item object if there is a match. null otherwise.
      */
     public Item findItem(String name) {
-        for (Item item : inventory) {
+        for (Item item : items) {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
@@ -145,7 +140,7 @@ public class Location implements Serializable {
     }
 
     public void removeItem(Item item) {
-        inventory.remove(item);
+        items.remove(item);
     }
 
     public void removeCreature(Creature creatureToRemove) {

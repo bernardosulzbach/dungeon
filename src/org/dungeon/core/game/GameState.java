@@ -27,6 +27,7 @@ import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Hints;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -259,15 +260,16 @@ public class GameState implements Serializable {
      * Returns the number of seconds the player walk took.
      */
     public int heroWalk(Direction dir) {
-        Point destination = new Point(heroPosition, dir);
-        if (!getWorld().hasLocation(destination)) {
+        Point destinationPoint = new Point(heroPosition, dir);
+        if (!getWorld().hasLocation(destinationPoint)) {
 
-            getWorld().expand(destination);
+            getWorld().expand(destinationPoint);
         }
-        getWorld().moveCreature(campaignHero, heroPosition, destination);
-        heroPosition = destination;
-        campaignHero.setLocation(getWorld().getLocation(destination));
-        IO.writeString("You arrive at " + getWorld().getLocation(destination).getName());
+        getWorld().moveCreature(campaignHero, heroPosition, destinationPoint);
+        heroPosition = destinationPoint;
+        Location destinationLocation = getWorld().getLocation(destinationPoint);
+        campaignHero.setLocation(destinationLocation);
+        IO.writeString(String.format("You arrive at %s.", destinationLocation.getName()), Color.ORANGE);
         return TimeConstants.WALK_SUCCESS;
     }
 
