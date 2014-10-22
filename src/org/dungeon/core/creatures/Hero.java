@@ -135,7 +135,7 @@ public class Hero extends Creature {
             builder.append(Constants.LINE_1).append('\n');
 
             if (getLocation().getItemCount() == 0) {
-                builder.append(Constants.NO_ITEMS);
+                builder.append(Constants.NO_ITEMS).append('\n');
             } else {
                 for (Item curItem : getLocation().getItems()) {
                     builder.append(curItem.toSelectionEntry()).append('\n');

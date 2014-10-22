@@ -57,11 +57,6 @@ public class Constants {
      */
     public static final String INVALID_INPUT = "Invalid input.";
 
-    /**
-     * Movement strings.
-     */
-    public static final String WALK_BLOCKED = "The path is blocked.";
-
     // Description strings.
     public static final String NO_CREATURES = "You do not see any creatures here.";
     public static final String NO_ITEMS = "You do not see any items here.";
@@ -75,9 +70,6 @@ public class Constants {
 
     // Inventory strings.
     public static final String INVENTORY_FULL = "Inventory is full.";
-    public static final String INVENTORY_FULL_ADD_CALL_WARNING = "Called addItem on a full inventory.";
-
-    public static final String WARNING = "WARNING";
 
     // Item not found messages.
     public static final String ITEM_NOT_FOUND_IN_INVENTORY = "Item not found in inventory.";
