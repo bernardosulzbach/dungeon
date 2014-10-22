@@ -79,4 +79,5 @@ public class Constants {
 
     public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
 
+    public static final String HERO_ID = "HERO";
 }

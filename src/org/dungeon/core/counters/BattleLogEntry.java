@@ -17,7 +17,6 @@
 package org.dungeon.core.counters;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.core.creatures.CreatureType;
 
 import java.io.Serializable;
@@ -26,8 +25,8 @@ class BattleLogEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    protected final CreatureID attackerID;
-    protected final CreatureID defenderID;
+    protected final String attackerID;
+    protected final String defenderID;
     protected final String attackerWeapon;
     protected final String defenderWeapon;
     protected final CreatureType attackerType;

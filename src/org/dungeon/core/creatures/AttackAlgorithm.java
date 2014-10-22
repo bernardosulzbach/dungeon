@@ -16,11 +16,13 @@
  */
 package org.dungeon.core.creatures;
 
-import java.awt.Color;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
+
+import java.awt.*;
 
 /**
  * AttackAlgorithm class that defines all the attack algorithms. Specific attack algorithms are used by using invoking
@@ -158,7 +160,7 @@ public class AttackAlgorithm {
             builder.append(" with a critical hit");
         }
         builder.append(".");
-        IO.writeString(builder.toString(), attacker.getId() == CreatureID.HERO ? Color.GREEN : Color.RED);
+        IO.writeString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
     }
     
     // Simple method that prints a miss message.

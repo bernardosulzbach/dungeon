@@ -18,9 +18,8 @@ package org.dungeon.core.achievements;
 
 import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
-import org.dungeon.core.creatures.Hero;
-import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.core.creatures.CreatureType;
+import org.dungeon.core.creatures.Hero;
 
 /**
  * Class BattleAchievement that defines a general-purpose battle-related achievements.
@@ -33,12 +32,12 @@ public class BattleAchievement extends Achievement {
 
     private final int battleCount;
     private final int longestBattleLength;
-    private final CounterMap<CreatureID> idKills;
+    private final CounterMap<String> idKills;
     private final CounterMap<CreatureType> typeKills;
     private final CounterMap<String> weaponKills;
 
     public BattleAchievement(String name, String info, int experienceReward, int battleCount, int longestBattleLength,
-            CounterMap<CreatureID> idKills, CounterMap<CreatureType> typeKills, CounterMap<String> weaponIdKills) {
+            CounterMap<String> idKills, CounterMap<CreatureType> typeKills, CounterMap<String> weaponIdKills) {
 
         super(name, info, experienceReward);
         this.battleCount = battleCount;
@@ -55,7 +54,7 @@ public class BattleAchievement extends Achievement {
             if (log.getLongestBattleLength() >= longestBattleLength) {
                 if (log.getBattlesWonByAttacker() >= battleCount) {
                     if (idKills != null) {
-                        for (CreatureID id : idKills.keySet()) {
+                        for (String id : idKills.keySet()) {
                             if (log.getKills(id) < idKills.getCounter(id)) {
                                 return false;
                             }

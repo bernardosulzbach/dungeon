@@ -42,7 +42,7 @@ public class Hero extends Creature {
     private final double minimumLuminosity = 0.3;
 
     public Hero(String name) {
-        super(CreatureType.HERO, CreatureID.HERO, name);
+        super(CreatureType.HERO, "HERO", name);
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
@@ -114,13 +114,13 @@ public class Hero extends Creature {
                 // If there is only the hero, say that there are no creatures.
                 builder.append(Constants.NO_CREATURES).append('\n');
             } else {
-                CounterMap<CreatureID> counter = new CounterMap<CreatureID>();
+                CounterMap<String> counter = new CounterMap<String>();
                 for (Creature creature : getLocation().getCreatures()) {
-                    if (creature.getId() != CreatureID.HERO) {
+                    if (!creature.getId().equals(getId())) {
                         counter.incrementCounter(creature.getId());
                     }
                 }
-                for (CreatureID id : counter.keySet()) {
+                for (String id : counter.keySet()) {
                     String line;
                     int creatureCount = counter.getCounter(id);
                     // If there is only one creature, do not print its count.

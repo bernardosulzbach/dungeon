@@ -17,7 +17,6 @@
 package org.dungeon.core.counters;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.core.creatures.CreatureType;
 
 import java.io.Serializable;
@@ -111,10 +110,10 @@ public class BattleLog implements Serializable {
     /**
      * Return the kill count for a certain CreatureID.
      */
-    public int getKills(CreatureID id) {
+    public int getKills(String id) {
         int kills = 0;
         for (BattleLogEntry entry : entries) {
-            if (entry.attackerWon && entry.defenderID == id) {
+            if (entry.attackerWon && entry.defenderID.equals(id)) {
                 kills++;
             }
         }

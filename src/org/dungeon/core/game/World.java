@@ -18,7 +18,6 @@ package org.dungeon.core.game;
 
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureID;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 
@@ -31,7 +30,7 @@ public class World implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final CounterMap<CreatureID> spawnCounter;
+    private final CounterMap<String> spawnCounter;
 
     private final WorldGenerator generator;
 
@@ -40,7 +39,7 @@ public class World implements Serializable {
     private final Date worldDate;
 
     public World() {
-        spawnCounter = new CounterMap<CreatureID>();
+        spawnCounter = new CounterMap<String>();
         locations = new HashMap<Point, Location>();
         generator = new WorldGenerator(this, GameData.LOCATION_PRESETS);
         worldDate = new Date();
@@ -143,7 +142,7 @@ public class World implements Serializable {
      */
     public void printSpawnCounters() {
         StringBuilder sb = new StringBuilder();
-        for (CreatureID id : spawnCounter.keySet()) {
+        for (String id : spawnCounter.keySet()) {
             sb.append(String.format("%-20s%10d\n", id, spawnCounter.getCounter(id)));
         }
         IO.writeString(sb.toString());

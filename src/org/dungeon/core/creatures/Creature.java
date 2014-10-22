@@ -35,8 +35,8 @@ public class Creature implements Selectable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private final String id;
     private final CreatureType type;
-    private final CreatureID id;
     private final String name;
 
     private int level;
@@ -58,7 +58,7 @@ public class Creature implements Selectable, Serializable {
 
     private Location location;
 
-    public Creature(CreatureType type, CreatureID id, String name) {
+    public Creature(CreatureType type, String id, String name) {
         this.type = type;
         this.id = id;
         this.name = name;
@@ -72,7 +72,7 @@ public class Creature implements Selectable, Serializable {
     //
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature;
-        creature = new Creature(preset.getType(), preset.getId(), preset.getId().getName());
+        creature = new Creature(preset.getType(), preset.getId(), preset.getId().toLowerCase());
         creature.setAttackAlgorithm(preset.getAttackAlgorithm());
         creature.setLevel(level);
         creature.setAttack(preset.getAttack());
@@ -81,14 +81,6 @@ public class Creature implements Selectable, Serializable {
         creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
         return creature;
-    }
-
-    public static Creature[] createCreatureArray(CreaturePreset preset, int level, int amount) {
-        Creature[] array = new Creature[amount];
-        for (int i = 0; i < amount; i++) {
-            array[i] = createCreature(preset, level);
-        }
-        return array;
     }
 
     //
@@ -100,7 +92,7 @@ public class Creature implements Selectable, Serializable {
         return type;
     }
 
-    public CreatureID getId() {
+    public String getId() {
         return id;
     }
 

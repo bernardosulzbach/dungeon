@@ -19,7 +19,8 @@ package org.dungeon.core.game;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
-import org.dungeon.core.creatures.*;
+import org.dungeon.core.creatures.CreatureType;
+import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
@@ -72,37 +73,32 @@ public class GameState implements Serializable {
     private List<Achievement> createDemoAchievements() {
         List<Achievement> list = new ArrayList<Achievement>();
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that do not require specific kills.
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        list.add(new BattleAchievement("First Blood", "Kill a creature.",
-                10, 1, 0, null, null, null));
-        list.add(new BattleAchievement("Killer", "Kill 10 creatures.",
-                100, 10, 0, null, null, null));
-        list.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.",
-                150, 0, 10, null, null, null));
+        list.add(new BattleAchievement("First Blood", "Kill a creature.", 10, 1, 0, null, null, null));
+        list.add(new BattleAchievement("Killer", "Kill 10 creatures.", 100, 10, 0, null, null, null));
+        list.add(new BattleAchievement("Die hard", "Take 10 turns to kill a creature.", 150, 0, 10, null, null, null));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Battle achievements that rely on the kill count of a specific creature ID.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Bane requires six battles against bats.
-        CounterMap<CreatureID> baneRequirements = new CounterMap<CreatureID>(CreatureID.BAT, 6);
+        CounterMap<String> baneRequirements = new CounterMap<String>("BAT", 6);
         list.add(new BattleAchievement("Bane", "Kill 6 bats.",
                 50, 0, 0, baneRequirements, null, null));
         // Cat requires four battles against rats.
-        CounterMap<CreatureID> catRequirements = new CounterMap<CreatureID>(CreatureID.RAT, 4);
+        CounterMap<String> catRequirements = new CounterMap<String>("RAT", 4);
         list.add(new BattleAchievement("Cat", "Kill 4 rats.",
                 40, 0, 0, catRequirements, null, null));
         // Evil Bastard requires one battle against a rabbit.
-        CounterMap<CreatureID> evilBastardRequirements = new CounterMap<CreatureID>(CreatureID.RABBIT, 1);
+        CounterMap<String> evilBastardRequirements = new CounterMap<String>("RABBIT", 1);
         list.add(new BattleAchievement("Evil Bastard", "Kill an innocent rabbit.",
                 5, 0, 0, evilBastardRequirements, null, null));
         // Stay Dead requires two battles against a zombie.
-        CounterMap<CreatureID> stayDeadRequirements = new CounterMap<CreatureID>(CreatureID.ZOMBIE, 2);
+        CounterMap<String> stayDeadRequirements = new CounterMap<String>("ZOMBIE", 2);
         list.add(new BattleAchievement("Stay Dead", "Kill 2 zombies.",
                 50, 0, 0, stayDeadRequirements, null, null));
 
-        CounterMap<CreatureID> dissectionRequirements = new CounterMap<CreatureID>(CreatureID.FROG, 5);
+        CounterMap<String> dissectionRequirements = new CounterMap<String>("FROG", 5);
         list.add(new BattleAchievement("Dissection", "Kill 5 frogs.",
                 25, 0, 0, dissectionRequirements, null, null));
 
