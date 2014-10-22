@@ -363,17 +363,19 @@ public class Hero extends Creature {
         StringBuilder builder = new StringBuilder();
 
         builder.append(String.format("%s (%s)\n", getName(), getId()));
-        builder.append(String.format("%-20s%20d\n", "Level", getLevel()));
+
+        builder.append(String.format("Level %94d\n", getLevel()).replace(' ', '.'));
 
         String experienceFraction = String.format("%d/%d", getExperience(), getExperienceToNextLevel());
-        builder.append(String.format("%-20s%20s\n", "Experience", experienceFraction));
+        builder.append(String.format("Experience %89s\n", experienceFraction).replace(' ', '.'));
 
-        builder.append(String.format("%-20s%20d\n", "Gold", getGold()));
+        builder.append(String.format("Gold %95d\n", getGold()).replace(' ', '.'));
 
+        // TODO: Enable Health coloring. Red / Yellow / Green / ...
         String healthFraction = String.format("%d/%d", getCurHealth(), getMaxHealth());
-        builder.append(String.format("%-20s%20s\n", "Health", healthFraction));
+        builder.append(String.format("Health %93s\n", healthFraction).replace(' ', '.'));
 
-        builder.append(String.format("%-20s%20d", "Attack", getAttack()));
+        builder.append(String.format("Attack %93d", getAttack()).replace(' ', '.'));
         return builder.toString();
 
     }

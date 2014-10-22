@@ -421,7 +421,7 @@ public final class Campaign implements Serializable {
         for (Achievement a : achievements) {
             if (a.isUnlocked()) {
                 builder.append('\n').append(a.getName());
-                builder.append('\n').append(Constants.MARGIN).append(a.getInfo());
+                builder.append('\n').append(a.getInfo());
             }
         }
         IO.writeString(builder.toString());

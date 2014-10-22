@@ -37,9 +37,6 @@ public class Constants {
     public static final String LINE_2 = StringUtils.makeRepeatedCharacterString(WIDTH, '=');
     public static final String HEADING = LINE_2 + '\n' + StringUtils.centerString(TITLE, '-') + '\n' + LINE_2;
 
-    /** String used to improve output readability. */
-    public static final String MARGIN = "  ";
-
     // Loader strings.
     public static final String SAVE_NAME = "campaign";
     public static final String SAVE_EXTENSION = ".dungeon";

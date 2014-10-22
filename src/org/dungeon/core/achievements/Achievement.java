@@ -82,7 +82,7 @@ public abstract class Achievement implements Serializable {
         sb.append(getName()).append("\n");
         sb.append(getInfo()).append("\n");
         if (getExperienceReward() != 0) {
-            sb.append(String.format("+ %d experience points", getExperienceReward()));
+            sb.append(String.format(" + %d experience points.", getExperienceReward()));
         }
         IO.writeString(sb.toString());
     }
