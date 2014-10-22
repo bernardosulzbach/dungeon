@@ -68,9 +68,9 @@ public class AttackAlgorithm {
 
     private static void critterAttack(Creature attacker) {
         if (Game.RANDOM.nextBoolean()) {
-            IO.writeString(attacker.getName() + " does nothing.");
+            IO.writeString(attacker.getName() + " does nothing.", Color.YELLOW);
         } else {
-            IO.writeString(attacker.getName() + " tries to run away.");
+            IO.writeString(attacker.getName() + " tries to run away.", Color.YELLOW);
         }
     }
 
