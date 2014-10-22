@@ -72,7 +72,7 @@ public class Creature implements Selectable, Serializable {
     //
     public static Creature createCreature(CreaturePreset preset, int level) {
         Creature creature;
-        creature = new Creature(preset.getType(), preset.getId(), preset.getId().toLowerCase());
+        creature = new Creature(preset.getType(), preset.getId(), preset.getName());
         creature.setAttackAlgorithm(preset.getAttackAlgorithm());
         creature.setLevel(level);
         creature.setAttack(preset.getAttack());
@@ -328,9 +328,7 @@ public class Creature implements Selectable, Serializable {
     //
     @Override
     public String toSelectionEntry() {
-        String typeString = String.format("[%s]", getType());
-        String levelString = String.format("Level: %2d", getLevel());
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, typeString, getName(), levelString);
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
     }
 
 }

@@ -16,14 +16,15 @@
  */
 package org.dungeon.gui;
 
-import java.awt.*;
+import org.dungeon.core.game.Game;
+import org.dungeon.utils.Constants;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import org.dungeon.core.game.Game;
-import org.dungeon.utils.Constants;
+import java.awt.*;
 
 public class GameWindow extends javax.swing.JFrame {
 
@@ -35,9 +36,6 @@ public class GameWindow extends javax.swing.JFrame {
     // java.awt.Color.ORANGE is not orange enough.
     public static final Color ORANGE = new Color(255, 127, 0);
 
-    // GUI components.
-    private JScrollPane scrollPane;
-    private JScrollBar scrollBar;
     private JTextField textField;
     private JTextPane textPane;
 
@@ -53,8 +51,10 @@ public class GameWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         textPane = new javax.swing.JTextPane();
-        scrollPane = new javax.swing.JScrollPane();
         textField = new javax.swing.JTextField();
+
+        JScrollPane scrollPane = new JScrollPane();
+        JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(Constants.FULLNAME);
@@ -69,7 +69,6 @@ public class GameWindow extends javax.swing.JFrame {
         scrollPane.setViewportView(textPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        scrollBar = scrollPane.getVerticalScrollBar();
         scrollBar.setBackground(Color.DARK_GRAY);
 
         getContentPane().add(scrollPane, BorderLayout.CENTER);

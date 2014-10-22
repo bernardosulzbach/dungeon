@@ -193,7 +193,7 @@ public class Item implements Selectable, Serializable {
     public String getWeaponIntegrity() {
         String weaponIntegrity;
         if (getCurIntegrity() == getMaxIntegrity()) {
-            weaponIntegrity = "Not damaged";
+            weaponIntegrity = "Perfect";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
             weaponIntegrity = "Slightly damaged";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
@@ -203,7 +203,6 @@ public class Item implements Selectable, Serializable {
         } else {
             weaponIntegrity = "Broken";
         }
-        weaponIntegrity = String.format("(%s)", weaponIntegrity);
         return weaponIntegrity;
     }
 
@@ -211,25 +210,14 @@ public class Item implements Selectable, Serializable {
     // Selectable implementation
     @Override
     public String toSelectionEntry() {
-        String typeString = String.format("[%s]", getType());
-        String extraString;
-        if (isFood()) {
-            extraString = String.format("Nutrition: %4d", getFood().getNutrition());
-        } else {
-            extraString = String.format("Damage: %7d", getDamage());
-        }
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, typeString, getName(), extraString);
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, getType(), getName());
     }
 
     // Printing methods
     public String getStatusString() {
         StringBuilder builder = new StringBuilder();
-        String nameString = getName();
-        builder.append(String.format("%-20s%20s\n", "Name", nameString));
-        builder.append(String.format("%-20s%20s\n", "Damage", getDamage()));
-        // Uses three lines to build the integrity line to improve code readability.
-        String weaponIntegrity = getWeaponIntegrity();
-        builder.append(String.format("%-20s%20s\n", "Integrity", weaponIntegrity));
+        builder.append(String.format("%s %s\n", getWeaponIntegrity(), getName()));
+        builder.append(String.format("Damage %93d\n", getDamage()).replace(' ', '.'));
         return builder.toString();
     }
 

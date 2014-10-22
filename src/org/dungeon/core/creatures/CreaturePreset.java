@@ -21,19 +21,20 @@ package org.dungeon.core.creatures;
  */
 public enum CreaturePreset {
 
-    FROG(CreatureType.CRITTER, "FROG", 10, 5, 3, 2, AttackAlgorithmID.CRITTER, 12),
-    RABBIT(CreatureType.CRITTER, "RABBIT", 10, 5, 3, 2, AttackAlgorithmID.CRITTER, 10),
-    BAT(CreatureType.BEAST, "BAT", 12, 6, 5, 4, AttackAlgorithmID.BAT, 15),
-    BEAR(CreatureType.BEAST, "BEAR", 30, 14, 15, 10, AttackAlgorithmID.BEAST, 40),
-    RAT(CreatureType.BEAST, "RAT", 14, 8, 7, 4, AttackAlgorithmID.BEAST, 17),
-    SNAKE(CreatureType.BEAST, "SNAKE", 23, 14, 9, 7, AttackAlgorithmID.BEAST, 25),
-    SPIDER(CreatureType.BEAST, "SPIDER", 20, 12, 8, 5, AttackAlgorithmID.BEAST, 20),
-    WOLF(CreatureType.BEAST, "WOLF", 30, 15, 11, 7, AttackAlgorithmID.BEAST, 30),
-    SKELETON(CreatureType.UNDEAD, "SKELETON", 30, 18, 15, 7, AttackAlgorithmID.UNDEAD, 55),
-    ZOMBIE(CreatureType.UNDEAD, "ZOMBIE", 29, 17, 13, 6, AttackAlgorithmID.UNDEAD, 45);
+    FROG("FROG", CreatureType.CRITTER, "Frog", 5, 3, 2, AttackAlgorithmID.CRITTER, 12, 10),
+    RABBIT("RABBIT", CreatureType.CRITTER, "Rabbit", 5, 3, 2, AttackAlgorithmID.CRITTER, 10, 10),
+    BAT("BAT", CreatureType.BEAST, "Bat", 6, 5, 4, AttackAlgorithmID.BAT, 15, 12),
+    BEAR("BEAR", CreatureType.BEAST, "Bear", 14, 15, 10, AttackAlgorithmID.BEAST, 40, 30),
+    RAT("RAT", CreatureType.BEAST, "Rat", 8, 7, 4, AttackAlgorithmID.BEAST, 17, 14),
+    SNAKE("SNAKE", CreatureType.BEAST, "Snake", 14, 9, 7, AttackAlgorithmID.BEAST, 25, 23),
+    SPIDER("SPIDER", CreatureType.BEAST, "Spider", 12, 8, 5, AttackAlgorithmID.BEAST, 20, 20),
+    WOLF("WOLF", CreatureType.BEAST, "Wolf", 15, 11, 7, AttackAlgorithmID.BEAST, 30, 30),
+    SKELETON("SKELETON", CreatureType.UNDEAD, "Skeleton", 18, 15, 7, AttackAlgorithmID.UNDEAD, 55, 30),
+    ZOMBIE("ZOMBIE", CreatureType.UNDEAD, "Zombie", 17, 13, 6, AttackAlgorithmID.UNDEAD, 45, 29);
 
-    private final CreatureType type;
     private final String id;
+    private final CreatureType type;
+    private final String name;
     private final int health;
     private final int healthIncrement;
     private final int attack;
@@ -41,10 +42,10 @@ public enum CreaturePreset {
     private final AttackAlgorithmID attackAlgorithm;
     private final int experienceDropFactor;
 
-    CreaturePreset(CreatureType type, String id, int health, int healthIncrement, int attack, int attackIncrement,
-            AttackAlgorithmID attackAlgorithm, int experienceDropFactor) {
-        this.type = type;
+    CreaturePreset(String id, CreatureType type, String name, int healthIncrement, int attack, int attackIncrement, AttackAlgorithmID attackAlgorithm, int experienceDropFactor, int health) {
         this.id = id;
+        this.type = type;
+        this.name = name;
         this.health = health;
         this.healthIncrement = healthIncrement;
         this.attack = attack;
@@ -53,12 +54,16 @@ public enum CreaturePreset {
         this.experienceDropFactor = experienceDropFactor;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public CreatureType getType() {
         return type;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public int getHealth() {

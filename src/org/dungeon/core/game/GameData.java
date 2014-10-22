@@ -29,7 +29,7 @@ public class GameData {
         ItemPreset[] clearingItems = {ItemPreset.CHERRY};
         locationPresets.add(new LocationPreset("Clearing", 0.9, clearingCreatures, clearingItems));
 
-        CreaturePreset[] desertCreatures = {CreaturePreset.RAT, CreaturePreset.WOLF};
+        CreaturePreset[] desertCreatures = {CreaturePreset.RAT, CreaturePreset.RAT, CreaturePreset.WOLF};
         ItemPreset[] desertItems = {};
         locationPresets.add(new LocationPreset("Desert", 1.0, desertCreatures, desertItems));
 
@@ -42,7 +42,7 @@ public class GameData {
         locationPresets.add(new LocationPreset("Graveyard", 0.7, graveyardCreatures, graveyardItems));
 
         CreaturePreset[] meadowCreatures = {CreaturePreset.SPIDER, CreaturePreset.SNAKE, CreaturePreset.FROG};
-        ItemPreset[] meadowItems = {};
+        ItemPreset[] meadowItems = {ItemPreset.LONGSWORD, ItemPreset.STICK};
         locationPresets.add(new LocationPreset("Meadow", 1.0, meadowCreatures, meadowItems));
 
         CreaturePreset[] pondCreatures = {CreaturePreset.SNAKE, CreaturePreset.SPIDER};

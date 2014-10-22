@@ -116,18 +116,18 @@ public class Hero extends Creature {
             } else {
                 CounterMap<String> counter = new CounterMap<String>();
                 for (Creature creature : getLocation().getCreatures()) {
-                    if (!creature.getId().equals(getId())) {
-                        counter.incrementCounter(creature.getId());
+                    if (!creature.getName().equals(getName())) {
+                        counter.incrementCounter(creature.getName());
                     }
                 }
-                for (String id : counter.keySet()) {
+                for (String name : counter.keySet()) {
                     String line;
-                    int creatureCount = counter.getCounter(id);
+                    int creatureCount = counter.getCounter(name);
                     // If there is only one creature, do not print its count.
                     if (creatureCount == 1) {
-                        line = String.format("%-20s", id.toString());
+                        line = String.format("%-20s", name);
                     } else {
-                        line = String.format("%-20s(%d)", id.toString(), creatureCount);
+                        line = String.format("%-20s(%d)", name, creatureCount);
                     }
                     builder.append(line).append('\n');
                 }
@@ -207,13 +207,6 @@ public class Hero extends Creature {
     public void pickItem(String[] inputWords) {
         Item selectedItem = selectLocationItem(inputWords);
         if (selectedItem != null) {
-            //
-            // Bernardo Sulzbach (mafagafogigante): It is not necessary to check for a full inventory before trying to
-            // add an item, but attempting to add an item to a full Inventory will display a warning.
-            //
-            // This warning exists because the game should not print a inventory full message to the player when trying
-            // to add something to the full inventory of an NPC.
-            //
             if (getInventory().isFull()) {
                 IO.writeString(Constants.INVENTORY_FULL);
             } else {
