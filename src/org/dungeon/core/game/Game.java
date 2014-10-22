@@ -21,6 +21,7 @@ import org.dungeon.core.creatures.Hero;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
+import org.dungeon.math.Fibonacci;
 import org.dungeon.utils.*;
 
 import java.util.Random;
@@ -54,7 +55,7 @@ public class Game {
 
         Utils.printHeading();
 
-        GameData.load();
+        GameData.loadGameData();
         gameState = Loader.loadGameRoutine();
     }
 
@@ -202,7 +203,9 @@ public class Game {
         } //
         else if (firstWord.equals("license") || firstWord.equals("copyright")) {
             LicenseUtils.printLicense();
-        } //
+        } else if (firstWord.equals("fibonacci") || firstWord.equals("f")) {
+            Fibonacci.evaluate(inputWords);
+        }
         else if (firstWord.equals("hint")) {
             gameState.printNextHint();
         } //

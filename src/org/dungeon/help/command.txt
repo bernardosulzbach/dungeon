@@ -74,6 +74,11 @@ info = "Equip the item chosen by the player."
 aliases = ""
 arguments = "", "item"
 
+command = "fibonacci"
+info = "Returns the n-th element of the fibonacci sequence."
+aliases = "f"
+arguments = "n"
+
 command = "help"
 info = "Displays the help text for a given command."
 aliases = "?"

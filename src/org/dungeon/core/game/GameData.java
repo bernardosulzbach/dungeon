@@ -16,10 +16,10 @@ public class GameData {
     public static CreaturePreset[] CREATURE_PRESETS;
     public static ItemPreset[] ITEM_PRESETS;
 
-    public static void load() {
+    public static void loadGameData() {
         LOCATION_PRESETS = loadLocationPresets();
-        loadCreaturePresets();
-        loadItemPresets();
+        CREATURE_PRESETS = loadCreaturePresets();
+        ITEM_PRESETS = loadItemPresets();
     }
 
     private static LocationPreset[] loadLocationPresets() {
@@ -32,12 +32,18 @@ public class GameData {
         return locationPresetsArray;
     }
 
-    private static void loadCreaturePresets() {
+    private static CreaturePreset[] loadCreaturePresets() {
+        ArrayList<CreaturePreset> creaturePresets = new ArrayList<CreaturePreset>();
 
+        CreaturePreset[] creaturePresetsArray = new CreaturePreset[creaturePresets.size()];
+        return creaturePresetsArray;
     }
 
-    private static void loadItemPresets() {
-
+    private static ItemPreset[] loadItemPresets() {
+        ArrayList<ItemPreset> itemPresets = new ArrayList<ItemPreset>();
+        
+        ItemPreset[] itemPresetsArray = new ItemPreset[itemPresets.size()];
+        return itemPresetsArray;
     }
 
 }
