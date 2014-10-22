@@ -59,7 +59,7 @@ public class AttackAlgorithm {
 
     private static void beastAttack(Creature attacker, Creature defender) {
         // 10% miss chance.
-        if (0.9 > Game.RANDOM.nextInt()) {
+        if (0.9 > Game.RANDOM.nextDouble()) {
             int hitDamage = attacker.getAttack();
             defender.takeDamage(hitDamage);
             printInflictedDamage(attacker, hitDamage, defender, false);
