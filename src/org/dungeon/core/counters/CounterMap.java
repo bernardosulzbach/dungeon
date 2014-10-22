@@ -42,10 +42,6 @@ public class CounterMap<K> implements Serializable {
         map.put(key, initialCount);
     }
 
-    public CounterMap(HashMap<K, Integer> map) {
-        this.map = map;
-    }
-
     /**
      * Returns a Set view of the keys contained in this map.
      */

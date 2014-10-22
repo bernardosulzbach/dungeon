@@ -18,7 +18,6 @@ package org.dungeon.core.achievements;
 
 import org.dungeon.core.counters.BattleLog;
 import org.dungeon.core.counters.CounterMap;
-import org.dungeon.core.creatures.CreatureType;
 import org.dungeon.core.creatures.Hero;
 
 /**
@@ -33,11 +32,11 @@ public class BattleAchievement extends Achievement {
     private final int battleCount;
     private final int longestBattleLength;
     private final CounterMap<String> idKills;
-    private final CounterMap<CreatureType> typeKills;
+    private final CounterMap<String> typeKills;
     private final CounterMap<String> weaponKills;
 
     public BattleAchievement(String name, String info, int experienceReward, int battleCount, int longestBattleLength,
-            CounterMap<String> idKills, CounterMap<CreatureType> typeKills, CounterMap<String> weaponIdKills) {
+            CounterMap<String> idKills, CounterMap<String> typeKills, CounterMap<String> weaponIdKills) {
 
         super(name, info, experienceReward);
         this.battleCount = battleCount;
@@ -55,14 +54,14 @@ public class BattleAchievement extends Achievement {
                 if (log.getBattlesWonByAttacker() >= battleCount) {
                     if (idKills != null) {
                         for (String id : idKills.keySet()) {
-                            if (log.getKills(id) < idKills.getCounter(id)) {
+                            if (log.getKillsByID(id) < idKills.getCounter(id)) {
                                 return false;
                             }
                         }
                     }
                     if (typeKills != null) {
-                        for (CreatureType type : typeKills.keySet()) {
-                            if (log.getKills(type) < typeKills.getCounter(type)) {
+                        for (String type : typeKills.keySet()) {
+                            if (log.getKillsByType(type) < typeKills.getCounter(type)) {
                                 return false;
                             }
                         }

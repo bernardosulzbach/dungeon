@@ -55,7 +55,7 @@ public final class Help {
             while ((line = bufferedReader.readLine()) != null) {
                 // Trim possible excessive spaces and convert the string to lowercase.
                 line = line.trim();
-                if (!StringUtils.isBlankString(line)) {
+                if (StringUtils.isNotBlankString(line)) {
                     if (line.charAt(0) == '#') {
                         continue;
                     }
@@ -111,8 +111,6 @@ public final class Help {
         }
     }
 
-    // TODO: this is roughly a translation of initCommandHelp, someone must rewrite both metods and extract the repeated
-    //       code.
     private static void initAspectHelp() {
         BufferedReader bufferedReader;
         try {
@@ -126,7 +124,7 @@ public final class Help {
             while ((line = bufferedReader.readLine()) != null) {
                 // Trim excessive spaces.
                 line = line.trim();
-                if (!StringUtils.isBlankString(line)) {
+                if (StringUtils.isNotBlankString(line)) {
                     if (line.charAt(0) == '#') {
                         continue;
                     }

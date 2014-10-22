@@ -93,13 +93,13 @@ public class StringUtils {
     /**
      * Tests if a string only contains whitespaces and returns true if it does.
      */
-    public static boolean isBlankString(String str) {
+    public static boolean isNotBlankString(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isWhitespace(c)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**

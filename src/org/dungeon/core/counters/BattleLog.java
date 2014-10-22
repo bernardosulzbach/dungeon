@@ -17,7 +17,6 @@
 package org.dungeon.core.counters;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreatureType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -95,12 +94,12 @@ public class BattleLog implements Serializable {
     }
 
     /**
-     * Return the kill count for a certain CreatureType.
+     * Return the kill count for a certain creature type.
      */
-    public int getKills(CreatureType type) {
+    public int getKillsByType(String type) {
         int kills = 0;
         for (BattleLogEntry entry : entries) {
-            if (entry.attackerWon && entry.defenderType == type) {
+            if (entry.attackerWon && entry.defenderType.equals(type)) {
                 kills++;
             }
         }
@@ -108,9 +107,9 @@ public class BattleLog implements Serializable {
     }
 
     /**
-     * Return the kill count for a certain CreatureID.
+     * Return the kill count for a certain creature ID.
      */
-    public int getKills(String id) {
+    public int getKillsByID(String id) {
         int kills = 0;
         for (BattleLogEntry entry : entries) {
             if (entry.attackerWon && entry.defenderID.equals(id)) {

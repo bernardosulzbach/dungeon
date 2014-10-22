@@ -19,7 +19,6 @@ package org.dungeon.core.game;
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
-import org.dungeon.core.creatures.CreatureType;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
@@ -107,11 +106,11 @@ public class GameState implements Serializable {
         // Battle achievements that rely on the kill count of a specific type.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Professional Coward requires killing 10 critters.
-        CounterMap<CreatureType> professionalCowardRequirements = new CounterMap<CreatureType>(CreatureType.CRITTER, 10);
+        CounterMap<String> professionalCowardRequirements = new CounterMap<String>("CRITTER", 10);
         list.add(new BattleAchievement("Professional Coward", "Kill 10 critters.",
                 100, 0, 0, null, professionalCowardRequirements, null));
 
-        CounterMap<CreatureType> hunterRequirements = new CounterMap<CreatureType>(CreatureType.BEAST, 10);
+        CounterMap<String> hunterRequirements = new CounterMap<String>("BEAST", 10);
         list.add(new BattleAchievement("Hunter", "Kill 10 beasts.",
                 125, 0, 0, null, hunterRequirements, null));
 

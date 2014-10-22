@@ -42,7 +42,7 @@ public class Hero extends Creature {
     private final double minimumLuminosity = 0.3;
 
     public Hero(String name) {
-        super(CreatureType.HERO, "HERO", name);
+        super("HERO", "HERO", name);
         setLevel(1);
         setMaxHealth(50);
         setCurHealth(50);
