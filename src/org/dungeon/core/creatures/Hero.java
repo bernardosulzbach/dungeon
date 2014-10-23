@@ -347,32 +347,6 @@ public class Hero extends Creature {
         }
     }
 
-    //
-    //
-    // Status methods.
-    //
-    //
-    private String getHeroStatusString() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(String.format("%s (%s)\n", getName(), getId()));
-
-        builder.append(String.format("Level %94d\n", getLevel()).replace(' ', '.'));
-
-        String experienceFraction = String.format("%d/%d", getExperience(), getExperienceToNextLevel());
-        builder.append(String.format("Experience %89s\n", experienceFraction).replace(' ', '.'));
-
-        builder.append(String.format("Gold %95d\n", getGold()).replace(' ', '.'));
-
-        // TODO: Enable Health coloring. Red / Yellow / Green / ...
-        String healthFraction = String.format("%d/%d", getCurHealth(), getMaxHealth());
-        builder.append(String.format("Health %93s\n", healthFraction).replace(' ', '.'));
-
-        builder.append(String.format("Attack %93d", getAttack()).replace(' ', '.'));
-        return builder.toString();
-
-    }
-
     private String getWeaponStatusString() {
         if (getWeapon() == null) {
             return Constants.NOT_EQUIPPING_A_WEAPON;
@@ -382,7 +356,14 @@ public class Hero extends Creature {
     }
 
     public void printHeroStatus() {
-        IO.writeString(getHeroStatusString());
+        //IO.writeString(getHeroStatusString());
+        IO.writeString(String.format("%s (%s)\n", getName(), getId()));
+        IO.writeFilledLine("Level", Integer.toString(getLevel()));
+        IO.writeFilledLine("Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel()));
+        IO.writeFilledLine("Gold", Integer.toString(getGold()));
+        // TODO: Enable Health coloring. Red / Yellow / Green / ...
+        IO.writeFilledLine("Health", String.format("%d/%d", getCurHealth(), getMaxHealth()));
+        IO.writeFilledLine("Attack", Integer.toString(getAttack()));
     }
 
     public void printWeaponStatus() {
@@ -393,12 +374,9 @@ public class Hero extends Creature {
      * Output a table with both the hero's status and his weapon's status.
      */
     public void printAllStatus() {
-        // Check to see if there is a weapon.
+        printHeroStatus();
         if (getWeapon() != null) {
-            IO.writeString(getHeroStatusString() + "\n" + getWeaponStatusString());
-        } else {
-            // If the hero is not carrying a weapon, avoid printing that he is not carrying a weapon.
-            printHeroStatus();
+            printWeaponStatus();
         }
     }
 

@@ -16,9 +16,11 @@
  */
 package org.dungeon.io;
 
-import java.awt.Color;
 import org.dungeon.core.game.Game;
+import org.dungeon.utils.Constants;
 import org.dungeon.utils.StringUtils;
+
+import java.awt.*;
 
 /**
  * IO class that encapsulates all Input/Output operations.
@@ -32,9 +34,33 @@ public class IO {
     }
 
     /**
-     * Outputs a string of text, stripping unnecessary spaces at the end and formatting it according to a WriteStyle.
+     *
      */
     public static void writeString(String string, Color color) {
-        Game.gameWindow.writeToTextPane(StringUtils.clearEnd(string), color);
+        writeString(string, color, true);
+    }
+
+    /**
+     * Outputs a string of text using the given color and inserting a newline character if set to.
+     */
+    public static void writeString(String string, Color color, boolean endLine) {
+        Game.gameWindow.writeToTextPane(StringUtils.clearEnd(string), color, endLine);
+    }
+
+
+
+    /** Method used to write a line of full width with dots separating two strings. */
+    public static void writeFilledLine(String name, String value) {
+        int dots = Constants.WIDTH - name.length() - value.length();
+        if (dots < 0) {
+            throw new IllegalArgumentException("strings are too large.");
+        }
+        writeString(name, Color.LIGHT_GRAY, false);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (; dots > 0; dots--) {
+            stringBuilder.append('.');
+        }
+        writeString(stringBuilder.toString(), Color.GRAY, false);
+        writeString(value, Color.LIGHT_GRAY);
     }
 }

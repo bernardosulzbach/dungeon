@@ -105,6 +105,10 @@ public class Item implements Selectable, Serializable {
         return name;
     }
 
+    public String getQualifiedName() {
+        return getIntegrityString() + " " + getName();
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -190,10 +194,10 @@ public class Item implements Selectable, Serializable {
         return getHitRate() > Game.RANDOM.nextDouble();
     }
 
-    public String getWeaponIntegrity() {
+    public String getIntegrityString() {
         String weaponIntegrity;
         if (getCurIntegrity() == getMaxIntegrity()) {
-            weaponIntegrity = "Perfect";
+            weaponIntegrity = "";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
             weaponIntegrity = "Slightly damaged";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
@@ -210,13 +214,13 @@ public class Item implements Selectable, Serializable {
     // Selectable implementation
     @Override
     public String toSelectionEntry() {
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, getType(), getName());
+        return String.format(Constants.SELECTION_ENTRY_FORMAT, String.format("[%s]", getType()), getQualifiedName());
     }
 
     // Printing methods
     public String getStatusString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s %s\n", getWeaponIntegrity(), getName()));
+        builder.append(String.format("%s %s\n", getIntegrityString(), getName()));
         builder.append(String.format("Damage %93d\n", getDamage()).replace(' ', '.'));
         return builder.toString();
     }

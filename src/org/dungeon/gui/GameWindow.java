@@ -98,12 +98,11 @@ public class GameWindow extends javax.swing.JFrame {
         textField.setText(null);
     }
 
-    public void writeToTextPane(String str, Color color) {
+    public void writeToTextPane(String str, Color color, boolean endLine) {
         StyleConstants.setForeground(attributeSet, color);
         try {
-            int length = document.getLength();
-            if (length != 0) {
-                document.insertString(document.getLength(), "\n" + str, attributeSet);
+            if (endLine) {
+                document.insertString(document.getLength(), str + '\n', attributeSet);
             } else {
                 document.insertString(document.getLength(), str, attributeSet);
             }
