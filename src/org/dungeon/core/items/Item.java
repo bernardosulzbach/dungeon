@@ -106,7 +106,11 @@ public class Item implements Selectable, Serializable {
     }
 
     public String getQualifiedName() {
-        return getIntegrityString() + " " + getName();
+        if (getCurIntegrity() == getMaxIntegrity()) {
+            return getName();
+        } else {
+            return getIntegrityString() + " " + getName();
+        }
     }
 
     public void setName(String name) {
@@ -197,7 +201,7 @@ public class Item implements Selectable, Serializable {
     public String getIntegrityString() {
         String weaponIntegrity;
         if (getCurIntegrity() == getMaxIntegrity()) {
-            weaponIntegrity = "";
+            weaponIntegrity = "Perfect";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
             weaponIntegrity = "Slightly damaged";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
