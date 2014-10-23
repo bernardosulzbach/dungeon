@@ -32,28 +32,39 @@ import java.awt.*;
  */
 public class AttackAlgorithm {
 
-    public static void attack(Creature attacker, Creature defender, AttackAlgorithmID algorithm) {
-        switch (algorithm) {
-            case BAT:
-                batAttack(attacker, defender);
-                break;
-            case BEAST:
-                beastAttack(attacker, defender);
-                break;
-            case CRITTER:
-                critterAttack(attacker);
-                break;
-            case UNDEAD:
-                undeadAttack(attacker, defender);
-                break;
-            case HERO:
-                heroAttack(attacker, defender);
-                break;
+    public static void attack(Creature attacker, Creature defender, String algorithmID) {
+        if (algorithmID.equals("BAT")) {
+            batAttack(attacker, defender);
+        } else if (algorithmID.equals("BEAST")) {
+            beastAttack(attacker, defender);
+        } else if (algorithmID.equals("CRITTER")) {
+            critterAttack(attacker);
+        } else if (algorithmID.equals("UNDEAD")) {
+            undeadAttack(attacker, defender);
+        } else if (algorithmID.equals("HERO")) {
+            heroAttack(attacker, defender);
+        } else {
+            throw new IllegalArgumentException("algorithmID does not match any implemented algorithm.");
         }
     }
 
+    // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
     private static void batAttack(Creature attacker, Creature defender) {
-        // TODO: implement luminosity check here.
+        double luminosity = attacker.getLocation().getLuminosity();
+        // At complete darkness: 90% hit chance.
+        //      noon's sunlight: 40% hit chance.
+        if (0.9 - luminosity / 2 > Game.RANDOM.nextDouble()) {
+            int hitDamage = attacker.getAttack();
+            if (luminosity == 0.0) {
+                hitDamage *= 2;
+                printInflictedDamage(attacker, hitDamage, defender, true);
+            } else {
+                printInflictedDamage(attacker, hitDamage, defender, false);
+            }
+            defender.takeDamage(hitDamage);
+        } else {
+            printMiss(attacker);
+        }
         beastAttack(attacker, defender);
     }
 

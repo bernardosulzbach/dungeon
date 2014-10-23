@@ -51,7 +51,7 @@ public class Creature implements Selectable, Serializable {
 
     private int attack;
     private int attackIncrement;
-    private AttackAlgorithmID attackAlgorithm;
+    private String attackAlgorithm;
 
     private Inventory inventory;
     private Item weapon;
@@ -62,7 +62,7 @@ public class Creature implements Selectable, Serializable {
         this.id = id;
         this.type = type;
         this.name = name;
-        this.attackAlgorithm = AttackAlgorithmID.CRITTER;
+        this.attackAlgorithm = "CRITTER";
     }
 
     //
@@ -170,11 +170,11 @@ public class Creature implements Selectable, Serializable {
         this.attackIncrement = attackIncrement;
     }
 
-    public AttackAlgorithmID getAttackAlgorithm() {
+    public String getAttackAlgorithm() {
         return attackAlgorithm;
     }
 
-    public void setAttackAlgorithm(AttackAlgorithmID attackAlgorithm) {
+    public void setAttackAlgorithm(String attackAlgorithm) {
         this.attackAlgorithm = attackAlgorithm;
     }
 
