@@ -207,15 +207,13 @@ public class GameState implements Serializable {
      * Prints all unlocked achievements.
      */
     public void printUnlockedAchievements() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("Progress: %d/%d", getUnlockedAchievementsCount(), getTotalAchievementsCount()));
+        IO.writeString("Progress: " + getUnlockedAchievementsCount() + "/" +  getTotalAchievementsCount(), Color.CYAN);
         for (Achievement a : achievements) {
             if (a.isUnlocked()) {
-                builder.append('\n').append(a.getName());
-                builder.append('\n').append(a.getInfo());
+                IO.writeString(a.getName(), Color.ORANGE);
+                IO.writeString(" " + a.getInfo(), Color.YELLOW);
             }
         }
-        IO.writeString(builder.toString());
     }
 
     /**

@@ -53,7 +53,7 @@ public class AttackAlgorithm {
         double luminosity = attacker.getLocation().getLuminosity();
         // At complete darkness: 90% hit chance.
         //      noon's sunlight: 40% hit chance.
-        if (0.9 - luminosity / 2 > Game.RANDOM.nextDouble()) {
+        if (Utils.roll(0.9 - luminosity / 2)) {
             int hitDamage = attacker.getAttack();
             if (luminosity == 0.0) {
                 hitDamage *= 2;
@@ -70,7 +70,7 @@ public class AttackAlgorithm {
 
     private static void beastAttack(Creature attacker, Creature defender) {
         // 10% miss chance.
-        if (0.9 > Game.RANDOM.nextDouble()) {
+        if (Utils.roll(0.9)) {
             int hitDamage = attacker.getAttack();
             defender.takeDamage(hitDamage);
             printInflictedDamage(attacker, hitDamage, defender, false);

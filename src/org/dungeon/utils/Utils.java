@@ -19,6 +19,8 @@ package org.dungeon.utils;
 import org.dungeon.core.game.Game;
 import org.dungeon.io.IO;
 
+import java.awt.*;
+
 /**
  * General utility class.
  *
@@ -41,23 +43,10 @@ public class Utils {
     }
 
     /**
-     * Checks if a string is a valid name in the game.
-     */
-    public static boolean isValidName(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Names must be at least one character long.");
-        } else if (!StringUtils.isAlphabetic(name)) {
-            throw new IllegalArgumentException("Names must contain only letters.");
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * Prints a message reporting the usage of an invalid command.
      */
     public static void printInvalidCommandMessage(String command) {
-        IO.writeString(command + " is not a valid command.\nSee 'commands' for a list of valid commands.");
+        IO.writeString(String.format(Constants.INVALID_COMMAND, command), Color.RED);
     }
 
     public static void printCredits() {

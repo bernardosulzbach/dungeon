@@ -80,4 +80,5 @@ public class Constants {
     public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
 
     public static final String HERO_ID = "HERO";
+    public static final String INVALID_COMMAND = "'%s' is not a command.\nSee 'commands' for a list of commands.";
 }
