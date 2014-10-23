@@ -5,6 +5,7 @@ A simple text-based RPG using Java
 
 Screenshots
 -----------
+![22-10-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/22-10-14.png)
 ![23-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/23-09-14.png)
 ![18-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/18-09-14.png)
 ![14-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/14-09-14.png)
