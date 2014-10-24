@@ -36,18 +36,22 @@ public final class Help {
      * Method that must be called in order to initialize the help text available in-game.
      */
     public static void initialize() {
-        initCommandHelp();
-        initAspectHelp();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        initCommandHelp(classLoader);
+        initAspectHelp(classLoader);
         initialized = true;
     }
 
+    public static boolean isInitialized() {
+        return initialized;
+    }
+
     // Attempts to load the help strings from a text file.
-    private static void initCommandHelp() {
+    private static void initCommandHelp(ClassLoader classLoader) {
         BufferedReader bufferedReader;
         try {
-            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.COMMAND_TXT_PATH);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            bufferedReader = new BufferedReader(inputStreamReader);
+            InputStream inputStream = classLoader.getResourceAsStream(HelpConstants.COMMAND_TXT_PATH);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
             CommandHelpBuilder commandBuilder = null;
             String line;
@@ -111,12 +115,11 @@ public final class Help {
         }
     }
 
-    private static void initAspectHelp() {
+    private static void initAspectHelp(ClassLoader classLoader) {
         BufferedReader bufferedReader;
         try {
-            InputStream inputStream = Help.class.getResourceAsStream(HelpConstants.ASPECT_TXT_PATH);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            bufferedReader = new BufferedReader(inputStreamReader);
+            InputStream inputStream = classLoader.getResourceAsStream(HelpConstants.ASPECT_TXT_PATH);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
             AspectHelpBuilder aspectHelpBuilder = null;
             String line;
@@ -218,7 +221,7 @@ public final class Help {
     /**
      * Prints the help string for a given game aspect.
      */
-    public static boolean printAspectHelp(String[] words) {
+    private static boolean printAspectHelp(String[] words) {
         for (AspectHelp aspectHelp : ASPECTS) {
             if (aspectHelp.equalsIgnoreCase(words[1])) {
                 // Output to toString method of the first command that matches the input.
@@ -232,7 +235,7 @@ public final class Help {
     /**
      * Prints the help string for a command based on the specifiers.
      */
-    public static boolean printCommandHelp(String[] words) {
+    private static boolean printCommandHelp(String[] words) {
         for (CommandHelp commandHelp : COMMANDS) {
             if (commandHelp.equalsIgnoreCase(words[1])) {
                 // Output to toString method of the first command that matches the input.

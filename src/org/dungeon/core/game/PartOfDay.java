@@ -52,7 +52,7 @@ public enum PartOfDay {
         return luminosity;
     }
 
-    public void setLuminosity(double luminosity) {
+    void setLuminosity(double luminosity) {
         if (luminosity < 0.0 || luminosity > 1.0) {
             throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
         }

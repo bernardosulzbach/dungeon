@@ -67,7 +67,7 @@ public class GameState implements Serializable {
 
         // TODO: analyze if this should be moved / refactored or done in a different way.
         campaignWorld.expand(heroPosition);
-        campaignWorld.addCreature(campaignHero, heroPosition);
+        campaignWorld.getLocation(heroPosition).addCreature(campaignHero);
     }
 
     private List<Achievement> createDemoAchievements() {
@@ -170,11 +170,11 @@ public class GameState implements Serializable {
         this.saved = saved;
     }
 
-    public int getNextHintIndex() {
+    int getNextHintIndex() {
         return nextHintIndex;
     }
 
-    public void setNextHintIndex(int nextHintIndex) {
+    void setNextHintIndex(int nextHintIndex) {
         this.nextHintIndex = nextHintIndex;
     }
 
@@ -187,15 +187,15 @@ public class GameState implements Serializable {
         }
     }
 
-    public int getTotalAchievementsCount() {
+    int getTotalAchievementsCount() {
         return totalAchievementsCount;
     }
 
-    public void setTotalAchievementsCount(int totalAchievementsCount) {
+    void setTotalAchievementsCount(int totalAchievementsCount) {
         this.totalAchievementsCount = totalAchievementsCount;
     }
 
-    public int getUnlockedAchievementsCount() {
+    int getUnlockedAchievementsCount() {
         return unlockedAchievementsCount;
     }
 
@@ -256,10 +256,9 @@ public class GameState implements Serializable {
      * <p/>
      * Returns the number of seconds the player walk took.
      */
-    public int heroWalk(Direction dir) {
+    int heroWalk(Direction dir) {
         Point destinationPoint = new Point(heroPosition, dir);
         if (!getWorld().hasLocation(destinationPoint)) {
-
             getWorld().expand(destinationPoint);
         }
         getWorld().moveCreature(campaignHero, heroPosition, destinationPoint);

@@ -45,7 +45,7 @@ public class BattleLog implements Serializable {
      * Adds a new battle to the BattleLog object.
      */
     public void addBattle(Creature attacker, Creature defender, boolean attackerWon, int turns) {
-        entries.add(new BattleLogEntry(attacker, defender, attackerWon, turns));
+        entries.add(new BattleLogEntry(attacker, defender, attackerWon));
         //
         // After creating the fields totalBattles, battlesWonByAttacker and longestBattleLength, this method also needs
         // to set these values appropriately.
@@ -63,11 +63,11 @@ public class BattleLog implements Serializable {
         }
     }
 
-    public int getTotalBattles() {
+    int getTotalBattles() {
         return totalBattles;
     }
 
-    public void setTotalBattles(int totalBattles) {
+    void setTotalBattles(int totalBattles) {
         this.totalBattles = totalBattles;
     }
 
@@ -78,7 +78,7 @@ public class BattleLog implements Serializable {
         return battlesWonByAttacker;
     }
 
-    public void setBattlesWonByAttacker(int battlesWonByAttacker) {
+    void setBattlesWonByAttacker(int battlesWonByAttacker) {
         this.battlesWonByAttacker = battlesWonByAttacker;
     }
 
@@ -89,7 +89,7 @@ public class BattleLog implements Serializable {
         return longestBattleLength;
     }
 
-    public void setLongestBattleLength(int longestBattleLength) {
+    void setLongestBattleLength(int longestBattleLength) {
         this.longestBattleLength = longestBattleLength;
     }
 

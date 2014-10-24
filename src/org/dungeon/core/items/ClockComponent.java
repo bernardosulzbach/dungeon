@@ -27,7 +27,7 @@ import java.util.Date;
  */
 public class ClockComponent implements Serializable {
 
-    private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private Item master;
 
     /** Used to store the date the clock had when it was broken. */

@@ -42,9 +42,6 @@ public class Creature implements Selectable, Serializable {
     private int level;
     private int experience;
     private int experienceDrop;
-
-    private int gold;
-
     private int maxHealth;
     private int curHealth;
     private int healthIncrement;
@@ -58,29 +55,25 @@ public class Creature implements Selectable, Serializable {
 
     private Location location;
 
-    public Creature(String id, String type, String name) {
+    public Creature(CreatureBlueprint bp) {
+        id = bp.getId();
+        type = bp.getType();
+        name = bp.getName();
+        attackAlgorithm = bp.getAttackAlgorithmID();
+        // TODO: add support to different levels or remove the levelling system already.
+        level = 1;
+        attack = bp.getAttack();
+        attackIncrement = bp.getAttackIncrement();
+        experienceDrop = level * bp.getExperienceDropFactor();
+        maxHealth = bp.getMaxHealth() + (level - 1) * bp.getMaxHealthIncrement();
+        curHealth = bp.getCurHealth();
+    }
+
+    Creature(String id, String type, String name) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.attackAlgorithm = "CRITTER";
-    }
-
-    //
-    //
-    // Factory methods.
-    //
-    //
-    public static Creature createCreature(CreaturePreset preset, int level) {
-        Creature creature;
-        creature = new Creature(preset.getId(), preset.getType(), preset.getName());
-        creature.setAttackAlgorithm(preset.getAttackAlgorithm());
-        creature.setLevel(level);
-        creature.setAttack(preset.getAttack());
-        creature.setAttackIncrement(preset.getAttackIncrement());
-        creature.setExperienceDrop(level * preset.getExperienceDropFactor());
-        creature.setMaxHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-        creature.setCurHealth(preset.getHealth() + (level - 1) * preset.getHealthIncrement());
-        return creature;
     }
 
     //
@@ -100,15 +93,15 @@ public class Creature implements Selectable, Serializable {
         return name;
     }
 
-    public int getLevel() {
+    int getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    void setLevel(int level) {
         this.level = level;
     }
 
-    public int getExperience() {
+    int getExperience() {
         return experience;
     }
 
@@ -116,41 +109,27 @@ public class Creature implements Selectable, Serializable {
         return experienceDrop;
     }
 
-    public void setExperienceDrop(int experienceDrop) {
-        this.experienceDrop = experienceDrop;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        if (this.gold < 0) {
-            this.gold = 0;
-        }
-    }
-
-    public int getMaxHealth() {
+    int getMaxHealth() {
         return maxHealth;
     }
 
-    public void setMaxHealth(int maxHealth) {
+    void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
 
-    public int getCurHealth() {
+    int getCurHealth() {
         return curHealth;
     }
 
-    public void setCurHealth(int curHealth) {
+    void setCurHealth(int curHealth) {
         this.curHealth = curHealth;
     }
 
-    public int getHealthIncrement() {
+    int getHealthIncrement() {
         return healthIncrement;
     }
 
-    public void setHealthIncrement(int healthIncrement) {
+    void setHealthIncrement(int healthIncrement) {
         this.healthIncrement = healthIncrement;
     }
 
@@ -158,23 +137,23 @@ public class Creature implements Selectable, Serializable {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    void setAttack(int attack) {
         this.attack = attack;
     }
 
-    public int getAttackIncrement() {
+    int getAttackIncrement() {
         return attackIncrement;
     }
 
-    public void setAttackIncrement(int attackIncrement) {
+    void setAttackIncrement(int attackIncrement) {
         this.attackIncrement = attackIncrement;
     }
 
-    public String getAttackAlgorithm() {
+    String getAttackAlgorithm() {
         return attackAlgorithm;
     }
 
-    public void setAttackAlgorithm(String attackAlgorithm) {
+    void setAttackAlgorithm(String attackAlgorithm) {
         this.attackAlgorithm = attackAlgorithm;
     }
 
@@ -182,7 +161,7 @@ public class Creature implements Selectable, Serializable {
         return inventory;
     }
 
-    public void setInventory(Inventory inventory) {
+    void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
 
@@ -210,7 +189,7 @@ public class Creature implements Selectable, Serializable {
     /**
      * Increments the creature's health by a certain amount, never exceeding its maximum health.
      */
-    public void addHealth(int amount) {
+    void addHealth(int amount) {
         int sum = amount + getCurHealth();
         if (sum > getMaxHealth()) {
             setCurHealth(getMaxHealth());
@@ -224,7 +203,7 @@ public class Creature implements Selectable, Serializable {
     // Leveling methods.
     //
     //
-    public int getExperienceToNextLevel() {
+    int getExperienceToNextLevel() {
         return getLevel() * getLevel() * 100;
     }
 
@@ -239,7 +218,7 @@ public class Creature implements Selectable, Serializable {
     /**
      * Increases the creature level by one and writes a message about it.
      */
-    public void levelUp() {
+    void levelUp() {
         setLevel(getLevel() + 1);
         setMaxHealth(getMaxHealth() + getHealthIncrement());
         setCurHealth(getMaxHealth());
@@ -254,29 +233,6 @@ public class Creature implements Selectable, Serializable {
         IO.writeString(sb.toString());
     }
 
-    //
-    //
-    // Finance methods.
-    //
-    //
-    public void addGold(int amount) {
-        if (amount > 0) {
-            this.setGold(this.getGold() + amount);
-            IO.writeString(getName() + " got " + amount + " gold coins.");
-        }
-    }
-
-    /**
-     * Reduces the creature gold by a given amount. Gold will never become negative, so you should check that the
-     * creature has enough gold before subtracting any.
-     */
-    public void subtractGold(int amount) {
-        if (this.getGold() - amount > 0) {
-            this.setGold(this.getGold() - amount);
-        } else {
-            this.setGold(0);
-        }
-    }
 
     //
     //
@@ -319,16 +275,6 @@ public class Creature implements Selectable, Serializable {
      */
     public boolean hasWeapon() {
         return getWeapon() != null;
-    }
-
-    //
-    //
-    // Selectable implementation.
-    //
-    //
-    @Override
-    public String toSelectionEntry() {
-        return String.format(Constants.SELECTION_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
     }
 
 }

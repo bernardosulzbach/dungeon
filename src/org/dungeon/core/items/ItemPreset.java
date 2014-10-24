@@ -32,25 +32,25 @@ public enum ItemPreset {
     CLOCK("CLOCK", "Misc", "Clock", 20, 20, true, true, 9, 0.6, 10, null, new ClockComponent());
 
     // Identification fields.
-    protected final String id;
-    protected final String type;
-    protected final String name;
+    final String id;
+    final String type;
+    final String name;
 
     // Durability fields.
-    protected final int maxIntegrity;
-    protected final int curIntegrity;
-    protected final boolean repairable;
+    final int maxIntegrity;
+    final int curIntegrity;
+    final boolean repairable;
 
     // Weapon fields.
-    protected final boolean weapon;
-    protected final int damage;
-    protected final double hitRate;
-    protected final int integrityDecrementOnHit;
+    final boolean weapon;
+    final int damage;
+    final double hitRate;
+    final int integrityDecrementOnHit;
 
     // Food fields.
-    protected final FoodComponent foodComponent;
+    final FoodComponent foodComponent;
 
-    protected final ClockComponent clockComponent;
+    final ClockComponent clockComponent;
 
     ItemPreset(String id,
             String type,

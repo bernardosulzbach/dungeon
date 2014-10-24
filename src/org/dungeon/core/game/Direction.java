@@ -44,8 +44,4 @@ public enum Direction implements Selectable {
         return name;
     }
 
-    @Override
-    public String toSelectionEntry() {
-        return name;
-    }
 }

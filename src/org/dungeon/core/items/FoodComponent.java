@@ -25,9 +25,9 @@ import java.io.Serializable;
  */
 public class FoodComponent implements Serializable {
 
-    private int nutrition;
-    private int experienceOnEat;
-    private int integrityDecrementOnEat;
+    private final int nutrition;
+    private final int experienceOnEat;
+    private final int integrityDecrementOnEat;
 
     // mafagafogigante: FoodComponent only has a copy constructor because it may, in the future, hold mutable data.
     // I think that some specific fruits may be more nutritious than others and that food integrity may eventually

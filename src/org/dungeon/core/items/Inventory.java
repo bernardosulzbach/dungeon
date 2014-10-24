@@ -65,7 +65,7 @@ public class Inventory implements Serializable {
     /**
      * Checks if an item is already in the inventory.
      */
-    public boolean hasItem(Item itemObject) {
+    boolean hasItem(Item itemObject) {
         return itemList.contains(itemObject);
     }
 

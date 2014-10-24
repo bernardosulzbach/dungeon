@@ -37,7 +37,7 @@ public abstract class Achievement implements Serializable {
     private final int experienceReward;
     private boolean unlocked;
 
-    public Achievement(String name, String info, int experienceReward) {
+    Achievement(String name, String info, int experienceReward) {
         this.name = name;
         this.info = info;
         if (experienceReward < 0) {
@@ -54,7 +54,7 @@ public abstract class Achievement implements Serializable {
         return info;
     }
 
-    public int getExperienceReward() {
+    int getExperienceReward() {
         return experienceReward;
     }
 
@@ -62,7 +62,7 @@ public abstract class Achievement implements Serializable {
         return unlocked;
     }
 
-    public void setUnlocked(boolean unlocked) {
+    void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;
     }
 
@@ -76,7 +76,7 @@ public abstract class Achievement implements Serializable {
     /**
      * Outputs an achievement unlocked message with some information about the unlocked achievement.
      */
-    public void printAchievementUnlocked() {
+    void printAchievementUnlocked() {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
         sb.append(getName()).append("\n");

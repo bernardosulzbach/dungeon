@@ -142,7 +142,7 @@ arguments = ""
 command = "save"
 info = "Saves the game."
 aliases = ""
-arguments = ""
+arguments = "", "filename"
 
 command = "spawns"
 info = "Shows the spawn counters."

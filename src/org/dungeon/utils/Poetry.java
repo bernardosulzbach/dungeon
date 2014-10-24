@@ -9,7 +9,7 @@ import org.dungeon.io.IO;
  */
 public class Poetry {
 
-    public static final String THE_ROAD_NOT_TAKEN = "The road not taken\n" +
+    private static final String THE_ROAD_NOT_TAKEN = "The road not taken\n" +
             "Two roads diverged in a yellow wood,\n" +
             "And sorry I could not travel both\n" +
             "And be one traveler, long I stood\n" +

@@ -85,7 +85,7 @@ public class Item implements Selectable, Serializable {
     }
 
     // Getters and setters
-    public Creature getOwner() {
+    Creature getOwner() {
         return owner;
     }
 
@@ -97,7 +97,7 @@ public class Item implements Selectable, Serializable {
         return id;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
@@ -105,7 +105,7 @@ public class Item implements Selectable, Serializable {
         return name;
     }
 
-    public String getQualifiedName() {
+    String getQualifiedName() {
         if (getCurIntegrity() == getMaxIntegrity()) {
             return getName();
         } else {
@@ -113,15 +113,11 @@ public class Item implements Selectable, Serializable {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getMaxIntegrity() {
+    int getMaxIntegrity() {
         return maxIntegrity;
     }
 
-    public int getCurIntegrity() {
+    int getCurIntegrity() {
         return curIntegrity;
     }
 
@@ -146,19 +142,15 @@ public class Item implements Selectable, Serializable {
         return weapon;
     }
 
-    public void setWeapon(boolean weapon) {
-        this.weapon = weapon;
-    }
-
     public int getDamage() {
         return damage;
     }
 
-    public double getHitRate() {
+    double getHitRate() {
         return hitRate;
     }
 
-    public int getIntegrityDecrementOnHit() {
+    int getIntegrityDecrementOnHit() {
         return integrityDecrementOnHit;
     }
 
@@ -216,17 +208,8 @@ public class Item implements Selectable, Serializable {
 
     // Food methods
     // Selectable implementation
-    @Override
     public String toSelectionEntry() {
         return String.format(Constants.SELECTION_ENTRY_FORMAT, String.format("[%s]", getType()), getQualifiedName());
-    }
-
-    // Printing methods
-    public String getStatusString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s %s\n", getIntegrityString(), getName()));
-        builder.append(String.format("Damage %93d\n", getDamage()).replace(' ', '.'));
-        return builder.toString();
     }
 
 }

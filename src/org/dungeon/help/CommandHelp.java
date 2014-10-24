@@ -56,7 +56,7 @@ public class CommandHelp {
     /**
      * Returns an array with the command name and all its aliases.
      */
-    protected String[] getAllAliases() {
+    String[] getAllAliases() {
         String[] allAliases = new String[aliases.length + 1];
         allAliases[0] = name;
         System.arraycopy(aliases, 0, allAliases, 1, allAliases.length - 1);
@@ -67,7 +67,7 @@ public class CommandHelp {
     /**
      * Verifies if any of the command aliases matches a string.
      */
-    protected boolean equalsIgnoreCase(String command) {
+    boolean equalsIgnoreCase(String command) {
         if (name.equalsIgnoreCase(command)) {
             return true;
         }

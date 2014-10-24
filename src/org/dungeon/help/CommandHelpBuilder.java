@@ -17,31 +17,27 @@
 package org.dungeon.help;
 
 // Generated builder for CommandHelp.
-public class CommandHelpBuilder {
+class CommandHelpBuilder {
 
     private String name;
     private String info;
     private String[] aliases;
     private String[] arguments;
 
-    public CommandHelpBuilder setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public CommandHelpBuilder setInfo(String info) {
+    public void setInfo(String info) {
         this.info = info;
-        return this;
     }
 
-    public CommandHelpBuilder setAliases(String[] aliases) {
+    public void setAliases(String[] aliases) {
         this.aliases = aliases;
-        return this;
     }
 
-    public CommandHelpBuilder setArguments(String[] arguments) {
+    public void setArguments(String[] arguments) {
         this.arguments = arguments;
-        return this;
     }
 
     public CommandHelp createCommandHelp() {

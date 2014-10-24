@@ -27,7 +27,7 @@ import org.dungeon.io.IO;
  */
 public class LicenseUtils {
 
-    public static final String LICENSE_STRING = "    Copyright (C) 2014 Bernardo Sulzbach\n\n"
+    private static final String LICENSE_STRING = "    Copyright (C) 2014 Bernardo Sulzbach\n\n"
             + "  This program is free software: you can redistribute it and/or modify\n"
             + "  it under the terms of the GNU General Public License as published by\n"
             + "  the Free Software Foundation, either version 3 of the License, or\n"

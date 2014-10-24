@@ -47,7 +47,7 @@ public class AspectHelp {
     /**
      * Verifies if any of the command aliases matches a string.
      */
-    protected boolean equalsIgnoreCase(String word) {
+    boolean equalsIgnoreCase(String word) {
         if (name.equalsIgnoreCase(word)) {
             return true;
         }

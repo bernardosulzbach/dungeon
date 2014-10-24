@@ -16,19 +16,18 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.items.ItemPreset;
 
 import java.io.Serializable;
 
-public class LocationPreset implements Serializable {
+class LocationPreset implements Serializable {
 
     private final String name;
     private final double lightPermittivity;
-    private final CreaturePreset[] creatures;
+    private final String[] creatures;
     private final ItemPreset[] items;
 
-    public LocationPreset(String name, double lightPermittivity, CreaturePreset[] creatures, ItemPreset[] items) {
+    public LocationPreset(String name, double lightPermittivity, String[] creatures, ItemPreset[] items) {
         this.name = name;
         this.lightPermittivity = lightPermittivity;
         this.creatures = creatures;
@@ -43,7 +42,7 @@ public class LocationPreset implements Serializable {
         return lightPermittivity;
     }
 
-    public CreaturePreset[] getCreatures() {
+    public String[] getCreatures() {
         return creatures;
     }
 

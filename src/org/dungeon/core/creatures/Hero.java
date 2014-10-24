@@ -65,15 +65,15 @@ public class Hero extends Creature {
         return battleLog;
     }
 
-    public void setBattleLog(BattleLog battleLog) {
+    void setBattleLog(BattleLog battleLog) {
         this.battleLog = battleLog;
     }
 
-    public Date getDateOfBirth() {
+    Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public double getMinimumLuminosity() {
+    double getMinimumLuminosity() {
         return minimumLuminosity;
     }
 
@@ -155,7 +155,7 @@ public class Hero extends Creature {
     // Selection methods.
     //
     //
-    public Item selectInventoryItem(String[] inputWords) {
+    Item selectInventoryItem(String[] inputWords) {
         if (inputWords.length == 1) {
             IO.writeString(Constants.INVALID_INPUT);
             return null;
@@ -168,7 +168,7 @@ public class Hero extends Creature {
         }
     }
 
-    public Item selectLocationItem(String[] inputWords) {
+    Item selectLocationItem(String[] inputWords) {
         if (inputWords.length == 1) {
 //            return Utils.selectFromList(getLocation().getItems());
             IO.writeString(Constants.INVALID_INPUT);
@@ -302,7 +302,7 @@ public class Hero extends Creature {
         }
     }
 
-    public boolean hasClock() {
+    boolean hasClock() {
         for (Item item : getInventory().getItems()) {
             if (item.isClock()) {
                 return true;
@@ -311,7 +311,7 @@ public class Hero extends Creature {
         return false;
     }
 
-    public Item getClock() {
+    Item getClock() {
         for (Item item : getInventory().getItems()) {
             if (item.isClock()) {
                 return item;
@@ -325,7 +325,7 @@ public class Hero extends Creature {
     // Weapon methods.
     //
     //
-    public void equipWeapon(Item weapon) {
+    void equipWeapon(Item weapon) {
         if (hasWeapon()) {
             if (getWeapon() == weapon) {
                 IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
@@ -347,27 +347,24 @@ public class Hero extends Creature {
         }
     }
 
-    private String getWeaponStatusString() {
-        if (getWeapon() == null) {
-            return Constants.NOT_EQUIPPING_A_WEAPON;
-        } else {
-            return getWeapon().getStatusString();
-        }
-    }
-
     public void printHeroStatus() {
         //IO.writeString(getHeroStatusString());
         IO.writeString(String.format("%s (%s)\n", getName(), getId()));
         IO.writeFilledLine("Level", Integer.toString(getLevel()));
         IO.writeFilledLine("Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel()));
-        IO.writeFilledLine("Gold", Integer.toString(getGold()));
         // TODO: Enable Health coloring. Red / Yellow / Green / ...
         IO.writeFilledLine("Health", String.format("%d/%d", getCurHealth(), getMaxHealth()));
         IO.writeFilledLine("Attack", Integer.toString(getAttack()));
     }
 
     public void printWeaponStatus() {
-        IO.writeString(getWeaponStatusString());
+        if (hasWeapon()) {
+            Item heroWeapon = getWeapon();
+            IO.writeString(heroWeapon.getIntegrityString() + " " + heroWeapon.getName());
+            IO.writeFilledLine("Damage", Integer.toString(heroWeapon.getDamage()));
+        } else {
+            IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
+        }
     }
 
     /**

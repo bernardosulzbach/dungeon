@@ -40,7 +40,7 @@ public class StringUtils {
      * @param fill the filling character.
      * @return a centered string.
      */
-    public static String centerString(String string, int width, char fill) {
+    private static String centerString(String string, int width, char fill) {
         int length = string.length();
         if (length > width) {
             throw new IllegalArgumentException("String is bigger than the desired width.");
@@ -58,18 +58,6 @@ public class StringUtils {
             }
             return builder.toString();
         }
-    }
-
-    /**
-     * Checks if a string is alphabetic (only contains letters).
-     */
-    public static boolean isAlphabetic(String name) {
-        for (int i = 0; i < name.length(); i++) {
-            if (!Character.isAlphabetic(name.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

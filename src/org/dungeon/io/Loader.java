@@ -83,7 +83,7 @@ public class Loader {
     /**
      * Prompts the user to confirm an operation using a dialog window.
      */
-    public static boolean confirmOperation(String confirmation) {
+    private static boolean confirmOperation(String confirmation) {
         int result = JOptionPane.showConfirmDialog(Game.gameWindow, confirmation, null, JOptionPane.YES_NO_OPTION);
         Game.gameWindow.requestFocusOnTextField();
         return result == JOptionPane.YES_OPTION;

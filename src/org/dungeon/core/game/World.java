@@ -18,7 +18,6 @@ package org.dungeon.core.game;
 
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -46,7 +45,7 @@ public class World implements Serializable {
         initializeCalendar();
     }
 
-    private void initializeCalendar() {
+    void initializeCalendar() {
         Calendar calendar = Calendar.getInstance();
         // Set the calendar to the starting game date.
         calendar.set(1985, Calendar.JUNE, 1, 6, 0, 0);
@@ -64,30 +63,6 @@ public class World implements Serializable {
     public void addLocation(Location locationObject, Point coordinates) {
         locations.put(coordinates, locationObject);
         locationObject.setWorld(this);
-    }
-
-    /**
-     * Add a creature to a specific location.
-     */
-    public void addCreature(Creature creature, Point coordinates) {
-        locations.get(coordinates).addCreature(creature);
-        creature.setLocation(getLocation(coordinates));
-        spawnCounter.incrementCounter(creature.getId());
-    }
-
-    public void addCreatureArray(Creature[] creatures, Point coordinates) {
-        locations.get(coordinates).addCreatureArray(creatures);
-        for (Creature creature : creatures) {
-            creature.setLocation(getLocation(coordinates));
-        }
-        spawnCounter.incrementCounter(creatures[0].getId(), creatures.length);
-    }
-
-    /**
-     * Add an item to a specific location.
-     */
-    public void addItem(Item item, Point locationPoint) {
-        locations.get(locationPoint).addItem(item);
     }
 
     /**

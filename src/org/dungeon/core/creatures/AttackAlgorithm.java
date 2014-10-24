@@ -30,7 +30,7 @@ import java.awt.*;
  * <p/>
  * Created by Bernardo Sulzbach on 29/09/14.
  */
-public class AttackAlgorithm {
+class AttackAlgorithm {
 
     public static void attack(Creature attacker, Creature defender, String algorithmID) {
         if (algorithmID.equals("BAT")) {
@@ -160,7 +160,7 @@ public class AttackAlgorithm {
      * @param defender the target of the attack.
      * @param criticalHit a boolean indicating if the attack was a critical hit or not.
      */
-    public static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
+    private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
         StringBuilder builder = new StringBuilder();
         builder.append(attacker.getName());
         builder.append(" inflicted ");
@@ -175,7 +175,7 @@ public class AttackAlgorithm {
     }
     
     // Simple method that prints a miss message.
-    public static void printMiss(Creature attacker) {
+    private static void printMiss(Creature attacker) {
         IO.writeString(attacker.getName() + " missed.", Color.YELLOW);
     }
 

@@ -35,7 +35,7 @@ public class Game {
 
     /** The window to what the games write output and get user input. */
     public static GameWindow gameWindow;
-    public static GameState gameState;
+    private static GameState gameState;
 
     public static void main(String[] args) {
 
@@ -240,7 +240,6 @@ public class Game {
     private static void battleCleanup(Creature survivor, Creature defeated) {
         if (survivor instanceof Hero) {
             survivor.addExperience(defeated.getExperienceDrop());
-            survivor.addGold(defeated.getGold());
         }
         // Remove the dead creature from the location.
         survivor.getLocation().removeCreature(defeated);

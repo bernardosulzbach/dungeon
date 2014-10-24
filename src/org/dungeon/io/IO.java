@@ -43,7 +43,7 @@ public class IO {
     /**
      * Outputs a string of text using the given color and inserting a newline character if set to.
      */
-    public static void writeString(String string, Color color, boolean endLine) {
+    private static void writeString(String string, Color color, boolean endLine) {
         Game.gameWindow.writeToTextPane(StringUtils.clearEnd(string), color, endLine);
     }
 

@@ -23,7 +23,7 @@ import java.io.Serializable;
  *
  * Created by mafagafogigante on 14/10/14.
  */
-public class WorldGenerator implements Serializable {
+class WorldGenerator implements Serializable {
 
     private final World world;
     private final LocationPreset[] locationPresets;
@@ -36,7 +36,7 @@ public class WorldGenerator implements Serializable {
         this(world, locationPresets, 5);
     }
 
-    public WorldGenerator(World world, LocationPreset[] locationPresets, int chunkSide) {
+    private WorldGenerator(World world, LocationPreset[] locationPresets, int chunkSide) {
         this.world = world;
         this.locationPresets = locationPresets;
         this.chunkSide = chunkSide;

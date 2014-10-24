@@ -17,6 +17,7 @@
 package org.dungeon.utils;
 
 import org.dungeon.core.game.Game;
+import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 
 import java.awt.*;
@@ -47,6 +48,9 @@ public class Utils {
      */
     public static void printInvalidCommandMessage(String command) {
         IO.writeString(String.format(Constants.INVALID_COMMAND, command), Color.RED);
+        if (Help.isInitialized()) {
+            IO.writeString(Constants.SUGGEST_COMMANDS, Color.ORANGE);
+        }
     }
 
     public static void printCredits() {
@@ -56,7 +60,8 @@ public class Utils {
     /**
      * Simulates a random roll.
      *
-     * @param chance the probability of a true result. Must be nonnegative and smaller than 1.
+     * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
+     * @return a boolean indicating if the roll was successful or not.
      */
     public static boolean roll(double chance) {
         if (chance < 0 || chance > 1) {

@@ -17,14 +17,12 @@
 package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.CreaturePreset;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Location implements Serializable {
@@ -43,8 +41,8 @@ public class Location implements Serializable {
         this.name = preset.getName();
         this.lightPermittivity = preset.getLightPermittivity();
         this.creatures = new ArrayList<Creature>();
-        for (CreaturePreset creaturePreset : preset.getCreatures()) {
-            Creature creature = Creature.createCreature(creaturePreset, 1);
+        for (String creatureID : preset.getCreatures()) {
+            Creature creature = new Creature(GameData.CREATURE_BLUEPRINTS.get(creatureID));
             creature.setLocation(this);
             this.addCreature(creature);
         }
@@ -58,7 +56,7 @@ public class Location implements Serializable {
         return name;
     }
 
-    public double getLightPermittivity() {
+    double getLightPermittivity() {
         return lightPermittivity;
     }
 
@@ -88,15 +86,6 @@ public class Location implements Serializable {
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
-    }
-
-    /**
-     * Adds all the creatures in an array of creatures to this Location object.
-     *
-     * @param creatureArray the array of creatures.
-     */
-    public void addCreatureArray(Creature[] creatureArray) {
-        creatures.addAll(Arrays.asList(creatureArray));
     }
 
     public void addItem(Item item) {

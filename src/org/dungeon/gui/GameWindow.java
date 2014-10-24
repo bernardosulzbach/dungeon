@@ -29,12 +29,12 @@ import java.awt.*;
 public class GameWindow extends javax.swing.JFrame {
 
     // Window configuration. Note that this is fixed in stone so that the text formatting makes sense.
-    public static final int WIDTH = 830;
+    private static final int WIDTH = 830;
     // With "Monospaced 14", this height allows for 24 rows of output.
-    public static final int HEIGHT = 640;
+    private static final int HEIGHT = 640;
 
     // java.awt.Color.ORANGE is not orange enough.
-    public static final Color ORANGE = new Color(255, 127, 0);
+    private static final Color ORANGE = new Color(255, 127, 0);
 
     private JTextField textField;
     private JTextPane textPane;
