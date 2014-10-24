@@ -24,8 +24,9 @@ import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
-import org.joda.time.Period;
+import org.dungeon.utils.Utils;
 
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -380,51 +381,9 @@ public class Hero extends Creature {
     /**
      * Prints the hero's age.
      */
-    // TODO: Write tests to this function.
-    // TODO: Extract to ageDiffToString (an util).
     public void printAge() {
-        Period p = new Period(getDateOfBirth().getTime(), getLocation().getWorld().getWorldDate().getTime());
-        int years = p.getYears();
-        int months = p.getMonths();
-        int days = p.getDays();
-        StringBuilder builder = new StringBuilder();
-        if (years != 0) {
-            if (years == 1) {
-                builder.append(years).append(" year");
-            } else {
-                builder.append(years).append(" years");
-            }
-        }
-        if (months != 0) {
-            if (builder.length() != 0) {
-                if (days == 0) {
-                    builder.append(" and ");
-                } else {
-                    builder.append(", ");
-                }
-            }
-            if (months == 1) {
-                builder.append(months).append(" month");
-            } else {
-                builder.append(months).append(" months");
-            }
-        }
-        if (days != 0) {
-            if (builder.length() != 0) {
-                builder.append(" and ");
-            }
-            if (days == 1) {
-                builder.append(days).append(" day");
-            } else {
-                builder.append(days).append(" days");
-            }
-        }
-        if (builder.length() == 0) {
-            builder.append("Less than a day.");
-        } else {
-            builder.append(".");
-        }
-        IO.writeString(builder.toString());
+        IO.writeString(Utils.dateDifferenceToString(getDateOfBirth().getTime(),
+                getLocation().getWorld().getWorldDate().getTime()) + ".", Color.CYAN);
     }
 
     public void printDateAndTime() {

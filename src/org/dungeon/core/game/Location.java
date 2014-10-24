@@ -85,6 +85,7 @@ public class Location implements Serializable {
     }
 
     public void addCreature(Creature creature) {
+        creature.setLocation(this);
         creatures.add(creature);
     }
 

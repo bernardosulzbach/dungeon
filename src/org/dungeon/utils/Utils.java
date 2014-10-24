@@ -19,6 +19,7 @@ package org.dungeon.utils;
 import org.dungeon.core.game.Game;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
+import org.joda.time.Period;
 
 import java.awt.*;
 
@@ -28,6 +29,8 @@ import java.awt.*;
  * @author Bernardo Sulzbach
  */
 public class Utils {
+
+    public static String LESS_THAN_A_DAY = "Less than a day";
 
     /**
      * Prints the startup heading.
@@ -54,7 +57,7 @@ public class Utils {
     }
 
     public static void printCredits() {
-        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.\n");
+        IO.writeString("This game was made by Bernardo Sulzbach and Gabriel Bohmer.");
     }
 
     /**
@@ -68,6 +71,49 @@ public class Utils {
             throw new IllegalArgumentException("chance must be nonnegative and smaller than 1.");
         }
         return chance > Game.RANDOM.nextDouble();
+    }
+
+    public static String dateDifferenceToString(long start, long end) {
+        Period period = new Period(start, end);
+        int years = period.getYears();
+        int months = period.getMonths();
+        int days = period.getDays();
+        StringBuilder builder = new StringBuilder();
+        if (years != 0) {
+            if (years == 1) {
+                builder.append(years).append(" year");
+            } else {
+                builder.append(years).append(" years");
+            }
+        }
+        if (months != 0) {
+            if (builder.length() != 0) {
+                if (days == 0) {
+                    builder.append(" and ");
+                } else {
+                    builder.append(", ");
+                }
+            }
+            if (months == 1) {
+                builder.append(months).append(" month");
+            } else {
+                builder.append(months).append(" months");
+            }
+        }
+        if (days != 0) {
+            if (builder.length() != 0) {
+                builder.append(" and ");
+            }
+            if (days == 1) {
+                builder.append(days).append(" day");
+            } else {
+                builder.append(days).append(" days");
+            }
+        }
+        if (builder.length() == 0) {
+            builder.append(LESS_THAN_A_DAY);
+        }
+        return builder.toString();
     }
 
 }
