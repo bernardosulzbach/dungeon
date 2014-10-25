@@ -38,9 +38,9 @@ public class Hero extends Creature {
 
     private static final long serialVersionUID = 1L;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private BattleLog battleLog;
     private final Date dateOfBirth;
     private final double minimumLuminosity = 0.3;
+    private BattleLog battleLog;
 
     public Hero(String name) {
         super("HERO", "HERO", name);
@@ -58,8 +58,13 @@ public class Hero extends Creature {
 
         // Currently, the hero's birthday is hardcoded.
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1952, Calendar.JUNE, 4, 8, 32, 55);  // Yes, I know his date of birth THIS precisely.
+        calendar.set(1952, Calendar.JUNE, 4, 8, 32, 55);
         dateOfBirth = calendar.getTime();
+    }
+
+    public static Hero createHeroInteractively() {
+        // I have no idea on how I will implement this.
+        return new Hero("Seth");
     }
 
     public BattleLog getBattleLog() {
@@ -70,7 +75,7 @@ public class Hero extends Creature {
         this.battleLog = battleLog;
     }
 
-    Date getDateOfBirth() {
+    private Date getDateOfBirth() {
         return dateOfBirth;
     }
 

@@ -42,7 +42,7 @@ public class GameState implements Serializable {
 
     private final World campaignWorld;
 
-    private final Hero campaignHero;
+    private final Hero hero;
     private Point heroPosition;
 
     private boolean saved;
@@ -59,7 +59,7 @@ public class GameState implements Serializable {
         // Set the number of achievements the campaign has.
         setTotalAchievementsCount(achievements.size());
 
-        campaignHero = new Hero("Seth");
+        hero = Hero.createHeroInteractively();
         heroPosition = new Point(0, 0);
 
         // campaignWorld = createDemoWorld();
@@ -67,7 +67,7 @@ public class GameState implements Serializable {
 
         // TODO: analyze if this should be moved / refactored or done in a different way.
         campaignWorld.expand(heroPosition);
-        campaignWorld.getLocation(heroPosition).addCreature(campaignHero);
+        campaignWorld.getLocation(heroPosition).addCreature(hero);
     }
 
     private List<Achievement> createDemoAchievements() {
@@ -146,16 +146,12 @@ public class GameState implements Serializable {
         return commandHistory;
     }
 
-    public void printCommandCount() {
-        IO.writeString("Commands issued: " + getCommandHistory().getCommandCount());
-    }
-
     public World getWorld() {
         return campaignWorld;
     }
 
     public Hero getHero() {
-        return campaignHero;
+        return hero;
     }
 
     public Point getHeroPosition() {
@@ -236,7 +232,7 @@ public class GameState implements Serializable {
      */
     public int parseHeroWalk(String[] inputWords) {
         if (inputWords.length == 1) {
-            IO.writeString(Constants.INVALID_INPUT);
+            IO.writeString("To where?", Color.ORANGE);
         } else {
             String arg = inputWords[1];
             for (Direction dir : Direction.values()) {
@@ -261,10 +257,10 @@ public class GameState implements Serializable {
         if (!getWorld().hasLocation(destinationPoint)) {
             getWorld().expand(destinationPoint);
         }
-        getWorld().moveCreature(campaignHero, heroPosition, destinationPoint);
+        getWorld().moveCreature(hero, heroPosition, destinationPoint);
         heroPosition = destinationPoint;
         Location destinationLocation = getWorld().getLocation(destinationPoint);
-        campaignHero.setLocation(destinationLocation);
+        hero.setLocation(destinationLocation);
         IO.writeString(String.format("You arrive at %s.", destinationLocation.getName()), Color.ORANGE);
         return TimeConstants.WALK_SUCCESS;
     }
@@ -284,5 +280,14 @@ public class GameState implements Serializable {
      */
     public String getHeroInfo() {
         return getHero().getName();
+    }
+
+    public void printGameStatistics() {
+        int commandCount = getCommandHistory().getCommandCount();
+        long charCount = getCommandHistory().getCharacterCount();
+        IO.writeFilledLine("Commands issued", Integer.toString(commandCount));
+        IO.writeFilledLine("Characters entered", Long.toString(charCount));
+        IO.writeFilledLine("Average characters per command", String.format("%.2f", (double) charCount / commandCount));
+        // TODO: fix the spawn statistics and add them here.
     }
 }

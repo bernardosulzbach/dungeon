@@ -35,12 +35,10 @@ public class GameWindow extends javax.swing.JFrame {
 
     // java.awt.Color.ORANGE is not orange enough.
     private static final Color ORANGE = new Color(255, 127, 0);
-
-    private JTextField textField;
-    private JTextPane textPane;
-
     private final StyledDocument document;
     private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+    private JTextField textField;
+    private JTextPane textPane;
 
     public GameWindow() {
         initComponents();
@@ -88,6 +86,7 @@ public class GameWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    // The method that gets called when the player presses ENTER.
     private void textFieldActionPerformed() {
         String text = textField.getText().trim();
         if (!text.isEmpty()) {

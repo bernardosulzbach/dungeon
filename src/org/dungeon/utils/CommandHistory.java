@@ -29,23 +29,30 @@ public class CommandHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<String> userCommands;
+    private final List<String> commands;
+    private long characterCount;
 
     public CommandHistory() {
-        this.userCommands = new ArrayList<String>();
-    }
-
-    public void addCommand(String command) {
-        userCommands.add(command);
+        commands = new ArrayList<String>();
+        characterCount = 0;
     }
 
     public int getCommandCount() {
-        return userCommands.size();
+        return commands.size();
+    }
+
+    public void addCommand(String command) {
+        characterCount += command.length();
+        commands.add(command);
+    }
+
+    public long getCharacterCount() {
+        return characterCount;
     }
 
     public String getLastCommand() {
-        if (!userCommands.isEmpty()) {
-            return userCommands.get(userCommands.size());
+        if (!commands.isEmpty()) {
+            return commands.get(commands.size());
         } else {
             return Constants.EMPTY_COMMAND_HISTORY;
         }

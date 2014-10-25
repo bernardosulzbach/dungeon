@@ -142,8 +142,8 @@ public class Game {
                 // A battle turn takes half a minute.
                 return lastBattleTurns * 30;
             }
-        } else if (firstWord.equals("commandcount")) { // TODO: think of a better name for this.
-            gameState.printCommandCount();
+        } else if (firstWord.equals("statistics")) { // TODO: think of a better name for this.
+            gameState.printGameStatistics();
         } else if (firstWord.equals("whoami")) {
             IO.writeString(gameState.getHeroInfo());
         } else if (firstWord.equals("whereami")) {
