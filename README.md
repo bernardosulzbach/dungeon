@@ -5,10 +5,6 @@ A simple text-based RPG using Java
 Screenshots
 -----------
 ![22-10-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/22-10-14.png)
-![23-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/23-09-14.png)
-![18-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/18-09-14.png)
-![14-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/14-09-14.png)
-![07-09-14](https://github.com/mafagafogigante/dungeon/blob/master/screenshots/07-09-14.png)
 
 
 Requirements
@@ -27,4 +23,4 @@ Bug reports are welcome in our [issue tracker](https://github.com/mafagafogigant
 
 License
 -------
-[GNU GPL v3](https://github.com/mafagafogigante/LICENSE.txt)
+[GNU GPLv3](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt)
