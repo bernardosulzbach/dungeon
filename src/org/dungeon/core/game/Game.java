@@ -22,8 +22,8 @@ import org.dungeon.gui.GameWindow;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.math.Fibonacci;
 import org.dungeon.utils.*;
+import org.dungeon.utils.Math;
 
 import java.awt.*;
 import java.util.Random;
@@ -175,7 +175,9 @@ public class Game {
         } else if (firstWord.equals("license") || firstWord.equals("copyright")) {
             LicenseUtils.printLicense();
         } else if (firstWord.equals("fibonacci") || firstWord.equals("f")) {
-            Fibonacci.evaluate(inputWords);
+            if (inputWords.length > 1) {
+                Math.fibonacci(inputWords[1]);
+            }
         } else if (firstWord.equals("hint")) {
             gameState.printNextHint();
         } else if (firstWord.equals("poem")) {
