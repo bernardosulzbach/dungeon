@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * The world generator. This class should be instantiated by a World object.
- *
+ * <p/>
  * Created by mafagafogigante on 14/10/14.
  */
 class WorldGenerator implements Serializable {

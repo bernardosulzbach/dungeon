@@ -48,7 +48,6 @@ public class IO {
     }
 
 
-
     /** Method used to write a line of full width with dots separating two strings. */
     public static void writeFilledLine(String name, String value) {
         int dots = Constants.WIDTH - name.length() - value.length();

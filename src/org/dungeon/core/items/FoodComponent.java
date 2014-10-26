@@ -29,16 +29,6 @@ public class FoodComponent implements Serializable {
     private final int experienceOnEat;
     private final int integrityDecrementOnEat;
 
-    // mafagafogigante: FoodComponent only has a copy constructor because it may, in the future, hold mutable data.
-    // I think that some specific fruits may be more nutritious than others and that food integrity may eventually
-    // become independent of the item's integrity.
-    /**
-     * The copy constructor.
-     */
-    public FoodComponent(FoodComponent model) {
-        this(model.getNutrition(), model.getExperienceOnEat(), model.getIntegrityDecrementOnEat());
-    }
-
     public FoodComponent(int nutrition, int experienceOnEat, int integrityDecrementOnEat) {
         this.nutrition = nutrition;
         this.experienceOnEat = experienceOnEat;

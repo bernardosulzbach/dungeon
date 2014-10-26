@@ -17,7 +17,6 @@
 package org.dungeon.core.creatures;
 
 import org.dungeon.core.game.Location;
-import org.dungeon.core.game.Selectable;
 import org.dungeon.core.items.Inventory;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
@@ -31,7 +30,7 @@ import java.io.Serializable;
  *
  * @author Bernardo Sulzbach
  */
-public class Creature implements Selectable, Serializable {
+public class Creature implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -186,6 +185,7 @@ public class Creature implements Selectable, Serializable {
     // General methods.
     //
     //
+
     /**
      * Increments the creature's health by a certain amount, never exceeding its maximum health.
      */
@@ -256,6 +256,7 @@ public class Creature implements Selectable, Serializable {
     // Predicate methods.
     //
     //
+
     /**
      * Checks if the creature is alive.
      */

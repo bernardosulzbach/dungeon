@@ -18,12 +18,11 @@ package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.game.Game;
-import org.dungeon.core.game.Selectable;
 import org.dungeon.utils.Constants;
 
 import java.io.Serializable;
 
-public class Item implements Selectable, Serializable {
+public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

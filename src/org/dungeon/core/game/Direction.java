@@ -18,12 +18,12 @@ package org.dungeon.core.game;
 
 /**
  * Direction enum that implements all the possible movement directions in the game.
- *
+ * <p/>
  * Edited 09/10/2014 by mafagafogigante: implemented equalsIgnoreCase method and added abbreviations.
  *
  * @author Bernardo Sulzbach
  */
-public enum Direction implements Selectable {
+public enum Direction {
 
     NORTH("North", "N"), EAST("East", "E"), SOUTH("South", "S"), WEST("West", "W");
 

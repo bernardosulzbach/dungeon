@@ -25,7 +25,7 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param fill the filling character.
+     * @param fill   the filling character.
      * @return a centered string.
      */
     public static String centerString(String string, char fill) {
@@ -36,8 +36,8 @@ public class StringUtils {
      * Centers a string.
      *
      * @param string the string to be centered.
-     * @param width the width of the resulting string.
-     * @param fill the filling character.
+     * @param width  the width of the resulting string.
+     * @param fill   the filling character.
      * @return a centered string.
      */
     private static String centerString(String string, int width, char fill) {
@@ -92,6 +92,7 @@ public class StringUtils {
 
     /**
      * Checks if a string is alphabetic (only contains letters).
+     *
      * @param s the string to be tested.
      * @return a boolean indicating if the string only contains letters.
      */

@@ -16,12 +16,12 @@
  */
 package org.dungeon.io;
 
+import org.dungeon.core.game.Game;
 import org.dungeon.core.game.GameState;
 import org.dungeon.utils.Constants;
 
+import javax.swing.*;
 import java.io.*;
-import javax.swing.JOptionPane;
-import org.dungeon.core.game.Game;
 
 public class Loader {
 

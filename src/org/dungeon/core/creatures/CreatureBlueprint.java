@@ -2,7 +2,7 @@ package org.dungeon.core.creatures;
 
 /**
  * CreatureBlueprint class that defines attributes used to generate a certain creature.
- *
+ * <p/>
  * Created by Bernardo on 23/10/2014.
  */
 public class CreatureBlueprint {

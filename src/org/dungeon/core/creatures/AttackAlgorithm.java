@@ -152,12 +152,13 @@ class AttackAlgorithm {
         // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
         // after an eventual "weaponName broke" message, what looks really weird.
     }
-    
+
     /**
      * Prints a message about the inflicted damage based on the parameters.
-     * @param attacker the Creature that performed the attack.
-     * @param hitDamage the damage inflicted by the attacker.
-     * @param defender the target of the attack.
+     *
+     * @param attacker    the Creature that performed the attack.
+     * @param hitDamage   the damage inflicted by the attacker.
+     * @param defender    the target of the attack.
      * @param criticalHit a boolean indicating if the attack was a critical hit or not.
      */
     private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
@@ -173,7 +174,7 @@ class AttackAlgorithm {
         builder.append(".");
         IO.writeString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
     }
-    
+
     // Simple method that prints a miss message.
     private static void printMiss(Creature attacker) {
         IO.writeString(attacker.getName() + " missed.", Color.YELLOW);
