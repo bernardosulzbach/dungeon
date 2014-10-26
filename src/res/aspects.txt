@@ -7,15 +7,15 @@
 # Blank lines are ignored.
 #
 # The syntax for defining a property is:
-#     property_type = "value"
+#     PROPERTY_TYPE: "value"
 ########################################################################################################################
 # ASPECTS
 # -------
 # All aspects must be registered using the following structure:
 #
-# aspect = "aspect name"
-# info = "long description of how something works."
-# aliases = "alias_1", "alias_2", ..., "alias_n"
+# ASPECT: "aspect name"
+# INFO: "long description of how something works."
+# ALIASES: "alias_1", "alias_2", ..., "alias_n"
 #   [Note that if there are not any aliases, an empty string ("") should be used.]
 ########################################################################################################################
 # AUTHORS
@@ -23,6 +23,6 @@
 # Started by Bernardo Sulzbach (08/10/2014)
 ########################################################################################################################
 
-aspect = "combat"
-info = "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent."
-aliases = "fight", "duel"
+ASPECT: "combat"
+INFO: "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent."
+ALIASES: "fight" "duel"

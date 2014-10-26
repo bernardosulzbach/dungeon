@@ -26,7 +26,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
-public class GameWindow extends javax.swing.JFrame {
+public class GameWindow extends JFrame {
 
     // Window configuration. Note that this is fixed in stone so that the text formatting makes sense.
     private static final int WIDTH = 830;

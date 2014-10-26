@@ -63,8 +63,8 @@ public final class Help {
                     if (line.charAt(0) == '#') {
                         continue;
                     }
-                    if (line.indexOf("command") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    if (line.startsWith("COMMAND:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
                             if (commandBuilder != null) {
@@ -73,34 +73,34 @@ public final class Help {
                             commandBuilder = new CommandHelpBuilder();
                             commandBuilder.setName(line);
                         } else {
-                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            throw new IllegalHelpFormatException("Missing string after ':' operand.");
                         }
-                    } else if (line.indexOf("info") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    } else if (line.startsWith("INFO:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
                             if (commandBuilder != null) {
                                 commandBuilder.setInfo(line);
                             }
                         } else {
-                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            throw new IllegalHelpFormatException("Missing string after ':' operand.");
                         }
-                    } else if (line.indexOf("aliases") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    } else if (line.startsWith("ALIASES:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         if (commandBuilder != null) {
                             if (!line.isEmpty()) {
                                 commandBuilder.setAliases(parseStringArray(line));
                             } else {
-                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                                throw new IllegalHelpFormatException("Missing string after ':' operand.");
                             }
                         }
-                    } else if (line.indexOf("arguments") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    } else if (line.startsWith("ARGUMENTS:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         if (commandBuilder != null) {
                             if (!line.isEmpty()) {
                                 commandBuilder.setArguments(parseStringArray(line));
                             } else {
-                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                                throw new IllegalHelpFormatException("Missing string after ':' operand.");
                             }
                         }
 
@@ -124,6 +124,8 @@ public final class Help {
             AspectHelpBuilder aspectHelpBuilder = null;
             String line;
 
+            // TODO: move this to GameData
+            // TODO: benchmark what is faster String.split()[1] or String.substring(String.indexOf(char) + 1)
             while ((line = bufferedReader.readLine()) != null) {
                 // Trim excessive spaces.
                 line = line.trim();
@@ -131,8 +133,8 @@ public final class Help {
                     if (line.charAt(0) == '#') {
                         continue;
                     }
-                    if (line.indexOf("aspect") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    if (line.startsWith("ASPECT:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
                             if (aspectHelpBuilder != null) {
@@ -141,25 +143,25 @@ public final class Help {
                             aspectHelpBuilder = new AspectHelpBuilder();
                             aspectHelpBuilder.setName(line);
                         } else {
-                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            throw new IllegalHelpFormatException("Missing string after ':' operand.");
                         }
-                    } else if (line.indexOf("info") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    } else if (line.startsWith("INFO:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         line = line.trim().replace("\"", "");
                         if (!line.isEmpty()) {
                             if (aspectHelpBuilder != null) {
                                 aspectHelpBuilder.setInfo(line);
                             }
                         } else {
-                            throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                            throw new IllegalHelpFormatException("Missing string after ':' operand.");
                         }
-                    } else if (line.indexOf("aliases") == 0) {
-                        line = line.substring(line.indexOf('=') + 1);
+                    } else if (line.startsWith("ALIASES:")) {
+                        line = line.substring(line.indexOf(':') + 1);
                         if (aspectHelpBuilder != null) {
                             if (!line.isEmpty()) {
                                 aspectHelpBuilder.setAliases(parseStringArray(line));
                             } else {
-                                throw new IllegalHelpFormatException("Missing string after '=' operand.");
+                                throw new IllegalHelpFormatException("Missing string after ':' operand.");
                             }
                         }
                     }

@@ -20,7 +20,6 @@ import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.achievements.BattleAchievement;
 import org.dungeon.core.counters.CounterMap;
 import org.dungeon.core.creatures.Hero;
-import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;
@@ -59,7 +58,7 @@ public class GameState implements Serializable {
         // Set the number of achievements the campaign has.
         setTotalAchievementsCount(achievements.size());
 
-        hero = Hero.createHeroInteractively();
+        hero = new Hero("Seth");
         heroPosition = new Point(0, 0);
 
         // campaignWorld = createDemoWorld();
@@ -126,16 +125,16 @@ public class GameState implements Serializable {
         list.add(new BattleAchievement("Boxer", "Kill 10 creatures unarmed.",
                 100, 0, 0, null, null, boxer));
 
-        CounterMap<String> onTheStickReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 2);
+        CounterMap<String> onTheStickReqs = new CounterMap<String>("STICK", 2);
         list.add(new BattleAchievement("On the Stick!", "Kill 2 creatures with the Stick.",
                 20, 0, 0, null, null, onTheStickReqs));
 
-        CounterMap<String> sticksAndStonesReqs = new CounterMap<String>(ItemPreset.STICK.getId(), 5);
+        CounterMap<String> sticksAndStonesReqs = new CounterMap<String>("STICK", 5);
+        sticksAndStonesReqs.incrementCounter("STONE", 5);
         list.add(new BattleAchievement("Sticks and Stones", "Kill 5 creatures with the Stone and 5 with the Stick.",
                 40, 0, 0, null, null, sticksAndStonesReqs));
-        sticksAndStonesReqs.incrementCounter(ItemPreset.STONE.getId(), 5);
 
-        CounterMap<String> lumberjackReqs = new CounterMap<String>(ItemPreset.AXE.getId(), 10);
+        CounterMap<String> lumberjackReqs = new CounterMap<String>("AXE", 10);
         list.add(new BattleAchievement("Lumberjack", "Kill 10 creatures with the Axe.",
                 50, 0, 0, null, null, lumberjackReqs));
 

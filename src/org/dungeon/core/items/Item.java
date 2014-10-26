@@ -47,41 +47,33 @@ public class Item implements Selectable, Serializable {
     private int integrityDecrementOnHit;
 
     // Food fields.
-    private FoodComponent food;
+    private FoodComponent foodComponent;
 
     // Clocks.
-    private ClockComponent clock;
+    private ClockComponent clockComponent;
 
-    private Item() {
+    public Item(ItemBlueprint bp) {
+        id = bp.id;
+        type = bp.type;
+        name = bp.name;
 
-    }
+        repairable = bp.repairable;
+        maxIntegrity = bp.maxIntegrity;
+        curIntegrity = bp.curIntegrity;
 
-    public static Item createItem(ItemPreset preset) {
-        Item result = new Item();
+        weapon = bp.weapon;
+        damage = bp.damage;
+        hitRate = bp.hitRate;
+        integrityDecrementOnHit = bp.integrityDecrementOnHit;
 
-        result.id = preset.id;
-        result.type = preset.type;
-        result.name = preset.name;
-
-        result.repairable = preset.repairable;
-        result.maxIntegrity = preset.maxIntegrity;
-        result.curIntegrity = preset.curIntegrity;
-
-        result.weapon = preset.weapon;
-        result.damage = preset.damage;
-        result.hitRate = preset.hitRate;
-        result.integrityDecrementOnHit = preset.integrityDecrementOnHit;
-
-        if (preset.foodComponent != null) {
-            result.food = new FoodComponent(preset.foodComponent);
+        if (bp.food) {
+            foodComponent = new FoodComponent(bp.nutrition, bp.experienceOnEat, bp.integrityDecrementOnEat);
         }
 
-        if (preset.clockComponent != null) {
-            result.clock = new ClockComponent(preset.clockComponent);
-            result.clock.setMaster(result);
+        if (bp.clock) {
+            clockComponent = new ClockComponent();
+            clockComponent.setMaster(this);
         }
-
-        return result;
     }
 
     // Getters and setters
@@ -127,9 +119,9 @@ public class Item implements Selectable, Serializable {
         } else {
             this.curIntegrity = 0;
             // TODO: maybe we should extract the "breaking routine" to another method.
-            if (isClock()) {
+            if (getClockComponent()) {
                 // A clock just broke! Update its last time record.
-                clock.setLastTime(getOwner().getLocation().getWorld().getWorldDate());
+                clockComponent.setLastTime(getOwner().getLocation().getWorld().getWorldDate());
             }
         }
     }
@@ -155,21 +147,21 @@ public class Item implements Selectable, Serializable {
     }
 
     // Food methods
-    public boolean isFood() {
-        return food != null;
+    public boolean getFoodComponent() {
+        return foodComponent != null;
     }
 
     public FoodComponent getFood() {
-        return food;
+        return foodComponent;
     }
 
     // Clock methods
-    public boolean isClock() {
-        return clock != null;
+    public boolean getClockComponent() {
+        return clockComponent != null;
     }
 
     public ClockComponent getClock() {
-        return clock;
+        return clockComponent;
     }
 
     // Durability methods

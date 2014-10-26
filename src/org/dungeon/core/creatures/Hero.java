@@ -62,11 +62,6 @@ public class Hero extends Creature {
         dateOfBirth = calendar.getTime();
     }
 
-    public static Hero createHeroInteractively() {
-        // I have no idea on how I will implement this.
-        return new Hero("Seth");
-    }
-
     public BattleLog getBattleLog() {
         return battleLog;
     }
@@ -261,7 +256,7 @@ public class Hero extends Creature {
     public void eatItem(String[] inputWords) {
         Item selectedItem = selectInventoryItem(inputWords);
         if (selectedItem != null) {
-            if (selectedItem.isFood()) {
+            if (selectedItem.getFoodComponent()) {
                 FoodComponent food = selectedItem.getFood();
                 addHealth(food.getNutrition());
                 selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
@@ -310,7 +305,7 @@ public class Hero extends Creature {
 
     boolean hasClock() {
         for (Item item : getInventory().getItems()) {
-            if (item.isClock()) {
+            if (item.getClockComponent()) {
                 return true;
             }
         }
@@ -319,7 +314,7 @@ public class Hero extends Creature {
 
     Item getClock() {
         for (Item item : getInventory().getItems()) {
-            if (item.isClock()) {
+            if (item.getClockComponent()) {
                 return item;
             }
         }

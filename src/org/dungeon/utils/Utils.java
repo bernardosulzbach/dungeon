@@ -61,6 +61,22 @@ public class Utils {
     }
 
     /**
+     * Checks if a string is a valid name in the game.
+     *
+     * @param name the name to be tested.
+     * @return a boolean indicating if the name is valid or not.
+     */
+    public static boolean isValidName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Names must be at least one character long.");
+        } else if (!StringUtils.isAlphabetic(name)) {
+            throw new IllegalArgumentException("Names must contain only letters.");
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * Simulates a random roll.
      *
      * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.

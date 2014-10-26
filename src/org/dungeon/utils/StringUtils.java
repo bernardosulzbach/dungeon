@@ -91,6 +91,20 @@ public class StringUtils {
     }
 
     /**
+     * Checks if a string is alphabetic (only contains letters).
+     * @param s the string to be tested.
+     * @return a boolean indicating if the string only contains letters.
+     */
+    public static boolean isAlphabetic(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isAlphabetic(s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Strips all newlines and spaces at the end of the string.
      */
     public static String clearEnd(String str) {

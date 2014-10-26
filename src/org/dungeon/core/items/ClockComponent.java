@@ -33,13 +33,6 @@ public class ClockComponent implements Serializable {
     /** Used to store the date the clock had when it was broken. */
     private Date lastTime;
 
-    public ClockComponent() {
-    }
-
-    public ClockComponent(ClockComponent model) {
-        this.lastTime = model.lastTime;
-    }
-
     public void setMaster(Item master) {
         this.master = master;
     }

@@ -18,7 +18,6 @@ package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.items.Item;
-import org.dungeon.core.items.ItemPreset;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -47,8 +46,9 @@ public class Location implements Serializable {
             this.addCreature(creature);
         }
         this.items = new ArrayList<Item>();
-        for (ItemPreset itemPreset : preset.getItems()) {
-            this.addItem(Item.createItem(itemPreset));
+        for (String itemID : preset.getItems()) {
+            Item item = new Item(GameData.ITEM_BLUEPRINTS.get(itemID));
+            this.addItem(item);
         }
     }
 
