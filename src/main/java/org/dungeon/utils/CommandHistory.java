@@ -53,4 +53,39 @@ public class CommandHistory implements Serializable {
     public String getCommandAt(int commandIndex) {
         return commands.get(commandIndex);
     }
+
+    /**
+     * Returns the last command of the command history.
+     * @return the last command of the command history or <code>null</code> if the command history is empty.
+     */
+    public String getLastCommand() {
+        return isEmpty() ? null : getCommandAt(getCommandCount() - 1);
+    }
+
+    /**
+     * Returns true if the command history contains no commands.
+     *
+     * @return true if the command history is empty.
+     */
+    public boolean isEmpty() {
+        return commands.isEmpty();
+    }
+
+
+    /**
+     * Returns the last similar command of the command history. A command is considered to be similar to another if it
+     * starts with the same character sequence. This method is not case-sensitive.
+     *
+     * @param command the command whose similarity is wanted.
+     * @return a String representation of the last command or <code>null</code> if no similar command could be found.
+     */
+    public String getLastSimilarCommand(String command) {
+        for (int i = commands.size() - 1; i >= 0; i--) {
+            if (Utils.startsWithIgnoreCase(commands.get(i), command)) {
+                return commands.get(i);
+            }
+        }
+        return null;
+    }
+
 }

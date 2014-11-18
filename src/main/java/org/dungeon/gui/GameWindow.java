@@ -67,6 +67,7 @@ public class GameWindow extends JFrame {
         textField.setForeground(Constants.DEFAULT_FORE_COLOR_NORMAL);
         textField.setCaretColor(Color.WHITE);
         textField.setFont(GameData.monospaced);
+        textField.setFocusTraversalKeysEnabled(false);
 
         textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
@@ -141,11 +142,14 @@ public class GameWindow extends JFrame {
 
     // The method that gets called when the player presses ENTER.
     private void textFieldActionPerformed() {
-        String text = textField.getText().trim();
+        String text = getTrimmedTextFieldText();
         if (!text.isEmpty()) {
-            Game.renderTurn(text);
             clearTextField();
+            textField.setEnabled(false);
+            Game.renderTurn(text);
             resetCommandIndex();
+            textField.requestFocusInWindow();
+            textField.setEnabled(true);
         }
     }
 
@@ -170,10 +174,29 @@ public class GameWindow extends JFrame {
                 }
                 validKeyPress = true;
             }
+        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+            String trimmedTextFieldText = getTrimmedTextFieldText();
+            if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
+                textField.setText(commandHistory.getLastCommand());
+            } else {
+                String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
+                if (lastSimilarCommand != null) {
+                    textField.setText(lastSimilarCommand);
+                }
+            }
         }
         if (validKeyPress) {
             textField.setText(commandHistory.getCommandAt(commandIndex));
         }
+    }
+
+    /**
+     * Convenience method that returns the text in the text field after trimming it.
+     *
+     * @return a trimmed String.
+     */
+    private String getTrimmedTextFieldText() {
+        return textField.getText().trim();
     }
 
     private void resetCommandIndex() {
