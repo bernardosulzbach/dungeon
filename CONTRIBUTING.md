@@ -34,10 +34,10 @@ doubles:   n | Double.MIN_VALUE  <= n <= Double.MAX_VALUE
 strings:   Plain text.
 ```
 
-IDs and KEYs are **ALWAYS** UPPERCASE_WITH_UNDERSCORES.
-Do not surround strings with quotation marks.
-Do not use TRUE or FALSE for booleans.
-Multiple line strings are not yet supported. Feel free to implement it.
+* IDs and KEYs are always UPPERCASE_WITH_UNDERSCORES.
+* Do not surround strings with quotation marks.
+* Do not use TRUE or FALSE for booleans.
+* Multiple line strings are not yet supported. Feel free to implement it.
 
 
 Code style
@@ -49,7 +49,7 @@ Code style
 
 Commits and pull requests
 -------------------------
-Do not change code unless there is a reason to do it. Refactorings are a valid reason.
-If you are not sure about how to implement something, discuss it on the issue tracker on GitHub.
-Do not revert changes before discussing it with the other developers.
-Do not use any license other than GNU GPL v3.
+* Do not change code unless there is a reason to do it. Refactorings are a valid reason.
+* If you are not sure about how to implement something, discuss it on the issue tracker on GitHub.
+* Do not revert changes before discussing it with the other developers.
+* Do not use any license other than GNU GPLv3.
