@@ -1,0 +1,55 @@
+TITLE: A Coat
+AUTHOR: William Butler Yeats
+CONTENT: I made my song a coat
+         Covered with embroideries
+         Out of old mythologies
+         From heel to throat;
+         But the fools caught it,
+         Wore it in the world’s eyes
+         As though they’d wrought it.
+         Song, let them take it
+         For there’s more enterprise
+         In walking naked.
+
+TITLE: The road not taken
+AUTHOR: Robert Frost
+CONTENT: The road not taken
+         Two roads diverged in a yellow wood,
+         And sorry I could not travel both
+         And be one traveler, long I stood
+         And looked down one as far as I could
+         To where it bent in the undergrowth;
+         Then took the other, as just as fair,
+         And having perhaps the better claim,
+         Because it was grassy and wanted wear
+         Though as for that the passing there
+         Had worn them really about the same,
+         And both that morning equally lay
+         In leaves no step had trodden black.
+         Oh, I kept the first for another day!
+         Yet knowing how way leads onto way,
+         I doubted if I should ever come back.
+         I shall be telling this with a sigh
+         Somewhere ages and ages hence;
+         Two roads diverged in a wood, and I
+         I took the one less traveled by,
+         And that has made all the difference.
+
+TITLE:   To the Virgins, to Make Much of Time
+AUTHOR:  Robert Herrick
+CONTENT: Gather ye rosebuds while ye may,
+         Old time is still a-flying;
+         And this same flower that smiles today
+         Tomorrow will be dying.
+         The glorious lamp of heaven the sun,
+         The higher he's a-getting,
+         The sooner will his race be run,
+         And nearer he's to setting.
+         That age is best which is the first,
+         When youth and blood are warmer;
+         But being spent, the worse, and worst
+         Times still succeed the former.
+         Then be not coy, but use your time,
+         And, while ye may, go marry;
+         For, having lost but once your prime,
+         You may forever tarry.

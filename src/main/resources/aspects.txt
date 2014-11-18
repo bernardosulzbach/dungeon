@@ -1,0 +1,32 @@
+########################################################################################################################
+# This file defines all the help text about features that can be read in-game.
+########################################################################################################################
+# USAGE AND INSTRUCTIONS
+# ----------------------
+# Lines starting with '#' are ignored.
+# Blank lines are ignored.
+#
+# The syntax for defining a property is:
+#     PROPERTY_TYPE: "value"
+########################################################################################################################
+# ASPECTS
+# -------
+# All aspects must be registered using the following structure:
+#
+# ASPECT: "aspect name"
+# INFO: "long description of how something works."
+# ALIASES: "alias_1", "alias_2", ..., "alias_n"
+#   [Note that if there are not any aliases, an empty string ("") should be used.]
+########################################################################################################################
+# AUTHORS
+# -------
+# Started by Bernardo Sulzbach (08/10/2014)
+########################################################################################################################
+
+ASPECT: "combat"
+INFO: "Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent."
+ALIASES: "fight" "duel"
+
+ASPECT: "luminosity"
+INFO: "Time passes after every turn. How much each turn lasts, however, depends on what your character did. Currently, time is the only factor responsible by the changing of luminosity thorough the day."
+ALIASES: ""
