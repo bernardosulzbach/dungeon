@@ -4,7 +4,9 @@
 
 # IDEA
 .idea/
-*iml
+*.iml
+*.ipr
+*.iws
 
 # Maven
 target/
