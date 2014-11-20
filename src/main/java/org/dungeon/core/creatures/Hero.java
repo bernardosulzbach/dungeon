@@ -48,7 +48,7 @@ public class Hero extends Creature {
     private final AchievementTracker achievementTracker;
 
     public Hero(String name) {
-        super(makeHeroBlueprint());
+        super(makeHeroBlueprint(name));
         setInventory(new CreatureInventory(this, 3));
         dateOfBirth = new DateTime(1952, 6, 4, 8, 32);
         explorationLog = new ExplorationLog();
@@ -56,10 +56,10 @@ public class Hero extends Creature {
         achievementTracker = new AchievementTracker();
     }
 
-    private static CreatureBlueprint makeHeroBlueprint() {
+    private static CreatureBlueprint makeHeroBlueprint(String name) {
         CreatureBlueprint heroBlueprint = new CreatureBlueprint();
         heroBlueprint.setId(Constants.HERO_ID);
-        heroBlueprint.setName("Seth");
+        heroBlueprint.setName(name);
         heroBlueprint.setType("Hero");
         heroBlueprint.setAttack(4);
         heroBlueprint.setAttackIncrement(2);
