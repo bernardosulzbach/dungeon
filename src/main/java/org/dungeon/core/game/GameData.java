@@ -192,9 +192,21 @@ public final class GameData {
         ItemFrequencyPair[] meadowItems = {new ItemFrequencyPair("STONE", 0.8)};
         locationPresets.add(new LocationPreset("Meadow", meadowPresets, meadowItems, 1.0));
 
-        SpawnerPreset[] pondPresets = {frog, snake, komodoDragon, crocodile};
+        SpawnerPreset[] pondPresets = {frog, komodoDragon, crocodile};
         ItemFrequencyPair[] pondItems = {new ItemFrequencyPair("WATERMELON", 0.8)};
         locationPresets.add(new LocationPreset("Pond", pondPresets, pondItems, 1.0));
+
+        SpawnerPreset[] swampPresets = {frog, snake, komodoDragon, crocodile};
+        ItemFrequencyPair[] swampItems = {new ItemFrequencyPair("STICK", 0.9)};
+        locationPresets.add(new LocationPreset("Swamp", swampPresets, swampItems, 0.7));
+
+        SpawnerPreset[] wastelandPresets = {rat, spider, snake};
+        ItemFrequencyPair[] wastelandItems = {new ItemFrequencyPair("STONE", 0.7)};
+        locationPresets.add(new LocationPreset("Wasteland", wastelandPresets, wastelandItems, 1.0));
+
+        SpawnerPreset[] savannahPresets = {boar, snake, whiteTiger};
+        ItemFrequencyPair[] savannahItems = {new ItemFrequencyPair("APPLE", 0.8)};
+        locationPresets.add(new LocationPreset("Savannah", savannahPresets, savannahItems, 1.0));
 
         LOCATION_PRESETS = new LocationPreset[locationPresets.size()];
         locationPresets.toArray(LOCATION_PRESETS);
