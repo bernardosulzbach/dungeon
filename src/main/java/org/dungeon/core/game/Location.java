@@ -133,7 +133,7 @@ public class Location implements Serializable {
         SelectionResult<Creature> selectionResult = Utils.selectFromList(creatures, tokens);
         if (selectionResult.size() == 0) {
             IO.writeString("Creature not found.");
-        } else if (selectionResult.size() == 1) {
+        } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
             return selectionResult.getMatch(0);
         } else {
             Utils.printAmbiguousSelectionMessage();

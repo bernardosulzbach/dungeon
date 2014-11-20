@@ -61,7 +61,7 @@ public abstract class BaseInventory implements Serializable {
         SelectionResult<Item> selectionResult = Utils.selectFromList(items, tokens);
         if (selectionResult.size() == 0) {
             IO.writeString("Item not found.");
-        } else if (selectionResult.size() == 1) {
+        } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
             return selectionResult.getMatch(0);
         } else {
             Utils.printAmbiguousSelectionMessage();
