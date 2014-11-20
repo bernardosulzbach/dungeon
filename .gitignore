@@ -7,6 +7,8 @@
 *.iml
 *.ipr
 *.iws
+src/META-INF/
+out/
 
 # Maven
 target/
