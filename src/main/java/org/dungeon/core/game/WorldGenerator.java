@@ -16,6 +16,8 @@
  */
 package org.dungeon.core.game;
 
+import org.dungeon.io.IO;
+
 import java.io.Serializable;
 
 /**
@@ -28,7 +30,7 @@ class WorldGenerator implements Serializable {
     private final World world;
 
     private int chunkSide;
-    private int generatedChunks;
+    private int generatedLocations;
     private final int MIN_CHUNK_SIDE = 1;
     private final int MAX_CHUNK_SIDE = 50;
 
@@ -77,14 +79,19 @@ class WorldGenerator implements Serializable {
                 if (!world.hasLocation(current_point)) {
                     // TODO: come up with something better than random locations.
                     world.addLocation(createRandomLocation(), current_point);
-                    generatedChunks++;
+                    generatedLocations++;
                 }
             }
         }
     }
 
-    public String toString() {
-        return "Chuck side: " + chunkSide + "\n" + "Generated chunks: " + generatedChunks;
+    /**
+     * Outputs some basic statistics about this WorldGenerator.
+     */
+    public void printStatistics() {
+        IO.writeKeyValueString("Chunk side", String.valueOf(chunkSide));
+        IO.writeKeyValueString("Chunk size", String.valueOf(chunkSide * chunkSide));
+        IO.writeKeyValueString("Locations", String.valueOf(generatedLocations));
     }
 
 }

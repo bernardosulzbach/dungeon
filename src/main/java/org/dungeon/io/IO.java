@@ -40,7 +40,7 @@ public final class IO {
      * @param string the string of text to be written.
      */
     public static void writeString(String string) {
-        writeString(string, Constants.DEFAULT_FORE_COLOR_NORMAL);
+        writeString(string, Constants.FORE_COLOR_NORMAL);
     }
 
     /**
@@ -113,7 +113,7 @@ public final class IO {
      * @param value the value string.
      */
     public static void writeKeyValueString(String key, String value) {
-        writeKeyValueString(key, value, Constants.DEFAULT_FORE_COLOR_NORMAL, Constants.DEFAULT_FORE_COLOR_DARKER);
+        writeKeyValueString(key, value, Constants.FORE_COLOR_NORMAL, Constants.FORE_COLOR_DARKER);
     }
 
     /**
@@ -155,7 +155,7 @@ public final class IO {
         if (name.length() > Constants.BAR_NAME_LENGTH) {
             throw new IllegalArgumentException("name is too long.");
         }
-        writeString(name, Constants.DEFAULT_FORE_COLOR_NORMAL, false);
+        writeString(name, Constants.FORE_COLOR_NORMAL, false);
         int size = Constants.COLS - Constants.BAR_NAME_LENGTH;
         // Perform a ceiling, as small percentages must be represented by at least one bar.
         int bars = (int) (size * percentage) + 1;

@@ -64,7 +64,7 @@ public class GameWindow extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         textField.setBackground(Color.BLACK);
-        textField.setForeground(Constants.DEFAULT_FORE_COLOR_NORMAL);
+        textField.setForeground(Constants.FORE_COLOR_NORMAL);
         textField.setCaretColor(Color.WHITE);
         textField.setFont(GameData.monospaced);
         textField.setFocusTraversalKeysEnabled(false);

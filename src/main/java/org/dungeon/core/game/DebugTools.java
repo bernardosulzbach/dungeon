@@ -86,7 +86,7 @@ class DebugTools {
                 sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
                 IO.writeString(sb.toString());
             } else if (firstWord.equals(args[5])) {
-                IO.writeString(Game.getGameState().getWorld().getGenerator().toString());
+                Game.getGameState().getWorld().getGenerator().printStatistics();
             } else if (firstWord.equals(args[6])) {
                 printIsSaved();
             } else if (firstWord.equals(args[7])) {
