@@ -22,6 +22,7 @@ import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 import java.awt.*;
 import java.util.List;
@@ -147,7 +148,7 @@ public class Utils {
      * @return a String of text.
      */
     public static String dateDifferenceToString(DateTime start, DateTime end) {
-        Period period = new Period(start, end);
+        Period period = new Period(start, end, PeriodType.yearMonthDay());
         int years = period.getYears();
         int months = period.getMonths();
         int days = period.getDays();
