@@ -29,7 +29,10 @@ import java.awt.*;
  *
  * @author Bernardo Sulzbach - 13/09/2014
  */
-public class IO {
+public final class IO {
+
+    // How many milliseconds the game 'lags' after writing a string of battle output.
+    public static final long WRITE_BATTLE_STRING_WAIT = 300;
 
     /**
      * Writes a string of text using the default output color.
@@ -50,21 +53,49 @@ public class IO {
         writeString(string, color, true);
     }
 
+
     /**
      * Writes a string of text using a specific color.
      *
      * @param string the string of text to be written.
      * @param color  the color of the text. If <code>null</code>, the default color will be used.
+     * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
      */
     public static void writeString(String string, Color color, boolean newLine) {
+        if (newLine) {
+            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color, 0);
+        } else {
+            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color, 0);
+        }
+    }
+
+    /**
+     * Writes a string of text using a specific color and waiting for a given amount of milliseconds.
+     *
+     * @param string the string of text to be written.
+     * @param color  the color of the text.
+     * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
+     * @param wait how many milliseconds the application should sleep after writing the string.
+     */
+    private static void writeString(String string, Color color, boolean newLine, long wait) {
         if (color == null) {
-            color = Constants.DEFAULT_FORE_COLOR_NORMAL;
+            throw new IllegalArgumentException("color should not be null.");
         }
         if (newLine) {
-            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color);
+            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color, wait);
         } else {
-            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color);
+            Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color, wait);
         }
+    }
+
+    /**
+     * Writes a string of text using a specific color and waits for the default battle wait interval.
+     *
+     * @param string the string of text to be written.
+     * @param color  the color of the text.
+     */
+    public static void writeBattleString(String string, Color color) {
+        writeString(string, color, true, WRITE_BATTLE_STRING_WAIT);
     }
 
     /**
@@ -114,7 +145,7 @@ public class IO {
     /**
      * Prints a bar to the window.
      *
-     * @param percentage the percentage of the attribute. Must be in the range[0.0, 1.0].
+     * @param percentage the percentage of the attribute. Must be in the range [0.0, 1.0].
      * @param fore       the foreground Color.
      */
     public static void writeNamedBar(String name, double percentage, Color fore) {

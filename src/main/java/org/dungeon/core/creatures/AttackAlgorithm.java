@@ -81,9 +81,9 @@ class AttackAlgorithm {
 
     private static void critterAttack(Creature attacker) {
         if (Game.RANDOM.nextBoolean()) {
-            IO.writeString(attacker.getName() + " does nothing.", Color.YELLOW);
+            IO.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
         } else {
-            IO.writeString(attacker.getName() + " tries to run away.", Color.YELLOW);
+            IO.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
         }
     }
 
@@ -172,12 +172,12 @@ class AttackAlgorithm {
             builder.append(" with a critical hit");
         }
         builder.append(".");
-        IO.writeString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+        IO.writeBattleString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
     }
 
     // Simple method that prints a miss message.
     private static void printMiss(Creature attacker) {
-        IO.writeString(attacker.getName() + " missed.", Color.YELLOW);
+        IO.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
     }
 
 }

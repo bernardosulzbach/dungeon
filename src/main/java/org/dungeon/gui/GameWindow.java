@@ -211,8 +211,8 @@ public class GameWindow extends JFrame {
      * @param string the string to be written.
      * @param color  the color of the text.
      */
-    public void writeToTextPane(String string, Color color) {
-        writeToTextPane(string, color, textPane.getBackground());
+    public void writeToTextPane(String string, Color color, long wait) {
+        writeToTextPane(string, color, textPane.getBackground(), wait);
     }
 
     /**
@@ -221,7 +221,7 @@ public class GameWindow extends JFrame {
      * @param string the string to be written.
      * @param fore   the color of the text.
      */
-    void writeToTextPane(String string, Color fore, Color back) {
+    void writeToTextPane(String string, Color fore, Color back, long wait) {
         StyleConstants.setForeground(attributeSet, fore);
         StyleConstants.setBackground(attributeSet, back);
         if (Game.getGameState() != null) {
@@ -229,6 +229,13 @@ public class GameWindow extends JFrame {
         }
         try {
             document.insertString(document.getLength(), string, attributeSet);
+            try {
+                if (wait > 0) {
+                    textPane.update(textPane.getGraphics());
+                    Thread.sleep(wait);
+                }
+            } catch (InterruptedException ignored) {
+            }
         } catch (BadLocationException ignored) {
         }
     }
