@@ -19,9 +19,6 @@ package org.dungeon.core.game;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.items.Item;
 import org.dungeon.core.items.LocationInventory;
-import org.dungeon.io.IO;
-import org.dungeon.utils.SelectionResult;
-import org.dungeon.utils.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -114,31 +111,6 @@ public class Location implements Serializable {
 
     public void addItem(Item item) {
         items.addItem(item);
-    }
-
-    public boolean hasCreature(Creature creature) {
-        for (Creature localCreature : creatures) {
-            if (localCreature.equals(creature)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Attempts to find a creature in the location by part of its name. If the given name matches multiple creatures,
-     * null is returned.
-     */
-    public Creature findCreature(String[] tokens) {
-        SelectionResult<Creature> selectionResult = Utils.selectFromList(creatures, tokens);
-        if (selectionResult.size() == 0) {
-            IO.writeString("Creature not found.");
-        } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
-            return selectionResult.getMatch(0);
-        } else {
-            Utils.printAmbiguousSelectionMessage();
-        }
-        return null;
     }
 
     public void removeItem(Item item) {

@@ -28,6 +28,7 @@ import org.dungeon.core.items.FoodComponent;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.SelectionResult;
 import org.dungeon.utils.Utils;
 import org.joda.time.DateTime;
 
@@ -205,8 +206,40 @@ public class Hero extends Creature {
             }
             return null;
         } else {
-            return getLocation().findCreature(Arrays.copyOfRange(inputWords, 1, inputWords.length));
+            return findCreature(Arrays.copyOfRange(inputWords, 1, inputWords.length));
         }
+    }
+
+    /**
+     * Attempts to find a creature in the current location comparing its name to an array of string tokens.
+     * <p/>
+     * If there are no matches, <code>null</code> is returned.
+     * <p/>
+     * If there is one match, it is returned.
+     * <p/>
+     * If there are multiple matches but all have the same name, the first one is returned.
+     * <p/>
+     * If there are multiple matches with only two different names and one of these names is the Hero's name, the first
+     * creature match is returned.
+     * <p/>
+     * Lastly, if there are multiple matches that do not fall in one of the two categories above, <code>null</code> is
+     * returned.
+     *
+     * @param tokens an array of string tokens.
+     * @return a Creature or null.
+     */
+    public Creature findCreature(String[] tokens) {
+        SelectionResult<Creature> result = Utils.selectFromList(getLocation().getCreatures(), tokens);
+        if (result.size() == 0) {
+            IO.writeString("Creature not found.");
+        } else if (result.size() == 1 || result.getDifferentNames() == 1) {
+            return result.getMatch(0);
+        } else if (result.getDifferentNames() == 2 && result.hasName(getName())) {
+            return result.getMatch(0).getName().equals(getName()) ? result.getMatch(1) : result.getMatch(0);
+        } else {
+            Utils.printAmbiguousSelectionMessage();
+        }
+        return null;
     }
 
     /**
