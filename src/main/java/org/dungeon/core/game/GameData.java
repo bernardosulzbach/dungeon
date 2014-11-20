@@ -157,7 +157,12 @@ public final class GameData {
 
         SpawnerPreset bat = new SpawnerPreset("BAT", 1, 4);
         SpawnerPreset bear = new SpawnerPreset("BEAR", 1, 2);
+        SpawnerPreset boar = new SpawnerPreset("BOAR", 3, 10);
+        SpawnerPreset crocodile = new SpawnerPreset("CROCODILE", 1, 8);
+        SpawnerPreset fox = new SpawnerPreset("FOX", 4, 6);
         SpawnerPreset frog = new SpawnerPreset("FROG", 2, 16);
+        SpawnerPreset komodoDragon = new SpawnerPreset("KOMODO_DRAGON", 1, 8);
+        SpawnerPreset orc = new SpawnerPreset("ORC", 2, 12);
         SpawnerPreset rabbit = new SpawnerPreset("RABBIT", 8, 24); // They fuck a lot.
         SpawnerPreset rat = new SpawnerPreset("RAT", 6, 10);
         SpawnerPreset skeleton = new SpawnerPreset("SKELETON", 1, 2);
@@ -167,11 +172,11 @@ public final class GameData {
         SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 2);
         SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 8);
 
-        SpawnerPreset[] clearingPresets = {frog, rabbit, spider};
+        SpawnerPreset[] clearingPresets = {frog, rabbit, spider, fox};
         ItemFrequencyPair[] clearingItems = {new ItemFrequencyPair("CHERRY", 0.6), new ItemFrequencyPair("STICK", 0.9)};
         locationPresets.add(new LocationPreset("Clearing", clearingPresets, clearingItems, 0.9));
 
-        SpawnerPreset[] desertPresets = {rat, snake, zombie};
+        SpawnerPreset[] desertPresets = {rat, snake, zombie, boar};
         ItemFrequencyPair[] desertItems = {new ItemFrequencyPair("CHERRY", 0.6)};
         locationPresets.add(new LocationPreset("Desert", desertPresets, desertItems, 1.0));
 
@@ -179,7 +184,7 @@ public final class GameData {
         ItemFrequencyPair[] forestItems = {new ItemFrequencyPair("AXE", 0.1), new ItemFrequencyPair("CLOCK", 0.05)};
         locationPresets.add(new LocationPreset("Forest", forestPresets, forestItems, 0.7));
 
-        SpawnerPreset[] graveyardPresets = {bat, skeleton, zombie};
+        SpawnerPreset[] graveyardPresets = {bat, skeleton, zombie, orc};
         ItemFrequencyPair[] graveyardItems = {new ItemFrequencyPair("LONGSWORD", 0.15)};
         locationPresets.add(new LocationPreset("Graveyard", graveyardPresets, graveyardItems, 0.9));
 
@@ -187,7 +192,7 @@ public final class GameData {
         ItemFrequencyPair[] meadowItems = {new ItemFrequencyPair("STONE", 0.8)};
         locationPresets.add(new LocationPreset("Meadow", meadowPresets, meadowItems, 1.0));
 
-        SpawnerPreset[] pondPresets = {frog, snake};
+        SpawnerPreset[] pondPresets = {frog, snake, komodoDragon, crocodile};
         ItemFrequencyPair[] pondItems = {new ItemFrequencyPair("WATERMELON", 0.8)};
         locationPresets.add(new LocationPreset("Pond", pondPresets, pondItems, 1.0));
 
