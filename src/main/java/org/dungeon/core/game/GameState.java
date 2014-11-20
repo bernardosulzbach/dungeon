@@ -51,7 +51,6 @@ public class GameState implements Serializable {
         hero = new Hero("Seth");
         heroPosition = new Point(0, 0);
 
-        // campaignWorld = createDemoWorld();
         campaignWorld = new World();
 
         // TODO: analyze if this should be moved / refactored or done in a different way.

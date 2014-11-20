@@ -38,7 +38,8 @@ public class World implements Serializable {
     private final DateTime worldCreationDate;
 
     public World() {
-        worldCreationDate = worldDate = new DateTime(1985, 6, 2, 6, 10);
+        worldDate = new DateTime(1985, 6, 2, 6, 10);
+        worldCreationDate = worldDate.minusHours(6);
         spawnCounter = new CounterMap<String>();
         locations = new HashMap<Point, Location>();
         generator = new WorldGenerator(this);
