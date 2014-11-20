@@ -42,6 +42,14 @@ public abstract class BaseInventory implements Serializable {
     }
 
     /**
+     * Convenience method that returns the number of items in the inventory.
+     * @return the number of items in the inventory.
+     */
+    public int getItemCount() {
+        return items.size();
+    }
+
+    /**
      * Checks if an item is already in the inventory.
      */
     boolean hasItem(Item itemObject) {

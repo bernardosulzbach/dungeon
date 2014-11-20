@@ -258,6 +258,7 @@ public class Hero extends Creature {
     }
 
     public void printInventory() {
+        IO.writeString("Items: " + getInventory().getItemCount() + "/" + getInventory().getLimit(), Color.CYAN);
         getInventory().printItems();
     }
 
