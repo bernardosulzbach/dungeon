@@ -62,7 +62,7 @@ class WorldGenerator implements Serializable {
     }
 
     private Location createRandomLocation() {
-        return new Location(GameData.LOCATION_PRESETS[Game.RANDOM.nextInt(GameData.LOCATION_PRESETS.length)], world);
+        return new Location(GameData.LOCATION_PRESETS[Engine.RANDOM.nextInt(GameData.LOCATION_PRESETS.length)], world);
     }
 
     public void expand(Point p) {

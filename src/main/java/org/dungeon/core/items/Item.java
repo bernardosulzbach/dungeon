@@ -17,6 +17,7 @@
 package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Game;
 import org.dungeon.utils.Constants;
 
@@ -168,7 +169,7 @@ public class Item extends Entity {
 
     // Weapon methods
     public boolean rollForHit() {
-        return getHitRate() > Game.RANDOM.nextDouble();
+        return getHitRate() > Engine.RANDOM.nextDouble();
     }
 
     private String getIntegrityString() {

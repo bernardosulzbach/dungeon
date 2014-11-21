@@ -16,23 +16,17 @@
  */
 package org.dungeon.core.game;
 
-import org.dungeon.core.creatures.Creature;
-import org.dungeon.core.creatures.Hero;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.help.Help;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.utils.*;
+import org.dungeon.utils.LicenseUtils;
 import org.dungeon.utils.Math;
-
-import java.awt.*;
-import java.util.Random;
+import org.dungeon.utils.SystemInfo;
+import org.dungeon.utils.Utils;
 
 public class Game {
-
-    // The single Random object used by all the methods.
-    public static final Random RANDOM = new Random();
 
     private static final LastInputProcessResult lastInputProcessResult = new LastInputProcessResult();
 
@@ -182,55 +176,6 @@ public class Game {
             // The user issued a command, but it was not recognized.
             Utils.printInvalidCommandMessage(inputWords[0]);
         }
-    }
-
-    // Simulates a battle between a Hero and a Creature and returns the number of turns the battle had.
-    public static int battle(Hero attacker, Creature defender) {
-        if (attacker == defender) {
-            // Two different messages.
-            if (RANDOM.nextBoolean()) {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_1);
-            } else {
-                IO.writeString(Constants.SUICIDE_ATTEMPT_2);
-            }
-            return 0;
-        }
-        /**
-         * A counter variable that register how many turns the battle had.
-         */
-        int turns = 0;
-        while (attacker.isAlive() && defender.isAlive()) {
-            attacker.hit(defender);
-            turns++;
-            if (defender.isAlive()) {
-                defender.hit(attacker);
-                turns++;
-            }
-        }
-        Creature survivor;
-        Creature defeated;
-        if (attacker.isAlive()) {
-            survivor = attacker;
-            defeated = defender;
-        } else {
-            survivor = defender;
-            defeated = attacker;
-        }
-        IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
-        // Add information about this battle to the Hero's battle log.
-        attacker.getBattleStatistics().addBattle(attacker, defender, attacker == survivor, turns);
-        attacker.getExplorationLog().addKill(getGameState().getHeroPosition());
-        battleCleanup(survivor, defeated);
-        return turns;
-    }
-
-    // Add the the surviving creature some experience and removes the dead creature from the battle location.
-    private static void battleCleanup(Creature survivor, Creature defeated) {
-        if (survivor instanceof Hero) {
-            survivor.addExperience(defeated.getExperienceDrop());
-        }
-        // Remove the dead creature from the location.
-        survivor.getLocation().removeCreature(defeated);
     }
 
     // Exits the game, prompting the user if the current state should be saved if it is not already saved.

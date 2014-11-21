@@ -16,6 +16,7 @@
  */
 package org.dungeon.io;
 
+import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.game.GameState;
 import org.dungeon.utils.Constants;
@@ -74,14 +75,14 @@ public class Loader {
                     IO.writeString(String.format(FILE_ENTRY, file.getName(), file.length()));
                 }
             } else {
-                if (Game.RANDOM.nextBoolean()) {
+                if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("Saves folder is empty.", Color.RED);
                 } else {
                     IO.writeString("There is not even a single save game for you to see.", Color.RED);
                 }
             }
         } else {
-            if (Game.RANDOM.nextBoolean()) {
+            if (Engine.RANDOM.nextBoolean()) {
                 IO.writeString("Saves folder does not exist.", Color.RED);
             } else {
                 IO.writeString("What did you do to the saves folder?", Color.RED);

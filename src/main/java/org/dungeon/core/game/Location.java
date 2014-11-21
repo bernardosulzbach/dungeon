@@ -46,7 +46,7 @@ public class Location implements Serializable {
         }
         this.items = new LocationInventory();
         for (ItemFrequencyPair pair : preset.getItems()) {
-            if (Game.RANDOM.nextDouble() < pair.getFrequency()) {
+            if (Engine.RANDOM.nextDouble() < pair.getFrequency()) {
                 this.addItem(new Item(GameData.ITEM_BLUEPRINTS.get(pair.getId())));
             }
         }

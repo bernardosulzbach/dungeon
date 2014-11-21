@@ -17,7 +17,10 @@
 package org.dungeon.core.game;
 
 import java.awt.Color;
+import java.util.Random;
+
 import org.dungeon.core.achievements.Achievement;
+import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -29,6 +32,9 @@ import org.dungeon.utils.Constants;
  * @author Bernardo Sulzbach
  */
 public class Engine {
+
+    // The single Random object used by all the methods.
+    public static final Random RANDOM = new Random();
 
     /**
      * Refreshes the game, should be called after every turn.
@@ -99,4 +105,52 @@ public class Engine {
         return TimeConstants.WALK_SUCCESS;
     }
 
+    // Simulates a battle between a Hero and a Creature and returns the number of turns the battle had.
+    public static int battle(Hero attacker, Creature defender) {
+        if (attacker == defender) {
+            // Two different messages.
+            if (RANDOM.nextBoolean()) {
+                IO.writeString(Constants.SUICIDE_ATTEMPT_1);
+            } else {
+                IO.writeString(Constants.SUICIDE_ATTEMPT_2);
+            }
+            return 0;
+        }
+        /**
+         * A counter variable that register how many turns the battle had.
+         */
+        int turns = 0;
+        while (attacker.isAlive() && defender.isAlive()) {
+            attacker.hit(defender);
+            turns++;
+            if (defender.isAlive()) {
+                defender.hit(attacker);
+                turns++;
+            }
+        }
+        Creature survivor;
+        Creature defeated;
+        if (attacker.isAlive()) {
+            survivor = attacker;
+            defeated = defender;
+        } else {
+            survivor = defender;
+            defeated = attacker;
+        }
+        IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
+        // Add information about this battle to the Hero's battle log.
+        attacker.getBattleStatistics().addBattle(attacker, defender, attacker == survivor, turns);
+        attacker.getExplorationLog().addKill(Game.getGameState().getHeroPosition());
+        battleCleanup(survivor, defeated);
+        return turns;
+    }
+
+    // Add the the surviving creature some experience and removes the dead creature from the battle location.
+    private static void battleCleanup(Creature survivor, Creature defeated) {
+        if (survivor instanceof Hero) {
+            survivor.addExperience(defeated.getExperienceDrop());
+        }
+        // Remove the dead creature from the location.
+        survivor.getLocation().removeCreature(defeated);
+    }
 }

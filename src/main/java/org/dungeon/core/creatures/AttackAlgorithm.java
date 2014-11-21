@@ -16,7 +16,7 @@
  */
 package org.dungeon.core.creatures;
 
-import org.dungeon.core.game.Game;
+import org.dungeon.core.game.Engine;
 import org.dungeon.core.items.Item;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
@@ -83,7 +83,7 @@ class AttackAlgorithm {
     }
 
     private static void critterAttack(Creature attacker) {
-        if (Game.RANDOM.nextBoolean()) {
+        if (Engine.RANDOM.nextBoolean()) {
             IO.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
         } else {
             IO.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
@@ -110,7 +110,7 @@ class AttackAlgorithm {
             }
         } else {
             // Hardcoded 15% miss chance.
-            if (0.85 > Game.RANDOM.nextDouble()) {
+            if (0.85 > Engine.RANDOM.nextDouble()) {
                 hitDamage = attacker.getAttack();
                 printInflictedDamage(attacker, hitDamage, defender, false);
             } else {

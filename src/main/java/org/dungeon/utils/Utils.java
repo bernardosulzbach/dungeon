@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.core.game.Game;
+import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
@@ -136,7 +136,7 @@ public class Utils {
         if (chance < 0 || chance > 1) {
             throw new IllegalArgumentException("chance must be nonnegative and smaller than 1.");
         }
-        return chance > Game.RANDOM.nextDouble();
+        return chance > Engine.RANDOM.nextDouble();
     }
 
     /**
@@ -194,7 +194,7 @@ public class Utils {
      * Prints a humanized message warning the user that the command used requires arguments.
      */
     public static void printMissingArgumentsMessage() {
-        switch (Game.RANDOM.nextInt(3)) {
+        switch (Engine.RANDOM.nextInt(3)) {
             case 0:
                 IO.writeString("Provide some arguments.", Color.BLUE);
                 break;
@@ -338,7 +338,7 @@ public class Utils {
     }
 
     public static void printAmbiguousSelectionMessage() {
-        if (Game.RANDOM.nextBoolean()) {
+        if (Engine.RANDOM.nextBoolean()) {
             IO.writeString("Provided input is ambiguous.");
         } else {
             IO.writeString("More than one entity with this name could be found.");

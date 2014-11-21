@@ -19,10 +19,7 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.achievements.AchievementTracker;
 import org.dungeon.core.counters.BattleStatistics;
 import org.dungeon.core.counters.ExplorationLog;
-import org.dungeon.core.game.Game;
-import org.dungeon.core.game.Location;
-import org.dungeon.core.game.TimeConstants;
-import org.dungeon.core.game.World;
+import org.dungeon.core.game.*;
 import org.dungeon.core.items.CreatureInventory;
 import org.dungeon.core.items.FoodComponent;
 import org.dungeon.core.items.Item;
@@ -121,7 +118,7 @@ public class Hero extends Creature {
         IO.writeNewLine();
         if (canSee()) {
             if (location.getCreatureCount() == 1) {
-                if (Game.RANDOM.nextBoolean()) {
+                if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("You do not see anyone here.");
                 } else {
                     IO.writeString("Only you are in this location.");
@@ -190,7 +187,7 @@ public class Hero extends Creature {
         if (canSee()) {
             Creature target = selectTarget(inputWords);
             if (target != null) {
-                return Game.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
+                return Engine.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
             }
         } else {
             IO.writeString("It is too dark to find your target.");
@@ -206,7 +203,7 @@ public class Hero extends Creature {
      */
     public Creature selectTarget(String[] inputWords) {
         if (inputWords.length == 1) {
-            if (Game.RANDOM.nextBoolean()) {
+            if (Engine.RANDOM.nextBoolean()) {
                 IO.writeString("Attack what?", Color.ORANGE);
             } else {
                 IO.writeString("You must specify a target.", Color.ORANGE);

@@ -44,7 +44,7 @@ class DebugTools {
                 IO.writeString(Game.getGameState().getHero().getExplorationLog().toString());
             } else if (firstWord.equals(args[1])) {
                 Game.getGameState().getWorld().rollDate(24 * 60 * 60);
-                if (Game.RANDOM.nextBoolean()) {
+                if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("A day has passed.", Color.ORANGE);
                 } else {
                     IO.writeString("You are one day closer to your ending.", Color.ORANGE);
@@ -92,7 +92,7 @@ class DebugTools {
             } else if (firstWord.equals(args[7])) {
                 listAllArguments();
             } else {
-                switch (Game.RANDOM.nextInt(4)) {
+                switch (Engine.RANDOM.nextInt(4)) {
                     case 0:
                         IO.writeString("FOOL! You cannot understand the power of 'debug'!", Color.RED);
                         break;

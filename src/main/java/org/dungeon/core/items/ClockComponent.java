@@ -16,6 +16,7 @@
  */
 package org.dungeon.core.items;
 
+import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Game;
 import org.dungeon.utils.Constants;
 import org.joda.time.DateTime;
@@ -51,7 +52,7 @@ public class ClockComponent implements Serializable {
     public String getTimeString() {
         if (master.isBroken()) {
             if (lastTime == null) {
-                if (Game.RANDOM.nextBoolean()) {
+                if (Engine.RANDOM.nextBoolean()) {
                     return "The clock is pure junk.";
                 } else {
                     return "The clock is completely smashed.";
