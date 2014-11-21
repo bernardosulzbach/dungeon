@@ -119,9 +119,7 @@ public class Hero extends Creature {
         Location location = getLocation(); // Avoid multiple calls to the getter.
         IO.writeString(location.getName());
         IO.writeNewLine();
-        if (location.getLuminosity() < minimumLuminosity) {
-            IO.writeString(Constants.CANT_SEE_ANYTHING);
-        } else {
+        if (canSee()) {
             if (location.getCreatureCount() == 1) {
                 if (Game.RANDOM.nextBoolean()) {
                     IO.writeString("You do not see anyone here.");
@@ -152,7 +150,16 @@ public class Hero extends Creature {
                     IO.writeString(curItem.toListEntry());
                 }
             }
+        } else {
+            IO.writeString(Constants.CANT_SEE_ANYTHING);
         }
+    }
+
+    /**
+     * @return a boolean indicating if the Hero can see other creatures or items in the current location.
+     */
+    public boolean canSee() {
+        return getLocation().getLuminosity() >= minimumLuminosity;
     }
 
     Item selectInventoryItem(String[] inputWords) {
@@ -180,13 +187,13 @@ public class Hero extends Creature {
      * @return an integer representing how many seconds the battle lasted.
      */
     public int attackTarget(String[] inputWords) {
-        if (getLocation().getLuminosity() < minimumLuminosity) {
-            IO.writeString("It is too dark to find your target.");
-        } else {
+        if (canSee()) {
             Creature target = selectTarget(inputWords);
             if (target != null) {
                 return Game.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
             }
+        } else {
+            IO.writeString("It is too dark to find your target.");
         }
         return 0;
     }
@@ -246,18 +253,18 @@ public class Hero extends Creature {
      * Attempts to pick and item and add it to the inventory.
      */
     public void pickItem(String[] inputWords) {
-        if (getLocation().getLuminosity() < minimumLuminosity) {
-            IO.writeString("It is too dark for you too see anything.");
-            return;
-        }
-        Item selectedItem = selectLocationItem(inputWords);
-        if (selectedItem != null) {
-            if (getInventory().isFull()) {
-                IO.writeString(Constants.INVENTORY_FULL);
-            } else {
-                getInventory().addItem(selectedItem);
-                getLocation().removeItem(selectedItem);
+        if (canSee()) {
+            Item selectedItem = selectLocationItem(inputWords);
+            if (selectedItem != null) {
+                if (getInventory().isFull()) {
+                    IO.writeString(Constants.INVENTORY_FULL);
+                } else {
+                    getInventory().addItem(selectedItem);
+                    getLocation().removeItem(selectedItem);
+                }
             }
+        } else {
+            IO.writeString("It is too dark for you too see anything.");
         }
     }
 

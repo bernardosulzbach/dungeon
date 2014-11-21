@@ -19,7 +19,7 @@ package org.dungeon.core.game;
 import org.joda.time.DateTime;
 
 /**
- * Enumerated types of the parts of the day.
+ * Enumerated type of the parts of the day.
  * <p/>
  * Created by Bernardo Sulzbach on 24/09/2014.
  */
@@ -43,6 +43,17 @@ public enum PartOfDay {
     PartOfDay(String stringRepresentation, double luminosity) {
         this.stringRepresentation = stringRepresentation;
         setLuminosity(luminosity);
+    }
+
+    public double getLuminosity() {
+        return luminosity;
+    }
+
+    void setLuminosity(double luminosity) {
+        if (luminosity < 0.0 || luminosity > 1.0) {
+            throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
+        }
+        this.luminosity = luminosity;
     }
 
     /**
@@ -79,14 +90,4 @@ public enum PartOfDay {
         return stringRepresentation;
     }
 
-    public double getLuminosity() {
-        return luminosity;
-    }
-
-    void setLuminosity(double luminosity) {
-        if (luminosity < 0.0 || luminosity > 1.0) {
-            throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
-        }
-        this.luminosity = luminosity;
-    }
 }
