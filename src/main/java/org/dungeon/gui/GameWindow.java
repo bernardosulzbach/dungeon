@@ -181,39 +181,41 @@ public class GameWindow extends JFrame {
     }
 
     private void textFieldKeyPressed(KeyEvent e) {
-        if (commandHistory == null) {
-            commandHistory = Game.getGameState().getCommandHistory();
-            resetCommandIndex();
-        }
-        boolean validKeyPress = false;
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if (commandIndex > 0) {
-                validKeyPress = true;
-                commandIndex--;
+        if (idle) {
+            if (commandHistory == null) {
+                commandHistory = Game.getGameState().getCommandHistory();
+                resetCommandIndex();
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (commandIndex < commandHistory.getCommandCount()) {
-                commandIndex++;
-                // When the index is set to one past the last saved command, just clear the text field.
-                if (commandIndex == commandHistory.getCommandCount()) {
-                    clearTextField();
-                    return;
+            boolean validKeyPress = false;
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                if (commandIndex > 0) {
+                    validKeyPress = true;
+                    commandIndex--;
                 }
-                validKeyPress = true;
-            }
-        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-            String trimmedTextFieldText = getTrimmedTextFieldText();
-            if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
-                textField.setText(commandHistory.getLastCommand());
-            } else {
-                String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
-                if (lastSimilarCommand != null) {
-                    textField.setText(lastSimilarCommand);
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if (commandIndex < commandHistory.getCommandCount()) {
+                    commandIndex++;
+                    // When the index is set to one past the last saved command, just clear the text field.
+                    if (commandIndex == commandHistory.getCommandCount()) {
+                        clearTextField();
+                        return;
+                    }
+                    validKeyPress = true;
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                String trimmedTextFieldText = getTrimmedTextFieldText();
+                if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
+                    textField.setText(commandHistory.getLastCommand());
+                } else {
+                    String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
+                    if (lastSimilarCommand != null) {
+                        textField.setText(lastSimilarCommand);
+                    }
                 }
             }
-        }
-        if (validKeyPress) {
-            textField.setText(commandHistory.getCommandAt(commandIndex));
+            if (validKeyPress) {
+                textField.setText(commandHistory.getCommandAt(commandIndex));
+            }
         }
     }
 
