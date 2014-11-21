@@ -18,6 +18,7 @@ package org.dungeon.gui;
 
 import org.dungeon.core.game.Game;
 import org.dungeon.core.game.GameData;
+import org.dungeon.io.Loader;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;
 
@@ -27,10 +28,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class GameWindow extends JFrame {
 
@@ -44,10 +42,13 @@ public class GameWindow extends JFrame {
 
     private int rows = Constants.ROWS;
 
+    private boolean idle;
+
     public GameWindow() {
         initComponents();
         document = textPane.getStyledDocument();
         setVisible(true);
+        setIdle(true);
     }
 
     private void initComponents() {
@@ -95,6 +96,18 @@ public class GameWindow extends JFrame {
                 Game.exit();
             }
         });
+
+        Action save = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (idle) {
+                    clearTextPane();
+                    Loader.saveGame(Game.getGameState());
+                }
+            }
+        };
+        textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
+        textField.getActionMap().put("SAVE", save);
 
         setResizable(false);
         resize();
@@ -145,12 +158,23 @@ public class GameWindow extends JFrame {
         String text = getTrimmedTextFieldText();
         if (!text.isEmpty()) {
             clearTextField();
-            textField.setEnabled(false);
+            setIdle(false);
             Game.renderTurn(text);
             resetCommandIndex();
             textField.requestFocusInWindow();
-            textField.setEnabled(true);
+            setIdle(true);
         }
+    }
+
+    /**
+     * Sets the idle state variable of this GameWindow. The player can only enter input or save the game when the window
+     * is idle.
+     *
+     * @param idle the new idle state for this window.
+     */
+    private void setIdle(boolean idle) {
+        this.idle = idle;
+        textField.setEnabled(idle);
     }
 
     private void textFieldKeyPressed(KeyEvent e) {
