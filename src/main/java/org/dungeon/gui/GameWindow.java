@@ -109,6 +109,9 @@ public class GameWindow extends JFrame {
         textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
         textField.getActionMap().put("SAVE", save);
 
+        ImageIcon imageIcon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icon.png"));
+        setIconImage(imageIcon.getImage());
+
         setResizable(false);
         resize();
     }
