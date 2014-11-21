@@ -22,17 +22,20 @@ import org.joda.time.DateTime;
  * Enumerated type of the parts of the day.
  * <p/>
  * Created by Bernardo Sulzbach on 24/09/2014.
+ * <p/>
+ * Updated by Bernardo Sulzbach on 21/11/2014: added starting hours.
  */
 public enum PartOfDay {
 
-    AFTERNOON("Afternoon", 0.8),
-    DAWN("Dawn", 0.6),
-    DUSK("Dusk", 0.6),
-    EVENING("Evening", 0.4),
-    MIDNIGHT("Midnight", 0.2),
-    MORNING("Morning", 0.8),
-    NIGHT("Night", 0.4),
-    NOON("Noon", 1.0);
+    // Keep this array sorted by the startingHour in ascending order. See getCorrespondingConstant to understand why.
+    NIGHT("Night", 0.4, 1),
+    DAWN("Dawn", 0.6, 5),
+    MORNING("Morning", 0.8, 7),
+    NOON("Noon", 1.0, 11),
+    AFTERNOON("Afternoon", 0.8, 13),
+    DUSK("Dusk", 0.6, 17),
+    EVENING("Evening", 0.4, 19),
+    MIDNIGHT("Midnight", 0.2, 23);
 
     private final String stringRepresentation;
 
@@ -40,9 +43,12 @@ public enum PartOfDay {
     // Should be bigger than or equal to 0 and smaller than or equal to 1.
     private double luminosity;
 
-    PartOfDay(String stringRepresentation, double luminosity) {
+    private int startingHour;
+
+    PartOfDay(String stringRepresentation, double luminosity, int startingHour) {
         this.stringRepresentation = stringRepresentation;
         setLuminosity(luminosity);
+        setStartingHour(startingHour);
     }
 
     public double getLuminosity() {
@@ -56,6 +62,17 @@ public enum PartOfDay {
         this.luminosity = luminosity;
     }
 
+    public int getStartingHour() {
+        return startingHour;
+    }
+
+    public void setStartingHour(int startingHour) {
+        if (startingHour < 0 || startingHour > 23) {
+            throw new IllegalArgumentException("startingHour must be in the range [0, 23]");
+        }
+        this.startingHour = startingHour;
+    }
+
     /**
      * Returns the PartOfDay constant corresponding to a given time.
      *
@@ -64,24 +81,18 @@ public enum PartOfDay {
      */
     public static PartOfDay getCorrespondingConstant(DateTime dateTime) {
         int hour = dateTime.getHourOfDay();
-        if (hour == 0 || hour == 23) {
+        // MIDNIGHT starts at 23, therefore 0 does not satisfy the comparison and the following statement is necessary.
+        if (hour == 0) {
+            // It is also possible to add 24 to hour if it is zero, making it bigger than 23, but this is simpler.
             return MIDNIGHT;
-        } else if (hour <= 4) {
-            return NIGHT;
-        } else if (hour <= 6) {
-            return DAWN;
-        } else if (hour <= 10) {
-            return MORNING;
-        } else if (hour <= 12) {
-            return NOON;
-        } else if (hour <= 16) {
-            return AFTERNOON;
-        } else if (hour <= 18) {
-            return DUSK;
-        } else if (hour <= 22) {
-            return EVENING;
         }
-        // This statement will never be reached.
+        PartOfDay[] podArray = values();
+        // Note that the array is sorted in ascending startingHour order, therefore we iterate backwards.
+        for (int i = podArray.length - 1; i >= 0; i--) {
+            if (podArray[i].getStartingHour() <= hour) {
+                return podArray[i];
+            }
+        }
         return null;
     }
 
