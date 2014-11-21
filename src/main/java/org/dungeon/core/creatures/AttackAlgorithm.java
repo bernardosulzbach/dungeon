@@ -32,6 +32,9 @@ import java.awt.*;
  */
 class AttackAlgorithm {
 
+    private static final double HERO_CRITICAL_CHANCE = 0.1;
+    private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
+
     public static void attack(Creature attacker, Creature defender, String algorithmID) {
         if (algorithmID.equals("BAT")) {
             batAttack(attacker, defender);
@@ -127,8 +130,7 @@ class AttackAlgorithm {
         if (weapon != null && !weapon.isBroken()) {
             if (weapon.rollForHit()) {
                 hitDamage = weapon.getDamage() + attacker.getAttack();
-                // Hardcoded 5 % chance of a critical hit (double damage).
-                if (Utils.roll(0.05)) {
+                if (Utils.roll(HERO_CRITICAL_CHANCE)) {
                     hitDamage *= 2;
                     printInflictedDamage(attacker, hitDamage, defender, true);
                 } else {
@@ -146,7 +148,12 @@ class AttackAlgorithm {
             }
         } else {
             hitDamage = attacker.getAttack();
-            printInflictedDamage(attacker, hitDamage, defender, false);
+            if (Utils.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
+                hitDamage *= 2;
+                printInflictedDamage(attacker, hitDamage, defender, true);
+            } else {
+                printInflictedDamage(attacker, hitDamage, defender, false);
+            }
         }
         defender.takeDamage(hitDamage);
         // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
