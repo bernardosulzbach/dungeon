@@ -176,11 +176,11 @@ public class Item extends Entity {
         if (getCurIntegrity() == getMaxIntegrity()) {
             weaponIntegrity = "";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
-            weaponIntegrity = "Slightly damaged";
+            weaponIntegrity = "Slightly Damaged";
         } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
             weaponIntegrity = "Damaged";
         } else if (getCurIntegrity() > 0) {
-            weaponIntegrity = "Severely damaged";
+            weaponIntegrity = "Severely Damaged";
         } else {
             weaponIntegrity = "Broken";
         }
@@ -190,4 +190,5 @@ public class Item extends Entity {
     public String toListEntry() {
         return String.format(Constants.LIST_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
     }
+
 }
