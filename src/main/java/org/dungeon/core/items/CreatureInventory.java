@@ -20,6 +20,7 @@ import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.game.Engine;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.Utils;
 
 import java.awt.*;
 
@@ -48,8 +49,22 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
             }
         } else {
             for (Item item : items) {
-                IO.writeString(item.toListEntry(), item.isEquipped() ? Color.MAGENTA : Color.LIGHT_GRAY);
+                printItem(item);
             }
+        }
+    }
+
+    private void printItem(Item item) {
+        Color color = item.isEquipped() ? Color.MAGENTA : Constants.FORE_COLOR_NORMAL;
+        int typeTagLength = 10;
+        String typeString = "[" + item.getType() + "]";
+        String extraSpace = Utils.makeRepeatedCharacterString(typeTagLength - typeString.length(), ' ');
+        IO.writeString(typeString, color, false);
+        if (item.isPerfect()) {
+            IO.writeString(extraSpace + item.getName(), color);
+        } else {
+            IO.writeString(extraSpace + item.getIntegrityString(), Constants.FORE_COLOR_DARKER, false);
+            IO.writeString(" " + item.getName(), color);
         }
     }
 

@@ -159,6 +159,13 @@ public class Item extends Entity {
         return getCurIntegrity() == 0;
     }
 
+    /**
+     * @return true if the item's current integrity is equals to its maximum integrity. False otherwise.
+     */
+    public boolean isPerfect() {
+        return getCurIntegrity() == getMaxIntegrity();
+    }
+
     public void decrementIntegrityByHit() {
         setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
     }
@@ -172,7 +179,7 @@ public class Item extends Entity {
         return getHitRate() > Engine.RANDOM.nextDouble();
     }
 
-    private String getIntegrityString() {
+    String getIntegrityString() {
         String weaponIntegrity;
         if (getCurIntegrity() == getMaxIntegrity()) {
             weaponIntegrity = "";
