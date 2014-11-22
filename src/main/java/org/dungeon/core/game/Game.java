@@ -79,14 +79,15 @@ public class Game {
             IO.writeString("You died.");
             // After the player's death, just prompt to load the default save file.
             gameState = Loader.loadGame(null);
-        }
-        // Advance the campaign's world date.
-        gameState.getWorld().rollDate(lastInputProcessResult.turnLength);
-        // Refresh the campaign state.
-        Engine.refresh();
-        // After a turn that consumed time, the campaign is not saved anymore.
-        if (lastInputProcessResult.turnLength != 0 || lastInputProcessResult.configurationsChanged) {
-            gameState.setSaved(false);
+        } else {
+            // Advance the campaign's world date.
+            gameState.getWorld().rollDate(lastInputProcessResult.turnLength);
+            // Refresh the campaign state.
+            Engine.refresh();
+            // After a turn that consumed time, the campaign is not saved anymore.
+            if (lastInputProcessResult.turnLength != 0 || lastInputProcessResult.configurationsChanged) {
+                gameState.setSaved(false);
+            }
         }
     }
 
