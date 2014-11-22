@@ -16,14 +16,14 @@
  */
 package org.dungeon.core.game;
 
-import java.awt.Color;
-import java.util.Random;
-
 import org.dungeon.core.achievements.Achievement;
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
+
+import java.awt.*;
+import java.util.Random;
 
 /**
  * Engine class that contains most static methods that need to be called to
@@ -66,20 +66,19 @@ public class Engine {
     /**
      * Parses an array of words to move the hero to another location.
      *
-     * @param inputWords the tokens provided by the player.
+     * @param command the command entered by the player.
      * @return how many seconds the player walk took.
      */
-    public static int parseHeroWalk(String[] inputWords) {
-        if (inputWords.length == 1) {
-            IO.writeString("To where?", Color.ORANGE);
-        } else {
-            String arg = inputWords[1];
+    public static int parseHeroWalk(Command command) {
+        if (command.hasArguments()) {
             for (Direction dir : Direction.values()) {
-                if (dir.equalsIgnoreCase(arg)) {
+                if (dir.equalsIgnoreCase(command.getFirstArgument())) {
                     return heroWalk(dir);
                 }
             }
             IO.writeString(Constants.INVALID_INPUT);
+        } else {
+            IO.writeString("To where?", Color.ORANGE);
         }
         // The user did not walk.
         return 0;

@@ -16,6 +16,8 @@
  */
 package org.dungeon.utils;
 
+import org.dungeon.core.game.Command;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +43,9 @@ public class CommandHistory implements Serializable {
         return commands.size();
     }
 
-    public void addCommand(String command) {
-        characterCount += command.length();
-        commands.add(command);
+    public void addCommand(Command command) {
+        characterCount += command.getString().length();
+        commands.add(command.getString());
     }
 
     public long getCharacterCount() {

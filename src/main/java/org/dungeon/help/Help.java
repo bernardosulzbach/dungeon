@@ -16,6 +16,7 @@
  */
 package org.dungeon.help;
 
+import org.dungeon.core.game.Command;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
@@ -204,28 +205,27 @@ public final class Help {
 
     }
 
-    public static void printHelp(String[] words) {
+    public static void printHelp(Command command) {
         if (!initialized) {
             IO.writeString(HelpConstants.NOT_INITIALIZED);
-        } else if (words.length == 1) {
-            // There are no specifiers, report the correct usage of this method.
-            IO.writeString(HelpConstants.HELP_USAGE);
-        } else {
-            if (!printCommandHelp(words)) {
-                if (!printAspectHelp(words)) {
+        } else if (command.hasArguments()) {
+            if (!printCommandHelp(command.getFirstToken())) {
+                if (!printAspectHelp(command.getFirstToken())) {
                     // There was no match.
-                    IO.writeString(String.format("No help text for '%s' could be found.", words[1]));
+                    IO.writeString(String.format("No help text for '%s' could be found.", command.getFirstToken()));
                 }
             }
+        } else {
+            Utils.printMissingArgumentsMessage();
         }
     }
 
     /**
      * Prints the help string for a given game aspect.
      */
-    private static boolean printAspectHelp(String[] words) {
+    private static boolean printAspectHelp(String command) {
         for (AspectHelp aspectHelp : ASPECTS) {
-            if (aspectHelp.equalsIgnoreCase(words[1])) {
+            if (aspectHelp.equalsIgnoreCase(command)) {
                 // Output to toString method of the first command that matches the input.
                 IO.writeString(aspectHelp.toString());
                 return true;
@@ -237,9 +237,9 @@ public final class Help {
     /**
      * Prints the help string for a command based on the specifiers.
      */
-    private static boolean printCommandHelp(String[] words) {
+    private static boolean printCommandHelp(String command) {
         for (CommandHelp commandHelp : COMMANDS) {
-            if (commandHelp.equalsIgnoreCase(words[1])) {
+            if (commandHelp.equalsIgnoreCase(command)) {
                 // Output to toString method of the first command that matches the input.
                 IO.writeString(commandHelp.toString());
                 return true;
@@ -249,18 +249,14 @@ public final class Help {
     }
 
     // Prints a list of commands starting with the first given word or all commands if no words are provided.
-    public static void printCommandList(String[] words) {
+    public static void printCommandList(Command command) {
         StringBuilder builder = new StringBuilder();
-        if (words.length == 1) {
-            for (CommandHelp commandHelp : COMMANDS) {
-                builder.append(commandHelp.toOneLineString()).append('\n');
-            }
-        } else {
+        if (command.hasArguments()) {
             for (CommandHelp commandHelp : COMMANDS) {
                 String[] nameAndAliases = commandHelp.getAllAliases();
                 for (String alias : nameAndAliases) {
-                    if (words[1].length() <= alias.length()) {
-                        if (Utils.startsWithIgnoreCase(alias, words[1])) {
+                    if (command.getFirstArgument().length() <= alias.length()) {
+                        if (Utils.startsWithIgnoreCase(alias, command.getFirstArgument())) {
                             builder.append(commandHelp.toOneLineString(alias)).append('\n');
                             break;
                         }
@@ -268,7 +264,11 @@ public final class Help {
                 }
             }
             if (builder.length() == 0) {
-                builder.append("No command starts with '").append(words[1]).append("'.");
+                builder.append("No command starts with '").append(command.getFirstArgument()).append("'.");
+            }
+        } else {
+            for (CommandHelp commandHelp : COMMANDS) {
+                builder.append(commandHelp.toOneLineString()).append('\n');
             }
         }
         IO.writeString(builder.toString());
@@ -281,4 +281,5 @@ public final class Help {
             super(message);
         }
     }
+
 }

@@ -35,21 +35,18 @@ class DebugTools {
         }
     }
 
-    static void parseDebugCommand(String[] words) {
-        if (words.length == 1) {
-            Utils.printMissingArgumentsMessage();
-        } else {
-            final String firstWord = words[1];
-            if (firstWord.equals(args[0])) {
+    static void parseDebugCommand(Command command) {
+        if (command.hasArguments()) {
+            if (command.firstTokenEquals(args[0])) {
                 IO.writeString(Game.getGameState().getHero().getExplorationLog().toString());
-            } else if (firstWord.equals(args[1])) {
+            } else if (command.firstTokenEquals(args[1])) {
                 Game.getGameState().getWorld().rollDate(24 * 60 * 60);
                 if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("A day has passed.", Color.ORANGE);
                 } else {
                     IO.writeString("You are one day closer to your ending.", Color.ORANGE);
                 }
-            } else if (firstWord.equals(args[2])) {
+            } else if (command.firstTokenEquals(args[2])) {
                 String holiday;
                 for (DateTime date = new DateTime(1970, 1, 1, 0, 0); date.getYear() != 1971; date = date.plusDays(1)) {
                     holiday = org.dungeon.utils.Holiday.getHoliday(date);
@@ -57,13 +54,13 @@ class DebugTools {
                         IO.writeKeyValueString(Constants.DATE_FORMAT.print(date), holiday);
                     }
                 }
-            } else if (firstWord.equals(args[3])) {
+            } else if (command.firstTokenEquals(args[3])) {
                 Loader.printFilesInSavesFolder();
-            } else if (firstWord.equals("lines")) {
+            } else if (command.firstTokenEquals("lines")) {
                 for (int i = 1; i <= Constants.ROWS; i++) {
                     IO.writeString(Integer.toString(i));
                 }
-            } else if (firstWord.equals(args[4])) {
+            } else if (command.firstTokenEquals(args[4])) {
                 final int WIDTH = 20;  // The width of the row's "tag".
                 GameState gameState = Game.getGameState();
                 Point heroPosition = gameState.getHeroPosition();
@@ -85,11 +82,11 @@ class DebugTools {
                 sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity()).append('\n');
                 sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
                 IO.writeString(sb.toString());
-            } else if (firstWord.equals(args[5])) {
+            } else if (command.firstTokenEquals(args[5])) {
                 Game.getGameState().getWorld().getGenerator().printStatistics();
-            } else if (firstWord.equals(args[6])) {
+            } else if (command.firstTokenEquals(args[6])) {
                 printIsSaved();
-            } else if (firstWord.equals(args[7])) {
+            } else if (command.firstTokenEquals(args[7])) {
                 listAllArguments();
             } else {
                 switch (Engine.RANDOM.nextInt(4)) {
@@ -107,6 +104,8 @@ class DebugTools {
                         break;
                 }
             }
+        } else {
+            Utils.printMissingArgumentsMessage();
         }
     }
 

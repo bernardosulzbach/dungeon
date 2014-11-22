@@ -1,5 +1,6 @@
 package org.dungeon.utils;
 
+import org.dungeon.core.game.Command;
 import org.dungeon.io.IO;
 
 import java.awt.*;
@@ -12,26 +13,43 @@ import java.math.BigInteger;
  */
 public class Math {
 
-    // Limits the fibonacci argument to 400 so its output does not span multiple lines.
-    private static final int FIBONACCI_MAX = 400;
+    private static final int FIBONACCI_MAX = 10000;
 
     /**
      * The public method that should be invoked using the input words.
      *
-     * @param stringArgument the argument passed as a string.
+     * @param command the command entered by the player.
      */
-    public static void fibonacci(String stringArgument) {
+    public static void fibonacci(Command command) {
         int intArgument;
-        try {
-            intArgument = Integer.parseInt(stringArgument);
-        } catch (NumberFormatException ignore) {
-            IO.writeString(String.format("Failed to parse " + stringArgument + ".", Color.RED));
-            return;
-        }
-        if (0 < intArgument && intArgument <= 400) {
-            IO.writeString("= " + fibonacci(intArgument));
+        if (command.hasArguments()) {
+            for (String strArgument : command.getArguments()) {
+                try {
+                    intArgument = Integer.parseInt(strArgument);
+                } catch (NumberFormatException ignore) {
+                    IO.writeString(String.format("Failed to parse " + strArgument + ".", Color.RED));
+                    return;
+                }
+                if (0 < intArgument && intArgument <= FIBONACCI_MAX) {
+                    char[] result = fibonacci(intArgument).toCharArray();
+                    StringBuilder sb = new StringBuilder(result.length + 64);
+                    sb.append("fibonacci").append('(').append(intArgument).append(')').append(" = ");
+                    int newLineCharacters = 0;
+                    for (char character : result) {
+                        if ((sb.length() + 1 - newLineCharacters) % Constants.COLS == 0) {
+                            sb.append("\\\n");
+                            newLineCharacters++;
+                        } else {
+                            sb.append(character);
+                        }
+                    }
+                    IO.writeString(sb.toString());
+                } else {
+                    IO.writeString("n must be positive and smaller than " + FIBONACCI_MAX + ".", Color.ORANGE);
+                }
+            }
         } else {
-            IO.writeString("n must be positive and smaller than " + FIBONACCI_MAX + ".", Color.ORANGE);
+            Utils.printMissingArgumentsMessage();
         }
     }
 

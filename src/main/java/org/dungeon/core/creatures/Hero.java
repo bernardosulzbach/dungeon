@@ -31,7 +31,6 @@ import org.joda.time.DateTime;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -159,33 +158,38 @@ public class Hero extends Creature {
         return getLocation().getLuminosity() >= minimumLuminosity;
     }
 
-    Item selectInventoryItem(String[] inputWords) {
-        if (inputWords.length == 1) {
+    Item selectInventoryItem(Command command) {
+        if (command.hasArguments()) {
+            return getInventory().findItem(command.getArguments());
+        } else {
             Utils.printMissingArgumentsMessage();
             return null;
-        } else {
-            return getInventory().findItem(Arrays.copyOfRange(inputWords, 1, inputWords.length));
         }
     }
 
-    Item selectLocationItem(String[] inputWords) {
-        if (inputWords.length == 1) {
-            IO.writeString("Pick what?", Color.ORANGE);
-            return null;
+    /**
+     * Select an item of the current location based on the arguments of a command.
+     * @param command the command whose arguments will determine the item search.
+     * @return an Item or <code>null</code>.
+     */
+    Item selectLocationItem(Command command) {
+        if (command.hasArguments()) {
+            return getLocation().getInventory().findItem(command.getArguments());
         } else {
-            return getLocation().getInventory().findItem(Arrays.copyOfRange(inputWords, 1, inputWords.length));
+            Utils.printMissingArgumentsMessage();
+            return null;
         }
     }
 
     /**
      * The method that lets the hero attack a target.
      *
-     * @param inputWords the array of the individual words of the user input.
+     * @param command the command entered by the player.
      * @return an integer representing how many seconds the battle lasted.
      */
-    public int attackTarget(String[] inputWords) {
+    public int attackTarget(Command command) {
         if (canSee()) {
-            Creature target = selectTarget(inputWords);
+            Creature target = selectTarget(command);
             if (target != null) {
                 return Engine.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
             }
@@ -198,19 +202,19 @@ public class Hero extends Creature {
     /**
      * Attempts to select a target from the current location using the player input.
      *
-     * @param inputWords the array of the individual words of the user input.
-     * @return a target Creature.
+     * @param command the command entered by the player.
+     * @return a target Creature or <code>null</code>.
      */
-    public Creature selectTarget(String[] inputWords) {
-        if (inputWords.length == 1) {
+    public Creature selectTarget(Command command) {
+        if (command.hasArguments()) {
+            return findCreature(command.getArguments());
+        } else {
             if (Engine.RANDOM.nextBoolean()) {
                 IO.writeString("Attack what?", Color.ORANGE);
             } else {
                 IO.writeString("You must specify a target.", Color.ORANGE);
             }
             return null;
-        } else {
-            return findCreature(Arrays.copyOfRange(inputWords, 1, inputWords.length));
         }
     }
 
@@ -249,9 +253,9 @@ public class Hero extends Creature {
     /**
      * Attempts to pick and item and add it to the inventory.
      */
-    public void pickItem(String[] inputWords) {
+    public void pickItem(Command command) {
         if (canSee()) {
-            Item selectedItem = selectLocationItem(inputWords);
+            Item selectedItem = selectLocationItem(command);
             if (selectedItem != null) {
                 if (getInventory().isFull()) {
                     IO.writeString(Constants.INVENTORY_FULL);
@@ -268,8 +272,8 @@ public class Hero extends Creature {
     /**
      * Tries to equip an item from the inventory.
      */
-    public void parseEquip(String[] inputWords) {
-        Item selectedItem = selectInventoryItem(inputWords);
+    public void parseEquip(Command command) {
+        Item selectedItem = selectInventoryItem(command);
         if (selectedItem != null) {
             if (selectedItem.isWeapon()) {
                 equipWeapon(selectedItem);
@@ -282,8 +286,8 @@ public class Hero extends Creature {
     /**
      * Attempts to drop an item from the hero's inventory.
      */
-    public void dropItem(String[] inputWords) {
-        Item selectedItem = selectInventoryItem(inputWords);
+    public void dropItem(Command command) {
+        Item selectedItem = selectInventoryItem(command);
         if (selectedItem != null) {
             if (selectedItem == getWeapon()) {
                 unequipWeapon();
@@ -302,8 +306,8 @@ public class Hero extends Creature {
     /**
      * Attempts to eat an item from the ground.
      */
-    public void eatItem(String[] inputWords) {
-        Item selectedItem = selectInventoryItem(inputWords);
+    public void eatItem(Command command) {
+        Item selectedItem = selectInventoryItem(command);
         if (selectedItem != null) {
             if (selectedItem.isFood()) {
                 FoodComponent food = selectedItem.getFoodComponent();
@@ -330,13 +334,13 @@ public class Hero extends Creature {
     /**
      * Tries to destroy an item from the current location.
      */
-    public void destroyItem(String[] inputWords) {
+    public void destroyItem(Command command) {
         Item target;
-        if (inputWords.length == 1) {
-            IO.writeString(Constants.INVALID_INPUT);
-            target = null;
+        if (command.hasArguments()) {
+            target = getLocation().getInventory().findItem(command.getArguments());
         } else {
-            target = getLocation().getInventory().findItem(Arrays.copyOfRange(inputWords, 1, inputWords.length));
+            Utils.printMissingArgumentsMessage();
+            target = null;
         }
         if (target != null) {
             if (target.isRepairable()) {

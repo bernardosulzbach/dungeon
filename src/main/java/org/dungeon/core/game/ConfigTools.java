@@ -80,33 +80,33 @@ class ConfigTools {
     }
 
     // Returns true if a configuration was changed.
-    static boolean parseConfigCommand(String[] inputWords) {
-        if (inputWords.length == 1) {
-            Utils.printMissingArgumentsMessage();
-        } else {
-            if (inputWords[1].equals(args[0])) {
+    static boolean parseConfigCommand(Command command) {
+        if (command.hasArguments()) {
+            if (command.firstTokenEquals(args[0])) {
                 toggleBars();
                 return true;
-            } else if (inputWords[1].equals(args[1])) {
+            } else if (command.firstTokenEquals(args[1])) {
                 toggleBold();
                 return true;
-            } else if (inputWords[1].equals(args[2])) {
-                if (inputWords.length > 2) {
-                    return changeChunkSide(inputWords[2]);
+            } else if (command.firstTokenEquals(args[2])) {
+                if (command.getArguments().length > 1) {
+                    return changeChunkSide(command.getArguments()[1]);
                 } else {
                     IO.writeString("Provide a numerical argument.");
                 }
-            } else if (inputWords[1].equals(args[3])) {
+            } else if (command.firstTokenEquals(args[3])) {
                 listAllArguments();
-            } else if (inputWords[1].equals(args[4])) {
-                if (inputWords.length > 2) {
-                    return changeRowCount(inputWords[2]);
+            } else if (command.firstTokenEquals(args[4])) {
+                if (command.getArguments().length > 1) {
+                    return changeRowCount(command.getArguments()[1]);
                 } else {
                     IO.writeString("Provide a number of rows.");
                 }
             } else {
                 IO.writeString("Invalid command. Use 'config list' to see all available configurations.", Color.RED);
             }
+        } else {
+            Utils.printMissingArgumentsMessage();
         }
         return false;
     }

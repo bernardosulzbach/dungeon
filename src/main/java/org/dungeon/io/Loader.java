@@ -16,6 +16,7 @@
  */
 package org.dungeon.io;
 
+import org.dungeon.core.game.Command;
 import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Game;
 import org.dungeon.core.game.GameState;
@@ -95,8 +96,22 @@ public class Loader {
      *
      * @return a saved campaign or a new demo campaign.
      */
-    public static GameState loadGame(String[] inputWords) {
-        if (inputWords == null || inputWords.length == 1) {
+    public static GameState loadGame(Command command) {
+        if (command != null && command.hasArguments()) {
+            // A save name was provided.
+            File save;
+            if (command.getFirstArgument().contains(SAVE_EXTENSION)) {
+                save = new File(SAVES_FOLDER, command.getFirstArgument());
+            } else {
+                save = new File(SAVES_FOLDER, command.getFirstArgument() + SAVE_EXTENSION);
+            }
+            if (save.exists() && save.isFile()) {
+                return loadFile(save);
+            } else {
+                IO.writeString(save.getName() + " does not exist or is not a file.");
+                return null;
+            }
+        } else {
             // A save name was not provided.
             if (checkForDefaultSave()) {
                 IO.writeString(Constants.FILE_FOUND);
@@ -113,20 +128,6 @@ public class Loader {
                 // Return the new campaign.
                 return newGameState;
             }
-        } else {
-            // A save name was provided.
-            File save;
-            if (inputWords[1].contains(SAVE_EXTENSION)) {
-                save = new File(SAVES_FOLDER, inputWords[1]);
-            } else {
-                save = new File(SAVES_FOLDER, inputWords[1] + SAVE_EXTENSION);
-            }
-            if (save.exists() && save.isFile()) {
-                return loadFile(save);
-            } else {
-                IO.writeString(save.getName() + " does not exist or is not a file.");
-                return null;
-            }
         }
     }
 
@@ -142,13 +143,13 @@ public class Loader {
     /**
      * Handles all the saving process, assigning a new name for the save file, if provided.
      */
-    public static void saveGame(GameState gameState, String[] inputWords) {
-        if (inputWords.length == 1) {
-            saveGame(gameState);
-        } else {
+    public static void saveGame(GameState gameState, Command command) {
+        if (command.hasArguments()) {
             if (confirmOperation(SAVE_CONFIRM)) {
-                saveFile(gameState, inputWords[1], false);
+                saveFile(gameState, command.getFirstArgument(), false);
             }
+        } else {
+            saveGame(gameState);
         }
     }
 
