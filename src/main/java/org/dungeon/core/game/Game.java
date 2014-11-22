@@ -28,7 +28,8 @@ import org.dungeon.utils.Utils;
 
 public class Game {
 
-    private static final LastInputProcessResult lastInputProcessResult = new LastInputProcessResult();
+    private static int turnLength = 0;
+    private static boolean configurationsChanged = false;
 
     private static GameWindow gameWindow;
     private static GameState gameState;
@@ -81,11 +82,11 @@ public class Game {
             gameState = Loader.loadGame(null);
         } else {
             // Advance the campaign's world date.
-            gameState.getWorld().rollDate(lastInputProcessResult.turnLength);
+            gameState.getWorld().rollDate(turnLength);
             // Refresh the campaign state.
             Engine.refresh();
             // After a turn that consumed time, the campaign is not saved anymore.
-            if (lastInputProcessResult.turnLength != 0 || lastInputProcessResult.configurationsChanged) {
+            if (turnLength != 0 || configurationsChanged) {
                 gameState.setSaved(false);
             }
         }
@@ -100,30 +101,29 @@ public class Game {
         // Split the command into words.
         inputWords = Utils.split(inputString);
         firstWord = inputWords[0].toLowerCase();
-        lastInputProcessResult.reset();
         if (firstWord.equals("rest")) {
-            lastInputProcessResult.turnLength = gameState.getHero().rest();
+            turnLength = gameState.getHero().rest();
         } else if (firstWord.equals("look") || firstWord.equals("peek")) {
             gameState.getHero().look();
         } else if (firstWord.equals("inventory") || firstWord.equals("items")) {
             gameState.getHero().printInventory();
         } else if (firstWord.equals("loot") || firstWord.equals("pick")) {
             gameState.getHero().pickItem(inputWords);
-            lastInputProcessResult.turnLength = 120;
+            turnLength = 120;
         } else if (firstWord.equals("equip")) {
             gameState.getHero().parseEquip(inputWords);
         } else if (firstWord.equals("unequip")) {
             gameState.getHero().unequipWeapon();
         } else if (firstWord.equals("eat") || firstWord.equals("devour")) {
             gameState.getHero().eatItem(inputWords);
-            lastInputProcessResult.turnLength = 120;
+            turnLength = 120;
         } else if (firstWord.equals("walk") || firstWord.equals("go")) {
-            lastInputProcessResult.turnLength = Engine.parseHeroWalk(inputWords);
+            turnLength = Engine.parseHeroWalk(inputWords);
         } else if (firstWord.equals("drop")) {
             gameState.getHero().dropItem(inputWords);
         } else if (firstWord.equals("destroy") || firstWord.equals("crash")) {
             gameState.getHero().destroyItem(inputWords);
-            lastInputProcessResult.turnLength = 120;
+            turnLength = 120;
         } else if (firstWord.equals("status")) {
             gameState.getHero().printAllStatus();
         } else if (firstWord.equals("hero") || firstWord.equals("me")) {
@@ -133,7 +133,7 @@ public class Game {
         } else if (firstWord.equals("weapon")) {
             gameState.getHero().printWeaponStatus();
         } else if (firstWord.equals("kill") || firstWord.equals("attack")) {
-            lastInputProcessResult.turnLength = gameState.getHero().attackTarget(inputWords);
+            turnLength = gameState.getHero().attackTarget(inputWords);
         } else if (firstWord.equals("statistics")) {
             gameState.printGameStatistics();
         } else if (firstWord.equals("achievements")) {
@@ -141,7 +141,7 @@ public class Game {
         } else if (firstWord.equals("spawns")) {
             gameState.getWorld().printSpawnCounters();
         } else if (firstWord.equals("time") || firstWord.equals("date")) {
-            lastInputProcessResult.turnLength = gameState.getHero().printDateAndTime();
+            turnLength = gameState.getHero().printDateAndTime();
         } else if (firstWord.equals("system")) {
             SystemInfo.printSystemInfo();
         } else if (firstWord.equals("help") || firstWord.equals("?")) {
@@ -172,7 +172,7 @@ public class Game {
         } else if (firstWord.equals("debug")) {
             DebugTools.parseDebugCommand(inputWords);
         } else if (firstWord.equals("config")) {
-            lastInputProcessResult.configurationsChanged = ConfigTools.parseConfigCommand(inputWords);
+            configurationsChanged = ConfigTools.parseConfigCommand(inputWords);
         } else {
             // The user issued a command, but it was not recognized.
             Utils.printInvalidCommandMessage(inputWords[0]);
@@ -186,18 +186,6 @@ public class Game {
         }
         DLogger.finest("Exited with no problems.");
         System.exit(0);
-    }
-
-}
-
-class LastInputProcessResult {
-
-    public int turnLength = 0;
-    public boolean configurationsChanged = false;
-
-    void reset() {
-        turnLength = 0;
-        configurationsChanged = false;
     }
 
 }
