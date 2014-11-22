@@ -37,7 +37,7 @@ public final class GameData {
 
     static void loadGameData(boolean noPoems) {
         long milliseconds = System.nanoTime();
-        DLogger.finest("Started loading the game data.");
+        DLogger.info("Started loading the game data.");
         loader = Thread.currentThread().getContextClassLoader();
 
         monospaced = new Font("Monospaced", Font.PLAIN, 14);
@@ -53,7 +53,7 @@ public final class GameData {
         }
 
         milliseconds = (System.nanoTime() - milliseconds) / 1000000;
-        DLogger.finest("Finished loading the game data. Took " + milliseconds + "ms.");
+        DLogger.info("Finished loading the game data. Took " + milliseconds + "ms.");
     }
 
     private static void loadItemBlueprints() {
@@ -103,10 +103,10 @@ public final class GameData {
             }
             br.close();
         } catch (IOException exception) {
-            DLogger.severe(exception.toString());
+            DLogger.warning(exception.toString());
         }
         ITEM_BLUEPRINTS.put(blueprint.getId(), blueprint);
-        DLogger.finest("Loaded " + ITEM_BLUEPRINTS.size() + " item blueprints.");
+        DLogger.info("Loaded " + ITEM_BLUEPRINTS.size() + " item blueprints.");
     }
 
     private static void loadCreatureBlueprints() {
@@ -146,10 +146,10 @@ public final class GameData {
             }
             br.close();
         } catch (IOException exception) {
-            DLogger.severe(exception.toString());
+            DLogger.warning(exception.toString());
         }
         CREATURE_BLUEPRINTS.put(blueprint.getId(), blueprint);
-        DLogger.finest("Loaded " + CREATURE_BLUEPRINTS.size() + " creature blueprints.");
+        DLogger.info("Loaded " + CREATURE_BLUEPRINTS.size() + " creature blueprints.");
     }
 
     private static void loadLocationPresets() {
@@ -210,7 +210,7 @@ public final class GameData {
 
         LOCATION_PRESETS = new LocationPreset[locationPresets.size()];
         locationPresets.toArray(LOCATION_PRESETS);
-        DLogger.finest("Created " + LOCATION_PRESETS.length + " location presets.");
+        DLogger.info("Created " + LOCATION_PRESETS.length + " location presets.");
     }
 
     private static void createAchievements() {
@@ -280,7 +280,7 @@ public final class GameData {
         CounterMap<String> lumberjackRequirements = new CounterMap<String>("AXE", 10);
         ACHIEVEMENTS.add(new BattleAchievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.",
                 50, 0, 0, null, null, lumberjackRequirements));
-        DLogger.finest("Created " + ACHIEVEMENTS.size() + " achievements.");
+        DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
     }
 
     private static void loadPoems() {
@@ -318,12 +318,12 @@ public final class GameData {
             }
             br.close();
         } catch (IOException exception) {
-            DLogger.severe(exception.toString());
+            DLogger.warning(exception.toString());
         }
         if (pb.isComplete()) {
             POEMS.add(pb.createPoem());
         }
-        DLogger.finest("Loaded " + POEMS.size() + " poems.");
+        DLogger.info("Loaded " + POEMS.size() + " poems.");
     }
 
 }

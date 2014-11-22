@@ -179,7 +179,7 @@ public class Game {
         if (!gameState.isSaved()) {
             Loader.saveGame(gameState);
         }
-        DLogger.finest("Exited with no problems.");
+        DLogger.info("Exited with no problems.");
         System.exit(0);
     }
 

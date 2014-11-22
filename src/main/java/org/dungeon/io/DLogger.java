@@ -36,17 +36,27 @@ public class DLogger {
         }
     }
 
-    // These methods can be called (and actually are) even if the logger was not initialized. In this case, the messages
-    // are discarded.
-    public static void finest(String message) {
+    /**
+     * Log an INFO message. This method can be called even if the logger was not initialized yet, in this case, the
+     * message is unceremoniously discarded.
+     *
+     * @param message the log message.
+     */
+    public static void info(String message) {
         if (logger != null) {
-            logger.finest(message);
+            logger.info(message);
         }
     }
 
-    public static void severe(String message) {
+    /**
+     * Log a WARNING message. This method can be called even if the logger was not initialized yet, in this case, the
+     * message is unceremoniously discarded.
+     *
+     * @param message the log message.
+     */
+    public static void warning(String message) {
         if (logger != null) {
-            logger.severe(message);
+            logger.warning(message);
         }
     }
 
