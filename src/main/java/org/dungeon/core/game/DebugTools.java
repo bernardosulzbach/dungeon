@@ -18,7 +18,7 @@ import java.awt.*;
 class DebugTools {
 
     private static final String[] args = {"exploration", "tomorrow", "holidays", "saves", "location", "generator",
-            "saved", "list"};
+            "saved", "list", "time"};
 
     private static void listAllArguments() {
         IO.writeString("Arguments are: ");
@@ -35,6 +35,10 @@ class DebugTools {
         }
     }
 
+    private static void printTime() {
+        IO.writeString(Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate()));
+    }
+
     static void parseDebugCommand(Command command) {
         if (command.hasArguments()) {
             if (command.firstTokenEquals(args[0])) {
@@ -46,7 +50,7 @@ class DebugTools {
                 } else {
                     IO.writeString("You are one day closer to your ending.", Color.ORANGE);
                 }
-            } else if (command.firstTokenEquals(args[2])) {
+            } else if (command.firstArgumentEquals(args[2])) {
                 String holiday;
                 for (DateTime date = new DateTime(1970, 1, 1, 0, 0); date.getYear() != 1971; date = date.plusDays(1)) {
                     holiday = org.dungeon.utils.Holiday.getHoliday(date);
@@ -54,13 +58,13 @@ class DebugTools {
                         IO.writeKeyValueString(Constants.DATE_FORMAT.print(date), holiday);
                     }
                 }
-            } else if (command.firstTokenEquals(args[3])) {
+            } else if (command.firstArgumentEquals(args[3])) {
                 Loader.printFilesInSavesFolder();
-            } else if (command.firstTokenEquals("lines")) {
+            } else if (command.firstArgumentEquals("lines")) {
                 for (int i = 1; i <= Constants.ROWS; i++) {
                     IO.writeString(Integer.toString(i));
                 }
-            } else if (command.firstTokenEquals(args[4])) {
+            } else if (command.firstArgumentEquals(args[4])) {
                 final int WIDTH = 20;  // The width of the row's "tag".
                 GameState gameState = Game.getGameState();
                 Point heroPosition = gameState.getHeroPosition();
@@ -82,12 +86,14 @@ class DebugTools {
                 sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity()).append('\n');
                 sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
                 IO.writeString(sb.toString());
-            } else if (command.firstTokenEquals(args[5])) {
+            } else if (command.firstArgumentEquals(args[5])) {
                 Game.getGameState().getWorld().getGenerator().printStatistics();
-            } else if (command.firstTokenEquals(args[6])) {
+            } else if (command.firstArgumentEquals(args[6])) {
                 printIsSaved();
-            } else if (command.firstTokenEquals(args[7])) {
+            } else if (command.firstArgumentEquals(args[7])) {
                 listAllArguments();
+            } else if (command.firstArgumentEquals(args[8])) {
+                printTime();
             } else {
                 switch (Engine.RANDOM.nextInt(4)) {
                     case 0:

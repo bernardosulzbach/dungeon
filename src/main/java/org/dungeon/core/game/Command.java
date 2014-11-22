@@ -63,11 +63,23 @@ public final class Command {
         return tokens[1];
     }
 
+    public boolean firstArgumentEquals(String argument) {
+        if (hasArguments()) {
+            return tokens[1].equalsIgnoreCase(argument);
+        } else {
+            throw new IllegalArgumentException("this command does not have arguments.");
+        }
+    }
+
     /**
      * @return an array with all tokens but the first.
      */
     public String[] getArguments() {
         return Arrays.copyOfRange(tokens, 1, tokens.length);
+    }
+
+    public int getTokenCount() {
+        return tokens.length;
     }
 
 }
