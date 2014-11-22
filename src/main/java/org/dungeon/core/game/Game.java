@@ -100,6 +100,8 @@ public class Game {
         configurationsChanged = false;
         if (command.firstTokenEquals("rest")) {
             turnLength = gameState.getHero().rest();
+        } else if (command.firstTokenEquals("sleep")) {
+            turnLength = gameState.getHero().sleep();
         } else if (command.firstTokenEquals("look") || command.firstTokenEquals("peek")) {
             gameState.getHero().look();
         } else if (command.firstTokenEquals("inventory") || command.firstTokenEquals("items")) {

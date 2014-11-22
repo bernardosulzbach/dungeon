@@ -93,7 +93,8 @@ public class Hero extends Creature {
     /**
      * Rest until the creature is healed to 60% of its health points.
      * <p/>
-     * Returns the number of seconds the hero rested.
+     *
+     * @return the number of seconds the hero rested.
      */
     public int rest() {
         if (getCurHealth() >= (int) (0.6 * getMaxHealth())) {
@@ -106,6 +107,26 @@ public class Hero extends Creature {
             IO.writeString("You feel rested.");
             return (int) (TimeConstants.REST_COMPLETE * fractionHealed);
         }
+    }
+
+    /**
+     * Sleep until the sun rises.
+     * <p/>
+     *
+     * @return the number of seconds the hero slept.
+     */
+    public int sleep() {
+        int seconds = 0;
+        World world = getLocation().getWorld();
+        PartOfDay pod = world.getPartOfDay();
+        if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
+            IO.writeString("You fall asleep.");
+            seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
+            IO.writeString("You wake up.");
+        } else {
+            IO.writeString("You can only sleep at night.");
+        }
+        return seconds;
     }
 
     /**
@@ -169,6 +190,7 @@ public class Hero extends Creature {
 
     /**
      * Select an item of the current location based on the arguments of a command.
+     *
      * @param command the command whose arguments will determine the item search.
      * @return an Item or <code>null</code>.
      */

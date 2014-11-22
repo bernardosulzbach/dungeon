@@ -17,6 +17,8 @@
 package org.dungeon.core.game;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 /**
  * Enumerated type of the parts of the day.
@@ -51,28 +53,6 @@ public enum PartOfDay {
         setStartingHour(startingHour);
     }
 
-    public double getLuminosity() {
-        return luminosity;
-    }
-
-    void setLuminosity(double luminosity) {
-        if (luminosity < 0.0 || luminosity > 1.0) {
-            throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
-        }
-        this.luminosity = luminosity;
-    }
-
-    public int getStartingHour() {
-        return startingHour;
-    }
-
-    public void setStartingHour(int startingHour) {
-        if (startingHour < 0 || startingHour > 23) {
-            throw new IllegalArgumentException("startingHour must be in the range [0, 23]");
-        }
-        this.startingHour = startingHour;
-    }
-
     /**
      * Returns the PartOfDay constant corresponding to a given time.
      *
@@ -94,6 +74,39 @@ public enum PartOfDay {
             }
         }
         return null;
+    }
+
+    /**
+     * @param cur the current time.
+     * @param pod a part of the day.
+     * @return the number of seconds between the current time and the start of the part of the day.
+     */
+    public static int getSecondsToNext(DateTime cur, PartOfDay pod) {
+        DateTime startOfPod = cur.getHourOfDay() < pod.getStartingHour() ? cur : cur.plusDays(1);
+        startOfPod = startOfPod.withHourOfDay(pod.getStartingHour()).withMinuteOfHour(0).withSecondOfMinute(0);
+        return new Period(cur, startOfPod, PeriodType.seconds()).getSeconds();
+    }
+
+    public double getLuminosity() {
+        return luminosity;
+    }
+
+    void setLuminosity(double luminosity) {
+        if (luminosity < 0.0 || luminosity > 1.0) {
+            throw new IllegalArgumentException("luminosity must be nonnegative and not bigger than 1.");
+        }
+        this.luminosity = luminosity;
+    }
+
+    public int getStartingHour() {
+        return startingHour;
+    }
+
+    public void setStartingHour(int startingHour) {
+        if (startingHour < 0 || startingHour > 23) {
+            throw new IllegalArgumentException("startingHour must be in the range [0, 23]");
+        }
+        this.startingHour = startingHour;
     }
 
     @Override

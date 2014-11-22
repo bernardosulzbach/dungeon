@@ -129,6 +129,11 @@ INFO: "Saves the game."
 ALIASES: ""
 ARGUMENTS: "", "filename"
 
+COMMAND: "sleep"
+INFO: "Sleeps until the sun rises."
+ALIASES: ""
+ARGUMENTS: ""
+
 COMMAND: "statistics"
 INFO: "Displays all available game statistics."
 ALIASES: ""

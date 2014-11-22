@@ -51,4 +51,15 @@ public class PartOfDayTest {
         Assert.assertEquals(PartOfDay.getCorrespondingConstant(new DateTime(1970, 1, 1, 23, 59)), PartOfDay.MIDNIGHT);
     }
 
+    @Test
+    public void testGetSecondsToNext() throws Exception {
+        Assert.assertEquals(3600, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 22, 0), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(3000, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 22, 10), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(1200, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 22, 40), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(86400, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 23, 0), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(85800, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 23, 10), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(84000, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 23, 40), PartOfDay.MIDNIGHT));
+        Assert.assertEquals(82800, PartOfDay.getSecondsToNext(new DateTime(1970, 1, 1, 0, 0), PartOfDay.MIDNIGHT));
+    }
+
 }

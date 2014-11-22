@@ -17,12 +17,12 @@
 package org.dungeon.core.game;
 
 import org.dungeon.core.counters.CounterMap;
+import org.dungeon.core.creatures.Hero;
 import org.dungeon.io.IO;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import org.dungeon.core.creatures.Hero;
 
 public class World implements Serializable {
 
@@ -33,9 +33,8 @@ public class World implements Serializable {
     private final WorldGenerator generator;
 
     private final HashMap<Point, Location> locations;
-
-    private DateTime worldDate;
     private final DateTime worldCreationDate;
+    private DateTime worldDate;
 
     public World() {
         worldDate = new DateTime(1985, 6, 2, 6, 10);
@@ -71,6 +70,7 @@ public class World implements Serializable {
 
     /**
      * Moves the hero from a location to another.
+     *
      * @param dir the Direction in which the hero should be moved.
      * @return the Location the hero arrives to.
      */
