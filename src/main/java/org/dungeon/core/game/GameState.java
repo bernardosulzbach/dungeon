@@ -174,7 +174,7 @@ public class GameState implements Serializable {
     }
 
     public void printGameStatistics() {
-        int commandCount = getCommandHistory().getCommandCount();
+        int commandCount = getCommandHistory().size();
         long charCount = getCommandHistory().getCharacterCount();
         long tokenCount = getCommandHistory().getTokenCount();
         IO.writeKeyValueString("Commands issued", Integer.toString(commandCount));

@@ -29,19 +29,19 @@ import java.util.Arrays;
  */
 public final class Command {
 
-    private String string;
+    private String stringRepresentation;
     private String[] tokens;
 
     public Command(String source) {
-        this.string = source;
         this.tokens = Utils.split(source);
+        this.stringRepresentation = String.join(" ", tokens);
         if (tokens.length == 0) {
             throw new IllegalArgumentException("source must contain at least one token.");
         }
     }
 
-    public String getString() {
-        return string;
+    public String getStringRepresentation() {
+        return stringRepresentation;
     }
 
     public String getFirstToken() {

@@ -34,8 +34,6 @@ import java.awt.event.*;
 public class GameWindow extends JFrame {
 
     private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-    private CommandHistory commandHistory;
-    private int commandIndex;
     private StyledDocument document;
 
     private JTextField textField;
@@ -164,7 +162,7 @@ public class GameWindow extends JFrame {
             clearTextField();
             setIdle(false);
             Game.renderTurn(new Command(text));
-            resetCommandIndex();
+            Game.getGameState().getCommandHistory().getCursor().moveToEnd();
             textField.requestFocusInWindow();
             setIdle(true);
         }
@@ -182,40 +180,22 @@ public class GameWindow extends JFrame {
     }
 
     private void textFieldKeyPressed(KeyEvent e) {
-        if (idle) {
-            if (commandHistory == null) {
-                commandHistory = Game.getGameState().getCommandHistory();
-                resetCommandIndex();
-            }
-            boolean validKeyPress = false;
+        CommandHistory commandHistory = Game.getGameState().getCommandHistory();
+        if (idle && commandHistory != null) {
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                if (commandIndex > 0) {
-                    validKeyPress = true;
-                    commandIndex--;
-                }
+                textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                if (commandIndex < commandHistory.getCommandCount()) {
-                    commandIndex++;
-                    // When the index is set to one past the last saved command, just clear the text field.
-                    if (commandIndex == commandHistory.getCommandCount()) {
-                        clearTextField();
-                        return;
-                    }
-                    validKeyPress = true;
-                }
+                textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
             } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
                 String trimmedTextFieldText = getTrimmedTextFieldText();
                 if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
-                    textField.setText(commandHistory.getLastCommand());
+                    textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
                 } else {
                     String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
                     if (lastSimilarCommand != null) {
                         textField.setText(lastSimilarCommand);
                     }
                 }
-            }
-            if (validKeyPress) {
-                textField.setText(commandHistory.getCommandAt(commandIndex));
             }
         }
     }
@@ -227,12 +207,6 @@ public class GameWindow extends JFrame {
      */
     private String getTrimmedTextFieldText() {
         return textField.getText().trim();
-    }
-
-    private void resetCommandIndex() {
-        // This is correct.
-        // The index should point to one after the last command, so the up key retrieves the last command.
-        commandIndex = commandHistory.getCommandCount();
     }
 
     /**
