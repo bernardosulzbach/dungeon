@@ -34,7 +34,7 @@ public final class Command {
 
     public Command(String source) {
         this.tokens = Utils.split(source);
-        this.stringRepresentation = String.join(" ", tokens);
+        this.stringRepresentation = Utils.join(" ", tokens);
         if (tokens.length == 0) {
             throw new IllegalArgumentException("source must contain at least one token.");
         }
