@@ -19,9 +19,6 @@ package org.dungeon.core.creatures;
 import org.dungeon.core.game.Location;
 import org.dungeon.core.items.CreatureInventory;
 import org.dungeon.core.items.Item;
-import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
 
 /**
  * The Creature class.
@@ -30,15 +27,10 @@ import org.dungeon.utils.Utils;
  */
 public class Creature extends Entity {
 
-    private int level;
-    private int experience;
-    private int experienceDrop;
     private int maxHealth;
     private int curHealth;
-    private int healthIncrement;
 
     private int attack;
-    private int attackIncrement;
     private String attackAlgorithm;
 
     private CreatureInventory inventory;
@@ -49,12 +41,8 @@ public class Creature extends Entity {
     public Creature(CreatureBlueprint bp) {
         super(bp.getId(), bp.getType(), bp.getName());
         attackAlgorithm = bp.getAttackAlgorithmID();
-        // TODO: add support to different levels or remove the levelling system already.
-        level = 1;
         attack = bp.getAttack();
-        attackIncrement = bp.getAttackIncrement();
-        experienceDrop = level * bp.getExperienceDropFactor();
-        maxHealth = bp.getMaxHealth() + (level - 1) * bp.getMaxHealthIncrement();
+        maxHealth = bp.getMaxHealth();
         curHealth = bp.getCurHealth();
     }
 
@@ -70,33 +58,8 @@ public class Creature extends Entity {
         return name;
     }
 
-    int getLevel() {
-        return level;
-    }
-
-    void setLevel(int level) {
-        this.level = level;
-    }
-
-    int getExperience() {
-        return experience;
-    }
-
-    public int getExperienceDrop() {
-        return experienceDrop;
-    }
-
-    double getLevelProgress() {
-        int xpToCurLevel = getExperienceToLevel(getLevel());
-        return ((double) (getExperience() - xpToCurLevel)) / (getExperienceToNextLevel() - xpToCurLevel);
-    }
-
     int getMaxHealth() {
         return maxHealth;
-    }
-
-    void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
     }
 
     int getCurHealth() {
@@ -107,36 +70,12 @@ public class Creature extends Entity {
         this.curHealth = curHealth;
     }
 
-    int getHealthIncrement() {
-        return healthIncrement;
-    }
-
-    void setHealthIncrement(int healthIncrement) {
-        this.healthIncrement = healthIncrement;
-    }
-
     public int getAttack() {
         return attack;
     }
 
-    void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    int getAttackIncrement() {
-        return attackIncrement;
-    }
-
-    void setAttackIncrement(int attackIncrement) {
-        this.attackIncrement = attackIncrement;
-    }
-
     String getAttackAlgorithm() {
         return attackAlgorithm;
-    }
-
-    void setAttackAlgorithm(String attackAlgorithm) {
-        this.attackAlgorithm = attackAlgorithm;
     }
 
     public CreatureInventory getInventory() {
@@ -171,37 +110,6 @@ public class Creature extends Entity {
         } else {
             setCurHealth(sum);
         }
-    }
-
-    private int getExperienceToLevel(int level) {
-        return (level - 1) * (level - 1) * 100;
-    }
-
-    int getExperienceToNextLevel() {
-        return getExperienceToLevel(getLevel() + 1);
-    }
-
-    public void addExperience(int amount) {
-        this.experience += amount;
-        IO.writeString(getName() + " got " + amount + " experience points.");
-        if (this.experience >= getExperienceToNextLevel()) {
-            levelUp();
-        }
-    }
-
-    // Increases the creature level by one and writes a message about it.
-    void levelUp() {
-        setLevel(getLevel() + 1);
-        setMaxHealth(getMaxHealth() + getHealthIncrement());
-        setCurHealth(getMaxHealth());
-        setAttack(getAttack() + getAttackIncrement());
-        if (this.getLevel() % 2 == 0) {
-            this.getInventory().setLimit(this.getInventory().getLimit() + 1);
-        }
-        IO.writeString(Utils.centerString(Constants.LEVEL_UP, '-') + '\n'
-                + getName() + " is now level " + getLevel() + '.' + '\n'
-                + "Level " + (getLevel() + 1) + " progress: "
-                + getExperience() + "/" + getExperienceToNextLevel());
     }
 
     public void hit(Creature target) {

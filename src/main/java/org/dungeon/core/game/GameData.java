@@ -92,8 +92,6 @@ public final class GameData {
                         blueprint.setFood(Integer.parseInt(Utils.getAfterColon(line).trim()) == 1);
                     } else if (line.startsWith("NUTRITION:")) {
                         blueprint.setNutrition(Integer.parseInt(Utils.getAfterColon(line).trim()));
-                    } else if (line.startsWith("EXPERIENCE_ON_EAT:")) {
-                        blueprint.setExperienceOnEat(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     } else if (line.startsWith("INTEGRITY_DECREMENT_ON_EAT:")) {
                         blueprint.setIntegrityDecrementOnEat(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     } else if (line.startsWith("CLOCK:")) {
@@ -131,16 +129,10 @@ public final class GameData {
                         blueprint.setCurHealth(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     } else if (line.startsWith("MAX_HEALTH:")) {
                         blueprint.setMaxHealth(Integer.parseInt(Utils.getAfterColon(line).trim()));
-                    } else if (line.startsWith("MAX_HEALTH_INCREMENT:")) {
-                        blueprint.setMaxHealthIncrement(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     } else if (line.startsWith("ATTACK:")) {
                         blueprint.setAttack(Integer.parseInt(Utils.getAfterColon(line).trim()));
-                    } else if (line.startsWith("ATTACK_INCREMENT:")) {
-                        blueprint.setAttackIncrement(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     } else if (line.startsWith("ATTACK_ALGORITHM_ID:")) {
                         blueprint.setAttackAlgorithmID(Utils.getAfterColon(line).trim());
-                    } else if (line.startsWith("EXPERIENCE_DROP_FACTOR:")) {
-                        blueprint.setExperienceDropFactor(Integer.parseInt(Utils.getAfterColon(line).trim()));
                     }
                 }
             }
@@ -218,68 +210,68 @@ public final class GameData {
         ACHIEVEMENTS = new ArrayList<Achievement>();
 
         // Exploration achievements.
-        ACHIEVEMENTS.add(new ExplorationAchievement("TRAVELER", "Traveler", "Visit 5 different locations of the same type.", 25, 5, 0));
-        ACHIEVEMENTS.add(new ExplorationAchievement("WIPE", "Wipe", "Kill 3 creatures in the same location.", 50, 0, 3));
+        ACHIEVEMENTS.add(new ExplorationAchievement("TRAVELER", "Traveler", "Visit 5 different locations of the same type.", 5, 0));
+        ACHIEVEMENTS.add(new ExplorationAchievement("WIPE", "Wipe", "Kill 3 creatures in the same location.", 0, 3));
 
         // Battle achievements that do not require specific kills.
-        ACHIEVEMENTS.add(new BattleAchievement("FIRST_BLOOD", "First Blood", "Kill a creature.", 10, 1, 0, null, null, null));
-        ACHIEVEMENTS.add(new BattleAchievement("KILLER", "Killer", "Kill 10 creatures.", 100, 10, 0, null, null, null));
-        ACHIEVEMENTS.add(new BattleAchievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.", 150, 0, 10, null, null, null));
+        ACHIEVEMENTS.add(new BattleAchievement("FIRST_BLOOD", "First Blood", "Kill a creature.", 1, 0, null, null, null));
+        ACHIEVEMENTS.add(new BattleAchievement("KILLER", "Killer", "Kill 10 creatures.", 10, 0, null, null, null));
+        ACHIEVEMENTS.add(new BattleAchievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.", 0, 10, null, null, null));
 
         // Battle achievements that rely on the kill count of a specific creature ID.
         // Bane requires six battles against bats.
         CounterMap<String> baneRequirements = new CounterMap<String>("BAT", 6);
         ACHIEVEMENTS.add(new BattleAchievement("BANE", "Bane", "Kill 6 bats.",
-                50, 0, 0, baneRequirements, null, null));
+                0, 0, baneRequirements, null, null));
         // Cat requires four battles against rats.
         CounterMap<String> catRequirements = new CounterMap<String>("RAT", 4);
         ACHIEVEMENTS.add(new BattleAchievement("CAT", "Cat", "Kill 4 rats.",
-                40, 0, 0, catRequirements, null, null));
+                0, 0, catRequirements, null, null));
         // Evil Bastard requires one battle against a rabbit.
         CounterMap<String> evilBastardRequirements = new CounterMap<String>("RABBIT", 1);
         ACHIEVEMENTS.add(new BattleAchievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.",
-                5, 0, 0, evilBastardRequirements, null, null));
+                0, 0, evilBastardRequirements, null, null));
         // Stay Dead requires two battles against a zombie.
         CounterMap<String> stayDeadRequirements = new CounterMap<String>("ZOMBIE", 2);
         ACHIEVEMENTS.add(new BattleAchievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.",
-                50, 0, 0, stayDeadRequirements, null, null));
+                0, 0, stayDeadRequirements, null, null));
 
         CounterMap<String> dissectionRequirements = new CounterMap<String>("FROG", 5);
         ACHIEVEMENTS.add(new BattleAchievement("DISSECTION", "Dissection", "Kill 5 frogs.",
-                25, 0, 0, dissectionRequirements, null, null));
+                0, 0, dissectionRequirements, null, null));
 
         // Battle achievements that rely on the kill count of a specific type.
         // Professional Coward requires killing 10 critters.
         CounterMap<String> professionalCowardRequirements = new CounterMap<String>("Critter", 10);
         ACHIEVEMENTS.add(new BattleAchievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.",
-                100, 0, 0, null, professionalCowardRequirements, null));
+                0, 0, null, professionalCowardRequirements, null));
 
         CounterMap<String> hunterRequirements = new CounterMap<String>("Beast", 10);
         ACHIEVEMENTS.add(new BattleAchievement("HUNTER", "Hunter", "Kill 10 beasts.",
-                125, 0, 0, null, hunterRequirements, null));
+                0, 0, null, hunterRequirements, null));
 
         // Battle achievements that rely on the number of kills with a specific weapon.
         // An empty string is used to to register unarmed kills.
         CounterMap<String> fiveFingerDeathPunchRequirements = new CounterMap<String>(Constants.UNARMED_ID, 1);
         ACHIEVEMENTS.add(new BattleAchievement("FIVE_FINGER_DEATH_PUNCH", "Five Finger Death Punch", "Kill a creature unarmed.",
-                10, 0, 0, null, null, fiveFingerDeathPunchRequirements));
+                0, 0, null, null, fiveFingerDeathPunchRequirements));
 
         CounterMap<String> boxer = new CounterMap<String>(Constants.UNARMED_ID, 10);
         ACHIEVEMENTS.add(new BattleAchievement("BOXER", "Boxer", "Kill 10 creatures unarmed.",
-                100, 0, 0, null, null, boxer));
+                0, 0, null, null, boxer));
 
         CounterMap<String> onTheStickRequirements = new CounterMap<String>("STICK", 2);
         ACHIEVEMENTS.add(new BattleAchievement("ON_THE_STICK!", "On the Stick!", "Kill 2 creatures with the Stick.",
-                20, 0, 0, null, null, onTheStickRequirements));
+                0, 0, null, null, onTheStickRequirements));
 
         CounterMap<String> sticksAndStonesRequirements = new CounterMap<String>("STICK", 5);
         sticksAndStonesRequirements.incrementCounter("STONE", 5);
         ACHIEVEMENTS.add(new BattleAchievement("STICKS_AND_STONES", "Sticks and Stones", "Kill 5 creatures with the Stone and 5 with the Stick.",
-                40, 0, 0, null, null, sticksAndStonesRequirements));
+                0, 0, null, null, sticksAndStonesRequirements));
 
         CounterMap<String> lumberjackRequirements = new CounterMap<String>("AXE", 10);
         ACHIEVEMENTS.add(new BattleAchievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.",
-                50, 0, 0, null, null, lumberjackRequirements));
+                0, 0, null, null, lumberjackRequirements));
         DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
     }
 

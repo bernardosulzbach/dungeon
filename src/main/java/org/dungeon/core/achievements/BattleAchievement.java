@@ -36,13 +36,12 @@ public class BattleAchievement extends Achievement {
     public BattleAchievement(String id,
                              String name,
                              String info,
-                             int experienceReward,
                              int battleCount,
                              int longestBattleLength,
                              CounterMap<String> killsByCreatureId,
                              CounterMap<String> killsByCreatureType,
                              CounterMap<String> weaponIdKills) {
-        super(id, name, info, experienceReward);
+        super(id, name, info);
         this.battleCount = battleCount;
         this.longestBattleLength = longestBattleLength;
         this.killsByCreatureId = killsByCreatureId;

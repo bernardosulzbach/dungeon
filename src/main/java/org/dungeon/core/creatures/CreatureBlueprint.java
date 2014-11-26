@@ -12,11 +12,8 @@ public class CreatureBlueprint {
     private String name;
     private int curHealth;
     private int maxHealth;
-    private int maxHealthIncrement;
     private int attack;
-    private int attackIncrement;
     private String attackAlgorithmID;
-    private int experienceDropFactor;
 
     public CreatureBlueprint() {
     }
@@ -61,14 +58,6 @@ public class CreatureBlueprint {
         this.maxHealth = maxHealth;
     }
 
-    public int getMaxHealthIncrement() {
-        return maxHealthIncrement;
-    }
-
-    public void setMaxHealthIncrement(int maxHealthIncrement) {
-        this.maxHealthIncrement = maxHealthIncrement;
-    }
-
     public int getAttack() {
         return attack;
     }
@@ -77,28 +66,12 @@ public class CreatureBlueprint {
         this.attack = attack;
     }
 
-    public int getAttackIncrement() {
-        return attackIncrement;
-    }
-
-    public void setAttackIncrement(int attackIncrement) {
-        this.attackIncrement = attackIncrement;
-    }
-
     public String getAttackAlgorithmID() {
         return attackAlgorithmID;
     }
 
     public void setAttackAlgorithmID(String attackAlgorithmID) {
         this.attackAlgorithmID = attackAlgorithmID;
-    }
-
-    public int getExperienceDropFactor() {
-        return experienceDropFactor;
-    }
-
-    public void setExperienceDropFactor(int experienceDropFactor) {
-        this.experienceDropFactor = experienceDropFactor;
     }
 
 }

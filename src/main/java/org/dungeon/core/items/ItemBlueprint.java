@@ -21,7 +21,6 @@ public final class ItemBlueprint {
     // Food fields.
     boolean food;
     int nutrition;
-    int experienceOnEat;
     int integrityDecrementOnEat;
 
     // Clock field.
@@ -121,14 +120,6 @@ public final class ItemBlueprint {
 
     public void setNutrition(int nutrition) {
         this.nutrition = nutrition;
-    }
-
-    public int getExperienceOnEat() {
-        return experienceOnEat;
-    }
-
-    public void setExperienceOnEat(int experienceOnEat) {
-        this.experienceOnEat = experienceOnEat;
     }
 
     public int getIntegrityDecrementOnEat() {

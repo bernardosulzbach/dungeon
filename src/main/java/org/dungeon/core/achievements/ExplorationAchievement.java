@@ -16,10 +16,9 @@ public class ExplorationAchievement extends Achievement {
     public ExplorationAchievement(String id,
                                   String name,
                                   String info,
-                                  int experienceReward,
                                   int visitCount,
                                   int killCount) {
-        super(id, name, info, experienceReward);
+        super(id, name, info);
         this.killCount = killCount;
         this.visitCount = visitCount;
     }

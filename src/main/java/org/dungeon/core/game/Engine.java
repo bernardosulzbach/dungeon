@@ -144,12 +144,9 @@ public class Engine {
         return turns;
     }
 
-    // Add the the surviving creature some experience and removes the dead creature from the battle location.
     private static void battleCleanup(Creature survivor, Creature defeated) {
-        if (survivor instanceof Hero) {
-            survivor.addExperience(defeated.getExperienceDrop());
-        }
         // Remove the dead creature from the location.
         survivor.getLocation().removeCreature(defeated);
     }
+
 }

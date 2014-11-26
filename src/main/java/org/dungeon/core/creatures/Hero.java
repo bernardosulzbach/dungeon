@@ -59,11 +59,9 @@ public class Hero extends Creature {
         heroBlueprint.setName(name);
         heroBlueprint.setType("Hero");
         heroBlueprint.setAttack(4);
-        heroBlueprint.setAttackIncrement(2);
         heroBlueprint.setAttackAlgorithmID("HERO");
         heroBlueprint.setMaxHealth(50);
         heroBlueprint.setCurHealth(50);
-        heroBlueprint.setMaxHealthIncrement(20);
         return heroBlueprint;
     }
 
@@ -345,8 +343,6 @@ public class Hero extends Creature {
                 if (isCompletelyHealed()) {
                     IO.writeString("You are completely healed.");
                 }
-                // When addExperience() is called a message is printed, so this line must come after the eat message.
-                addExperience(food.getExperienceOnEat());
             } else {
                 IO.writeString("You can only eat food.");
             }
@@ -420,12 +416,9 @@ public class Hero extends Creature {
 
     public void printHeroStatus() {
         IO.writeString(getName());
-        IO.writeKeyValueString("Level", Integer.toString(getLevel()));
         if (Game.getGameState().isUsingBars()) {
-            IO.writeNamedBar("Experience", getLevelProgress(), Constants.LEVEL_BAR_COLOR);
             IO.writeNamedBar("Health", (double) getCurHealth() / getMaxHealth(), Constants.HEALTH_BAR_COLOR);
         } else {
-            IO.writeKeyValueString("Experience", String.format("%d/%d", getExperience(), getExperienceToNextLevel()));
             IO.writeKeyValueString("Health", String.format("%d/%d", getCurHealth(), getMaxHealth()));
         }
         IO.writeKeyValueString("Attack", Integer.toString(getAttack()));

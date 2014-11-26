@@ -31,16 +31,11 @@ public abstract class Achievement implements Serializable {
     final String id;
     private final String name;
     private final String info;
-    private final int experienceReward;
 
-    Achievement(String id, String name, String info, int experienceReward) {
+    Achievement(String id, String name, String info) {
         this.id = id;
         this.name = name;
         this.info = info;
-        if (experienceReward < 0) {
-            throw new IllegalArgumentException("experienceReward should be nonnegative.");
-        }
-        this.experienceReward = experienceReward;
     }
 
     public String getId() {
@@ -53,10 +48,6 @@ public abstract class Achievement implements Serializable {
 
     public String getInfo() {
         return info;
-    }
-
-    int getExperienceReward() {
-        return experienceReward;
     }
 
     /**
@@ -92,9 +83,8 @@ public abstract class Achievement implements Serializable {
         sb.append(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
         sb.append(getName()).append("\n");
         sb.append(getInfo()).append("\n");
-        if (getExperienceReward() != 0) {
-            sb.append(" + ").append(getExperienceReward()).append(" experience points.");
-        }
+        // Keep the StringBuilder as, in the future, Honor, Karma or something else may be rewarded by the achievements.
         IO.writeString(sb.toString());
     }
+
 }

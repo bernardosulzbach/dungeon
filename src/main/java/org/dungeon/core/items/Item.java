@@ -58,7 +58,7 @@ public class Item extends Entity {
         integrityDecrementOnHit = bp.integrityDecrementOnHit;
 
         if (bp.food) {
-            foodComponent = new FoodComponent(bp.nutrition, bp.experienceOnEat, bp.integrityDecrementOnEat);
+            foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
         }
 
         if (bp.clock) {
