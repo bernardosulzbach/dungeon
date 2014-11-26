@@ -1,4 +1,8 @@
-Implement Honor system. (Killing rabbits make you evil, killing orcs do not...)
+This is a checklist for developers.
 
-
-
+Alignment system. (Killing good creatures make you evil.)
+Trees.
+Harvesting.
+Farming. (Gathering seeds, planting and harvesting.)
+Factions.
+Reputations.
