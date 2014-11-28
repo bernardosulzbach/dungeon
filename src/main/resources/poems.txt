@@ -1,5 +1,5 @@
-TITLE: A Coat
-AUTHOR: William Butler Yeats
+TITLE:   A Coat
+AUTHOR:  William Butler Yeats
 CONTENT: I made my song a coat
          Covered with embroideries
          Out of old mythologies
@@ -11,10 +11,9 @@ CONTENT: I made my song a coat
          For there’s more enterprise
          In walking naked.
 
-TITLE: The road not taken
-AUTHOR: Robert Frost
-CONTENT: The road not taken
-         Two roads diverged in a yellow wood,
+TITLE:   The road not taken
+AUTHOR:  Robert Frost
+CONTENT: Two roads diverged in a yellow wood,
          And sorry I could not travel both
          And be one traveler, long I stood
          And looked down one as far as I could

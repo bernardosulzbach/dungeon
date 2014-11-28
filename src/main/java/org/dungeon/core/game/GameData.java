@@ -147,22 +147,22 @@ public final class GameData {
     private static void loadLocationPresets() {
         ArrayList<LocationPreset> locationPresets = new ArrayList<LocationPreset>();
 
-        SpawnerPreset bat = new SpawnerPreset("BAT", 1, 4);
-        SpawnerPreset bear = new SpawnerPreset("BEAR", 1, 2);
-        SpawnerPreset boar = new SpawnerPreset("BOAR", 3, 10);
-        SpawnerPreset crocodile = new SpawnerPreset("CROCODILE", 1, 8);
-        SpawnerPreset fox = new SpawnerPreset("FOX", 4, 6);
-        SpawnerPreset frog = new SpawnerPreset("FROG", 2, 16);
-        SpawnerPreset komodoDragon = new SpawnerPreset("KOMODO_DRAGON", 1, 8);
-        SpawnerPreset orc = new SpawnerPreset("ORC", 2, 12);
-        SpawnerPreset rabbit = new SpawnerPreset("RABBIT", 8, 24); // They fuck a lot.
-        SpawnerPreset rat = new SpawnerPreset("RAT", 6, 10);
-        SpawnerPreset skeleton = new SpawnerPreset("SKELETON", 1, 2);
-        SpawnerPreset snake = new SpawnerPreset("SNAKE", 3, 6);
-        SpawnerPreset spider = new SpawnerPreset("SPIDER", 2, 6);
-        SpawnerPreset whiteTiger = new SpawnerPreset("WHITE_TIGER", 1, 1);
-        SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 2);
-        SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 8);
+        SpawnerPreset bat = new SpawnerPreset("BAT", 1, 6);
+        SpawnerPreset bear = new SpawnerPreset("BEAR", 1, 12);
+        SpawnerPreset boar = new SpawnerPreset("BOAR", 3, 8);
+        SpawnerPreset crocodile = new SpawnerPreset("CROCODILE", 1, 6);
+        SpawnerPreset fox = new SpawnerPreset("FOX", 4, 4);
+        SpawnerPreset frog = new SpawnerPreset("FROG", 2, 2);
+        SpawnerPreset komodoDragon = new SpawnerPreset("KOMODO_DRAGON", 1, 4);
+        SpawnerPreset orc = new SpawnerPreset("ORC", 2, 2);
+        SpawnerPreset rabbit = new SpawnerPreset("RABBIT", 8, 1);
+        SpawnerPreset rat = new SpawnerPreset("RAT", 6, 2);
+        SpawnerPreset skeleton = new SpawnerPreset("SKELETON", 1, 12);
+        SpawnerPreset snake = new SpawnerPreset("SNAKE", 3, 4);
+        SpawnerPreset spider = new SpawnerPreset("SPIDER", 2, 4);
+        SpawnerPreset whiteTiger = new SpawnerPreset("WHITE_TIGER", 1, 24);
+        SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 12);
+        SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 4);
 
         SpawnerPreset[] clearingPresets = {frog, rabbit, spider, fox};
         ItemFrequencyPair[] clearingItems = {new ItemFrequencyPair("CHERRY", 0.6), new ItemFrequencyPair("STICK", 0.9)};

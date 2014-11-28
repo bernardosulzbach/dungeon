@@ -117,8 +117,12 @@ public class Location implements Serializable {
         items.removeItem(item);
     }
 
-    public void removeCreature(Creature creatureToRemove) {
-        creatures.remove(creatureToRemove);
+    public void removeCreature(Creature creature) {
+        for (Spawner spawner : spawners) {
+            spawner.notifyKill(creature);
+        }
+        // The creature must be removed after the spawns are notified.
+        creatures.remove(creature);
     }
 
     public World getWorld() {
@@ -128,4 +132,5 @@ public class Location implements Serializable {
     public void setWorld(World world) {
         this.world = world;
     }
+
 }
