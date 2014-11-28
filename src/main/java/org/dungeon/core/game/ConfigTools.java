@@ -82,21 +82,21 @@ class ConfigTools {
     // Returns true if a configuration was changed.
     static boolean parseConfigCommand(Command command) {
         if (command.hasArguments()) {
-            if (command.firstTokenEquals(args[0])) {
+            if (command.firstArgumentEquals(args[0])) {
                 toggleBars();
                 return true;
-            } else if (command.firstTokenEquals(args[1])) {
+            } else if (command.firstArgumentEquals(args[1])) {
                 toggleBold();
                 return true;
-            } else if (command.firstTokenEquals(args[2])) {
+            } else if (command.firstArgumentEquals(args[2])) {
                 if (command.getArguments().length > 1) {
                     return changeChunkSide(command.getArguments()[1]);
                 } else {
                     IO.writeString("Provide a numerical argument.");
                 }
-            } else if (command.firstTokenEquals(args[3])) {
+            } else if (command.firstArgumentEquals(args[3])) {
                 listAllArguments();
-            } else if (command.firstTokenEquals(args[4])) {
+            } else if (command.firstArgumentEquals(args[4])) {
                 if (command.getArguments().length > 1) {
                     return changeRowCount(command.getArguments()[1]);
                 } else {
