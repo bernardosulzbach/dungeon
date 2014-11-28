@@ -17,6 +17,7 @@
 package org.dungeon.utils;
 
 import org.dungeon.core.game.Engine;
+import org.dungeon.core.game.GameData;
 import org.dungeon.core.game.Selectable;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
@@ -370,6 +371,10 @@ public class Utils {
      */
     public static void printFailedToCreateDirectoryMessage(String directory) {
         IO.writeString("Failed to create the " + directory + " directory.");
+    }
+
+    public static void printLicense() {
+        IO.writeString(GameData.LICENSE);
     }
 
 }

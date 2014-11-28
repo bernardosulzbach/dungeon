@@ -33,6 +33,9 @@ public final class GameData {
     public static List<Achievement> ACHIEVEMENTS;
     public static List<Poem> POEMS;
     public static Font monospaced;
+
+    public static String LICENSE;
+
     private static ClassLoader loader;
 
     static void loadGameData(boolean noPoems) {
@@ -51,6 +54,8 @@ public final class GameData {
         if (!noPoems) {
             loadPoems();
         }
+
+        loadLicense();
 
         milliseconds = (System.nanoTime() - milliseconds) / 1000000;
         DLogger.info("Finished loading the game data. Took " + milliseconds + "ms.");
@@ -316,6 +321,21 @@ public final class GameData {
             POEMS.add(pb.createPoem());
         }
         DLogger.info("Loaded " + POEMS.size() + " poems.");
+    }
+
+    private static void loadLicense() {
+        final int CHARACTERS_IN_LICENSE = 513;
+        InputStreamReader isr = new InputStreamReader(loader.getResourceAsStream("license.txt"));
+        StringBuilder sb = new StringBuilder(CHARACTERS_IN_LICENSE);
+        char[] buffer = new char[CHARACTERS_IN_LICENSE];
+        int length;
+        try {
+            while ((length = isr.read(buffer)) != -1) {
+                sb.append(buffer, 0, length);
+            }
+        } catch (IOException ignore) {
+        }
+        LICENSE = sb.toString();
     }
 
 }

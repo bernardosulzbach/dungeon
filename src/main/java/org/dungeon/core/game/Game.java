@@ -21,7 +21,6 @@ import org.dungeon.help.Help;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.utils.LicenseUtils;
 import org.dungeon.utils.Math;
 import org.dungeon.utils.SystemInfo;
 import org.dungeon.utils.Utils;
@@ -157,7 +156,7 @@ public class Game {
         } else if (command.firstTokenEquals("quit") || command.firstTokenEquals("exit")) {
             Game.exit();
         } else if (command.firstTokenEquals("license") || command.firstTokenEquals("copyright")) {
-            LicenseUtils.printLicense();
+            Utils.printLicense();
         } else if (command.firstTokenEquals("fibonacci")) {
             Math.fibonacci(command);
         } else if (command.firstTokenEquals("hint") || command.firstTokenEquals("tip")) {
