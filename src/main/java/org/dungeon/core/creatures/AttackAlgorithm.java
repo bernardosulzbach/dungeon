@@ -68,7 +68,6 @@ class AttackAlgorithm {
         } else {
             printMiss(attacker);
         }
-        beastAttack(attacker, defender);
     }
 
     private static void beastAttack(Creature attacker, Creature defender) {
