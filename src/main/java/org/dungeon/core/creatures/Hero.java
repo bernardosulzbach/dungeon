@@ -20,6 +20,7 @@ import org.dungeon.core.achievements.AchievementTracker;
 import org.dungeon.core.counters.BattleStatistics;
 import org.dungeon.core.counters.ExplorationLog;
 import org.dungeon.core.game.*;
+import org.dungeon.core.game.Point;
 import org.dungeon.core.items.CreatureInventory;
 import org.dungeon.core.items.FoodComponent;
 import org.dungeon.core.items.Item;
@@ -135,6 +136,7 @@ public class Hero extends Creature {
         IO.writeString(location.getName());
         IO.writeNewLine();
         if (canSee()) {
+            lookAdjacentLocations();
             if (location.getCreatureCount() == 1) {
                 if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("You do not see anyone here.");
@@ -168,6 +170,25 @@ public class Hero extends Creature {
         } else {
             IO.writeString(Constants.CANT_SEE_ANYTHING);
         }
+    }
+
+    /**
+     * Look to the locations adjacent to the one the Hero is in.
+     */
+    private void lookAdjacentLocations() {
+        World world = Game.getGameState().getWorld();
+        Point pos = Game.getGameState().getHeroPosition();
+        // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
+        StringBuilder stringBuilder = new StringBuilder(140);
+        for (Direction dir : Direction.values()) {
+            stringBuilder.append("To ");
+            stringBuilder.append(dir);
+            stringBuilder.append(" you see ");
+            stringBuilder.append(world.getLocation(new Point(pos, dir)).getName());
+            stringBuilder.append(".\n");
+        }
+        stringBuilder.append('\n');
+        IO.writeString(stringBuilder.toString());
     }
 
     /**
