@@ -340,8 +340,9 @@ public class Utils {
 
     /**
      * Joins a sequence of strings with a specified delimiter string.
+     *
      * @param delimiter the delimiter string.
-     * @param elements the sequence of strings to be joined.
+     * @param elements  the sequence of strings to be joined.
      * @return a single String.
      */
     public static String join(String delimiter, String... elements) {

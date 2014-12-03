@@ -76,6 +76,7 @@ public class SelectionResult<T extends Selectable> {
     }
 
     // TODO: write tests for this class (mainly, for this method).
+
     /**
      * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects
      * with identical names, this method will return 1.
