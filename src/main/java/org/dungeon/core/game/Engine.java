@@ -91,10 +91,13 @@ public class Engine {
      */
     static int heroWalk(Direction dir) {
         GameState gameState = Game.getGameState();
+        World world = gameState.getWorld();
+        Point point = gameState.getHeroPosition();
         Hero hero = gameState.getHero();
         Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
-        if (!gameState.getWorld().hasLocation(destinationPoint)) {
-            gameState.getWorld().expand(destinationPoint);
+        if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
+            IO.writeString("You cannot go " + dir + ".");
+            return TimeConstants.WALK_BLOCKED;
         }
         Location destination = gameState.getWorld().moveHero(dir);
         hero.setLocation(destination);

@@ -29,6 +29,7 @@ public class Location implements Serializable {
     private World world;
 
     private final String name;
+    private final BlockedEntrances blockedEntrances;
     private final List<Creature> creatures;
     private final List<Spawner> spawners;
     private final LocationInventory items;
@@ -38,6 +39,7 @@ public class Location implements Serializable {
     public Location(LocationPreset preset, World world) {
         this.world = world;
         this.name = preset.getName();
+        this.blockedEntrances = new BlockedEntrances(preset.blockedEntrances);
         this.lightPermittivity = preset.getLightPermittivity();
         this.creatures = new ArrayList<Creature>();
         spawners = new ArrayList<Spawner>(preset.getSpawners().length);
@@ -131,6 +133,10 @@ public class Location implements Serializable {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public boolean isBlocked(Direction direction) {
+        return blockedEntrances.isBlocked(direction);
     }
 
 }

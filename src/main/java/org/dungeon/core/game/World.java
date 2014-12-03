@@ -52,10 +52,6 @@ public class World implements Serializable {
         return generator;
     }
 
-    public void expand(Point p) {
-        generator.expand(p);
-    }
-
     public DateTime getWorldCreationDate() {
         return worldCreationDate;
     }
@@ -90,6 +86,9 @@ public class World implements Serializable {
     }
 
     public Location getLocation(Point point) {
+        if (!hasLocation(point)) {
+            generator.expand(point);
+        }
         return locations.get(point);
     }
 

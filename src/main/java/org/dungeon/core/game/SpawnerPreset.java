@@ -24,8 +24,9 @@ public class SpawnerPreset {
 
     /**
      * Default SpawnerPreset constructor.
-     * @param id the creature ID string.
-     * @param population the maximum population.
+     *
+     * @param id           the creature ID string.
+     * @param population   the maximum population.
      * @param delayInHours the spawn delay, in hours.
      */
     public SpawnerPreset(String id, int population, int delayInHours) {

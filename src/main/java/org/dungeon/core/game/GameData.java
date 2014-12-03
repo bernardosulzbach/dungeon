@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 Bernardo Sulzbach
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.dungeon.core.game;
 
 import org.dungeon.core.achievements.Achievement;
@@ -336,6 +352,22 @@ public final class GameData {
         } catch (IOException ignore) {
         }
         LICENSE = sb.toString();
+    }
+
+    public static LocationPreset getRandomRiver() {
+        SpawnerPreset[] items = {};
+        ItemFrequencyPair[] creatures = {};
+        LocationPreset river = new LocationPreset("River", items, creatures, 1.0);
+        river.block(Direction.EAST).block(Direction.WEST);
+        return river;
+    }
+
+    public static LocationPreset getRandomBridge() {
+        SpawnerPreset[] items = {};
+        ItemFrequencyPair[] creatures = {};
+        LocationPreset bridge = new LocationPreset("Bridge", items, creatures, 1.0);
+        bridge.block(Direction.NORTH).block(Direction.SOUTH);
+        return bridge;
     }
 
 }

@@ -54,7 +54,6 @@ public class GameState implements Serializable {
         campaignWorld = new World();
 
         // TODO: analyze if this should be moved / refactored or done in a different way.
-        campaignWorld.expand(heroPosition);
         campaignWorld.getLocation(heroPosition).addCreature(hero);
         hero.getExplorationLog().addVisit(heroPosition);
 
@@ -186,6 +185,7 @@ public class GameState implements Serializable {
 
     /**
      * Retrieves the Location object that contains the hero.
+     *
      * @return a Location object.
      */
     public Location getHeroLocation() {

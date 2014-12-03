@@ -22,15 +22,22 @@ import java.io.Serializable;
 class LocationPreset implements Serializable {
 
     private final String name;
+    public final BlockedEntrances blockedEntrances;
     private final SpawnerPreset[] spawners;
     private final ItemFrequencyPair[] items;
     private final double lightPermittivity;
 
     public LocationPreset(String name, SpawnerPreset[] spawners, ItemFrequencyPair[] items, double lightPermittivity) {
         this.name = name;
+        this.blockedEntrances = new BlockedEntrances();
         this.items = items;
         this.spawners = spawners;
         this.lightPermittivity = lightPermittivity;
+    }
+
+    public LocationPreset block(Direction direction) {
+        blockedEntrances.block(direction);
+        return this;
     }
 
     public String getName() {
