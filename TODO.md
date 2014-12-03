@@ -4,7 +4,7 @@ TODO
 Bugs
 ----
 
-New feaures
+New features
 -----------
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
