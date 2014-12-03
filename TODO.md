@@ -3,7 +3,6 @@ TODO
 
 Bugs
 ----
-- Distant spawners are not properly refreshed when the player arrives.
 
 New feaures
 -----------

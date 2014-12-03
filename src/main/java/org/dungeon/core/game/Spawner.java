@@ -37,7 +37,7 @@ public class Spawner implements Serializable {
         populationLimit = preset.population;
         spawnDelay = preset.spawnDelay;
         this.location = location;
-        lastChange = getWorldTime();
+        lastChange = getWorldCreationTime();
     }
 
     /**
@@ -66,10 +66,17 @@ public class Spawner implements Serializable {
     }
 
     /**
-     * @return the time, in milliseconds of the World of the Location that this Spawner is in.
+     * @return the time, in milliseconds, of the World of the Location that this Spawner is in.
      */
     private long getWorldTime() {
         return location.getWorld().getWorldDate().getMillis();
+    }
+
+    /**
+     * @return the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
+     */
+    private long getWorldCreationTime() {
+        return location.getWorld().getWorldCreationDate().getMillis();
     }
 
 }
