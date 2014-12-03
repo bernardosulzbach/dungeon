@@ -57,8 +57,8 @@ public final class IO {
     /**
      * Writes a string of text using a specific color.
      *
-     * @param string the string of text to be written.
-     * @param color  the color of the text. If <code>null</code>, the default color will be used.
+     * @param string  the string of text to be written.
+     * @param color   the color of the text. If <code>null</code>, the default color will be used.
      * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
      */
     public static void writeString(String string, Color color, boolean newLine) {
@@ -72,10 +72,10 @@ public final class IO {
     /**
      * Writes a string of text using a specific color and waiting for a given amount of milliseconds.
      *
-     * @param string the string of text to be written.
-     * @param color  the color of the text.
+     * @param string  the string of text to be written.
+     * @param color   the color of the text.
      * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
-     * @param wait how many milliseconds the application should sleep after writing the string.
+     * @param wait    how many milliseconds the application should sleep after writing the string.
      */
     private static void writeString(String string, Color color, boolean newLine, long wait) {
         if (color == null) {
