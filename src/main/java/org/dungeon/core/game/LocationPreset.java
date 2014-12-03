@@ -16,27 +16,57 @@
  */
 package org.dungeon.core.game;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.Serializable;
+/**
+ * The LocationPreset class that serves as a recipe for Locations.
+ */
+final class LocationPreset extends Preset {
 
-class LocationPreset implements Serializable {
+    private String name;
+    private BlockedEntrances blockedEntrances;
+    private ArrayList<SpawnerPreset> spawners;
+    private ArrayList<ItemFrequencyPair> items;
+    private double lightPermittivity;
 
-    private final String name;
-    public final BlockedEntrances blockedEntrances;
-    private final SpawnerPreset[] spawners;
-    private final ItemFrequencyPair[] items;
-    private final double lightPermittivity;
-
-    public LocationPreset(String name, SpawnerPreset[] spawners, ItemFrequencyPair[] items, double lightPermittivity) {
+    LocationPreset(String name) {
         this.name = name;
-        this.blockedEntrances = new BlockedEntrances();
-        this.items = items;
-        this.spawners = spawners;
-        this.lightPermittivity = lightPermittivity;
+        blockedEntrances = new BlockedEntrances();
+        spawners = new ArrayList<SpawnerPreset>();
+        items = new ArrayList<ItemFrequencyPair>();
     }
 
+    public LocationPreset addSpawner(SpawnerPreset spawner) {
+        if (!isLocked()) {
+            this.spawners.add(spawner);
+        }
+        return this;
+    }
+
+    public LocationPreset addItem(String id, Double likelihood) {
+        if (!isLocked()) {
+            this.items.add(new ItemFrequencyPair(id, likelihood));
+        }
+        return this;
+    }
+
+    public LocationPreset setLightPermittivity(double lightPermittivity) {
+        if (!isLocked()) {
+            this.lightPermittivity = lightPermittivity;
+        }
+        return this;
+    }
+
+    /**
+     * Block exiting and entering into the location by a given direction.
+     *
+     * @param direction a Direction to be blocked.
+     */
     public LocationPreset block(Direction direction) {
-        blockedEntrances.block(direction);
+        if (!isLocked()) {
+            blockedEntrances.block(direction);
+        }
         return this;
     }
 
@@ -44,16 +74,29 @@ class LocationPreset implements Serializable {
         return name;
     }
 
+    public BlockedEntrances getBlockedEntrances() {
+        return new BlockedEntrances(blockedEntrances);
+    }
+
+    public List<SpawnerPreset> getSpawners() {
+        return spawners;
+    }
+
+    public List<ItemFrequencyPair> getItems() {
+        return items;
+    }
+
     public double getLightPermittivity() {
         return lightPermittivity;
     }
 
-    public SpawnerPreset[] getSpawners() {
-        return spawners;
-    }
-
-    public ItemFrequencyPair[] getItems() {
-        return items;
+    @Override
+    void finish() {
+        if (!isLocked()) {
+            spawners.trimToSize();
+            items.trimToSize();
+            lock();
+        }
     }
 
 }

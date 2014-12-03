@@ -185,41 +185,68 @@ public final class GameData {
         SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 12);
         SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 4);
 
-        SpawnerPreset[] clearingPresets = {frog, rabbit, spider, fox};
-        ItemFrequencyPair[] clearingItems = {new ItemFrequencyPair("CHERRY", 0.6), new ItemFrequencyPair("STICK", 0.9)};
-        locationPresets.add(new LocationPreset("Clearing", clearingPresets, clearingItems, 0.9));
+        LocationPreset clearing = new LocationPreset("Clearing");
+        clearing.addSpawner(frog).addSpawner(rabbit).addSpawner(spider).addSpawner(fox);
+        clearing.addItem("CHERRY", 0.6).addItem("STICK", 0.9);
+        clearing.setLightPermittivity(1.0);
+        clearing.finish();
+        locationPresets.add(clearing);
 
-        SpawnerPreset[] desertPresets = {rat, snake, zombie, boar};
-        ItemFrequencyPair[] desertItems = {new ItemFrequencyPair("CHERRY", 0.6)};
-        locationPresets.add(new LocationPreset("Desert", desertPresets, desertItems, 1.0));
+        LocationPreset desert = new LocationPreset("Desert");
+        desert.addSpawner(rat).addSpawner(snake).addSpawner(zombie).addSpawner(boar);
+        desert.addItem("MACE", 0.1).addItem("STAFF", 0.2).addItem("DAGGER", 0.15).addItem("SPEAR", 0.1);
+        desert.setLightPermittivity(1.0);
+        desert.finish();
+        locationPresets.add(desert);
 
-        SpawnerPreset[] forestPresets = {bear, frog, rabbit, whiteTiger, zombie};
-        ItemFrequencyPair[] forestItems = {new ItemFrequencyPair("AXE", 0.1), new ItemFrequencyPair("CLOCK", 0.05)};
-        locationPresets.add(new LocationPreset("Forest", forestPresets, forestItems, 0.7));
+        LocationPreset forest = new LocationPreset("Forest");
+        forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(zombie);
+        forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5);
+        forest.setLightPermittivity(0.7);
+        forest.finish();
+        locationPresets.add(forest);
 
-        SpawnerPreset[] graveyardPresets = {bat, skeleton, zombie, orc};
-        ItemFrequencyPair[] graveyardItems = {new ItemFrequencyPair("LONGSWORD", 0.15)};
-        locationPresets.add(new LocationPreset("Graveyard", graveyardPresets, graveyardItems, 0.9));
+        LocationPreset graveyard = new LocationPreset("Graveyard");
+        graveyard.addSpawner(bat).addSpawner(skeleton).addSpawner(zombie).addSpawner(orc);
+        graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025);
+        graveyard.setLightPermittivity(0.9);
+        graveyard.finish();
+        locationPresets.add(graveyard);
 
-        SpawnerPreset[] meadowPresets = {whiteTiger, wolf};
-        ItemFrequencyPair[] meadowItems = {new ItemFrequencyPair("STONE", 0.8)};
-        locationPresets.add(new LocationPreset("Meadow", meadowPresets, meadowItems, 1.0));
+        LocationPreset meadow = new LocationPreset("Meadow");
+        meadow.addSpawner(whiteTiger).addSpawner(wolf);
+        meadow.addItem("STONE", 0.8).addItem("WATERMELON", 0.4).addItem("APPLE", 0.7);
+        meadow.setLightPermittivity(1.0);
+        meadow.finish();
+        locationPresets.add(meadow);
 
-        SpawnerPreset[] pondPresets = {frog, komodoDragon, crocodile};
-        ItemFrequencyPair[] pondItems = {new ItemFrequencyPair("WATERMELON", 0.8)};
-        locationPresets.add(new LocationPreset("Pond", pondPresets, pondItems, 1.0));
+        LocationPreset pond = new LocationPreset("Pond");
+        pond.addSpawner(frog).addSpawner(komodoDragon).addSpawner(crocodile);
+        pond.addItem("WATERMELON", 0.8).addItem("SPEAR", 0.3);
+        pond.setLightPermittivity(0.96);
+        pond.finish();
+        locationPresets.add(pond);
 
-        SpawnerPreset[] swampPresets = {frog, snake, komodoDragon, crocodile};
-        ItemFrequencyPair[] swampItems = {new ItemFrequencyPair("STICK", 0.9)};
-        locationPresets.add(new LocationPreset("Swamp", swampPresets, swampItems, 0.7));
+        LocationPreset swamp = new LocationPreset("Swamp");
+        swamp.addSpawner(frog).addSpawner(snake).addSpawner(komodoDragon).addSpawner(crocodile);
+        swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.12);
+        swamp.setLightPermittivity(0.7);
+        swamp.finish();
+        locationPresets.add(swamp);
 
-        SpawnerPreset[] wastelandPresets = {rat, spider, snake};
-        ItemFrequencyPair[] wastelandItems = {new ItemFrequencyPair("STONE", 0.7)};
-        locationPresets.add(new LocationPreset("Wasteland", wastelandPresets, wastelandItems, 1.0));
+        LocationPreset wasteland = new LocationPreset("Wasteland");
+        wasteland.addSpawner(rat).addSpawner(spider).addSpawner(snake);
+        wasteland.addItem("STONE", 0.3).addItem("STICK", 0.18);
+        wasteland.setLightPermittivity(1.0);
+        wasteland.finish();
+        locationPresets.add(wasteland);
 
-        SpawnerPreset[] savannahPresets = {boar, snake, whiteTiger};
-        ItemFrequencyPair[] savannahItems = {new ItemFrequencyPair("APPLE", 0.8)};
-        locationPresets.add(new LocationPreset("Savannah", savannahPresets, savannahItems, 1.0));
+        LocationPreset savannah = new LocationPreset("Savannah");
+        savannah.addSpawner(boar).addSpawner(snake).addSpawner(whiteTiger);
+        savannah.addItem("APPLE", 0.8).addItem("AXE", 0.3);
+        savannah.setLightPermittivity(1.0);
+        savannah.finish();
+        locationPresets.add(savannah);
 
         LOCATION_PRESETS = new LocationPreset[locationPresets.size()];
         locationPresets.toArray(LOCATION_PRESETS);
@@ -227,7 +254,6 @@ public final class GameData {
     }
 
     private static void createAchievements() {
-        // TODO: Write a builder for teh achievements. They will not be loaded.
         ACHIEVEMENTS = new ArrayList<Achievement>();
 
         // Exploration achievements.
@@ -355,18 +381,16 @@ public final class GameData {
     }
 
     public static LocationPreset getRandomRiver() {
-        SpawnerPreset[] items = {};
-        ItemFrequencyPair[] creatures = {};
-        LocationPreset river = new LocationPreset("River", items, creatures, 1.0);
+        LocationPreset river = new LocationPreset("River");
         river.block(Direction.EAST).block(Direction.WEST);
+        river.setLightPermittivity(1.0);
         return river;
     }
 
     public static LocationPreset getRandomBridge() {
-        SpawnerPreset[] items = {};
-        ItemFrequencyPair[] creatures = {};
-        LocationPreset bridge = new LocationPreset("Bridge", items, creatures, 1.0);
+        LocationPreset bridge = new LocationPreset("Bridge");
         bridge.block(Direction.NORTH).block(Direction.SOUTH);
+        bridge.setLightPermittivity(1.0);
         return bridge;
     }
 

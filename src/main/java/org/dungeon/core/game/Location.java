@@ -39,12 +39,12 @@ public class Location implements Serializable {
     public Location(LocationPreset preset, World world) {
         this.world = world;
         this.name = preset.getName();
-        this.blockedEntrances = new BlockedEntrances(preset.blockedEntrances);
+        this.blockedEntrances = preset.getBlockedEntrances();
         this.lightPermittivity = preset.getLightPermittivity();
         this.creatures = new ArrayList<Creature>();
-        spawners = new ArrayList<Spawner>(preset.getSpawners().length);
-        for (SpawnerPreset spawnerPreset : preset.getSpawners()) {
-            spawners.add(new Spawner(spawnerPreset, this));
+        this.spawners = new ArrayList<Spawner>(preset.getSpawners().size());
+        for (SpawnerPreset spawner : preset.getSpawners()) {
+            spawners.add(new Spawner(spawner, this));
         }
         this.items = new LocationInventory();
         for (ItemFrequencyPair pair : preset.getItems()) {
