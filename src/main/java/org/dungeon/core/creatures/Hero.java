@@ -187,8 +187,8 @@ public class Hero extends Creature {
             stringBuilder.append(world.getLocation(new Point(pos, dir)).getName());
             stringBuilder.append(".\n");
         }
-        stringBuilder.append('\n');
         IO.writeString(stringBuilder.toString());
+        IO.writeNewLine();
     }
 
     /**
