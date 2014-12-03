@@ -23,6 +23,7 @@ Known Bugs
 
 Planned features
 ----------------
+- Properties file with ``git describe`` output to be used in the game.
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
 - Harvesting.
