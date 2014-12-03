@@ -17,11 +17,10 @@
 package org.dungeon.core.items;
 
 import org.dungeon.core.creatures.Creature;
+import org.dungeon.core.creatures.Entity;
 import org.dungeon.core.game.Engine;
 import org.dungeon.core.game.Game;
 import org.dungeon.utils.Constants;
-
-import org.dungeon.core.creatures.Entity;
 
 public class Item extends Entity {
 
