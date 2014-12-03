@@ -14,6 +14,22 @@ Reporting bugs
 --------------
 Bug reports are welcome in our [issue tracker](https://github.com/mafagafogigante/dungeon/issues).
 
+
+TODO
+====
+
+Known Bugs
+----------
+
+Planned features
+----------------
+- Alignment system. (Killing good creatures make you evil.)
+- Trees.
+- Harvesting.
+- Farming. (Gathering seeds, planting and harvesting.)
+- Factions.
+- Reputations.
+
 License
 -------
 [GNU GPLv3](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt)
