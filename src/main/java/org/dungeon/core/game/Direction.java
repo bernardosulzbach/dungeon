@@ -50,6 +50,13 @@ public enum Direction {
         return x;
     }
 
+    /**
+     * @return the opposite direction.
+     */
+    public Direction invert() {
+        return values()[(ordinal() + values().length / 2) % values().length];
+    }
+
     public boolean equalsIgnoreCase(String str) {
         return name.equalsIgnoreCase(str) || abbreviation.equalsIgnoreCase(str);
     }
