@@ -57,7 +57,7 @@ public abstract class BaseInventory implements Serializable {
         return items.contains(itemObject);
     }
 
-    public abstract void addItem(Item item);
+    public abstract boolean addItem(Item item);
 
     public abstract void removeItem(Item item);
 

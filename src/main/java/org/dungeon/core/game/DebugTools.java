@@ -18,6 +18,7 @@ package org.dungeon.core.game;
 
 import org.dungeon.core.creatures.Creature;
 import org.dungeon.core.items.Item;
+import org.dungeon.core.items.ItemBlueprint;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.utils.Constants;
@@ -34,7 +35,17 @@ import java.awt.*;
 class DebugTools {
 
     private static final String[] args = {"exploration", "tomorrow", "holidays", "saves", "location", "generator",
-            "saved", "list", "time"};
+            "saved", "list", "time", "give"};
+
+    private static void give(String itemId) {
+        ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(itemId.toUpperCase());
+        if (bp != null) {
+            if (Game.getGameState().getHero().getInventory().addItem(new Item(bp))) {
+                return;
+            }
+        }
+        IO.writeString("Item could not be added to your inventory.");
+    }
 
     private static void listAllArguments() {
         IO.writeString("Arguments are: ");
@@ -110,6 +121,12 @@ class DebugTools {
                 listAllArguments();
             } else if (command.firstArgumentEquals(args[8])) {
                 printTime();
+            } else if (command.firstArgumentEquals(args[9])) {
+                if (command.getTokenCount() >= 3) {
+                    give(command.getArguments()[1]);
+                } else {
+                    Utils.printMissingArgumentsMessage();
+                }
             } else {
                 switch (Engine.RANDOM.nextInt(4)) {
                     case 0:

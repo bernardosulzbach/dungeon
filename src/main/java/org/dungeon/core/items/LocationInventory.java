@@ -24,9 +24,10 @@ package org.dungeon.core.items;
 public class LocationInventory extends BaseInventory {
 
     @Override
-    public void addItem(Item item) {
+    public boolean addItem(Item item) {
         items.add(item);
         item.setOwner(null);
+        return true;
     }
 
     @Override

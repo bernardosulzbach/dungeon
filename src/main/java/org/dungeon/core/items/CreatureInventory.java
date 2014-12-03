@@ -71,7 +71,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     /**
      * Attempts to add an item object to the inventory.
      */
-    public void addItem(Item newItem) {
+    public boolean addItem(Item newItem) {
         // Check that the new item is not already in the inventory.
         if (hasItem(newItem)) {
             throw new IllegalArgumentException("newItem is already in the inventory.");
@@ -83,7 +83,9 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
             items.add(newItem);
             newItem.setOwner(owner);
             IO.writeString("Added " + newItem.getName() + " to the inventory.");
+            return true;
         }
+        return false;
     }
 
     public void removeItem(Item item) {
