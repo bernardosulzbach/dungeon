@@ -98,7 +98,7 @@ public class Item extends Entity {
         return maxIntegrity;
     }
 
-    int getCurIntegrity() {
+    public int getCurIntegrity() {
         return curIntegrity;
     }
 
