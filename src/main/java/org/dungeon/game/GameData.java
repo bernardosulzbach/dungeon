@@ -329,33 +329,25 @@ public final class GameData {
         String IDENTIFIER_AUTHOR = "AUTHOR:";
         String IDENTIFIER_CONTENT = "CONTENT:";
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("poems.txt")));
-
         String line;
-
-        StringBuilder contentBuilder = new StringBuilder();
         PoemBuilder pb = new PoemBuilder();
+        DBufferedReader reader = new DBufferedReader(new InputStreamReader(loader.getResourceAsStream("poems.txt")));
 
         try {
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readString()) != null) {
                 if (line.startsWith(IDENTIFIER_TITLE)) {
                     if (pb.isComplete()) {
                         POEMS.add(pb.createPoem());
                         pb = new PoemBuilder();
-                        contentBuilder.setLength(0);
                     }
                     pb.setTitle(Utils.getAfterColon(line).trim());
                 } else if (line.startsWith(IDENTIFIER_AUTHOR)) {
                     pb.setAuthor(Utils.getAfterColon(line).trim());
                 } else if (line.startsWith(IDENTIFIER_CONTENT)) {
-                    contentBuilder.append(Utils.getAfterColon(line).trim());
-                    while ((line = br.readLine()) != null && !line.isEmpty() && !line.startsWith(IDENTIFIER_TITLE)) {
-                        contentBuilder.append('\n').append(line.trim());
-                    }
-                    pb.setContent(contentBuilder.toString());
+                    pb.setContent(Utils.getAfterColon(line).trim());
                 }
             }
-            br.close();
+            reader.close();
         } catch (IOException exception) {
             DLogger.warning(exception.toString());
         }

@@ -1,81 +1,85 @@
 TITLE:   A Coat
 AUTHOR:  William Butler Yeats
-CONTENT: I made my song a coat
-         Covered with embroideries
-         Out of old mythologies
-         From heel to throat;
-         But the fools caught it,
-         Wore it in the world’s eyes
-         As though they’d wrought it.
-         Song, let them take it
-         For there’s more enterprise
-         In walking naked.
+CONTENT: \
+I made my song a coat       \
+Covered with embroideries   \
+Out of old mythologies      \
+From heel to throat;        \
+But the fools caught it,    \
+Wore it in the world’s eyes \
+As though they’d wrought it.\
+Song, let them take it      \
+For there’s more enterprise \
+In walking naked.
 
 TITLE:   The road not taken
 AUTHOR:  Robert Frost
-CONTENT: Two roads diverged in a yellow wood,
-         And sorry I could not travel both
-         And be one traveler, long I stood
-         And looked down one as far as I could
-         To where it bent in the undergrowth;
-         Then took the other, as just as fair,
-         And having perhaps the better claim,
-         Because it was grassy and wanted wear
-         Though as for that the passing there
-         Had worn them really about the same,
-         And both that morning equally lay
-         In leaves no step had trodden black.
-         Oh, I kept the first for another day!
-         Yet knowing how way leads onto way,
-         I doubted if I should ever come back.
-         I shall be telling this with a sigh
-         Somewhere ages and ages hence;
-         Two roads diverged in a wood, and I
-         I took the one less traveled by,
-         And that has made all the difference.
+CONTENT: \
+Two roads diverged in a yellow wood, \
+And sorry I could not travel both    \
+And be one traveler, long I stood    \
+And looked down one as far as I could\
+To where it bent in the undergrowth; \
+Then took the other, as just as fair,\
+And having perhaps the better claim, \
+Because it was grassy and wanted wear\
+Though as for that the passing there \
+Had worn them really about the same, \
+And both that morning equally lay    \
+In leaves no step had trodden black. \
+Oh, I kept the first for another day!\
+Yet knowing how way leads onto way,  \
+I doubted if I should ever come back.\
+I shall be telling this with a sigh  \
+Somewhere ages and ages hence;       \
+Two roads diverged in a wood, and I  \
+I took the one less traveled by,     \
+And that has made all the difference.
 
 TITLE:   To the Virgins, to Make Much of Time
 AUTHOR:  Robert Herrick
-CONTENT: Gather ye rosebuds while ye may,
-         Old time is still a-flying;
-         And this same flower that smiles today
-         Tomorrow will be dying.
-         The glorious lamp of heaven the sun,
-         The higher he's a-getting,
-         The sooner will his race be run,
-         And nearer he's to setting.
-         That age is best which is the first,
-         When youth and blood are warmer;
-         But being spent, the worse, and worst
-         Times still succeed the former.
-         Then be not coy, but use your time,
-         And, while ye may, go marry;
-         For, having lost but once your prime,
-         You may forever tarry.
+CONTENT: \
+Gather ye rosebuds while ye may,      \
+Old time is still a-flying;           \
+And this same flower that smiles today\
+Tomorrow will be dying.               \
+The glorious lamp of heaven the sun,  \
+The higher he's a-getting,            \
+The sooner will his race be run,      \
+And nearer he's to setting.           \
+That age is best which is the first,  \
+When youth and blood are warmer;      \
+But being spent, the worse, and worst \
+Times still succeed the former.       \
+Then be not coy, but use your time,   \
+And, while ye may, go marry;          \
+For, having lost but once your prime, \
+You may forever tarry.                \
 
 TITLE:   A Dream Within A Dream
 AUTHOR:  Edgar Allan Poe
-CONTENT: Take this kiss upon the brow!
-         And, in parting from you now,
-         Thus much let me avow--
-         You are not wrong, who deem
-         That my days have been a dream;
-         Yet if hope has flown away
-         In a night, or in a day,
-         In a vision, or in none,
-         Is it therefore the less gone?
-         All that we see or seem
-         Is but a dream within a dream.
-         I stand amid the roar
-         Of a surf-tormented shore,
-         And I hold within my hand
-         Grains of the golden sand--
-         How few! yet how they creep
-         Through my fingers to the deep,
-         While I weep--while I weep!
-         O God! can I not grasp
-         Them with a tighter clasp?
-         O God! can I not save
-         One from the pitiless wave?
-         Is all that we see or seem
-         But a dream within a dream?
+CONTENT: \
+Take this kiss upon the brow!  \
+And, in parting from you now,  \
+Thus much let me avow--        \
+You are not wrong, who deem    \
+That my days have been a dream;\
+Yet if hope has flown away     \
+In a night, or in a day,       \
+In a vision, or in none,       \
+Is it therefore the less gone? \
+All that we see or seem        \
+Is but a dream within a dream. \
+I stand amid the roar          \
+Of a surf-tormented shore,     \
+And I hold within my hand      \
+Grains of the golden sand--    \
+How few! yet how they creep    \
+Through my fingers to the deep,\
+While I weep--while I weep!    \
+O God! can I not grasp         \
+Them with a tighter clasp?     \
+O God! can I not save          \
+One from the pitiless wave?    \
+Is all that we see or seem     \
+But a dream within a dream?    \
