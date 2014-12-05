@@ -36,7 +36,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.dungeon.core.game.Game</mainClass>
+                            <mainClass>org.dungeon.game.Game</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -16,7 +16,7 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.core.game.Game;
+import org.dungeon.game.Game;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Poem;
 import org.dungeon.utils.Utils;

@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.core.game.Selectable;
+import org.dungeon.game.Selectable;
 
 import java.util.ArrayList;
 import java.util.HashSet;

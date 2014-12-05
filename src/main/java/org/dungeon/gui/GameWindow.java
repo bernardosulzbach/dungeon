@@ -16,9 +16,9 @@
  */
 package org.dungeon.gui;
 
-import org.dungeon.core.game.Command;
-import org.dungeon.core.game.Game;
-import org.dungeon.core.game.GameData;
+import org.dungeon.game.Command;
+import org.dungeon.game.Game;
+import org.dungeon.game.GameData;
 import org.dungeon.io.Loader;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;

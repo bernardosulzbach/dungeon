@@ -16,10 +16,10 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.core.game.Command;
-import org.dungeon.core.game.Engine;
-import org.dungeon.core.game.Game;
-import org.dungeon.core.game.GameState;
+import org.dungeon.game.Command;
+import org.dungeon.game.Engine;
+import org.dungeon.game.Game;
+import org.dungeon.game.GameState;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 

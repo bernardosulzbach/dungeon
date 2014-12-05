@@ -16,7 +16,7 @@
  */
 package org.dungeon.help;
 
-import org.dungeon.core.game.Command;
+import org.dungeon.game.Command;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 

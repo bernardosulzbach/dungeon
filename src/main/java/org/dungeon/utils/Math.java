@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.core.game.Command;
+import org.dungeon.game.Command;
 import org.dungeon.io.IO;
 
 import java.awt.*;

@@ -16,9 +16,9 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.core.game.Engine;
-import org.dungeon.core.game.GameData;
-import org.dungeon.core.game.Selectable;
+import org.dungeon.game.Engine;
+import org.dungeon.game.GameData;
+import org.dungeon.game.Selectable;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 import org.joda.time.DateTime;
