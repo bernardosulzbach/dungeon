@@ -209,11 +209,10 @@ public final class Help {
         if (!initialized) {
             IO.writeString(HelpConstants.NOT_INITIALIZED);
         } else if (command.hasArguments()) {
-            if (!printCommandHelp(command.getFirstToken())) {
-                if (!printAspectHelp(command.getFirstToken())) {
-                    // There was no match.
-                    IO.writeString(String.format("No help text for '%s' could be found.", command.getFirstToken()));
-                }
+            String argument = command.getFirstArgument();
+            if (!printCommandHelp(argument) && !printAspectHelp(argument)) {
+                // There was no match.
+                IO.writeString(String.format("No help text for '%s' could be found.", command.getFirstToken()));
             }
         } else {
             Utils.printMissingArgumentsMessage();
