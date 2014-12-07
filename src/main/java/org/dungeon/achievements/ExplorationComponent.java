@@ -16,32 +16,26 @@
  */
 package org.dungeon.achievements;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import org.dungeon.counters.ExplorationLog;
+import org.dungeon.creatures.Hero;
 
 /**
- * AchievementTracker that tracks the unlocked achievements.
- * <p/>
- * Created by Bernardo Sulzbach on 16/11/14.
+ * The exploration component of the achievements.
+ *
+ * Created by Bernardo on 07/12/2014.
  */
-public class AchievementTracker implements Serializable {
+final class ExplorationComponent extends AchievementComponent {
 
-    private final ArrayList<String> unlockedAchievements;
+    int killCount;
+    int visitCount;
 
-    public AchievementTracker() {
-        this.unlockedAchievements = new ArrayList<String>();
+    public ExplorationComponent() {
     }
 
-    public int getUnlockedCount() {
-        return unlockedAchievements.size();
-    }
-
-    public void setUnlocked(Achievement achievement) {
-        unlockedAchievements.add(achievement.getId());
-    }
-
-    public boolean isUnlocked(Achievement achievement) {
-        return unlockedAchievements.contains(achievement.getId());
+    @Override
+    public boolean isFulfilled(Hero hero) {
+        ExplorationLog explorationLog = hero.getExplorationLog();
+        return killCount <= explorationLog.getMaximumKills() && visitCount <= explorationLog.getMaximumVisits();
     }
 
 }

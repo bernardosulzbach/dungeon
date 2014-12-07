@@ -16,32 +16,15 @@
  */
 package org.dungeon.achievements;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import org.dungeon.creatures.Hero;
 
 /**
- * AchievementTracker that tracks the unlocked achievements.
- * <p/>
- * Created by Bernardo Sulzbach on 16/11/14.
+ * The component abstract class.
+ *
+ * Created by Bernardo on 07/12/2014.
  */
-public class AchievementTracker implements Serializable {
+abstract class AchievementComponent {
 
-    private final ArrayList<String> unlockedAchievements;
-
-    public AchievementTracker() {
-        this.unlockedAchievements = new ArrayList<String>();
-    }
-
-    public int getUnlockedCount() {
-        return unlockedAchievements.size();
-    }
-
-    public void setUnlocked(Achievement achievement) {
-        unlockedAchievements.add(achievement.getId());
-    }
-
-    public boolean isUnlocked(Achievement achievement) {
-        return unlockedAchievements.contains(achievement.getId());
-    }
+    abstract boolean isFulfilled(Hero hero);
 
 }

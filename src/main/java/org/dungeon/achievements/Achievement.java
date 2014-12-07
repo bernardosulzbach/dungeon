@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,21 +21,26 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-import java.io.Serializable;
-
 /**
- * Achievement class that defines achievements.
+ * Achievement class.
+ *
+ * Created by Bernardo on 07/12/2014.
  */
-public abstract class Achievement implements Serializable {
+public class Achievement {
 
     final String id;
     private final String name;
     private final String info;
 
-    Achievement(String id, String name, String info) {
+    private BattleComponent battle;
+    private ExplorationComponent exploration;
+
+    public Achievement(String id, String name, String info) {
         this.id = id;
         this.name = name;
         this.info = info;
+        battle = new BattleComponent();
+        exploration = new ExplorationComponent();
     }
 
     public String getId() {
@@ -48,6 +53,50 @@ public abstract class Achievement implements Serializable {
 
     public String getInfo() {
         return info;
+    }
+
+    public void setBattleCount(int battleCount) {
+        battle.battleCount = battleCount;
+    }
+
+    public void setLongestBattleLength(int longestBattleLength) {
+        battle.longestBattleLength = longestBattleLength;
+    }
+
+    public void setKillsByWeapon(String id, int count) {
+        if (battle.killsByWeapon.getCounter(id) == 0) {
+            battle.killsByWeapon.incrementCounter(id, count);
+        } else {
+            throw new IllegalArgumentException("id already registered.");
+        }
+    }
+
+    public void setKillsByCreatureId(String id, int count) {
+        if (battle.killsByCreatureId.getCounter(id) == 0) {
+            battle.killsByCreatureId.incrementCounter(id, count);
+        } else {
+            throw new IllegalArgumentException("id already registered.");
+        }
+    }
+
+    public void setKillsByCreatureType(String id, int count) {
+        if (battle.killsByCreatureType.getCounter(id) == 0) {
+            battle.killsByCreatureType.incrementCounter(id, count);
+        } else {
+            throw new IllegalArgumentException("id already registered.");
+        }
+    }
+
+    public void setKillCount(int count) {
+        exploration.killCount = count;
+    }
+
+    public void setVisitCount(int count) {
+        exploration.visitCount = count;
+    }
+
+    public boolean isFulfilled(Hero hero) {
+        return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
     }
 
     /**
@@ -66,9 +115,6 @@ public abstract class Achievement implements Serializable {
         }
 
     }
-
-    // Checks if the given Hero fulfills the requirements of this achievement.
-    abstract boolean isFulfilled(Hero hero);
 
     /**
      * Outputs an achievement unlocked message with some information about the unlocked achievement.

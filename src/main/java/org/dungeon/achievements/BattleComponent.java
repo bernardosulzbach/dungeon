@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,32 +21,22 @@ import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.Hero;
 
 /**
- * Class BattleAchievement that defines a general-purpose battle-related achievements.
- * <p/>
- * Created by Bernardo Sulzbach on 20/09/2014.
+ * The battle component of the achievements.
+ *
+ * Created by Bernardo on 07/12/2014.
  */
-public class BattleAchievement extends Achievement {
+final class BattleComponent extends AchievementComponent {
 
-    private final int battleCount;
-    private final int longestBattleLength;
-    private final CounterMap<String> killsByCreatureId;
-    private final CounterMap<String> killsByCreatureType;
-    private final CounterMap<String> killsByWeapon;
+    int battleCount;
+    int longestBattleLength;
+    CounterMap<String> killsByWeapon;
+    CounterMap<String> killsByCreatureId;
+    CounterMap<String> killsByCreatureType;
 
-    public BattleAchievement(String id,
-                             String name,
-                             String info,
-                             int battleCount,
-                             int longestBattleLength,
-                             CounterMap<String> killsByCreatureId,
-                             CounterMap<String> killsByCreatureType,
-                             CounterMap<String> weaponIdKills) {
-        super(id, name, info);
-        this.battleCount = battleCount;
-        this.longestBattleLength = longestBattleLength;
-        this.killsByCreatureId = killsByCreatureId;
-        this.killsByCreatureType = killsByCreatureType;
-        this.killsByWeapon = weaponIdKills;
+    public BattleComponent() {
+        killsByWeapon = new CounterMap<String>();
+        killsByCreatureId = new CounterMap<String>();
+        killsByCreatureType = new CounterMap<String>();
     }
 
     @Override

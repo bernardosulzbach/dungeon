@@ -32,7 +32,7 @@ public class Constants {
     public static final int ROWS = 30;
     public static final String FILE_FOUND = "A saved campaign was found.";
     public static final String ACHIEVEMENT_UNLOCKED = "Achievement Unlocked!";
-    public static final String LEVEL_UP = "Level up!";
+
     public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
     public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
 

@@ -17,12 +17,9 @@
 package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
-import org.dungeon.achievements.BattleAchievement;
-import org.dungeon.achievements.ExplorationAchievement;
-import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.CreatureBlueprint;
-import org.dungeon.items.ItemBlueprint;
 import org.dungeon.io.DLogger;
+import org.dungeon.items.ItemBlueprint;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Poem;
 import org.dungeon.utils.PoemBuilder;
@@ -256,69 +253,76 @@ public final class GameData {
     private static void createAchievements() {
         ACHIEVEMENTS = new ArrayList<Achievement>();
 
-        // Exploration achievements.
-        ACHIEVEMENTS.add(new ExplorationAchievement("TRAVELER", "Traveler", "Visit 5 different locations of the same type.", 5, 0));
-        ACHIEVEMENTS.add(new ExplorationAchievement("WIPE", "Wipe", "Kill 3 creatures in the same location.", 0, 3));
+        Achievement traveler = new Achievement("TRAVELER", "Traveler", "Visit the same location five times.");
+        traveler.setVisitCount(5);
+        ACHIEVEMENTS.add(traveler);
 
-        // Battle achievements that do not require specific kills.
-        ACHIEVEMENTS.add(new BattleAchievement("FIRST_BLOOD", "First Blood", "Kill a creature.", 1, 0, null, null, null));
-        ACHIEVEMENTS.add(new BattleAchievement("KILLER", "Killer", "Kill 10 creatures.", 10, 0, null, null, null));
-        ACHIEVEMENTS.add(new BattleAchievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.", 0, 10, null, null, null));
+        Achievement wipe = new Achievement("WIPE", "Wipe", "Kill 3 creatures in the same location.");
+        wipe.setKillCount(3);
+        ACHIEVEMENTS.add(wipe);
 
-        // Battle achievements that rely on the kill count of a specific creature ID.
-        // Bane requires six battles against bats.
-        CounterMap<String> baneRequirements = new CounterMap<String>("BAT", 6);
-        ACHIEVEMENTS.add(new BattleAchievement("BANE", "Bane", "Kill 6 bats.",
-                0, 0, baneRequirements, null, null));
-        // Cat requires four battles against rats.
-        CounterMap<String> catRequirements = new CounterMap<String>("RAT", 4);
-        ACHIEVEMENTS.add(new BattleAchievement("CAT", "Cat", "Kill 4 rats.",
-                0, 0, catRequirements, null, null));
-        // Evil Bastard requires one battle against a rabbit.
-        CounterMap<String> evilBastardRequirements = new CounterMap<String>("RABBIT", 1);
-        ACHIEVEMENTS.add(new BattleAchievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.",
-                0, 0, evilBastardRequirements, null, null));
-        // Stay Dead requires two battles against a zombie.
-        CounterMap<String> stayDeadRequirements = new CounterMap<String>("ZOMBIE", 2);
-        ACHIEVEMENTS.add(new BattleAchievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.",
-                0, 0, stayDeadRequirements, null, null));
+        Achievement firstBlood = new Achievement("FIRST_BLOOD", "First Blood", "Kill a creature.");
+        firstBlood.setKillCount(1);
+        ACHIEVEMENTS.add(firstBlood);
 
-        CounterMap<String> dissectionRequirements = new CounterMap<String>("FROG", 5);
-        ACHIEVEMENTS.add(new BattleAchievement("DISSECTION", "Dissection", "Kill 5 frogs.",
-                0, 0, dissectionRequirements, null, null));
+        Achievement killer = new Achievement("KILLER", "Killer", "Kill 10 creatures in the same location.");
+        killer.setKillCount(10);
+        ACHIEVEMENTS.add(killer);
 
-        // Battle achievements that rely on the kill count of a specific type.
-        // Professional Coward requires killing 10 critters.
-        CounterMap<String> professionalCowardRequirements = new CounterMap<String>("Critter", 10);
-        ACHIEVEMENTS.add(new BattleAchievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.",
-                0, 0, null, professionalCowardRequirements, null));
+        Achievement dieHard = new Achievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.");
+        dieHard.setLongestBattleLength(10);
+        ACHIEVEMENTS.add(dieHard);
 
-        CounterMap<String> hunterRequirements = new CounterMap<String>("Beast", 10);
-        ACHIEVEMENTS.add(new BattleAchievement("HUNTER", "Hunter", "Kill 10 beasts.",
-                0, 0, null, hunterRequirements, null));
+        Achievement bane = new Achievement("BANE", "Bane", "Kill 6 bats.");
+        bane.setKillsByCreatureId("BAT", 6);
+        ACHIEVEMENTS.add(bane);
 
-        // Battle achievements that rely on the number of kills with a specific weapon.
-        // An empty string is used to to register unarmed kills.
-        CounterMap<String> fiveFingerDeathPunchRequirements = new CounterMap<String>(Constants.UNARMED_ID, 1);
-        ACHIEVEMENTS.add(new BattleAchievement("FIVE_FINGER_DEATH_PUNCH", "Five Finger Death Punch", "Kill a creature unarmed.",
-                0, 0, null, null, fiveFingerDeathPunchRequirements));
+        Achievement cat = new Achievement("CAT", "Cat", "Kill 4 rats.");
+        cat.setKillsByCreatureId("RAT", 4);
+        ACHIEVEMENTS.add(cat);
 
-        CounterMap<String> boxer = new CounterMap<String>(Constants.UNARMED_ID, 10);
-        ACHIEVEMENTS.add(new BattleAchievement("BOXER", "Boxer", "Kill 10 creatures unarmed.",
-                0, 0, null, null, boxer));
+        Achievement evilBastard = new Achievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.");
+        evilBastard.setKillsByCreatureId("RABBIT", 1);
+        ACHIEVEMENTS.add(evilBastard);
 
-        CounterMap<String> onTheStickRequirements = new CounterMap<String>("STICK", 2);
-        ACHIEVEMENTS.add(new BattleAchievement("ON_THE_STICK!", "On the Stick!", "Kill 2 creatures with the Stick.",
-                0, 0, null, null, onTheStickRequirements));
+        Achievement stayDead = new Achievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.");
+        stayDead.setKillsByCreatureId("ZOMBIE", 2);
+        ACHIEVEMENTS.add(stayDead);
 
-        CounterMap<String> sticksAndStonesRequirements = new CounterMap<String>("STICK", 5);
-        sticksAndStonesRequirements.incrementCounter("STONE", 5);
-        ACHIEVEMENTS.add(new BattleAchievement("STICKS_AND_STONES", "Sticks and Stones", "Kill 5 creatures with the Stone and 5 with the Stick.",
-                0, 0, null, null, sticksAndStonesRequirements));
+        Achievement dissection = new Achievement("DISSECTION", "Dissection", "Kill 5 frogs.");
+        dissection.setKillsByCreatureId("FROG", 5);
+        ACHIEVEMENTS.add(dissection);
 
-        CounterMap<String> lumberjackRequirements = new CounterMap<String>("AXE", 10);
-        ACHIEVEMENTS.add(new BattleAchievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.",
-                0, 0, null, null, lumberjackRequirements));
+        Achievement proCoward = new Achievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.");
+        proCoward.setKillsByCreatureType("Critter", 5);
+        ACHIEVEMENTS.add(proCoward);
+
+        Achievement hunter = new Achievement("HUNTER", "Hunter", "Kill 10 beasts.");
+        hunter.setKillsByCreatureType("Beast", 10);
+        ACHIEVEMENTS.add(hunter);
+
+        Achievement deathPunch = new Achievement("DEATH_PUNCH", "Death Punch", "Kill a creature unarmed.");
+        deathPunch.setKillsByWeapon(Constants.UNARMED_ID, 1);
+        ACHIEVEMENTS.add(deathPunch);
+
+        Achievement boxer = new Achievement("BOXER", "Boxer", "Kill 10 creatures unarmed.");
+        boxer.setKillsByWeapon(Constants.UNARMED_ID, 10);
+        ACHIEVEMENTS.add(boxer);
+
+        Achievement onTheStick = new Achievement("ON_THE_STICK!", "On the Stick!", "Kill 2 creatures with the Stick.");
+        onTheStick.setKillsByWeapon("STICK", 2);
+        ACHIEVEMENTS.add(onTheStick);
+
+        Achievement sticksAndStones = new Achievement("STICKS_AND_STONES", "Sticks and Stones",
+                "Kill 5 creatures with the Stone and 5 with the Stick.");
+        sticksAndStones.setKillsByWeapon("STICK", 5);
+        sticksAndStones.setKillsByWeapon("STONE", 5);
+        ACHIEVEMENTS.add(sticksAndStones);
+
+        Achievement lumberjack = new Achievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.");
+        lumberjack.setKillsByWeapon("AXE", 10);
+        ACHIEVEMENTS.add(lumberjack);
+
         DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
     }
 

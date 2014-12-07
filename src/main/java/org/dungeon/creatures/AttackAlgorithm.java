@@ -17,8 +17,8 @@
 package org.dungeon.creatures;
 
 import org.dungeon.game.Engine;
-import org.dungeon.items.Item;
 import org.dungeon.io.IO;
+import org.dungeon.items.Item;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
