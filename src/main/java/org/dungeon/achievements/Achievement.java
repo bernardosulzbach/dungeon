@@ -23,7 +23,7 @@ import org.dungeon.utils.Utils;
 
 /**
  * Achievement class.
- *
+ * <p/>
  * Created by Bernardo on 07/12/2014.
  */
 public class Achievement {
@@ -63,28 +63,34 @@ public class Achievement {
         battle.longestBattleLength = longestBattleLength;
     }
 
-    public void setKillsByWeapon(String id, int count) {
-        if (battle.killsByWeapon.getCounter(id) == 0) {
-            battle.killsByWeapon.incrementCounter(id, count);
-        } else {
-            throw new IllegalArgumentException("id already registered.");
-        }
+    /**
+     * Increment how many kills with a certain weapon are needed in order to unlock this achievement.
+     *
+     * @param id     the id of the weapon.
+     * @param amount the increment.
+     */
+    public void incrementKillsByWeapon(String id, int amount) {
+        battle.killsByWeapon.incrementCounter(id, amount);
     }
 
-    public void setKillsByCreatureId(String id, int count) {
-        if (battle.killsByCreatureId.getCounter(id) == 0) {
-            battle.killsByCreatureId.incrementCounter(id, count);
-        } else {
-            throw new IllegalArgumentException("id already registered.");
-        }
+    /**
+     * Increment how many kills of certain creature are needed in order to unlock this achievement.
+     *
+     * @param id     the creature's id.
+     * @param amount the increment.
+     */
+    public void incrementKillsByCreatureId(String id, int amount) {
+        battle.killsByCreatureId.incrementCounter(id, amount);
     }
 
-    public void setKillsByCreatureType(String id, int count) {
-        if (battle.killsByCreatureType.getCounter(id) == 0) {
-            battle.killsByCreatureType.incrementCounter(id, count);
-        } else {
-            throw new IllegalArgumentException("id already registered.");
-        }
+    /**
+     * Increment how many kills of certain type of creature are needed in order to unlock this achievement.
+     *
+     * @param id     the creature type.
+     * @param amount the increment.
+     */
+    public void incrementKillsByCreatureType(String id, int amount) {
+        battle.killsByCreatureType.incrementCounter(id, amount);
     }
 
     public void setKillCount(int count) {

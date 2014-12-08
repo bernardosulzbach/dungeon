@@ -274,53 +274,53 @@ public final class GameData {
         ACHIEVEMENTS.add(dieHard);
 
         Achievement bane = new Achievement("BANE", "Bane", "Kill 6 bats.");
-        bane.setKillsByCreatureId("BAT", 6);
+        bane.incrementKillsByCreatureId("BAT", 6);
         ACHIEVEMENTS.add(bane);
 
         Achievement cat = new Achievement("CAT", "Cat", "Kill 4 rats.");
-        cat.setKillsByCreatureId("RAT", 4);
+        cat.incrementKillsByCreatureId("RAT", 4);
         ACHIEVEMENTS.add(cat);
 
         Achievement evilBastard = new Achievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.");
-        evilBastard.setKillsByCreatureId("RABBIT", 1);
+        evilBastard.incrementKillsByCreatureId("RABBIT", 1);
         ACHIEVEMENTS.add(evilBastard);
 
         Achievement stayDead = new Achievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.");
-        stayDead.setKillsByCreatureId("ZOMBIE", 2);
+        stayDead.incrementKillsByCreatureId("ZOMBIE", 2);
         ACHIEVEMENTS.add(stayDead);
 
         Achievement dissection = new Achievement("DISSECTION", "Dissection", "Kill 5 frogs.");
-        dissection.setKillsByCreatureId("FROG", 5);
+        dissection.incrementKillsByCreatureId("FROG", 5);
         ACHIEVEMENTS.add(dissection);
 
         Achievement proCoward = new Achievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.");
-        proCoward.setKillsByCreatureType("Critter", 5);
+        proCoward.incrementKillsByCreatureType("Critter", 5);
         ACHIEVEMENTS.add(proCoward);
 
         Achievement hunter = new Achievement("HUNTER", "Hunter", "Kill 10 beasts.");
-        hunter.setKillsByCreatureType("Beast", 10);
+        hunter.incrementKillsByCreatureType("Beast", 10);
         ACHIEVEMENTS.add(hunter);
 
         Achievement deathPunch = new Achievement("DEATH_PUNCH", "Death Punch", "Kill a creature unarmed.");
-        deathPunch.setKillsByWeapon(Constants.UNARMED_ID, 1);
+        deathPunch.incrementKillsByWeapon(Constants.UNARMED_ID, 1);
         ACHIEVEMENTS.add(deathPunch);
 
         Achievement boxer = new Achievement("BOXER", "Boxer", "Kill 10 creatures unarmed.");
-        boxer.setKillsByWeapon(Constants.UNARMED_ID, 10);
+        boxer.incrementKillsByWeapon(Constants.UNARMED_ID, 10);
         ACHIEVEMENTS.add(boxer);
 
         Achievement onTheStick = new Achievement("ON_THE_STICK!", "On the Stick!", "Kill 2 creatures with the Stick.");
-        onTheStick.setKillsByWeapon("STICK", 2);
+        onTheStick.incrementKillsByWeapon("STICK", 2);
         ACHIEVEMENTS.add(onTheStick);
 
         Achievement sticksAndStones = new Achievement("STICKS_AND_STONES", "Sticks and Stones",
                 "Kill 5 creatures with the Stone and 5 with the Stick.");
-        sticksAndStones.setKillsByWeapon("STICK", 5);
-        sticksAndStones.setKillsByWeapon("STONE", 5);
+        sticksAndStones.incrementKillsByWeapon("STICK", 5);
+        sticksAndStones.incrementKillsByWeapon("STONE", 5);
         ACHIEVEMENTS.add(sticksAndStones);
 
         Achievement lumberjack = new Achievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.");
-        lumberjack.setKillsByWeapon("AXE", 10);
+        lumberjack.incrementKillsByWeapon("AXE", 10);
         ACHIEVEMENTS.add(lumberjack);
 
         DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
