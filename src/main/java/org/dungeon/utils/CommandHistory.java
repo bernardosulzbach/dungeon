@@ -32,13 +32,9 @@ public class CommandHistory implements Serializable {
     private final List<String> commands;
     private transient Cursor cursor;
 
-    private long characterCount;
-    private long tokenCount;
-
     public CommandHistory() {
         commands = new ArrayList<String>();
         cursor = new Cursor(this);
-        characterCount = 0;
     }
 
     /**
@@ -69,17 +65,7 @@ public class CommandHistory implements Serializable {
      * @param command a Command to be appended to the end of this CommandHistory.
      */
     public void addCommand(Command command) {
-        characterCount += command.getStringRepresentation().length();
-        tokenCount += command.getTokenCount();
         commands.add(command.getStringRepresentation());
-    }
-
-    public long getCharacterCount() {
-        return characterCount;
-    }
-
-    public long getTokenCount() {
-        return tokenCount;
     }
 
     /**

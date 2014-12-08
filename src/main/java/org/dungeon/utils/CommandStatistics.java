@@ -1,0 +1,70 @@
+/*
+ * Copyright (C) 2014 Bernardo Sulzbach
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.dungeon.utils;
+
+import org.dungeon.game.Command;
+
+import java.io.Serializable;
+
+/**
+ * CommandStatistics class that is a component of Statistics.
+ * <p/>
+ * Created by Bernardo on 07/12/2014.
+ */
+public class CommandStatistics implements Serializable {
+
+    private int commands;
+    private int chars;
+    private int words;
+
+    /**
+     * Add a command to the statistics.
+     *
+     * @param command the command to be added.
+     */
+    public void addCommand(Command command) {
+        commands++;
+        words += command.getTokenCount();
+        for (char c : command.getStringRepresentation().toCharArray()) {
+            if (!Character.isWhitespace(c)) {
+                chars++;
+            }
+        }
+    }
+
+    /**
+     * @return how many commands the user has issued so far.
+     */
+    public int getCommandCount() {
+        return commands;
+    }
+
+    /**
+     * @return how many printable characters the user has entered so far.
+     */
+    public int getChars() {
+        return chars;
+    }
+
+    /**
+     * @return how many words the user has entered so far.
+     */
+    public int getWords() {
+        return words;
+    }
+
+}

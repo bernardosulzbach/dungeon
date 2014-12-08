@@ -22,6 +22,7 @@ import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Hints;
+import org.dungeon.utils.Statistics;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -30,8 +31,9 @@ import java.io.Serializable;
 public class GameState implements Serializable {
 
     private final CommandHistory commandHistory;
+    private final World world;
 
-    private final World campaignWorld;
+    private final Statistics statistics;
 
     private final Hero hero;
     private Point heroPosition;
@@ -47,14 +49,15 @@ public class GameState implements Serializable {
 
     public GameState() {
         commandHistory = new CommandHistory();
+        world = new World();
+
+        statistics = new Statistics();
 
         hero = new Hero("Seth");
         heroPosition = new Point(0, 0);
 
-        campaignWorld = new World();
-
         // TODO: analyze if this should be moved / refactored or done in a different way.
-        campaignWorld.getLocation(heroPosition).addCreature(hero);
+        world.getLocation(heroPosition).addCreature(hero);
         hero.getExplorationLog().addVisit(heroPosition);
 
         saved = true;
@@ -65,7 +68,11 @@ public class GameState implements Serializable {
     }
 
     public World getWorld() {
-        return campaignWorld;
+        return world;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
     }
 
     public Hero getHero() {
@@ -173,13 +180,7 @@ public class GameState implements Serializable {
     }
 
     public void printGameStatistics() {
-        int commandCount = getCommandHistory().size();
-        long charCount = getCommandHistory().getCharacterCount();
-        long tokenCount = getCommandHistory().getTokenCount();
-        IO.writeKeyValueString("Commands issued", Integer.toString(commandCount));
-        IO.writeKeyValueString("Characters entered", Long.toString(charCount));
-        IO.writeKeyValueString("Tokens entered", Long.toString(tokenCount));
-        IO.writeKeyValueString("Average characters per command", String.format("%.2f", (double) charCount / commandCount));
+        statistics.print();
         // TODO: fix the spawn statistics and add them here.
     }
 
@@ -189,7 +190,7 @@ public class GameState implements Serializable {
      * @return a Location object.
      */
     public Location getHeroLocation() {
-        return campaignWorld.getLocation(heroPosition);
+        return world.getLocation(heroPosition);
     }
 
 }

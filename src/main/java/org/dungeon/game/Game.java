@@ -94,6 +94,7 @@ public class Game {
     // Processes the player input.
     private static void processInput(Command command) {
         gameState.getCommandHistory().addCommand(command);
+        gameState.getStatistics().addCommand(command);
         // Reset the turn variables.
         turnLength = 0;
         configurationsChanged = false;
