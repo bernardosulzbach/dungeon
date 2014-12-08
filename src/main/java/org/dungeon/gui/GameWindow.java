@@ -19,6 +19,7 @@ package org.dungeon.gui;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Constants;
@@ -30,6 +31,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 
 public class GameWindow extends JFrame {
 
@@ -51,6 +53,8 @@ public class GameWindow extends JFrame {
     }
 
     private void initComponents() {
+        setSystemLookAndFeel();
+
         textPane = new javax.swing.JTextPane();
         textField = new javax.swing.JTextField();
 
@@ -108,12 +112,30 @@ public class GameWindow extends JFrame {
         textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
         textField.getActionMap().put("SAVE", save);
 
-        ImageIcon imageIcon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icon.png"));
-        setIconImage(imageIcon.getImage());
+        URL icon = Thread.currentThread().getContextClassLoader().getResource("icon.png");
+        if (icon != null) {
+            setIconImage(new ImageIcon(icon).getImage());
+        } else {
+            DLogger.warning("Could not find the icon.");
+        }
 
         setResizable(false);
         resize();
     }
+
+    /**
+     * Try to set the system's default look and feel.
+     */
+    private void setSystemLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException ignored) {
+        } catch (ClassNotFoundException ignored) {
+        } catch (InstantiationException ignored) {
+        } catch (IllegalAccessException ignored) {
+        }
+    }
+
 
     /**
      * Resizes and centers the frame.
