@@ -51,9 +51,10 @@ public final class GameData {
 
     private static ClassLoader loader;
 
-    static void loadGameData(boolean noPoems) {
+    static void loadGameData() {
         long milliseconds = System.nanoTime();
         DLogger.info("Started loading the game data.");
+
         loader = Thread.currentThread().getContextClassLoader();
 
         monospaced = new Font("Monospaced", Font.PLAIN, 14);
@@ -63,11 +64,7 @@ public final class GameData {
         loadLocationPresets();
 
         createAchievements();
-
-        if (!noPoems) {
-            loadPoems();
-        }
-
+        loadPoems();
         loadLicense();
 
         milliseconds = (System.nanoTime() - milliseconds) / 1000000;

@@ -34,31 +34,10 @@ public class Game {
     private static GameState gameState;
 
     public static void main(String[] args) {
-
-        boolean noHelp = false, noLog = false, noPoems = false;
-
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("--no-help")) {
-                noHelp = true;
-            } else if (arg.equalsIgnoreCase("--no-poems")) {
-                noPoems = true;
-            } else if (arg.equalsIgnoreCase("--no-log")) {
-                noLog = true;
-            }
-        }
-
-        if (!noHelp) {
-            Help.initialize();
-        }
-
-        if (!noLog) {
-            DLogger.initialize();
-        }
-
-        GameData.loadGameData(noPoems);
-
+        Help.initialize();
+        DLogger.initialize();
+        GameData.loadGameData();
         gameWindow = new GameWindow();
-
         gameState = Loader.loadGame(null);
     }
 
