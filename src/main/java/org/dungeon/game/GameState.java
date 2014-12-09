@@ -18,11 +18,14 @@ package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
+import org.dungeon.achievements.UnlockedAchievement;
 import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Hints;
 import org.dungeon.utils.Statistics;
+import org.dungeon.utils.Utils;
+import org.joda.time.DateTime;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -149,11 +152,16 @@ public class GameState implements Serializable {
      * Prints all unlocked achievements.
      */
     public void printUnlockedAchievements() {
+        DateTime now = Game.getGameState().getWorld().getWorldDate();
+        String dateDifference;
+        UnlockedAchievement ua;
         AchievementTracker tracker = hero.getAchievementTracker();
         IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
         for (Achievement a : GameData.ACHIEVEMENTS) {
-            if (tracker.isUnlocked(a)) {
-                IO.writeString(a.getName(), Color.ORANGE);
+            ua = tracker.getUnlockedAchievement(a);
+            if (ua != null) {
+                dateDifference = Utils.dateDifferenceToString(ua.date, now);
+                IO.writeString(a.getName() + " (" + dateDifference + " ago)", Color.ORANGE);
                 IO.writeString(" " + a.getInfo(), Color.YELLOW);
             }
         }

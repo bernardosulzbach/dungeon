@@ -114,7 +114,7 @@ public class Achievement {
         if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
             // All the requirements OK, unlock the achievement.
             printAchievementUnlocked();
-            hero.getAchievementTracker().setUnlocked(this);
+            hero.getAchievementTracker().unlock(this);
             return true;
         } else {
             return false;

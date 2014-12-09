@@ -16,6 +16,8 @@
  */
 package org.dungeon.achievements;
 
+import org.dungeon.game.Game;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -26,22 +28,47 @@ import java.util.ArrayList;
  */
 public class AchievementTracker implements Serializable {
 
-    private final ArrayList<String> unlockedAchievements;
+    private final ArrayList<UnlockedAchievement> unlockedAchievements;
 
     public AchievementTracker() {
-        this.unlockedAchievements = new ArrayList<String>();
+        this.unlockedAchievements = new ArrayList<UnlockedAchievement>();
     }
 
     public int getUnlockedCount() {
         return unlockedAchievements.size();
     }
 
-    public void setUnlocked(Achievement achievement) {
-        unlockedAchievements.add(achievement.getId());
+    public void unlock(Achievement achievement) {
+        unlockedAchievements.add(new UnlockedAchievement(achievement.getId(),
+                Game.getGameState().getWorld().getWorldDate()));
     }
 
+    /**
+     * Return the UnlockedAchievement object that corresponds to a specific Achievement.
+     *
+     * @param achievement an Achievement object.
+     * @return the UnlockedAchievement that corresponds to this Achievement.
+     */
+    public UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
+        String id = achievement.getId();
+        for (UnlockedAchievement ua : unlockedAchievements) {
+            if (ua.id.equals(id)) {
+                return ua;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Convenience method that return if a given Achievement is unlocked in this AchievementTracker.
+     * <p/>
+     * Alternatively, the developer can compare the return of getUnlockedAchievement(Achievement) to null.
+     *
+     * @param achievement an Achievement object.
+     * @return true if this Achievement is unlocked, false otherwise.
+     */
     public boolean isUnlocked(Achievement achievement) {
-        return unlockedAchievements.contains(achievement.getId());
+        return getUnlockedAchievement(achievement) != null;
     }
 
 }
