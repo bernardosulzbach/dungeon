@@ -124,19 +124,26 @@ public class GameWindow extends JFrame {
     }
 
     /**
-     * Try to set the system's default look and feel.
+     * Try to set the system's look and feel.
+     *
+     * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
+     * background coloring of a JTextField.
      */
     private void setSystemLookAndFeel() {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+            if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } else {
+                UIManager.setLookAndFeel(lookAndFeel);
+            }
         } catch (UnsupportedLookAndFeelException ignored) {
         } catch (ClassNotFoundException ignored) {
         } catch (InstantiationException ignored) {
         } catch (IllegalAccessException ignored) {
         }
     }
-
-
+    
     /**
      * Resizes and centers the frame.
      */
