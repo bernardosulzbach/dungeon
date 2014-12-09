@@ -125,7 +125,7 @@ public class GameWindow extends JFrame {
 
     /**
      * Try to set the system's look and feel.
-     *
+     * <p/>
      * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
      * background coloring of a JTextField.
      */
@@ -143,7 +143,7 @@ public class GameWindow extends JFrame {
         } catch (IllegalAccessException ignored) {
         }
     }
-    
+
     /**
      * Resizes and centers the frame.
      */
@@ -208,6 +208,11 @@ public class GameWindow extends JFrame {
         textField.setEnabled(idle);
     }
 
+    /**
+     * Handles a key press in the text field.
+     *
+     * @param e the KeyEvent.
+     */
     private void textFieldKeyPressed(KeyEvent e) {
         CommandHistory commandHistory = Game.getGameState().getCommandHistory();
         if (idle && commandHistory != null) {
