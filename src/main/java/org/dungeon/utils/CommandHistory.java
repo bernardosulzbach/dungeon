@@ -19,8 +19,6 @@ package org.dungeon.utils;
 import org.dungeon.game.IssuedCommand;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * CommandHistory class that is used to keep track of all the commands issued by the player.
@@ -29,11 +27,15 @@ import java.util.List;
  */
 public class CommandHistory implements Serializable {
 
-    private final List<String> commands;
+    // Let the optimal size of a String s be 8 * (int) (s.length() * 2 + 45) / 8) bytes.
+    // Thus, 200 Strings of 8 characters would cost 1640 bytes (a bit more than 1.6 kB).
+    // Besides the obvious cost of memory, having too many Strings in the history would also slow down the TAB search.
+    private static final int HISTORY_MAXIMUM_SIZE = 200;
+    private final CircularList<String> commands;
     private transient Cursor cursor;
 
     public CommandHistory() {
-        commands = new ArrayList<String>();
+        commands = new CircularList<String>(HISTORY_MAXIMUM_SIZE);
         cursor = new Cursor(this);
     }
 
