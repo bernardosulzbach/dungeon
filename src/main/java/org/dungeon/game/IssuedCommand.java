@@ -21,18 +21,18 @@ import org.dungeon.utils.Utils;
 import java.util.Arrays;
 
 /**
- * Command class that wraps a command string.
+ * IssuedCommand class that wraps a String entered by the user and provides powerful query methods.
  * <p/>
- * All commands are made up of at least one token (word) and are not case-sensitive.
+ * An IssuedCommand is made up of at least one token (word) and is not case-sensitive.
  * <p/>
  * Created by Bernardo Sulzbach on 21/11/14.
  */
-public final class Command {
+public final class IssuedCommand {
 
     private String stringRepresentation;
     private String[] tokens;
 
-    public Command(String source) {
+    public IssuedCommand(String source) {
         this.tokens = Utils.split(source);
         this.stringRepresentation = Utils.join(" ", tokens);
         if (tokens.length == 0) {

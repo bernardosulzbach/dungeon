@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 
 import java.io.Serializable;
 
@@ -34,12 +34,12 @@ public class CommandStatistics implements Serializable {
     /**
      * Add a command to the statistics.
      *
-     * @param command the command to be added.
+     * @param issuedCommand the command to be added.
      */
-    public void addCommand(Command command) {
+    public void addCommand(IssuedCommand issuedCommand) {
         commands++;
-        words += command.getTokenCount();
-        for (char c : command.getStringRepresentation().toCharArray()) {
+        words += issuedCommand.getTokenCount();
+        for (char c : issuedCommand.getStringRepresentation().toCharArray()) {
             if (!Character.isWhitespace(c)) {
                 chars++;
             }

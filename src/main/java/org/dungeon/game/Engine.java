@@ -66,13 +66,13 @@ public class Engine {
     /**
      * Parses an array of words to move the hero to another location.
      *
-     * @param command the command entered by the player.
+     * @param issuedCommand the command entered by the player.
      * @return how many seconds the player walk took.
      */
-    public static int parseHeroWalk(Command command) {
-        if (command.hasArguments()) {
+    public static int parseHeroWalk(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
             for (Direction dir : Direction.values()) {
-                if (dir.equalsIgnoreCase(command.getFirstArgument())) {
+                if (dir.equalsIgnoreCase(issuedCommand.getFirstArgument())) {
                     return heroWalk(dir);
                 }
             }

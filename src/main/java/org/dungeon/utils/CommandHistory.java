@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * @param command a Command to be appended to the end of this CommandHistory.
+     * @param issuedCommand a Command to be appended to the end of this CommandHistory.
      */
-    public void addCommand(Command command) {
-        commands.add(command.getStringRepresentation());
+    public void addCommand(IssuedCommand issuedCommand) {
+        commands.add(issuedCommand.getStringRepresentation());
     }
 
     /**

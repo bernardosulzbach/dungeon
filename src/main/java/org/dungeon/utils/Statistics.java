@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
@@ -37,8 +37,8 @@ public class Statistics implements Serializable {
     /**
      * Add a command to the statistics.
      */
-    public void addCommand(Command command) {
-        commandStats.addCommand(command);
+    public void addCommand(IssuedCommand issuedCommand) {
+        commandStats.addCommand(issuedCommand);
     }
 
     /**

@@ -16,7 +16,7 @@
  */
 package org.dungeon.help;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
@@ -205,14 +205,14 @@ public final class Help {
 
     }
 
-    public static void printHelp(Command command) {
+    public static void printHelp(IssuedCommand issuedCommand) {
         if (!initialized) {
             IO.writeString(HelpConstants.NOT_INITIALIZED);
-        } else if (command.hasArguments()) {
-            String argument = command.getFirstArgument();
+        } else if (issuedCommand.hasArguments()) {
+            String argument = issuedCommand.getFirstArgument();
             if (!printCommandHelp(argument) && !printAspectHelp(argument)) {
                 // There was no match.
-                IO.writeString(String.format("No help text for '%s' could be found.", command.getFirstToken()));
+                IO.writeString(String.format("No help text for '%s' could be found.", issuedCommand.getFirstToken()));
             }
         } else {
             Utils.printMissingArgumentsMessage();
@@ -248,14 +248,14 @@ public final class Help {
     }
 
     // Prints a list of commands starting with the first given word or all commands if no words are provided.
-    public static void printCommandList(Command command) {
+    public static void printCommandList(IssuedCommand issuedCommand) {
         StringBuilder builder = new StringBuilder();
-        if (command.hasArguments()) {
+        if (issuedCommand.hasArguments()) {
             for (CommandHelp commandHelp : COMMANDS) {
                 String[] nameAndAliases = commandHelp.getAllAliases();
                 for (String alias : nameAndAliases) {
-                    if (command.getFirstArgument().length() <= alias.length()) {
-                        if (Utils.startsWithIgnoreCase(alias, command.getFirstArgument())) {
+                    if (issuedCommand.getFirstArgument().length() <= alias.length()) {
+                        if (Utils.startsWithIgnoreCase(alias, issuedCommand.getFirstArgument())) {
                             builder.append(commandHelp.toOneLineString(alias)).append('\n');
                             break;
                         }
@@ -263,7 +263,7 @@ public final class Help {
                 }
             }
             if (builder.length() == 0) {
-                builder.append("No command starts with '").append(command.getFirstArgument()).append("'.");
+                builder.append("No command starts with '").append(issuedCommand.getFirstArgument()).append("'.");
             }
         } else {
             for (CommandHelp commandHelp : COMMANDS) {

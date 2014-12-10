@@ -16,7 +16,7 @@
  */
 package org.dungeon.gui;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.io.DLogger;
@@ -190,7 +190,7 @@ public class GameWindow extends JFrame {
         if (!text.isEmpty()) {
             clearTextField();
             setIdle(false);
-            Game.renderTurn(new Command(text));
+            Game.renderTurn(new IssuedCommand(text));
             Game.getGameState().getCommandHistory().getCursor().moveToEnd();
             textField.requestFocusInWindow();
             setIdle(true);

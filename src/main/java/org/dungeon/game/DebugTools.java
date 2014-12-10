@@ -66,18 +66,18 @@ class DebugTools {
         IO.writeString(Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate()));
     }
 
-    static void parseDebugCommand(Command command) {
-        if (command.hasArguments()) {
-            if (command.firstArgumentEquals(args[0])) {
+    static void parseDebugCommand(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
+            if (issuedCommand.firstArgumentEquals(args[0])) {
                 IO.writeString(Game.getGameState().getHero().getExplorationLog().toString());
-            } else if (command.firstArgumentEquals(args[1])) {
+            } else if (issuedCommand.firstArgumentEquals(args[1])) {
                 Game.getGameState().getWorld().rollDate(24 * 60 * 60);
                 if (Engine.RANDOM.nextBoolean()) {
                     IO.writeString("A day has passed.", Color.ORANGE);
                 } else {
                     IO.writeString("You are one day closer to your ending.", Color.ORANGE);
                 }
-            } else if (command.firstArgumentEquals(args[2])) {
+            } else if (issuedCommand.firstArgumentEquals(args[2])) {
                 String holiday;
                 for (DateTime date = new DateTime(1970, 1, 1, 0, 0); date.getYear() != 1971; date = date.plusDays(1)) {
                     holiday = org.dungeon.utils.Holiday.getHoliday(date);
@@ -85,13 +85,13 @@ class DebugTools {
                         IO.writeKeyValueString(Constants.DATE_FORMAT.print(date), holiday);
                     }
                 }
-            } else if (command.firstArgumentEquals(args[3])) {
+            } else if (issuedCommand.firstArgumentEquals(args[3])) {
                 Loader.printFilesInSavesFolder();
-            } else if (command.firstArgumentEquals("lines")) {
+            } else if (issuedCommand.firstArgumentEquals("lines")) {
                 for (int i = 1; i <= Constants.ROWS; i++) {
                     IO.writeString(Integer.toString(i));
                 }
-            } else if (command.firstArgumentEquals(args[4])) {
+            } else if (issuedCommand.firstArgumentEquals(args[4])) {
                 final int WIDTH = 20;  // The width of the row's "tag".
                 GameState gameState = Game.getGameState();
                 Point heroPosition = gameState.getHeroPosition();
@@ -113,17 +113,17 @@ class DebugTools {
                 sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity()).append('\n');
                 sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
                 IO.writeString(sb.toString());
-            } else if (command.firstArgumentEquals(args[5])) {
+            } else if (issuedCommand.firstArgumentEquals(args[5])) {
                 Game.getGameState().getWorld().getGenerator().printStatistics();
-            } else if (command.firstArgumentEquals(args[6])) {
+            } else if (issuedCommand.firstArgumentEquals(args[6])) {
                 printIsSaved();
-            } else if (command.firstArgumentEquals(args[7])) {
+            } else if (issuedCommand.firstArgumentEquals(args[7])) {
                 listAllArguments();
-            } else if (command.firstArgumentEquals(args[8])) {
+            } else if (issuedCommand.firstArgumentEquals(args[8])) {
                 printTime();
-            } else if (command.firstArgumentEquals(args[9])) {
-                if (command.getTokenCount() >= 3) {
-                    give(command.getArguments()[1]);
+            } else if (issuedCommand.firstArgumentEquals(args[9])) {
+                if (issuedCommand.getTokenCount() >= 3) {
+                    give(issuedCommand.getArguments()[1]);
                 } else {
                     Utils.printMissingArgumentsMessage();
                 }

@@ -198,9 +198,9 @@ public class Hero extends Creature {
         return getLocation().getLuminosity() >= minimumLuminosity;
     }
 
-    Item selectInventoryItem(Command command) {
-        if (command.hasArguments()) {
-            return getInventory().findItem(command.getArguments());
+    Item selectInventoryItem(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
+            return getInventory().findItem(issuedCommand.getArguments());
         } else {
             Utils.printMissingArgumentsMessage();
             return null;
@@ -210,12 +210,12 @@ public class Hero extends Creature {
     /**
      * Select an item of the current location based on the arguments of a command.
      *
-     * @param command the command whose arguments will determine the item search.
+     * @param issuedCommand the command whose arguments will determine the item search.
      * @return an Item or <code>null</code>.
      */
-    Item selectLocationItem(Command command) {
-        if (command.hasArguments()) {
-            return getLocation().getInventory().findItem(command.getArguments());
+    Item selectLocationItem(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
+            return getLocation().getInventory().findItem(issuedCommand.getArguments());
         } else {
             Utils.printMissingArgumentsMessage();
             return null;
@@ -225,12 +225,12 @@ public class Hero extends Creature {
     /**
      * The method that lets the hero attack a target.
      *
-     * @param command the command entered by the player.
+     * @param issuedCommand the command entered by the player.
      * @return an integer representing how many seconds the battle lasted.
      */
-    public int attackTarget(Command command) {
+    public int attackTarget(IssuedCommand issuedCommand) {
         if (canSee()) {
-            Creature target = selectTarget(command);
+            Creature target = selectTarget(issuedCommand);
             if (target != null) {
                 return Engine.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
             }
@@ -243,12 +243,12 @@ public class Hero extends Creature {
     /**
      * Attempts to select a target from the current location using the player input.
      *
-     * @param command the command entered by the player.
+     * @param issuedCommand the command entered by the player.
      * @return a target Creature or <code>null</code>.
      */
-    public Creature selectTarget(Command command) {
-        if (command.hasArguments()) {
-            return findCreature(command.getArguments());
+    public Creature selectTarget(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
+            return findCreature(issuedCommand.getArguments());
         } else {
             if (Engine.RANDOM.nextBoolean()) {
                 IO.writeString("Attack what?", Color.ORANGE);
@@ -294,9 +294,9 @@ public class Hero extends Creature {
     /**
      * Attempts to pick and item and add it to the inventory.
      */
-    public void pickItem(Command command) {
+    public void pickItem(IssuedCommand issuedCommand) {
         if (canSee()) {
-            Item selectedItem = selectLocationItem(command);
+            Item selectedItem = selectLocationItem(issuedCommand);
             if (selectedItem != null) {
                 if (getInventory().isFull()) {
                     IO.writeString(Constants.INVENTORY_FULL);
@@ -313,8 +313,8 @@ public class Hero extends Creature {
     /**
      * Tries to equip an item from the inventory.
      */
-    public void parseEquip(Command command) {
-        Item selectedItem = selectInventoryItem(command);
+    public void parseEquip(IssuedCommand issuedCommand) {
+        Item selectedItem = selectInventoryItem(issuedCommand);
         if (selectedItem != null) {
             if (selectedItem.isWeapon()) {
                 equipWeapon(selectedItem);
@@ -327,8 +327,8 @@ public class Hero extends Creature {
     /**
      * Attempts to drop an item from the hero's inventory.
      */
-    public void dropItem(Command command) {
-        Item selectedItem = selectInventoryItem(command);
+    public void dropItem(IssuedCommand issuedCommand) {
+        Item selectedItem = selectInventoryItem(issuedCommand);
         if (selectedItem != null) {
             if (selectedItem == getWeapon()) {
                 unequipWeapon();
@@ -347,8 +347,8 @@ public class Hero extends Creature {
     /**
      * Attempts to eat an item from the ground.
      */
-    public void eatItem(Command command) {
-        Item selectedItem = selectInventoryItem(command);
+    public void eatItem(IssuedCommand issuedCommand) {
+        Item selectedItem = selectInventoryItem(issuedCommand);
         if (selectedItem != null) {
             if (selectedItem.isFood()) {
                 FoodComponent food = selectedItem.getFoodComponent();
@@ -378,10 +378,10 @@ public class Hero extends Creature {
     /**
      * Tries to destroy an item from the current location.
      */
-    public void destroyItem(Command command) {
+    public void destroyItem(IssuedCommand issuedCommand) {
         Item target;
-        if (command.hasArguments()) {
-            target = getLocation().getInventory().findItem(command.getArguments());
+        if (issuedCommand.hasArguments()) {
+            target = getLocation().getInventory().findItem(issuedCommand.getArguments());
         } else {
             Utils.printMissingArgumentsMessage();
             target = null;

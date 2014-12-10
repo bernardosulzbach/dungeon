@@ -50,10 +50,10 @@ public class Game {
     }
 
     // Renders a turn based on an input string.
-    public static void renderTurn(Command command) {
+    public static void renderTurn(IssuedCommand issuedCommand) {
         // Clears the text pane.
         getGameWindow().clearTextPane();
-        processInput(command);
+        processInput(issuedCommand);
         if (gameState.getHero().isDead()) {
             IO.writeString("You died.");
             // After the player's death, just prompt to load the default save file.
@@ -71,87 +71,87 @@ public class Game {
     }
 
     // Processes the player input.
-    private static void processInput(Command command) {
-        gameState.getCommandHistory().addCommand(command);
-        gameState.getStatistics().addCommand(command);
+    private static void processInput(IssuedCommand issuedCommand) {
+        gameState.getCommandHistory().addCommand(issuedCommand);
+        gameState.getStatistics().addCommand(issuedCommand);
         // Reset the turn variables.
         turnLength = 0;
         configurationsChanged = false;
-        if (command.firstTokenEquals("rest")) {
+        if (issuedCommand.firstTokenEquals("rest")) {
             turnLength = gameState.getHero().rest();
-        } else if (command.firstTokenEquals("sleep")) {
+        } else if (issuedCommand.firstTokenEquals("sleep")) {
             turnLength = gameState.getHero().sleep();
-        } else if (command.firstTokenEquals("look") || command.firstTokenEquals("peek")) {
+        } else if (issuedCommand.firstTokenEquals("look") || issuedCommand.firstTokenEquals("peek")) {
             gameState.getHero().look();
-        } else if (command.firstTokenEquals("inventory") || command.firstTokenEquals("items")) {
+        } else if (issuedCommand.firstTokenEquals("inventory") || issuedCommand.firstTokenEquals("items")) {
             gameState.getHero().printInventory();
-        } else if (command.firstTokenEquals("loot") || command.firstTokenEquals("pick")) {
-            gameState.getHero().pickItem(command);
+        } else if (issuedCommand.firstTokenEquals("loot") || issuedCommand.firstTokenEquals("pick")) {
+            gameState.getHero().pickItem(issuedCommand);
             turnLength = 120;
-        } else if (command.firstTokenEquals("equip")) {
-            gameState.getHero().parseEquip(command);
-        } else if (command.firstTokenEquals("unequip")) {
+        } else if (issuedCommand.firstTokenEquals("equip")) {
+            gameState.getHero().parseEquip(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("unequip")) {
             gameState.getHero().unequipWeapon();
-        } else if (command.firstTokenEquals("eat") || command.firstTokenEquals("devour")) {
-            gameState.getHero().eatItem(command);
+        } else if (issuedCommand.firstTokenEquals("eat") || issuedCommand.firstTokenEquals("devour")) {
+            gameState.getHero().eatItem(issuedCommand);
             turnLength = 120;
-        } else if (command.firstTokenEquals("walk") || command.firstTokenEquals("go")) {
-            turnLength = Engine.parseHeroWalk(command);
-        } else if (command.firstTokenEquals("drop")) {
-            gameState.getHero().dropItem(command);
-        } else if (command.firstTokenEquals("destroy") || command.firstTokenEquals("crash")) {
-            gameState.getHero().destroyItem(command);
+        } else if (issuedCommand.firstTokenEquals("walk") || issuedCommand.firstTokenEquals("go")) {
+            turnLength = Engine.parseHeroWalk(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("drop")) {
+            gameState.getHero().dropItem(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("destroy") || issuedCommand.firstTokenEquals("crash")) {
+            gameState.getHero().destroyItem(issuedCommand);
             turnLength = 120;
-        } else if (command.firstTokenEquals("status")) {
+        } else if (issuedCommand.firstTokenEquals("status")) {
             gameState.getHero().printAllStatus();
-        } else if (command.firstTokenEquals("hero") || command.firstTokenEquals("me")) {
+        } else if (issuedCommand.firstTokenEquals("hero") || issuedCommand.firstTokenEquals("me")) {
             gameState.getHero().printHeroStatus();
-        } else if (command.firstTokenEquals("age")) {
+        } else if (issuedCommand.firstTokenEquals("age")) {
             gameState.getHero().printAge();
-        } else if (command.firstTokenEquals("weapon")) {
+        } else if (issuedCommand.firstTokenEquals("weapon")) {
             gameState.getHero().printWeaponStatus();
-        } else if (command.firstTokenEquals("kill") || command.firstTokenEquals("attack")) {
-            turnLength = gameState.getHero().attackTarget(command);
-        } else if (command.firstTokenEquals("statistics")) {
+        } else if (issuedCommand.firstTokenEquals("kill") || issuedCommand.firstTokenEquals("attack")) {
+            turnLength = gameState.getHero().attackTarget(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("statistics")) {
             gameState.printGameStatistics();
-        } else if (command.firstTokenEquals("achievements")) {
+        } else if (issuedCommand.firstTokenEquals("achievements")) {
             gameState.printUnlockedAchievements();
-        } else if (command.firstTokenEquals("spawns")) {
+        } else if (issuedCommand.firstTokenEquals("spawns")) {
             gameState.getWorld().printSpawnCounters();
-        } else if (command.firstTokenEquals("time") || command.firstTokenEquals("date")) {
+        } else if (issuedCommand.firstTokenEquals("time") || issuedCommand.firstTokenEquals("date")) {
             turnLength = gameState.getHero().printDateAndTime();
-        } else if (command.firstTokenEquals("system")) {
+        } else if (issuedCommand.firstTokenEquals("system")) {
             SystemInfo.printSystemInfo();
-        } else if (command.firstTokenEquals("help") || command.firstTokenEquals("?")) {
-            Help.printHelp(command);
-        } else if (command.firstTokenEquals("commands")) {
-            Help.printCommandList(command);
-        } else if (command.firstTokenEquals("save")) {
-            Loader.saveGame(gameState, command);
-        } else if (command.firstTokenEquals("load")) {
-            GameState loadedGameState = Loader.loadGame(command);
+        } else if (issuedCommand.firstTokenEquals("help") || issuedCommand.firstTokenEquals("?")) {
+            Help.printHelp(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("commands")) {
+            Help.printCommandList(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("save")) {
+            Loader.saveGame(gameState, issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("load")) {
+            GameState loadedGameState = Loader.loadGame(issuedCommand);
             if (loadedGameState != null) {
                 gameState = loadedGameState;
             }
-        } else if (command.firstTokenEquals("quit") || command.firstTokenEquals("exit")) {
+        } else if (issuedCommand.firstTokenEquals("quit") || issuedCommand.firstTokenEquals("exit")) {
             Game.exit();
-        } else if (command.firstTokenEquals("license") || command.firstTokenEquals("copyright")) {
+        } else if (issuedCommand.firstTokenEquals("license") || issuedCommand.firstTokenEquals("copyright")) {
             Utils.printLicense();
-        } else if (command.firstTokenEquals("fibonacci")) {
-            Math.fibonacci(command);
-        } else if (command.firstTokenEquals("hint") || command.firstTokenEquals("tip")) {
+        } else if (issuedCommand.firstTokenEquals("fibonacci")) {
+            Math.fibonacci(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("hint") || issuedCommand.firstTokenEquals("tip")) {
             gameState.printNextHint();
-        } else if (command.firstTokenEquals("poem")) {
+        } else if (issuedCommand.firstTokenEquals("poem")) {
             gameState.printNextPoem();
-        } else if (command.firstTokenEquals("version")) {
+        } else if (issuedCommand.firstTokenEquals("version")) {
             Utils.printVersion();
-        } else if (command.firstTokenEquals("debug")) {
-            DebugTools.parseDebugCommand(command);
-        } else if (command.firstTokenEquals("config")) {
-            configurationsChanged = ConfigTools.parseConfigCommand(command);
+        } else if (issuedCommand.firstTokenEquals("debug")) {
+            DebugTools.parseDebugCommand(issuedCommand);
+        } else if (issuedCommand.firstTokenEquals("config")) {
+            configurationsChanged = ConfigTools.parseConfigCommand(issuedCommand);
         } else {
             // The user issued a command, but it was not recognized.
-            Utils.printInvalidCommandMessage(command.getFirstToken());
+            Utils.printInvalidCommandMessage(issuedCommand.getFirstToken());
         }
     }
 

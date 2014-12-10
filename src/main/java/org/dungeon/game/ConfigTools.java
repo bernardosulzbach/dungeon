@@ -96,25 +96,25 @@ class ConfigTools {
     }
 
     // Returns true if a configuration was changed.
-    static boolean parseConfigCommand(Command command) {
-        if (command.hasArguments()) {
-            if (command.firstArgumentEquals(args[0])) {
+    static boolean parseConfigCommand(IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
+            if (issuedCommand.firstArgumentEquals(args[0])) {
                 toggleBars();
                 return true;
-            } else if (command.firstArgumentEquals(args[1])) {
+            } else if (issuedCommand.firstArgumentEquals(args[1])) {
                 toggleBold();
                 return true;
-            } else if (command.firstArgumentEquals(args[2])) {
-                if (command.getArguments().length > 1) {
-                    return changeChunkSide(command.getArguments()[1]);
+            } else if (issuedCommand.firstArgumentEquals(args[2])) {
+                if (issuedCommand.getArguments().length > 1) {
+                    return changeChunkSide(issuedCommand.getArguments()[1]);
                 } else {
                     IO.writeString("Provide a numerical argument.");
                 }
-            } else if (command.firstArgumentEquals(args[3])) {
+            } else if (issuedCommand.firstArgumentEquals(args[3])) {
                 listAllArguments();
-            } else if (command.firstArgumentEquals(args[4])) {
-                if (command.getArguments().length > 1) {
-                    return changeRowCount(command.getArguments()[1]);
+            } else if (issuedCommand.firstArgumentEquals(args[4])) {
+                if (issuedCommand.getArguments().length > 1) {
+                    return changeRowCount(issuedCommand.getArguments()[1]);
                 } else {
                     IO.writeString("Provide a number of rows.");
                 }

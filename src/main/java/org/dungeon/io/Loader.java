@@ -16,7 +16,7 @@
  */
 package org.dungeon.io;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
@@ -96,14 +96,14 @@ public class Loader {
      *
      * @return a saved campaign or a new demo campaign.
      */
-    public static GameState loadGame(Command command) {
-        if (command != null && command.hasArguments()) {
+    public static GameState loadGame(IssuedCommand issuedCommand) {
+        if (issuedCommand != null && issuedCommand.hasArguments()) {
             // A save name was provided.
             File save;
-            if (command.getFirstArgument().contains(SAVE_EXTENSION)) {
-                save = new File(SAVES_FOLDER, command.getFirstArgument());
+            if (issuedCommand.getFirstArgument().contains(SAVE_EXTENSION)) {
+                save = new File(SAVES_FOLDER, issuedCommand.getFirstArgument());
             } else {
-                save = new File(SAVES_FOLDER, command.getFirstArgument() + SAVE_EXTENSION);
+                save = new File(SAVES_FOLDER, issuedCommand.getFirstArgument() + SAVE_EXTENSION);
             }
             if (save.exists() && save.isFile()) {
                 return loadFile(save);
@@ -143,10 +143,10 @@ public class Loader {
     /**
      * Handles all the saving process, assigning a new name for the save file, if provided.
      */
-    public static void saveGame(GameState gameState, Command command) {
-        if (command.hasArguments()) {
+    public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
+        if (issuedCommand.hasArguments()) {
             if (confirmOperation(SAVE_CONFIRM)) {
-                saveFile(gameState, command.getFirstArgument(), false);
+                saveFile(gameState, issuedCommand.getFirstArgument(), false);
             }
         } else {
             saveGame(gameState);

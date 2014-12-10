@@ -16,7 +16,7 @@
  */
 package org.dungeon.utils;
 
-import org.dungeon.game.Command;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
 
 import java.awt.*;
@@ -34,12 +34,12 @@ public class Math {
     /**
      * The public method that should be invoked using the input words.
      *
-     * @param command the command entered by the player.
+     * @param issuedCommand the command entered by the player.
      */
-    public static void fibonacci(Command command) {
+    public static void fibonacci(IssuedCommand issuedCommand) {
         int intArgument;
-        if (command.hasArguments()) {
-            for (String strArgument : command.getArguments()) {
+        if (issuedCommand.hasArguments()) {
+            for (String strArgument : issuedCommand.getArguments()) {
                 try {
                     intArgument = Integer.parseInt(strArgument);
                 } catch (NumberFormatException ignore) {
