@@ -8,11 +8,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <packaging>jar</packaging>
     <name>Dungeon</name>
+    <description>Text-based open-world RPG made with Java.</description>
+    <url>https://github.com/mafagafogigante/dungeon</url>
+
+    <issueManagement>
+        <url>https://github.com/mafagafogigante/dungeon/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
 
     <groupId>org.dungeon</groupId>
     <artifactId>dungeon</artifactId>
     <version>v0.0.4</version>
+
+    <developers>
+        <developer>
+            <email>mafagafogigante@gmail.com</email>
+            <name>Bernardo Sulzbach</name>
+            <url>https://github.com/mafagafogigante</url>
+            <id>mafagafogigante</id>
+        </developer>
+    </developers>
 
     <build>
         <plugins>
