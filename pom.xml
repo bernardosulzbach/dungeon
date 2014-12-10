@@ -12,7 +12,7 @@
 
     <groupId>org.dungeon</groupId>
     <artifactId>dungeon</artifactId>
-    <version>0.0.3</version>
+    <version>v0.0.4</version>
 
     <build>
         <plugins>
