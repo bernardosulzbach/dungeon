@@ -8,6 +8,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <name>Dungeon</name>
+
     <groupId>org.dungeon</groupId>
     <artifactId>dungeon</artifactId>
     <version>0.0.3</version>
