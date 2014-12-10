@@ -61,7 +61,6 @@ public class Constants {
     public static final Color FORE_COLOR_DARKER = Color.GRAY;
     public static final Color DEFAULT_BACK_COLOR = Color.BLACK;
     public static final Color HEALTH_BAR_COLOR = Color.GREEN;
-    public static final Color LEVEL_BAR_COLOR = Color.YELLOW;
 
     // How many characters the bar name should occupy.
     public static final int BAR_NAME_LENGTH = 16;
