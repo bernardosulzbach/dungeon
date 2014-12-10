@@ -50,7 +50,7 @@ public class Engine {
      */
     private static void refreshAchievements() {
         Hero hero = Game.getGameState().getHero();
-        for (Achievement a : GameData.ACHIEVEMENTS) {
+        for (Achievement a : GameData.ACHIEVEMENTS.values()) {
             a.update(hero);
         }
     }

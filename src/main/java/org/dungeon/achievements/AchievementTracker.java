@@ -17,9 +17,11 @@
 package org.dungeon.achievements;
 
 import org.dungeon.game.Game;
+import org.dungeon.io.DLogger;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.TreeSet;
 
 /**
  * AchievementTracker that tracks the unlocked achievements.
@@ -28,19 +30,35 @@ import java.util.ArrayList;
  */
 public class AchievementTracker implements Serializable {
 
-    private final ArrayList<UnlockedAchievement> unlockedAchievements;
+    private final TreeSet<UnlockedAchievement> unlockedAchievements;
 
     public AchievementTracker() {
-        this.unlockedAchievements = new ArrayList<UnlockedAchievement>();
+        this.unlockedAchievements = new TreeSet<UnlockedAchievement>(new UnlockedAchievementNameComparator());
     }
 
+    /**
+     * Returns how many unlocked achievements there are in this AchievementTracker.
+     *
+     * @return how many unlocked achievements there are in this AchievementTracker.
+     */
     public int getUnlockedCount() {
         return unlockedAchievements.size();
     }
 
+    /**
+     * Unlock a specific Achievement.
+     * <p/>
+     * If there already is an UnlockedAchievement with the same ID, a warning will be logged.
+     *
+     * @param achievement the Achievement to be unlocked.
+     */
     public void unlock(Achievement achievement) {
-        unlockedAchievements.add(new UnlockedAchievement(achievement.getId(),
-                Game.getGameState().getWorld().getWorldDate()));
+        DateTime now = Game.getGameState().getWorld().getWorldDate();
+        if (!isUnlocked(achievement)) {
+            unlockedAchievements.add(new UnlockedAchievement(achievement.getId(), achievement.getName(), now));
+        } else {
+            DLogger.warning("Tried to unlock an already unlocked achievement!");
+        }
     }
 
     /**
@@ -60,9 +78,16 @@ public class AchievementTracker implements Serializable {
     }
 
     /**
-     * Convenience method that return if a given Achievement is unlocked in this AchievementTracker.
-     * <p/>
-     * Alternatively, the developer can compare the return of getUnlockedAchievement(Achievement) to null.
+     * Returns an array with all the unlocked achievements.
+     *
+     * @return an array with all the unlocked achievements.
+     */
+    public UnlockedAchievement[] getUnlockedAchievementArray() {
+        return unlockedAchievements.toArray(new UnlockedAchievement[unlockedAchievements.size()]);
+    }
+
+    /**
+     * Return true if a given Achievement is unlocked in this AchievementTracker.
      *
      * @param achievement an Achievement object.
      * @return true if this Achievement is unlocked, false otherwise.

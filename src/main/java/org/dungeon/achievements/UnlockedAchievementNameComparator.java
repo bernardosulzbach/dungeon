@@ -16,32 +16,18 @@
  */
 package org.dungeon.achievements;
 
-import org.joda.time.DateTime;
-
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
- * UnlockedAchievement class that records the unlocking of an achievement.
- * <p/>
- * Created by Bernardo Sulzbach on 09/12/14.
+ * A comparator that compares UnlockedAchievements by their name.
+ *
+ * Created by Bernardo Sulzbach on 10/12/14.
  */
-public final class UnlockedAchievement implements Serializable {
+class UnlockedAchievementNameComparator implements Comparator<UnlockedAchievement>, Serializable {
 
-    public final String id;
-    public final String name;
-    // DateTime is immutable, therefore it can be public.
-    public final DateTime date;
-
-    /**
-     * Construct a new UnlockedAchievement.
-     *
-     * @param name the name of the unlocked achievement.
-     * @param date the date when the achievement was unlocked.
-     */
-    public UnlockedAchievement(String id, String name, DateTime date) {
-        this.id = id;
-        this.name = name;
-        this.date = date;
+    public int compare(UnlockedAchievement a, UnlockedAchievement b) {
+        return a.name.compareTo(b.name);
     }
 
 }

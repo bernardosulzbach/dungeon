@@ -43,7 +43,7 @@ public final class GameData {
     public static HashMap<String, CreatureBlueprint> CREATURE_BLUEPRINTS;
     public static HashMap<String, ItemBlueprint> ITEM_BLUEPRINTS;
     public static LocationPreset[] LOCATION_PRESETS;
-    public static List<Achievement> ACHIEVEMENTS;
+    public static HashMap<String, Achievement> ACHIEVEMENTS;
     public static List<Poem> POEMS;
     public static Font monospaced;
 
@@ -248,77 +248,77 @@ public final class GameData {
     }
 
     private static void createAchievements() {
-        ACHIEVEMENTS = new ArrayList<Achievement>();
+        ACHIEVEMENTS = new HashMap<String, Achievement>();
 
         Achievement traveler = new Achievement("TRAVELER", "Traveler", "Visit the same location five times.");
         traveler.setVisitCount(5);
-        ACHIEVEMENTS.add(traveler);
+        ACHIEVEMENTS.put("TRAVELER", traveler);
 
         Achievement wipe = new Achievement("WIPE", "Wipe", "Kill 3 creatures in the same location.");
         wipe.setKillCount(3);
-        ACHIEVEMENTS.add(wipe);
+        ACHIEVEMENTS.put("WIPE", wipe);
 
         Achievement firstBlood = new Achievement("FIRST_BLOOD", "First Blood", "Kill a creature.");
         firstBlood.setKillCount(1);
-        ACHIEVEMENTS.add(firstBlood);
+        ACHIEVEMENTS.put("FIRST_BLOOD", firstBlood);
 
         Achievement killer = new Achievement("KILLER", "Killer", "Kill 10 creatures in the same location.");
         killer.setKillCount(10);
-        ACHIEVEMENTS.add(killer);
+        ACHIEVEMENTS.put("KILLER", killer);
 
         Achievement dieHard = new Achievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.");
         dieHard.setLongestBattleLength(10);
-        ACHIEVEMENTS.add(dieHard);
+        ACHIEVEMENTS.put("DIE_HARD", dieHard);
 
         Achievement bane = new Achievement("BANE", "Bane", "Kill 6 bats.");
         bane.incrementKillsByCreatureId("BAT", 6);
-        ACHIEVEMENTS.add(bane);
+        ACHIEVEMENTS.put("BANE", bane);
 
         Achievement cat = new Achievement("CAT", "Cat", "Kill 4 rats.");
         cat.incrementKillsByCreatureId("RAT", 4);
-        ACHIEVEMENTS.add(cat);
+        ACHIEVEMENTS.put("CAT", cat);
 
         Achievement evilBastard = new Achievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.");
         evilBastard.incrementKillsByCreatureId("RABBIT", 1);
-        ACHIEVEMENTS.add(evilBastard);
+        ACHIEVEMENTS.put("EVIL_BASTARD", evilBastard);
 
         Achievement stayDead = new Achievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.");
         stayDead.incrementKillsByCreatureId("ZOMBIE", 2);
-        ACHIEVEMENTS.add(stayDead);
+        ACHIEVEMENTS.put("STAY_DEAD", stayDead);
 
         Achievement dissection = new Achievement("DISSECTION", "Dissection", "Kill 5 frogs.");
         dissection.incrementKillsByCreatureId("FROG", 5);
-        ACHIEVEMENTS.add(dissection);
+        ACHIEVEMENTS.put("DISSECTION", dissection);
 
         Achievement proCoward = new Achievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.");
         proCoward.incrementKillsByCreatureType("Critter", 5);
-        ACHIEVEMENTS.add(proCoward);
+        ACHIEVEMENTS.put("PROFESSIONAL_COWARD", proCoward);
 
         Achievement hunter = new Achievement("HUNTER", "Hunter", "Kill 10 beasts.");
         hunter.incrementKillsByCreatureType("Beast", 10);
-        ACHIEVEMENTS.add(hunter);
+        ACHIEVEMENTS.put("HUNTER", hunter);
 
         Achievement deathPunch = new Achievement("DEATH_PUNCH", "Death Punch", "Kill a creature unarmed.");
         deathPunch.incrementKillsByWeapon(Constants.UNARMED_ID, 1);
-        ACHIEVEMENTS.add(deathPunch);
+        ACHIEVEMENTS.put("DEATH_PUNCH", deathPunch);
 
         Achievement boxer = new Achievement("BOXER", "Boxer", "Kill 10 creatures unarmed.");
         boxer.incrementKillsByWeapon(Constants.UNARMED_ID, 10);
-        ACHIEVEMENTS.add(boxer);
+        ACHIEVEMENTS.put("BOXER", boxer);
 
         Achievement onTheStick = new Achievement("ON_THE_STICK!", "On the Stick!", "Kill 2 creatures with the Stick.");
         onTheStick.incrementKillsByWeapon("STICK", 2);
-        ACHIEVEMENTS.add(onTheStick);
+        ACHIEVEMENTS.put("ON_THE_STICK!", onTheStick);
 
         Achievement sticksAndStones = new Achievement("STICKS_AND_STONES", "Sticks and Stones",
                 "Kill 5 creatures with the Stone and 5 with the Stick.");
         sticksAndStones.incrementKillsByWeapon("STICK", 5);
         sticksAndStones.incrementKillsByWeapon("STONE", 5);
-        ACHIEVEMENTS.add(sticksAndStones);
+        ACHIEVEMENTS.put("STICKS_AND_STONES", sticksAndStones);
 
         Achievement lumberjack = new Achievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.");
         lumberjack.incrementKillsByWeapon("AXE", 10);
-        ACHIEVEMENTS.add(lumberjack);
+        ACHIEVEMENTS.put("LUMBERJACK", lumberjack);
 
         DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
     }

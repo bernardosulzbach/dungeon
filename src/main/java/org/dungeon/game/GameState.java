@@ -20,6 +20,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.achievements.UnlockedAchievement;
 import org.dungeon.creatures.Hero;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Hints;
@@ -152,17 +153,19 @@ public class GameState implements Serializable {
      * Prints all unlocked achievements.
      */
     public void printUnlockedAchievements() {
-        DateTime now = Game.getGameState().getWorld().getWorldDate();
         String dateDifference;
-        UnlockedAchievement ua;
+        Achievement achievement;
+        DateTime now = world.getWorldDate();
         AchievementTracker tracker = hero.getAchievementTracker();
         IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
-        for (Achievement a : GameData.ACHIEVEMENTS) {
-            ua = tracker.getUnlockedAchievement(a);
-            if (ua != null) {
+        for (UnlockedAchievement ua : tracker.getUnlockedAchievementArray()) {
+            achievement = GameData.ACHIEVEMENTS.get(ua.id);
+            if (achievement != null) {
                 dateDifference = Utils.dateDifferenceToString(ua.date, now);
-                IO.writeString(a.getName() + " (" + dateDifference + " ago)", Color.ORANGE);
-                IO.writeString(" " + a.getInfo(), Color.YELLOW);
+                IO.writeString(achievement.getName() + " (" + dateDifference + " ago)", Color.ORANGE);
+                IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
+            } else {
+                DLogger.warning("Unlocked achievement ID not found in GameData.");
             }
         }
     }
