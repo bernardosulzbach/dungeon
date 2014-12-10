@@ -107,8 +107,14 @@ public class Engine {
         return TimeConstants.WALK_SUCCESS;
     }
 
-    // Simulates a battle between a Hero and a Creature and returns the number of turns the battle had.
-    public static int battle(Hero attacker, Creature defender) {
+    /**
+     * Simulates a battle between two Creatures and returns the number of turns the battle had.
+     *
+     * @param attacker the attacker.
+     * @param defender the defender.
+     * @return an integer representing the number of turns the battle had.
+     */
+    public static int battle(Creature attacker, Creature defender) {
         if (attacker == defender) {
             // Two different messages.
             if (RANDOM.nextBoolean()) {
@@ -140,9 +146,11 @@ public class Engine {
             defeated = attacker;
         }
         IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
-        // Add information about this battle to the Hero's battle log.
-        attacker.getBattleStatistics().addBattle(attacker, defender, attacker == survivor, turns);
-        attacker.getExplorationLog().addKill(Game.getGameState().getHeroPosition());
+        if (attacker instanceof Hero) {
+            Hero hero = (Hero) attacker;
+            hero.getBattleStatistics().addBattle(attacker, defender, attacker == survivor, turns);
+            hero.getExplorationLog().addKill(Game.getGameState().getHeroPosition());
+        }
         battleCleanup(survivor, defeated);
         return turns;
     }
