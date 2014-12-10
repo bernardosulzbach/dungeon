@@ -159,11 +159,6 @@ INFO: "Unequips the current item."
 ALIASES: ""
 ARGUMENTS: ""
 
-COMMAND: "version"
-INFO: "Shows the current version of the game."
-ALIASES: ""
-ARGUMENTS: ""
-
 COMMAND: "walk"
 INFO: "Move to the direction chosen."
 ALIASES: "go"

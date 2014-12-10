@@ -143,8 +143,6 @@ public class Game {
             gameState.printNextHint();
         } else if (issuedCommand.firstTokenEquals("poem")) {
             gameState.printNextPoem();
-        } else if (issuedCommand.firstTokenEquals("version")) {
-            Utils.printVersion();
         } else if (issuedCommand.firstTokenEquals("debug")) {
             DebugTools.parseDebugCommand(issuedCommand);
         } else if (issuedCommand.firstTokenEquals("config")) {

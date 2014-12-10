@@ -65,10 +65,7 @@ public class Constants {
     // How many characters the bar name should occupy.
     public static final int BAR_NAME_LENGTH = 16;
     public static final String UNARMED_ID = "";
-    // Basic version information. (19/10/2014)
-    private static final String VERSION = "v0.0.3";
-    private static final String CODENAME = "Bowman";
-    // The name used as the window title. Contains the game's name, version and its version's codename.
-    public static final String TITLE = String.format("Dungeon %s (%s)", VERSION, CODENAME);
+
+    public static final String NAME = "Dungeon";
 
 }

@@ -89,7 +89,7 @@ public class GameWindow extends JFrame {
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(textField, BorderLayout.SOUTH);
 
-        setTitle(Constants.TITLE);
+        setTitle(Constants.NAME);
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

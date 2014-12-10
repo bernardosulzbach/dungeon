@@ -38,13 +38,6 @@ public class Utils {
     public static String LESS_THAN_A_DAY = "Less than a day";
 
     /**
-     * Prints the full name of the current version of the game.
-     */
-    public static void printVersion() {
-        IO.writeString(Constants.TITLE);
-    }
-
-    /**
      * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is
      * bigger than the desired length, the same string is returned.
      */
