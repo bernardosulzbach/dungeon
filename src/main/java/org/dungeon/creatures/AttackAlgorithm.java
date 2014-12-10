@@ -99,6 +99,7 @@ class AttackAlgorithm {
                 printInflictedDamage(attacker, hitDamage, defender, false);
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
+                    printWeaponBreak(weapon);
                     if (!weapon.isRepairable()) {
                         attacker.getInventory().removeItem(weapon);
                     }
@@ -137,6 +138,7 @@ class AttackAlgorithm {
                 }
                 weapon.decrementIntegrityByHit();
                 if (weapon.isBroken()) {
+                    printWeaponBreak(weapon);
                     if (!weapon.isRepairable()) {
                         attacker.getInventory().removeItem(weapon);
                     }
@@ -181,7 +183,20 @@ class AttackAlgorithm {
         IO.writeBattleString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
     }
 
-    // Simple method that prints a miss message.
+    /**
+     * Prints that a weapon broke.
+     *
+     * @param weapon the weapon that broke.
+     */
+    private static void printWeaponBreak(Item weapon) {
+        IO.writeString(weapon.getName() + " broke!", Color.RED);
+    }
+
+    /**
+     * Prints a miss message.
+     *
+     * @param attacker the attacker creature.
+     */
     private static void printMiss(Creature attacker) {
         IO.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
     }
