@@ -16,9 +16,10 @@
  */
 package org.dungeon.gui;
 
-import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
+import org.dungeon.game.GameState;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.utils.CommandHistory;
@@ -231,20 +232,23 @@ public class GameWindow extends JFrame {
      * @param e the KeyEvent.
      */
     private void textFieldKeyPressed(KeyEvent e) {
-        CommandHistory commandHistory = Game.getGameState().getCommandHistory();
-        if (idle && commandHistory != null) {
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
-            } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                String trimmedTextFieldText = getTrimmedTextFieldText();
-                if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
-                    textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
-                } else {
-                    String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
-                    if (lastSimilarCommand != null) {
-                        textField.setText(lastSimilarCommand);
+        if (idle) {
+            GameState gameState = Game.getGameState();
+            if (gameState != null) {
+                CommandHistory commandHistory = gameState.getCommandHistory();
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
+                } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    String trimmedTextFieldText = getTrimmedTextFieldText();
+                    if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
+                        textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
+                    } else {
+                        String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
+                        if (lastSimilarCommand != null) {
+                            textField.setText(lastSimilarCommand);
+                        }
                     }
                 }
             }
