@@ -38,9 +38,6 @@ public class GameWindow extends JFrame {
     // The border, in pixels.
     private static final int MARGIN = 5;
 
-    private static final Color MARGIN_COLOR = Color.BLACK;
-    private static final Color INSIDE_COLOR = new Color(20, 20, 20);
-
     private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
     private StyledDocument document;
 
@@ -62,7 +59,7 @@ public class GameWindow extends JFrame {
         setSystemLookAndFeel();
 
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(MARGIN_COLOR);
+        panel.setBackground(SharedConstants.MARGIN_COLOR);
 
         textPane = new javax.swing.JTextPane();
         textField = new javax.swing.JTextField();
@@ -70,14 +67,15 @@ public class GameWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane();
 
         textPane.setEditable(false);
-        textPane.setBackground(INSIDE_COLOR);
+        textPane.setBackground(SharedConstants.INSIDE_COLOR);
         textPane.setFont(GameData.monospaced);
 
         scrollPane.setViewportView(textPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
 
-        textField.setBackground(INSIDE_COLOR);
+        textField.setBackground(SharedConstants.INSIDE_COLOR);
         textField.setForeground(Constants.FORE_COLOR_NORMAL);
         textField.setCaretColor(Color.WHITE);
         textField.setFont(GameData.monospaced);
