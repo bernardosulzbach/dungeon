@@ -26,20 +26,20 @@ import java.io.Serializable;
  */
 public class FoodComponent implements Serializable {
 
-    private final int nutrition;
-    private final int integrityDecrementOnEat;
+  private final int nutrition;
+  private final int integrityDecrementOnEat;
 
-    public FoodComponent(int nutrition, int integrityDecrementOnEat) {
-        this.nutrition = nutrition;
-        this.integrityDecrementOnEat = integrityDecrementOnEat;
-    }
+  public FoodComponent(int nutrition, int integrityDecrementOnEat) {
+    this.nutrition = nutrition;
+    this.integrityDecrementOnEat = integrityDecrementOnEat;
+  }
 
-    public int getNutrition() {
-        return nutrition;
-    }
+  public int getNutrition() {
+    return nutrition;
+  }
 
-    public int getIntegrityDecrementOnEat() {
-        return integrityDecrementOnEat;
-    }
+  public int getIntegrityDecrementOnEat() {
+    return integrityDecrementOnEat;
+  }
 
 }

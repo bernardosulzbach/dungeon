@@ -33,173 +33,173 @@ import java.awt.Color;
  */
 class AttackAlgorithm {
 
-    private static final double HERO_CRITICAL_CHANCE = 0.1;
-    private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
+  private static final double HERO_CRITICAL_CHANCE = 0.1;
+  private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
 
-    public static void attack(Creature attacker, Creature defender, String algorithmID) {
-        if (algorithmID.equals("BAT")) {
-            batAttack(attacker, defender);
-        } else if (algorithmID.equals("BEAST")) {
-            beastAttack(attacker, defender);
-        } else if (algorithmID.equals("CRITTER")) {
-            critterAttack(attacker);
-        } else if (algorithmID.equals("UNDEAD")) {
-            undeadAttack(attacker, defender);
-        } else if (algorithmID.equals("HERO")) {
-            heroAttack(attacker, defender);
+  public static void attack(Creature attacker, Creature defender, String algorithmID) {
+    if (algorithmID.equals("BAT")) {
+      batAttack(attacker, defender);
+    } else if (algorithmID.equals("BEAST")) {
+      beastAttack(attacker, defender);
+    } else if (algorithmID.equals("CRITTER")) {
+      critterAttack(attacker);
+    } else if (algorithmID.equals("UNDEAD")) {
+      undeadAttack(attacker, defender);
+    } else if (algorithmID.equals("HERO")) {
+      heroAttack(attacker, defender);
+    } else {
+      throw new IllegalArgumentException("algorithmID does not match any implemented algorithm.");
+    }
+  }
+
+  // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
+  private static void batAttack(Creature attacker, Creature defender) {
+    double luminosity = attacker.getLocation().getLuminosity();
+    // At complete darkness: 90% hit chance.
+    //      noon's sunlight: 40% hit chance.
+    if (Utils.roll(0.9 - luminosity / 2)) {
+      int hitDamage = attacker.getAttack();
+      if (luminosity == 0.0) {
+        hitDamage *= 2;
+        printInflictedDamage(attacker, hitDamage, defender, true);
+      } else {
+        printInflictedDamage(attacker, hitDamage, defender, false);
+      }
+      defender.takeDamage(hitDamage);
+    } else {
+      printMiss(attacker);
+    }
+  }
+
+  private static void beastAttack(Creature attacker, Creature defender) {
+    // 10% miss chance.
+    if (Utils.roll(0.9)) {
+      int hitDamage = attacker.getAttack();
+      defender.takeDamage(hitDamage);
+      printInflictedDamage(attacker, hitDamage, defender, false);
+    } else {
+      printMiss(attacker);
+    }
+  }
+
+  private static void critterAttack(Creature attacker) {
+    if (Engine.RANDOM.nextBoolean()) {
+      IO.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
+    } else {
+      IO.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
+    }
+  }
+
+  private static void undeadAttack(Creature attacker, Creature defender) {
+    Item weapon = attacker.getWeapon();
+    int hitDamage;
+    // Check that there is a weapon and that it is not broken.
+    if (weapon != null && !weapon.isBroken()) {
+      if (weapon.rollForHit()) {
+        hitDamage = weapon.getDamage() + attacker.getAttack();
+        printInflictedDamage(attacker, hitDamage, defender, false);
+        weapon.decrementIntegrityByHit();
+        if (weapon.isBroken()) {
+          printWeaponBreak(weapon);
+          if (!weapon.isRepairable()) {
+            attacker.getInventory().removeItem(weapon);
+          }
+        }
+      } else {
+        printMiss(attacker);
+        return;
+      }
+    } else {
+      // Hardcoded 15% miss chance.
+      if (0.85 > Engine.RANDOM.nextDouble()) {
+        hitDamage = attacker.getAttack();
+        printInflictedDamage(attacker, hitDamage, defender, false);
+      } else {
+        printMiss(attacker);
+        return;
+      }
+    }
+    defender.takeDamage(hitDamage);
+    // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
+    // after an eventual "weaponName broke" message, what looks really weird.
+  }
+
+  private static void heroAttack(Creature attacker, Creature defender) {
+    Item weapon = attacker.getWeapon();
+    int hitDamage;
+    // Check that there is a weapon and that it is not broken.
+    if (weapon != null && !weapon.isBroken()) {
+      if (weapon.rollForHit()) {
+        hitDamage = weapon.getDamage() + attacker.getAttack();
+        if (Utils.roll(HERO_CRITICAL_CHANCE)) {
+          hitDamage *= 2;
+          printInflictedDamage(attacker, hitDamage, defender, true);
         } else {
-            throw new IllegalArgumentException("algorithmID does not match any implemented algorithm.");
+          printInflictedDamage(attacker, hitDamage, defender, false);
         }
-    }
-
-    // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
-    private static void batAttack(Creature attacker, Creature defender) {
-        double luminosity = attacker.getLocation().getLuminosity();
-        // At complete darkness: 90% hit chance.
-        //      noon's sunlight: 40% hit chance.
-        if (Utils.roll(0.9 - luminosity / 2)) {
-            int hitDamage = attacker.getAttack();
-            if (luminosity == 0.0) {
-                hitDamage *= 2;
-                printInflictedDamage(attacker, hitDamage, defender, true);
-            } else {
-                printInflictedDamage(attacker, hitDamage, defender, false);
-            }
-            defender.takeDamage(hitDamage);
-        } else {
-            printMiss(attacker);
+        weapon.decrementIntegrityByHit();
+        if (weapon.isBroken()) {
+          printWeaponBreak(weapon);
+          if (!weapon.isRepairable()) {
+            attacker.getInventory().removeItem(weapon);
+          }
         }
+      } else {
+        printMiss(attacker);
+        return;
+      }
+    } else {
+      hitDamage = attacker.getAttack();
+      if (Utils.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
+        hitDamage *= 2;
+        printInflictedDamage(attacker, hitDamage, defender, true);
+      } else {
+        printInflictedDamage(attacker, hitDamage, defender, false);
+      }
     }
+    defender.takeDamage(hitDamage);
+    // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
+    // after an eventual "weaponName broke" message, what looks really weird.
+  }
 
-    private static void beastAttack(Creature attacker, Creature defender) {
-        // 10% miss chance.
-        if (Utils.roll(0.9)) {
-            int hitDamage = attacker.getAttack();
-            defender.takeDamage(hitDamage);
-            printInflictedDamage(attacker, hitDamage, defender, false);
-        } else {
-            printMiss(attacker);
-        }
+  /**
+   * Prints a message about the inflicted damage based on the parameters.
+   *
+   * @param attacker    the Creature that performed the attack.
+   * @param hitDamage   the damage inflicted by the attacker.
+   * @param defender    the target of the attack.
+   * @param criticalHit a boolean indicating if the attack was a critical hit or not.
+   */
+  private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(attacker.getName());
+    builder.append(" inflicted ");
+    builder.append(hitDamage);
+    builder.append(" damage points to ");
+    builder.append(defender.getName());
+    if (criticalHit) {
+      builder.append(" with a critical hit");
     }
+    builder.append(".");
+    IO.writeBattleString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+  }
 
-    private static void critterAttack(Creature attacker) {
-        if (Engine.RANDOM.nextBoolean()) {
-            IO.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
-        } else {
-            IO.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
-        }
-    }
+  /**
+   * Prints that a weapon broke.
+   *
+   * @param weapon the weapon that broke.
+   */
+  private static void printWeaponBreak(Item weapon) {
+    IO.writeString(weapon.getName() + " broke!", Color.RED);
+  }
 
-    private static void undeadAttack(Creature attacker, Creature defender) {
-        Item weapon = attacker.getWeapon();
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (weapon != null && !weapon.isBroken()) {
-            if (weapon.rollForHit()) {
-                hitDamage = weapon.getDamage() + attacker.getAttack();
-                printInflictedDamage(attacker, hitDamage, defender, false);
-                weapon.decrementIntegrityByHit();
-                if (weapon.isBroken()) {
-                    printWeaponBreak(weapon);
-                    if (!weapon.isRepairable()) {
-                        attacker.getInventory().removeItem(weapon);
-                    }
-                }
-            } else {
-                printMiss(attacker);
-                return;
-            }
-        } else {
-            // Hardcoded 15% miss chance.
-            if (0.85 > Engine.RANDOM.nextDouble()) {
-                hitDamage = attacker.getAttack();
-                printInflictedDamage(attacker, hitDamage, defender, false);
-            } else {
-                printMiss(attacker);
-                return;
-            }
-        }
-        defender.takeDamage(hitDamage);
-        // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-        // after an eventual "weaponName broke" message, what looks really weird.
-    }
-
-    private static void heroAttack(Creature attacker, Creature defender) {
-        Item weapon = attacker.getWeapon();
-        int hitDamage;
-        // Check that there is a weapon and that it is not broken.
-        if (weapon != null && !weapon.isBroken()) {
-            if (weapon.rollForHit()) {
-                hitDamage = weapon.getDamage() + attacker.getAttack();
-                if (Utils.roll(HERO_CRITICAL_CHANCE)) {
-                    hitDamage *= 2;
-                    printInflictedDamage(attacker, hitDamage, defender, true);
-                } else {
-                    printInflictedDamage(attacker, hitDamage, defender, false);
-                }
-                weapon.decrementIntegrityByHit();
-                if (weapon.isBroken()) {
-                    printWeaponBreak(weapon);
-                    if (!weapon.isRepairable()) {
-                        attacker.getInventory().removeItem(weapon);
-                    }
-                }
-            } else {
-                printMiss(attacker);
-                return;
-            }
-        } else {
-            hitDamage = attacker.getAttack();
-            if (Utils.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
-                hitDamage *= 2;
-                printInflictedDamage(attacker, hitDamage, defender, true);
-            } else {
-                printInflictedDamage(attacker, hitDamage, defender, false);
-            }
-        }
-        defender.takeDamage(hitDamage);
-        // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-        // after an eventual "weaponName broke" message, what looks really weird.
-    }
-
-    /**
-     * Prints a message about the inflicted damage based on the parameters.
-     *
-     * @param attacker    the Creature that performed the attack.
-     * @param hitDamage   the damage inflicted by the attacker.
-     * @param defender    the target of the attack.
-     * @param criticalHit a boolean indicating if the attack was a critical hit or not.
-     */
-    private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(attacker.getName());
-        builder.append(" inflicted ");
-        builder.append(hitDamage);
-        builder.append(" damage points to ");
-        builder.append(defender.getName());
-        if (criticalHit) {
-            builder.append(" with a critical hit");
-        }
-        builder.append(".");
-        IO.writeBattleString(builder.toString(), attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
-    }
-
-    /**
-     * Prints that a weapon broke.
-     *
-     * @param weapon the weapon that broke.
-     */
-    private static void printWeaponBreak(Item weapon) {
-        IO.writeString(weapon.getName() + " broke!", Color.RED);
-    }
-
-    /**
-     * Prints a miss message.
-     *
-     * @param attacker the attacker creature.
-     */
-    private static void printMiss(Creature attacker) {
-        IO.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
-    }
+  /**
+   * Prints a miss message.
+   *
+   * @param attacker the attacker creature.
+   */
+  private static void printMiss(Creature attacker) {
+    IO.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
+  }
 
 }

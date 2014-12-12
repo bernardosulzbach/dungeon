@@ -26,58 +26,58 @@ import java.io.Serializable;
  */
 public class Spawner implements Serializable {
 
-    private final String id;
-    private final int populationLimit;
-    private final int spawnDelay;
-    private final Location location;
-    // A change can be either the spawn of a creature or the end of the population limit.
-    private long lastChange;
+  private final String id;
+  private final int populationLimit;
+  private final int spawnDelay;
+  private final Location location;
+  // A change can be either the spawn of a creature or the end of the population limit.
+  private long lastChange;
 
-    public Spawner(SpawnerPreset preset, Location location) {
-        id = preset.id;
-        populationLimit = preset.population;
-        spawnDelay = preset.spawnDelay;
-        this.location = location;
-        lastChange = getWorldCreationTime();
-    }
+  public Spawner(SpawnerPreset preset, Location location) {
+    id = preset.id;
+    populationLimit = preset.population;
+    spawnDelay = preset.spawnDelay;
+    this.location = location;
+    lastChange = getWorldCreationTime();
+  }
 
-    /**
-     * Refresh the spawner, spawning all creatures that should have spawned since the last spawn.
-     * <p/>
-     * Only spawners in locations whose creatures are visible to the player should be refreshed.
-     */
-    public void refresh() {
-        long worldTime = getWorldTime();
-        while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
-            location.getWorld().getSpawnCounter().incrementCounter(id);
-            location.addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(id)));
-            // Simulate that the creature was spawned just when it should have been.
-            lastChange += spawnDelay;
-        }
+  /**
+   * Refresh the spawner, spawning all creatures that should have spawned since the last spawn.
+   * <p/>
+   * Only spawners in locations whose creatures are visible to the player should be refreshed.
+   */
+  public void refresh() {
+    long worldTime = getWorldTime();
+    while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
+      location.getWorld().getSpawnCounter().incrementCounter(id);
+      location.addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(id)));
+      // Simulate that the creature was spawned just when it should have been.
+      lastChange += spawnDelay;
     }
+  }
 
-    /**
-     * Notify the killing of a creature in the location of the spawner. This is necessary in order to record a possible
-     * end of the population limit.
-     */
-    public void notifyKill(Creature creature) {
-        if (id.equals(creature.getId()) && location.getCreatureCount(id) == populationLimit) {
-            lastChange = getWorldTime();
-        }
+  /**
+   * Notify the killing of a creature in the location of the spawner. This is necessary in order to record a possible
+   * end of the population limit.
+   */
+  public void notifyKill(Creature creature) {
+    if (id.equals(creature.getId()) && location.getCreatureCount(id) == populationLimit) {
+      lastChange = getWorldTime();
     }
+  }
 
-    /**
-     * @return the time, in milliseconds, of the World of the Location that this Spawner is in.
-     */
-    private long getWorldTime() {
-        return location.getWorld().getWorldDate().getMillis();
-    }
+  /**
+   * @return the time, in milliseconds, of the World of the Location that this Spawner is in.
+   */
+  private long getWorldTime() {
+    return location.getWorld().getWorldDate().getMillis();
+  }
 
-    /**
-     * @return the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
-     */
-    private long getWorldCreationTime() {
-        return location.getWorld().getWorldCreationDate().getMillis();
-    }
+  /**
+   * @return the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
+   */
+  private long getWorldCreationTime() {
+    return location.getWorld().getWorldCreationDate().getMillis();
+  }
 
 }

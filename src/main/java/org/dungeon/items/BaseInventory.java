@@ -32,51 +32,51 @@ import java.util.List;
  */
 public abstract class BaseInventory implements Serializable {
 
-    final List<Item> items;
+  final List<Item> items;
 
-    BaseInventory() {
-        items = new ArrayList<Item>();
+  BaseInventory() {
+    items = new ArrayList<Item>();
+  }
+
+  public List<Item> getItems() {
+    return items;
+  }
+
+  /**
+   * Convenience method that returns the number of items in the inventory.
+   *
+   * @return the number of items in the inventory.
+   */
+  public int getItemCount() {
+    return items.size();
+  }
+
+  /**
+   * Checks if an item is already in the inventory.
+   */
+  boolean hasItem(Item itemObject) {
+    return items.contains(itemObject);
+  }
+
+  public abstract boolean addItem(Item item);
+
+  public abstract void removeItem(Item item);
+
+  /**
+   * Attempts to find an item by its name.
+   *
+   * @return an Item object if there is a match. null otherwise.
+   */
+  public Item findItem(String[] tokens) {
+    SelectionResult<Item> selectionResult = Utils.selectFromList(items, tokens);
+    if (selectionResult.size() == 0) {
+      IO.writeString("Item not found.");
+    } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
+      return selectionResult.getMatch(0);
+    } else {
+      Utils.printAmbiguousSelectionMessage();
     }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    /**
-     * Convenience method that returns the number of items in the inventory.
-     *
-     * @return the number of items in the inventory.
-     */
-    public int getItemCount() {
-        return items.size();
-    }
-
-    /**
-     * Checks if an item is already in the inventory.
-     */
-    boolean hasItem(Item itemObject) {
-        return items.contains(itemObject);
-    }
-
-    public abstract boolean addItem(Item item);
-
-    public abstract void removeItem(Item item);
-
-    /**
-     * Attempts to find an item by its name.
-     *
-     * @return an Item object if there is a match. null otherwise.
-     */
-    public Item findItem(String[] tokens) {
-        SelectionResult<Item> selectionResult = Utils.selectFromList(items, tokens);
-        if (selectionResult.size() == 0) {
-            IO.writeString("Item not found.");
-        } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
-            return selectionResult.getMatch(0);
-        } else {
-            Utils.printAmbiguousSelectionMessage();
-        }
-        return null;
-    }
+    return null;
+  }
 
 }

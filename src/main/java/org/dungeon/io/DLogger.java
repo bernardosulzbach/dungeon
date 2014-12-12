@@ -33,64 +33,64 @@ import java.util.logging.Logger;
  */
 public class DLogger {
 
-    private static Logger logger;
-    private static final String LOG_FILE_PATH = "logs/";
-    private static final String LOG_FILE_NAME = "log.txt";
+  private static Logger logger;
+  private static final String LOG_FILE_PATH = "logs/";
+  private static final String LOG_FILE_NAME = "log.txt";
 
-    private DLogger() {
-    }
+  private DLogger() {
+  }
 
-    public static void initialize() {
-        if (logger == null) {
-            try {
-                logger = Logger.getLogger("org.dungeon");
-                Handler handler = new FileHandler(getLogFilePath(), true);
-                handler.setFormatter(new DFormatter());
-                logger.addHandler(handler);
-                logger.setLevel(Level.ALL);
-            } catch (IOException ignored) {
-            }
-        }
+  public static void initialize() {
+    if (logger == null) {
+      try {
+        logger = Logger.getLogger("org.dungeon");
+        Handler handler = new FileHandler(getLogFilePath(), true);
+        handler.setFormatter(new DFormatter());
+        logger.addHandler(handler);
+        logger.setLevel(Level.ALL);
+      } catch (IOException ignored) {
+      }
     }
+  }
 
-    /**
-     * Log an INFO message. This method can be called even if the logger was not initialized yet, in this case, the
-     * message is unceremoniously discarded.
-     *
-     * @param message the log message.
-     */
-    public static void info(String message) {
-        if (logger != null) {
-            logger.info(message);
-        }
+  /**
+   * Log an INFO message. This method can be called even if the logger was not initialized yet, in this case, the
+   * message is unceremoniously discarded.
+   *
+   * @param message the log message.
+   */
+  public static void info(String message) {
+    if (logger != null) {
+      logger.info(message);
     }
+  }
 
-    /**
-     * Log a WARNING message. This method can be called even if the logger was not initialized yet, in this case, the
-     * message is unceremoniously discarded.
-     *
-     * @param message the log message.
-     */
-    public static void warning(String message) {
-        if (logger != null) {
-            logger.warning(message);
-        }
+  /**
+   * Log a WARNING message. This method can be called even if the logger was not initialized yet, in this case, the
+   * message is unceremoniously discarded.
+   *
+   * @param message the log message.
+   */
+  public static void warning(String message) {
+    if (logger != null) {
+      logger.warning(message);
     }
+  }
 
-    /**
-     * Retrieves the path of a plain text file to be used to store logging messages. If the logging directory does not
-     * exist, it will be created.
-     *
-     * @return the file path of a text file to be used by the FileHandler constructor.
-     */
-    public static String getLogFilePath() {
-        File logFolder = new File(LOG_FILE_PATH);
-        if (!logFolder.exists()) {
-            if (!logFolder.mkdir()) {
-                Utils.printFailedToCreateDirectoryMessage(LOG_FILE_PATH);
-            }
-        }
-        return LOG_FILE_PATH + LOG_FILE_NAME;
+  /**
+   * Retrieves the path of a plain text file to be used to store logging messages. If the logging directory does not
+   * exist, it will be created.
+   *
+   * @return the file path of a text file to be used by the FileHandler constructor.
+   */
+  public static String getLogFilePath() {
+    File logFolder = new File(LOG_FILE_PATH);
+    if (!logFolder.exists()) {
+      if (!logFolder.mkdir()) {
+        Utils.printFailedToCreateDirectoryMessage(LOG_FILE_PATH);
+      }
     }
+    return LOG_FILE_PATH + LOG_FILE_NAME;
+  }
 
 }

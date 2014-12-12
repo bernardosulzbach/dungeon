@@ -25,178 +25,178 @@ import org.dungeon.utils.Constants;
 
 public class Item extends Entity {
 
-    // Ownership.
-    private Creature owner;
+  // Ownership.
+  private Creature owner;
 
-    // Durability fields.
-    private int maxIntegrity;
-    private int curIntegrity;
-    private boolean repairable;
+  // Durability fields.
+  private int maxIntegrity;
+  private int curIntegrity;
+  private boolean repairable;
 
-    // Weapon fields.
-    private boolean weapon;
-    private int damage;
-    private double hitRate;
-    private int integrityDecrementOnHit;
+  // Weapon fields.
+  private boolean weapon;
+  private int damage;
+  private double hitRate;
+  private int integrityDecrementOnHit;
 
-    // Food fields.
-    private FoodComponent foodComponent;
+  // Food fields.
+  private FoodComponent foodComponent;
 
-    // Clocks.
-    private ClockComponent clockComponent;
+  // Clocks.
+  private ClockComponent clockComponent;
 
-    public Item(ItemBlueprint bp) {
-        super(bp.id, bp.type, bp.name);
+  public Item(ItemBlueprint bp) {
+    super(bp.id, bp.type, bp.name);
 
-        repairable = bp.repairable;
-        maxIntegrity = bp.maxIntegrity;
-        curIntegrity = bp.curIntegrity;
+    repairable = bp.repairable;
+    maxIntegrity = bp.maxIntegrity;
+    curIntegrity = bp.curIntegrity;
 
-        weapon = bp.weapon;
-        damage = bp.damage;
-        hitRate = bp.hitRate;
-        integrityDecrementOnHit = bp.integrityDecrementOnHit;
+    weapon = bp.weapon;
+    damage = bp.damage;
+    hitRate = bp.hitRate;
+    integrityDecrementOnHit = bp.integrityDecrementOnHit;
 
-        if (bp.food) {
-            foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
-        }
-
-        if (bp.clock) {
-            clockComponent = new ClockComponent();
-            clockComponent.setMaster(this);
-        }
+    if (bp.food) {
+      foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
 
-    public void setOwner(Creature owner) {
-        this.owner = owner;
+    if (bp.clock) {
+      clockComponent = new ClockComponent();
+      clockComponent.setMaster(this);
     }
+  }
 
-    public boolean isEquipped() {
-        return owner != null && owner.getWeapon() == this;
-    }
+  public void setOwner(Creature owner) {
+    this.owner = owner;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public boolean isEquipped() {
+    return owner != null && owner.getWeapon() == this;
+  }
 
-    String getType() {
-        return type;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  String getType() {
+    return type;
+  }
 
-    public String getQualifiedName() {
-        if (getCurIntegrity() == getMaxIntegrity()) {
-            return getName();
-        } else {
-            return getIntegrityString() + " " + getName();
-        }
-    }
+  public String getName() {
+    return name;
+  }
 
-    int getMaxIntegrity() {
-        return maxIntegrity;
+  public String getQualifiedName() {
+    if (getCurIntegrity() == getMaxIntegrity()) {
+      return getName();
+    } else {
+      return getIntegrityString() + " " + getName();
     }
+  }
 
-    public int getCurIntegrity() {
-        return curIntegrity;
-    }
+  int getMaxIntegrity() {
+    return maxIntegrity;
+  }
 
-    public void setCurIntegrity(int curIntegrity) {
-        if (curIntegrity > 0) {
-            this.curIntegrity = curIntegrity;
-        } else {
-            this.curIntegrity = 0;
-            // TODO: maybe we should extract the "breaking routine" to another method.
-            if (isClock()) {
-                // A clock just broke! Update its last time record.
-                clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
-            }
-        }
-    }
+  public int getCurIntegrity() {
+    return curIntegrity;
+  }
 
-    public boolean isRepairable() {
-        return repairable;
+  public void setCurIntegrity(int curIntegrity) {
+    if (curIntegrity > 0) {
+      this.curIntegrity = curIntegrity;
+    } else {
+      this.curIntegrity = 0;
+      // TODO: maybe we should extract the "breaking routine" to another method.
+      if (isClock()) {
+        // A clock just broke! Update its last time record.
+        clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
+      }
     }
+  }
 
-    public boolean isWeapon() {
-        return weapon;
-    }
+  public boolean isRepairable() {
+    return repairable;
+  }
 
-    public int getDamage() {
-        return damage;
-    }
+  public boolean isWeapon() {
+    return weapon;
+  }
 
-    double getHitRate() {
-        return hitRate;
-    }
+  public int getDamage() {
+    return damage;
+  }
 
-    int getIntegrityDecrementOnHit() {
-        return integrityDecrementOnHit;
-    }
+  double getHitRate() {
+    return hitRate;
+  }
 
-    // Food methods
-    public boolean isFood() {
-        return foodComponent != null;
-    }
+  int getIntegrityDecrementOnHit() {
+    return integrityDecrementOnHit;
+  }
 
-    public FoodComponent getFoodComponent() {
-        return foodComponent;
-    }
+  // Food methods
+  public boolean isFood() {
+    return foodComponent != null;
+  }
 
-    // Clock methods
-    public boolean isClock() {
-        return clockComponent != null;
-    }
+  public FoodComponent getFoodComponent() {
+    return foodComponent;
+  }
 
-    public ClockComponent getClockComponent() {
-        return clockComponent;
-    }
+  // Clock methods
+  public boolean isClock() {
+    return clockComponent != null;
+  }
 
-    // Durability methods
-    public boolean isBroken() {
-        return getCurIntegrity() == 0;
-    }
+  public ClockComponent getClockComponent() {
+    return clockComponent;
+  }
 
-    /**
-     * @return true if the item's current integrity is equals to its maximum integrity. False otherwise.
-     */
-    public boolean isPerfect() {
-        return getCurIntegrity() == getMaxIntegrity();
-    }
+  // Durability methods
+  public boolean isBroken() {
+    return getCurIntegrity() == 0;
+  }
 
-    public void decrementIntegrityByHit() {
-        setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
-    }
+  /**
+   * @return true if the item's current integrity is equals to its maximum integrity. False otherwise.
+   */
+  public boolean isPerfect() {
+    return getCurIntegrity() == getMaxIntegrity();
+  }
 
-    public void decrementIntegrity(int integrityDecrement) {
-        setCurIntegrity(getCurIntegrity() - integrityDecrement);
-    }
+  public void decrementIntegrityByHit() {
+    setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
+  }
 
-    // Weapon methods
-    public boolean rollForHit() {
-        return getHitRate() > Engine.RANDOM.nextDouble();
-    }
+  public void decrementIntegrity(int integrityDecrement) {
+    setCurIntegrity(getCurIntegrity() - integrityDecrement);
+  }
 
-    String getIntegrityString() {
-        String weaponIntegrity;
-        if (getCurIntegrity() == getMaxIntegrity()) {
-            weaponIntegrity = "";
-        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
-            weaponIntegrity = "Slightly Damaged";
-        } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
-            weaponIntegrity = "Damaged";
-        } else if (getCurIntegrity() > 0) {
-            weaponIntegrity = "Severely Damaged";
-        } else {
-            weaponIntegrity = "Broken";
-        }
-        return weaponIntegrity;
-    }
+  // Weapon methods
+  public boolean rollForHit() {
+    return getHitRate() > Engine.RANDOM.nextDouble();
+  }
 
-    public String toListEntry() {
-        return String.format(Constants.LIST_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
+  String getIntegrityString() {
+    String weaponIntegrity;
+    if (getCurIntegrity() == getMaxIntegrity()) {
+      weaponIntegrity = "";
+    } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
+      weaponIntegrity = "Slightly Damaged";
+    } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
+      weaponIntegrity = "Damaged";
+    } else if (getCurIntegrity() > 0) {
+      weaponIntegrity = "Severely Damaged";
+    } else {
+      weaponIntegrity = "Broken";
     }
+    return weaponIntegrity;
+  }
+
+  public String toListEntry() {
+    return String.format(Constants.LIST_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
+  }
 
 }

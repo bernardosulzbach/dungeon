@@ -29,71 +29,71 @@ import java.util.TreeSet;
  */
 public class ExpandableIntegerSet implements Serializable {
 
-    // DBI stands for distance between integers.
-    private final int MIN_DBI;
-    // The difference between the minimum DBI and maximum DBI.
-    private final int DIFF;
+  // DBI stands for distance between integers.
+  private final int MIN_DBI;
+  // The difference between the minimum DBI and maximum DBI.
+  private final int DIFF;
 
-    // A sorted set of integers.
-    private final TreeSet<Integer> set = new TreeSet<Integer>();
+  // A sorted set of integers.
+  private final TreeSet<Integer> set = new TreeSet<Integer>();
 
-    /**
-     * Make a new ExpandableIntegerSet.
-     *
-     * @param MIN_DBI the minimum distance between integers. Must be positive.
-     * @param MAX_DBI the maximum distance between integers. Must be bigger than <code>MIN_DBI</code>.
-     */
-    public ExpandableIntegerSet(int MIN_DBI, int MAX_DBI) {
-        if (MIN_DBI > 0 && MAX_DBI > MIN_DBI) {
-            this.MIN_DBI = MIN_DBI;
-            this.DIFF = MAX_DBI - MIN_DBI;
-        } else {
-            throw new IllegalArgumentException("illegal values for MIN_DBI or MAX_DBI");
-        }
-        initialize();
+  /**
+   * Make a new ExpandableIntegerSet.
+   *
+   * @param MIN_DBI the minimum distance between integers. Must be positive.
+   * @param MAX_DBI the maximum distance between integers. Must be bigger than <code>MIN_DBI</code>.
+   */
+  public ExpandableIntegerSet(int MIN_DBI, int MAX_DBI) {
+    if (MIN_DBI > 0 && MAX_DBI > MIN_DBI) {
+      this.MIN_DBI = MIN_DBI;
+      this.DIFF = MAX_DBI - MIN_DBI;
+    } else {
+      throw new IllegalArgumentException("illegal values for MIN_DBI or MAX_DBI");
     }
+    initialize();
+  }
 
-    /**
-     * Generate the first integer of the set. This method should not be invoked twice.
-     */
-    void initialize() {
-        if (set.size() != 0) {
-            throw new IllegalStateException("set already has an element.");
-        } else {
-            set.add(Engine.RANDOM.nextInt(MIN_DBI));
-        }
+  /**
+   * Generate the first integer of the set. This method should not be invoked twice.
+   */
+  void initialize() {
+    if (set.size() != 0) {
+      throw new IllegalStateException("set already has an element.");
+    } else {
+      set.add(Engine.RANDOM.nextInt(MIN_DBI));
     }
+  }
 
-    /**
-     * Expand the set of integers towards an integer a until there is an integer bigger than or equal to a.
-     *
-     * @return a list with all new integers.
-     */
-    List<Integer> expand(int a) {
-        if (set.size() == 0) {
-            throw new IllegalStateException("the set is empty.");
-        }
-        ArrayList<Integer> integerList = new ArrayList<Integer>();
-        int integer = set.last();
-        while (a >= integer) {
-            integer += MIN_DBI + Engine.RANDOM.nextInt(DIFF);
-            integerList.add(integer);
-            set.add(integer);
-        }
-        integer = set.first();
-        while (a <= integer) {
-            integer -= MIN_DBI + Engine.RANDOM.nextInt(DIFF);
-            integerList.add(integer);
-            set.add(integer);
-        }
-        return integerList;
+  /**
+   * Expand the set of integers towards an integer a until there is an integer bigger than or equal to a.
+   *
+   * @return a list with all new integers.
+   */
+  List<Integer> expand(int a) {
+    if (set.size() == 0) {
+      throw new IllegalStateException("the set is empty.");
     }
+    ArrayList<Integer> integerList = new ArrayList<Integer>();
+    int integer = set.last();
+    while (a >= integer) {
+      integer += MIN_DBI + Engine.RANDOM.nextInt(DIFF);
+      integerList.add(integer);
+      set.add(integer);
+    }
+    integer = set.first();
+    while (a <= integer) {
+      integer -= MIN_DBI + Engine.RANDOM.nextInt(DIFF);
+      integerList.add(integer);
+      set.add(integer);
+    }
+    return integerList;
+  }
 
-    /**
-     * @return true if <code>a</code> is in the set.
-     */
-    boolean contains(int a) {
-        return set.contains(a);
-    }
+  /**
+   * @return true if <code>a</code> is in the set.
+   */
+  boolean contains(int a) {
+    return set.contains(a);
+  }
 
 }

@@ -26,26 +26,26 @@ import java.io.Serializable;
  */
 public class River implements Serializable {
 
-    private final ExpandableIntegerSet bridges;
+  private final ExpandableIntegerSet bridges;
 
-    /**
-     * Make a river.
-     *
-     * @param MIN_DBB the minimum distance between bridges. Must be positive.
-     * @param MAX_DBB the maximum distance between bridges. Must be bigger than <code>MIN_DBB</code>.
-     */
-    River(int MIN_DBB, int MAX_DBB) {
-        bridges = new ExpandableIntegerSet(MIN_DBB, MAX_DBB);
-    }
+  /**
+   * Make a river.
+   *
+   * @param MIN_DBB the minimum distance between bridges. Must be positive.
+   * @param MAX_DBB the maximum distance between bridges. Must be bigger than <code>MIN_DBB</code>.
+   */
+  River(int MIN_DBB, int MAX_DBB) {
+    bridges = new ExpandableIntegerSet(MIN_DBB, MAX_DBB);
+  }
 
-    // Expand the set of bridges towards a value of y until there is a bridge at y or after y.
-    private void expand(int y) {
-        bridges.expand(y);
-    }
+  // Expand the set of bridges towards a value of y until there is a bridge at y or after y.
+  private void expand(int y) {
+    bridges.expand(y);
+  }
 
-    boolean isBridge(int y) {
-        expand(y);
-        return bridges.contains(y);
-    }
+  boolean isBridge(int y) {
+    expand(y);
+    return bridges.contains(y);
+  }
 
 }

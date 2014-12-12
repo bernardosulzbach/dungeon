@@ -26,6 +26,6 @@ import org.dungeon.creatures.Hero;
  */
 abstract class AchievementComponent {
 
-    abstract boolean isFulfilled(Hero hero);
+  abstract boolean isFulfilled(Hero hero);
 
 }

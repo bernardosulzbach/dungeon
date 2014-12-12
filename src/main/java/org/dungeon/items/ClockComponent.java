@@ -31,40 +31,40 @@ import java.io.Serializable;
  */
 public class ClockComponent implements Serializable {
 
-    private Item master;
+  private Item master;
 
-    /**
-     * Used to store the date the clock had when it was broken.
-     */
-    private DateTime lastTime;
+  /**
+   * Used to store the date the clock had when it was broken.
+   */
+  private DateTime lastTime;
 
-    public void setMaster(Item master) {
-        this.master = master;
-    }
+  public void setMaster(Item master) {
+    this.master = master;
+  }
 
-    public void setLastTime(DateTime lastTime) {
-        // Create a new Date object so that this field is not affected by changes in the rest of the program.
-        this.lastTime = lastTime;
-    }
+  public void setLastTime(DateTime lastTime) {
+    // Create a new Date object so that this field is not affected by changes in the rest of the program.
+    this.lastTime = lastTime;
+  }
 
-    /**
-     * Returns a string that represents a clock reading.
-     */
-    public String getTimeString() {
-        if (master.isBroken()) {
-            if (lastTime == null) {
-                if (Engine.RANDOM.nextBoolean()) {
-                    return "The clock is pure junk.";
-                } else {
-                    return "The clock is completely smashed.";
-                }
-            } else {
-                return "The clock is broken. Still, it displays " + Constants.TIME_FORMAT.print(lastTime) + ".";
-            }
+  /**
+   * Returns a string that represents a clock reading.
+   */
+  public String getTimeString() {
+    if (master.isBroken()) {
+      if (lastTime == null) {
+        if (Engine.RANDOM.nextBoolean()) {
+          return "The clock is pure junk.";
         } else {
-            String timeString = Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate());
-            return "The clock displays " + timeString + ".";
+          return "The clock is completely smashed.";
         }
+      } else {
+        return "The clock is broken. Still, it displays " + Constants.TIME_FORMAT.print(lastTime) + ".";
+      }
+    } else {
+      String timeString = Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate());
+      return "The clock displays " + timeString + ".";
     }
+  }
 
 }

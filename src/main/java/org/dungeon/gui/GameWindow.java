@@ -60,282 +60,282 @@ import java.net.URL;
 
 public class GameWindow extends JFrame {
 
-    // The border, in pixels.
-    private static final int MARGIN = 5;
+  // The border, in pixels.
+  private static final int MARGIN = 5;
 
-    private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-    private StyledDocument document;
+  private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+  private StyledDocument document;
 
-    private JTextField textField;
-    private JTextPane textPane;
+  private JTextField textField;
+  private JTextPane textPane;
 
-    private int rows = Constants.ROWS;
+  private int rows = Constants.ROWS;
 
-    private boolean idle;
+  private boolean idle;
 
-    public GameWindow() {
-        initComponents();
-        document = textPane.getStyledDocument();
-        setVisible(true);
-        setIdle(true);
-    }
+  public GameWindow() {
+    initComponents();
+    document = textPane.getStyledDocument();
+    setVisible(true);
+    setIdle(true);
+  }
 
-    private void initComponents() {
-        setSystemLookAndFeel();
+  private void initComponents() {
+    setSystemLookAndFeel();
 
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(SharedConstants.MARGIN_COLOR);
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBackground(SharedConstants.MARGIN_COLOR);
 
-        textPane = new javax.swing.JTextPane();
-        textField = new javax.swing.JTextField();
+    textPane = new javax.swing.JTextPane();
+    textField = new javax.swing.JTextField();
 
-        JScrollPane scrollPane = new JScrollPane();
+    JScrollPane scrollPane = new JScrollPane();
 
-        textPane.setEditable(false);
-        textPane.setBackground(SharedConstants.INSIDE_COLOR);
-        textPane.setFont(GameData.monospaced);
+    textPane.setEditable(false);
+    textPane.setBackground(SharedConstants.INSIDE_COLOR);
+    textPane.setFont(GameData.monospaced);
 
-        scrollPane.setViewportView(textPane);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
+    scrollPane.setViewportView(textPane);
+    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+    scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
 
-        textField.setBackground(SharedConstants.INSIDE_COLOR);
-        textField.setForeground(Constants.FORE_COLOR_NORMAL);
-        textField.setCaretColor(Color.WHITE);
-        textField.setFont(GameData.monospaced);
-        textField.setFocusTraversalKeysEnabled(false);
-        textField.setBorder(BorderFactory.createEmptyBorder());
+    textField.setBackground(SharedConstants.INSIDE_COLOR);
+    textField.setForeground(Constants.FORE_COLOR_NORMAL);
+    textField.setCaretColor(Color.WHITE);
+    textField.setFont(GameData.monospaced);
+    textField.setFocusTraversalKeysEnabled(false);
+    textField.setBorder(BorderFactory.createEmptyBorder());
 
-        textField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-                textFieldActionPerformed();
-            }
-        });
+    textField.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+        textFieldActionPerformed();
+      }
+    });
 
-        textField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                textFieldKeyPressed(e);
-            }
-        });
+    textField.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e) {
+        textFieldKeyPressed(e);
+      }
+    });
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
-        panel.add(scrollPane, c);
+    GridBagConstraints c = new GridBagConstraints();
+    c.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+    panel.add(scrollPane, c);
 
-        c.gridy = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
-        panel.add(textField, c);
+    c.gridy = 1;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
+    panel.add(textField, c);
 
-        setTitle(Constants.NAME);
+    setTitle(Constants.NAME);
 
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                Game.exit();
-            }
-        });
+    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        super.windowClosing(e);
+        Game.exit();
+      }
+    });
 
-        Action save = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (idle) {
-                    clearTextPane();
-                    Loader.saveGame(Game.getGameState());
-                }
-            }
-        };
-        textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
-        textField.getActionMap().put("SAVE", save);
-
-        URL icon = Thread.currentThread().getContextClassLoader().getResource("icon.png");
-        if (icon != null) {
-            setIconImage(new ImageIcon(icon).getImage());
-        } else {
-            DLogger.warning("Could not find the icon.");
-        }
-
-        add(panel);
-
-        setResizable(false);
-        resize();
-    }
-
-    /**
-     * Try to set the system's look and feel.
-     * <p/>
-     * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
-     * background coloring of a JTextField.
-     */
-    private void setSystemLookAndFeel() {
-        try {
-            String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-            if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            } else {
-                UIManager.setLookAndFeel(lookAndFeel);
-            }
-        } catch (UnsupportedLookAndFeelException ignored) {
-        } catch (ClassNotFoundException ignored) {
-        } catch (InstantiationException ignored) {
-        } catch (IllegalAccessException ignored) {
-        }
-    }
-
-    /**
-     * Resizes and centers the frame.
-     */
-    private void resize() {
-        textPane.setPreferredSize(calculateTextPaneSize());
-        pack();
-        setLocationRelativeTo(null);
-    }
-
-    /**
-     * Evaluates the preferred size for the TextPane.
-     *
-     * @return a Dimension with the preferred TextPane dimensions.
-     */
-    private Dimension calculateTextPaneSize() {
-        FontMetrics fontMetrics = getFontMetrics(GameData.monospaced);
-        int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
-        int height = fontMetrics.getHeight() * rows;
-        return new Dimension(width, height);
-    }
-
-    /**
-     * Changes the number of rows displayed in the TextPane and resizes the frame. You should verify that the argument
-     * is reasonable as this method does not verify if the row count is too big.
-     *
-     * @param rows the new number of rows.
-     * @return a boolean indicating if the number of rows was altered or not.
-     */
-    public boolean setRows(int rows) {
-        if (rows < 0) {
-            throw new IllegalArgumentException("rows should be positive.");
-        }
-        if (rows != this.rows) {
-            this.rows = rows;
-            resize();
-            return true;
-        }
-        return false;
-    }
-
-    // The method that gets called when the player presses ENTER.
-    private void textFieldActionPerformed() {
-        String text = getTrimmedTextFieldText();
-        if (!text.isEmpty()) {
-            clearTextField();
-            setIdle(false);
-            Game.renderTurn(new IssuedCommand(text));
-            Game.getGameState().getCommandHistory().getCursor().moveToEnd();
-            textField.requestFocusInWindow();
-            setIdle(true);
-        }
-    }
-
-    /**
-     * Sets the idle state variable of this GameWindow. The player can only enter input or save the game when the window
-     * is idle.
-     *
-     * @param idle the new idle state for this window.
-     */
-    private void setIdle(boolean idle) {
-        this.idle = idle;
-        textField.setEnabled(idle);
-    }
-
-    /**
-     * Handles a key press in the text field.
-     *
-     * @param e the KeyEvent.
-     */
-    private void textFieldKeyPressed(KeyEvent e) {
+    Action save = new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
         if (idle) {
-            GameState gameState = Game.getGameState();
-            if (gameState != null) {
-                CommandHistory commandHistory = gameState.getCommandHistory();
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
-                } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                    String trimmedTextFieldText = getTrimmedTextFieldText();
-                    if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
-                        textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
-                    } else {
-                        String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
-                        if (lastSimilarCommand != null) {
-                            textField.setText(lastSimilarCommand);
-                        }
-                    }
-                }
+          clearTextPane();
+          Loader.saveGame(Game.getGameState());
+        }
+      }
+    };
+    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
+    textField.getActionMap().put("SAVE", save);
+
+    URL icon = Thread.currentThread().getContextClassLoader().getResource("icon.png");
+    if (icon != null) {
+      setIconImage(new ImageIcon(icon).getImage());
+    } else {
+      DLogger.warning("Could not find the icon.");
+    }
+
+    add(panel);
+
+    setResizable(false);
+    resize();
+  }
+
+  /**
+   * Try to set the system's look and feel.
+   * <p/>
+   * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
+   * background coloring of a JTextField.
+   */
+  private void setSystemLookAndFeel() {
+    try {
+      String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+      if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      } else {
+        UIManager.setLookAndFeel(lookAndFeel);
+      }
+    } catch (UnsupportedLookAndFeelException ignored) {
+    } catch (ClassNotFoundException ignored) {
+    } catch (InstantiationException ignored) {
+    } catch (IllegalAccessException ignored) {
+    }
+  }
+
+  /**
+   * Resizes and centers the frame.
+   */
+  private void resize() {
+    textPane.setPreferredSize(calculateTextPaneSize());
+    pack();
+    setLocationRelativeTo(null);
+  }
+
+  /**
+   * Evaluates the preferred size for the TextPane.
+   *
+   * @return a Dimension with the preferred TextPane dimensions.
+   */
+  private Dimension calculateTextPaneSize() {
+    FontMetrics fontMetrics = getFontMetrics(GameData.monospaced);
+    int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
+    int height = fontMetrics.getHeight() * rows;
+    return new Dimension(width, height);
+  }
+
+  /**
+   * Changes the number of rows displayed in the TextPane and resizes the frame. You should verify that the argument
+   * is reasonable as this method does not verify if the row count is too big.
+   *
+   * @param rows the new number of rows.
+   * @return a boolean indicating if the number of rows was altered or not.
+   */
+  public boolean setRows(int rows) {
+    if (rows < 0) {
+      throw new IllegalArgumentException("rows should be positive.");
+    }
+    if (rows != this.rows) {
+      this.rows = rows;
+      resize();
+      return true;
+    }
+    return false;
+  }
+
+  // The method that gets called when the player presses ENTER.
+  private void textFieldActionPerformed() {
+    String text = getTrimmedTextFieldText();
+    if (!text.isEmpty()) {
+      clearTextField();
+      setIdle(false);
+      Game.renderTurn(new IssuedCommand(text));
+      Game.getGameState().getCommandHistory().getCursor().moveToEnd();
+      textField.requestFocusInWindow();
+      setIdle(true);
+    }
+  }
+
+  /**
+   * Sets the idle state variable of this GameWindow. The player can only enter input or save the game when the window
+   * is idle.
+   *
+   * @param idle the new idle state for this window.
+   */
+  private void setIdle(boolean idle) {
+    this.idle = idle;
+    textField.setEnabled(idle);
+  }
+
+  /**
+   * Handles a key press in the text field.
+   *
+   * @param e the KeyEvent.
+   */
+  private void textFieldKeyPressed(KeyEvent e) {
+    if (idle) {
+      GameState gameState = Game.getGameState();
+      if (gameState != null) {
+        CommandHistory commandHistory = gameState.getCommandHistory();
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+          textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+          textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
+        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+          String trimmedTextFieldText = getTrimmedTextFieldText();
+          if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
+            textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
+          } else {
+            String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
+            if (lastSimilarCommand != null) {
+              textField.setText(lastSimilarCommand);
             }
+          }
         }
+      }
     }
+  }
 
-    /**
-     * Convenience method that returns the text in the text field after trimming it.
-     *
-     * @return a trimmed String.
-     */
-    private String getTrimmedTextFieldText() {
-        return textField.getText().trim();
+  /**
+   * Convenience method that returns the text in the text field after trimming it.
+   *
+   * @return a trimmed String.
+   */
+  private String getTrimmedTextFieldText() {
+    return textField.getText().trim();
+  }
+
+  /**
+   * Adds a string with a specific foreground color to the text pane.
+   *
+   * @param string the string to be written.
+   * @param color  the color of the text.
+   */
+  public void writeToTextPane(String string, Color color, long wait) {
+    writeToTextPane(string, color, textPane.getBackground(), wait);
+  }
+
+  /**
+   * Adds a string with a specific foreground and background color to the text pane.
+   *
+   * @param string the string to be written.
+   * @param fore   the color of the text.
+   */
+  void writeToTextPane(String string, Color fore, Color back, long wait) {
+    StyleConstants.setForeground(attributeSet, fore);
+    StyleConstants.setBackground(attributeSet, back);
+    if (Game.getGameState() != null) {
+      StyleConstants.setBold(attributeSet, Game.getGameState().isBold());
     }
-
-    /**
-     * Adds a string with a specific foreground color to the text pane.
-     *
-     * @param string the string to be written.
-     * @param color  the color of the text.
-     */
-    public void writeToTextPane(String string, Color color, long wait) {
-        writeToTextPane(string, color, textPane.getBackground(), wait);
-    }
-
-    /**
-     * Adds a string with a specific foreground and background color to the text pane.
-     *
-     * @param string the string to be written.
-     * @param fore   the color of the text.
-     */
-    void writeToTextPane(String string, Color fore, Color back, long wait) {
-        StyleConstants.setForeground(attributeSet, fore);
-        StyleConstants.setBackground(attributeSet, back);
-        if (Game.getGameState() != null) {
-            StyleConstants.setBold(attributeSet, Game.getGameState().isBold());
+    try {
+      document.insertString(document.getLength(), string, attributeSet);
+      try {
+        if (wait > 0) {
+          textPane.update(textPane.getGraphics());
+          Thread.sleep(wait);
         }
-        try {
-            document.insertString(document.getLength(), string, attributeSet);
-            try {
-                if (wait > 0) {
-                    textPane.update(textPane.getGraphics());
-                    Thread.sleep(wait);
-                }
-            } catch (InterruptedException ignored) {
-            }
-        } catch (BadLocationException ignored) {
-        }
+      } catch (InterruptedException ignored) {
+      }
+    } catch (BadLocationException ignored) {
     }
+  }
 
-    public void clearTextPane() {
-        try {
-            document.remove(0, document.getLength());
-        } catch (BadLocationException ignored) {
-        }
+  public void clearTextPane() {
+    try {
+      document.remove(0, document.getLength());
+    } catch (BadLocationException ignored) {
     }
+  }
 
-    public void requestFocusOnTextField() {
-        textField.requestFocusInWindow();
-    }
+  public void requestFocusOnTextField() {
+    textField.requestFocusInWindow();
+  }
 
-    private void clearTextField() {
-        textField.setText(null);
-    }
+  private void clearTextField() {
+    textField.setText(null);
+  }
 
 }

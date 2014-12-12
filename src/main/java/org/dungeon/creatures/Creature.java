@@ -28,116 +28,116 @@ import org.dungeon.items.Item;
  */
 public class Creature extends Entity {
 
-    private int maxHealth;
-    private int curHealth;
+  private int maxHealth;
+  private int curHealth;
 
-    private int attack;
-    private String attackAlgorithm;
+  private int attack;
+  private String attackAlgorithm;
 
-    private CreatureInventory inventory;
-    private Item weapon;
+  private CreatureInventory inventory;
+  private Item weapon;
 
-    private Location location;
+  private Location location;
 
-    public Creature(CreatureBlueprint bp) {
-        super(bp.getId(), bp.getType(), bp.getName());
-        attackAlgorithm = bp.getAttackAlgorithmID();
-        attack = bp.getAttack();
-        maxHealth = bp.getMaxHealth();
-        curHealth = bp.getCurHealth();
+  public Creature(CreatureBlueprint bp) {
+    super(bp.getId(), bp.getType(), bp.getName());
+    attackAlgorithm = bp.getAttackAlgorithmID();
+    attack = bp.getAttack();
+    maxHealth = bp.getMaxHealth();
+    curHealth = bp.getCurHealth();
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  int getMaxHealth() {
+    return maxHealth;
+  }
+
+  int getCurHealth() {
+    return curHealth;
+  }
+
+  void setCurHealth(int curHealth) {
+    this.curHealth = curHealth;
+  }
+
+  public int getAttack() {
+    return attack;
+  }
+
+  String getAttackAlgorithm() {
+    return attackAlgorithm;
+  }
+
+  public CreatureInventory getInventory() {
+    return inventory;
+  }
+
+  void setInventory(CreatureInventory inventory) {
+    this.inventory = inventory;
+  }
+
+  public Item getWeapon() {
+    return weapon;
+  }
+
+  public void setWeapon(Item weapon) {
+    this.weapon = weapon;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
+  }
+
+  // Increments the creature's health by a certain amount, never exceeding its maximum health.
+  void addHealth(int amount) {
+    int sum = amount + getCurHealth();
+    if (sum > getMaxHealth()) {
+      setCurHealth(getMaxHealth());
+    } else {
+      setCurHealth(sum);
     }
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void hit(Creature target) {
+    AttackAlgorithm.attack(this, target, getAttackAlgorithm());
+  }
 
-    public String getType() {
-        return type;
+  public void takeDamage(int damage) {
+    if (damage > getCurHealth()) {
+      setCurHealth(0);
+    } else {
+      setCurHealth(getCurHealth() - damage);
     }
+  }
 
-    public String getName() {
-        return name;
-    }
+  // Checks if the creature is alive.
+  public boolean isAlive() {
+    return getCurHealth() > 0;
+  }
 
-    int getMaxHealth() {
-        return maxHealth;
-    }
+  // Checks if the creature is dead.
+  public boolean isDead() {
+    return !isAlive();
+  }
 
-    int getCurHealth() {
-        return curHealth;
-    }
-
-    void setCurHealth(int curHealth) {
-        this.curHealth = curHealth;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    String getAttackAlgorithm() {
-        return attackAlgorithm;
-    }
-
-    public CreatureInventory getInventory() {
-        return inventory;
-    }
-
-    void setInventory(CreatureInventory inventory) {
-        this.inventory = inventory;
-    }
-
-    public Item getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Item weapon) {
-        this.weapon = weapon;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    // Increments the creature's health by a certain amount, never exceeding its maximum health.
-    void addHealth(int amount) {
-        int sum = amount + getCurHealth();
-        if (sum > getMaxHealth()) {
-            setCurHealth(getMaxHealth());
-        } else {
-            setCurHealth(sum);
-        }
-    }
-
-    public void hit(Creature target) {
-        AttackAlgorithm.attack(this, target, getAttackAlgorithm());
-    }
-
-    public void takeDamage(int damage) {
-        if (damage > getCurHealth()) {
-            setCurHealth(0);
-        } else {
-            setCurHealth(getCurHealth() - damage);
-        }
-    }
-
-    // Checks if the creature is alive.
-    public boolean isAlive() {
-        return getCurHealth() > 0;
-    }
-
-    // Checks if the creature is dead.
-    public boolean isDead() {
-        return !isAlive();
-    }
-
-    // Checks if the creature has a weapon.
-    public boolean hasWeapon() {
-        return getWeapon() != null;
-    }
+  // Checks if the creature has a weapon.
+  public boolean hasWeapon() {
+    return getWeapon() != null;
+  }
 
 }

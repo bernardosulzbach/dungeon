@@ -31,19 +31,19 @@ import java.io.Serializable;
  */
 public abstract class Entity implements Selectable, Serializable {
 
-    public final String id;
-    public final String type;
-    public final String name;
+  public final String id;
+  public final String type;
+  public final String name;
 
-    public Entity(String id, String type, String name) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-    }
+  public Entity(String id, String type, String name) {
+    this.id = id;
+    this.type = type;
+    this.name = name;
+  }
 
-    @Override
-    public String getName() {
-        return name;
-    }
+  @Override
+  public String getName() {
+    return name;
+  }
 
 }

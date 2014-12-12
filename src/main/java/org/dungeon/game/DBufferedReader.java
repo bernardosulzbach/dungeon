@@ -31,79 +31,79 @@ import java.io.Reader;
  */
 public class DBufferedReader implements Closeable {
 
-    // The last line retrieved by the readLine method.
-    private String line;
-    // True if line ends with the LINE_BREAK character.
-    private boolean continued;
+  // The last line retrieved by the readLine method.
+  private String line;
+  // True if line ends with the LINE_BREAK character.
+  private boolean continued;
 
-    // A line breaking character.
-    private static final char LINE_BREAK = '\\';
+  // A line breaking character.
+  private static final char LINE_BREAK = '\\';
 
-    // The wrapped BufferedReader.
-    private final BufferedReader br;
+  // The wrapped BufferedReader.
+  private final BufferedReader br;
 
-    /**
-     * Creates a convenient buffered reader for reading Dungeon resource files.
-     *
-     * @param in the Reader.
-     */
-    public DBufferedReader(Reader in) {
-        br = new BufferedReader(in);
-    }
+  /**
+   * Creates a convenient buffered reader for reading Dungeon resource files.
+   *
+   * @param in the Reader.
+   */
+  public DBufferedReader(Reader in) {
+    br = new BufferedReader(in);
+  }
 
-    /**
-     * Read the next line from the BufferedReader to the private variable <code>line</code>.
-     */
-    private void readLine() {
-        try {
-            line = br.readLine();
-            if (line != null) {
-                continued = isContinued();
-                if (continued) {
-                    line = line.substring(0, line.length() - 1);
-                }
-                line = line.trim();
-            } else {
-                continued = false;
-            }
-        } catch (IOException e) {
-            DLogger.warning(e.getMessage());
-        }
-    }
-
-    /**
-     * @return true if the line ends with the line break character. False otherwise.
-     */
-    private boolean isContinued() {
-        return !line.isEmpty() && line.charAt(line.length() - 1) == LINE_BREAK;
-    }
-
-    /**
-     * Read a String of text formatted according to the Dungeon convention.
-     */
-    public String readString() {
-        readLine();
+  /**
+   * Read the next line from the BufferedReader to the private variable <code>line</code>.
+   */
+  private void readLine() {
+    try {
+      line = br.readLine();
+      if (line != null) {
+        continued = isContinued();
         if (continued) {
-            StringBuilder sb = new StringBuilder(line);
-            while (continued) {
-                readLine();
-                if (line != null) {
-                    sb.append('\n').append(line);
-                }
-            }
-            return sb.toString();
+          line = line.substring(0, line.length() - 1);
         }
-        return line;
+        line = line.trim();
+      } else {
+        continued = false;
+      }
+    } catch (IOException e) {
+      DLogger.warning(e.getMessage());
     }
+  }
 
-    /**
-     * Closes the underlying BufferedReader.
-     *
-     * @throws IOException
-     */
-    @Override
-    public void close() throws IOException {
-        br.close();
+  /**
+   * @return true if the line ends with the line break character. False otherwise.
+   */
+  private boolean isContinued() {
+    return !line.isEmpty() && line.charAt(line.length() - 1) == LINE_BREAK;
+  }
+
+  /**
+   * Read a String of text formatted according to the Dungeon convention.
+   */
+  public String readString() {
+    readLine();
+    if (continued) {
+      StringBuilder sb = new StringBuilder(line);
+      while (continued) {
+        readLine();
+        if (line != null) {
+          sb.append('\n').append(line);
+        }
+      }
+      return sb.toString();
     }
+    return line;
+  }
+
+  /**
+   * Closes the underlying BufferedReader.
+   *
+   * @throws IOException
+   */
+  @Override
+  public void close() throws IOException {
+    br.close();
+  }
 
 }

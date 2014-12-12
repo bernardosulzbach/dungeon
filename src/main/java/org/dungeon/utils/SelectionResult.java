@@ -32,85 +32,85 @@ import java.util.List;
  */
 public class SelectionResult<T extends Selectable> {
 
-    private final List<T> matches;
+  private final List<T> matches;
 
-    private int differentNames;
-    private boolean differentNamesUpToDate;
+  private int differentNames;
+  private boolean differentNamesUpToDate;
 
-    public SelectionResult() {
-        matches = new ArrayList<T>();
-        differentNames = 0;
-        differentNamesUpToDate = true;
+  public SelectionResult() {
+    matches = new ArrayList<T>();
+    differentNames = 0;
+    differentNamesUpToDate = true;
+  }
+
+  public void addMatch(T match) {
+    matches.add(match);
+    differentNamesUpToDate = false;
+  }
+
+  public T getMatch(int index) {
+    return matches.get(index);
+  }
+
+  /**
+   * Returns true if there is a match with the given name, false otherwise.
+   *
+   * @param name the name used for comparison.
+   * @return true if there is a match with the given name, false otherwise.
+   */
+  public boolean hasName(String name) {
+    for (T match : matches) {
+      if (match.getName().equals(name)) {
+        return true;
+      }
     }
+    return false;
+  }
 
-    public void addMatch(T match) {
-        matches.add(match);
-        differentNamesUpToDate = false;
+  /**
+   * Returns the number of matches in this SelectionResult.
+   *
+   * @return the number of matches in this SelectionResult.
+   */
+  public int size() {
+    return matches.size();
+  }
+
+  // TODO: write tests for this class (mainly, for this method).
+
+  /**
+   * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects
+   * with identical names, this method will return 1.
+   * <p/>
+   * This method will calculate how many different names are in the list of matches or use the last calculated value,
+   * if the matches list did not change since the last calculation. Therefore, after adding all matches and calling
+   * this method once, subsequent method calls should be substantially faster.
+   * <p/>
+   * Adding more elements to the SelectionResult will make necessary a new iteration through the list before returning
+   * the new amount of different names.
+   * <p/>
+   * This is more efficient than updating the counter after every addition as it allows many matches to be added with
+   * little overhead, letting the different names calculation to the end.
+   *
+   * @return how many different names the matches have.
+   */
+  public int getDifferentNames() {
+    if (!differentNamesUpToDate) {
+      updateDifferentNamesCount();
     }
+    return differentNames;
+  }
 
-    public T getMatch(int index) {
-        return matches.get(index);
+  /**
+   * Updates the differentNames variable after iterating over the list of matches.
+   */
+  private void updateDifferentNamesCount() {
+    HashSet<String> uniqueNames = new HashSet<String>();
+    for (T match : matches) {
+      uniqueNames.add(match.getName());
     }
-
-    /**
-     * Returns true if there is a match with the given name, false otherwise.
-     *
-     * @param name the name used for comparison.
-     * @return true if there is a match with the given name, false otherwise.
-     */
-    public boolean hasName(String name) {
-        for (T match : matches) {
-            if (match.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns the number of matches in this SelectionResult.
-     *
-     * @return the number of matches in this SelectionResult.
-     */
-    public int size() {
-        return matches.size();
-    }
-
-    // TODO: write tests for this class (mainly, for this method).
-
-    /**
-     * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects
-     * with identical names, this method will return 1.
-     * <p/>
-     * This method will calculate how many different names are in the list of matches or use the last calculated value,
-     * if the matches list did not change since the last calculation. Therefore, after adding all matches and calling
-     * this method once, subsequent method calls should be substantially faster.
-     * <p/>
-     * Adding more elements to the SelectionResult will make necessary a new iteration through the list before returning
-     * the new amount of different names.
-     * <p/>
-     * This is more efficient than updating the counter after every addition as it allows many matches to be added with
-     * little overhead, letting the different names calculation to the end.
-     *
-     * @return how many different names the matches have.
-     */
-    public int getDifferentNames() {
-        if (!differentNamesUpToDate) {
-            updateDifferentNamesCount();
-        }
-        return differentNames;
-    }
-
-    /**
-     * Updates the differentNames variable after iterating over the list of matches.
-     */
-    private void updateDifferentNamesCount() {
-        HashSet<String> uniqueNames = new HashSet<String>();
-        for (T match : matches) {
-            uniqueNames.add(match.getName());
-        }
-        differentNames = uniqueNames.size();
-        differentNamesUpToDate = true;
-    }
+    differentNames = uniqueNames.size();
+    differentNamesUpToDate = true;
+  }
 
 }

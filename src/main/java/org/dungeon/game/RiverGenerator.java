@@ -27,55 +27,55 @@ import java.util.HashMap;
  */
 public final class RiverGenerator implements Serializable {
 
-    private final ExpandableIntegerSet lines;
-    private final HashMap<Integer, River> rivers;
+  private final ExpandableIntegerSet lines;
+  private final HashMap<Integer, River> rivers;
 
-    private static final int MIN_BRIDGE_DIST = 6;
-    private static final int MAX_BRIDGE_DIST = 16;
+  private static final int MIN_BRIDGE_DIST = 6;
+  private static final int MAX_BRIDGE_DIST = 16;
 
-    // Rivers do not appear in x > 10 || x < 10.
-    private static final int START = 10;
+  // Rivers do not appear in x > 10 || x < 10.
+  private static final int START = 10;
 
-    public RiverGenerator(int minimumDistance, int maximumDistance) {
-        lines = new ExpandableIntegerSet(minimumDistance, maximumDistance);
-        rivers = new HashMap<Integer, River>();
+  public RiverGenerator(int minimumDistance, int maximumDistance) {
+    lines = new ExpandableIntegerSet(minimumDistance, maximumDistance);
+    rivers = new HashMap<Integer, River>();
+  }
+
+  /**
+   * Expand the river set to ensure that all points whose x coordinate is in the range
+   * <code>[point.x - chunkSide, point.x + chunkSide]</code> will either correspond to a river or to a location that
+   * anticipates a river.
+   *
+   * @param point     the point from which the expansion starts.
+   * @param chunkSide the current chunk side.
+   */
+  void expand(Point point, int chunkSide) {
+    for (int river : lines.expand(point.getX() - chunkSide)) {
+      if (river <= -START) {
+        rivers.put(river, new River(MIN_BRIDGE_DIST, MAX_BRIDGE_DIST));
+      }
     }
-
-    /**
-     * Expand the river set to ensure that all points whose x coordinate is in the range
-     * <code>[point.x - chunkSide, point.x + chunkSide]</code> will either correspond to a river or to a location that
-     * anticipates a river.
-     *
-     * @param point     the point from which the expansion starts.
-     * @param chunkSide the current chunk side.
-     */
-    void expand(Point point, int chunkSide) {
-        for (int river : lines.expand(point.getX() - chunkSide)) {
-            if (river <= -START) {
-                rivers.put(river, new River(MIN_BRIDGE_DIST, MAX_BRIDGE_DIST));
-            }
-        }
-        for (int river : lines.expand(point.getX() + chunkSide)) {
-            if (river >= START) {
-                rivers.put(river, new River(MIN_BRIDGE_DIST, MAX_BRIDGE_DIST));
-            }
-        }
+    for (int river : lines.expand(point.getX() + chunkSide)) {
+      if (river >= START) {
+        rivers.put(river, new River(MIN_BRIDGE_DIST, MAX_BRIDGE_DIST));
+      }
     }
+  }
 
-    /**
-     * @return if in a point there should be a river.
-     */
-    boolean isRiver(Point point) {
-        River river = rivers.get(point.getX());
-        return river != null && !river.isBridge(point.getY());
-    }
+  /**
+   * @return if in a point there should be a river.
+   */
+  boolean isRiver(Point point) {
+    River river = rivers.get(point.getX());
+    return river != null && !river.isBridge(point.getY());
+  }
 
-    /**
-     * @return if in a point there should be a bridge.
-     */
-    boolean isBridge(Point point) {
-        River river = rivers.get(point.getX());
-        return river != null && river.isBridge(point.getY());
-    }
+  /**
+   * @return if in a point there should be a bridge.
+   */
+  boolean isBridge(Point point) {
+    River river = rivers.get(point.getX());
+    return river != null && river.isBridge(point.getY());
+  }
 
 }

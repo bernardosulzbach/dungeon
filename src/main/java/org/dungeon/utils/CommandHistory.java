@@ -28,119 +28,119 @@ import java.io.Serializable;
  */
 public class CommandHistory implements Serializable {
 
-    // Let the optimal size of a String s be 8 * (int) (s.length() * 2 + 45) / 8) bytes.
-    // Thus, 200 Strings of 8 characters would cost 1640 bytes (a bit more than 1.6 kB).
-    // Besides the obvious cost of memory, having too many Strings in the history would also slow down the TAB search.
-    private static final int HISTORY_MAXIMUM_SIZE = 200;
-    private final CircularList<String> commands;
-    private transient Cursor cursor;
+  // Let the optimal size of a String s be 8 * (int) (s.length() * 2 + 45) / 8) bytes.
+  // Thus, 200 Strings of 8 characters would cost 1640 bytes (a bit more than 1.6 kB).
+  // Besides the obvious cost of memory, having too many Strings in the history would also slow down the TAB search.
+  private static final int HISTORY_MAXIMUM_SIZE = 200;
+  private final CircularList<String> commands;
+  private transient Cursor cursor;
 
-    public CommandHistory() {
-        commands = new CircularList<String>(HISTORY_MAXIMUM_SIZE);
-        cursor = new Cursor(this);
+  public CommandHistory() {
+    commands = new CircularList<String>(HISTORY_MAXIMUM_SIZE);
+    cursor = new Cursor(this);
+  }
+
+  /**
+   * @return a CommandHistory.Cursor to provide access to the stored commands.
+   */
+  public Cursor getCursor() {
+    if (cursor == null) {
+      cursor = new Cursor(this);
+    }
+    return cursor;
+  }
+
+  /**
+   * @return the number of commands in this CommandHistory.
+   */
+  public int size() {
+    return commands.size();
+  }
+
+  /**
+   * @return true if this CommandHistory contains no commands.
+   */
+  public boolean isEmpty() {
+    return commands.isEmpty();
+  }
+
+  /**
+   * @param issuedCommand a Command to be appended to the end of this CommandHistory.
+   */
+  public void addCommand(IssuedCommand issuedCommand) {
+    commands.add(issuedCommand.getStringRepresentation());
+  }
+
+  /**
+   * @return a String representation of the last similar command or <code>null</code> if no similar command was found.
+   */
+  public String getLastSimilarCommand(String command) {
+    for (int i = commands.size() - 1; i >= 0; i--) {
+      if (Utils.startsWithIgnoreCase(commands.get(i), command)) {
+        return commands.get(i);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Cursor inner class of CommandHistory that provides a set of methods for browsing and querying a CommandHistory.
+   */
+  public class Cursor implements Serializable {
+
+    private final CommandHistory history;
+    private int index;
+
+    Cursor(CommandHistory history) {
+      this.history = history;
+      moveToEnd();
     }
 
     /**
-     * @return a CommandHistory.Cursor to provide access to the stored commands.
+     * @return the selected command or <code>null</code> if the CommandHistory does not have any commands or the
+     * cursor is at the end of the CommandHistory.
      */
-    public Cursor getCursor() {
-        if (cursor == null) {
-            cursor = new Cursor(this);
-        }
-        return cursor;
-    }
-
-    /**
-     * @return the number of commands in this CommandHistory.
-     */
-    public int size() {
-        return commands.size();
-    }
-
-    /**
-     * @return true if this CommandHistory contains no commands.
-     */
-    public boolean isEmpty() {
-        return commands.isEmpty();
-    }
-
-    /**
-     * @param issuedCommand a Command to be appended to the end of this CommandHistory.
-     */
-    public void addCommand(IssuedCommand issuedCommand) {
-        commands.add(issuedCommand.getStringRepresentation());
-    }
-
-    /**
-     * @return a String representation of the last similar command or <code>null</code> if no similar command was found.
-     */
-    public String getLastSimilarCommand(String command) {
-        for (int i = commands.size() - 1; i >= 0; i--) {
-            if (Utils.startsWithIgnoreCase(commands.get(i), command)) {
-                return commands.get(i);
-            }
-        }
+    public String getSelectedCommand() {
+      if (!history.isEmpty() && index < history.size()) {
+        return history.commands.get(index);
+      } else {
         return null;
+      }
     }
 
     /**
-     * Cursor inner class of CommandHistory that provides a set of methods for browsing and querying a CommandHistory.
+     * Move the cursor up one command. If the cursor is at the beginning of the history, it does not move.
+     *
+     * @return the cursor.
      */
-    public class Cursor implements Serializable {
-
-        private final CommandHistory history;
-        private int index;
-
-        Cursor(CommandHistory history) {
-            this.history = history;
-            moveToEnd();
-        }
-
-        /**
-         * @return the selected command or <code>null</code> if the CommandHistory does not have any commands or the
-         * cursor is at the end of the CommandHistory.
-         */
-        public String getSelectedCommand() {
-            if (!history.isEmpty() && index < history.size()) {
-                return history.commands.get(index);
-            } else {
-                return null;
-            }
-        }
-
-        /**
-         * Move the cursor up one command. If the cursor is at the beginning of the history, it does not move.
-         *
-         * @return the cursor.
-         */
-        public Cursor moveUp() {
-            if (index != 0) {
-                index--;
-            }
-            return this;
-        }
-
-        /**
-         * Move the cursor down one command. If the cursor is at one past the end of the history, it does not move.
-         *
-         * @return the cursor.
-         */
-        public Cursor moveDown() {
-            if (index < history.size()) {
-                index++;
-            }
-            return this;
-        }
-
-        /**
-         * Sets the cursor to one past the last command of the CommandHistory. Retrieving the selected entry after
-         * calling this method will return <code>null</code>.
-         */
-        public Cursor moveToEnd() {
-            index = history.size();
-            return this;
-        }
-
+    public Cursor moveUp() {
+      if (index != 0) {
+        index--;
+      }
+      return this;
     }
+
+    /**
+     * Move the cursor down one command. If the cursor is at one past the end of the history, it does not move.
+     *
+     * @return the cursor.
+     */
+    public Cursor moveDown() {
+      if (index < history.size()) {
+        index++;
+      }
+      return this;
+    }
+
+    /**
+     * Sets the cursor to one past the last command of the CommandHistory. Retrieving the selected entry after
+     * calling this method will return <code>null</code>.
+     */
+    public Cursor moveToEnd() {
+      index = history.size();
+      return this;
+    }
+
+  }
 
 }

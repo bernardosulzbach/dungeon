@@ -29,115 +29,115 @@ import org.dungeon.utils.Utils;
  */
 public class Achievement {
 
-    final String id;
-    private final String name;
-    private final String info;
+  final String id;
+  private final String name;
+  private final String info;
 
-    private BattleComponent battle;
-    private ExplorationComponent exploration;
+  private BattleComponent battle;
+  private ExplorationComponent exploration;
 
-    public Achievement(String id, String name, String info) {
-        this.id = id;
-        this.name = name;
-        this.info = info;
-        battle = new BattleComponent();
-        exploration = new ExplorationComponent();
+  public Achievement(String id, String name, String info) {
+    this.id = id;
+    this.name = name;
+    this.info = info;
+    battle = new BattleComponent();
+    exploration = new ExplorationComponent();
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getInfo() {
+    return info;
+  }
+
+  public void setBattleCount(int battleCount) {
+    battle.battleCount = battleCount;
+  }
+
+  public void setLongestBattleLength(int longestBattleLength) {
+    battle.longestBattleLength = longestBattleLength;
+  }
+
+  /**
+   * Increment how many kills with a certain weapon are needed in order to unlock this achievement.
+   *
+   * @param id     the id of the weapon.
+   * @param amount the increment.
+   */
+  public void incrementKillsByWeapon(String id, int amount) {
+    battle.killsByWeapon.incrementCounter(id, amount);
+  }
+
+  /**
+   * Increment how many kills of certain creature are needed in order to unlock this achievement.
+   *
+   * @param id     the creature's id.
+   * @param amount the increment.
+   */
+  public void incrementKillsByCreatureId(String id, int amount) {
+    battle.killsByCreatureId.incrementCounter(id, amount);
+  }
+
+  /**
+   * Increment how many kills of certain type of creature are needed in order to unlock this achievement.
+   *
+   * @param id     the creature type.
+   * @param amount the increment.
+   */
+  public void incrementKillsByCreatureType(String id, int amount) {
+    battle.killsByCreatureType.incrementCounter(id, amount);
+  }
+
+  public void setKillCount(int count) {
+    exploration.killCount = count;
+  }
+
+  public void setVisitCount(int count) {
+    exploration.visitCount = count;
+  }
+
+  public boolean isFulfilled(Hero hero) {
+    return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
+  }
+
+  /**
+   * Updates the state of the Achievement.
+   *
+   * @return true if the achievement was unlocked. False otherwise.
+   */
+  public final boolean update(Hero hero) {
+    if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
+      // All the requirements OK, unlock the achievement.
+      printAchievementUnlocked();
+      hero.getAchievementTracker().unlock(this);
+      return true;
+    } else {
+      return false;
     }
 
-    public String getId() {
-        return id;
-    }
+  }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setBattleCount(int battleCount) {
-        battle.battleCount = battleCount;
-    }
-
-    public void setLongestBattleLength(int longestBattleLength) {
-        battle.longestBattleLength = longestBattleLength;
-    }
-
-    /**
-     * Increment how many kills with a certain weapon are needed in order to unlock this achievement.
-     *
-     * @param id     the id of the weapon.
-     * @param amount the increment.
-     */
-    public void incrementKillsByWeapon(String id, int amount) {
-        battle.killsByWeapon.incrementCounter(id, amount);
-    }
-
-    /**
-     * Increment how many kills of certain creature are needed in order to unlock this achievement.
-     *
-     * @param id     the creature's id.
-     * @param amount the increment.
-     */
-    public void incrementKillsByCreatureId(String id, int amount) {
-        battle.killsByCreatureId.incrementCounter(id, amount);
-    }
-
-    /**
-     * Increment how many kills of certain type of creature are needed in order to unlock this achievement.
-     *
-     * @param id     the creature type.
-     * @param amount the increment.
-     */
-    public void incrementKillsByCreatureType(String id, int amount) {
-        battle.killsByCreatureType.incrementCounter(id, amount);
-    }
-
-    public void setKillCount(int count) {
-        exploration.killCount = count;
-    }
-
-    public void setVisitCount(int count) {
-        exploration.visitCount = count;
-    }
-
-    public boolean isFulfilled(Hero hero) {
-        return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
-    }
-
-    /**
-     * Updates the state of the Achievement.
-     *
-     * @return true if the achievement was unlocked. False otherwise.
-     */
-    public final boolean update(Hero hero) {
-        if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
-            // All the requirements OK, unlock the achievement.
-            printAchievementUnlocked();
-            hero.getAchievementTracker().unlock(this);
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
-     * Outputs an achievement unlocked message with some information about the unlocked achievement.
-     */
-    void printAchievementUnlocked() {
-        // Initial capacity:
-        // First line:                    precisely 100 characters
-        // Name, info and three newlines: about 60 characters (using 100 to prevent buffer overflow).
-        // How many experience points:    25 characters for a experience reward of three digits.
-        // Total:                         100 + 100 + 25 = 225
-        StringBuilder sb = new StringBuilder(225);
-        sb.append(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
-        sb.append(getName()).append("\n");
-        sb.append(getInfo()).append("\n");
-        // Keep the StringBuilder as, in the future, Honor, Karma or something else may be rewarded by the achievements.
-        IO.writeString(sb.toString());
-    }
+  /**
+   * Outputs an achievement unlocked message with some information about the unlocked achievement.
+   */
+  void printAchievementUnlocked() {
+    // Initial capacity:
+    // First line:                    precisely 100 characters
+    // Name, info and three newlines: about 60 characters (using 100 to prevent buffer overflow).
+    // How many experience points:    25 characters for a experience reward of three digits.
+    // Total:                         100 + 100 + 25 = 225
+    StringBuilder sb = new StringBuilder(225);
+    sb.append(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
+    sb.append(getName()).append("\n");
+    sb.append(getInfo()).append("\n");
+    // Keep the StringBuilder as, in the future, Honor, Karma or something else may be rewarded by the achievements.
+    IO.writeString(sb.toString());
+  }
 
 }

@@ -30,71 +30,71 @@ import java.util.ArrayList;
  */
 public final class CircularList<T> implements Serializable {
 
-    public final int capacity;
-    private final ArrayList<T> list;
-    /**
-     * The index where the element that should be at 0 actually is. Initially 0.
-     */
-    private int zeroIndex;
+  public final int capacity;
+  private final ArrayList<T> list;
+  /**
+   * The index where the element that should be at 0 actually is. Initially 0.
+   */
+  private int zeroIndex;
 
-    public CircularList(int capacity) {
-        if (capacity < 1) {
-            throw new IllegalArgumentException("capacity must be positive.");
-        }
-        list = new ArrayList<T>(capacity);
-        this.capacity = capacity;
+  public CircularList(int capacity) {
+    if (capacity < 1) {
+      throw new IllegalArgumentException("capacity must be positive.");
     }
+    list = new ArrayList<T>(capacity);
+    this.capacity = capacity;
+  }
 
-    /**
-     * Add an element to this CircularList.
-     *
-     * @param t the element to be added.
-     */
-    public void add(T t) {
-        if (isFull()) {
-            list.set(zeroIndex, t);
-            incrementZeroIndex();
-        } else {
-            list.add(t);
-        }
+  /**
+   * Add an element to this CircularList.
+   *
+   * @param t the element to be added.
+   */
+  public void add(T t) {
+    if (isFull()) {
+      list.set(zeroIndex, t);
+      incrementZeroIndex();
+    } else {
+      list.add(t);
     }
+  }
 
-    /**
-     * Increments the zeroIndex variable, setting it to 0 if it is equal to the capacity.
-     */
-    private void incrementZeroIndex() {
-        zeroIndex = (zeroIndex + 1) % capacity;
-    }
+  /**
+   * Increments the zeroIndex variable, setting it to 0 if it is equal to the capacity.
+   */
+  private void incrementZeroIndex() {
+    zeroIndex = (zeroIndex + 1) % capacity;
+  }
 
-    /**
-     * Returns the number of elements in this CircularList.
-     *
-     * @return the number of elements in this CircularList.
-     */
-    public int size() {
-        return list.size();
-    }
+  /**
+   * Returns the number of elements in this CircularList.
+   *
+   * @return the number of elements in this CircularList.
+   */
+  public int size() {
+    return list.size();
+  }
 
-    /**
-     * Returns true if this CircularList is at its maximum capacity. False otherwise.
-     *
-     * @return true if this CircularList is at its maximum capacity. False otherwise.
-     */
-    public boolean isFull() {
-        return size() == capacity;
-    }
+  /**
+   * Returns true if this CircularList is at its maximum capacity. False otherwise.
+   *
+   * @return true if this CircularList is at its maximum capacity. False otherwise.
+   */
+  public boolean isFull() {
+    return size() == capacity;
+  }
 
-    /**
-     * Returns true if this CircularList contains no elements.
-     *
-     * @return true if this CircularList contains no elements.
-     */
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
+  /**
+   * Returns true if this CircularList contains no elements.
+   *
+   * @return true if this CircularList contains no elements.
+   */
+  public boolean isEmpty() {
+    return list.isEmpty();
+  }
 
-    public T get(final int index) {
-        return list.get((index + zeroIndex) % capacity);
-    }
+  public T get(final int index) {
+    return list.get((index + zeroIndex) % capacity);
+  }
 
 }

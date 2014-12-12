@@ -19,21 +19,21 @@ package org.dungeon.game;
 
 public class SpawnerPreset {
 
-    public final String id;
-    public final int population;
-    public final int spawnDelay;
+  public final String id;
+  public final int population;
+  public final int spawnDelay;
 
-    /**
-     * Default SpawnerPreset constructor.
-     *
-     * @param id           the creature ID string.
-     * @param population   the maximum population.
-     * @param delayInHours the spawn delay, in hours.
-     */
-    public SpawnerPreset(String id, int population, int delayInHours) {
-        this.id = id;
-        this.population = population;
-        this.spawnDelay = delayInHours * 60 * 60 * 1000;
-    }
+  /**
+   * Default SpawnerPreset constructor.
+   *
+   * @param id           the creature ID string.
+   * @param population   the maximum population.
+   * @param delayInHours the spawn delay, in hours.
+   */
+  public SpawnerPreset(String id, int population, int delayInHours) {
+    this.id = id;
+    this.population = population;
+    this.spawnDelay = delayInHours * 60 * 60 * 1000;
+  }
 
 }

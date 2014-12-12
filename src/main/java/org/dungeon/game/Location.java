@@ -27,117 +27,117 @@ import java.util.List;
 
 public class Location implements Serializable {
 
-    private World world;
+  private World world;
 
-    private final String name;
-    private final BlockedEntrances blockedEntrances;
-    private final List<Creature> creatures;
-    private final List<Spawner> spawners;
-    private final LocationInventory items;
+  private final String name;
+  private final BlockedEntrances blockedEntrances;
+  private final List<Creature> creatures;
+  private final List<Spawner> spawners;
+  private final LocationInventory items;
 
-    private final double lightPermittivity;
+  private final double lightPermittivity;
 
-    public Location(LocationPreset preset, World world) {
-        this.world = world;
-        this.name = preset.getName();
-        this.blockedEntrances = preset.getBlockedEntrances();
-        this.lightPermittivity = preset.getLightPermittivity();
-        this.creatures = new ArrayList<Creature>();
-        this.spawners = new ArrayList<Spawner>(preset.getSpawners().size());
-        for (SpawnerPreset spawner : preset.getSpawners()) {
-            spawners.add(new Spawner(spawner, this));
-        }
-        this.items = new LocationInventory();
-        for (ItemFrequencyPair pair : preset.getItems()) {
-            if (Engine.RANDOM.nextDouble() < pair.getFrequency()) {
-                this.addItem(new Item(GameData.ITEM_BLUEPRINTS.get(pair.getId())));
-            }
-        }
+  public Location(LocationPreset preset, World world) {
+    this.world = world;
+    this.name = preset.getName();
+    this.blockedEntrances = preset.getBlockedEntrances();
+    this.lightPermittivity = preset.getLightPermittivity();
+    this.creatures = new ArrayList<Creature>();
+    this.spawners = new ArrayList<Spawner>(preset.getSpawners().size());
+    for (SpawnerPreset spawner : preset.getSpawners()) {
+      spawners.add(new Spawner(spawner, this));
     }
-
-    public void refreshSpawners() {
-        for (Spawner spawner : spawners) {
-            spawner.refresh();
-        }
+    this.items = new LocationInventory();
+    for (ItemFrequencyPair pair : preset.getItems()) {
+      if (Engine.RANDOM.nextDouble() < pair.getFrequency()) {
+        this.addItem(new Item(GameData.ITEM_BLUEPRINTS.get(pair.getId())));
+      }
     }
+  }
 
-    public String getName() {
-        return name;
+  public void refreshSpawners() {
+    for (Spawner spawner : spawners) {
+      spawner.refresh();
     }
+  }
 
-    double getLightPermittivity() {
-        return lightPermittivity;
-    }
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
-     * light permittivity.
-     */
-    public double getLuminosity() {
-        return getLightPermittivity() * getWorld().getPartOfDay().getLuminosity();
-    }
+  double getLightPermittivity() {
+    return lightPermittivity;
+  }
 
-    public List<Creature> getCreatures() {
-        return creatures;
-    }
+  /**
+   * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
+   * light permittivity.
+   */
+  public double getLuminosity() {
+    return getLightPermittivity() * getWorld().getPartOfDay().getLuminosity();
+  }
 
-    public LocationInventory getInventory() {
-        return items;
-    }
+  public List<Creature> getCreatures() {
+    return creatures;
+  }
 
-    public List<Item> getItemList() {
-        return items.getItems();
-    }
+  public LocationInventory getInventory() {
+    return items;
+  }
 
-    public int getCreatureCount() {
-        return creatures.size();
-    }
+  public List<Item> getItemList() {
+    return items.getItems();
+  }
 
-    public int getCreatureCount(String id) {
-        int count = 0;
-        for (Creature creature : creatures) {
-            if (creature.getId().equals(id)) {
-                count++;
-            }
-        }
-        return count;
-    }
+  public int getCreatureCount() {
+    return creatures.size();
+  }
 
-    public int getItemCount() {
-        return items.getItems().size();
+  public int getCreatureCount(String id) {
+    int count = 0;
+    for (Creature creature : creatures) {
+      if (creature.getId().equals(id)) {
+        count++;
+      }
     }
+    return count;
+  }
 
-    public void addCreature(Creature creature) {
-        creature.setLocation(this);
-        creatures.add(creature);
-    }
+  public int getItemCount() {
+    return items.getItems().size();
+  }
 
-    public void addItem(Item item) {
-        items.addItem(item);
-    }
+  public void addCreature(Creature creature) {
+    creature.setLocation(this);
+    creatures.add(creature);
+  }
 
-    public void removeItem(Item item) {
-        items.removeItem(item);
-    }
+  public void addItem(Item item) {
+    items.addItem(item);
+  }
 
-    public void removeCreature(Creature creature) {
-        for (Spawner spawner : spawners) {
-            spawner.notifyKill(creature);
-        }
-        // The creature must be removed after the spawns are notified.
-        creatures.remove(creature);
-    }
+  public void removeItem(Item item) {
+    items.removeItem(item);
+  }
 
-    public World getWorld() {
-        return world;
+  public void removeCreature(Creature creature) {
+    for (Spawner spawner : spawners) {
+      spawner.notifyKill(creature);
     }
+    // The creature must be removed after the spawns are notified.
+    creatures.remove(creature);
+  }
 
-    public void setWorld(World world) {
-        this.world = world;
-    }
+  public World getWorld() {
+    return world;
+  }
 
-    public boolean isBlocked(Direction direction) {
-        return blockedEntrances.isBlocked(direction);
-    }
+  public void setWorld(World world) {
+    this.world = world;
+  }
+
+  public boolean isBlocked(Direction direction) {
+    return blockedEntrances.isBlocked(direction);
+  }
 
 }

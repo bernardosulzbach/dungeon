@@ -7,14 +7,14 @@ package org.dungeon.game;
  */
 public abstract class Preset {
 
-    private boolean finished;
+  private boolean finished;
 
-    void lock() {
-        finished = true;
-    }
+  void lock() {
+    finished = true;
+  }
 
-    boolean isLocked() {
-        return finished;
-    }
+  boolean isLocked() {
+    return finished;
+  }
 
 }

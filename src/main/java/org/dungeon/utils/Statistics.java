@@ -29,31 +29,31 @@ import java.io.Serializable;
  */
 public class Statistics implements Serializable {
 
-    private final CommandStatistics commandStats;
+  private final CommandStatistics commandStats;
 
-    public Statistics() {
-        commandStats = new CommandStatistics();
-    }
+  public Statistics() {
+    commandStats = new CommandStatistics();
+  }
 
-    /**
-     * Add a command to the statistics.
-     */
-    public void addCommand(IssuedCommand issuedCommand) {
-        commandStats.addCommand(issuedCommand);
-    }
+  /**
+   * Add a command to the statistics.
+   */
+  public void addCommand(IssuedCommand issuedCommand) {
+    commandStats.addCommand(issuedCommand);
+  }
 
-    /**
-     * Print the statistics.
-     */
-    public void print() {
-        int commandCount = commandStats.getCommandCount();
-        int chars = commandStats.getChars();
-        int words = commandStats.getWords();
-        IO.writeKeyValueString("Commands issued", String.valueOf(commandCount));
-        IO.writeKeyValueString("Characters entered", String.valueOf(chars));
-        IO.writeKeyValueString("Average characters per command", String.format("%.2f", (double) chars / commandCount));
-        IO.writeKeyValueString("Words entered", String.valueOf(words));
-        IO.writeKeyValueString("Average words per command", String.format("%.2f", (double) words / commandCount));
-    }
+  /**
+   * Print the statistics.
+   */
+  public void print() {
+    int commandCount = commandStats.getCommandCount();
+    int chars = commandStats.getChars();
+    int words = commandStats.getWords();
+    IO.writeKeyValueString("Commands issued", String.valueOf(commandCount));
+    IO.writeKeyValueString("Characters entered", String.valueOf(chars));
+    IO.writeKeyValueString("Average characters per command", String.format("%.2f", (double) chars / commandCount));
+    IO.writeKeyValueString("Words entered", String.valueOf(words));
+    IO.writeKeyValueString("Average words per command", String.format("%.2f", (double) words / commandCount));
+  }
 
 }

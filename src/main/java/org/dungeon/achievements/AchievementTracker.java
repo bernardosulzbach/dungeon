@@ -31,70 +31,70 @@ import java.util.TreeSet;
  */
 public class AchievementTracker implements Serializable {
 
-    private final TreeSet<UnlockedAchievement> unlockedAchievements;
+  private final TreeSet<UnlockedAchievement> unlockedAchievements;
 
-    public AchievementTracker() {
-        this.unlockedAchievements = new TreeSet<UnlockedAchievement>(new UnlockedAchievementNameComparator());
-    }
+  public AchievementTracker() {
+    this.unlockedAchievements = new TreeSet<UnlockedAchievement>(new UnlockedAchievementNameComparator());
+  }
 
-    /**
-     * Returns how many unlocked achievements there are in this AchievementTracker.
-     *
-     * @return how many unlocked achievements there are in this AchievementTracker.
-     */
-    public int getUnlockedCount() {
-        return unlockedAchievements.size();
-    }
+  /**
+   * Returns how many unlocked achievements there are in this AchievementTracker.
+   *
+   * @return how many unlocked achievements there are in this AchievementTracker.
+   */
+  public int getUnlockedCount() {
+    return unlockedAchievements.size();
+  }
 
-    /**
-     * Unlock a specific Achievement.
-     * <p/>
-     * If there already is an UnlockedAchievement with the same ID, a warning will be logged.
-     *
-     * @param achievement the Achievement to be unlocked.
-     */
-    public void unlock(Achievement achievement) {
-        DateTime now = Game.getGameState().getWorld().getWorldDate();
-        if (!isUnlocked(achievement)) {
-            unlockedAchievements.add(new UnlockedAchievement(achievement.getId(), achievement.getName(), now));
-        } else {
-            DLogger.warning("Tried to unlock an already unlocked achievement!");
-        }
+  /**
+   * Unlock a specific Achievement.
+   * <p/>
+   * If there already is an UnlockedAchievement with the same ID, a warning will be logged.
+   *
+   * @param achievement the Achievement to be unlocked.
+   */
+  public void unlock(Achievement achievement) {
+    DateTime now = Game.getGameState().getWorld().getWorldDate();
+    if (!isUnlocked(achievement)) {
+      unlockedAchievements.add(new UnlockedAchievement(achievement.getId(), achievement.getName(), now));
+    } else {
+      DLogger.warning("Tried to unlock an already unlocked achievement!");
     }
+  }
 
-    /**
-     * Return the UnlockedAchievement object that corresponds to a specific Achievement.
-     *
-     * @param achievement an Achievement object.
-     * @return the UnlockedAchievement that corresponds to this Achievement.
-     */
-    public UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
-        String id = achievement.getId();
-        for (UnlockedAchievement ua : unlockedAchievements) {
-            if (ua.id.equals(id)) {
-                return ua;
-            }
-        }
-        return null;
+  /**
+   * Return the UnlockedAchievement object that corresponds to a specific Achievement.
+   *
+   * @param achievement an Achievement object.
+   * @return the UnlockedAchievement that corresponds to this Achievement.
+   */
+  public UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
+    String id = achievement.getId();
+    for (UnlockedAchievement ua : unlockedAchievements) {
+      if (ua.id.equals(id)) {
+        return ua;
+      }
     }
+    return null;
+  }
 
-    /**
-     * Returns an array with all the unlocked achievements.
-     *
-     * @return an array with all the unlocked achievements.
-     */
-    public UnlockedAchievement[] getUnlockedAchievementArray() {
-        return unlockedAchievements.toArray(new UnlockedAchievement[unlockedAchievements.size()]);
-    }
+  /**
+   * Returns an array with all the unlocked achievements.
+   *
+   * @return an array with all the unlocked achievements.
+   */
+  public UnlockedAchievement[] getUnlockedAchievementArray() {
+    return unlockedAchievements.toArray(new UnlockedAchievement[unlockedAchievements.size()]);
+  }
 
-    /**
-     * Return true if a given Achievement is unlocked in this AchievementTracker.
-     *
-     * @param achievement an Achievement object.
-     * @return true if this Achievement is unlocked, false otherwise.
-     */
-    public boolean isUnlocked(Achievement achievement) {
-        return getUnlockedAchievement(achievement) != null;
-    }
+  /**
+   * Return true if a given Achievement is unlocked in this AchievementTracker.
+   *
+   * @param achievement an Achievement object.
+   * @return true if this Achievement is unlocked, false otherwise.
+   */
+  public boolean isUnlocked(Achievement achievement) {
+    return getUnlockedAchievement(achievement) != null;
+  }
 
 }

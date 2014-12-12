@@ -27,16 +27,16 @@ import org.dungeon.creatures.Hero;
  */
 final class ExplorationComponent extends AchievementComponent {
 
-    int killCount;
-    int visitCount;
+  int killCount;
+  int visitCount;
 
-    public ExplorationComponent() {
-    }
+  public ExplorationComponent() {
+  }
 
-    @Override
-    public boolean isFulfilled(Hero hero) {
-        ExplorationLog explorationLog = hero.getExplorationLog();
-        return killCount <= explorationLog.getMaximumKills() && visitCount <= explorationLog.getMaximumVisits();
-    }
+  @Override
+  public boolean isFulfilled(Hero hero) {
+    ExplorationLog explorationLog = hero.getExplorationLog();
+    return killCount <= explorationLog.getMaximumKills() && visitCount <= explorationLog.getMaximumVisits();
+  }
 
 }

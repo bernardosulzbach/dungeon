@@ -28,44 +28,44 @@ import java.io.Serializable;
  */
 public class CommandStatistics implements Serializable {
 
-    private int commands;
-    private int chars;
-    private int words;
+  private int commands;
+  private int chars;
+  private int words;
 
-    /**
-     * Add a command to the statistics.
-     *
-     * @param issuedCommand the command to be added.
-     */
-    public void addCommand(IssuedCommand issuedCommand) {
-        commands++;
-        words += issuedCommand.getTokenCount();
-        for (char c : issuedCommand.getStringRepresentation().toCharArray()) {
-            if (!Character.isWhitespace(c)) {
-                chars++;
-            }
-        }
+  /**
+   * Add a command to the statistics.
+   *
+   * @param issuedCommand the command to be added.
+   */
+  public void addCommand(IssuedCommand issuedCommand) {
+    commands++;
+    words += issuedCommand.getTokenCount();
+    for (char c : issuedCommand.getStringRepresentation().toCharArray()) {
+      if (!Character.isWhitespace(c)) {
+        chars++;
+      }
     }
+  }
 
-    /**
-     * @return how many commands the user has issued so far.
-     */
-    public int getCommandCount() {
-        return commands;
-    }
+  /**
+   * @return how many commands the user has issued so far.
+   */
+  public int getCommandCount() {
+    return commands;
+  }
 
-    /**
-     * @return how many printable characters the user has entered so far.
-     */
-    public int getChars() {
-        return chars;
-    }
+  /**
+   * @return how many printable characters the user has entered so far.
+   */
+  public int getChars() {
+    return chars;
+  }
 
-    /**
-     * @return how many words the user has entered so far.
-     */
-    public int getWords() {
-        return words;
-    }
+  /**
+   * @return how many words the user has entered so far.
+   */
+  public int getWords() {
+    return words;
+  }
 
 }

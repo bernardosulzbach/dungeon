@@ -27,8 +27,8 @@ import java.util.Comparator;
  */
 class UnlockedAchievementNameComparator implements Comparator<UnlockedAchievement>, Serializable {
 
-    public int compare(UnlockedAchievement a, UnlockedAchievement b) {
-        return a.name.compareTo(b.name);
-    }
+  public int compare(UnlockedAchievement a, UnlockedAchievement b) {
+    return a.name.compareTo(b.name);
+  }
 
 }
