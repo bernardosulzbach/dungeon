@@ -2,6 +2,9 @@
 *.class
 *.jar
 
+# Except exported IDEA settings.
+!misc/idea/*.jar
+
 # IDEA
 .idea/
 *.iml
