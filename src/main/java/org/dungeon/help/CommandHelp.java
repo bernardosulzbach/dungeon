@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.help;
 
 import org.dungeon.utils.Constants;
@@ -62,7 +63,6 @@ public class CommandHelp {
         System.arraycopy(aliases, 0, allAliases, 1, allAliases.length - 1);
         return allAliases;
     }
-
 
     /**
      * Verifies if any of the command aliases matches a string.

@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.io;
 
 import org.dungeon.game.Game;
@@ -21,7 +22,7 @@ import org.dungeon.utils.Constants;
 import org.dungeon.utils.Poem;
 import org.dungeon.utils.Utils;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * IO class that encapsulates all Input/Output operations. This is the only class that should call the writing methods
@@ -52,7 +53,6 @@ public final class IO {
     public static void writeString(String string, Color color) {
         writeString(string, color, true);
     }
-
 
     /**
      * Writes a string of text using a specific color.

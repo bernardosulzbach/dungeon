@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.game;
 
 import org.dungeon.io.IO;
 import org.dungeon.utils.Utils;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Some in-game configuration methods.

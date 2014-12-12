@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.utils;
 
 import org.dungeon.game.Engine;
@@ -25,7 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 /**
@@ -211,7 +212,6 @@ public class Utils {
     public static boolean startsWithIgnoreCase(String a, String b) {
         return a.toLowerCase().startsWith(b.toLowerCase());
     }
-
 
     /**
      * Returns all the contents of a string after the first colon.

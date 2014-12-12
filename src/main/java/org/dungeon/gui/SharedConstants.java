@@ -1,10 +1,10 @@
 package org.dungeon.gui;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Constants shared among the classes in the gui package.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 12/12/14.
  */
 final class SharedConstants {

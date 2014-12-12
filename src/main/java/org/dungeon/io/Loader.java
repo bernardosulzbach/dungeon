@@ -14,18 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.io;
 
-import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Loader class that handles saving / loading the game.

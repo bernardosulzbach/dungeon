@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.achievements;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ import java.util.Comparator;
 
 /**
  * A comparator that compares UnlockedAchievements by their name.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 10/12/14.
  */
 class UnlockedAchievementNameComparator implements Comparator<UnlockedAchievement>, Serializable {

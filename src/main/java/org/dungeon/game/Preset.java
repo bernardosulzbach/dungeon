@@ -2,7 +2,7 @@ package org.dungeon.game;
 
 /**
  * Abstract Preset class that defines common methods for all presets.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 03/12/14.
  */
 public abstract class Preset {

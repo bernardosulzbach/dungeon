@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.utils;
 
 import org.dungeon.game.IssuedCommand;
@@ -23,7 +24,7 @@ import java.io.Serializable;
 
 /**
  * Statistics class that stores, processes and prints game statistics.
- *
+ * <p/>
  * Created by Bernardo on 07/12/2014.
  */
 public class Statistics implements Serializable {

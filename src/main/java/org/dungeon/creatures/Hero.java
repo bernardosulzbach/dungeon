@@ -14,13 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.creatures;
 
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.counters.BattleStatistics;
 import org.dungeon.counters.ExplorationLog;
-import org.dungeon.game.*;
+import org.dungeon.game.Direction;
+import org.dungeon.game.Engine;
+import org.dungeon.game.Game;
+import org.dungeon.game.IssuedCommand;
+import org.dungeon.game.Location;
+import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
+import org.dungeon.game.TimeConstants;
+import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
@@ -30,7 +38,7 @@ import org.dungeon.utils.SelectionResult;
 import org.dungeon.utils.Utils;
 import org.joda.time.DateTime;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**

@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.achievements;
 
 import org.dungeon.counters.BattleStatistics;
@@ -22,7 +23,7 @@ import org.dungeon.creatures.Hero;
 
 /**
  * The battle component of the achievements.
- *
+ * <p/>
  * Created by Bernardo on 07/12/2014.
  */
 final class BattleComponent extends AchievementComponent {

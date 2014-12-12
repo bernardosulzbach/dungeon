@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.game;
 
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class BlockedEntrances implements Serializable {
 
     /**
      * Copy constructor.
+     *
      * @param source the object to be copied.
      */
     public BlockedEntrances(BlockedEntrances source) {

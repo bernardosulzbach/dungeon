@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.achievements;
 
 import org.dungeon.creatures.Hero;
 
 /**
  * The component abstract class.
- *
+ * <p/>
  * Created by Bernardo on 07/12/2014.
  */
 abstract class AchievementComponent {

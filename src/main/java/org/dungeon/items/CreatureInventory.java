@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.items;
 
 import org.dungeon.creatures.Creature;
@@ -22,7 +23,7 @@ import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Inventory class that defines a common general-purpose Item storage and query structure.

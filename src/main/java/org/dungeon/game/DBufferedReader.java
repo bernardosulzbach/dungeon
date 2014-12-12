@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
@@ -25,7 +26,7 @@ import java.io.Reader;
 
 /**
  * Dungeon custom buffered reader. Allow easier input of text-based data formatted according to the Dungeon convention.
- *
+ * <p/>
  * Created on 05/12/14.
  */
 public class DBufferedReader implements Closeable {
@@ -41,9 +42,9 @@ public class DBufferedReader implements Closeable {
     // The wrapped BufferedReader.
     private final BufferedReader br;
 
-
     /**
      * Creates a convenient buffered reader for reading Dungeon resource files.
+     *
      * @param in the Reader.
      */
     public DBufferedReader(Reader in) {
@@ -97,6 +98,7 @@ public class DBufferedReader implements Closeable {
 
     /**
      * Closes the underlying BufferedReader.
+     *
      * @throws IOException
      */
     @Override

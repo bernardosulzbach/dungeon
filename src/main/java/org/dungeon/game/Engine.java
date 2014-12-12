@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
@@ -22,7 +23,7 @@ import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Random;
 
 /**
