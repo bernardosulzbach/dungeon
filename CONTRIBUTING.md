@@ -4,6 +4,15 @@ Contributing
 This file contains some basic directives for developers interested in this project.
 
 
+Writing code
+------------
+Our code style is a slightly modified version of Google Java Style.
+
+The fork is called (Dungeon Java Style)[].
+
+There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory.
+Download it and import it into the IDE to get proper Code Reformatting.
+
 Writing GUI code
 ----------------
 Do not use a generator, write the code yourself.
@@ -38,13 +47,6 @@ strings:   Plain text.
 * Do not surround strings with quotation marks.
 * Do not use TRUE or FALSE for booleans.
 * Multiple line strings are not yet supported. Feel free to implement it.
-
-
-Code style
-----------
-* Four spaces instead of tabs.
-* 120 characters per line. Feel free to stick to 80 or 100 or whatever you like, as long as it is not bigger than 120.
-* Final variables and enumeration constants should be UPPERCASE_WITH_UNDERSCORES.
 
 
 Commits and pull requests
