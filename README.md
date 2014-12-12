@@ -4,7 +4,9 @@ A simple text-based RPG using Java
 
 Requirements
 -------------------
-Java 6 or newer. (Maybe you need 6u10 at least, whatever).
+Java 6 or newer.
+
+If you have trouble running the game with a supposedly supported version of Java, tell me.
 
 Running the game
 ----------------
@@ -29,6 +31,16 @@ Planned features
 - Properties file with ``git describe`` output to be used in the game.
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
+- Load hints from resource files.
+- A Command type for the commands, create an instance for every command and iterate through a list.
+- Store command help in the respective Command object.
+- Store aliases independently and let the player add and remove aliases.
+- Maps (a ``map`` command that prints an ASCII map of the locations the player already visited).
+- Creature will have an bloodAlcoholContent double variable (% by volume).
+- AttackAlgorithms will account for insobriety.
+- Implement a third coordinate to Point (z).
+- Implement dungeons (in z = -1).
+- Implement healing during sleep.
 - Harvesting.
 - Farming. (Gathering seeds, planting and harvesting.)
 - Factions.
