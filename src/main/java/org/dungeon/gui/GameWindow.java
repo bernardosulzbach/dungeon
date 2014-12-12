@@ -35,6 +35,12 @@ import java.net.URL;
 
 public class GameWindow extends JFrame {
 
+    // The border, in pixels.
+    private static final int MARGIN = 5;
+
+    private static final Color MARGIN_COLOR = Color.BLACK;
+    private static final Color INSIDE_COLOR = new Color(20, 20, 20);
+
     private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
     private StyledDocument document;
 
@@ -55,23 +61,28 @@ public class GameWindow extends JFrame {
     private void initComponents() {
         setSystemLookAndFeel();
 
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(MARGIN_COLOR);
+
         textPane = new javax.swing.JTextPane();
         textField = new javax.swing.JTextField();
 
         JScrollPane scrollPane = new JScrollPane();
 
         textPane.setEditable(false);
-        textPane.setBackground(Constants.DEFAULT_BACK_COLOR);
+        textPane.setBackground(INSIDE_COLOR);
         textPane.setFont(GameData.monospaced);
 
         scrollPane.setViewportView(textPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
-        textField.setBackground(Color.BLACK);
+        textField.setBackground(INSIDE_COLOR);
         textField.setForeground(Constants.FORE_COLOR_NORMAL);
         textField.setCaretColor(Color.WHITE);
         textField.setFont(GameData.monospaced);
         textField.setFocusTraversalKeysEnabled(false);
+        textField.setBorder(BorderFactory.createEmptyBorder());
 
         textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
@@ -86,8 +97,14 @@ public class GameWindow extends JFrame {
             }
         });
 
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
-        getContentPane().add(textField, BorderLayout.SOUTH);
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+        panel.add(scrollPane, c);
+
+        c.gridy = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
+        panel.add(textField, c);
 
         setTitle(Constants.NAME);
 
@@ -118,6 +135,8 @@ public class GameWindow extends JFrame {
         } else {
             DLogger.warning("Could not find the icon.");
         }
+
+        add(panel);
 
         setResizable(false);
         resize();

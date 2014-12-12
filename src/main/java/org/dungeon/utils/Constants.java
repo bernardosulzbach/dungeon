@@ -59,7 +59,6 @@ public class Constants {
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy");
     public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
     public static final Color FORE_COLOR_DARKER = Color.GRAY;
-    public static final Color DEFAULT_BACK_COLOR = Color.BLACK;
     public static final Color HEALTH_BAR_COLOR = Color.GREEN;
 
     // How many characters the bar name should occupy.
