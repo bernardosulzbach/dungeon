@@ -32,7 +32,7 @@ Planned features
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
 - Load hints from resource files.
-- A Command type for the commands, create an instance for every command and iterate through a list.
+- A Command type for the commands, create an instance for all commands and iterate through them.
 - Store command help in the respective Command object.
 - Store aliases independently and let the player add and remove aliases.
 - Maps (a ``map`` command that prints an ASCII map of the locations the player already visited).
