@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Dungeon's very own logger class.
+ * Dungeon logger class.
  * <p/>
  * Created by Bernardo Sulzbach on 14/11/14.
  */
@@ -40,15 +40,20 @@ public class DLogger {
   private DLogger() {
   }
 
+  /**
+   * Initialize this logger. Nothing will be logged until the logger is initialized.
+   */
   public static void initialize() {
     if (logger == null) {
       try {
         logger = Logger.getLogger("org.dungeon");
         Handler handler = new FileHandler(getLogFilePath(), true);
         handler.setFormatter(new DFormatter());
+        logger.setUseParentHandlers(false);
         logger.addHandler(handler);
         logger.setLevel(Level.ALL);
       } catch (IOException ignored) {
+        // It is not possible to log an exception that prevented us from getting a logger.
       }
     }
   }
