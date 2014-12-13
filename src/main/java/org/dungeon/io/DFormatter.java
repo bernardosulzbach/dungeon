@@ -23,10 +23,11 @@ import java.util.logging.LogRecord;
 
 class DFormatter extends Formatter {
 
-  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("[dd/MM/yyyy HH:mm:ss.SSS]");
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
 
   @Override
   public String format(LogRecord record) {
     return dateFormat.format(record.getMillis()) + " (" + record.getLevel() + ") : " + record.getMessage() + "\n";
   }
+
 }
