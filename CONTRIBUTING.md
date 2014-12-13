@@ -4,6 +4,14 @@ Contributing
 This file contains some basic directives for developers interested in this project.
 
 
+Commits and PRs
+---------------
+* Do not change code unless there is a reason to do it. Refactorings are a valid reason.
+* If you are not sure about how to implement something, discuss it on the issue tracker on GitHub.
+* Do not revert changes before discussing it with the other developers.
+* Do not use any license other than GNU GPLv3.
+
+
 Writing code
 ------------
 Our code style is a slightly modified version of Google Java Style.
@@ -13,6 +21,7 @@ The fork is called [Dungeon Java Style]
 
 There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory.
 Download it and import it into the IDE to get proper Code Reformatting.
+
 
 Writing GUI code
 ----------------
@@ -48,11 +57,3 @@ strings:   Plain text.
 * Do not surround strings with quotation marks.
 * Do not use TRUE or FALSE for booleans.
 * Multiple line strings are not yet supported. Feel free to implement it.
-
-
-Commits and pull requests
--------------------------
-* Do not change code unless there is a reason to do it. Refactorings are a valid reason.
-* If you are not sure about how to implement something, discuss it on the issue tracker on GitHub.
-* Do not revert changes before discussing it with the other developers.
-* Do not use any license other than GNU GPLv3.
