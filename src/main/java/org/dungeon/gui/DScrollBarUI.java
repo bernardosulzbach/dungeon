@@ -12,7 +12,7 @@ import java.awt.Rectangle;
  * <p/>
  * Created by Bernardo Sulzbach on 12/12/14.
  */
-public class DungeonScrollBarUI extends BasicScrollBarUI {
+public class DScrollBarUI extends BasicScrollBarUI {
 
   private static final Dimension zeroDimension = new Dimension(0, 0);
 
