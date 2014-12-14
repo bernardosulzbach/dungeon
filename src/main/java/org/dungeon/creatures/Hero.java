@@ -450,11 +450,7 @@ public class Hero extends Creature {
 
   public void printHeroStatus() {
     IO.writeString(getName());
-    if (Game.getGameState().isUsingBars()) {
-      IO.writeNamedBar("Health", (double) getCurHealth() / getMaxHealth(), Constants.HEALTH_BAR_COLOR);
-    } else {
-      IO.writeKeyValueString("Health", String.format("%d/%d", getCurHealth(), getMaxHealth()));
-    }
+    IO.writeNamedBar("Health", (double) getCurHealth() / getMaxHealth(), Constants.HEALTH_BAR_COLOR);
     IO.writeKeyValueString("Attack", Integer.toString(getAttack()));
   }
 

@@ -29,7 +29,7 @@ import java.awt.Color;
  */
 class ConfigTools {
 
-  private static final String[] args = {"bars", "bold", "generator", "list", "rows"};
+  private static final String[] args = {"bold", "generator", "list", "rows"};
 
   private static final int MIN_ROWS = 10;
   private static final int MAX_ROWS = 50;
@@ -45,16 +45,6 @@ class ConfigTools {
     boolean newBoldValue = !Game.getGameState().isBold();
     Game.getGameState().setBold(newBoldValue);
     IO.writeString("Bold set to " + newBoldValue + ".");
-  }
-
-  private static void toggleBars() {
-    boolean newUsingBarsValue = !Game.getGameState().isUsingBars();
-    Game.getGameState().setUsingBars(newUsingBarsValue);
-    if (newUsingBarsValue) {
-      IO.writeString("Bars enabled.");
-    } else {
-      IO.writeString("Bars disabled.");
-    }
   }
 
   private static boolean changeRowCount(String argument) {
@@ -100,20 +90,17 @@ class ConfigTools {
   static boolean parseConfigCommand(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
       if (issuedCommand.firstArgumentEquals(args[0])) {
-        toggleBars();
-        return true;
-      } else if (issuedCommand.firstArgumentEquals(args[1])) {
         toggleBold();
         return true;
-      } else if (issuedCommand.firstArgumentEquals(args[2])) {
+      } else if (issuedCommand.firstArgumentEquals(args[1])) {
         if (issuedCommand.getArguments().length > 1) {
           return changeChunkSide(issuedCommand.getArguments()[1]);
         } else {
           IO.writeString("Provide a numerical argument.");
         }
-      } else if (issuedCommand.firstArgumentEquals(args[3])) {
+      } else if (issuedCommand.firstArgumentEquals(args[2])) {
         listAllArguments();
-      } else if (issuedCommand.firstArgumentEquals(args[4])) {
+      } else if (issuedCommand.firstArgumentEquals(args[3])) {
         if (issuedCommand.getArguments().length > 1) {
           return changeRowCount(issuedCommand.getArguments()[1]);
         } else {

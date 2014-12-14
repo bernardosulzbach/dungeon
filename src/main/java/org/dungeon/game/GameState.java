@@ -44,8 +44,6 @@ public class GameState implements Serializable {
 
   // Controls if the text displayed is bold or not. False by default. Toggled with the "config bold" command.
   private boolean bold;
-  // If true, bars will be used instead of fractions wherever possible.
-  private boolean usingBars;
 
   transient private boolean saved;
   private int nextHintIndex;
@@ -97,14 +95,6 @@ public class GameState implements Serializable {
 
   public void setBold(boolean bold) {
     this.bold = bold;
-  }
-
-  public boolean isUsingBars() {
-    return usingBars;
-  }
-
-  public void setUsingBars(boolean usingBars) {
-    this.usingBars = usingBars;
   }
 
   public boolean isSaved() {
