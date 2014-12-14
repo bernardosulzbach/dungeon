@@ -79,7 +79,7 @@ public class Loader {
       if (files.length != 0) {
         IO.writeString(String.format(FILE_ENTRY, "Name", "Size"));
         for (File file : files) {
-          IO.writeString(String.format(FILE_ENTRY, file.getName(), file.length()));
+          IO.writeString(String.format(FILE_ENTRY, file.getName(), Utils.bytesToHuman(file.length())));
         }
       } else {
         if (Engine.RANDOM.nextBoolean()) {
