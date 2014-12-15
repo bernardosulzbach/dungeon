@@ -22,6 +22,7 @@ import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.utils.Constants;
+import org.dungeon.utils.DTable;
 import org.dungeon.utils.Utils;
 
 import javax.swing.JOptionPane;
@@ -58,9 +59,6 @@ public class Loader {
   private static final String LOAD_SUCCESS = "Successfully loaded the game.";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
 
-  // Format strings.
-  private static final String FILE_ENTRY = "%-60s|%s";
-
   /**
    * Check if the default save file exists.
    */
@@ -77,10 +75,11 @@ public class Loader {
     File[] files = SAVES_FOLDER.listFiles();
     if (files != null) {
       if (files.length != 0) {
-        IO.writeString(String.format(FILE_ENTRY, "Name", "Size"));
+        DTable dTable = new DTable("Name", "Size");
         for (File file : files) {
-          IO.writeString(String.format(FILE_ENTRY, file.getName(), Utils.bytesToHuman(file.length())));
+          dTable.insertRow(file.getName(), Utils.bytesToHuman(file.length()));
         }
+        dTable.print();
       } else {
         if (Engine.RANDOM.nextBoolean()) {
           IO.writeString("Saves folder is empty.", Color.RED);
