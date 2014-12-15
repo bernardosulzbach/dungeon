@@ -22,8 +22,6 @@ import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.utils.Constants;
-import org.dungeon.utils.Poem;
-import org.dungeon.utils.PoemBuilder;
 import org.dungeon.utils.Utils;
 
 import java.awt.Font;
@@ -32,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -45,12 +42,17 @@ public final class GameData {
   public static HashMap<String, ItemBlueprint> ITEM_BLUEPRINTS;
   public static LocationPreset[] LOCATION_PRESETS;
   public static HashMap<String, Achievement> ACHIEVEMENTS;
-  public static List<Poem> POEMS;
   public static Font monospaced;
+
+  private static PoetryData poetryData;
 
   public static String LICENSE;
 
   private static ClassLoader loader;
+
+  public static PoetryData getPoetryData() {
+    return poetryData;
+  }
 
   static void loadGameData() {
     long milliseconds = System.nanoTime();
@@ -65,7 +67,8 @@ public final class GameData {
     loadLocationPresets();
 
     createAchievements();
-    loadPoems();
+    poetryData = new PoetryData();
+
     loadLicense();
 
     milliseconds = (System.nanoTime() - milliseconds) / 1000000;
@@ -322,41 +325,6 @@ public final class GameData {
     ACHIEVEMENTS.put("LUMBERJACK", lumberjack);
 
     DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
-  }
-
-  private static void loadPoems() {
-    POEMS = new ArrayList<Poem>();
-
-    String IDENTIFIER_TITLE = "TITLE:";
-    String IDENTIFIER_AUTHOR = "AUTHOR:";
-    String IDENTIFIER_CONTENT = "CONTENT:";
-
-    String line;
-    PoemBuilder pb = new PoemBuilder();
-    DBufferedReader reader = new DBufferedReader(new InputStreamReader(loader.getResourceAsStream("poems.txt")));
-
-    try {
-      while ((line = reader.readString()) != null) {
-        if (line.startsWith(IDENTIFIER_TITLE)) {
-          if (pb.isComplete()) {
-            POEMS.add(pb.createPoem());
-            pb = new PoemBuilder();
-          }
-          pb.setTitle(Utils.getAfterColon(line).trim());
-        } else if (line.startsWith(IDENTIFIER_AUTHOR)) {
-          pb.setAuthor(Utils.getAfterColon(line).trim());
-        } else if (line.startsWith(IDENTIFIER_CONTENT)) {
-          pb.setContent(Utils.getAfterColon(line).trim());
-        }
-      }
-      reader.close();
-    } catch (IOException exception) {
-      DLogger.warning(exception.toString());
-    }
-    if (pb.isComplete()) {
-      POEMS.add(pb.createPoem());
-    }
-    DLogger.info("Loaded " + POEMS.size() + " poems.");
   }
 
   private static void loadLicense() {
