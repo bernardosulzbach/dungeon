@@ -18,8 +18,10 @@
 package org.dungeon.utils;
 
 import org.dungeon.io.DLogger;
+import org.dungeon.io.IO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * DTable class that provides table functionality for printing in-game tables. Currently, all data is stored as Strings.
@@ -88,6 +90,86 @@ public class DTable {
     } else {
       return new Dimensions(0, 0);
     }
+  }
+
+  /**
+   * Prints the table to the game window.
+   */
+  public void print() {
+    if (columns.size() == 0) {
+      DLogger.warning("Tried to print an empty DTable.");
+      return;
+    }
+
+    int columnCount = columns.size();
+    // Subtract columnCount to account for separators.
+    // Add one because we do not add a separator at the end.
+    int columnWidth = (Constants.COLS - columnCount + 1) / columnCount;
+
+    int rowCount = columns.get(0).rows.size();
+
+    StringBuilder sb = new StringBuilder(Constants.COLS * rowCount + 16);
+    String[] currentRow = new String[columnCount];
+
+    // Insert headers
+    for (int i = 0; i < columnCount; i++) {
+      currentRow[i] = columns.get(i).header;
+    }
+    appendRow(sb, columnWidth, currentRow);
+
+    // A horizontal separator.
+    appendHorizontalSeparator(sb, columnWidth, columnCount);
+
+    // Insert table body.
+    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+      for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+        currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
+      }
+      appendRow(sb, columnWidth, currentRow);
+    }
+
+    // Dump to the window.
+    IO.writeString(sb.toString());
+  }
+
+  /**
+   * Appends a row to a StringBuilder.
+   *
+   * @param stringBuilder the StringBuilder object.
+   * @param columnWidth   the width of the columns of the table.
+   * @param values        the values of the row.
+   */
+  private void appendRow(StringBuilder stringBuilder, int columnWidth, String... values) {
+    String currentValue;
+    for (int i = 0; i < values.length; i++) {
+      currentValue = values[i];
+      if (currentValue.length() > columnWidth) {
+        stringBuilder.append(currentValue.substring(0, columnWidth - 3)).append("...");
+      } else {
+        stringBuilder.append(currentValue);
+        int extraSpaces = columnWidth - currentValue.length();
+        for (int j = 0; j < extraSpaces; j++) {
+          stringBuilder.append(" ");
+        }
+      }
+      if (i < values.length - 1) {
+        stringBuilder.append('|');
+      }
+    }
+    stringBuilder.append('\n');
+  }
+
+  /**
+   * Append a horizontal separator made up of dashes to a StringBuilder.
+   *
+   * @param stringBuilder the StringBuilder object.
+   * @param columnWidth   the width of the columns of the table.
+   */
+  private void appendHorizontalSeparator(StringBuilder stringBuilder, int columnWidth, int columnCount) {
+    String pseudoValue = Utils.makeRepeatedCharacterString(columnWidth, '-');
+    String[] pseudoRow = new String[columnCount];
+    Arrays.fill(pseudoRow, pseudoValue);
+    appendRow(stringBuilder, columnWidth, pseudoRow);
   }
 
   private class Column {
