@@ -128,38 +128,19 @@ public final class GameData {
 
   private static void loadCreatureBlueprints() {
     CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>();
-    BufferedReader br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("creatures.txt")));
-    String line;
-    CreatureBlueprint blueprint = new CreatureBlueprint();
-    try {
-      while ((line = br.readLine()) != null) {
-        if (Utils.isNotBlankString(line)) {
-          if (line.startsWith("ID:")) {
-            if (blueprint.getId() != null) {
-              CREATURE_BLUEPRINTS.put(blueprint.getId(), blueprint);
-              blueprint = new CreatureBlueprint();
-            }
-            blueprint.setId(new ID(Utils.getAfterColon(line).trim()));
-          } else if (line.startsWith("TYPE:")) {
-            blueprint.setType(Utils.getAfterColon(line).trim());
-          } else if (line.startsWith("NAME:")) {
-            blueprint.setName(Utils.getAfterColon(line).trim());
-          } else if (line.startsWith("CUR_HEALTH:")) {
-            blueprint.setCurHealth(Integer.parseInt(Utils.getAfterColon(line).trim()));
-          } else if (line.startsWith("MAX_HEALTH:")) {
-            blueprint.setMaxHealth(Integer.parseInt(Utils.getAfterColon(line).trim()));
-          } else if (line.startsWith("ATTACK:")) {
-            blueprint.setAttack(Integer.parseInt(Utils.getAfterColon(line).trim()));
-          } else if (line.startsWith("ATTACK_ALGORITHM_ID:")) {
-            blueprint.setAttackAlgorithmID(Utils.getAfterColon(line).trim());
-          }
-        }
-      }
-      br.close();
-    } catch (IOException exception) {
-      DLogger.warning(exception.toString());
+    DResourceReader resourceReader = new DResourceReader(loader.getResourceAsStream("creatures.txt"));
+    CreatureBlueprint blueprint;
+    while (resourceReader.readNextElement()) {
+      blueprint = new CreatureBlueprint();
+      blueprint.setId(new ID(resourceReader.getValue("ID")));
+      blueprint.setType(resourceReader.getValue("TYPE"));
+      blueprint.setName(resourceReader.getValue("NAME"));
+      blueprint.setCurHealth(Integer.parseInt(resourceReader.getValue("CUR_HEALTH")));
+      blueprint.setMaxHealth(Integer.parseInt(resourceReader.getValue("MAX_HEALTH")));
+      blueprint.setAttack(Integer.parseInt(resourceReader.getValue("ATTACK")));
+      blueprint.setAttackAlgorithmID(resourceReader.getValue("ATTACK_ALGORITHM_ID"));
+      CREATURE_BLUEPRINTS.put(blueprint.getId(), blueprint);
     }
-    CREATURE_BLUEPRINTS.put(blueprint.getId(), blueprint);
     DLogger.info("Loaded " + CREATURE_BLUEPRINTS.size() + " creature blueprints.");
   }
 
