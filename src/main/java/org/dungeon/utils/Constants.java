@@ -22,6 +22,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Constants class is a general-purpose constant storing class.
@@ -56,8 +58,8 @@ public class Constants {
   public static final String SUGGEST_COMMANDS = "See 'commands' for a list of commands.";
 
   // DateFormats for time and date printing.
-  public static final DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("HH:mm:ss");
-  public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy");
+  public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+  public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
   public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
   public static final Color FORE_COLOR_DARKER = Color.GRAY;
   public static final Color HEALTH_BAR_COLOR = Color.GREEN;

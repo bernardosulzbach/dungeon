@@ -21,13 +21,13 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.achievements.UnlockedAchievement;
 import org.dungeon.creatures.Hero;
+import org.dungeon.date.Date;
+import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.utils.CommandHistory;
 import org.dungeon.utils.Hints;
 import org.dungeon.utils.Statistics;
-import org.dungeon.utils.Utils;
-import org.joda.time.DateTime;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -145,13 +145,13 @@ public class GameState implements Serializable {
   public void printUnlockedAchievements() {
     String dateDifference;
     Achievement achievement;
-    DateTime now = world.getWorldDate();
+    Date now = world.getWorldDate();
     AchievementTracker tracker = hero.getAchievementTracker();
     IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
     for (UnlockedAchievement ua : tracker.getUnlockedAchievementArray()) {
       achievement = GameData.ACHIEVEMENTS.get(ua.id);
       if (achievement != null) {
-        dateDifference = Utils.dateDifferenceToString(ua.date, now);
+        dateDifference = new Period(ua.date, now).toString();
         IO.writeString(achievement.getName() + " (" + dateDifference + " ago)", Color.ORANGE);
         IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
       } else {

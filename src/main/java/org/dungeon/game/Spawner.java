@@ -70,14 +70,14 @@ public class Spawner implements Serializable {
    * @return the time, in milliseconds, of the World of the Location that this Spawner is in.
    */
   private long getWorldTime() {
-    return location.getWorld().getWorldDate().getMillis();
+    return location.getWorld().getWorldDate().getTime();
   }
 
   /**
    * @return the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
    */
   private long getWorldCreationTime() {
-    return location.getWorld().getWorldCreationDate().getMillis();
+    return location.getWorld().getWorldCreationDate().getTime();
   }
 
 }

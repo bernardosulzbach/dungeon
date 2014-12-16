@@ -17,10 +17,10 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.game.ID;
+import org.dungeon.date.Date;
 import org.dungeon.game.Game;
+import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
-import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.TreeSet;
@@ -55,7 +55,7 @@ public class AchievementTracker implements Serializable {
    * @param achievement the Achievement to be unlocked.
    */
   public void unlock(Achievement achievement) {
-    DateTime now = Game.getGameState().getWorld().getWorldDate();
+    Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
       unlockedAchievements.add(new UnlockedAchievement(achievement.getId(), achievement.getName(), now));
     } else {

@@ -20,15 +20,18 @@ package org.dungeon.utils;
 import org.dungeon.io.IO;
 import org.joda.time.DateTime;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SystemInfo {
 
   /**
    * Prints some information about the system.
    */
   public static void printSystemInfo() {
-    DateTime currentDate = new DateTime();
-    IO.writeString("Time: " + Constants.TIME_FORMAT.print(currentDate));
-    IO.writeString("Date: " + Constants.DATE_FORMAT.print(currentDate));
+    Date currentDate = new Date();
+    IO.writeString("Time: " + Constants.TIME_FORMAT.format(currentDate));
+    IO.writeString("Date: " + Constants.DATE_FORMAT.format(currentDate));
     IO.writeString("User: " + System.getProperty("user.name"));
     IO.writeString(getJavaVersionString());
     IO.writeString(getOSVersionString());

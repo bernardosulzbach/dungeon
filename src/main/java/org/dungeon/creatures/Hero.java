@@ -20,6 +20,8 @@ package org.dungeon.creatures;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.counters.BattleStatistics;
 import org.dungeon.counters.ExplorationLog;
+import org.dungeon.date.Date;
+import org.dungeon.date.Period;
 import org.dungeon.game.Direction;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
@@ -48,7 +50,7 @@ public class Hero extends Creature {
 
   private final double minimumLuminosity = 0.3;
 
-  private final DateTime dateOfBirth;
+  private final Date dateOfBirth;
   private final ExplorationLog explorationLog;
   private final BattleStatistics battleStatistics;
   private final AchievementTracker achievementTracker;
@@ -56,7 +58,7 @@ public class Hero extends Creature {
   public Hero(String name) {
     super(makeHeroBlueprint(name));
     setInventory(new CreatureInventory(this, 3));
-    dateOfBirth = new DateTime(1952, 6, 4, 8, 32);
+    dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
     explorationLog = new ExplorationLog();
     battleStatistics = new BattleStatistics();
     achievementTracker = new AchievementTracker();
@@ -86,7 +88,7 @@ public class Hero extends Creature {
     return achievementTracker;
   }
 
-  private DateTime getDateOfBirth() {
+  private Date getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -478,7 +480,7 @@ public class Hero extends Creature {
    * Prints the hero's age.
    */
   public void printAge() {
-    String age = Utils.dateDifferenceToString(getDateOfBirth(), Game.getGameState().getWorld().getWorldDate());
+    String age = new Period(getDateOfBirth(), Game.getGameState().getWorld().getWorldDate()).toString();
     IO.writeString(String.format("You are %s old.", age), Color.CYAN);
   }
 
@@ -502,16 +504,11 @@ public class Hero extends Creature {
       IO.writeString(getClock().getClockComponent().getTimeString());
     }
 
-    DateTime worldDate = world.getWorldDate();
-    IO.writeString("You think it is " + Constants.DATE_FORMAT.print(worldDate) + ".");
+    Date worldDate = world.getWorldDate();
+    IO.writeString("You think it is " + worldDate.toDateString() + ".");
 
-    String holiday = org.dungeon.utils.Holiday.getHoliday(worldDate);
-    if (holiday != null) {
-      IO.writeString("You remember it is " + holiday + ".");
-    }
-
-    DateTime dob = getDateOfBirth();
-    if (worldDate.getMonthOfYear() == dob.getMonthOfYear() && worldDate.getDayOfMonth() == dob.getDayOfMonth()) {
+    Date dob = getDateOfBirth();
+    if (worldDate.getMonth() == dob.getMonth() && worldDate.getDay() == dob.getDay()) {
       IO.writeString("Today is your birthday.");
     }
 

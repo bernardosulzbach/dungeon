@@ -45,7 +45,7 @@ public class Date implements Serializable {
 
   private long time;
 
-  private Date(long millis) {
+  protected Date(long millis) {
     time = millis;
   }
 
@@ -100,6 +100,22 @@ public class Date implements Serializable {
     time = millisInYear * (year - 1) + millisInMonth * (month - 1) + millisInDay * (day - 1);
   }
 
+  public long getTime() {
+    return time;
+  }
+
+  public long getSecond() {
+    return (time % millisInMinute) / millisInSecond;
+  }
+
+  public long getMinute() {
+    return (time % millisInHour) / millisInMinute;
+  }
+
+  public long getHour() {
+    return (time % millisInDay) / millisInHour;
+  }
+
   public long getDay() {
     return (time % millisInMonth) / millisInDay + 1;
   }
@@ -110,6 +126,27 @@ public class Date implements Serializable {
 
   public long getYear() {
     return time / millisInYear + 1;
+  }
+
+  public Date minusSeconds(int seconds) {
+    if (seconds < 0) {
+      DLogger.warning("Passed negative argument to minus method.");
+    }
+    return new Date(time - seconds * millisInSecond);
+  }
+
+  public Date minusMinutes(int minutes) {
+    if (minutes < 0) {
+      DLogger.warning("Passed negative argument to minus method.");
+    }
+    return new Date(time - minutes * millisInMinute);
+  }
+
+  public Date minusHours(int hours) {
+    if (hours < 0) {
+      DLogger.warning("Passed negative argument to minus method.");
+    }
+    return new Date(time - hours * millisInHour);
   }
 
   public Date minusDays(int days) {
@@ -133,6 +170,27 @@ public class Date implements Serializable {
     return new Date(time - years * millisInYear);
   }
 
+  public Date plusSeconds(int seconds) {
+    if (seconds < 0) {
+      DLogger.warning("Passed negative argument to plus method.");
+    }
+    return new Date(time + seconds * millisInSecond);
+  }
+
+  public Date plusMinutes(int minutes) {
+    if (minutes < 0) {
+      DLogger.warning("Passed negative argument to plus method.");
+    }
+    return new Date(time + minutes * millisInMinute);
+  }
+
+  public Date plusHours(int hours) {
+    if (hours < 0) {
+      DLogger.warning("Passed negative argument to plus method.");
+    }
+    return new Date(time + hours * millisInHour);
+  }
+
   public Date plusDays(int days) {
     if (days < 0) {
       DLogger.warning("Passed negative argument to plus method.");
@@ -154,4 +212,11 @@ public class Date implements Serializable {
     return new Date(time + years * millisInYear);
   }
 
+  public String toDateString() {
+    return "day " + getDay() + " of month " + getMonth() + " of the year " + getYear();
+  }
+
+  public String toTimeString() {
+    return getHour() + ":" + getMinute() + ":" + getSecond();
+  }
 }

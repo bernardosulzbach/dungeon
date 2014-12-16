@@ -17,9 +17,7 @@
 
 package org.dungeon.game;
 
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
+import org.dungeon.date.Date;
 
 /**
  * Enumerated type of the parts of the day.
@@ -57,11 +55,11 @@ public enum PartOfDay {
   /**
    * Returns the PartOfDay constant corresponding to a given time.
    *
-   * @param dateTime a DateTime object.
+   * @param date a Date object.
    * @return a PartOfDay constant.
    */
-  public static PartOfDay getCorrespondingConstant(DateTime dateTime) {
-    int hour = dateTime.getHourOfDay();
+  public static PartOfDay getCorrespondingConstant(Date date) {
+    long hour = date.getHour();
     // MIDNIGHT starts at 23, therefore 0 does not satisfy the comparison and the following statement is necessary.
     if (hour == 0) {
       // It is also possible to add 24 to hour if it is zero, making it bigger than 23, but this is simpler.
@@ -82,10 +80,11 @@ public enum PartOfDay {
    * @param pod a part of the day.
    * @return the number of seconds between the current time and the start of the part of the day.
    */
-  public static int getSecondsToNext(DateTime cur, PartOfDay pod) {
-    DateTime startOfPod = cur.getHourOfDay() < pod.getStartingHour() ? cur : cur.plusDays(1);
-    startOfPod = startOfPod.withHourOfDay(pod.getStartingHour()).withMinuteOfHour(0).withSecondOfMinute(0);
-    return new Period(cur, startOfPod, PeriodType.seconds()).getSeconds();
+  public static int getSecondsToNext(Date cur, PartOfDay pod) {
+    // The day on which the next part of day will happen.
+    Date day = cur.getHour() < pod.getStartingHour() ? cur : cur.plusDays(1);
+    day = new Date(day.getYear(), day.getMonth(), day.getDay(), pod.getStartingHour(), 0, 0);
+    return (int) new org.dungeon.date.Period(cur, day).getSeconds();
   }
 
   public double getLuminosity() {

@@ -24,7 +24,6 @@ import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
-import org.joda.time.DateTime;
 
 import java.awt.Color;
 
@@ -64,7 +63,7 @@ class DebugTools {
   }
 
   private static void printTime() {
-    IO.writeString(Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate()));
+    IO.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
   }
 
   static void parseDebugCommand(IssuedCommand issuedCommand) {
@@ -77,14 +76,6 @@ class DebugTools {
           IO.writeString("A day has passed.", Color.ORANGE);
         } else {
           IO.writeString("You are one day closer to your ending.", Color.ORANGE);
-        }
-      } else if (issuedCommand.firstArgumentEquals(args[2])) {
-        String holiday;
-        for (DateTime date = new DateTime(1970, 1, 1, 0, 0); date.getYear() != 1971; date = date.plusDays(1)) {
-          holiday = org.dungeon.utils.Holiday.getHoliday(date);
-          if (holiday != null) {
-            IO.writeKeyValueString(Constants.DATE_FORMAT.print(date), holiday);
-          }
         }
       } else if (issuedCommand.firstArgumentEquals(args[3])) {
         Loader.printFilesInSavesFolder();

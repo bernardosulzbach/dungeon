@@ -19,26 +19,24 @@ package org.dungeon.game;
 
 import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.Hero;
+import org.dungeon.date.Date;
 import org.dungeon.io.IO;
-import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class World implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-
   private final CounterMap<ID> spawnCounter;
 
   private final WorldGenerator generator;
 
   private final HashMap<Point, Location> locations;
-  private final DateTime worldCreationDate;
-  private DateTime worldDate;
+  private final Date worldCreationDate;
+  private Date worldDate;
 
   public World() {
-    worldDate = new DateTime(1985, 6, 2, 6, 10);
+    worldDate = new Date(455, 6, 2, 6, 10, 0);
     worldCreationDate = worldDate.minusHours(6);
     spawnCounter = new CounterMap<ID>();
     locations = new HashMap<Point, Location>();
@@ -53,11 +51,11 @@ public class World implements Serializable {
     return generator;
   }
 
-  public DateTime getWorldCreationDate() {
+  public Date getWorldCreationDate() {
     return worldCreationDate;
   }
 
-  public DateTime getWorldDate() {
+  public Date getWorldDate() {
     return worldDate;
   }
 
@@ -97,7 +95,7 @@ public class World implements Serializable {
    * Returns the PartOfDay constant that represents the current part of the day.
    */
   public PartOfDay getPartOfDay() {
-    return PartOfDay.getCorrespondingConstant(new DateTime(worldDate));
+    return PartOfDay.getCorrespondingConstant(worldDate);
   }
 
   /**

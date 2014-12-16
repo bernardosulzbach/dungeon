@@ -17,10 +17,9 @@
 
 package org.dungeon.items;
 
+import org.dungeon.date.Date;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
-import org.dungeon.utils.Constants;
-import org.joda.time.DateTime;
 
 import java.io.Serializable;
 
@@ -36,13 +35,13 @@ public class ClockComponent implements Serializable {
   /**
    * Used to store the date the clock had when it was broken.
    */
-  private DateTime lastTime;
+  private Date lastTime;
 
   public void setMaster(Item master) {
     this.master = master;
   }
 
-  public void setLastTime(DateTime lastTime) {
+  public void setLastTime(Date lastTime) {
     // Create a new Date object so that this field is not affected by changes in the rest of the program.
     this.lastTime = lastTime;
   }
@@ -59,10 +58,10 @@ public class ClockComponent implements Serializable {
           return "The clock is completely smashed.";
         }
       } else {
-        return "The clock is broken. Still, it displays " + Constants.TIME_FORMAT.print(lastTime) + ".";
+        return "The clock is broken. Still, it displays " + lastTime.toTimeString() + ".";
       }
     } else {
-      String timeString = Constants.TIME_FORMAT.print(Game.getGameState().getWorld().getWorldDate());
+      String timeString = Game.getGameState().getWorld().getWorldDate().toTimeString();
       return "The clock displays " + timeString + ".";
     }
   }
