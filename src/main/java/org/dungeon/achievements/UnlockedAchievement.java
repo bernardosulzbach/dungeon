@@ -31,7 +31,7 @@ public final class UnlockedAchievement implements Serializable {
 
   public final ID id;
   public final String name;
-  // DateTime is immutable, therefore it can be public.
+  // Date is immutable, therefore it can be public.
   public final Date date;
 
   /**
