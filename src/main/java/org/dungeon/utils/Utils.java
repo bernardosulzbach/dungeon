@@ -22,9 +22,6 @@ import org.dungeon.game.GameData;
 import org.dungeon.game.Selectable;
 import org.dungeon.help.Help;
 import org.dungeon.io.IO;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
 
 import java.awt.Color;
 import java.util.List;
@@ -35,8 +32,6 @@ import java.util.List;
  * @author Bernardo Sulzbach
  */
 public class Utils {
-
-  public static String LESS_THAN_A_DAY = "Less than a day";
 
   /**
    * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is
@@ -132,57 +127,6 @@ public class Utils {
       throw new IllegalArgumentException("chance must be nonnegative and smaller than 1.");
     }
     return chance > Engine.RANDOM.nextDouble();
-  }
-
-  /**
-   * Given two dates, this method returns a string of text of a humanized representation of the interval between
-   * them.
-   *
-   * @param start the start time.
-   * @param end   the end time.
-   * @return a String of text.
-   */
-  public static String dateDifferenceToString(DateTime start, DateTime end) {
-    Period period = new Period(start, end, PeriodType.yearMonthDay());
-    int years = period.getYears();
-    int months = period.getMonths();
-    int days = period.getDays();
-    StringBuilder builder = new StringBuilder();
-    if (years != 0) {
-      if (years == 1) {
-        builder.append(years).append(" year");
-      } else {
-        builder.append(years).append(" years");
-      }
-    }
-    if (months != 0) {
-      if (builder.length() != 0) {
-        if (days == 0) {
-          builder.append(" and ");
-        } else {
-          builder.append(", ");
-        }
-      }
-      if (months == 1) {
-        builder.append(months).append(" month");
-      } else {
-        builder.append(months).append(" months");
-      }
-    }
-    if (days != 0) {
-      if (builder.length() != 0) {
-        builder.append(" and ");
-      }
-      if (days == 1) {
-        builder.append(days).append(" day");
-      } else {
-        builder.append(days).append(" days");
-      }
-    }
-    if (builder.length() == 0) {
-      builder.append(LESS_THAN_A_DAY);
-    }
-    return builder.toString();
   }
 
   /**
@@ -298,21 +242,6 @@ public class Utils {
   }
 
   /**
-   * Checks if a string is alphabetic (only contains letters).
-   *
-   * @param s the string to be tested.
-   * @return a boolean indicating if the string only contains letters.
-   */
-  public static boolean isAlphabetic(String s) {
-    for (int i = 0; i < s.length(); i++) {
-      if (!Character.isAlphabetic(s.charAt(i))) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
    * Strips all newlines and spaces at the end of the string.
    */
   public static String clearEnd(String str) {
@@ -369,6 +298,7 @@ public class Utils {
 
   /**
    * Converts a given number of bytes to a human readable format.
+   *
    * @return a String.
    */
   public static String bytesToHuman(long bytes) {

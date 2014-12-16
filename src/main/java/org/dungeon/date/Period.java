@@ -1,35 +1,54 @@
+/*
+ * Copyright (C) 2014 Bernardo Sulzbach
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.dungeon.date;
+
+import java.io.Serializable;
 
 /**
  * Period class to calculate, store and print date differences.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
-public class Period {
+public class Period implements Serializable {
 
   private static final String LESS_THAN_A_DAY = "Less than a day";
 
-  // Use a Date as it already provides convenient getters.
-  private final Date difference;
+  private final long difference;
 
   /**
    * Constructs a period from a specified start date to an end date.
+   *
    * @param start the start of the period.
-   * @param end the end of the period.
+   * @param end   the end of the period.
    */
   public Period(Date start, Date end) {
-    difference = new Date(end.getTime() - start.getTime());
+    difference = end.getTime() - start.getTime();
   }
 
   public long getSeconds() {
-    return difference.getTime() / 1000;
+    return difference / 1000;
   }
 
   @Override
   public String toString() {
-    long years = difference.getYear();
-    long months = difference.getMonth();
-    long days = difference.getDay();
+    long years = difference / Date.MILLIS_IN_YEAR;
+    long months = (difference % Date.MILLIS_IN_YEAR) / Date.MILLIS_IN_MONTH;
+    long days = (difference % Date.MILLIS_IN_MONTH) / Date.MILLIS_IN_DAY;
     StringBuilder builder = new StringBuilder();
     if (years != 0) {
       if (years == 1) {
