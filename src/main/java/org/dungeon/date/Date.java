@@ -30,15 +30,52 @@ import java.io.Serializable;
  */
 public class Date implements Serializable {
 
+  public static final long SECONDS_IN_MINUTE = 60;
+  public static final long MINUTES_IN_HOUR = 60;
+  public static final long HOURS_IN_DAY = 24;
   public static final long DAYS_IN_MONTH = 10;
   public static final long MONTHS_IN_YEAR = 10;
-  private static final long millisInDay = 1000 * 60 * 60 * 24;
+
+  private static final long millisInSecond = 1000;
+  private static final long millisInMinute = millisInSecond * SECONDS_IN_MINUTE;
+  private static final long millisInHour = millisInMinute * MINUTES_IN_HOUR;
+  private static final long millisInDay = millisInHour * HOURS_IN_DAY;
   private static final long millisInMonth = millisInDay * DAYS_IN_MONTH;
   private static final long millisInYear = millisInMonth * MONTHS_IN_YEAR;
-  private final long time;
+
+  private long time;
 
   private Date(long millis) {
     time = millis;
+  }
+
+  public Date(long year, long month, long day, long hour, long minute, long second) {
+    this(year, month, day);
+    if (hour < 0) {
+      DLogger.warning("Tried to construct Date with negative hour!");
+      hour = 0;
+    } else if (hour >= HOURS_IN_DAY) {
+      DLogger.warning("Tried to construct Date with nonexistent hour.");
+      // First hour of the next day. Even if the code supplied this, log a warning as this is likely a bug.
+      hour = HOURS_IN_DAY;
+    }
+    if (minute < 0) {
+      DLogger.warning("Tried to construct Date with negative minute!");
+      minute = 0;
+    } else if (minute >= MINUTES_IN_HOUR) {
+      DLogger.warning("Tried to construct Date with nonexistent minute.");
+      // First minute of the next hour. Even if the code supplied this, log a warning as this is likely a bug.
+      minute = MINUTES_IN_HOUR;
+    }
+    if (second < 0) {
+      DLogger.warning("Tried to construct Date with negative second!");
+      second = 0;
+    } else if (second >= SECONDS_IN_MINUTE) {
+      DLogger.warning("Tried to construct Date with nonexistent second.");
+      // First second of the next minute. Even if the code supplied this, log a warning as this is likely a bug.
+      second = SECONDS_IN_MINUTE;
+    }
+    time += hour * millisInHour + minute * millisInMinute + second * millisInSecond;
   }
 
   public Date(long year, long month, long day) {
