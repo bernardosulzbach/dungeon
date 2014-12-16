@@ -24,7 +24,7 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo Sulzbach on 01/12/14.
  */
-public class River implements Serializable {
+class River implements Serializable {
 
   private final ExpandableIntegerSet bridges;
 

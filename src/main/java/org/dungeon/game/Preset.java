@@ -5,7 +5,7 @@ package org.dungeon.game;
  * <p/>
  * Created by Bernardo Sulzbach on 03/12/14.
  */
-public abstract class Preset {
+abstract class Preset {
 
   private boolean finished;
 

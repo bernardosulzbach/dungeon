@@ -38,7 +38,7 @@ class DebugTools {
       "saved", "list", "time", "give"};
 
   private static void give(String itemId) {
-    ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(itemId.toUpperCase());
+    ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(new ID(itemId.toUpperCase()));
     if (bp != null) {
       if (Game.getGameState().getHero().getInventory().addItem(new Item(bp))) {
         return;

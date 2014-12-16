@@ -25,7 +25,7 @@ import java.util.HashMap;
  * <p/>
  * Created by Bernardo Sulzbach on 01/12/14.
  */
-public final class RiverGenerator implements Serializable {
+final class RiverGenerator implements Serializable {
 
   private final ExpandableIntegerSet lines;
   private final HashMap<Integer, River> rivers;

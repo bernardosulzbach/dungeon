@@ -30,7 +30,7 @@ import java.util.Arrays;
  */
 public class DTable {
 
-  private ArrayList<Column> columns;
+  private final ArrayList<Column> columns;
 
   /**
    * Constructs a DTable using the provided Strings as column headers.
@@ -173,9 +173,9 @@ public class DTable {
   }
 
   private class Column {
-    String header;
+    final String header;
     int widestValue;
-    ArrayList<String> rows;
+    final ArrayList<String> rows;
 
     public Column(String header) {
       rows = new ArrayList<String>();

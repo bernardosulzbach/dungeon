@@ -90,7 +90,7 @@ public class Engine {
    *
    * @return the number of seconds the player walk took as an integer.
    */
-  static int heroWalk(Direction dir) {
+  private static int heroWalk(Direction dir) {
     GameState gameState = Game.getGameState();
     World world = gameState.getWorld();
     Point point = gameState.getHeroPosition();

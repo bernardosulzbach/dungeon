@@ -53,7 +53,7 @@ public class CommandHistory implements Serializable {
   /**
    * @return the number of commands in this CommandHistory.
    */
-  public int size() {
+  int size() {
     return commands.size();
   }
 

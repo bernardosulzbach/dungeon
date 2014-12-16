@@ -25,10 +25,10 @@ import java.util.List;
  */
 final class LocationPreset extends Preset {
 
-  private String name;
-  private BlockedEntrances blockedEntrances;
-  private ArrayList<SpawnerPreset> spawners;
-  private ArrayList<ItemFrequencyPair> items;
+  private final String name;
+  private final BlockedEntrances blockedEntrances;
+  private final ArrayList<SpawnerPreset> spawners;
+  private final ArrayList<ItemFrequencyPair> items;
   private double lightPermittivity;
 
   LocationPreset(String name) {
@@ -52,11 +52,10 @@ final class LocationPreset extends Preset {
     return this;
   }
 
-  public LocationPreset setLightPermittivity(double lightPermittivity) {
+  public void setLightPermittivity(double lightPermittivity) {
     if (!isLocked()) {
       this.lightPermittivity = lightPermittivity;
     }
-    return this;
   }
 
   /**

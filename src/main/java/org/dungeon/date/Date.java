@@ -30,22 +30,22 @@ import java.io.Serializable;
  */
 public class Date implements Serializable {
 
-  public static final long SECONDS_IN_MINUTE = 60;
-  public static final long MINUTES_IN_HOUR = 60;
-  public static final long HOURS_IN_DAY = 24;
+  private static final long SECONDS_IN_MINUTE = 60;
+  private static final long MINUTES_IN_HOUR = 60;
+  private static final long HOURS_IN_DAY = 24;
   public static final long DAYS_IN_MONTH = 10;
   public static final long MONTHS_IN_YEAR = 10;
 
-  static final long MILLIS_IN_SECOND = 1000;
-  static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
-  static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;
+  private static final long MILLIS_IN_SECOND = 1000;
+  private static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
+  private static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;
   static final long MILLIS_IN_DAY = MILLIS_IN_HOUR * HOURS_IN_DAY;
   static final long MILLIS_IN_MONTH = MILLIS_IN_DAY * DAYS_IN_MONTH;
   static final long MILLIS_IN_YEAR = MILLIS_IN_MONTH * MONTHS_IN_YEAR;
 
   private long time;
 
-  protected Date(long millis) {
+  private Date(long millis) {
     time = millis;
   }
 
@@ -104,11 +104,11 @@ public class Date implements Serializable {
     return time;
   }
 
-  public long getSecond() {
+  long getSecond() {
     return (time % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
   }
 
-  public long getMinute() {
+  long getMinute() {
     return (time % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
   }
 

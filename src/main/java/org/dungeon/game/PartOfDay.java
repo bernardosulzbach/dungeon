@@ -98,11 +98,11 @@ public enum PartOfDay {
     this.luminosity = luminosity;
   }
 
-  public int getStartingHour() {
+  int getStartingHour() {
     return startingHour;
   }
 
-  public void setStartingHour(int startingHour) {
+  void setStartingHour(int startingHour) {
     if (startingHour < 0 || startingHour > 23) {
       throw new IllegalArgumentException("startingHour must be in the range [0, 23]");
     }

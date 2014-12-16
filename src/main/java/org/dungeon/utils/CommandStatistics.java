@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo on 07/12/2014.
  */
-public class CommandStatistics implements Serializable {
+class CommandStatistics implements Serializable {
 
   private int commands;
   private int chars;

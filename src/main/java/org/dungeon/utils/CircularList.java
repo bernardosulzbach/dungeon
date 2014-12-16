@@ -28,9 +28,9 @@ import java.util.ArrayList;
  * <p/>
  * Created by Bernardo Sulzbach on 10/12/14.
  */
-public final class CircularList<T> implements Serializable {
+final class CircularList<T> implements Serializable {
 
-  public final int capacity;
+  private final int capacity;
   private final ArrayList<T> list;
   /**
    * The index where the element that should be at 0 actually is. Initially 0.
@@ -80,7 +80,7 @@ public final class CircularList<T> implements Serializable {
    *
    * @return true if this CircularList is at its maximum capacity. False otherwise.
    */
-  public boolean isFull() {
+  boolean isFull() {
     return size() == capacity;
   }
 

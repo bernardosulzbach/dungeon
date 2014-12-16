@@ -28,10 +28,10 @@ import java.util.HashMap;
  * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
-public class DResourceReader implements Closeable {
+class DResourceReader implements Closeable {
 
   private final HashMap<String, String> map;
-  private DBufferedReader dBufferedReader;
+  private final DBufferedReader dBufferedReader;
 
   public DResourceReader(InputStream inputStream) {
     map = new HashMap<String, String>();

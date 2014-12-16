@@ -88,7 +88,7 @@ public class DLogger {
    *
    * @return the file path of a text file to be used by the FileHandler constructor.
    */
-  public static String getLogFilePath() {
+  private static String getLogFilePath() {
     File logFolder = new File(LOG_FILE_PATH);
     if (!logFolder.exists()) {
       if (!logFolder.mkdir()) {

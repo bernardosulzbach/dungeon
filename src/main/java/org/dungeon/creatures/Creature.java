@@ -28,11 +28,11 @@ import org.dungeon.items.Item;
  */
 public class Creature extends Entity {
 
-  private int maxHealth;
+  private final int maxHealth;
   private int curHealth;
 
-  private int attack;
-  private String attackAlgorithm;
+  private final int attack;
+  private final String attackAlgorithm;
 
   private CreatureInventory inventory;
   private Item weapon;
@@ -132,7 +132,7 @@ public class Creature extends Entity {
   }
 
   // Checks if the creature has a weapon.
-  public boolean hasWeapon() {
+  boolean hasWeapon() {
     return getWeapon() != null;
   }
 

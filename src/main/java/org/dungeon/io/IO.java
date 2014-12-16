@@ -33,7 +33,7 @@ import java.awt.Color;
 public final class IO {
 
   // How many milliseconds the game 'lags' after writing a string of battle output.
-  public static final long WRITE_BATTLE_STRING_WAIT = 300;
+  private static final long WRITE_BATTLE_STRING_WAIT = 300;
 
   /**
    * Writes a string of text using the default output color.
@@ -124,7 +124,7 @@ public final class IO {
    * @param textColor the color used to write the key and the value.
    * @param fillColor the color used to write the dots.
    */
-  public static void writeKeyValueString(String key, String value, Color textColor, Color fillColor) {
+  private static void writeKeyValueString(String key, String value, Color textColor, Color fillColor) {
     int dots = Constants.COLS - key.length() - value.length();  // The amount of dots necessary.
     if (dots < 0) {
       throw new IllegalArgumentException("strings are too large.");

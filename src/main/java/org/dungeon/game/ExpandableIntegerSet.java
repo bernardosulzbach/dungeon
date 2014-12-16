@@ -27,7 +27,7 @@ import java.util.TreeSet;
  * <p/>
  * Created by Bernardo Sulzbach on 01/12/14.
  */
-public class ExpandableIntegerSet implements Serializable {
+class ExpandableIntegerSet implements Serializable {
 
   // DBI stands for distance between integers.
   private final int MIN_DBI;

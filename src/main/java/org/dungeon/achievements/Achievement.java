@@ -30,12 +30,12 @@ import org.dungeon.utils.Utils;
  */
 public class Achievement {
 
-  final ID id;
+  private final ID id;
   private final String name;
   private final String info;
 
-  private BattleComponent battle;
-  private ExplorationComponent exploration;
+  private final BattleComponent battle;
+  private final ExplorationComponent exploration;
 
   public Achievement(String id, String name, String info) {
     this.id = new ID(id);
@@ -103,7 +103,7 @@ public class Achievement {
     exploration.visitCount = count;
   }
 
-  public boolean isFulfilled(Hero hero) {
+  boolean isFulfilled(Hero hero) {
     return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
   }
 
@@ -112,14 +112,14 @@ public class Achievement {
    *
    * @return true if the achievement was unlocked. False otherwise.
    */
-  public final boolean update(Hero hero) {
+  public final void update(Hero hero) {
     if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
       // All the requirements OK, unlock the achievement.
       printAchievementUnlocked();
       hero.getAchievementTracker().unlock(this);
-      return true;
+      return;
     } else {
-      return false;
+      return;
     }
 
   }

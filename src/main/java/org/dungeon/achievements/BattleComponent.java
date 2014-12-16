@@ -31,9 +31,9 @@ final class BattleComponent extends AchievementComponent {
 
   int battleCount;
   int longestBattleLength;
-  CounterMap<String> killsByCreatureType;
-  CounterMap<ID> killsByCreatureId;
-  CounterMap<ID> killsByWeapon;
+  final CounterMap<String> killsByCreatureType;
+  final CounterMap<ID> killsByCreatureId;
+  final CounterMap<ID> killsByWeapon;
 
   public BattleComponent() {
     killsByCreatureType = new CounterMap<String>();

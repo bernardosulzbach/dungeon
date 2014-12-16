@@ -22,19 +22,16 @@ public class PoemBuilder {
   private String author;
   private String content;
 
-  public PoemBuilder setTitle(String title) {
+  public void setTitle(String title) {
     this.title = title;
-    return this;
   }
 
-  public PoemBuilder setAuthor(String author) {
+  public void setAuthor(String author) {
     this.author = author;
-    return this;
   }
 
-  public PoemBuilder setContent(String content) {
+  public void setContent(String content) {
     this.content = content;
-    return this;
   }
 
   /**

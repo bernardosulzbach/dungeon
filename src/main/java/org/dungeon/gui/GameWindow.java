@@ -64,7 +64,7 @@ public class GameWindow extends JFrame {
   private static final int MARGIN = 5;
 
   private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-  private StyledDocument document;
+  private final StyledDocument document;
 
   private JTextField textField;
   private JTextPane textPane;

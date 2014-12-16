@@ -22,7 +22,7 @@ package org.dungeon.game;
  * <p/>
  * Created by Bernardo Sulzbach on 12/11/14.
  */
-public class ItemFrequencyPair {
+class ItemFrequencyPair {
 
   private final Pair<ID, Double> pair;
 

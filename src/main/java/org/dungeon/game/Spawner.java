@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * Spawner class that repopulates locations.
  */
-public class Spawner implements Serializable {
+class Spawner implements Serializable {
 
   private final ID id;
   private final int populationLimit;

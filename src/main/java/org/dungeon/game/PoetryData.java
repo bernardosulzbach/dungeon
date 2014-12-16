@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public final class PoetryData {
 
-  private ArrayList<Poem> poems;
+  private final ArrayList<Poem> poems;
   private boolean initialized;
 
   public PoetryData() {

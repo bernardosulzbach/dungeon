@@ -29,7 +29,7 @@ import java.io.Reader;
  * <p/>
  * Created on 05/12/14.
  */
-public class DBufferedReader implements Closeable {
+class DBufferedReader implements Closeable {
 
   // The last line retrieved by the readLine method.
   private String line;

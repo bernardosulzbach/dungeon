@@ -203,7 +203,7 @@ public class Hero extends Creature {
   /**
    * @return a boolean indicating if the Hero can see other creatures or items in the current location.
    */
-  public boolean canSee() {
+  boolean canSee() {
     return getLocation().getLuminosity() >= minimumLuminosity;
   }
 
@@ -255,7 +255,7 @@ public class Hero extends Creature {
    * @param issuedCommand the command entered by the player.
    * @return a target Creature or <code>null</code>.
    */
-  public Creature selectTarget(IssuedCommand issuedCommand) {
+  Creature selectTarget(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
       return findCreature(issuedCommand.getArguments());
     } else {
@@ -286,7 +286,7 @@ public class Hero extends Creature {
    * @param tokens an array of string tokens.
    * @return a Creature or null.
    */
-  public Creature findCreature(String[] tokens) {
+  Creature findCreature(String[] tokens) {
     SelectionResult<Creature> result = Utils.selectFromList(getLocation().getCreatures(), tokens);
     if (result.size() == 0) {
       IO.writeString("Creature not found.");

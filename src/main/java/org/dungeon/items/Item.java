@@ -29,15 +29,15 @@ public class Item extends Entity {
   private Creature owner;
 
   // Durability fields.
-  private int maxIntegrity;
+  private final int maxIntegrity;
   private int curIntegrity;
-  private boolean repairable;
+  private final boolean repairable;
 
   // Weapon fields.
-  private boolean weapon;
-  private int damage;
-  private double hitRate;
-  private int integrityDecrementOnHit;
+  private final boolean weapon;
+  private final int damage;
+  private final double hitRate;
+  private final int integrityDecrementOnHit;
 
   // Food fields.
   private FoodComponent foodComponent;
