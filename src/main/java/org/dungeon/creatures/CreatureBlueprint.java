@@ -17,6 +17,8 @@
 
 package org.dungeon.creatures;
 
+import org.dungeon.game.ID;
+
 /**
  * CreatureBlueprint class that defines attributes used to generate a certain creature.
  * <p/>
@@ -24,7 +26,7 @@ package org.dungeon.creatures;
  */
 public class CreatureBlueprint {
 
-  private String id;
+  private ID id;
   private String type;
   private String name;
   private int curHealth;
@@ -35,11 +37,11 @@ public class CreatureBlueprint {
   public CreatureBlueprint() {
   }
 
-  public String getId() {
+  public ID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(ID id) {
     this.id = id;
   }
 

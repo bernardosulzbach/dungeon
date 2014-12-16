@@ -18,6 +18,7 @@
 package org.dungeon.counters;
 
 import org.dungeon.creatures.Creature;
+import org.dungeon.game.ID;
 import org.dungeon.items.Item;
 import org.dungeon.utils.Constants;
 
@@ -32,23 +33,23 @@ import java.io.Serializable;
  */
 public class BattleStatistics implements Serializable {
 
-  private final CounterMap<String> killsByCreatureId;
   private final CounterMap<String> killsByCreatureType;
-  private final CounterMap<String> killsByWeapon;
+  private final CounterMap<ID> killsByCreatureId;
+  private final CounterMap<ID> killsByWeapon;
   private int battleCount;
   private int longestBattleLength;
 
   public BattleStatistics() {
-    killsByCreatureId = new CounterMap<String>();
     killsByCreatureType = new CounterMap<String>();
-    killsByWeapon = new CounterMap<String>();
+    killsByCreatureId = new CounterMap<ID>();
+    killsByWeapon = new CounterMap<ID>();
   }
 
   // Adds a new battle to the statistics.
   public void addBattle(Creature attacker, Creature defender, boolean attackerWon, int turns) {
     if (attackerWon) {
-      killsByCreatureId.incrementCounter(defender.getId());
       killsByCreatureType.incrementCounter(defender.getType());
+      killsByCreatureId.incrementCounter(defender.getId());
       Item weapon = attacker.getWeapon();
       killsByWeapon.incrementCounter(weapon != null ? weapon.getId() : Constants.UNARMED_ID);
     }
@@ -66,15 +67,15 @@ public class BattleStatistics implements Serializable {
     return longestBattleLength;
   }
 
-  public CounterMap<String> getKillsByCreatureId() {
-    return killsByCreatureId;
-  }
-
   public CounterMap<String> getKillsByCreatureType() {
     return killsByCreatureType;
   }
 
-  public CounterMap<String> getKillsByWeapon() {
+  public CounterMap<ID> getKillsByCreatureId() {
+    return killsByCreatureId;
+  }
+
+  public CounterMap<ID> getKillsByWeapon() {
     return killsByWeapon;
   }
 

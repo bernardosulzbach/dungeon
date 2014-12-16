@@ -47,10 +47,6 @@ public class Creature extends Entity {
     curHealth = bp.getCurHealth();
   }
 
-  public String getId() {
-    return id;
-  }
-
   public String getType() {
     return type;
   }

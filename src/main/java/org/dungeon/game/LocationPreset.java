@@ -47,7 +47,7 @@ final class LocationPreset extends Preset {
 
   public LocationPreset addItem(String id, Double likelihood) {
     if (!isLocked()) {
-      this.items.add(new ItemFrequencyPair(id, likelihood));
+      this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
     }
     return this;
   }

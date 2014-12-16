@@ -17,10 +17,12 @@
 
 package org.dungeon.items;
 
+import org.dungeon.game.ID;
+
 public final class ItemBlueprint {
 
   // Identification fields.
-  String id;
+  ID id;
   String type;
   String name;
 
@@ -43,12 +45,12 @@ public final class ItemBlueprint {
   // Clock field.
   boolean clock;
 
-  public String getId() {
+  public ID getId() {
     return id;
   }
 
   public void setId(String id) {
-    this.id = id;
+    this.id = new ID(id);
   }
 
   public String getType() {

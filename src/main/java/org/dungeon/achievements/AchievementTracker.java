@@ -17,6 +17,7 @@
 
 package org.dungeon.achievements;
 
+import org.dungeon.game.ID;
 import org.dungeon.game.Game;
 import org.dungeon.io.DLogger;
 import org.joda.time.DateTime;
@@ -69,7 +70,7 @@ public class AchievementTracker implements Serializable {
    * @return the UnlockedAchievement that corresponds to this Achievement.
    */
   public UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
-    String id = achievement.getId();
+    ID id = achievement.getId();
     for (UnlockedAchievement ua : unlockedAchievements) {
       if (ua.id.equals(id)) {
         return ua;

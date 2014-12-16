@@ -26,7 +26,7 @@ import java.io.Serializable;
  */
 public class Spawner implements Serializable {
 
-  private final String id;
+  private final ID id;
   private final int populationLimit;
   private final int spawnDelay;
   private final Location location;

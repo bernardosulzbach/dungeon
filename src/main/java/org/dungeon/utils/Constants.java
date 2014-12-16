@@ -17,6 +17,7 @@
 
 package org.dungeon.utils;
 
+import org.dungeon.game.ID;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -51,7 +52,6 @@ public class Constants {
   // Item not found messages.
   public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
   public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
-  public static final String HERO_ID = "HERO";
   public static final String INVALID_COMMAND = "'%s' is not a command.";
   public static final String SUGGEST_COMMANDS = "See 'commands' for a list of commands.";
 
@@ -64,7 +64,10 @@ public class Constants {
 
   // How many characters the bar name should occupy.
   public static final int BAR_NAME_LENGTH = 16;
-  public static final String UNARMED_ID = "";
+
+  // IDs
+  public static final ID HERO_ID = new ID("HERO");
+  public static final ID UNARMED_ID = new ID("");
 
   public static final String NAME = "Dungeon";
 

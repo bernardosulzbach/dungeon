@@ -24,13 +24,13 @@ package org.dungeon.game;
  */
 public class ItemFrequencyPair {
 
-  private final Pair<String, Double> pair;
+  private final Pair<ID, Double> pair;
 
-  public ItemFrequencyPair(String id, double frequency) {
-    this.pair = new Pair<String, Double>(id, frequency);
+  public ItemFrequencyPair(ID id, double frequency) {
+    this.pair = new Pair<ID, Double>(id, frequency);
   }
 
-  public String getId() {
+  public ID getId() {
     return pair.a;
   }
 

@@ -18,6 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.creatures.Hero;
+import org.dungeon.game.ID;
 import org.dungeon.io.IO;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
@@ -29,7 +30,7 @@ import org.dungeon.utils.Utils;
  */
 public class Achievement {
 
-  final String id;
+  final ID id;
   private final String name;
   private final String info;
 
@@ -37,14 +38,14 @@ public class Achievement {
   private ExplorationComponent exploration;
 
   public Achievement(String id, String name, String info) {
-    this.id = id;
+    this.id = new ID(id);
     this.name = name;
     this.info = info;
     battle = new BattleComponent();
     exploration = new ExplorationComponent();
   }
 
-  public String getId() {
+  public ID getId() {
     return id;
   }
 
@@ -70,7 +71,7 @@ public class Achievement {
    * @param id     the id of the weapon.
    * @param amount the increment.
    */
-  public void incrementKillsByWeapon(String id, int amount) {
+  public void incrementKillsByWeapon(ID id, int amount) {
     battle.killsByWeapon.incrementCounter(id, amount);
   }
 
@@ -80,7 +81,7 @@ public class Achievement {
    * @param id     the creature's id.
    * @param amount the increment.
    */
-  public void incrementKillsByCreatureId(String id, int amount) {
+  public void incrementKillsByCreatureId(ID id, int amount) {
     battle.killsByCreatureId.incrementCounter(id, amount);
   }
 

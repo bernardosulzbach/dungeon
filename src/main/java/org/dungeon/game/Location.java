@@ -93,7 +93,7 @@ public class Location implements Serializable {
     return creatures.size();
   }
 
-  public int getCreatureCount(String id) {
+  public int getCreatureCount(ID id) {
     int count = 0;
     for (Creature creature : creatures) {
       if (creature.getId().equals(id)) {

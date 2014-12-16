@@ -17,6 +17,7 @@
 
 package org.dungeon.achievements;
 
+import org.dungeon.game.ID;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -28,7 +29,7 @@ import java.io.Serializable;
  */
 public final class UnlockedAchievement implements Serializable {
 
-  public final String id;
+  public final ID id;
   public final String name;
   // DateTime is immutable, therefore it can be public.
   public final DateTime date;
@@ -39,7 +40,7 @@ public final class UnlockedAchievement implements Serializable {
    * @param name the name of the unlocked achievement.
    * @param date the date when the achievement was unlocked.
    */
-  public UnlockedAchievement(String id, String name, DateTime date) {
+  public UnlockedAchievement(ID id, String name, DateTime date) {
     this.id = id;
     this.name = name;
     this.date = date;

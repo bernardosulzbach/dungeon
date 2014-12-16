@@ -20,6 +20,7 @@ package org.dungeon.achievements;
 import org.dungeon.counters.BattleStatistics;
 import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.Hero;
+import org.dungeon.game.ID;
 
 /**
  * The battle component of the achievements.
@@ -30,14 +31,14 @@ final class BattleComponent extends AchievementComponent {
 
   int battleCount;
   int longestBattleLength;
-  CounterMap<String> killsByWeapon;
-  CounterMap<String> killsByCreatureId;
   CounterMap<String> killsByCreatureType;
+  CounterMap<ID> killsByCreatureId;
+  CounterMap<ID> killsByWeapon;
 
   public BattleComponent() {
-    killsByWeapon = new CounterMap<String>();
-    killsByCreatureId = new CounterMap<String>();
     killsByCreatureType = new CounterMap<String>();
+    killsByCreatureId = new CounterMap<ID>();
+    killsByWeapon = new CounterMap<ID>();
   }
 
   @Override
