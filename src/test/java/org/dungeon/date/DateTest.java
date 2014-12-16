@@ -78,17 +78,29 @@ public class DateTest {
 
   @Test
   public void testPlusDays() throws Exception {
-
+    Date date = new Date(1, 1, 1);
+    for (long i = 1; i <= Date.DAYS_IN_MONTH; i++) {
+      assertEquals(i, date.getDay());
+      date = date.plusDays(1);
+    }
   }
 
   @Test
   public void testPlusMonths() throws Exception {
-
+    Date date = new Date(1, 1, 1);
+    for (long i = 1; i <= Date.MONTHS_IN_YEAR; i++) {
+      assertEquals(i, date.getMonth());
+      date = date.plusMonths(1);
+    }
   }
 
   @Test
   public void testPlusYears() throws Exception {
-
+    Date date = new Date(1, 1, 1);
+    for (long i = 1; i <= MAX_YEAR; i++) {
+      assertEquals(i, date.getYear());
+      date = date.plusYears(1);
+    }
   }
 
 }
