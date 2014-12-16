@@ -26,9 +26,7 @@ Known Bugs
 Planned features
 ----------------
 - DStopWatch class for timing stuff in the game.
-- A better logger.
 - Stop ignoring exceptions, log them all instead.
-- Properties file with ``git describe`` output to be used in the game.
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
 - Load hints from resource files.
