@@ -46,37 +46,37 @@ public class Date implements Serializable {
   }
 
   public Date(long year, long month, long day) {
-    if (year < 0) {
-      DLogger.warning("Tried to construct Date with negative year!");
-      year = 0;
+    if (year <= 0) {
+      DLogger.warning("Tried to construct Date with nonpositive year!");
+      year = 1;
     }
-    if (month < 0) {
-      DLogger.warning("Tried to construct Date with negative month!");
-      month = 0;
+    if (month <= 0) {
+      DLogger.warning("Tried to construct Date with nonpositive month!");
+      month = 1;
     } else if (month > MONTHS_IN_YEAR) {
       DLogger.warning("Tried to construct Date with nonexistent month.");
       month = MONTHS_IN_YEAR;
     }
-    if (day < 0) {
-      DLogger.warning("Tried to construct Date with negative day!");
-      day = 0;
+    if (day <= 0) {
+      DLogger.warning("Tried to construct Date with nonpositive day!");
+      day = 1;
     } else if (day > DAYS_IN_MONTH) {
       DLogger.warning("Tried to construct Date with nonexistent day.");
       day = DAYS_IN_MONTH;
     }
-    time = millisInYear * year + millisInMonth * month + millisInDay * day;
+    time = millisInYear * (year - 1) + millisInMonth * (month - 1) + millisInDay * (day - 1);
   }
 
   public long getDay() {
-    return (time % millisInMonth) / millisInDay;
+    return (time % millisInMonth) / millisInDay + 1;
   }
 
   public long getMonth() {
-    return (time % millisInYear) / millisInMonth;
+    return (time % millisInYear) / millisInMonth + 1;
   }
 
   public long getYear() {
-    return time / millisInYear;
+    return time / millisInYear + 1;
   }
 
   public Date minusDays(int days) {
