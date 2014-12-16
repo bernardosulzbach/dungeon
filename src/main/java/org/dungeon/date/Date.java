@@ -37,10 +37,6 @@ public class Date implements Serializable {
   private static final long millisInYear = millisInMonth * MONTHS_IN_YEAR;
   private final long time;
 
-  private Date() {
-    time = 0;
-  }
-
   private Date(long millis) {
     time = millis;
   }
