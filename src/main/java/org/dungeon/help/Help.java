@@ -213,7 +213,7 @@ public final class Help {
       String argument = issuedCommand.getFirstArgument();
       if (!printCommandHelp(argument) && !printAspectHelp(argument)) {
         // There was no match.
-        IO.writeString(String.format("No help text for '%s' could be found.", issuedCommand.getFirstToken()));
+        IO.writeString(String.format("No help text for '%s' could be found.", argument));
       }
     } else {
       Utils.printMissingArgumentsMessage();

@@ -39,11 +39,6 @@ INFO: "Configures a given option. Currently, it is a simple toggle switch."
 ALIASES: ""
 ARGUMENTS: "option"
 
-COMMAND: "credits"
-INFO: "Displays information about the game and its creators."
-ALIASES: "about"
-ARGUMENTS: ""
-
 COMMAND: "destroy"
 INFO: "Destroys an item on the ground."
 ALIASES: "crash"
