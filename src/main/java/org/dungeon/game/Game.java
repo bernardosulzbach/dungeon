@@ -28,9 +28,7 @@ import org.dungeon.utils.Utils;
 
 public class Game {
 
-  private static int turnLength = 0;
-  private static boolean configurationsChanged = false;
-
+  private static TurnResult result = new TurnResult();
   private static GameWindow gameWindow;
   private static GameState gameState;
 
@@ -61,48 +59,47 @@ public class Game {
       gameState = Loader.loadGame(null);
     } else {
       // Advance the campaign's world date.
-      gameState.getWorld().rollDate(turnLength);
+      gameState.getWorld().rollDate(result.turnLength);
       // Refresh the campaign state.
       Engine.refresh();
-      // After a turn that consumed time, the campaign is not saved anymore.
-      if (turnLength != 0 || configurationsChanged) {
+      // If the last turn changed the GameState, set the game as not saved.
+      if (result.gameStateChanged()) {
         gameState.setSaved(false);
       }
     }
+    // Clear the results of the last turn.
+    result.clear();
   }
 
   // Processes the player input.
   private static void processInput(IssuedCommand issuedCommand) {
     gameState.getCommandHistory().addCommand(issuedCommand);
     gameState.getStatistics().addCommand(issuedCommand);
-    // Reset the turn variables.
-    turnLength = 0;
-    configurationsChanged = false;
     if (issuedCommand.firstTokenEquals("rest")) {
-      turnLength = gameState.getHero().rest();
+      result.turnLength = gameState.getHero().rest();
     } else if (issuedCommand.firstTokenEquals("sleep")) {
-      turnLength = gameState.getHero().sleep();
+      result.turnLength = gameState.getHero().sleep();
     } else if (issuedCommand.firstTokenEquals("look") || issuedCommand.firstTokenEquals("peek")) {
       gameState.getHero().look();
     } else if (issuedCommand.firstTokenEquals("inventory") || issuedCommand.firstTokenEquals("items")) {
       gameState.getHero().printInventory();
     } else if (issuedCommand.firstTokenEquals("loot") || issuedCommand.firstTokenEquals("pick")) {
       gameState.getHero().pickItem(issuedCommand);
-      turnLength = 120;
+      result.turnLength = 120;
     } else if (issuedCommand.firstTokenEquals("equip")) {
       gameState.getHero().parseEquip(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("unequip")) {
       gameState.getHero().unequipWeapon();
     } else if (issuedCommand.firstTokenEquals("eat") || issuedCommand.firstTokenEquals("devour")) {
       gameState.getHero().eatItem(issuedCommand);
-      turnLength = 120;
+      result.turnLength = 120;
     } else if (issuedCommand.firstTokenEquals("walk") || issuedCommand.firstTokenEquals("go")) {
-      turnLength = Engine.parseHeroWalk(issuedCommand);
+      result.turnLength = Engine.parseHeroWalk(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("drop")) {
       gameState.getHero().dropItem(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("destroy") || issuedCommand.firstTokenEquals("crash")) {
       gameState.getHero().destroyItem(issuedCommand);
-      turnLength = 120;
+      result.turnLength = 120;
     } else if (issuedCommand.firstTokenEquals("status")) {
       gameState.getHero().printAllStatus();
     } else if (issuedCommand.firstTokenEquals("hero") || issuedCommand.firstTokenEquals("me")) {
@@ -112,7 +109,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("weapon")) {
       gameState.getHero().printWeaponStatus();
     } else if (issuedCommand.firstTokenEquals("kill") || issuedCommand.firstTokenEquals("attack")) {
-      turnLength = gameState.getHero().attackTarget(issuedCommand);
+      result.turnLength = gameState.getHero().attackTarget(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("statistics")) {
       gameState.printGameStatistics();
     } else if (issuedCommand.firstTokenEquals("achievements")) {
@@ -120,7 +117,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("spawns")) {
       gameState.getWorld().printSpawnCounters();
     } else if (issuedCommand.firstTokenEquals("time") || issuedCommand.firstTokenEquals("date")) {
-      turnLength = gameState.getHero().printDateAndTime();
+      result.turnLength = gameState.getHero().printDateAndTime();
     } else if (issuedCommand.firstTokenEquals("system")) {
       SystemInfo.printSystemInfo();
     } else if (issuedCommand.firstTokenEquals("help") || issuedCommand.firstTokenEquals("?")) {
@@ -149,7 +146,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("debug")) {
       DebugTools.parseDebugCommand(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("config")) {
-      configurationsChanged = ConfigTools.parseConfigCommand(issuedCommand);
+      result.configurationsChanged = ConfigTools.parseConfigCommand(issuedCommand);
     } else {
       // The user issued a command, but it was not recognized.
       Utils.printInvalidCommandMessage(issuedCommand.getFirstToken());
