@@ -25,7 +25,9 @@ Known Bugs
 
 Planned features
 ----------------
-- DStopWatch class for timing stuff in the game.
+- Books to teach spells for the character.
+- The ability to learn and use spells.
+- StopWatch class for timing stuff in the game.
 - Stop ignoring exceptions, log them all instead.
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
