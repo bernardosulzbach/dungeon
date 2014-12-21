@@ -24,7 +24,7 @@ import org.dungeon.items.ItemBlueprint;
 import org.dungeon.utils.Constants;
 import org.dungeon.utils.Utils;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -128,7 +128,7 @@ public final class GameData {
 
   private static void loadCreatureBlueprints() {
     CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>();
-    DResourceReader resourceReader = new DResourceReader(loader.getResourceAsStream("creatures.txt"));
+    ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("creatures.txt"));
     CreatureBlueprint blueprint;
     while (resourceReader.readNextElement()) {
       blueprint = new CreatureBlueprint();

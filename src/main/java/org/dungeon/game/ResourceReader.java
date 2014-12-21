@@ -24,16 +24,16 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 /**
- * DResourceReader class that eases the parsing of resource files.
+ * ResourceReader class that eases the parsing of resource files.
  * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
-class DResourceReader implements Closeable {
+class ResourceReader implements Closeable {
 
   private final HashMap<String, String> map;
   private final DBufferedReader dBufferedReader;
 
-  public DResourceReader(InputStream inputStream) {
+  public ResourceReader(InputStream inputStream) {
     map = new HashMap<String, String>();
     dBufferedReader = new DBufferedReader(new InputStreamReader(inputStream));
   }
