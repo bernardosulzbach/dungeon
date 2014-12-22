@@ -33,6 +33,8 @@ class ResourceReader implements Closeable {
   private final HashMap<String, String> map;
   private final DBufferedReader dBufferedReader;
 
+  private Pair<String, String> lastPair;
+
   public ResourceReader(InputStream inputStream) {
     map = new HashMap<String, String>();
     dBufferedReader = new DBufferedReader(new InputStreamReader(inputStream));
@@ -54,31 +56,40 @@ class ResourceReader implements Closeable {
   public boolean readNextElement() {
     // TODO: all elements should start with an ID field and be considered complete when the parser hits the next id.
     map.clear();
-    boolean readNewValue = true;
-    while (readNewValue) {
-      readNewValue = readNextValue();
+    if (lastPair != null) {
+      map.put(lastPair.a, lastPair.b);
     }
-    return !map.isEmpty();
+    while (true) {
+      lastPair = readNextPair();
+      if (map.containsKey("ID")) {
+        if (lastPair == null || lastPair.a.equals("ID")) {
+          return true;
+        }
+      } else {
+        if (lastPair == null) {
+          return false;
+        }
+      }
+      map.put(lastPair.a, lastPair.b);
+    }
   }
 
   /**
    * Reads the next ID: value pair from the BufferedReader.
-   *
+   * <p/>
    * Does not put a new value in the HashMap if the HashMap already contains a key that matches the value's ID.
    *
    * @return true if a new value was read; false otherwise.
    */
-  private boolean readNextValue() {
+  private Pair<String, String> readNextPair() {
     String string = dBufferedReader.readString();
     if (string != null && !string.isEmpty()) {
       int colonIndex = string.indexOf(':');
-      String valueId = string.substring(0, colonIndex).trim();
-      if (!map.containsKey(valueId)) {
-        map.put(valueId, string.substring(colonIndex + 1).trim());
-        return true;
-      }
+      String key = string.substring(0, colonIndex).trim();
+      String value = string.substring(colonIndex + 1).trim();
+      return new Pair<String, String>(key, value);
     }
-    return false;
+    return null;
   }
 
   @Override

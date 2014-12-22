@@ -49,8 +49,8 @@ public final class ItemBlueprint {
     return id;
   }
 
-  public void setId(String id) {
-    this.id = new ID(id);
+  public void setId(ID id) {
+    this.id = id;
   }
 
   public String getType() {

@@ -29,18 +29,19 @@ import java.io.Reader;
  * <p/>
  * Created on 05/12/14.
  */
+// TODO: rename this
 class DBufferedReader implements Closeable {
-
-  // The last line retrieved by the readLine method.
-  private String line;
-  // True if line ends with the LINE_BREAK character.
-  private boolean continued;
 
   // A line breaking character.
   private static final char LINE_BREAK = '\\';
-
   // The wrapped BufferedReader.
   private final BufferedReader br;
+  // The last line retrieved by the readLine method.
+  // TODO: make a class for line - with isComment and isContinued as methods
+  //       consider also making an isValid method that checks if the line of text is a valid line and logs if it is not.
+  private String line;
+  // True if line ends with the LINE_BREAK character.
+  private boolean continued;
 
   /**
    * Creates a convenient buffered reader for reading Dungeon resource files.
@@ -56,7 +57,9 @@ class DBufferedReader implements Closeable {
    */
   private void readLine() {
     try {
-      line = br.readLine();
+      do {
+        line = br.readLine();
+      } while (line != null && (line.isEmpty() || isComment()));
       if (line != null) {
         continued = isContinued();
         if (continued) {
@@ -72,10 +75,21 @@ class DBufferedReader implements Closeable {
   }
 
   /**
+   * Preconditions: line != null and line.isEmpty() == false
+   *
    * @return true if the line ends with the line break character. False otherwise.
    */
   private boolean isContinued() {
-    return !line.isEmpty() && line.charAt(line.length() - 1) == LINE_BREAK;
+    return line.charAt(line.length() - 1) == LINE_BREAK;
+  }
+
+  /**
+   * Preconditions: line != null and line.isEmpty() == false
+   *
+   * @return true if the line starts with a valid comment starting sequence.
+   */
+  private boolean isComment() {
+    return line.trim().startsWith("//") || line.trim().startsWith("#");
   }
 
   /**
