@@ -38,6 +38,10 @@ class ResourceReader implements Closeable {
     dBufferedReader = new DBufferedReader(new InputStreamReader(inputStream));
   }
 
+  public boolean contains(String key) {
+    return map.containsKey(key);
+  }
+
   public String getValue(String identifier) {
     return map.get(identifier);
   }
@@ -48,6 +52,7 @@ class ResourceReader implements Closeable {
    * @return true if a new element was read; false otherwise.
    */
   public boolean readNextElement() {
+    // TODO: all elements should start with an ID field and be considered complete when the parser hits the next id.
     map.clear();
     boolean readNewValue = true;
     while (readNewValue) {
