@@ -147,3 +147,16 @@ The torch; be yours to hold it high!   \
 If ye break faith with us who die      \
 We shall not sleep, though poppies grow\
 In Flanders fields.
+
+TITLE: Heaven Is What I Cannot Reach!
+AUTHOR: Emily Dickinson
+CONTENT: \
+Heaven is what I cannot reach!       \
+The apple on the tree,               \
+Provided it do hopeless hang,        \
+That "heaven" is, to me.             \
+                                     \
+The color on the cruising cloud,     \
+The interdicted ground               \
+Behind the hill, the house behind, --\
+There Paradise is found!             \
