@@ -17,6 +17,8 @@
 
 package org.dungeon.game;
 
+import org.dungeon.util.Percentage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ final class LocationPreset extends Preset {
   private final BlockedEntrances blockedEntrances;
   private final ArrayList<SpawnerPreset> spawners;
   private final ArrayList<ItemFrequencyPair> items;
-  private double lightPermittivity;
+  private Percentage lightPermittivity;
 
   LocationPreset(String name) {
     this.name = name;
@@ -54,7 +56,7 @@ final class LocationPreset extends Preset {
 
   public void setLightPermittivity(double lightPermittivity) {
     if (!isLocked()) {
-      this.lightPermittivity = lightPermittivity;
+      this.lightPermittivity = new Percentage(lightPermittivity);
     }
   }
 
@@ -86,7 +88,7 @@ final class LocationPreset extends Preset {
     return items;
   }
 
-  public double getLightPermittivity() {
+  public Percentage getLightPermittivity() {
     return lightPermittivity;
   }
 

@@ -21,6 +21,7 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.LocationInventory;
+import org.dungeon.util.Percentage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class Location implements Serializable {
   private final List<Creature> creatures;
   private final List<Spawner> spawners;
   private final LocationInventory items;
-  private final double lightPermittivity;
+  private final Percentage lightPermittivity;
   private World world;
 
   public Location(LocationPreset preset, World world) {
@@ -69,7 +70,7 @@ public class Location implements Serializable {
     return name;
   }
 
-  double getLightPermittivity() {
+  Percentage getLightPermittivity() {
     return lightPermittivity;
   }
 
@@ -77,8 +78,9 @@ public class Location implements Serializable {
    * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
    * light permittivity.
    */
+  // TODO: make this method return a Percentage
   public double getLuminosity() {
-    return getLightPermittivity() * getWorld().getPartOfDay().getLuminosity();
+    return getLightPermittivity().toDouble() * getWorld().getPartOfDay().getLuminosity();
   }
 
   public List<Creature> getCreatures() {
