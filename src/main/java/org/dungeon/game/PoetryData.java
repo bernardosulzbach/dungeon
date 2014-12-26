@@ -18,9 +18,9 @@
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
-import org.dungeon.utils.Poem;
-import org.dungeon.utils.PoemBuilder;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Poem;
+import org.dungeon.util.PoemBuilder;
+import org.dungeon.util.Utils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -15,35 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.utils;
+package org.dungeon.util;
+
+import java.util.Arrays;
 
 /**
- * Poem class that defines a poem storage data structure.
+ * Dungeon Dimensions class. A thin wrapper for an array of integers.
  * <p/>
- * Created by Bernardo Sulzbach on 28/10/2014.
+ * Created by Bernardo Sulzbach on 13/12/14.
  */
-public class Poem {
+public class Dimensions {
 
-  private final String title;
-  private final String author;
-  private final String content;
+  private final int[] dimensions;
 
-  Poem(String title, String author, String content) {
-    this.title = title;
-    this.author = author;
-    this.content = content;
+  public Dimensions(int... dimensions) {
+    this.dimensions = dimensions;
   }
 
-  public String getTitle() {
-    return title;
-  }
-
-  public String getAuthor() {
-    return author;
-  }
-
-  public String getContent() {
-    return content;
+  public boolean equals(Dimensions anotherObject) {
+    return Arrays.equals(dimensions, anotherObject.dimensions);
   }
 
 }

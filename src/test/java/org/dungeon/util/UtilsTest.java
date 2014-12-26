@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.utils;
+package org.dungeon.util;
 
 import org.junit.Assert;
 import org.junit.Test;

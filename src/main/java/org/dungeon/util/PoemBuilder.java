@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.utils;
+package org.dungeon.util;
 
 public class PoemBuilder {
   private String title;

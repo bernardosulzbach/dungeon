@@ -22,9 +22,9 @@ import org.dungeon.help.Help;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.utils.Math;
-import org.dungeon.utils.SystemInfo;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Math;
+import org.dungeon.util.SystemInfo;
+import org.dungeon.util.Utils;
 
 public class Game {
 

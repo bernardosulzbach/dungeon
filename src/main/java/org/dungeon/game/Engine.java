@@ -21,7 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
+import org.dungeon.util.Constants;
 
 import java.awt.Color;
 import java.util.Random;

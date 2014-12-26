@@ -21,9 +21,9 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.DTable;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Constants;
+import org.dungeon.util.DTable;
+import org.dungeon.util.Utils;
 
 import javax.swing.JOptionPane;
 import java.awt.Color;

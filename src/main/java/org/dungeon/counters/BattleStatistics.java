@@ -20,7 +20,7 @@ package org.dungeon.counters;
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.ID;
 import org.dungeon.items.Item;
-import org.dungeon.utils.Constants;
+import org.dungeon.util.Constants;
 
 import java.io.Serializable;
 

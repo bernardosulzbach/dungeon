@@ -18,9 +18,9 @@
 package org.dungeon.io;
 
 import org.dungeon.game.Game;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Poem;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Constants;
+import org.dungeon.util.Poem;
+import org.dungeon.util.Utils;
 
 import java.awt.Color;
 

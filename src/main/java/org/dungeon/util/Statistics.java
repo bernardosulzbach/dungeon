@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.utils;
+package org.dungeon.util;
 
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;

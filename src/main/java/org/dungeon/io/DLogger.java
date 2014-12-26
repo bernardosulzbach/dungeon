@@ -17,7 +17,7 @@
 
 package org.dungeon.io;
 
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Utils;
 
 import java.io.File;
 import java.io.IOException;

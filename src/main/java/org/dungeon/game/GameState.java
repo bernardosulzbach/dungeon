@@ -25,9 +25,9 @@ import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
-import org.dungeon.utils.CommandHistory;
-import org.dungeon.utils.Hints;
-import org.dungeon.utils.Statistics;
+import org.dungeon.util.CommandHistory;
+import org.dungeon.util.Hints;
+import org.dungeon.util.Statistics;
 
 import java.awt.Color;
 import java.io.Serializable;

@@ -18,7 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.io.IO;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Utils;
 
 import java.awt.Color;
 

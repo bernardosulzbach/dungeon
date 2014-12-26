@@ -23,8 +23,8 @@ import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.Loader;
-import org.dungeon.utils.CommandHistory;
-import org.dungeon.utils.Constants;
+import org.dungeon.util.CommandHistory;
+import org.dungeon.util.Constants;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;

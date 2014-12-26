@@ -18,8 +18,8 @@
 package org.dungeon.items;
 
 import org.dungeon.io.IO;
-import org.dungeon.utils.SelectionResult;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.SelectionResult;
+import org.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;

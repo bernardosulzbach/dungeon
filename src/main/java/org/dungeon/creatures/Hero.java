@@ -35,9 +35,9 @@ import org.dungeon.io.IO;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.SelectionResult;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Constants;
+import org.dungeon.util.SelectionResult;
+import org.dungeon.util.Utils;
 
 import java.awt.Color;
 import java.util.ArrayList;

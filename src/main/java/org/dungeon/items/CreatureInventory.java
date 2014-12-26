@@ -20,8 +20,8 @@ package org.dungeon.items;
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.Engine;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Constants;
+import org.dungeon.util.Utils;
 
 import java.awt.Color;
 

@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Utils;
 
 import java.util.Arrays;
 

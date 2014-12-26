@@ -21,7 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.ItemBlueprint;
-import org.dungeon.utils.Constants;
+import org.dungeon.util.Constants;
 
 import java.awt.Font;
 import java.io.IOException;

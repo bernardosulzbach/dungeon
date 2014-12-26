@@ -21,7 +21,7 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.Entity;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
-import org.dungeon.utils.Constants;
+import org.dungeon.util.Constants;
 
 public class Item extends Entity {
 

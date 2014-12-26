@@ -20,8 +20,8 @@ package org.dungeon.achievements;
 import org.dungeon.creatures.Hero;
 import org.dungeon.game.ID;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Constants;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Constants;
+import org.dungeon.util.Utils;
 
 /**
  * Achievement class.

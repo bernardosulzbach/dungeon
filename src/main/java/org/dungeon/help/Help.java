@@ -19,7 +19,7 @@ package org.dungeon.help;
 
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
-import org.dungeon.utils.Utils;
+import org.dungeon.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

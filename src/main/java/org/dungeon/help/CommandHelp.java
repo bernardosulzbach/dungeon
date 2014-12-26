@@ -17,7 +17,7 @@
 
 package org.dungeon.help;
 
-import org.dungeon.utils.Constants;
+import org.dungeon.util.Constants;
 
 /**
  * CommandHelp class that defines a common structure of the help strings for a command and a few methods that enable
