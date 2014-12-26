@@ -78,10 +78,8 @@ public final class GameData {
    */
   private static void loadItemBlueprints() {
     ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("items.txt"));
-    // TODO: minimize the scope of these variables.
-    ItemBlueprint blueprint;
     while (resourceReader.readNextElement()) {
-      blueprint = new ItemBlueprint();
+      ItemBlueprint blueprint = new ItemBlueprint();
       blueprint.setId(new ID(resourceReader.getValue("ID")));
       blueprint.setType(resourceReader.getValue("TYPE"));
       blueprint.setName(resourceReader.getValue("NAME"));
@@ -112,9 +110,8 @@ public final class GameData {
    */
   private static void loadCreatureBlueprints() {
     ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("creatures.txt"));
-    CreatureBlueprint blueprint;
     while (resourceReader.readNextElement()) {
-      blueprint = new CreatureBlueprint();
+      CreatureBlueprint blueprint = new CreatureBlueprint();
       blueprint.setId(new ID(resourceReader.getValue("ID")));
       blueprint.setType(resourceReader.getValue("TYPE"));
       blueprint.setName(resourceReader.getValue("NAME"));
