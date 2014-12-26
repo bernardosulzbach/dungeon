@@ -36,8 +36,11 @@ import java.util.HashMap;
  */
 public final class GameData {
 
-  public static HashMap<ID, CreatureBlueprint> CREATURE_BLUEPRINTS;
-  public static HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS;
+  // Hardcoded HashMap initial capacities. Be sure to increase it if more items and creatures are added.
+  // The second parameter ensures that unless the HashMap is full, it will not have its capacity increased.
+  public static final HashMap<ID, CreatureBlueprint> CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>(20, 1f);
+  public static final HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>(20, 1f);
+
   public static LocationPreset[] LOCATION_PRESETS;
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static Font monospaced;
@@ -70,8 +73,10 @@ public final class GameData {
     DLogger.info("Finished loading the game data. Took " + milliseconds + "ms.");
   }
 
+  /**
+   * Loads all ItemBlueprints to a HashMap.
+   */
   private static void loadItemBlueprints() {
-    ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>();
     ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("items.txt"));
     // TODO: minimize the scope of these variables.
     ItemBlueprint blueprint;
@@ -102,8 +107,10 @@ public final class GameData {
     DLogger.info("Loaded " + ITEM_BLUEPRINTS.size() + " item blueprints.");
   }
 
+  /**
+   * Loads all CreatureBlueprints to a HashMap.
+   */
   private static void loadCreatureBlueprints() {
-    CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>();
     ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("creatures.txt"));
     CreatureBlueprint blueprint;
     while (resourceReader.readNextElement()) {
