@@ -17,23 +17,29 @@
 
 package org.dungeon.util;
 
+import org.dungeon.io.DLogger;
+
+import java.io.Serializable;
+
 /**
  * A class that represents a percentage value.
  * <p/>
  * Created by Bernardo Sulzbach on 26/12/14.
  */
-public class Percentage {
+public class Percentage implements Serializable {
 
   private static final double ONE = 1.0;
   private static final double ZERO = 0.0;
 
-  private double value;
+  private final double value;
 
   public Percentage(double percentage) {
     if (percentage < ZERO) {
       value = ZERO;
+      DLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ZERO + " instead.");
     } else if (percentage > ONE) {
       value = ONE;
+      DLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ONE + " instead.");
     } else {
       value = percentage;
     }
