@@ -101,6 +101,7 @@ public class Engine {
       return TimeConstants.WALK_BLOCKED;
     }
     Location destination = gameState.getWorld().moveHero(dir);
+    refreshSpawners(); // Update the spawners of the location the Hero moved to.
     hero.setLocation(destination);
     hero.look(true);
     hero.getExplorationLog().addVisit(destinationPoint);
