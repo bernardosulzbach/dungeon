@@ -20,15 +20,12 @@ package org.dungeon.game;
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Poem;
 import org.dungeon.util.PoemBuilder;
-import org.dungeon.util.Utils;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
  * A component of GameData.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 15/12/14.
  */
 public final class PoetryData {
@@ -57,35 +54,19 @@ public final class PoetryData {
   }
 
   private void loadPoems() {
-    String IDENTIFIER_TITLE = "TITLE:";
-    String IDENTIFIER_AUTHOR = "AUTHOR:";
-    String IDENTIFIER_CONTENT = "CONTENT:";
-
-    String line;
-    PoemBuilder pb = new PoemBuilder();
-    ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    ResourceParser parser = new ResourceParser(new InputStreamReader(cl.getResourceAsStream("poems.txt")));
-
-    try {
-      while ((line = parser.readString()) != null) {
-        if (line.startsWith(IDENTIFIER_TITLE)) {
-          if (pb.isComplete()) {
-            poems.add(pb.createPoem());
-            pb = new PoemBuilder();
-          }
-          pb.setTitle(Utils.getAfterColon(line).trim());
-        } else if (line.startsWith(IDENTIFIER_AUTHOR)) {
-          pb.setAuthor(Utils.getAfterColon(line).trim());
-        } else if (line.startsWith(IDENTIFIER_CONTENT)) {
-          pb.setContent(Utils.getAfterColon(line).trim());
-        }
+    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("poems.txt"));
+    final String IDENTIFIER_TITLE = "TITLE";
+    final String IDENTIFIER_AUTHOR = "AUTHOR";
+    final String IDENTIFIER_CONTENT = "CONTENT";
+    while (reader.readNextElement()) {
+      PoemBuilder pb = new PoemBuilder();
+      pb.setTitle(reader.getValue(IDENTIFIER_TITLE));
+      pb.setAuthor(reader.getValue(IDENTIFIER_AUTHOR));
+      pb.setContent(reader.getValue(IDENTIFIER_CONTENT));
+      if (pb.isComplete()) {
+        poems.add(pb.createPoem());
       }
-      parser.close();
-    } catch (IOException exception) {
-      DLogger.warning(exception.toString());
-    }
-    if (pb.isComplete()) {
-      poems.add(pb.createPoem());
     }
     DLogger.info("Loaded " + poems.size() + " poems.");
     poems.trimToSize();

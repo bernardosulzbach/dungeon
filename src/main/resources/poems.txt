@@ -1,3 +1,4 @@
+ID: 1
 TITLE:   A Coat
 AUTHOR:  William Butler Yeats
 CONTENT: \
@@ -12,6 +13,7 @@ Song, let them take it      \
 For there’s more enterprise \
 In walking naked.
 
+ID: 2
 TITLE:   The road not taken
 AUTHOR:  Robert Frost
 CONTENT: \
@@ -36,6 +38,7 @@ Two roads diverged in a wood, and I  \
 I took the one less traveled by,     \
 And that has made all the difference.
 
+ID: 3
 TITLE:   To the Virgins, to Make Much of Time
 AUTHOR:  Robert Herrick
 CONTENT: \
@@ -56,6 +59,7 @@ And, while ye may, go marry;          \
 For, having lost but once your prime, \
 You may forever tarry.
 
+ID: 4
 TITLE:   A Dream Within A Dream
 AUTHOR:  Edgar Allan Poe
 CONTENT: \
@@ -84,6 +88,7 @@ One from the pitiless wave?    \
 Is all that we see or seem     \
 But a dream within a dream?
 
+ID: 5
 TITLE:   As The Sparrow
 AUTHOR:  Charles Bukowski
 CONTENT: \
@@ -99,6 +104,7 @@ young; I cry when it is fashionable to laugh.         \
 I hated you when it would have taken less courage     \
 to love.
 
+ID: 6
 TITLE: Do not go gentle into that good night
 AUTHOR: Dylan Thomas
 CONTENT: \
@@ -127,6 +133,7 @@ Curse, bless, me now with your fierce tears, I pray.\
 Do not go gentle into that good night.              \
 Rage, rage against the dying of the light.          \
 
+ID: 7
 TITLE: In Flanders Fields
 AUTHOR: John McCrae
 CONTENT: \
