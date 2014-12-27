@@ -109,19 +109,13 @@ public class Achievement {
 
   /**
    * Updates the state of the Achievement.
-   *
-   * @return true if the achievement was unlocked. False otherwise.
    */
   public final void update(Hero hero) {
     if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
       // All the requirements OK, unlock the achievement.
       printAchievementUnlocked();
       hero.getAchievementTracker().unlock(this);
-      return;
-    } else {
-      return;
     }
-
   }
 
   /**
