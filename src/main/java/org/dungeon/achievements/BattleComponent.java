@@ -31,14 +31,11 @@ final class BattleComponent extends AchievementComponent {
 
   int battleCount;
   int longestBattleLength;
-  final CounterMap<String> killsByCreatureType;
-  final CounterMap<ID> killsByCreatureId;
-  final CounterMap<ID> killsByWeapon;
+  final CounterMap<String> killsByCreatureType = new CounterMap<String>();
+  final CounterMap<ID> killsByCreatureId = new CounterMap<ID>();
+  final CounterMap<ID> killsByWeapon = new CounterMap<ID>();
 
   public BattleComponent() {
-    killsByCreatureType = new CounterMap<String>();
-    killsByCreatureId = new CounterMap<ID>();
-    killsByWeapon = new CounterMap<ID>();
   }
 
   @Override
@@ -50,13 +47,13 @@ final class BattleComponent extends AchievementComponent {
     if (stats.getLongestBattleLength() < longestBattleLength) {
       return false;
     }
-    if (killsByCreatureId != null && !stats.getKillsByCreatureId().fulfills(killsByCreatureId)) {
+    if (!stats.getKillsByCreatureId().fulfills(killsByCreatureId)) {
       return false;
     }
-    if (killsByCreatureType != null && !stats.getKillsByCreatureType().fulfills(killsByCreatureType)) {
+    if (!stats.getKillsByCreatureType().fulfills(killsByCreatureType)) {
       return false;
     }
-    if (killsByWeapon != null && !stats.getKillsByWeapon().fulfills(killsByWeapon)) {
+    if (!stats.getKillsByWeapon().fulfills(killsByWeapon)) {
       return false;
     }
     return true;
