@@ -31,13 +31,13 @@ import java.util.HashMap;
 class ResourceReader implements Closeable {
 
   private final HashMap<String, String> map;
-  private final DBufferedReader dBufferedReader;
+  private final ResourceParser resourceParser;
 
   private Pair<String, String> lastPair;
 
   public ResourceReader(InputStream inputStream) {
     map = new HashMap<String, String>();
-    dBufferedReader = new DBufferedReader(new InputStreamReader(inputStream));
+    resourceParser = new ResourceParser(new InputStreamReader(inputStream));
   }
 
   public boolean contains(String key) {
@@ -82,7 +82,7 @@ class ResourceReader implements Closeable {
    * @return true if a new value was read; false otherwise.
    */
   private Pair<String, String> readNextPair() {
-    String string = dBufferedReader.readString();
+    String string = resourceParser.readString();
     if (string != null && !string.isEmpty()) {
       int colonIndex = string.indexOf(':');
       String key = string.substring(0, colonIndex).trim();
@@ -94,7 +94,7 @@ class ResourceReader implements Closeable {
 
   @Override
   public void close() throws IOException {
-    dBufferedReader.close();
+    resourceParser.close();
   }
 
 }

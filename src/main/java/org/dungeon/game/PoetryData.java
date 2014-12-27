@@ -64,10 +64,10 @@ public final class PoetryData {
     String line;
     PoemBuilder pb = new PoemBuilder();
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    DBufferedReader reader = new DBufferedReader(new InputStreamReader(cl.getResourceAsStream("poems.txt")));
+    ResourceParser parser = new ResourceParser(new InputStreamReader(cl.getResourceAsStream("poems.txt")));
 
     try {
-      while ((line = reader.readString()) != null) {
+      while ((line = parser.readString()) != null) {
         if (line.startsWith(IDENTIFIER_TITLE)) {
           if (pb.isComplete()) {
             poems.add(pb.createPoem());
@@ -80,7 +80,7 @@ public final class PoetryData {
           pb.setContent(Utils.getAfterColon(line).trim());
         }
       }
-      reader.close();
+      parser.close();
     } catch (IOException exception) {
       DLogger.warning(exception.toString());
     }

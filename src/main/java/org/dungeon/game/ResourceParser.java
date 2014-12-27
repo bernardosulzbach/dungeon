@@ -29,8 +29,7 @@ import java.io.Reader;
  * <p/>
  * Created on 05/12/14.
  */
-// TODO: rename this
-class DBufferedReader implements Closeable {
+class ResourceParser implements Closeable {
 
   // A line breaking character.
   private static final char LINE_BREAK = '\\';
@@ -48,7 +47,7 @@ class DBufferedReader implements Closeable {
    *
    * @param in the Reader.
    */
-  public DBufferedReader(Reader in) {
+  public ResourceParser(Reader in) {
     br = new BufferedReader(in);
   }
 
