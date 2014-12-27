@@ -138,11 +138,17 @@ public class Hero extends Creature {
   }
 
   /**
-   * Print the name of the player's current location and list all creatures and items the player can see.
+   * Prints the name of the player's current location and lists all creatures and items the character sees.
+   * 
+   * @param arriving is the player arriving to the location? False if he is just looking while standing still.
    */
-  public void look() {
+  public void look(boolean arriving) {
     Location location = getLocation(); // Avoid multiple calls to the getter.
-    IO.writeString(location.getName());
+    if (arriving) {
+      IO.writeString("You arrive at " + location.getName() + ".");
+    } else {
+      IO.writeString("You are at " + location.getName() + ".");
+    }
     IO.writeNewLine();
     if (canSee()) {
       lookAdjacentLocations();
