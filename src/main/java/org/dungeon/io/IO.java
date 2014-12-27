@@ -58,7 +58,7 @@ public final class IO {
    * Writes a string of text using a specific color.
    *
    * @param string  the string of text to be written.
-   * @param color   the color of the text. If <code>null</code>, the default color will be used.
+   * @param color   the color of the text. If {@code null}, the default color will be used.
    * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
    */
   public static void writeString(String string, Color color, boolean newLine) {

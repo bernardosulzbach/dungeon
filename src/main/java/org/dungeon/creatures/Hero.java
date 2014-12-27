@@ -226,7 +226,7 @@ public class Hero extends Creature {
    * Select an item of the current location based on the arguments of a command.
    *
    * @param issuedCommand the command whose arguments will determine the item search.
-   * @return an Item or <code>null</code>.
+   * @return an Item or {@code null}.
    */
   Item selectLocationItem(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
@@ -259,7 +259,7 @@ public class Hero extends Creature {
    * Attempts to select a target from the current location using the player input.
    *
    * @param issuedCommand the command entered by the player.
-   * @return a target Creature or <code>null</code>.
+   * @return a target Creature or {@code null}.
    */
   Creature selectTarget(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
@@ -277,7 +277,7 @@ public class Hero extends Creature {
   /**
    * Attempts to find a creature in the current location comparing its name to an array of string tokens.
    * <p/>
-   * If there are no matches, <code>null</code> is returned.
+   * If there are no matches, {@code null} is returned.
    * <p/>
    * If there is one match, it is returned.
    * <p/>
@@ -286,7 +286,7 @@ public class Hero extends Creature {
    * If there are multiple matches with only two different names and one of these names is the Hero's name, the first
    * creature match is returned.
    * <p/>
-   * Lastly, if there are multiple matches that do not fall in one of the two categories above, <code>null</code> is
+   * Lastly, if there are multiple matches that do not fall in one of the two categories above, {@code null} is
    * returned.
    *
    * @param tokens an array of string tokens.

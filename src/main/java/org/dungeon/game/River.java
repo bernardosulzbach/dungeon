@@ -32,7 +32,7 @@ class River implements Serializable {
    * Make a river.
    *
    * @param MIN_DBB the minimum distance between bridges. Must be positive.
-   * @param MAX_DBB the maximum distance between bridges. Must be bigger than <code>MIN_DBB</code>.
+   * @param MAX_DBB the maximum distance between bridges. Must be bigger than {@code MIN_DBB}.
    */
   River(int MIN_DBB, int MAX_DBB) {
     bridges = new ExpandableIntegerSet(MIN_DBB, MAX_DBB);

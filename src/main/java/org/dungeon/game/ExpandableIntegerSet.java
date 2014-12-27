@@ -41,7 +41,7 @@ class ExpandableIntegerSet implements Serializable {
    * Make a new ExpandableIntegerSet.
    *
    * @param MIN_DBI the minimum distance between integers. Must be positive.
-   * @param MAX_DBI the maximum distance between integers. Must be bigger than <code>MIN_DBI</code>.
+   * @param MAX_DBI the maximum distance between integers. Must be bigger than {@code MIN_DBI}.
    */
   public ExpandableIntegerSet(int MIN_DBI, int MAX_DBI) {
     if (MIN_DBI > 0 && MAX_DBI > MIN_DBI) {
@@ -90,7 +90,7 @@ class ExpandableIntegerSet implements Serializable {
   }
 
   /**
-   * @return true if <code>a</code> is in the set.
+   * @return true if {@code a} is in the set.
    */
   boolean contains(int a) {
     return set.contains(a);

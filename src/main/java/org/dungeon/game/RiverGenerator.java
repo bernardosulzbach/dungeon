@@ -43,7 +43,7 @@ final class RiverGenerator implements Serializable {
 
   /**
    * Expand the river set to ensure that all points whose x coordinate is in the range
-   * <code>[point.x - chunkSide, point.x + chunkSide]</code> will either correspond to a river or to a location that
+   * {@code [point.x - chunkSide, point.x + chunkSide]} will either correspond to a river or to a location that
    * anticipates a river.
    *
    * @param point     the point from which the expansion starts.

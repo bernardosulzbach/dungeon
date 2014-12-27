@@ -52,7 +52,7 @@ class ResourceParser implements Closeable {
   }
 
   /**
-   * Read the next line from the BufferedReader to the private variable <code>line</code>.
+   * Read the next line from the BufferedReader to the private variable {@code line}.
    */
   private void readLine() {
     try {

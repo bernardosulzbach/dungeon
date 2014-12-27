@@ -72,7 +72,7 @@ public class CommandHistory implements Serializable {
   }
 
   /**
-   * @return a String representation of the last similar command or <code>null</code> if no similar command was found.
+   * @return a String representation of the last similar command or {@code null} if no similar command was found.
    */
   public String getLastSimilarCommand(String command) {
     for (int i = commands.size() - 1; i >= 0; i--) {
@@ -97,7 +97,7 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * @return the selected command or <code>null</code> if the CommandHistory does not have any commands or the
+     * @return the selected command or {@code null} if the CommandHistory does not have any commands or the
      * cursor is at the end of the CommandHistory.
      */
     public String getSelectedCommand() {
@@ -134,7 +134,7 @@ public class CommandHistory implements Serializable {
 
     /**
      * Sets the cursor to one past the last command of the CommandHistory. Retrieving the selected entry after
-     * calling this method will return <code>null</code>.
+     * calling this method will return {@code null}.
      */
     public Cursor moveToEnd() {
       index = history.size();

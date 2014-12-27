@@ -37,7 +37,7 @@ class TurnResult {
   /**
    * Evaluates if the GameState has changed.
    * <p/>
-   * Basically, returns <code>turnLength != 0 || configurationsChanged</code>.
+   * Basically, returns {@code turnLength != 0 || configurationsChanged}.
    */
   boolean gameStateChanged() {
     return turnLength != 0 || configurationsChanged;
