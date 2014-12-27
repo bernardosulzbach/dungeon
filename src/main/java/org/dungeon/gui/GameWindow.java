@@ -51,6 +51,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -86,8 +87,8 @@ public class GameWindow extends JFrame {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBackground(SharedConstants.MARGIN_COLOR);
 
-    textPane = new javax.swing.JTextPane();
-    textField = new javax.swing.JTextField();
+    textPane = new JTextPane();
+    textField = new JTextField();
 
     JScrollPane scrollPane = new JScrollPane();
 
@@ -107,8 +108,8 @@ public class GameWindow extends JFrame {
     textField.setFocusTraversalKeysEnabled(false);
     textField.setBorder(BorderFactory.createEmptyBorder());
 
-    textField.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+    textField.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent actionEvent) {
         textFieldActionPerformed();
       }
     });

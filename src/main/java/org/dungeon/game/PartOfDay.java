@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.date.Date;
+import org.dungeon.date.Period;
 
 /**
  * Enumerated type of the parts of the day.
@@ -84,7 +85,7 @@ public enum PartOfDay {
     // The day on which the next part of day will happen.
     Date day = cur.getHour() < pod.getStartingHour() ? cur : cur.plusDays(1);
     day = new Date(day.getYear(), day.getMonth(), day.getDay(), pod.getStartingHour(), 0, 0);
-    return (int) new org.dungeon.date.Period(cur, day).getSeconds();
+    return (int) new Period(cur, day).getSeconds();
   }
 
   public double getLuminosity() {

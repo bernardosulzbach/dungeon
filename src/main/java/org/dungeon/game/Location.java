@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.creatures.Creature;
+import org.dungeon.io.DLogger;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.LocationInventory;
@@ -54,7 +55,7 @@ public class Location implements Serializable {
         if (blueprint != null) {
           this.addItem(new Item(blueprint));
         } else {
-          org.dungeon.io.DLogger.warning("ItemBlueprint not found: " + pair.getId().getId());
+          DLogger.warning("ItemBlueprint not found: " + pair.getId().getId());
         }
       }
     }
