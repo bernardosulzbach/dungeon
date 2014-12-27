@@ -142,7 +142,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("hint") || issuedCommand.firstTokenEquals("tip")) {
       gameState.printNextHint();
     } else if (issuedCommand.firstTokenEquals("poem")) {
-      gameState.printNextPoem();
+      gameState.printPoem(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("debug")) {
       DebugTools.parseDebugCommand(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("config")) {

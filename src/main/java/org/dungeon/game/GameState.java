@@ -169,14 +169,34 @@ public class GameState implements Serializable {
   }
 
   /**
-   * Prints the next poem.
+   * Prints a poem based on the issued command.
+   * <p/>
+   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
+   * <p/>
+   * Otherwise, the next poem is based on a behind-the-scenes poem index.
+   *
+   * @param command the issued command.
    */
-  public void printNextPoem() {
+  public void printPoem(IssuedCommand command) {
     if (GameData.getPoetryData().getPoemCount() == 0) {
-      IO.writeString("No poems were loaded.", Color.RED);
+      IO.writeString("No poems were loaded.");
     } else {
-      IO.writePoem(GameData.getPoetryData().getPoem(nextPoemIndex));
-      incrementNextPoemIndex();
+      if (command.hasArguments()) {
+        try {
+          // Indexing is zero-based to the implementation, but one-based to the player.
+          int index = Integer.parseInt(command.getFirstArgument()) - 1;
+          if (index >= 0 && index < GameData.getPoetryData().getPoemCount()) {
+            IO.writePoem(GameData.getPoetryData().getPoem(index));
+            return;
+          }
+        } catch (NumberFormatException ignore) {
+          // This exception reproduces the same error message an invalid index does.
+        }
+        IO.writeString("Invalid poem index.");
+      } else {
+        IO.writePoem(GameData.getPoetryData().getPoem(nextPoemIndex));
+        incrementNextPoemIndex();
+      }
     }
   }
 

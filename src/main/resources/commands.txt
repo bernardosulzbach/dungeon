@@ -105,9 +105,9 @@ ALIASES: "pick"
 ARGUMENTS: "", "item"
 
 COMMAND: "poem"
-INFO: "Prints a random poem from the poem library."
+INFO: "Prints a poem from the poem library."
 ALIASES: ""
-ARGUMENTS: ""
+ARGUMENTS: "", "index"
 
 COMMAND: "quit"
 INFO: "Exits the game."
