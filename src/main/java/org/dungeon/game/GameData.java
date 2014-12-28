@@ -102,6 +102,7 @@ public final class GameData {
       }
       ITEM_BLUEPRINTS.put(blueprint.getId(), blueprint);
     }
+    resourceReader.close();
     DLogger.info("Loaded " + ITEM_BLUEPRINTS.size() + " item blueprints.");
   }
 
@@ -121,6 +122,7 @@ public final class GameData {
       blueprint.setAttackAlgorithmID(resourceReader.getValue("ATTACK_ALGORITHM_ID"));
       CREATURE_BLUEPRINTS.put(blueprint.getId(), blueprint);
     }
+    resourceReader.close();
     DLogger.info("Loaded " + CREATURE_BLUEPRINTS.size() + " creature blueprints.");
   }
 

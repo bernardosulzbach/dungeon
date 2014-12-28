@@ -68,8 +68,9 @@ public final class PoetryData {
         poems.add(pb.createPoem());
       }
     }
-    DLogger.info("Loaded " + poems.size() + " poems.");
+    reader.close();
     poems.trimToSize();
+    DLogger.info("Loaded " + poems.size() + " poems.");
   }
 
 }
