@@ -1,4 +1,4 @@
-dungeon
+Dungeon
 =======
 A simple text-based RPG using Java
 
