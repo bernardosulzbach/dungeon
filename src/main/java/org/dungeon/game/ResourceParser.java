@@ -31,16 +31,11 @@ import java.io.Reader;
  */
 class ResourceParser implements Closeable {
 
-  // A line breaking character.
-  private static final char LINE_BREAK = '\\';
   // The wrapped BufferedReader.
   private final BufferedReader br;
-  // The last line retrieved by the readLine method.
-  // TODO: make a class for line - with isComment and isContinued as methods
-  //       consider also making an isValid method that checks if the line of text is a valid line and logs if it is not.
-  private String line;
-  // True if line ends with the LINE_BREAK character.
-  private boolean continued;
+
+  // The last line retrieved by the readLine method, wrappend in a ResourceLine object.
+  private ResourceLine line;
 
   /**
    * Creates a convenient buffered reader for reading Dungeon resource files.
@@ -55,68 +50,52 @@ class ResourceParser implements Closeable {
    * Read the next line from the BufferedReader to the private variable {@code line}.
    */
   private void readLine() {
-    try {
-      do {
-        line = br.readLine();
-      } while (line != null && (line.isEmpty() || isComment()));
-      if (line != null) {
-        continued = isContinued();
-        if (continued) {
-          line = line.substring(0, line.length() - 1);
+    do {
+      try {
+        String text = br.readLine();
+        // Do not create a ResourceLine with a null String.
+        if (text == null) {
+          line = null;
+          return;
         }
-        line = line.trim();
-      } else {
-        continued = false;
+        line = new ResourceLine(text);
+      } catch (IOException e) {
+        DLogger.warning(e.getMessage());
       }
-    } catch (IOException e) {
-      DLogger.warning(e.getMessage());
-    }
-  }
-
-  /**
-   * Preconditions: line != null and line.isEmpty() == false
-   *
-   * @return true if the line ends with the line break character. False otherwise.
-   */
-  private boolean isContinued() {
-    return line.charAt(line.length() - 1) == LINE_BREAK;
-  }
-
-  /**
-   * Preconditions: line != null and line.isEmpty() == false
-   *
-   * @return true if the line starts with a valid comment starting sequence.
-   */
-  private boolean isComment() {
-    return line.trim().startsWith("//") || line.trim().startsWith("#");
+    } while (!line.isValid() || line.isComment());
   }
 
   /**
    * Read a String of text formatted according to the Dungeon convention.
+   * <p/>
+   * Returns {@code null} if the end of the file has been reached.
    */
   public String readString() {
     readLine();
-    if (continued) {
-      StringBuilder sb = new StringBuilder(line);
-      while (continued) {
+    if (line == null) {
+      return null;
+    }
+    if (line.isContinued()) {
+      StringBuilder sb = new StringBuilder();
+      do {
+        sb.append(line.toString()).append('\n');
         readLine();
-        if (line != null) {
-          sb.append('\n').append(line);
-        }
-      }
+      } while (line != null && line.isContinued());
       return sb.toString();
     }
-    return line;
+    return line.toString();
   }
 
   /**
    * Closes the underlying BufferedReader.
-   *
-   * @throws IOException
    */
   @Override
-  public void close() throws IOException {
-    br.close();
+  public void close() {
+    try {
+      br.close();
+    } catch (IOException e) {
+      DLogger.warning(e.getMessage());
+    }
   }
 
 }

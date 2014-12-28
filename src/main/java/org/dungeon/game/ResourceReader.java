@@ -18,7 +18,6 @@
 package org.dungeon.game;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -92,8 +91,11 @@ class ResourceReader implements Closeable {
     return null;
   }
 
+  /**
+   * Calls the close method of the underlying ResourceParser.
+   */
   @Override
-  public void close() throws IOException {
+  public void close() {
     resourceParser.close();
   }
 
