@@ -29,7 +29,6 @@ Planned features
 - The ability to learn and use spells.
 - Alignment system. (Killing good creatures make you evil.)
 - Trees.
-- Load hints from resource files.
 - A Command type for the commands, create an instance for all commands and iterate through them.
 - Store command help in the respective Command object.
 - Store aliases independently and let the player add and remove aliases.
