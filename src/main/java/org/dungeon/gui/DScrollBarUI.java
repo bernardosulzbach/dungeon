@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2014 Bernardo Sulzbach
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.dungeon.gui;
 
 import javax.swing.JButton;
@@ -18,6 +35,19 @@ class DScrollBarUI extends BasicScrollBarUI {
 
   private static final int TRACK_W = 4;
   private static final int THUMB_W = TRACK_W * 2;
+
+  /**
+   * This is a temporary solution to remove the buttons from BasicScrollBarUI.
+   *
+   * @return a JButton with all sizes set to zero.
+   */
+  private static JButton createZeroButton() {
+    JButton jButton = new JButton();
+    jButton.setPreferredSize(zeroDimension);
+    jButton.setMinimumSize(zeroDimension);
+    jButton.setMaximumSize(zeroDimension);
+    return jButton;
+  }
 
   @Override
   protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
@@ -61,19 +91,6 @@ class DScrollBarUI extends BasicScrollBarUI {
    */
   private int calculateX(int x, int areaWidth, int barWidth) {
     return x + (areaWidth - barWidth) / 2;
-  }
-
-  /**
-   * This is a temporary solution to remove the buttons from BasicScrollBarUI.
-   *
-   * @return a JButton with all sizes set to zero.
-   */
-  private static JButton createZeroButton() {
-    JButton jButton = new JButton();
-    jButton.setPreferredSize(zeroDimension);
-    jButton.setMinimumSize(zeroDimension);
-    jButton.setMaximumSize(zeroDimension);
-    return jButton;
   }
 
 }
