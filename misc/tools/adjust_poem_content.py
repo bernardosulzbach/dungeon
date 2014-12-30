@@ -28,7 +28,9 @@ def print_poem(filename):
             max_width = current_line_width
     for i in range(len(lines)):
         # If max_width is 10, as this is zero-indexed, the backslash should be at line[10].
-        lines[i] = lines[i] + ' ' * (max_width - len(lines[i])) + '\\'
+        lines[i] = lines[i] + ' ' * (max_width - len(lines[i]))
+        if i != len(lines) - 1:
+            lines[i] = lines[i] + '\\'
     poem = '\n'.join(lines)
     print(poem)
 
