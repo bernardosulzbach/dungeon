@@ -24,36 +24,36 @@ import org.dungeon.util.PoemBuilder;
 import java.util.ArrayList;
 
 /**
- * A component of GameData.
+ * A Library of Poems.
  * <p/>
  * Created by Bernardo Sulzbach on 15/12/14.
  */
-public final class PoetryData {
+public final class PoetryLibrary extends Library {
 
-  private final ArrayList<Poem> poems;
-  private boolean initialized;
+  private final ArrayList<Poem> poems = new ArrayList<Poem>();
 
-  public PoetryData() {
-    poems = new ArrayList<Poem>();
-  }
-
+  /**
+   * Returns how many poems the library has.
+   * <p/>
+   * This should be the first method called in this Library, as it triggers its initialization if it has not happened
+   * yet.
+   */
   public int getPoemCount() {
-    if (!initialized) {
+    if (!isInitialized()) {
       initialize();
     }
     return poems.size();
   }
 
+  /**
+   * Return the poem at the specified index.
+   */
   public Poem getPoem(int index) {
     return poems.get(index);
   }
 
-  private void initialize() {
-    loadPoems();
-    initialized = true;
-  }
-
-  private void loadPoems() {
+  @Override
+  void load() {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("poems.txt"));
     final String IDENTIFIER_TITLE = "TITLE";

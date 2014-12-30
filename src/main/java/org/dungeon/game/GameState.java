@@ -26,7 +26,6 @@ import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.util.CommandHistory;
-import org.dungeon.util.Hints;
 import org.dungeon.util.Statistics;
 
 import java.awt.Color;
@@ -115,10 +114,22 @@ public class GameState implements Serializable {
 
   private void incrementNextHintIndex() {
     int newIndex = getNextHintIndex() + 1;
-    if (newIndex == Hints.hintsArray.length) {
+    if (newIndex == GameData.getHintLibrary().getHintCount()) {
       setNextHintIndex(0);
     } else {
       setNextHintIndex(newIndex);
+    }
+  }
+
+  /**
+   * Prints the next hint.
+   */
+  public void printNextHint() {
+    if (GameData.getHintLibrary().getHintCount() == 0) {
+      IO.writeString("No hints were loaded.");
+    } else {
+      IO.writeString(GameData.getHintLibrary().getHint(getNextHintIndex()));
+      incrementNextHintIndex();
     }
   }
 
@@ -132,10 +143,42 @@ public class GameState implements Serializable {
 
   private void incrementNextPoemIndex() {
     int newIndex = getNextPoemIndex() + 1;
-    if (newIndex == GameData.getPoetryData().getPoemCount()) {
+    if (newIndex == GameData.getPoetryLibrary().getPoemCount()) {
       setNextPoemIndex(0);
     } else {
       setNextPoemIndex(newIndex);
+    }
+  }
+
+  /**
+   * Prints a poem based on the issued command.
+   * <p/>
+   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
+   * <p/>
+   * Otherwise, the next poem is based on a behind-the-scenes poem index.
+   *
+   * @param command the issued command.
+   */
+  public void printPoem(IssuedCommand command) {
+    if (GameData.getPoetryLibrary().getPoemCount() == 0) {
+      IO.writeString("No poems were loaded.");
+    } else {
+      if (command.hasArguments()) {
+        try {
+          // Indexing is zero-based to the implementation, but one-based to the player.
+          int index = Integer.parseInt(command.getFirstArgument()) - 1;
+          if (index >= 0 && index < GameData.getPoetryLibrary().getPoemCount()) {
+            IO.writePoem(GameData.getPoetryLibrary().getPoem(index));
+            return;
+          }
+        } catch (NumberFormatException ignore) {
+          // This exception reproduces the same error message an invalid index does.
+        }
+        IO.writeString("Invalid poem index.");
+      } else {
+        IO.writePoem(GameData.getPoetryLibrary().getPoem(nextPoemIndex));
+        incrementNextPoemIndex();
+      }
     }
   }
 
@@ -156,46 +199,6 @@ public class GameState implements Serializable {
         IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
       } else {
         DLogger.warning("Unlocked achievement ID not found in GameData.");
-      }
-    }
-  }
-
-  /**
-   * Prints the next hint.
-   */
-  public void printNextHint() {
-    IO.writeString(Hints.hintsArray[getNextHintIndex()]);
-    incrementNextHintIndex();
-  }
-
-  /**
-   * Prints a poem based on the issued command.
-   * <p/>
-   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
-   * <p/>
-   * Otherwise, the next poem is based on a behind-the-scenes poem index.
-   *
-   * @param command the issued command.
-   */
-  public void printPoem(IssuedCommand command) {
-    if (GameData.getPoetryData().getPoemCount() == 0) {
-      IO.writeString("No poems were loaded.");
-    } else {
-      if (command.hasArguments()) {
-        try {
-          // Indexing is zero-based to the implementation, but one-based to the player.
-          int index = Integer.parseInt(command.getFirstArgument()) - 1;
-          if (index >= 0 && index < GameData.getPoetryData().getPoemCount()) {
-            IO.writePoem(GameData.getPoetryData().getPoem(index));
-            return;
-          }
-        } catch (NumberFormatException ignore) {
-          // This exception reproduces the same error message an invalid index does.
-        }
-        IO.writeString("Invalid poem index.");
-      } else {
-        IO.writePoem(GameData.getPoetryData().getPoem(nextPoemIndex));
-        incrementNextPoemIndex();
       }
     }
   }
