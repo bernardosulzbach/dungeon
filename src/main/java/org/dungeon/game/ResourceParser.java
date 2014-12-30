@@ -34,7 +34,7 @@ class ResourceParser implements Closeable {
   // The wrapped BufferedReader.
   private final BufferedReader br;
 
-  // The last line retrieved by the readLine method, wrappend in a ResourceLine object.
+  // The last line retrieved by the readLine method, wrapped in a ResourceLine object.
   private ResourceLine line;
 
   /**
