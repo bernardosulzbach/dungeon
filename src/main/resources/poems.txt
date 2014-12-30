@@ -131,7 +131,7 @@ Rage, rage against the dying of the light.          \
 And you, my father, there on the sad height,        \
 Curse, bless, me now with your fierce tears, I pray.\
 Do not go gentle into that good night.              \
-Rage, rage against the dying of the light.          \
+Rage, rage against the dying of the light.
 
 ID: 7
 TITLE: In Flanders Fields
@@ -155,6 +155,7 @@ If ye break faith with us who die      \
 We shall not sleep, though poppies grow\
 In Flanders fields.
 
+ID: 8
 TITLE: Heaven Is What I Cannot Reach!
 AUTHOR: Emily Dickinson
 CONTENT: \
@@ -166,4 +167,4 @@ That "heaven" is, to me.             \
 The color on the cruising cloud,     \
 The interdicted ground               \
 Behind the hill, the house behind, --\
-There Paradise is found!             \
+There Paradise is found!
