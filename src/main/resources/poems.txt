@@ -298,3 +298,34 @@ And his eyes have all the seeming of a demon's that is dreaming,            \
 And the lamp-light o'er him streaming throws his shadow on the floor:       \
 And my soul from out that shadow that lies floating on the floor            \
     Shall be lifted—nevermore!
+
+ID: 10
+TITLE: Morning
+AUTHOR: Billy Collins
+CONTENT: \
+Why do we bother with the rest of the day,      \
+the swale of the afternoon,                     \
+the sudden dip into evening,                    \
+                                                \
+then night with his notorious perfumes,         \
+his many-pointed stars?                         \
+                                                \
+This is the best—                               \
+throwing off the light covers,                  \
+feet on the cold floor,                         \
+and buzzing around the house on espresso—       \
+                                                \
+maybe a splash of water on the face,            \
+a palmful of vitamins—                          \
+but mostly buzzing around the house on espresso,\
+                                                \
+dictionary and atlas open on the rug,           \
+the typewriter waiting for the key of the head, \
+a cello on the radio,                           \
+                                                \
+and, if necessary, the windows—                 \
+trees fifty, a hundred years old                \
+out there,                                      \
+heavy clouds on the way                         \
+and the lawn steaming like a horse              \
+in the early morning.
