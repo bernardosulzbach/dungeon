@@ -114,8 +114,6 @@ public class Game {
       gameState.printGameStatistics();
     } else if (issuedCommand.firstTokenEquals("achievements")) {
       gameState.printUnlockedAchievements();
-    } else if (issuedCommand.firstTokenEquals("spawns")) {
-      gameState.getWorld().printSpawnCounters();
     } else if (issuedCommand.firstTokenEquals("time") || issuedCommand.firstTokenEquals("date")) {
       result.turnLength = gameState.getHero().printDateAndTime();
     } else if (issuedCommand.firstTokenEquals("system")) {
