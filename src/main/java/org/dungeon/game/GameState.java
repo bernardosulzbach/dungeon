@@ -26,7 +26,7 @@ import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.util.CommandHistory;
-import org.dungeon.util.Statistics;
+import org.dungeon.stats.Statistics;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -36,7 +36,7 @@ public class GameState implements Serializable {
   private final CommandHistory commandHistory;
   private final World world;
 
-  private final Statistics statistics;
+  private final Statistics statistics = new Statistics();
 
   private Hero hero;
   private Point heroPosition;
@@ -50,12 +50,8 @@ public class GameState implements Serializable {
 
   public GameState() {
     commandHistory = new CommandHistory();
-    world = new World();
-
-    statistics = new Statistics();
-
+    world = new World(statistics.getWorldStatistics());
     createHeroAndStartingLocation();
-
     saved = true;
   }
 
@@ -208,9 +204,11 @@ public class GameState implements Serializable {
     }
   }
 
+  /**
+   * Prints the game statistics.
+   */
   public void printGameStatistics() {
-    statistics.print();
-    // TODO: fix the spawn statistics and add them here.
+    statistics.printAllStatistics();
   }
 
   /**

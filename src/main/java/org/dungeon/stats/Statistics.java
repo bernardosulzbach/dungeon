@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.stats;
 
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
@@ -27,25 +27,39 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo on 07/12/2014.
  */
-public class Statistics implements Serializable {
+public final class Statistics implements Serializable {
 
-  private final CommandStatistics commandStats;
+  private final WorldStatistics worldStatistics = new WorldStatistics();
+  private final CommandStatistics commandStats = new CommandStatistics();
 
-  public Statistics() {
-    commandStats = new CommandStatistics();
+  /**
+   * Returns the WorldStatistics object of this Statistics.
+   *
+   * @return a WorldStatistics object.
+   */
+  public WorldStatistics getWorldStatistics() {
+    return worldStatistics;
   }
 
   /**
-   * Add a command to the statistics.
+   * Adds an issued command to the statistics.
    */
   public void addCommand(IssuedCommand issuedCommand) {
     commandStats.addCommand(issuedCommand);
   }
 
   /**
-   * Print the statistics.
+   * Prints the statistics.
    */
-  public void print() {
+  public void printAllStatistics() {
+    printCommandStatistics();
+    printWorldStatistics();
+  }
+
+  /**
+   * Prints the statistics tracked by CommandStatistics.
+   */
+  private void printCommandStatistics() {
     int commandCount = commandStats.getCommandCount();
     int chars = commandStats.getChars();
     int words = commandStats.getWords();
@@ -54,6 +68,14 @@ public class Statistics implements Serializable {
     IO.writeKeyValueString("Average characters per command", String.format("%.2f", (double) chars / commandCount));
     IO.writeKeyValueString("Words entered", String.valueOf(words));
     IO.writeKeyValueString("Average words per command", String.format("%.2f", (double) words / commandCount));
+  }
+
+  /**
+   * Prints the statistics tracked by WorldStatistics.
+   */
+  private void printWorldStatistics() {
+    IO.writeKeyValueString("Created Locations", String.valueOf(worldStatistics.getLocationCount()));
+    IO.writeKeyValueString("Spawned Creatures", String.valueOf(worldStatistics.getCreatureCount()));
   }
 
 }

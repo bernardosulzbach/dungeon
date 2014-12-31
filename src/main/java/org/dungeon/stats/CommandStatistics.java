@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.stats;
 
 import org.dungeon.game.IssuedCommand;
 
@@ -26,14 +26,14 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo on 07/12/2014.
  */
-class CommandStatistics implements Serializable {
+final class CommandStatistics implements Serializable {
 
   private int commands;
   private int chars;
   private int words;
 
   /**
-   * Add a command to the statistics.
+   * Adds an issued command to the statistics.
    *
    * @param issuedCommand the command to be added.
    */
