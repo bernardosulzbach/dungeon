@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
+import org.dungeon.util.StopWatch;
 
 /**
  * Library class that serves as an abstract superclass to data classes that should only load from secondary storage
@@ -39,13 +40,17 @@ public abstract class Library {
   /**
    * The method that should be invoked to call the load() method.
    * <p/>
+   * This method uses a StopWatch to record how long did the load() invocation took and logs it.
+   * <p/>
    * If this method is called after data has been loaded, a warning is logged.
    */
   protected final void initialize() {
     if (initialized) {
       DLogger.warning("Tried to initialize an already initialized Library class.");
     } else {
+      StopWatch stopWatch = new StopWatch();
       load();
+      DLogger.info("Loading took " + stopWatch.toString() + ".");
       initialized = true;
     }
   }
