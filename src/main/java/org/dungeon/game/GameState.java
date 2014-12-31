@@ -38,7 +38,7 @@ public class GameState implements Serializable {
 
   private final Statistics statistics;
 
-  private final Hero hero;
+  private Hero hero;
   private Point heroPosition;
 
   // Controls if the text displayed is bold or not. False by default. Toggled with the "config bold" command.
@@ -54,14 +54,19 @@ public class GameState implements Serializable {
 
     statistics = new Statistics();
 
-    hero = new Hero("Seth");
-    heroPosition = new Point(0, 0);
-
-    // TODO: analyze if this should be moved / refactored or done in a different way.
-    world.getLocation(heroPosition).addCreature(hero);
-    hero.getExplorationLog().addVisit(heroPosition);
+    createHeroAndStartingLocation();
 
     saved = true;
+  }
+
+  /**
+   * Creates the Hero and the starting Location.
+   */
+  private void createHeroAndStartingLocation() {
+    hero = new Hero("Seth");
+    heroPosition = new Point(0, 0);
+    world.getLocation(heroPosition).addCreature(hero);
+    hero.getExplorationLog().addVisit(heroPosition);
   }
 
   public CommandHistory getCommandHistory() {
