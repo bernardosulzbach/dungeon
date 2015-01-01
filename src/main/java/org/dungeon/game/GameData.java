@@ -41,8 +41,10 @@ public final class GameData {
   // The second parameter ensures that unless the HashMap is full, it will not have its capacity increased.
   public static final HashMap<ID, CreatureBlueprint> CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>(20, 1f);
   public static final HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>(20, 1f);
-  private final static PoetryLibrary poetryLibrary = new PoetryLibrary();
-  private final static HintLibrary hintLibrary = new HintLibrary();
+  private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
+  private static final HintLibrary hintLibrary = new HintLibrary();
+  private static final LocationPreset riverPreset = new LocationPreset("River");
+  private static final LocationPreset bridgePreset = new LocationPreset("Bridge");
   public static LocationPreset[] LOCATION_PRESETS;
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static Font monospaced;
@@ -214,7 +216,21 @@ public final class GameData {
 
     LOCATION_PRESETS = new LocationPreset[locationPresets.size()];
     locationPresets.toArray(LOCATION_PRESETS);
+
+    makeHardcodedLocationPresets();
+
     DLogger.info("Created " + LOCATION_PRESETS.length + " location presets.");
+  }
+
+  /**
+   * Makes the river and the bridge presets.
+   */
+  private static void makeHardcodedLocationPresets() {
+    riverPreset.block(Direction.WEST).block(Direction.EAST);
+    riverPreset.setLightPermittivity(1.0);
+
+    bridgePreset.block(Direction.NORTH).block(Direction.SOUTH);
+    bridgePreset.setLightPermittivity(1.0);
   }
 
   private static void createAchievements() {
@@ -308,18 +324,22 @@ public final class GameData {
     LICENSE = sb.toString();
   }
 
+  /**
+   * Returns a LocationPreset for a river.
+   *
+   * @return a LocationPreset.
+   */
   public static LocationPreset getRandomRiver() {
-    LocationPreset river = new LocationPreset("River");
-    river.block(Direction.EAST).block(Direction.WEST);
-    river.setLightPermittivity(1.0);
-    return river;
+    return riverPreset;
   }
 
+  /**
+   * Returns a LocationPreset for a bridge than can be accessed by west or east.
+   *
+   * @return a LocationPreset.
+   */
   public static LocationPreset getRandomBridge() {
-    LocationPreset bridge = new LocationPreset("Bridge");
-    bridge.block(Direction.NORTH).block(Direction.SOUTH);
-    bridge.setLightPermittivity(1.0);
-    return bridge;
+    return bridgePreset;
   }
 
 }
