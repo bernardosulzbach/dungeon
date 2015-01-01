@@ -76,6 +76,7 @@ public final class Statistics implements Serializable {
   private void printWorldStatistics() {
     IO.writeKeyValueString("Created Locations", String.valueOf(worldStatistics.getLocationCount()));
     IO.writeKeyValueString("Spawned Creatures", String.valueOf(worldStatistics.getCreatureCount()));
+    // TODO: print specific creature spawn counts (as a tree?).
   }
 
 }

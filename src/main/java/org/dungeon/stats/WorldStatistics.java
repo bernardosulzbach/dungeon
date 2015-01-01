@@ -17,6 +17,8 @@
 
 package org.dungeon.stats;
 
+import org.dungeon.counters.CounterMap;
+
 import java.io.Serializable;
 
 /**
@@ -26,15 +28,15 @@ import java.io.Serializable;
  */
 public final class WorldStatistics implements Serializable {
 
+  private final CounterMap<String> spawnCounter = new CounterMap<String>();
   private int locations;
   private int creatures;
-
-  // TODO: start to use location and creature name
 
   /**
    * Adds the creation of a new Location to the statistics.
    */
   public void addLocation(String location) {
+    // TODO: start to use Location name.
     locations++;
   }
 
@@ -43,6 +45,7 @@ public final class WorldStatistics implements Serializable {
    */
   public void addSpawn(String creature) {
     creatures++;
+    spawnCounter.incrementCounter(creature);
   }
 
   /**
@@ -61,6 +64,15 @@ public final class WorldStatistics implements Serializable {
    */
   public int getCreatureCount() {
     return creatures;
+  }
+
+  /**
+   * Returns the CounterMap that relate Creature name to spawn count.
+   *
+   * @return a CounterMap of String.
+   */
+  public CounterMap<String> getSpawnCounter() {
+    return spawnCounter;
   }
 
 }

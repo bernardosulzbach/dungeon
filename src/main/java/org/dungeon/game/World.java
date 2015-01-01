@@ -20,7 +20,6 @@ package org.dungeon.game;
 import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.Hero;
 import org.dungeon.date.Date;
-import org.dungeon.io.IO;
 import org.dungeon.stats.WorldStatistics;
 
 import java.io.Serializable;
@@ -28,8 +27,6 @@ import java.util.HashMap;
 
 public class World implements Serializable {
 
-  // TODO: place something like this in WorldStatistics and remove it from here.
-  private final CounterMap<ID> spawnCounter;
 
   private final WorldGenerator generator;
 
@@ -49,13 +46,8 @@ public class World implements Serializable {
     worldStatistics = statistics;
     worldDate = new Date(455, 6, 2, 6, 10, 0);
     worldCreationDate = worldDate.minusHours(6);
-    spawnCounter = new CounterMap<ID>();
     locations = new HashMap<Point, Location>();
     generator = new WorldGenerator(this);
-  }
-
-  public CounterMap<ID> getSpawnCounter() {
-    return spawnCounter;
   }
 
   public WorldGenerator getGenerator() {
@@ -112,15 +104,6 @@ public class World implements Serializable {
    */
   public PartOfDay getPartOfDay() {
     return PartOfDay.getCorrespondingConstant(worldDate);
-  }
-
-  /**
-   * Prints all the spawn counters.
-   */
-  public void printSpawnCounters() {
-    for (ID id : spawnCounter.keySet()) {
-      IO.writeKeyValueString(id.getId(), Integer.toString(spawnCounter.getCounter(id)));
-    }
   }
 
   /**
