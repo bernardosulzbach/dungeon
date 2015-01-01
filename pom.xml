@@ -20,7 +20,7 @@
 
     <groupId>org.dungeon</groupId>
     <artifactId>dungeon</artifactId>
-    <version>v0.0.5.1</version>
+    <version>v0.0.5.4</version>
 
     <developers>
         <developer>
@@ -45,6 +45,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                 <archive>
                     <manifest>
