@@ -103,7 +103,7 @@ public class Engine {
     Location destination = gameState.getWorld().moveHero(dir);
     refreshSpawners(); // Update the spawners of the location the Hero moved to.
     hero.setLocation(destination);
-    hero.look(true);
+    hero.look(dir.invert());
     hero.getExplorationLog().addVisit(destinationPoint);
     return TimeConstants.WALK_SUCCESS;
   }

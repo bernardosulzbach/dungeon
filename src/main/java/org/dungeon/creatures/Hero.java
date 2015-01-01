@@ -139,19 +139,19 @@ public class Hero extends Creature {
 
   /**
    * Prints the name of the player's current location and lists all creatures and items the character sees.
-   * 
-   * @param arriving is the player arriving to the location? False if he is just looking while standing still.
+   *
+   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  public void look(boolean arriving) {
+  public void look(Direction walkedInFrom) {
     Location location = getLocation(); // Avoid multiple calls to the getter.
-    if (arriving) {
+    if (walkedInFrom != null) {
       IO.writeString("You arrive at " + location.getName() + ".");
     } else {
       IO.writeString("You are at " + location.getName() + ".");
     }
     IO.writeNewLine();
     if (canSee()) {
-      lookAdjacentLocations();
+      lookAdjacentLocations(walkedInFrom);
       if (location.getCreatureCount() == 1) {
         if (Engine.RANDOM.nextBoolean()) {
           IO.writeString("You do not see anyone here.");
@@ -189,18 +189,23 @@ public class Hero extends Creature {
 
   /**
    * Look to the locations adjacent to the one the Hero is in.
+   *
+   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  private void lookAdjacentLocations() {
+  private void lookAdjacentLocations(Direction walkedInFrom) {
     World world = Game.getGameState().getWorld();
     Point pos = Game.getGameState().getHeroPosition();
     // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
     StringBuilder stringBuilder = new StringBuilder(140);
     for (Direction dir : Direction.values()) {
-      stringBuilder.append("To ");
-      stringBuilder.append(dir);
-      stringBuilder.append(" you see ");
-      stringBuilder.append(world.getLocation(new Point(pos, dir)).getName());
-      stringBuilder.append(".\n");
+      // Avoids printing the name of the Location you just left.
+      if (walkedInFrom == null || !dir.equals(walkedInFrom)) {
+        stringBuilder.append("To ");
+        stringBuilder.append(dir);
+        stringBuilder.append(" you see ");
+        stringBuilder.append(world.getLocation(new Point(pos, dir)).getName());
+        stringBuilder.append(".\n");
+      }
     }
     IO.writeString(stringBuilder.toString());
     IO.writeNewLine();

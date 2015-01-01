@@ -80,7 +80,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("sleep")) {
       result.turnLength = gameState.getHero().sleep();
     } else if (issuedCommand.firstTokenEquals("look") || issuedCommand.firstTokenEquals("peek")) {
-      gameState.getHero().look(false);
+      gameState.getHero().look(null);
     } else if (issuedCommand.firstTokenEquals("inventory") || issuedCommand.firstTokenEquals("items")) {
       gameState.getHero().printInventory();
     } else if (issuedCommand.firstTokenEquals("loot") || issuedCommand.firstTokenEquals("pick")) {
