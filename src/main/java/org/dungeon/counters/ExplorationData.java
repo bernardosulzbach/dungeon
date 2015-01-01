@@ -17,22 +17,37 @@
 
 package org.dungeon.counters;
 
+import org.dungeon.game.ID;
+
 import java.io.Serializable;
 
 /**
- * An ExplorationLog entry.
+ * An ExplorationLog entry that stores data relative to one Point.
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
 class ExplorationData implements Serializable {
 
-  private String locationID;
+  private ID locationID;
+
+  /**
+   * How many times the Hero visited this Point.
+   */
   private int visitCount;
+
+  /**
+   * How many times the Hero killed in this Point.
+   */
   private int killCount;
 
-  public ExplorationData(int visitCount, int killCount) {
+  public ExplorationData(ID locationID, int visitCount, int killCount) {
+    this.locationID = locationID;
     this.visitCount = visitCount;
     this.killCount = killCount;
+  }
+
+  public ID getLocationID() {
+    return locationID;
   }
 
   public int getVisitCount() {

@@ -17,6 +17,7 @@
 
 package org.dungeon.counters;
 
+import org.dungeon.game.ID;
 import org.dungeon.game.Point;
 
 import java.io.Serializable;
@@ -29,54 +30,84 @@ import java.util.HashMap;
  */
 public class ExplorationLog implements Serializable {
 
+  // Hold data for each point (and not for each Location ID - what should suffice for now) so that in the future more
+  // complex achievements can be made.
   private final HashMap<Point, ExplorationData> entries;
-
-  // The biggest number of visits to a same location.
-  private int maximumVisits;
-
-  // The biggest number of kills in a same location.
-  private int maximumKills;
 
   public ExplorationLog() {
     this.entries = new HashMap<Point, ExplorationData>();
   }
 
-  public int getMaximumVisits() {
-    return maximumVisits;
-  }
-
-  public int getMaximumKills() {
-    return maximumKills;
-  }
-
-  private int getVisitCount(Point point) {
-    return entries.containsKey(point) ? entries.get(point).getVisitCount() : 0;
-  }
-
-  public void addVisit(Point point) {
-    int visitsToPoint;
+  /**
+   * Records a visit to a specified Point.
+   *
+   * @param point the visited Point.
+   */
+  public void addVisit(Point point, ID locationID) {
     if (entries.containsKey(point)) {
-      visitsToPoint = entries.get(point).addVisit();
+      entries.get(point).addVisit();
     } else {
-      entries.put(point, new ExplorationData(1, 0));
-      visitsToPoint = 1;
-    }
-    if (visitsToPoint > maximumVisits) {
-      maximumVisits = visitsToPoint;
+      entries.put(point, new ExplorationData(locationID, 1, 0));
     }
   }
 
-  private int getKillCount(Point point) {
-    return entries.containsKey(point) ? entries.get(point).getKillCount() : 0;
-  }
-
+  /**
+   * Records a kill in a specified Point.
+   *
+   * @param point the Point where the Hero just killed something.
+   */
   public void addKill(Point point) {
     // No longer checks for a not existing point as the player needs to have visited (and thus created) a given
     // point before killing anything in it.
-    int killsInPoint = entries.get(point).addKill();
-    if (killsInPoint > maximumKills) {
-      maximumKills = killsInPoint;
+    entries.get(point).addKill();
+  }
+
+  /**
+   * Returns how many different Locations with a specified ID the Hero visited.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getDistinctVisitCount(ID locationID) {
+    int count = 0;
+    for (ExplorationData entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID)) {
+        count++;
+      }
     }
+    return count;
+  }
+
+  /**
+   * Returns how many time the Hero visited the same Locations with a specified ID.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getSameLocationVisitCount(ID locationID) {
+    int count = 0;
+    for (ExplorationData entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID)) {
+        count += entry.getVisitCount();
+      }
+    }
+    return count;
+  }
+
+  /**
+   * Returns how many Creatures the Hero killed in Locations with a specified ID.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getKillCount(ID locationID) {
+    int count = 0;
+    for (ExplorationData entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID)) {
+        count += entry.getKillCount();
+      }
+    }
+    return count;
   }
 
   /**

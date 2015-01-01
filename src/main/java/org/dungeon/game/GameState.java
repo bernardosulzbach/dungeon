@@ -25,8 +25,8 @@ import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
-import org.dungeon.util.CommandHistory;
 import org.dungeon.stats.Statistics;
+import org.dungeon.util.CommandHistory;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -62,7 +62,7 @@ public class GameState implements Serializable {
     hero = new Hero("Seth");
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
-    hero.getExplorationLog().addVisit(heroPosition);
+    hero.getExplorationLog().addVisit(heroPosition, world.getLocation(heroPosition).getID());
   }
 
   public CommandHistory getCommandHistory() {

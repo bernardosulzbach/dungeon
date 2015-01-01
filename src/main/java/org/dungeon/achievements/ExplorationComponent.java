@@ -17,8 +17,10 @@
 
 package org.dungeon.achievements;
 
+import org.dungeon.counters.CounterMap;
 import org.dungeon.counters.ExplorationLog;
 import org.dungeon.creatures.Hero;
+import org.dungeon.game.ID;
 
 /**
  * The exploration component of the achievements.
@@ -27,16 +29,40 @@ import org.dungeon.creatures.Hero;
  */
 final class ExplorationComponent extends AchievementComponent {
 
-  int killCount;
-  int visitCount;
+  /**
+   * Stores how many kills in Locations with a specified ID the Hero must have.
+   */
+  CounterMap<ID> killCounter = new CounterMap<ID>();
 
-  public ExplorationComponent() {
-  }
+  /**
+   * Stores how many distinct Locations with a specified ID the Hero must visit.
+   */
+  CounterMap<ID> distinctLocationsVisitCount = new CounterMap<ID>();
+
+  /**
+   * Stores how many times the Hero must visit the same Location with a specified ID.
+   */
+  CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
 
   @Override
   public boolean isFulfilled(Hero hero) {
     ExplorationLog explorationLog = hero.getExplorationLog();
-    return killCount <= explorationLog.getMaximumKills() && visitCount <= explorationLog.getMaximumVisits();
+    for (ID locationID : killCounter.keySet()) {
+      if (explorationLog.getKillCount(locationID) < killCounter.getCounter(locationID)) {
+        return false;
+      }
+    }
+    for (ID locationID : distinctLocationsVisitCount.keySet()) {
+      if (explorationLog.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
+        return false;
+      }
+    }
+    for (ID locationID : sameLocationVisitCounter.keySet()) {
+      if (explorationLog.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

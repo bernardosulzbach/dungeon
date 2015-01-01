@@ -34,15 +34,20 @@ public class Achievement {
   private final String name;
   private final String info;
 
-  private final BattleComponent battle;
-  private final ExplorationComponent exploration;
+  private final BattleComponent battle = new BattleComponent();
+  private final ExplorationComponent exploration = new ExplorationComponent();
 
+  /**
+   * Constructs an Achievement with the specified ID, name and info.
+   *
+   * @param id   the achievement's ID.
+   * @param name the achievement's name.
+   * @param info the achievement's info.
+   */
   public Achievement(String id, String name, String info) {
     this.id = new ID(id);
     this.name = name;
     this.info = info;
-    battle = new BattleComponent();
-    exploration = new ExplorationComponent();
   }
 
   public ID getId() {
@@ -57,10 +62,20 @@ public class Achievement {
     return info;
   }
 
-  public void setBattleCount(int battleCount) {
-    battle.battleCount = battleCount;
+  /**
+   * Sets the minimum battle count to fulfill this Achievement.
+   *
+   * @param minimumBattleCount the minimum battle count to fulfill this achievement.
+   */
+  public void setMinimumBattleCount(int minimumBattleCount) {
+    battle.battleCount = minimumBattleCount;
   }
 
+  /**
+   * Sets the longest battle length to fulfill this Achievement.
+   *
+   * @param longestBattleLength the longest battle length to fulfill this Achievement.
+   */
   public void setLongestBattleLength(int longestBattleLength) {
     battle.longestBattleLength = longestBattleLength;
   }
@@ -71,8 +86,8 @@ public class Achievement {
    * @param id     the id of the weapon.
    * @param amount the increment.
    */
-  public void incrementKillsByWeapon(ID id, int amount) {
-    battle.killsByWeapon.incrementCounter(id, amount);
+  public void incrementKillsByWeapon(String id, int amount) {
+    battle.killsByWeapon.incrementCounter(new ID(id), amount);
   }
 
   /**
@@ -81,8 +96,8 @@ public class Achievement {
    * @param id     the creature's id.
    * @param amount the increment.
    */
-  public void incrementKillsByCreatureId(ID id, int amount) {
-    battle.killsByCreatureId.incrementCounter(id, amount);
+  public void incrementKillsByCreatureId(String id, int amount) {
+    battle.killsByCreatureId.incrementCounter(new ID(id), amount);
   }
 
   /**
@@ -95,14 +110,42 @@ public class Achievement {
     battle.killsByCreatureType.incrementCounter(id, amount);
   }
 
-  public void setKillCount(int count) {
-    exploration.killCount = count;
+  /**
+   * Set the required kill count in a specified Location.
+   *
+   * @param locationID the CreatureID.
+   * @param amount     the required kill count.
+   */
+  public void incrementKillsByLocationID(String locationID, int amount) {
+    exploration.killCounter.incrementCounter(new ID(locationID), amount);
   }
 
-  public void setVisitCount(int count) {
-    exploration.visitCount = count;
+  /**
+   * Increment the required visit count to distinct Locations with a specified Location ID.
+   *
+   * @param locationID the CreatureID.
+   * @param amount     the required kill count.
+   */
+  public void incrementVisitsToDistinctLocations(String locationID, int amount) {
+    exploration.distinctLocationsVisitCount.incrementCounter(new ID(locationID), amount);
   }
 
+  /**
+   * Increment the required visit count to the same Location with a specified Location ID.
+   *
+   * @param locationID the CreatureID.
+   * @param amount     the required kill count.
+   */
+  public void incrementVisitsToTheSameLocation(String locationID, int amount) {
+    exploration.sameLocationVisitCounter.incrementCounter(new ID(locationID), amount);
+  }
+
+  /**
+   * Evaluates if a specified Hero fulfills this Achievement conditions.
+   *
+   * @param hero the Hero.
+   * @return a boolean.
+   */
   boolean isFulfilled(Hero hero) {
     return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
   }
