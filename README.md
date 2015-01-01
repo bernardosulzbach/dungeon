@@ -1,6 +1,6 @@
 Dungeon
 =======
-A simple text-based RPG using Java
+Text-based open-world RPG made with Java.
 
 Requirements
 -------------------
