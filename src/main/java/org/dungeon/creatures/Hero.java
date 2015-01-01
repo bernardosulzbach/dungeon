@@ -199,6 +199,7 @@ public class Hero extends Creature {
     Point pos = Game.getGameState().getHeroPosition();
     // An ArrayList of Pairs of String (Location name) and ArrayLists of Directions.
     // The elements of the first List relate Location names to all Directions where there is a Location with that name.
+    // TODO: substitute this by a HashMap of String, ArrayList<Direction>.
     ArrayList<Pair<String, ArrayList<Direction>>> pairs = new ArrayList<Pair<String, ArrayList<Direction>>>();
     for (Direction dir : Direction.values()) {
       // Avoids printing the name of the Location you just left.
