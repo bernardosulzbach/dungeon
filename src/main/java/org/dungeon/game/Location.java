@@ -30,6 +30,7 @@ import java.util.List;
 
 public class Location implements Serializable {
 
+  private final ID id;
   private final String name;
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
@@ -39,6 +40,7 @@ public class Location implements Serializable {
   private World world;
 
   public Location(LocationPreset preset, World world) {
+    this.id = preset.id;
     this.world = world;
     this.name = preset.getName();
     this.blockedEntrances = preset.getBlockedEntrances();

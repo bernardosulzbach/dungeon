@@ -43,8 +43,8 @@ public final class GameData {
   public static final HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>(20, 1f);
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
-  private static final LocationPreset riverPreset = new LocationPreset("River");
-  private static final LocationPreset bridgePreset = new LocationPreset("Bridge");
+  private static final LocationPreset riverPreset = new LocationPreset("RIVER", "River");
+  private static final LocationPreset bridgePreset = new LocationPreset("BRIDGE", "Bridge");
   public static LocationPreset[] LOCATION_PRESETS;
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static Font monospaced;
@@ -151,63 +151,63 @@ public final class GameData {
     SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 12);
     SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 4);
 
-    LocationPreset clearing = new LocationPreset("Clearing");
+    LocationPreset clearing = new LocationPreset("CLEARING", "Clearing");
     clearing.addSpawner(frog).addSpawner(rabbit).addSpawner(spider).addSpawner(fox);
     clearing.addItem("CHERRY", 0.6).addItem("STICK", 0.9);
     clearing.setLightPermittivity(1.0);
     clearing.finish();
     locationPresets.add(clearing);
 
-    LocationPreset desert = new LocationPreset("Desert");
+    LocationPreset desert = new LocationPreset("DESERT", "Desert");
     desert.addSpawner(rat).addSpawner(snake).addSpawner(zombie).addSpawner(boar);
     desert.addItem("MACE", 0.1).addItem("STAFF", 0.2).addItem("DAGGER", 0.15).addItem("SPEAR", 0.1);
     desert.setLightPermittivity(1.0);
     desert.finish();
     locationPresets.add(desert);
 
-    LocationPreset forest = new LocationPreset("Forest");
+    LocationPreset forest = new LocationPreset("FOREST", "Forest");
     forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(zombie);
     forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5);
     forest.setLightPermittivity(0.7);
     forest.finish();
     locationPresets.add(forest);
 
-    LocationPreset graveyard = new LocationPreset("Graveyard");
+    LocationPreset graveyard = new LocationPreset("GRAVEYARD", "Graveyard");
     graveyard.addSpawner(bat).addSpawner(skeleton).addSpawner(zombie).addSpawner(orc);
     graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025);
     graveyard.setLightPermittivity(0.9);
     graveyard.finish();
     locationPresets.add(graveyard);
 
-    LocationPreset meadow = new LocationPreset("Meadow");
+    LocationPreset meadow = new LocationPreset("MEADOW", "Meadow");
     meadow.addSpawner(whiteTiger).addSpawner(wolf);
     meadow.addItem("STONE", 0.8).addItem("WATERMELON", 0.4).addItem("APPLE", 0.7);
     meadow.setLightPermittivity(1.0);
     meadow.finish();
     locationPresets.add(meadow);
 
-    LocationPreset pond = new LocationPreset("Pond");
+    LocationPreset pond = new LocationPreset("POND", "Pond");
     pond.addSpawner(frog).addSpawner(komodoDragon).addSpawner(crocodile);
     pond.addItem("WATERMELON", 0.8).addItem("SPEAR", 0.3);
     pond.setLightPermittivity(0.96);
     pond.finish();
     locationPresets.add(pond);
 
-    LocationPreset swamp = new LocationPreset("Swamp");
+    LocationPreset swamp = new LocationPreset("SWAMP", "Swamp");
     swamp.addSpawner(frog).addSpawner(snake).addSpawner(komodoDragon).addSpawner(crocodile);
     swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.12);
     swamp.setLightPermittivity(0.7);
     swamp.finish();
     locationPresets.add(swamp);
 
-    LocationPreset wasteland = new LocationPreset("Wasteland");
+    LocationPreset wasteland = new LocationPreset("WASTELAND", "Wasteland");
     wasteland.addSpawner(rat).addSpawner(spider).addSpawner(snake);
     wasteland.addItem("STONE", 0.3).addItem("STICK", 0.18);
     wasteland.setLightPermittivity(1.0);
     wasteland.finish();
     locationPresets.add(wasteland);
 
-    LocationPreset savannah = new LocationPreset("Savannah");
+    LocationPreset savannah = new LocationPreset("SAVANNAH", "Savannah");
     savannah.addSpawner(boar).addSpawner(snake).addSpawner(whiteTiger);
     savannah.addItem("APPLE", 0.8).addItem("AXE", 0.3);
     savannah.setLightPermittivity(1.0);

@@ -27,13 +27,15 @@ import java.util.List;
  */
 final class LocationPreset extends Preset {
 
+  final ID id;
   private final String name;
   private final BlockedEntrances blockedEntrances;
   private final ArrayList<SpawnerPreset> spawners;
   private final ArrayList<ItemFrequencyPair> items;
   private Percentage lightPermittivity;
 
-  LocationPreset(String name) {
+  LocationPreset(String id, String name) {
+    this.id = new ID(id);
     this.name = name;
     blockedEntrances = new BlockedEntrances();
     spawners = new ArrayList<SpawnerPreset>();
