@@ -33,6 +33,7 @@ public class StopWatch {
   }
 
   /**
+   * Returns a String representation of the time difference between this method call and the creation of this StopWatch.
    * @return a String of the form "x ms" where x is an integer.
    */
   public String toString() {
