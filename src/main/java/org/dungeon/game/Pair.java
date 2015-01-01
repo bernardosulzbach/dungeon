@@ -22,7 +22,7 @@ package org.dungeon.game;
  * <p/>
  * Created by Bernardo Sulzbach on 12/11/14.
  */
-class Pair<T, U> {
+public class Pair<T, U> {
 
   public final T a;
   public final U b;

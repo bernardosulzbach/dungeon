@@ -27,6 +27,7 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
+import org.dungeon.game.Pair;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.TimeConstants;
@@ -41,6 +42,7 @@ import org.dungeon.util.Utils;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -188,27 +190,67 @@ public class Hero extends Creature {
   }
 
   /**
-   * Look to the locations adjacent to the one the Hero is in.
+   * Looks to the Locations adjacent to the one the Hero is in.
    *
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   private void lookAdjacentLocations(Direction walkedInFrom) {
     World world = Game.getGameState().getWorld();
     Point pos = Game.getGameState().getHeroPosition();
-    // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
-    StringBuilder stringBuilder = new StringBuilder(140);
+    // An ArrayList of Pairs of String (Location name) and ArrayLists of Directions.
+    // The elements of the first List relate Location names to all Directions where there is a Location with that name.
+    ArrayList<Pair<String, ArrayList<Direction>>> pairs = new ArrayList<Pair<String, ArrayList<Direction>>>();
     for (Direction dir : Direction.values()) {
       // Avoids printing the name of the Location you just left.
       if (walkedInFrom == null || !dir.equals(walkedInFrom)) {
-        stringBuilder.append("To ");
-        stringBuilder.append(dir);
-        stringBuilder.append(" you see ");
-        stringBuilder.append(world.getLocation(new Point(pos, dir)).getName());
-        stringBuilder.append(".\n");
+        // True if a pair with this Location name was not found. False otherwise.
+        boolean pairWithNameNotFound = true;
+        String locationName = world.getLocation(new Point(pos, dir)).getName();
+        for (Pair<String, ArrayList<Direction>> pair : pairs) {
+          if (pair.a.equals(locationName)) {
+            pair.b.add(dir);
+            pairWithNameNotFound = false;
+            // There will not be another positive match in the ArrayList, therefore it is good to break this loop.
+            break;
+          }
+        }
+        if (pairWithNameNotFound) {
+          ArrayList<Direction> directionList = new ArrayList<Direction>();
+          directionList.add(dir);
+          pairs.add(new Pair<String, ArrayList<Direction>>(locationName, directionList));
+        }
       }
+    }
+    // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
+    StringBuilder stringBuilder = new StringBuilder(140);
+    for (Pair<String, ArrayList<Direction>> pair : pairs) {
+      stringBuilder.append("To ");
+      stringBuilder.append(enumerateDirections(pair.b));
+      stringBuilder.append(" you see ");
+      stringBuilder.append(pair.a);
+      stringBuilder.append(".\n");
     }
     IO.writeString(stringBuilder.toString());
     IO.writeNewLine();
+  }
+
+  /**
+   * Enumerates in an human-readable fashion a List of Directions.
+   *
+   * @param directions the List of directions.
+   * @return a String.
+   */
+  private String enumerateDirections(List<Direction> directions) {
+    StringBuilder stringBuilder = new StringBuilder();
+    for (int i = 0; i < directions.size(); i++) {
+      stringBuilder.append(directions.get(i).toString().toLowerCase());
+      if (i < directions.size() - 2) {
+        stringBuilder.append(", ");
+      } else if (i == directions.size() - 2) {
+        stringBuilder.append(" and ");
+      }
+    }
+    return stringBuilder.toString();
   }
 
   /**
