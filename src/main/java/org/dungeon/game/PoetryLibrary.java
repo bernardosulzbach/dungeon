@@ -56,6 +56,7 @@ public final class PoetryLibrary extends Library {
   void load() {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("poems.txt"));
+    final String IDENTIFIER_ID = "ID";
     final String IDENTIFIER_TITLE = "TITLE";
     final String IDENTIFIER_AUTHOR = "AUTHOR";
     final String IDENTIFIER_CONTENT = "CONTENT";
@@ -66,6 +67,8 @@ public final class PoetryLibrary extends Library {
       pb.setContent(reader.getValue(IDENTIFIER_CONTENT));
       if (pb.isComplete()) {
         poems.add(pb.createPoem());
+      } else {
+        DLogger.warning("Parsed incomplete poem! (ID = " + reader.getValue(IDENTIFIER_ID) + ")");
       }
     }
     reader.close();
