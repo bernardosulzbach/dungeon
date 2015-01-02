@@ -386,5 +386,17 @@ in me all that fire is repeated,               \
 in me nothing is extinguished or forgotten,    \
 my love feeds on your love, beloved,           \
 and as long as you live it will be in your arms\
-without leaving mine.                          \
+without leaving mine.
 
+ID: 12
+TITLE: Dreams
+AUTHOR: Langston Hughes
+CONTENT: \
+Hold fast to dreams         \
+For if dreams die           \
+Life is a broken-winged bird\
+That cannot fly.            \
+Hold fast to dreams         \
+For when dreams go          \
+Life is a barren field      \
+Frozen with snow.
