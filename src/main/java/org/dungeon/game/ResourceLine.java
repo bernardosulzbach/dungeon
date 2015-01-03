@@ -33,6 +33,11 @@ final class ResourceLine {
   private final boolean valid;
 
   /**
+   * A String that represents the returned text. Works as a cache for multiple toString calls.
+   */
+  private String returnText;
+
+  /**
    * Constructs a ResourceLine based on a String read from a resource file.
    *
    * @param line the line of text.
@@ -83,11 +88,40 @@ final class ResourceLine {
   }
 
   @Override
+  /**
+   * Returns a line of text without the line break character (if there is one) and without any trailing whitespaces.
+   *
+   * If this ResourceLine is a comment, {@code null} is returned.
+   */
   public String toString() {
-    if (isContinued()) {
-      return text.substring(0, text.length() - 1);
+    if (isComment()) {
+      return null;
     }
-    return text;
+    if (returnText == null) {
+      makeReturnText();
+    }
+    return returnText;
+  }
+
+  private void makeReturnText() {
+    returnText = text;
+    if (isContinued()) {
+      returnText = returnText.substring(0, returnText.length() - 1);
+    }
+    // Just loop if the String is not empty and the last character is a whitespace.
+    if (!returnText.isEmpty() && Character.isWhitespace(returnText.charAt(returnText.length() - 1))) {
+      int indexOfFirstTrailingWhitespace = returnText.length() - 1;
+      // Loop until the index becomes 0 or starts to point to a character that is not a whitespace.
+      while (indexOfFirstTrailingWhitespace > 0) {
+        if (Character.isWhitespace(returnText.charAt(indexOfFirstTrailingWhitespace - 1))) {
+          indexOfFirstTrailingWhitespace--;
+        } else {
+          break;
+        }
+      }
+      returnText = returnText.substring(0, indexOfFirstTrailingWhitespace);
+    }
+
   }
 
 }

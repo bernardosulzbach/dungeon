@@ -41,7 +41,15 @@ public class PoemBuilder {
     return (title != null && author != null && content != null);
   }
 
+  /**
+   * Creates a Poem from what is in the PoemBuilder.
+   * <p/>
+   * One should use isComplete() to assure that the PoemBuilder has no {@code null} fields.
+   *
+   * @return a Poem.
+   */
   public Poem createPoem() {
     return new Poem(title, author, content);
   }
+
 }

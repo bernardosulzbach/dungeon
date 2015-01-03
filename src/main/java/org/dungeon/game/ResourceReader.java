@@ -17,6 +17,8 @@
 
 package org.dungeon.game;
 
+import org.dungeon.io.DLogger;
+
 import java.io.Closeable;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,6 +39,30 @@ class ResourceReader implements Closeable {
   public ResourceReader(InputStream inputStream) {
     map = new HashMap<String, String>();
     resourceParser = new ResourceParser(new InputStreamReader(inputStream));
+  }
+
+  /**
+   * Makes a pair from a String.
+   *
+   * @param string a String of the format "key: value".
+   * @return a Pair of Strings, with the guarantee that none of them will be {@code null}.
+   */
+  private Pair<String, String> makePairFromString(String string) {
+    String[] parts = {"", ""};
+    // TODO: make a static final variable for the colon.
+    int indexOfColon = string.indexOf(":");
+    if (indexOfColon == -1) {
+      // TODO: point the line number.
+      DLogger.warning("Resource String without colon!");
+    } else {
+      parts[0] = string.substring(0, indexOfColon).trim();
+      if (indexOfColon == string.length() - 1) {
+        DLogger.warning("Resource String with nothing after the colon!");
+      } else {
+        parts[1] = string.substring(indexOfColon + 1).trim();
+      }
+    }
+    return new Pair<String, String>(parts[0], parts[1]);
   }
 
   public boolean contains(String key) {
@@ -74,19 +100,12 @@ class ResourceReader implements Closeable {
   }
 
   /**
-   * Reads the next ID: value pair from the BufferedReader.
-   * <p/>
-   * Does not put a new value in the HashMap if the HashMap already contains a key that matches the value's ID.
-   *
-   * @return true if a new value was read; false otherwise.
+   * Reads the next key-value pair from the ResourceParser.
    */
   private Pair<String, String> readNextPair() {
     String string = resourceParser.readString();
-    if (string != null && !string.isEmpty()) {
-      int colonIndex = string.indexOf(':');
-      String key = string.substring(0, colonIndex).trim();
-      String value = string.substring(colonIndex + 1).trim();
-      return new Pair<String, String>(key, value);
+    if (string != null) {
+      return makePairFromString(string);
     }
     return null;
   }
