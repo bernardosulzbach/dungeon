@@ -42,7 +42,7 @@ class ResourceReader implements Closeable {
   }
 
   /**
-   * Makes a pair from a String.
+   * Makes a Pair from a String. Both Strings of the Pair are trimmed.
    *
    * @param string a String of the format "key: value".
    * @return a Pair of Strings, with the guarantee that none of them will be {@code null}.
@@ -65,7 +65,13 @@ class ResourceReader implements Closeable {
     return new Pair<String, String>(parts[0], parts[1]);
   }
 
-  public boolean contains(String key) {
+  /**
+   * Checks if the Reader's last element has a value for a specified key.
+   *
+   * @param key the Key.
+   * @return true if the Reader has the key, false otherwise.
+   */
+  public boolean hasValue(String key) {
     return map.containsKey(key);
   }
 

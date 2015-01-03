@@ -22,7 +22,11 @@ import org.dungeon.io.DLogger;
 import java.io.Serializable;
 
 /**
- * ID class that encapsulates the ID field.
+ * ID class that wraps an identification String.
+ * <p/>
+ * The wrapped String is guaranteed to only contain valid characters.
+ * <p/>
+ * Valid characters are: uppercase ASCII letters, digits and underscores.
  * <p/>
  * Created by Bernardo Sulzbach on 15/12/14.
  */
@@ -30,31 +34,44 @@ public final class ID implements Serializable {
 
   private final String id;
 
+  /**
+   * Constructs an ID from a String, fixing all invalid characters and logging a warning if either {@code null} or an
+   * invalid String was used as an argument.
+   * <p/>
+   * Valid characters are: uppercase ASCII letters, digits and underscores.
+   * <p/>
+   * Lowercase letters are converted to their uppercase analogous and any other invalid characters are converted to
+   * underscores.
+   * <p/>
+   * If {@code null} is provided, a String containing "NULL" will be generated.
+   *
+   * @param id the ID String.
+   */
   public ID(String id) {
     if (id == null) {
-      DLogger.warning("Tried to use a null String as an ID.");
-      this.id = "null";
-      return;
-    }
-    boolean invalid = false;
-    char[] idChars = id.toCharArray();
-    char currentChar;
-    for (int i = 0; i < idChars.length; i++) {
-      currentChar = idChars[i];
-      if (Character.isLetter(currentChar)) {
-        if (Character.isLowerCase(idChars[i])) {
+      DLogger.warning("Tried to create an ID with null.");
+      this.id = "NULL";
+    } else {
+      boolean invalid = false;
+      char[] idChars = id.toCharArray();
+      char currentChar;
+      for (int i = 0; i < idChars.length; i++) {
+        currentChar = idChars[i];
+        if (Character.isLetter(currentChar)) {
+          if (Character.isLowerCase(idChars[i])) {
+            invalid = true;
+            idChars[i] = Character.toUpperCase(currentChar);
+          }
+        } else if (!(Character.isDigit(currentChar) || idChars[i] == '_')) {
           invalid = true;
-          idChars[i] = Character.toUpperCase(currentChar);
+          idChars[i] = '_';
         }
-      } else if (!(Character.isDigit(currentChar) || idChars[i] == '_')) {
-        invalid = true;
-        idChars[i] = '_';
       }
+      if (invalid) {
+        DLogger.warning("Tried to use \"" + id + "\" as an ID.");
+      }
+      this.id = new String(idChars);
     }
-    if (invalid) {
-      DLogger.warning("Tried to use \"" + id + "\" as an ID.");
-    }
-    this.id = new String(idChars);
   }
 
   @Override

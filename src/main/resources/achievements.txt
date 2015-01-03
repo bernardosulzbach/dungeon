@@ -1,0 +1,105 @@
+// Observe that there is some ordering (similar Achievements should be grouped together).
+
+ID: FIRST_BLOOD
+NAME: First Blood
+INFO: Kill a creature.
+MINIMUM_BATTLE_COUNT: 1
+
+ID: KILLER
+NAME: Killer
+INFO: Kill 10 creatures.
+MINIMUM_BATTLE_COUNT: 10
+
+ID: DIE_HARD
+NAME: Die hard
+INFO: Take 10 turns to kill a creature.
+LONGEST_BATTLE_LENGTH: 10
+
+ID: FOREST_HUNTER
+NAME: Forest Hunter
+INFO: Kill 10 creatures in forests.
+KILLS_BY_LOCATION_ID: FOREST, 10
+
+ID: I_MISS_YOU
+NAME: I miss you!
+INFO: Visit the same graveyard 10 times.
+VISITS_TO_THE_SAME_LOCATION: GRAVEYARD, 10
+
+ID: ARCHAEOLOGIST
+NAME: Archaeologist
+INFO: Visit 10 different deserts.
+VISITS_TO_DISTINCT_LOCATIONS: DESERT, 10
+
+ID: REAPER
+NAME: Reaper
+INFO: Visit 10 graveyards.
+VISITS_TO_DISTINCT_LOCATIONS: GRAVEYARD, 10
+
+ID: EVIL_BASTARD
+NAME: Evil Bastard
+INFO: Kill an innocent rabbit.
+KILLS_BY_CREATURE_ID: RABBIT, 1
+
+ID: BANE
+NAME: Bane
+INFO: Kill 6 bats.
+KILLS_BY_CREATURE_ID: BAT, 6
+
+ID: CAT
+NAME: Cat
+INFO: Kill 4 rats.
+KILLS_BY_CREATURE_ID: RAT, 4
+
+ID: STAY_DEAD
+NAME: Stay Dead
+INFO: Kill 2 zombies.
+KILLS_BY_CREATURE_ID: ZOMBIE, 2
+
+ID: DISSECTION
+NAME: Dissection
+INFO: Kill 5 frogs.
+KILLS_BY_CREATURE_ID: FROG, 5
+
+ID: HUNTER
+NAME: Hunter
+INFO: Kill 10 beasts.
+KILLS_BY_CREATURE_TYPE: Beast, 10
+
+ID: PROFESSIONAL_COWARD
+NAME: Professional Coward
+INFO: Kill 10 critters.
+KILLS_BY_CREATURE_TYPE: Critter, 10
+
+ID: PARANOID
+NAME: Paranoid
+INFO: Kill 25 critters.
+KILLS_BY_CREATURE_TYPE: Critter, 25
+
+ID: DEATH_PUNCH
+NAME: Death Punch
+INFO: Kill a creature unarmed.
+# An empty string means unarmed.
+KILLS_BY_WEAPON: , 1
+
+ID: BOXER
+NAME: Boxer
+INFO: Kill 10 creatures unarmed.
+# An empty string means unarmed.
+KILLS_BY_WEAPON: , 10
+
+ID: ON_THE_STICK
+NAME: On the Stick!
+INFO: Kill 2 creatures with the Stick.
+KILLS_BY_WEAPON: STICK, 2
+
+ID: STICKS_AND_STONES
+NAME: Sticks and Stones
+INFO: Kill 5 creatures with the Stone and 5 with the Stick.
+KILLS_BY_WEAPON: STICK, 5
+# TODO: use this!
+# KILLS_BY_WEAPON: STONE, 5
+
+ID: LUMBERJACK
+NAME: Lumberjack
+INFO: Kill 10 creatures with the Axe.
+KILLS_BY_WEAPON: AXE, 10

@@ -85,13 +85,16 @@ public class ExplorationLog implements Serializable {
    * @return a nonnegative integer.
    */
   public int getSameLocationVisitCount(ID locationID) {
-    int count = 0;
+    int maximumVisitsToLocationWithThisID = 0;
     for (ExplorationData entry : entries.values()) {
       if (entry.getLocationID().equals(locationID)) {
-        count += entry.getVisitCount();
+        if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
+          maximumVisitsToLocationWithThisID = entry.getVisitCount();
+        }
+        maximumVisitsToLocationWithThisID += entry.getVisitCount();
       }
     }
-    return count;
+    return maximumVisitsToLocationWithThisID;
   }
 
   /**

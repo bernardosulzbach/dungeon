@@ -21,7 +21,6 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.ItemBlueprint;
-import org.dungeon.util.Constants;
 import org.dungeon.util.StopWatch;
 
 import java.awt.Font;
@@ -96,13 +95,13 @@ public final class GameData {
       blueprint.setHitRate(Double.parseDouble(resourceReader.getValue("HIT_RATE")));
       blueprint.setIntegrityDecrementOnHit(Integer.parseInt(resourceReader.getValue("INTEGRITY_DECREMENT_ON_HIT")));
       blueprint.setFood(Integer.parseInt(resourceReader.getValue("FOOD")) == 1);
-      if (resourceReader.contains("NUTRITION")) {
+      if (resourceReader.hasValue("NUTRITION")) {
         blueprint.setNutrition(Integer.parseInt(resourceReader.getValue("NUTRITION")));
       }
-      if (resourceReader.contains("INTEGRITY_DECREMENT_ON_EAT")) {
+      if (resourceReader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
         blueprint.setIntegrityDecrementOnEat(Integer.parseInt(resourceReader.getValue("INTEGRITY_DECREMENT_ON_EAT")));
       }
-      if (resourceReader.contains("CLOCK")) {
+      if (resourceReader.hasValue("CLOCK")) {
         blueprint.setClock(Integer.parseInt(resourceReader.getValue("CLOCK")) == 1);
       }
       ITEM_BLUEPRINTS.put(blueprint.getId(), blueprint);
@@ -240,91 +239,87 @@ public final class GameData {
     // TODO: load this from a resource file.
     ACHIEVEMENTS = new HashMap<ID, Achievement>();
 
-    // Observe that there is some ordering (similar Achievements should be grouped together).
+    ResourceReader reader = new ResourceReader(loader.getResourceAsStream("achievements.txt"));
 
-    Achievement firstBlood = new Achievement("FIRST_BLOOD", "First Blood", "Kill a creature.");
-    firstBlood.setMinimumBattleCount(1);
-    ACHIEVEMENTS.put(firstBlood.getId(), firstBlood);
+    while (reader.readNextElement()) {
+      String id = reader.getValue("ID");
+      String name = reader.getValue("NAME");
+      String info = reader.getValue("INFO");
+      Achievement achievement = new Achievement(id, name, info);
 
-    Achievement killer = new Achievement("KILLER", "Killer", "Kill 10 creatures.");
-    killer.setMinimumBattleCount(10);
-    ACHIEVEMENTS.put(killer.getId(), killer);
+      if (reader.hasValue("MINIMUM_BATTLE_COUNT")) {
+        try {
+          String minimumBattleCount = reader.getValue("MINIMUM_BATTLE_COUNT");
+          achievement.setMinimumBattleCount(Integer.parseInt(minimumBattleCount));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement dieHard = new Achievement("DIE_HARD", "Die hard", "Take 10 turns to kill a creature.");
-    dieHard.setLongestBattleLength(10);
-    ACHIEVEMENTS.put(dieHard.getId(), dieHard);
+      if (reader.hasValue("LONGEST_BATTLE_LENGTH")) {
+        try {
+          String longestBattleLength = reader.getValue("LONGEST_BATTLE_LENGTH");
+          achievement.setLongestBattleLength(Integer.parseInt(longestBattleLength));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement forestHunter = new Achievement("FOREST_HUNTER", "Forest Hunter", "Kill 10 creatures in forests.");
-    forestHunter.incrementKillsByLocationID("FOREST", 10);
-    ACHIEVEMENTS.put(forestHunter.getId(), forestHunter);
+      if (reader.hasValue("KILLS_BY_LOCATION_ID")) {
+        try {
+          String killsByLocationID = reader.getValue("KILLS_BY_LOCATION_ID");
+          String[] parts = killsByLocationID.split(",");
+          achievement.incrementKillsByLocationID(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement iMissYou = new Achievement("I_MISS_YOU", "I miss you!", "Visit the same graveyard 10 times.");
-    iMissYou.incrementVisitsToTheSameLocation("GRAVEYARD", 10);
-    ACHIEVEMENTS.put(iMissYou.getId(), iMissYou);
+      if (reader.hasValue("VISITS_TO_THE_SAME_LOCATION")) {
+        try {
+          String visitsToTheSameLocation = reader.getValue("VISITS_TO_THE_SAME_LOCATION");
+          String[] parts = visitsToTheSameLocation.split(",");
+          achievement.incrementVisitsToTheSameLocation(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement archaeologist = new Achievement("ARCHAEOLOGIST", "Archaeologist", "Visit 10 different deserts.");
-    archaeologist.incrementVisitsToDistinctLocations("DESERT", 10);
-    ACHIEVEMENTS.put(archaeologist.getId(), archaeologist);
+      if (reader.hasValue("VISITS_TO_DISTINCT_LOCATIONS")) {
+        try {
+          String visitsToDistinctLocations = reader.getValue("VISITS_TO_DISTINCT_LOCATIONS");
+          String[] parts = visitsToDistinctLocations.split(",");
+          achievement.incrementVisitsToDistinctLocations(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement reaper = new Achievement("REAPER", "Reaper", "Visit 10 graveyards.");
-    reaper.incrementVisitsToDistinctLocations("GRAVEYARD", 10);
-    ACHIEVEMENTS.put(reaper.getId(), reaper);
+      if (reader.hasValue("KILLS_BY_CREATURE_ID")) {
+        try {
+          String killsByCreatureID = reader.getValue("KILLS_BY_CREATURE_ID");
+          String[] parts = killsByCreatureID.split(",");
+          achievement.incrementKillsByCreatureId(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    // TODO: implement kill count by creature type and let this count 25 critters.
-    Achievement paranoid = new Achievement("PARANOID", "Paranoid", "Kill 25 rabbits.");
-    paranoid.incrementKillsByCreatureId("RABBIT", 25);
-    ACHIEVEMENTS.put(paranoid.getId(), paranoid);
+      if (reader.hasValue("KILLS_BY_CREATURE_TYPE")) {
+        try {
+          String killsByCreatureType = reader.getValue("KILLS_BY_CREATURE_TYPE");
+          String[] parts = killsByCreatureType.split(",");
+          achievement.incrementKillsByCreatureType(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement bane = new Achievement("BANE", "Bane", "Kill 6 bats.");
-    bane.incrementKillsByCreatureId("BAT", 6);
-    ACHIEVEMENTS.put(bane.getId(), bane);
+      if (reader.hasValue("KILLS_BY_WEAPON")) {
+        try {
+          String killsByCreatureType = reader.getValue("KILLS_BY_WEAPON");
+          String[] parts = killsByCreatureType.split(",");
+          achievement.incrementKillsByWeapon(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+        } catch (NumberFormatException ignore) {
+        }
+      }
 
-    Achievement cat = new Achievement("CAT", "Cat", "Kill 4 rats.");
-    cat.incrementKillsByCreatureId("RAT", 4);
-    ACHIEVEMENTS.put(cat.getId(), cat);
-
-    Achievement evilBastard = new Achievement("EVIL_BASTARD", "Evil Bastard", "Kill an innocent rabbit.");
-    evilBastard.incrementKillsByCreatureId("RABBIT", 1);
-    ACHIEVEMENTS.put(evilBastard.getId(), evilBastard);
-
-    Achievement stayDead = new Achievement("STAY_DEAD", "Stay Dead", "Kill 2 zombies.");
-    stayDead.incrementKillsByCreatureId("ZOMBIE", 2);
-    ACHIEVEMENTS.put(stayDead.getId(), stayDead);
-
-    Achievement dissection = new Achievement("DISSECTION", "Dissection", "Kill 5 frogs.");
-    dissection.incrementKillsByCreatureId("FROG", 5);
-    ACHIEVEMENTS.put(dissection.getId(), dissection);
-
-    Achievement proCoward = new Achievement("PROFESSIONAL_COWARD", "Professional Coward", "Kill 10 critters.");
-    proCoward.incrementKillsByCreatureType("Critter", 10);
-    ACHIEVEMENTS.put(proCoward.getId(), proCoward);
-
-    Achievement hunter = new Achievement("HUNTER", "Hunter", "Kill 10 beasts.");
-    hunter.incrementKillsByCreatureType("Beast", 10);
-    ACHIEVEMENTS.put(hunter.getId(), hunter);
-
-    Achievement deathPunch = new Achievement("DEATH_PUNCH", "Death Punch", "Kill a creature unarmed.");
-    deathPunch.incrementKillsByWeapon(Constants.UNARMED_ID.getId(), 1);
-    ACHIEVEMENTS.put(deathPunch.getId(), deathPunch);
-
-    Achievement boxer = new Achievement("BOXER", "Boxer", "Kill 10 creatures unarmed.");
-    boxer.incrementKillsByWeapon(Constants.UNARMED_ID.getId(), 10);
-    ACHIEVEMENTS.put(boxer.getId(), boxer);
-
-    Achievement onTheStick = new Achievement("ON_THE_STICK", "On the Stick!", "Kill 2 creatures with the Stick.");
-    onTheStick.incrementKillsByWeapon("STICK", 2);
-    ACHIEVEMENTS.put(onTheStick.getId(), onTheStick);
-
-    Achievement sticksAndStones = new Achievement("STICKS_AND_STONES", "Sticks and Stones",
-        "Kill 5 creatures with the Stone and 5 with the Stick.");
-    sticksAndStones.incrementKillsByWeapon("STICK", 5);
-    sticksAndStones.incrementKillsByWeapon("STONE", 5);
-    ACHIEVEMENTS.put(sticksAndStones.getId(), sticksAndStones);
-
-    Achievement lumberjack = new Achievement("LUMBERJACK", "Lumberjack", "Kill 10 creatures with the Axe.");
-    lumberjack.incrementKillsByWeapon("AXE", 10);
-    ACHIEVEMENTS.put(lumberjack.getId(), lumberjack);
-
+      // Get ID from the Achievement as it is an ID already (not a String).
+      ACHIEVEMENTS.put(achievement.getId(), achievement);
+    }
     DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
   }
 
