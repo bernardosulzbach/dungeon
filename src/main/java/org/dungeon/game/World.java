@@ -17,7 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.counters.CounterMap;
 import org.dungeon.creatures.Hero;
 import org.dungeon.date.Date;
 import org.dungeon.stats.WorldStatistics;

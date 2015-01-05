@@ -18,7 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.counters.BattleStatistics;
-import org.dungeon.counters.CounterMap;
+import org.dungeon.util.CounterMap;
 import org.dungeon.creatures.Hero;
 import org.dungeon.game.ID;
 

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.counters;
+package org.dungeon.util;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -29,15 +29,12 @@ import java.util.Set;
 public class CounterMap<K> implements Serializable {
 
   // The wrapped HashMap.
-  private final HashMap<K, Integer> map;
+  private final HashMap<K, Integer> map = new HashMap<K, Integer>();
 
+  /**
+   * Constructs a new empty CounterMap.
+   */
   public CounterMap() {
-    map = new HashMap<K, Integer>();
-  }
-
-  public CounterMap(K key, Integer initialCount) {
-    this();
-    map.put(key, initialCount);
   }
 
   /**

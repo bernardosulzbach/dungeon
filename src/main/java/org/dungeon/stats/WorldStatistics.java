@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.counters.CounterMap;
+import org.dungeon.util.CounterMap;
 
 import java.io.Serializable;
 

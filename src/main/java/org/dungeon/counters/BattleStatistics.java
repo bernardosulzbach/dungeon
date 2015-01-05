@@ -21,6 +21,7 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.game.ID;
 import org.dungeon.items.Item;
 import org.dungeon.util.Constants;
+import org.dungeon.util.CounterMap;
 
 import java.io.Serializable;
 
