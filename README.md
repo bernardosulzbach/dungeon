@@ -25,6 +25,7 @@ Known Bugs
 
 Planned features
 ----------------
+- Achievements should be based on statistics.
 - Books to teach spells for the character.
 - The ability to learn and use spells.
 - Alignment system. (Killing good creatures make you evil.)
