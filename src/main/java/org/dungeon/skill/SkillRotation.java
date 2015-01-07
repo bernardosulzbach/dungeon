@@ -21,33 +21,50 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * SkillSet class.
+ * SkillRotation class that represents a rotation of Skills.
  * <p/>
  * Created by Bernardo Sulzbach on 07/01/15.
  */
-public class SkillList implements Serializable {
+public class SkillRotation implements Serializable {
 
-  private final ArrayList<Skill> list = new ArrayList<Skill>();
+  private final ArrayList<Skill> skillList = new ArrayList<Skill>();
+  private int indexOfNextSkill;
 
   public void addSkill(Skill skill) {
-    list.add(skill);
+    skillList.add(skill);
+  }
+
+  public boolean hasReadySkill() {
+    return true;
   }
 
   /**
-   * Returns the number of elements in this list.
-   */
-  public int getSize() {
-    return list.size();
-  }
-
-  /**
-   * Returns the element at the specified position in this list.
+   * Returns the next Skill of the Rotation.
    *
-   * @param index the index.
    * @return a Skill.
    */
-  public Skill getSkill(int index) {
-    return list.get(index);
+  public Skill getNextSkill() {
+    Skill selectedSkill;
+    if (skillList.isEmpty()) {
+      selectedSkill = null;
+    } else {
+      selectedSkill = skillList.get(indexOfNextSkill);
+      incrementIndexOfNextSkill();
+    }
+    return selectedSkill;
+  }
+
+  /**
+   * Increments the index of the next Skill to be returned by getNextSkill().
+   */
+  private void incrementIndexOfNextSkill() {
+    if (!skillList.isEmpty()) {
+      indexOfNextSkill = (indexOfNextSkill + 1) % skillList.size();
+    }
+  }
+
+  public void restartRotation() {
+    indexOfNextSkill = 0;
   }
 
 }

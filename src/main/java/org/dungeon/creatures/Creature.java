@@ -22,6 +22,7 @@ import org.dungeon.game.Location;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
 import org.dungeon.skill.SkillList;
+import org.dungeon.skill.SkillRotation;
 
 /**
  * The Creature class.
@@ -34,6 +35,7 @@ public class Creature extends Entity {
   private final int attack;
   private final String attackAlgorithm;
   private final SkillList skillList = new SkillList();
+  private final SkillRotation skillRotation = new SkillRotation();
   private int curHealth;
   private CreatureInventory inventory;
   private Item weapon;
@@ -49,6 +51,10 @@ public class Creature extends Entity {
 
   public SkillList getSkillList() {
     return skillList;
+  }
+
+  public SkillRotation getSkillRotation() {
+    return skillRotation;
   }
 
   public String getType() {

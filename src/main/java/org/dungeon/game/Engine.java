@@ -156,9 +156,16 @@ public class Engine {
     return turns;
   }
 
+  /**
+   * Battle cleanup routine.
+   * This method removes the defeated creature and resets the SkillRotation of the survivor.
+   *
+   * @param survivor the Creature that is still alive.
+   * @param defeated the Creature that was killed.
+   */
   private static void battleCleanup(Creature survivor, Creature defeated) {
-    // Remove the dead creature from the location.
-    survivor.getLocation().removeCreature(defeated);
+    defeated.getLocation().removeCreature(defeated);
+    survivor.getSkillRotation().restartRotation();
   }
 
 }

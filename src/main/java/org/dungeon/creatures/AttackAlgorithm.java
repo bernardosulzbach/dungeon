@@ -128,8 +128,8 @@ class AttackAlgorithm {
   private static void heroAttack(Creature attacker, Creature defender) {
     Item weapon = attacker.getWeapon();
     int hitDamage;
-    if (attacker.getSkillList().hasSkill()) {
-      Skill skill = attacker.getSkillList().getFirstSkill();
+    if (attacker.getSkillRotation().hasReadySkill()) {
+      Skill skill = attacker.getSkillRotation().getNextSkill();
       hitDamage = skill.getDamage();
       printSkillCast(attacker, skill, defender);
     } else {

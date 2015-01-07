@@ -65,6 +65,10 @@ public class GameState implements Serializable {
     world.getLocation(heroPosition).addCreature(hero);
     hero.getExplorationLog().addVisit(heroPosition, world.getLocation(heroPosition).getID());
     hero.getSkillList().addSkill(Skill.FIREBALL);
+    hero.getSkillList().addSkill(Skill.BURNING_GROUND);
+    for (int i = 0; i < hero.getSkillList().getSize(); i++) {
+      hero.getSkillRotation().addSkill(hero.getSkillList().getSkill(i));
+    }
   }
 
   public CommandHistory getCommandHistory() {
