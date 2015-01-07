@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.game;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Selectable;

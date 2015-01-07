@@ -17,6 +17,7 @@
 
 package org.dungeon.creatures;
 
+import org.dungeon.game.Entity;
 import org.dungeon.game.Location;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
