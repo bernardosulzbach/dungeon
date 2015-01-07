@@ -400,3 +400,19 @@ Hold fast to dreams         \
 For when dreams go          \
 Life is a barren field      \
 Frozen with snow.
+
+ID: 13
+TITLE: Fox
+AUTHOR: Caki Wilkinson
+CONTENT: \
+The yards grow ghosts. Between the limbs and wings,\
+bleached street-lit things, I'm best at moving on. \
+Hunt-heavy, gray, slunk overlow like so            \
+much weight got in the way, my shape's the shape   \
+of something missed, flash-pop or empty frame.     \
+Though you could say I've made a game of this,     \
+and though midtrickery it might be true,           \
+when evening lingers in the key of leaving         \
+my senses swoon. A synonym for stay,               \
+I'm always coming back. I chew through traps.      \
+I love whatever doesn't get too close.
