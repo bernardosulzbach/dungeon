@@ -21,6 +21,7 @@ import org.dungeon.game.Entity;
 import org.dungeon.game.Location;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
+import org.dungeon.skill.SkillList;
 
 /**
  * The Creature class.
@@ -30,14 +31,12 @@ import org.dungeon.items.Item;
 public class Creature extends Entity {
 
   private final int maxHealth;
-  private int curHealth;
-
   private final int attack;
   private final String attackAlgorithm;
-
+  private final SkillList skillList = new SkillList();
+  private int curHealth;
   private CreatureInventory inventory;
   private Item weapon;
-
   private Location location;
 
   public Creature(CreatureBlueprint bp) {
@@ -46,6 +45,10 @@ public class Creature extends Entity {
     attack = bp.getAttack();
     maxHealth = bp.getMaxHealth();
     curHealth = bp.getCurHealth();
+  }
+
+  public SkillList getSkillList() {
+    return skillList;
   }
 
   public String getType() {

@@ -1,0 +1,6 @@
+A sketch of the use case of Skill.
+
+1. All Creatures are constructed with an empty SkillList.
+2. Call addSkill(Skill) with a static Skill in createHeroAndStartingLocation().
+3. AttackAlgorithm's attack() will check for Skills in the SkillSet.
+4. If a Skill is found, a message will be printed and the target will be damaged by the Skill's damage.
