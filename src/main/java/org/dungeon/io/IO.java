@@ -63,11 +63,7 @@ public final class IO {
    * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
    */
   public static void writeString(String string, Color color, boolean newLine) {
-    if (newLine) {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color);
-    } else {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color);
-    }
+    writeString(string, color, newLine, 0);
   }
 
   /**
