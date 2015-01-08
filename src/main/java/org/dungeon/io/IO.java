@@ -19,6 +19,7 @@ package org.dungeon.io;
 
 import org.dungeon.game.Game;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Percentage;
 import org.dungeon.util.Poem;
 import org.dungeon.util.Utils;
 
@@ -79,7 +80,7 @@ public final class IO {
    */
   private static void writeString(String string, Color color, boolean newLine, long wait) {
     if (color == null) {
-      throw new IllegalArgumentException("color should not be null.");
+      DLogger.warning("Passed null as a Color to writeString.");
     }
     if (newLine) {
       Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color, wait);
@@ -127,7 +128,7 @@ public final class IO {
   private static void writeKeyValueString(String key, String value, Color textColor, Color fillColor) {
     int dots = Constants.COLS - key.length() - value.length();  // The amount of dots necessary.
     if (dots < 0) {
-      throw new IllegalArgumentException("strings are too large.");
+      DLogger.warning("Passed too large strings to writeKeyValueString.");
     }
     writeString(key, textColor, false);
     StringBuilder stringBuilder = new StringBuilder();
@@ -145,20 +146,17 @@ public final class IO {
   /**
    * Prints a bar to the window.
    *
-   * @param percentage the percentage of the attribute. Must be in the range [0.0, 1.0].
+   * @param percentage the percentage of the attribute.
    * @param fore       the foreground Color.
    */
-  public static void writeNamedBar(String name, double percentage, Color fore) {
-    if (percentage < 0.0 || percentage > 1.0) {
-      throw new IllegalArgumentException("percentage must be in the range [0.0, 1.0]");
-    }
+  public static void writeNamedBar(String name, Percentage percentage, Color fore) {
     if (name.length() > Constants.BAR_NAME_LENGTH) {
-      throw new IllegalArgumentException("name is too long.");
+      DLogger.warning("Passed a too long bar name.");
     }
     writeString(name, Constants.FORE_COLOR_NORMAL, false);
     int size = Constants.COLS - Constants.BAR_NAME_LENGTH;
     // Perform a ceiling, as small percentages must be represented by at least one bar.
-    int bars = (int) (size * percentage) + 1;
+    int bars = (int) (size * percentage.toDouble()) + 1;
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < Constants.BAR_NAME_LENGTH - name.length(); i++) {
       sb.append(' ');

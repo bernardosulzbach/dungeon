@@ -37,6 +37,7 @@ import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Percentage;
 import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Utils;
 
@@ -505,7 +506,7 @@ public class Hero extends Creature {
 
   public void printHeroStatus() {
     IO.writeString(getName());
-    IO.writeNamedBar("Health", (double) getCurHealth() / getMaxHealth(), Constants.HEALTH_BAR_COLOR);
+    IO.writeNamedBar("Health", new Percentage(getCurHealth() / (double) getMaxHealth()), Constants.HEALTH_BAR_COLOR);
     IO.writeKeyValueString("Attack", Integer.toString(getAttack()));
   }
 
