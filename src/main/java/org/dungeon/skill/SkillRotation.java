@@ -35,7 +35,12 @@ public class SkillRotation implements Serializable {
   }
 
   public boolean hasReadySkill() {
-    return true;
+    for (Skill skill : skillList) {
+      if (skill.isReady()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -45,12 +50,24 @@ public class SkillRotation implements Serializable {
    */
   public Skill getNextSkill() {
     Skill selectedSkill;
-    if (skillList.isEmpty()) {
+    if (skillList.isEmpty() || !hasReadySkill()) {
       selectedSkill = null;
     } else {
-      selectedSkill = skillList.get(indexOfNextSkill);
-      incrementIndexOfNextSkill();
+      // Get the next Skill that is ready.
+      // As we checked that there is at least one ready Skill, this won't loop forever.
+      int indexOfSelectedSkill = indexOfNextSkill;
+      selectedSkill = skillList.get(indexOfSelectedSkill);
+      if (selectedSkill.isReady()) {
+        incrementIndexOfNextSkill();
+      } else {
+        do {
+          indexOfSelectedSkill = (indexOfSelectedSkill + 1) % skillList.size();
+          selectedSkill = skillList.get(indexOfSelectedSkill);
+        }
+        while (!selectedSkill.isReady());
+      }
     }
+
     return selectedSkill;
   }
 
@@ -63,8 +80,27 @@ public class SkillRotation implements Serializable {
     }
   }
 
+  /**
+   * Restarts the rotation by resetting the remaining cool down of all Skills setting the index to the first Skill.
+   * <p/>
+   * This method should be invoked after the battle ends.
+   */
   public void restartRotation() {
     indexOfNextSkill = 0;
+    for (Skill skill : skillList) {
+      skill.reset();
+    }
+  }
+
+  /**
+   * Refreshes the remaining cool down of all Skills in this SkillRotation.
+   * <p/>
+   * This method should be invoked after each turn.
+   */
+  public void refresh() {
+    for (Skill skill : skillList) {
+      skill.refresh();
+    }
   }
 
 }

@@ -130,8 +130,8 @@ class AttackAlgorithm {
     int hitDamage;
     if (attacker.getSkillRotation().hasReadySkill()) {
       Skill skill = attacker.getSkillRotation().getNextSkill();
-      hitDamage = skill.getDamage();
-      printSkillCast(attacker, skill, defender);
+      hitDamage = skill.getDamageAndStartCoolDown();
+      printSkillCast(attacker, hitDamage, skill, defender);
     } else {
       // Check that there is a weapon and that it is not broken.
       if (weapon != null && !weapon.isBroken()) {
@@ -203,14 +203,15 @@ class AttackAlgorithm {
   /**
    * Prints a message about the inflicted damage due to a casted skill.
    *
-   * @param attacker the Creature that performed the attack.
-   * @param skill    the Skill casted.
-   * @param defender the target of the attack.
+   * @param attacker  the Creature that performed the attack.
+   * @param hitDamage the damage inflicted by the hit.
+   * @param skill     the Skill casted.
+   * @param defender  the target of the attack.
    */
-  private static void printSkillCast(Creature attacker, Skill skill, Creature defender) {
+  private static void printSkillCast(Creature attacker, int hitDamage, Skill skill, Creature defender) {
     String result = attacker.getName() + " casted " +
         skill.getName() + " and inflicted " +
-        skill.getDamage() + " damage points to " +
+        hitDamage + " damage points to " +
         defender.getName() + ".";
     IO.writeBattleString(result, attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }

@@ -131,9 +131,13 @@ public class Engine {
     int turns = 0;
     while (attacker.isAlive() && defender.isAlive()) {
       attacker.hit(defender);
+      attacker.getSkillRotation().refresh();
+      defender.getSkillRotation().refresh();
       turns++;
       if (defender.isAlive()) {
         defender.hit(attacker);
+        attacker.getSkillRotation().refresh();
+        defender.getSkillRotation().refresh();
         turns++;
       }
     }
