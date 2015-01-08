@@ -59,6 +59,7 @@ class DebugTools {
    */
   private static void spawnDummyInHeroLocation() {
     Game.getGameState().getHeroLocation().addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(new ID("DUMMY"))));
+    IO.writeString("Spawned a dummy.");
   }
 
   private static void printIsSaved() {
