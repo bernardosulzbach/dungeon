@@ -64,9 +64,9 @@ public final class IO {
    */
   public static void writeString(String string, Color color, boolean newLine) {
     if (newLine) {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color, 0);
+      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color);
     } else {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color, 0);
+      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color);
     }
   }
 
@@ -83,9 +83,9 @@ public final class IO {
       DLogger.warning("Passed null as a Color to writeString.");
     }
     if (newLine) {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color, wait);
+      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color);
     } else {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color, wait);
+      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color);
     }
   }
 
