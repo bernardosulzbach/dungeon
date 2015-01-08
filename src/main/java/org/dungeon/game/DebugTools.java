@@ -35,7 +35,7 @@ import java.awt.Color;
 class DebugTools {
 
   private static final String[] args = {"exploration", "tomorrow", "holidays", "saves", "location", "generator",
-      "saved", "list", "time", "give"};
+      "saved", "list", "time", "give", "dummy"};
 
   private static void give(String itemId) {
     ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(new ID(itemId.toUpperCase()));
@@ -52,6 +52,13 @@ class DebugTools {
     for (String arg : args) {
       IO.writeString("\n  " + arg);
     }
+  }
+
+  /**
+   * Spawns a dummy in the Location the Hero is in.
+   */
+  private static void spawnDummyInHeroLocation() {
+    Game.getGameState().getHeroLocation().addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(new ID("DUMMY"))));
   }
 
   private static void printIsSaved() {
@@ -119,6 +126,8 @@ class DebugTools {
         } else {
           Utils.printMissingArgumentsMessage();
         }
+      } else if (issuedCommand.firstArgumentEquals(args[10])) {
+        spawnDummyInHeroLocation();
       } else {
         switch (Engine.RANDOM.nextInt(4)) {
           case 0:

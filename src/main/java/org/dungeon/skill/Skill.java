@@ -28,7 +28,7 @@ import org.dungeon.game.ID;
 public class Skill extends Entity {
 
   public static final Skill FIREBALL = new Skill("FIREBALL", "Skill", "Fireball", 10, 6);
-  public static final Skill BURNING_GROUND = new Skill("BURNING_GROUND", "Skill", "Burning Ground", 4, 6);
+  public static final Skill BURNING_GROUND = new Skill("BURNING_GROUND", "Skill", "Burning Ground", 4, 12);
   private final int damage;
   private final int coolDown;
   private int remainingCoolDown;
