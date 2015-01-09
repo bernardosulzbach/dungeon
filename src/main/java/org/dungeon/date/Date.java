@@ -217,6 +217,7 @@ public class Date implements Serializable {
   }
 
   public String toTimeString() {
-    return getHour() + ":" + getMinute() + ":" + getSecond();
+    return String.format("%02d:%02d:%02d", getHour(), getMinute(), getSecond());
   }
+
 }
