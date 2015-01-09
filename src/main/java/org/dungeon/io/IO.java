@@ -63,26 +63,36 @@ public final class IO {
    * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
    */
   public static void writeString(String string, Color color, boolean newLine) {
-    writeString(string, color, newLine, 0);
+    writeString(string, color, newLine, true, 0);
+  }
+
+  /**
+   * Writes a string of text using a specific color.
+   *
+   * @param string     the string of text to be written.
+   * @param color      the color of the text. If {@code null}, the default color will be used.
+   * @param newLine    if true, a newline will be added to the end of the string after its end is cleared.
+   * @param scrollDown if true, the TextPane will be scrolled down after writing.
+   */
+  public static void writeString(String string, Color color, boolean newLine, boolean scrollDown) {
+    writeString(string, color, newLine, scrollDown, 0);
   }
 
   /**
    * Writes a string of text using a specific color and waiting for a given amount of milliseconds.
    *
-   * @param string  the string of text to be written.
-   * @param color   the color of the text.
-   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
-   * @param wait    how many milliseconds the application should sleep after writing the string.
+   * @param string     the string of text to be written.
+   * @param color      the color of the text.
+   * @param newLine    if true, a newline will be added to the end of the string after its end is cleared.
+   * @param scrollDown if true, the TextPane will be scrolled down after writing.
+   * @param wait       how many milliseconds the application should sleep after writing the string.
    */
-  private static void writeString(String string, Color color, boolean newLine, long wait) {
+  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, long wait) {
     if (color == null) {
       DLogger.warning("Passed null as a Color to writeString.");
     }
-    if (newLine) {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string) + '\n', color);
-    } else {
-      Game.getGameWindow().writeToTextPane(Utils.clearEnd(string), color);
-    }
+    String processedString = newLine ? Utils.clearEnd(string) + '\n' : Utils.clearEnd(string);
+    Game.getGameWindow().writeToTextPane(processedString, color, scrollDown);
   }
 
   /**
@@ -92,7 +102,7 @@ public final class IO {
    * @param color  the color of the text.
    */
   public static void writeBattleString(String string, Color color) {
-    writeString(string, color, true, WRITE_BATTLE_STRING_WAIT);
+    writeString(string, color, true, true, WRITE_BATTLE_STRING_WAIT);
   }
 
   /**
@@ -136,7 +146,7 @@ public final class IO {
   }
 
   public static void writePoem(Poem poem) {
-    writeString(poem.getTitle() + "\n\n" + poem.getContent() + "\n\n" + poem.getAuthor());
+    writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false);
   }
 
   /**

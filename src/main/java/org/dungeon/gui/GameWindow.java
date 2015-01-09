@@ -292,20 +292,23 @@ public class GameWindow extends JFrame {
   /**
    * Adds a string with a specific foreground color to the text pane.
    *
-   * @param string the string to be written.
-   * @param color  the color of the text.
+   * @param string     the string to be written.
+   * @param color      the Color of the foreground text.
+   * @param scrollDown if true, the TextPane will be scrolled down after writing.
    */
-  public void writeToTextPane(String string, Color color) {
-    writeToTextPane(string, color, textPane.getBackground());
+  public void writeToTextPane(String string, Color color, boolean scrollDown) {
+    writeToTextPane(string, color, textPane.getBackground(), scrollDown);
   }
 
   /**
    * Adds a string with a specific foreground and background color to the text pane.
    *
-   * @param string the string to be written.
-   * @param fore   the color of the text.
+   * @param string     the string to be written.
+   * @param fore       the Color of the foreground text.
+   * @param back       the Color of the background text.
+   * @param scrollDown if true, the TextPane will be scrolled down after writing.
    */
-  void writeToTextPane(String string, Color fore, Color back) {
+  void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
     StyleConstants.setForeground(attributeSet, fore);
     StyleConstants.setBackground(attributeSet, back);
     if (Game.getGameState() != null) {
@@ -313,6 +316,9 @@ public class GameWindow extends JFrame {
     }
     try {
       document.insertString(document.getLength(), string, attributeSet);
+      if (!scrollDown) {
+        textPane.setCaretPosition(0);
+      }
     } catch (BadLocationException ignored) {
     }
   }
