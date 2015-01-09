@@ -18,8 +18,8 @@ def print_poem(filename):
     :type filename: str
     :return: None
     """
-    f = open(filename, 'r')
-    lines = f.readlines()
+    with open(filename, 'r') as f:
+        lines = f.readlines()
     max_width = 0
     for i in range(len(lines)):
         lines[i] = lines[i].rstrip()
