@@ -93,6 +93,10 @@ public final class IO {
     }
     String processedString = newLine ? Utils.clearEnd(string) + '\n' : Utils.clearEnd(string);
     Game.getGameWindow().writeToTextPane(processedString, color, scrollDown);
+    try {
+      Thread.sleep(wait);
+    } catch (InterruptedException ignored) {
+    }
   }
 
   /**
