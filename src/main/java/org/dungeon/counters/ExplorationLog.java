@@ -91,7 +91,6 @@ public class ExplorationLog implements Serializable {
         if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
           maximumVisitsToLocationWithThisID = entry.getVisitCount();
         }
-        maximumVisitsToLocationWithThisID += entry.getVisitCount();
       }
     }
     return maximumVisitsToLocationWithThisID;
