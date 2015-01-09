@@ -26,7 +26,7 @@ Known Bugs
 Planned features
 ----------------
 - Write a total row on the ``saves`` output.
-- Make sleeping take a few seconds. The Hero can have dreams during this.
+- The Hero can have dreams during this.
 - Achievements should be based on statistics.
 - Books to teach spells for the character.
 - The ability to learn and use spells.

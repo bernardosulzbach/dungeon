@@ -34,7 +34,7 @@ import java.awt.Color;
 public final class IO {
 
   // How many milliseconds the game 'lags' after writing a string of battle output.
-  private static final long WRITE_BATTLE_STRING_WAIT = 300;
+  private static final int WRITE_BATTLE_STRING_WAIT = 300;
 
   /**
    * Writes a string of text using the default output color.
@@ -87,15 +87,14 @@ public final class IO {
    * @param scrollDown if true, the TextPane will be scrolled down after writing.
    * @param wait       how many milliseconds the application should sleep after writing the string.
    */
-  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, long wait) {
+  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, int wait) {
     if (color == null) {
       DLogger.warning("Passed null as a Color to writeString.");
     }
     String processedString = newLine ? Utils.clearEnd(string) + '\n' : Utils.clearEnd(string);
     Game.getGameWindow().writeToTextPane(processedString, color, scrollDown);
-    try {
-      Thread.sleep(wait);
-    } catch (InterruptedException ignored) {
+    if (wait > 0) {
+      Sleeper.sleep(wait);
     }
   }
 
