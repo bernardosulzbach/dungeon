@@ -319,8 +319,33 @@ public class Utils {
     return String.format("%.1f %sB", significand, prefix);
   }
 
+  /**
+   * Prints the game's license.
+   */
   public static void printLicense() {
     IO.writeString(GameData.LICENSE);
+  }
+
+  /**
+   * Converts an array of Strings into a single String object, separating Strings with the specified separator.
+   *
+   * @param strings   the Strings.
+   * @param separator a String to be inserted between Strings of the array.
+   * @return a single String.
+   */
+  public static String stringArrayToString(String[] strings, String separator) {
+    if (strings.length == 0) {
+      return "";
+    } else if (strings.length == 1) {
+      return strings[0];
+    } else {
+      StringBuilder builder = new StringBuilder(strings[0]);
+      for (int index = 1; index < strings.length; index++) {
+        builder.append(separator);
+        builder.append(strings[index]);
+      }
+      return builder.toString();
+    }
   }
 
 }
