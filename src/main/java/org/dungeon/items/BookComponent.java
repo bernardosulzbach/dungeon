@@ -15,27 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.items;
+
+import org.dungeon.game.ID;
+
+import java.io.Serializable;
 
 /**
- * ItemFrequencyPair that wraps Pair in order to provide a simple object to track a creatureID and a frequency value.
- * <p/>
- * Created by Bernardo Sulzbach on 12/11/14.
+ * BookComponent class.
+ *
+ * Created by Bernardo Sulzbach on 09/01/15.
  */
-class ItemFrequencyPair {
+public class BookComponent implements Serializable{
 
-  private final Pair<ID, Double> pair;
+  private final ID skillID;
 
-  public ItemFrequencyPair(ID id, double frequency) {
-    this.pair = new Pair<ID, Double>(id, frequency);
+  public BookComponent(ID skillID) {
+    this.skillID = skillID;
   }
 
-  public ID getID() {
-    return pair.a;
-  }
-
-  public double getFrequency() {
-    return pair.b;
+  /**
+   * @return the ID of the Skill this books teaches.
+   */
+  public ID getSkillID() {
+    return skillID;
   }
 
 }

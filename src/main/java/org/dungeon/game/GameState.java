@@ -25,7 +25,6 @@ import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
-import org.dungeon.skill.Skill;
 import org.dungeon.stats.Statistics;
 import org.dungeon.util.CommandHistory;
 
@@ -64,11 +63,6 @@ public class GameState implements Serializable {
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
     hero.getExplorationLog().addVisit(heroPosition, world.getLocation(heroPosition).getID());
-    hero.getSkillList().addSkill(Skill.FIREBALL);
-    hero.getSkillList().addSkill(Skill.BURNING_GROUND);
-    for (int i = 0; i < hero.getSkillList().getSize(); i++) {
-      hero.getSkillRotation().addSkill(hero.getSkillList().getSkill(i));
-    }
   }
 
   public CommandHistory getCommandHistory() {

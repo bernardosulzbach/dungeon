@@ -53,11 +53,11 @@ public class Location implements Serializable {
     this.items = new LocationInventory();
     for (ItemFrequencyPair pair : preset.getItems()) {
       if (Engine.RANDOM.nextDouble() < pair.getFrequency()) {
-        ItemBlueprint blueprint = GameData.ITEM_BLUEPRINTS.get(pair.getId());
+        ItemBlueprint blueprint = GameData.ITEM_BLUEPRINTS.get(pair.getID());
         if (blueprint != null) {
           this.addItem(new Item(blueprint));
         } else {
-          DLogger.warning("ItemBlueprint not found: " + pair.getId().getId());
+          DLogger.warning("ItemBlueprint not found: " + pair.getID().toString());
         }
       }
     }
@@ -109,7 +109,7 @@ public class Location implements Serializable {
   public int getCreatureCount(ID id) {
     int count = 0;
     for (Creature creature : creatures) {
-      if (creature.getId().equals(id)) {
+      if (creature.getID().equals(id)) {
         count++;
       }
     }

@@ -17,6 +17,8 @@
 
 package org.dungeon.skill;
 
+import org.dungeon.io.IO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -108,6 +110,26 @@ public class SkillRotation implements Serializable {
    */
   public void resetRotation() {
     skillList.clear();
+  }
+
+  /**
+   * Prints the SkillRotation.
+   */
+  public void printSkillRotation() {
+    // 20 characters per Skill seems a good enough.
+    // "> Burning Ground" has 16, for instance.
+    StringBuilder builder = new StringBuilder(skillList.size() * 20);
+    for (Skill skill : skillList) {
+      builder.append("> ").append(skill.getName()).append("\n");
+    }
+    IO.writeString(builder.toString());
+  }
+
+  /**
+   * Returns true if this SkillRotation contains no Skills.
+   */
+  public boolean isEmpty() {
+    return skillList.isEmpty();
   }
 
 }

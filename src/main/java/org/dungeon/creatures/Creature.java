@@ -42,7 +42,7 @@ public class Creature extends Entity {
   private Location location;
 
   public Creature(CreatureBlueprint bp) {
-    super(bp.getId(), bp.getType(), bp.getName());
+    super(bp.getID(), bp.getType(), bp.getName());
     attackAlgorithm = bp.getAttackAlgorithmID();
     attack = bp.getAttack();
     maxHealth = bp.getMaxHealth();

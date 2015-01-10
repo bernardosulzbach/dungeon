@@ -17,37 +17,76 @@
 
 package org.dungeon.skill;
 
+import org.dungeon.game.ID;
+import org.dungeon.game.Selectable;
+import org.dungeon.io.DLogger;
+import org.dungeon.io.IO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * SkillSet class.
+ * SkillList class that stores references to all the Skills a Creature has.
  * <p/>
  * Created by Bernardo Sulzbach on 07/01/15.
  */
 public class SkillList implements Serializable {
 
-  private final ArrayList<Skill> list = new ArrayList<Skill>();
+  private final ArrayList<Skill> skillList = new ArrayList<Skill>();
 
+  /**
+   * Add a Skill to this SkillList. If the Skill is already present, a warning will be logged.
+   *
+   * @param skill the Skill to be added.
+   */
   public void addSkill(Skill skill) {
-    list.add(skill);
+    if (hasSkill(skill.getID())) {
+      DLogger.warning("Tried to add an already present Skill to a SkillList!");
+    } else {
+      skillList.add(skill);
+    }
   }
 
   /**
-   * Returns the number of elements in this list.
+   * Checks if this SkillList has a Skill with a specified ID.
+   *
+   * @param skillID the ID.
+   * @return a boolean.
+   */
+  public boolean hasSkill(ID skillID) {
+    for (Skill skill : skillList) {
+      if (skillID.equals(skill.getID())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Returns the number of elements in this SkillList.
    */
   public int getSize() {
-    return list.size();
+    return skillList.size();
   }
 
   /**
-   * Returns the element at the specified position in this list.
-   *
-   * @param index the index.
-   * @return a Skill.
+   * Prints the names of all Skills in this SkillList.
    */
-  public Skill getSkill(int index) {
-    return list.get(index);
+  public void printSkillList() {
+    for (Skill skill : skillList) {
+      IO.writeString(skill.getName());
+    }
+  }
+
+
+  /**
+   * Returns a List of Selectable objects.
+   *
+   * @return a List of Selectable objects.
+   */
+  public List<Selectable> toListOfSelectable() {
+    return new ArrayList<Selectable>(skillList);
   }
 
 }

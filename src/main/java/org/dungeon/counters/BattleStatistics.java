@@ -35,24 +35,31 @@ import java.io.Serializable;
 public class BattleStatistics implements Serializable {
 
   private final CounterMap<String> killsByCreatureType;
-  private final CounterMap<ID> killsByCreatureId;
+  private final CounterMap<ID> killsByCreatureID;
   private final CounterMap<ID> killsByWeapon;
   private int battleCount;
   private int longestBattleLength;
 
   public BattleStatistics() {
     killsByCreatureType = new CounterMap<String>();
-    killsByCreatureId = new CounterMap<ID>();
+    killsByCreatureID = new CounterMap<ID>();
     killsByWeapon = new CounterMap<ID>();
   }
 
-  // Adds a new battle to the statistics.
+  /**
+   * Adds the outcome of a battle to the statistics.
+   *
+   * @param attacker    the attacking Creature (the one the started the battle).
+   * @param defender    the defending Creature.
+   * @param attackerWon true if the attacker won, false otherwise.
+   * @param turns       how many turns the battle took.
+   */
   public void addBattle(Creature attacker, Creature defender, boolean attackerWon, int turns) {
     if (attackerWon) {
       killsByCreatureType.incrementCounter(defender.getType());
-      killsByCreatureId.incrementCounter(defender.getId());
+      killsByCreatureID.incrementCounter(defender.getID());
       Item weapon = attacker.getWeapon();
-      killsByWeapon.incrementCounter(weapon != null ? weapon.getId() : Constants.UNARMED_ID);
+      killsByWeapon.incrementCounter(weapon != null ? weapon.getID() : Constants.UNARMED_ID);
     }
     battleCount++;
     if (turns > longestBattleLength) {
@@ -72,8 +79,8 @@ public class BattleStatistics implements Serializable {
     return killsByCreatureType;
   }
 
-  public CounterMap<ID> getKillsByCreatureId() {
-    return killsByCreatureId;
+  public CounterMap<ID> getKillsByCreatureID() {
+    return killsByCreatureID;
   }
 
   public CounterMap<ID> getKillsByWeapon() {

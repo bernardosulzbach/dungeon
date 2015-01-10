@@ -18,32 +18,24 @@
 package org.dungeon.items;
 
 import org.dungeon.creatures.Creature;
-import org.dungeon.game.Entity;
 import org.dungeon.game.Engine;
+import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
 import org.dungeon.util.Constants;
 
 public class Item extends Entity {
 
-  // Ownership.
-  private Creature owner;
-
-  // Durability fields.
   private final int maxIntegrity;
-  private int curIntegrity;
   private final boolean repairable;
-
-  // Weapon fields.
   private final boolean weapon;
   private final int damage;
   private final double hitRate;
   private final int integrityDecrementOnHit;
-
-  // Food fields.
+  private Creature owner;
+  private int curIntegrity;
   private FoodComponent foodComponent;
-
-  // Clocks.
   private ClockComponent clockComponent;
+  private BookComponent bookComponent;
 
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
@@ -64,6 +56,9 @@ public class Item extends Entity {
     if (bp.clock) {
       clockComponent = new ClockComponent();
       clockComponent.setMaster(this);
+    }
+    if (bp.book) {
+      bookComponent = new BookComponent(bp.getSkill());
     }
   }
 
@@ -132,7 +127,6 @@ public class Item extends Entity {
     return integrityDecrementOnHit;
   }
 
-  // Food methods
   public boolean isFood() {
     return foodComponent != null;
   }
@@ -141,7 +135,6 @@ public class Item extends Entity {
     return foodComponent;
   }
 
-  // Clock methods
   public boolean isClock() {
     return clockComponent != null;
   }
@@ -150,7 +143,10 @@ public class Item extends Entity {
     return clockComponent;
   }
 
-  // Durability methods
+  public BookComponent getBookComponent() {
+    return bookComponent;
+  }
+
   public boolean isBroken() {
     return getCurIntegrity() == 0;
   }
@@ -170,7 +166,6 @@ public class Item extends Entity {
     setCurIntegrity(getCurIntegrity() - integrityDecrement);
   }
 
-  // Weapon methods
   public boolean rollForHit() {
     return getHitRate() > Engine.RANDOM.nextDouble();
   }

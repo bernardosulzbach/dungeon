@@ -37,8 +37,8 @@ class DebugTools {
   private static final String[] args = {"exploration", "tomorrow", "holidays", "saves", "location", "generator",
       "saved", "list", "time", "give", "dummy"};
 
-  private static void give(String itemId) {
-    ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(new ID(itemId.toUpperCase()));
+  private static void give(String itemID) {
+    ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(new ID(itemID.toUpperCase()));
     if (bp != null) {
       if (Game.getGameState().getHero().getInventory().addItem(new Item(bp))) {
         return;

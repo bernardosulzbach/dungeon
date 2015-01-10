@@ -42,7 +42,7 @@ public abstract class Entity implements Selectable, Serializable {
     this.name = name;
   }
 
-  public ID getId() {
+  public ID getID() {
     return id;
   }
 

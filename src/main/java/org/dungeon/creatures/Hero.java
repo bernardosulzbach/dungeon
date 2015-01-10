@@ -25,18 +25,22 @@ import org.dungeon.date.Period;
 import org.dungeon.game.Direction;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
+import org.dungeon.game.GameData;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.Pair;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
+import org.dungeon.game.Selectable;
 import org.dungeon.game.TimeConstants;
 import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.io.Sleeper;
+import org.dungeon.items.BookComponent;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
+import org.dungeon.skill.Skill;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.SelectionResult;
@@ -52,8 +56,8 @@ import java.util.List;
 public class Hero extends Creature {
 
   private final static int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
+  private static final String ROTATION_SKILL_SEPARATOR = ">";
   private final double minimumLuminosity = 0.3;
-
   private final Date dateOfBirth;
   private final ExplorationLog explorationLog;
   private final BattleStatistics battleStatistics;
@@ -70,7 +74,7 @@ public class Hero extends Creature {
 
   private static CreatureBlueprint makeHeroBlueprint(String name) {
     CreatureBlueprint heroBlueprint = new CreatureBlueprint();
-    heroBlueprint.setId(Constants.HERO_ID);
+    heroBlueprint.setID(Constants.HERO_ID);
     heroBlueprint.setName(name);
     heroBlueprint.setType("Hero");
     heroBlueprint.setAttack(4);
@@ -173,7 +177,7 @@ public class Hero extends Creature {
           curName = creature.getName();
           if (!alreadyListedCreatures.contains(curName)) {
             alreadyListedCreatures.add(curName);
-            curCount = location.getCreatureCount(creature.getId());
+            curCount = location.getCreatureCount(creature.getID());
             if (curCount > 1) {
               IO.writeKeyValueString(curName, Integer.toString(curCount));
             } else {
@@ -442,6 +446,28 @@ public class Hero extends Creature {
     }
   }
 
+  public int readItem(IssuedCommand issuedCommand) {
+    Item selectedItem = selectInventoryItem(issuedCommand);
+    if (selectedItem != null) {
+      BookComponent book = selectedItem.getBookComponent();
+      if (book != null) {
+        Skill skill = GameData.SKILLS.get(book.getSkillID());
+        if (getSkillList().hasSkill(skill.getID())) {
+          IO.writeString("You already know " + skill.getName() + ".");
+          // It takes some time to look to the cover of the book.
+          return 6;
+        } else {
+          getSkillList().addSkill(skill);
+          IO.writeString("You learned " + skill.getName() + ".");
+          return 60;
+        }
+      } else {
+        IO.writeString("You can only read books.");
+      }
+    }
+    return 0;
+  }
+
   /**
    * Tries to destroy an item from the current location.
    */
@@ -571,6 +597,79 @@ public class Hero extends Creature {
 
     IO.writeString("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
     return timeSpent;
+  }
+
+  /**
+   * Prints all the Skills that the Hero knows.
+   */
+  public void printSkills() {
+    if (getSkillList().getSize() == 0) {
+      IO.writeString("You have not learned any skills yet.");
+    } else {
+      IO.writeString("You know the following skills:");
+      getSkillList().printSkillList();
+    }
+  }
+
+  /**
+   * Based on the arguments of the last issued command, makes a new SkillRotation for the Hero.
+   *
+   * @param issuedCommand the last command issued by the player.
+   */
+  public void editRotation(IssuedCommand issuedCommand) {
+    if (issuedCommand.hasArguments()) {
+      List<String[]> skillNames = new ArrayList<String[]>();
+      List<String> currentSkillName = new ArrayList<String>();
+      for (String argument : issuedCommand.getArguments()) {
+        if (ROTATION_SKILL_SEPARATOR.equals(argument)) {
+          if (!currentSkillName.isEmpty()) {
+            String[] stringArray = new String[currentSkillName.size()];
+            currentSkillName.toArray(stringArray);
+            skillNames.add(stringArray);
+            currentSkillName.clear();
+          }
+        } else {
+          currentSkillName.add(argument);
+        }
+      }
+      if (!currentSkillName.isEmpty()) {
+        String[] stringArray = new String[currentSkillName.size()];
+        currentSkillName.toArray(stringArray);
+        skillNames.add(stringArray);
+        currentSkillName.clear();
+      }
+      if (skillNames.isEmpty()) {
+        IO.writeString("Provide skills arguments separated by '" + ROTATION_SKILL_SEPARATOR + "'.");
+      } else {
+        getSkillRotation().resetRotation();
+        ArrayList<Selectable> skillsList = new ArrayList<Selectable>(getSkillList().toListOfSelectable());
+        for (String[] skillName : skillNames) {
+          SelectionResult<Selectable> result = Utils.selectFromList(skillsList, skillName);
+          if (result.size() == 0) {
+            IO.writeString(Utils.stringArrayToString(skillName, " ") + " did not match any skill!");
+          } else {
+            if (result.getDifferentNames() == 1) {
+              getSkillRotation().addSkill((Skill) result.getMatch(0));
+            } else {
+              IO.writeString(Utils.stringArrayToString(skillName, " ") + " matched multiple skills!");
+            }
+          }
+        }
+        if (getSkillRotation().isEmpty()) {
+          IO.writeString("Failed to create a new skill rotation.");
+        } else {
+          IO.writeString("Created new skill rotation.");
+        }
+      }
+    } else {
+      if (getSkillRotation().isEmpty()) {
+        IO.writeString("You don't have a skill rotation.");
+      } else {
+        IO.writeString("This is your current skill rotation:");
+        getSkillRotation().printSkillRotation();
+      }
+    }
+
   }
 
 }

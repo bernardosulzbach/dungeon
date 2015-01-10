@@ -93,6 +93,8 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("eat") || issuedCommand.firstTokenEquals("devour")) {
       gameState.getHero().eatItem(issuedCommand);
       result.turnLength = 120;
+    } else if (issuedCommand.firstTokenEquals("read")) {
+      result.turnLength = gameState.getHero().readItem(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("walk") || issuedCommand.firstTokenEquals("go")) {
       result.turnLength = Engine.parseHeroWalk(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("drop")) {
@@ -102,6 +104,10 @@ public class Game {
       result.turnLength = 120;
     } else if (issuedCommand.firstTokenEquals("status")) {
       gameState.getHero().printAllStatus();
+    } else if (issuedCommand.firstTokenEquals("skills")) {
+      gameState.getHero().printSkills();
+    } else if (issuedCommand.firstTokenEquals("rotation")) {
+      gameState.getHero().editRotation(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("hero") || issuedCommand.firstTokenEquals("me")) {
       gameState.getHero().printHeroStatus();
     } else if (issuedCommand.firstTokenEquals("age")) {
@@ -151,7 +157,9 @@ public class Game {
     }
   }
 
-  // Exits the game, prompting the user if the current state should be saved if it is not already saved.
+  /**
+   * Exits the game, prompting the user if the current state should be saved if it is not already saved.
+   */
   public static void exit() {
     if (!gameState.isSaved()) {
       Loader.saveGame(gameState);

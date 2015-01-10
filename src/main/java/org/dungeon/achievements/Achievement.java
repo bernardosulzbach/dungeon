@@ -50,7 +50,7 @@ public class Achievement {
     this.info = info;
   }
 
-  public ID getId() {
+  public ID getID() {
     return id;
   }
 
@@ -96,8 +96,8 @@ public class Achievement {
    * @param id     the creature's id.
    * @param amount the increment.
    */
-  public void incrementKillsByCreatureId(String id, int amount) {
-    battle.killsByCreatureId.incrementCounter(new ID(id), amount);
+  public void incrementKillsByCreatureID(String id, int amount) {
+    battle.killsByCreatureID.incrementCounter(new ID(id), amount);
   }
 
   /**

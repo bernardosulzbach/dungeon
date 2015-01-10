@@ -19,16 +19,15 @@ package org.dungeon.skill;
 
 import org.dungeon.game.Entity;
 import org.dungeon.game.ID;
+import org.dungeon.game.Selectable;
 
 /**
  * The Skill class.
  * <p/>
  * Created by Bernardo Sulzbach on 07/01/15.
  */
-public class Skill extends Entity {
+public class Skill extends Entity implements Selectable {
 
-  public static final Skill FIREBALL = new Skill("FIREBALL", "Skill", "Fireball", 10, 6);
-  public static final Skill BURNING_GROUND = new Skill("BURNING_GROUND", "Skill", "Burning Ground", 4, 12);
   private final int damage;
   private final int coolDown;
   private int remainingCoolDown;
@@ -39,11 +38,25 @@ public class Skill extends Entity {
     this.coolDown = coolDown;
   }
 
-  public int getDamageAndStartCoolDown() {
-    remainingCoolDown = coolDown;
+  /**
+   * Returns the damage of this Skill.
+   *
+   * @return the damage of this Skill.
+   */
+  public int getDamage() {
     return damage;
   }
 
+  /**
+   * Starts the cool down of this Skill.
+   */
+  public void startCoolDown() {
+    remainingCoolDown = coolDown;
+  }
+
+  /**
+   * Verifies if this Skill is ready to be casted or not.
+   */
   public boolean isReady() {
     return remainingCoolDown == 0;
   }

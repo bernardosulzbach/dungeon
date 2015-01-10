@@ -21,35 +21,36 @@ import org.dungeon.game.ID;
 
 public final class ItemBlueprint {
 
-  // Identification fields.
   ID id;
   String type;
   String name;
 
-  // Durability fields.
   int maxIntegrity;
   int curIntegrity;
   boolean repairable;
 
-  // Weapon fields.
   boolean weapon;
   int damage;
   double hitRate;
   int integrityDecrementOnHit;
 
-  // Food fields.
   boolean food;
   int nutrition;
   int integrityDecrementOnEat;
 
-  // Clock field.
   boolean clock;
+  boolean book;
+  ID skill;
 
-  public ID getId() {
+  public void setSkill(ID skill) {
+    this.skill = skill;
+  }
+
+  public ID getID() {
     return id;
   }
 
-  public void setId(ID id) {
+  public void setID(ID id) {
     this.id = id;
   }
 
@@ -155,6 +156,22 @@ public final class ItemBlueprint {
 
   public void setClock(boolean clock) {
     this.clock = clock;
+  }
+
+  public ID getSkill() {
+    return skill;
+  }
+
+  public void setSkill(String skill) {
+    this.skill = new ID(skill);
+  }
+
+  public boolean isBook() {
+    return book;
+  }
+
+  public void setBook(boolean book) {
+    this.book = book;
   }
 
 }
