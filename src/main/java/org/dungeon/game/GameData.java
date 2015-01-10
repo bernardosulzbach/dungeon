@@ -182,14 +182,14 @@ public final class GameData {
 
     LocationPreset forest = new LocationPreset("FOREST", "Forest");
     forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(zombie);
-    forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.8);
+    forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.1);
     forest.setLightPermittivity(0.7);
     forest.finish();
     locationPresets.add(forest);
 
     LocationPreset graveyard = new LocationPreset("GRAVEYARD", "Graveyard");
     graveyard.addSpawner(bat).addSpawner(skeleton).addSpawner(zombie).addSpawner(orc);
-    graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025);
+    graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025).addItem("TOME_OF_BURNING_GROUND", 0.1);
     graveyard.setLightPermittivity(0.9);
     graveyard.finish();
     locationPresets.add(graveyard);
