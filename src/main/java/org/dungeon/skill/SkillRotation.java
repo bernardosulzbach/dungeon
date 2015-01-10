@@ -103,4 +103,11 @@ public class SkillRotation implements Serializable {
     }
   }
 
+  /**
+   * Resets the SkillRotation, clearing the Skills that were added.
+   */
+  public void resetRotation() {
+    skillList.clear();
+  }
+
 }
