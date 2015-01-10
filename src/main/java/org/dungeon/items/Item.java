@@ -70,10 +70,6 @@ public class Item extends Entity {
     return owner != null && owner.getWeapon() == this;
   }
 
-  String getType() {
-    return type;
-  }
-
   public String getName() {
     return name;
   }

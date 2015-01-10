@@ -21,7 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.ItemBlueprint;
-import org.dungeon.skill.Skill;
+import org.dungeon.skill.SkillDefinition;
 import org.dungeon.util.StopWatch;
 
 import java.awt.Font;
@@ -41,7 +41,7 @@ public final class GameData {
   // The second parameter ensures that unless the HashMap is full, it will not have its capacity increased.
   public static final HashMap<ID, CreatureBlueprint> CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>(20, 1f);
   public static final HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>(20, 1f);
-  public static final HashMap<ID, Skill> SKILLS = new HashMap<ID, Skill>(2, 1f);
+  public static final HashMap<ID, SkillDefinition> SKILL_DEFINITIONS = new HashMap<ID, SkillDefinition>(2, 1f);
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
   private static final LocationPreset riverPreset = new LocationPreset("RIVER", "River");
@@ -84,11 +84,11 @@ public final class GameData {
    * Creates all the Skills (hardcoded).
    */
   private static void createSkills() {
-    Skill fireball = new Skill("FIREBALL", "Skill", "Fireball", 10, 6);
-    SKILLS.put(fireball.getID(), fireball);
+    SkillDefinition fireball = new SkillDefinition("FIREBALL", "Skill", "Fireball", 10, 6);
+    SKILL_DEFINITIONS.put(fireball.getID(), fireball);
 
-    Skill burningGround = new Skill("BURNING_GROUND", "Skill", "Burning Ground", 18, 12);
-    SKILLS.put(burningGround.getID(), burningGround);
+    SkillDefinition burningGround = new SkillDefinition("BURNING_GROUND", "Skill", "Burning Ground", 18, 12);
+    SKILL_DEFINITIONS.put(burningGround.getID(), burningGround);
   }
 
   /**

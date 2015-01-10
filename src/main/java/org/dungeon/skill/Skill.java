@@ -18,7 +18,6 @@
 package org.dungeon.skill;
 
 import org.dungeon.game.Entity;
-import org.dungeon.game.ID;
 import org.dungeon.game.Selectable;
 
 /**
@@ -28,14 +27,12 @@ import org.dungeon.game.Selectable;
  */
 public class Skill extends Entity implements Selectable {
 
-  private final int damage;
-  private final int coolDown;
+  private final SkillDefinition definition;
   private int remainingCoolDown;
 
-  public Skill(String id, String type, String name, int damage, int coolDown) {
-    super(new ID(id), type, name);
-    this.damage = damage;
-    this.coolDown = coolDown;
+  public Skill(SkillDefinition definition) {
+    super(definition.getID(), definition.getType(), definition.getName());
+    this.definition = definition;
   }
 
   /**
@@ -44,14 +41,14 @@ public class Skill extends Entity implements Selectable {
    * @return the damage of this Skill.
    */
   public int getDamage() {
-    return damage;
+    return definition.damage;
   }
 
   /**
    * Starts the cool down of this Skill.
    */
   public void startCoolDown() {
-    remainingCoolDown = coolDown;
+    remainingCoolDown = definition.coolDown;
   }
 
   /**

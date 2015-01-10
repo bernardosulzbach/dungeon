@@ -17,9 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.game.ID;
-import org.dungeon.game.Selectable;
-
 import java.io.Serializable;
 
 /**
@@ -32,9 +29,9 @@ import java.io.Serializable;
  */
 public abstract class Entity implements Selectable, Serializable {
 
-  private final ID id;
   protected final String type;
   protected final String name;
+  private final ID id;
 
   protected Entity(ID id, String type, String name) {
     this.id = id;
@@ -44,6 +41,10 @@ public abstract class Entity implements Selectable, Serializable {
 
   public ID getID() {
     return id;
+  }
+
+  public String getType() {
+    return type;
   }
 
   @Override
