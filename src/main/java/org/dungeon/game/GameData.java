@@ -28,7 +28,9 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -37,11 +39,6 @@ import java.util.HashMap;
  */
 public final class GameData {
 
-  // Hardcoded HashMap initial capacities. Be sure to increase it if more items and creatures are added.
-  // The second parameter ensures that unless the HashMap is full, it will not have its capacity increased.
-  public static final HashMap<ID, CreatureBlueprint> CREATURE_BLUEPRINTS = new HashMap<ID, CreatureBlueprint>(20, 1f);
-  public static final HashMap<ID, ItemBlueprint> ITEM_BLUEPRINTS = new HashMap<ID, ItemBlueprint>(20, 1f);
-  public static final HashMap<ID, SkillDefinition> SKILL_DEFINITIONS = new HashMap<ID, SkillDefinition>(2, 1f);
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
   private static final LocationPreset riverPreset = new LocationPreset("RIVER", "River");
@@ -50,6 +47,9 @@ public final class GameData {
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static Font monospaced;
   public static String LICENSE;
+  private static Map<ID, CreatureBlueprint> creatureBlueprints = new HashMap<ID, CreatureBlueprint>();
+  private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
+  private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
   private static ClassLoader loader;
 
   public static PoetryLibrary getPoetryLibrary() {
@@ -85,10 +85,11 @@ public final class GameData {
    */
   private static void createSkills() {
     SkillDefinition fireball = new SkillDefinition("FIREBALL", "Skill", "Fireball", 10, 6);
-    SKILL_DEFINITIONS.put(fireball.getID(), fireball);
+    skillDefinitions.put(fireball.getID(), fireball);
 
     SkillDefinition burningGround = new SkillDefinition("BURNING_GROUND", "Skill", "Burning Ground", 18, 12);
-    SKILL_DEFINITIONS.put(burningGround.getID(), burningGround);
+    skillDefinitions.put(burningGround.getID(), burningGround);
+    skillDefinitions = Collections.unmodifiableMap(skillDefinitions);
   }
 
   /**
@@ -120,10 +121,11 @@ public final class GameData {
       if (resourceReader.hasValue("SKILL")) {
         blueprint.setSkill(resourceReader.getValue("SKILL"));
       }
-      ITEM_BLUEPRINTS.put(blueprint.getID(), blueprint);
+      itemBlueprints.put(blueprint.getID(), blueprint);
     }
     resourceReader.close();
-    DLogger.info("Loaded " + ITEM_BLUEPRINTS.size() + " item blueprints.");
+    itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
+    DLogger.info("Loaded " + getItemBlueprints().size() + " item blueprints.");
   }
 
   /**
@@ -140,10 +142,11 @@ public final class GameData {
       blueprint.setMaxHealth(Integer.parseInt(resourceReader.getValue("MAX_HEALTH")));
       blueprint.setAttack(Integer.parseInt(resourceReader.getValue("ATTACK")));
       blueprint.setAttackAlgorithmID(resourceReader.getValue("ATTACK_ALGORITHM_ID"));
-      CREATURE_BLUEPRINTS.put(blueprint.getID(), blueprint);
+      creatureBlueprints.put(blueprint.getID(), blueprint);
     }
     resourceReader.close();
-    DLogger.info("Loaded " + CREATURE_BLUEPRINTS.size() + " creature blueprints.");
+    creatureBlueprints = Collections.unmodifiableMap(creatureBlueprints);
+    DLogger.info("Loaded " + getCreatureBlueprints().size() + " creature blueprints.");
   }
 
   private static void loadLocationPresets() {
@@ -372,4 +375,15 @@ public final class GameData {
     return bridgePreset;
   }
 
+  public static Map<ID, CreatureBlueprint> getCreatureBlueprints() {
+    return creatureBlueprints;
+  }
+
+  public static Map<ID, ItemBlueprint> getItemBlueprints() {
+    return itemBlueprints;
+  }
+
+  public static Map<ID, SkillDefinition> getSkillDefinitions() {
+    return skillDefinitions;
+  }
 }

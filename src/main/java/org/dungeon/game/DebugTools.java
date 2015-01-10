@@ -38,7 +38,7 @@ class DebugTools {
       "saved", "list", "time", "give", "dummy"};
 
   private static void give(String itemID) {
-    ItemBlueprint bp = GameData.ITEM_BLUEPRINTS.get(new ID(itemID.toUpperCase()));
+    ItemBlueprint bp = GameData.getItemBlueprints().get(new ID(itemID.toUpperCase()));
     if (bp != null) {
       if (Game.getGameState().getHero().getInventory().addItem(new Item(bp))) {
         return;
@@ -58,7 +58,7 @@ class DebugTools {
    * Spawns a dummy in the Location the Hero is in.
    */
   private static void spawnDummyInHeroLocation() {
-    Game.getGameState().getHeroLocation().addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(new ID("DUMMY"))));
+    Game.getGameState().getHeroLocation().addCreature(new Creature(GameData.getCreatureBlueprints().get(new ID("DUMMY"))));
     IO.writeString("Spawned a dummy.");
   }
 

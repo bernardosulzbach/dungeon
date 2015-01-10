@@ -461,7 +461,7 @@ public class Hero extends Creature {
     if (selectedItem != null) {
       BookComponent book = selectedItem.getBookComponent();
       if (book != null) {
-        Skill skill = new Skill(GameData.SKILL_DEFINITIONS.get(book.getSkillID()));
+        Skill skill = new Skill(GameData.getSkillDefinitions().get(book.getSkillID()));
         if (getSkillList().hasSkill(skill.getID())) {
           IO.writeString("You already know " + skill.getName() + ".");
           // It takes some time to look to the cover of the book.

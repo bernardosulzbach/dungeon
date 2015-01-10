@@ -49,7 +49,7 @@ class Spawner implements Serializable {
   public void refresh() {
     long worldTime = getWorldTime();
     while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
-      location.addCreature(new Creature(GameData.CREATURE_BLUEPRINTS.get(id)));
+      location.addCreature(new Creature(GameData.getCreatureBlueprints().get(id)));
       // Simulate that the creature was spawned just when it should have been.
       lastChange += spawnDelay;
     }
