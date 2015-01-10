@@ -100,8 +100,12 @@ public class SkillRotation implements Serializable {
    * This method should be invoked after each turn.
    */
   public void refresh() {
+    ArrayList<Skill> alreadyRefreshedSkills = new ArrayList<Skill>(skillList.size());
     for (Skill skill : skillList) {
-      skill.refresh();
+      if (!alreadyRefreshedSkills.contains(skill)) {
+        skill.refresh();
+        alreadyRefreshedSkills.add(skill);
+      }
     }
   }
 
