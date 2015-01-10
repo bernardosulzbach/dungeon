@@ -165,17 +165,7 @@ public class Achievement {
    * Outputs an achievement unlocked message with some information about the unlocked achievement.
    */
   void printAchievementUnlocked() {
-    // Initial capacity:
-    // First line:                    precisely 100 characters
-    // Name, info and three newlines: about 60 characters (using 100 to prevent buffer overflow).
-    // How many experience points:    25 characters for a experience reward of three digits.
-    // Total:                         100 + 100 + 25 = 225
-    StringBuilder sb = new StringBuilder(225);
-    sb.append(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-')).append("\n");
-    sb.append(getName()).append("\n");
-    sb.append(getInfo()).append("\n");
-    // Keep the StringBuilder as, in the future, Honor, Karma or something else may be rewarded by the achievements.
-    IO.writeString(sb.toString());
+    IO.writeString(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-') + "\n" + getName() + "\n" + getInfo());
   }
 
 }
