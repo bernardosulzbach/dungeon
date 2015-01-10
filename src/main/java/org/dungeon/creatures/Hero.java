@@ -114,15 +114,16 @@ public class Hero extends Creature {
    * @return the number of seconds the hero rested.
    */
   public int rest() {
-    if (getCurHealth() >= (int) (0.6 * getMaxHealth())) {
+    final double healthFractionThroughRest = 0.6;
+    if (getCurHealth() >= (int) (healthFractionThroughRest * getMaxHealth())) {
       IO.writeString("You are already rested.");
       return 0;
     } else {
-      double fractionHealed = 0.6 - (double) getCurHealth() / (double) getMaxHealth();
+      double fractionHealed = healthFractionThroughRest - (double) getCurHealth() / (double) getMaxHealth();
       IO.writeString("Resting...");
-      setCurHealth((int) (0.6 * getMaxHealth()));
+      setCurHealth((int) (healthFractionThroughRest * getMaxHealth()));
       IO.writeString("You feel rested.");
-      return (int) (TimeConstants.REST_COMPLETE * fractionHealed);
+      return (int) (TimeConstants.HEAL_TEN_PERCENT * fractionHealed * 10);
     }
   }
 
@@ -139,6 +140,15 @@ public class Hero extends Creature {
     if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
       IO.writeString("You fall asleep.");
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
+      int healing = getMaxHealth() * seconds / TimeConstants.HEAL_TEN_PERCENT / 10;
+      if (!isCompletelyHealed()) {
+        int health = getCurHealth() + healing;
+        if (health < getMaxHealth()) {
+          setCurHealth(health);
+        } else {
+          setCurHealth(getMaxHealth());
+        }
+      }
       Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * seconds / 3600);
       IO.writeString("You wake up.");
     } else {
