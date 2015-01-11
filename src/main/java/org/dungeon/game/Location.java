@@ -40,7 +40,7 @@ public class Location implements Serializable {
   private World world;
 
   public Location(LocationPreset preset, World world) {
-    this.id = preset.id;
+    this.id = preset.getID();
     this.world = world;
     this.name = preset.getName();
     this.blockedEntrances = preset.getBlockedEntrances();

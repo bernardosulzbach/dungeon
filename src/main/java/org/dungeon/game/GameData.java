@@ -27,7 +27,6 @@ import org.dungeon.util.StopWatch;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,15 +40,14 @@ public final class GameData {
 
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
-  private static final LocationPreset riverPreset = new LocationPreset("RIVER", "River");
-  private static final LocationPreset bridgePreset = new LocationPreset("BRIDGE", "Bridge");
-  public static LocationPreset[] LOCATION_PRESETS;
+
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static Font monospaced;
   public static String LICENSE;
   private static Map<ID, CreatureBlueprint> creatureBlueprints = new HashMap<ID, CreatureBlueprint>();
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
+  private static Map<ID, LocationPreset> locationPresets = new HashMap<ID, LocationPreset>();
   private static ClassLoader loader;
 
   public static PoetryLibrary getPoetryLibrary() {
@@ -125,7 +123,7 @@ public final class GameData {
     }
     resourceReader.close();
     itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
-    DLogger.info("Loaded " + getItemBlueprints().size() + " item blueprints.");
+    DLogger.info("Loaded " + itemBlueprints.size() + " item blueprints.");
   }
 
   /**
@@ -146,12 +144,10 @@ public final class GameData {
     }
     resourceReader.close();
     creatureBlueprints = Collections.unmodifiableMap(creatureBlueprints);
-    DLogger.info("Loaded " + getCreatureBlueprints().size() + " creature blueprints.");
+    DLogger.info("Loaded " + creatureBlueprints.size() + " creature blueprints.");
   }
 
   private static void loadLocationPresets() {
-    ArrayList<LocationPreset> locationPresets = new ArrayList<LocationPreset>();
-
     SpawnerPreset bat = new SpawnerPreset("BAT", 1, 6);
     SpawnerPreset bear = new SpawnerPreset("BEAR", 1, 12);
     SpawnerPreset boar = new SpawnerPreset("BOAR", 3, 8);
@@ -169,86 +165,85 @@ public final class GameData {
     SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 12);
     SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 4);
 
-    LocationPreset clearing = new LocationPreset("CLEARING", "Clearing");
+    LocationPreset clearing = new LocationPreset("CLEARING", "Land", "Clearing");
     clearing.addSpawner(frog).addSpawner(rabbit).addSpawner(spider).addSpawner(fox);
     clearing.addItem("CHERRY", 0.6).addItem("STICK", 0.9);
     clearing.setLightPermittivity(1.0);
     clearing.finish();
-    locationPresets.add(clearing);
+    locationPresets.put(clearing.getID(), clearing);
 
-    LocationPreset desert = new LocationPreset("DESERT", "Desert");
+    LocationPreset desert = new LocationPreset("DESERT", "Land", "Desert");
     desert.addSpawner(rat).addSpawner(snake).addSpawner(zombie).addSpawner(boar);
     desert.addItem("MACE", 0.1).addItem("STAFF", 0.2).addItem("DAGGER", 0.15).addItem("SPEAR", 0.1);
     desert.setLightPermittivity(1.0);
     desert.finish();
-    locationPresets.add(desert);
+    locationPresets.put(desert.getID(), desert);
 
-    LocationPreset forest = new LocationPreset("FOREST", "Forest");
+    LocationPreset forest = new LocationPreset("FOREST", "Land", "Forest");
     forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(zombie);
     forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.1);
     forest.setLightPermittivity(0.7);
     forest.finish();
-    locationPresets.add(forest);
+    locationPresets.put(forest.getID(), forest);
 
-    LocationPreset graveyard = new LocationPreset("GRAVEYARD", "Graveyard");
+    LocationPreset graveyard = new LocationPreset("GRAVEYARD", "Land", "Graveyard");
     graveyard.addSpawner(bat).addSpawner(skeleton).addSpawner(zombie).addSpawner(orc);
     graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025).addItem("TOME_OF_BURNING_GROUND", 0.1);
     graveyard.setLightPermittivity(0.9);
     graveyard.finish();
-    locationPresets.add(graveyard);
+    locationPresets.put(graveyard.getID(), graveyard);
 
-    LocationPreset meadow = new LocationPreset("MEADOW", "Meadow");
+    LocationPreset meadow = new LocationPreset("MEADOW", "Land", "Meadow");
     meadow.addSpawner(whiteTiger).addSpawner(wolf);
     meadow.addItem("STONE", 0.8).addItem("WATERMELON", 0.4).addItem("APPLE", 0.7);
     meadow.setLightPermittivity(1.0);
     meadow.finish();
-    locationPresets.add(meadow);
+    locationPresets.put(meadow.getID(), meadow);
 
-    LocationPreset pond = new LocationPreset("POND", "Pond");
+    LocationPreset pond = new LocationPreset("POND", "Land", "Pond");
     pond.addSpawner(frog).addSpawner(komodoDragon).addSpawner(crocodile);
     pond.addItem("WATERMELON", 0.8).addItem("SPEAR", 0.3);
     pond.setLightPermittivity(0.96);
     pond.finish();
-    locationPresets.add(pond);
+    locationPresets.put(pond.getID(), pond);
 
-    LocationPreset swamp = new LocationPreset("SWAMP", "Swamp");
+    LocationPreset swamp = new LocationPreset("SWAMP", "Land", "Swamp");
     swamp.addSpawner(frog).addSpawner(snake).addSpawner(komodoDragon).addSpawner(crocodile);
     swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.12);
     swamp.setLightPermittivity(0.7);
     swamp.finish();
-    locationPresets.add(swamp);
+    locationPresets.put(swamp.getID(), swamp);
 
-    LocationPreset wasteland = new LocationPreset("WASTELAND", "Wasteland");
+    LocationPreset wasteland = new LocationPreset("WASTELAND", "Land", "Wasteland");
     wasteland.addSpawner(rat).addSpawner(spider).addSpawner(snake);
     wasteland.addItem("STONE", 0.3).addItem("STICK", 0.18);
     wasteland.setLightPermittivity(1.0);
     wasteland.finish();
-    locationPresets.add(wasteland);
+    locationPresets.put(wasteland.getID(), wasteland);
 
-    LocationPreset savannah = new LocationPreset("SAVANNAH", "Savannah");
+    LocationPreset savannah = new LocationPreset("SAVANNAH", "Land", "Savannah");
     savannah.addSpawner(boar).addSpawner(snake).addSpawner(whiteTiger);
     savannah.addItem("APPLE", 0.8).addItem("AXE", 0.3);
     savannah.setLightPermittivity(1.0);
     savannah.finish();
-    locationPresets.add(savannah);
+    locationPresets.put(savannah.getID(), savannah);
 
-    LOCATION_PRESETS = new LocationPreset[locationPresets.size()];
-    locationPresets.toArray(LOCATION_PRESETS);
+    LocationPreset river = new LocationPreset("RIVER", "River", "River");
+    river.block(Direction.WEST).block(Direction.EAST);
+    river.setLightPermittivity(1.0);
+    river.finish();
+    locationPresets.put(river.getID(), river);
 
-    makeHardcodedLocationPresets();
+    LocationPreset bridge = new LocationPreset("BRIDGE", "Bridge", "Bridge");
+    bridge.addItem("TOME_OF_FIREBALL", 0.15);
+    bridge.block(Direction.NORTH).block(Direction.SOUTH);
+    bridge.setLightPermittivity(1.0);
+    bridge.finish();
+    locationPresets.put(bridge.getID(), bridge);
 
-    DLogger.info("Created " + LOCATION_PRESETS.length + " location presets.");
-  }
+    locationPresets = Collections.unmodifiableMap(locationPresets);
 
-  /**
-   * Makes the river and the bridge presets.
-   */
-  private static void makeHardcodedLocationPresets() {
-    riverPreset.block(Direction.WEST).block(Direction.EAST);
-    riverPreset.setLightPermittivity(1.0);
-
-    bridgePreset.block(Direction.NORTH).block(Direction.SOUTH);
-    bridgePreset.setLightPermittivity(1.0);
+    DLogger.info("Created " + locationPresets.size() + " location presets.");
   }
 
   /**
@@ -357,24 +352,6 @@ public final class GameData {
     LICENSE = sb.toString();
   }
 
-  /**
-   * Returns a LocationPreset for a river.
-   *
-   * @return a LocationPreset.
-   */
-  public static LocationPreset getRandomRiver() {
-    return riverPreset;
-  }
-
-  /**
-   * Returns a LocationPreset for a bridge than can be accessed by west or east.
-   *
-   * @return a LocationPreset.
-   */
-  public static LocationPreset getRandomBridge() {
-    return bridgePreset;
-  }
-
   public static Map<ID, CreatureBlueprint> getCreatureBlueprints() {
     return creatureBlueprints;
   }
@@ -386,4 +363,9 @@ public final class GameData {
   public static Map<ID, SkillDefinition> getSkillDefinitions() {
     return skillDefinitions;
   }
+
+  public static Map<ID, LocationPreset> getLocationPresets() {
+    return locationPresets;
+  }
+
 }

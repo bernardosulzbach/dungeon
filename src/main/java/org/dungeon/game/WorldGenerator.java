@@ -20,6 +20,8 @@ package org.dungeon.game;
 import org.dungeon.io.IO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The world generator. This class should be instantiated by a World object.
@@ -28,19 +30,15 @@ import java.io.Serializable;
  */
 class WorldGenerator implements Serializable {
 
-  private final World world;
-
-  private final RiverGenerator riverGenerator;
-
-  private int chunkSide;
-  private int generatedLocations;
-
   private static final int MIN_CHUNK_SIDE = 1;
   private static final int DEF_CHUNK_SIDE = 5;
   private static final int MAX_CHUNK_SIDE = 50;
-
   private static final int MIN_DIST_RIVER = 6;
   private static final int MAX_DIST_RIVER = 11;
+  private final World world;
+  private final RiverGenerator riverGenerator;
+  private int chunkSide;
+  private int generatedLocations;
 
   /**
    * Instantiates a new World generator. This should be called by the constructor of a World object.
@@ -75,16 +73,27 @@ class WorldGenerator implements Serializable {
     }
   }
 
-  private Location createRandomLocation() {
-    return new Location(GameData.LOCATION_PRESETS[Engine.RANDOM.nextInt(GameData.LOCATION_PRESETS.length)], world);
+  /**
+   * Retrieves a random Location made from a LocationPreset whose type is "Land".
+   *
+   * @return a Location.
+   */
+  private Location createRandomLandLocation() {
+    // After getting something better than random locations, we will have the desired Location ID here.
+    List<LocationPreset> locationPresets = new ArrayList<LocationPreset>(GameData.getLocationPresets().values());
+    LocationPreset selectedLocation;
+    do {
+      selectedLocation = locationPresets.get(Engine.RANDOM.nextInt(locationPresets.size()));
+    } while (!"Land".equals(selectedLocation.getType()));
+    return new Location(selectedLocation, world);
   }
 
   private Location createRiverLocation() {
-    return new Location(GameData.getRandomRiver(), world);
+    return new Location(GameData.getLocationPresets().get(new ID("RIVER")), world);
   }
 
   private Location createBridgeLocation() {
-    return new Location(GameData.getRandomBridge(), world);
+    return new Location(GameData.getLocationPresets().get(new ID("BRIDGE")), world);
   }
 
   public void expand(Point p) {
@@ -106,7 +115,7 @@ class WorldGenerator implements Serializable {
             world.addLocation(createBridgeLocation(), current_point);
           } else {
             // TODO: come up with something better than random locations.
-            world.addLocation(createRandomLocation(), current_point);
+            world.addLocation(createRandomLandLocation(), current_point);
           }
           generatedLocations++;
         }

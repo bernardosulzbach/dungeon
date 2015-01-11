@@ -25,41 +25,25 @@ import java.util.List;
 /**
  * The LocationPreset class that serves as a recipe for Locations.
  */
-final class LocationPreset extends Preset {
+final class LocationPreset extends Entity {
 
-  final ID id;
-  private final String name;
-  private final BlockedEntrances blockedEntrances;
-  private final ArrayList<SpawnerPreset> spawners;
-  private final ArrayList<ItemFrequencyPair> items;
+  private final BlockedEntrances blockedEntrances = new BlockedEntrances();
+  private final ArrayList<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
+  private final ArrayList<ItemFrequencyPair> items = new ArrayList<ItemFrequencyPair>();
   private Percentage lightPermittivity;
 
-  LocationPreset(String id, String name) {
-    this.id = new ID(id);
-    this.name = name;
-    blockedEntrances = new BlockedEntrances();
-    spawners = new ArrayList<SpawnerPreset>();
-    items = new ArrayList<ItemFrequencyPair>();
+  LocationPreset(String id, String type, String name) {
+    super(new ID(id), type, name);
   }
 
   public LocationPreset addSpawner(SpawnerPreset spawner) {
-    if (!isLocked()) {
-      this.spawners.add(spawner);
-    }
+    this.spawners.add(spawner);
     return this;
   }
 
   public LocationPreset addItem(String id, Double likelihood) {
-    if (!isLocked()) {
-      this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
-    }
+    this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
     return this;
-  }
-
-  public void setLightPermittivity(double lightPermittivity) {
-    if (!isLocked()) {
-      this.lightPermittivity = new Percentage(lightPermittivity);
-    }
   }
 
   /**
@@ -68,14 +52,8 @@ final class LocationPreset extends Preset {
    * @param direction a Direction to be blocked.
    */
   public LocationPreset block(Direction direction) {
-    if (!isLocked()) {
-      blockedEntrances.block(direction);
-    }
+    blockedEntrances.block(direction);
     return this;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public BlockedEntrances getBlockedEntrances() {
@@ -94,12 +72,19 @@ final class LocationPreset extends Preset {
     return lightPermittivity;
   }
 
+  public LocationPreset setLightPermittivity(double lightPermittivity) {
+    this.lightPermittivity = new Percentage(lightPermittivity);
+    return this;
+  }
+
+  /**
+   * Calling this method trims all ArrayLists to size, reducing the memory used by this LocationPreset.
+   * <p/>
+   * This method should be called after all modifications have been made.
+   */
   void finish() {
-    if (!isLocked()) {
-      spawners.trimToSize();
-      items.trimToSize();
-      lock();
-    }
+    spawners.trimToSize();
+    items.trimToSize();
   }
 
 }
