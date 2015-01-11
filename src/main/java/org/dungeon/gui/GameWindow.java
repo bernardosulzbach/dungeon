@@ -64,15 +64,14 @@ public class GameWindow extends JFrame {
 
   // The border, in pixels.
   private static final int MARGIN = 5;
-
+  /**
+   * Returns how many text rows are shown in the Window.
+   */
+  private static final int ROWS = 30;
   private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
   private final StyledDocument document;
-
   private JTextField textField;
   private JTextPane textPane;
-
-  private int rows = Constants.ROWS;
-
   private boolean idle;
 
   public GameWindow() {
@@ -205,27 +204,8 @@ public class GameWindow extends JFrame {
   private Dimension calculateTextPaneSize() {
     FontMetrics fontMetrics = getFontMetrics(GameData.monospaced);
     int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
-    int height = fontMetrics.getHeight() * rows;
+    int height = fontMetrics.getHeight() * ROWS;
     return new Dimension(width, height);
-  }
-
-  /**
-   * Changes the number of rows displayed in the TextPane and resizes the frame. You should verify that the argument
-   * is reasonable as this method does not verify if the row count is too big.
-   *
-   * @param rows the new number of rows.
-   * @return a boolean indicating if the number of rows was altered or not.
-   */
-  public boolean setRows(int rows) {
-    if (rows < 0) {
-      throw new IllegalArgumentException("rows should be positive.");
-    }
-    if (rows != this.rows) {
-      this.rows = rows;
-      resize();
-      return true;
-    }
-    return false;
   }
 
   /**

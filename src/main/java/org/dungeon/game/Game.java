@@ -48,7 +48,11 @@ public class Game {
     return gameState;
   }
 
-  // Renders a turn based on an input string.
+  /**
+   * Renders a turn based on the last IssuedCommand.
+   *
+   * @param issuedCommand the last IssuedCommand.
+   */
   public static void renderTurn(IssuedCommand issuedCommand) {
     // Clears the text pane.
     getGameWindow().clearTextPane();
@@ -71,7 +75,11 @@ public class Game {
     result.clear();
   }
 
-  // Processes the player input.
+  /**
+   * Processes the player input.
+   *
+   * @param issuedCommand the last IssuedCommand.
+   */
   private static void processInput(IssuedCommand issuedCommand) {
     gameState.getCommandHistory().addCommand(issuedCommand);
     gameState.getStatistics().addCommand(issuedCommand);

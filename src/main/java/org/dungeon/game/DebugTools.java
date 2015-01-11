@@ -22,7 +22,6 @@ import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
-import org.dungeon.util.Constants;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
@@ -87,10 +86,6 @@ class DebugTools {
         }
       } else if (issuedCommand.firstArgumentEquals(args[3])) {
         Loader.printFilesInSavesFolder();
-      } else if (issuedCommand.firstArgumentEquals("lines")) {
-        for (int i = 1; i <= Constants.ROWS; i++) {
-          IO.writeString(Integer.toString(i));
-        }
       } else if (issuedCommand.firstArgumentEquals(args[4])) {
         final int WIDTH = 20;  // The width of the row's "tag".
         GameState gameState = Game.getGameState();

@@ -29,10 +29,7 @@ import java.awt.Color;
  */
 class ConfigTools {
 
-  private static final String[] args = {"bold", "generator", "list", "rows"};
-
-  private static final int MIN_ROWS = 10;
-  private static final int MAX_ROWS = 50;
+  private static final String[] args = {"bold", "generator", "list"};
 
   private static void listAllArguments() {
     IO.writeString("Arguments are: ");
@@ -45,26 +42,6 @@ class ConfigTools {
     boolean newBoldValue = !Game.getGameState().isBold();
     Game.getGameState().setBold(newBoldValue);
     IO.writeString("Bold set to " + newBoldValue + ".");
-  }
-
-  private static boolean changeRowCount(String argument) {
-    try {
-      int rows = Integer.parseInt(argument);
-      if (rows < MIN_ROWS || rows > MAX_ROWS) {
-        IO.writeString("Row count should be in the range [" + MIN_ROWS + ", " + MAX_ROWS + "].");
-      } else {
-        // setRows returns true if the number of rows changed.
-        if (Game.getGameWindow().setRows(rows)) {
-          IO.writeString("Rows set to " + rows + ".");
-          return true;
-        } else {
-          IO.writeString("Row count unchanged.");
-        }
-      }
-    } catch (NumberFormatException exception) {
-      IO.writeString("Provide a valid number of rows.", Color.RED);
-    }
-    return false;
   }
 
   // Returns true if the chunk side changed.
@@ -100,12 +77,6 @@ class ConfigTools {
         }
       } else if (issuedCommand.firstArgumentEquals(args[2])) {
         listAllArguments();
-      } else if (issuedCommand.firstArgumentEquals(args[3])) {
-        if (issuedCommand.getArguments().length > 1) {
-          return changeRowCount(issuedCommand.getArguments()[1]);
-        } else {
-          IO.writeString("Provide a number of rows.");
-        }
       } else {
         IO.writeString("Invalid command. Use 'config list' to see all available configurations.", Color.RED);
       }
