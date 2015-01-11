@@ -1,0 +1,22 @@
+# Java
+*.class
+*.jar
+
+# Except exported IDEA settings.
+!misc/idea/*.jar
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+src/META-INF/
+out/
+
+# Maven
+target/
+
+# Dungeon
+saves/
+logs/
+
