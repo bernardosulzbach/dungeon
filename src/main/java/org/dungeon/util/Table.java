@@ -24,20 +24,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * DTable class that provides table functionality for printing in-game tables. Currently, all data is stored as Strings.
+ * Table class that provides table functionality for printing in-game tables.
+ *
+ * Currently, all data is stored as Strings.
  * <p/>
  * Created by Bernardo Sulzbach on 13/12/14.
  */
-public class DTable {
+public class Table {
 
   private final ArrayList<Column> columns;
 
   /**
-   * Constructs a DTable using the provided Strings as column headers.
+   * Constructs a Table using the provided Strings as column headers.
    *
    * @param headers the columns' headers.
    */
-  public DTable(String... headers) {
+  public Table(String... headers) {
     columns = new ArrayList<Column>(headers.length);
     for (String header : headers) {
       columns.add(new Column(header));
@@ -97,7 +99,7 @@ public class DTable {
    */
   public void print() {
     if (columns.size() == 0) {
-      DLogger.warning("Tried to print an empty DTable.");
+      DLogger.warning("Tried to print an empty Table.");
       return;
     }
 
