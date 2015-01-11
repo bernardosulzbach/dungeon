@@ -67,7 +67,7 @@ public class GameWindow extends JFrame {
   /**
    * Returns how many text rows are shown in the Window.
    */
-  private static final int ROWS = 30;
+  public static final int ROWS = 30;
   private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
   private final StyledDocument document;
   private JTextField textField;
