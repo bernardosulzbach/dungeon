@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DTableTest {
 
-  static DTable dTable;
+  private static DTable dTable;
 
   @Before
   public void createTable() {

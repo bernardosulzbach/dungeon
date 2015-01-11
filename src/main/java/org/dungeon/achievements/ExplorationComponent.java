@@ -32,17 +32,17 @@ final class ExplorationComponent extends AchievementComponent {
   /**
    * Stores how many kills in Locations with a specified ID the Hero must have.
    */
-  CounterMap<ID> killCounter = new CounterMap<ID>();
+  final CounterMap<ID> killCounter = new CounterMap<ID>();
 
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  CounterMap<ID> distinctLocationsVisitCount = new CounterMap<ID>();
+  final CounterMap<ID> distinctLocationsVisitCount = new CounterMap<ID>();
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
-  CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
+  final CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
 
   @Override
   public boolean isFulfilled(Hero hero) {

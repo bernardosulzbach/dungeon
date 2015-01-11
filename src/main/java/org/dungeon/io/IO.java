@@ -74,7 +74,7 @@ public final class IO {
    * @param newLine    if true, a newline will be added to the end of the string after its end is cleared.
    * @param scrollDown if true, the TextPane will be scrolled down after writing.
    */
-  public static void writeString(String string, Color color, boolean newLine, boolean scrollDown) {
+  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown) {
     writeString(string, color, newLine, scrollDown, 0);
   }
 

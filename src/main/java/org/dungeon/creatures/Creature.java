@@ -49,7 +49,7 @@ public class Creature extends Entity {
     curHealth = bp.getCurHealth();
   }
 
-  public SkillList getSkillList() {
+  SkillList getSkillList() {
     return skillList;
   }
 

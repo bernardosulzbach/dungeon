@@ -72,9 +72,8 @@ final class LocationPreset extends Entity {
     return lightPermittivity;
   }
 
-  public LocationPreset setLightPermittivity(double lightPermittivity) {
+  public void setLightPermittivity(double lightPermittivity) {
     this.lightPermittivity = new Percentage(lightPermittivity);
-    return this;
   }
 
   /**

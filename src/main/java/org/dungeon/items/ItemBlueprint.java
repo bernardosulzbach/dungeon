@@ -40,7 +40,7 @@ public final class ItemBlueprint {
 
   boolean clock;
   boolean book;
-  ID skill;
+  private ID skill;
 
   public void setSkill(ID skill) {
     this.skill = skill;

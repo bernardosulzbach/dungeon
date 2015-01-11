@@ -28,7 +28,7 @@ import java.io.Serializable;
  */
 class ExplorationData implements Serializable {
 
-  private ID locationID;
+  private final ID locationID;
 
   /**
    * How many times the Hero visited this Point.
@@ -54,16 +54,16 @@ class ExplorationData implements Serializable {
     return visitCount;
   }
 
-  public int addVisit() {
-    return ++this.visitCount;
+  public void addVisit() {
+    this.visitCount++;
   }
 
   public int getKillCount() {
     return killCount;
   }
 
-  public int addKill() {
-    return ++this.killCount;
+  public void addKill() {
+    this.killCount++;
   }
 
 }

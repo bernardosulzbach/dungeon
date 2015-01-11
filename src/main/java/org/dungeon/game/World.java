@@ -34,7 +34,7 @@ public class World implements Serializable {
   private final Date worldCreationDate;
   private Date worldDate;
 
-  private WorldStatistics worldStatistics;
+  private final WorldStatistics worldStatistics;
 
   /**
    * Creates a new World.

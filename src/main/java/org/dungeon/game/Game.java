@@ -28,7 +28,7 @@ import org.dungeon.util.Utils;
 
 public class Game {
 
-  private static TurnResult result = new TurnResult();
+  private static final TurnResult result = new TurnResult();
   private static GameWindow gameWindow;
   private static GameState gameState;
 

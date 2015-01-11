@@ -26,14 +26,14 @@ import org.dungeon.util.StopWatch;
  * <p/>
  * Created by Bernardo Sulzbach on 12/30/14.
  */
-public abstract class Library {
+abstract class Library {
 
   private boolean initialized = false;
 
   /**
    * Returns true if the data has already been loaded; false otherwise.
    */
-  protected final boolean isInitialized() {
+  final boolean isInitialized() {
     return initialized;
   }
 
@@ -44,7 +44,7 @@ public abstract class Library {
    * <p/>
    * If this method is called after data has been loaded, a warning is logged.
    */
-  protected final void initialize() {
+  final void initialize() {
     if (initialized) {
       DLogger.warning("Tried to initialize an already initialized Library class.");
     } else {
