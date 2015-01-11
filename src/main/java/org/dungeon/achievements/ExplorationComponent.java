@@ -27,7 +27,7 @@ import org.dungeon.game.ID;
  * <p/>
  * Created by Bernardo on 07/12/2014.
  */
-final class ExplorationComponent extends AchievementComponent {
+final class ExplorationComponent {
 
   /**
    * Stores how many kills in Locations with a specified ID the Hero must have.
@@ -44,7 +44,6 @@ final class ExplorationComponent extends AchievementComponent {
    */
   final CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
 
-  @Override
   public boolean isFulfilled(Hero hero) {
     ExplorationLog explorationLog = hero.getExplorationLog();
     for (ID locationID : killCounter.keySet()) {

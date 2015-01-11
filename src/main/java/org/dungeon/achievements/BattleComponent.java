@@ -27,7 +27,7 @@ import org.dungeon.game.ID;
  * <p/>
  * Created by Bernardo on 07/12/2014.
  */
-final class BattleComponent extends AchievementComponent {
+final class BattleComponent {
 
   final CounterMap<String> killsByCreatureType = new CounterMap<String>();
   final CounterMap<ID> killsByCreatureID = new CounterMap<ID>();
@@ -35,7 +35,6 @@ final class BattleComponent extends AchievementComponent {
   int battleCount;
   int longestBattleLength;
 
-  @Override
   public boolean isFulfilled(Hero hero) {
     BattleStatistics stats = hero.getBattleStatistics();
     if (stats.getBattleCount() < battleCount) {
