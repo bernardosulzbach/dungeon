@@ -57,7 +57,8 @@ class DebugTools {
    * Spawns a dummy in the Location the Hero is in.
    */
   private static void spawnDummyInHeroLocation() {
-    Game.getGameState().getHeroLocation().addCreature(new Creature(GameData.getCreatureBlueprints().get(new ID("DUMMY"))));
+    Creature dummy = new Creature(GameData.getCreatureBlueprints().get(new ID("DUMMY")));
+    Game.getGameState().getHeroLocation().addCreature(dummy);
     IO.writeString("Spawned a dummy.");
   }
 
