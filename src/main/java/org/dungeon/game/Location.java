@@ -24,25 +24,24 @@ import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.LocationInventory;
 import org.dungeon.util.Percentage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Location implements Serializable {
+/**
+ * The Location class that defines a Location of a World.
+ */
+public class Location extends Entity {
 
-  private final ID id;
-  private final String name;
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
   private final List<Spawner> spawners;
   private final LocationInventory items;
   private final Percentage lightPermittivity;
-  private World world;
+  private final World world;
 
   public Location(LocationPreset preset, World world) {
-    this.id = preset.getID();
+    super(preset.getID(), preset.getType(), preset.getName());
     this.world = world;
-    this.name = preset.getName();
     this.blockedEntrances = preset.getBlockedEntrances();
     this.lightPermittivity = preset.getLightPermittivity();
     this.creatures = new ArrayList<Creature>();
@@ -63,18 +62,10 @@ public class Location implements Serializable {
     }
   }
 
-  public ID getID() {
-    return id;
-  }
-
   public void refreshSpawners() {
     for (Spawner spawner : spawners) {
       spawner.refresh();
     }
-  }
-
-  public String getName() {
-    return name;
   }
 
   Percentage getLightPermittivity() {
@@ -144,10 +135,6 @@ public class Location implements Serializable {
 
   public World getWorld() {
     return world;
-  }
-
-  public void setWorld(World world) {
-    this.world = world;
   }
 
   public boolean isBlocked(Direction direction) {
