@@ -35,10 +35,7 @@ import java.io.ObjectOutputStream;
 /**
  * Loader class that handles saving / loading the game.
  * <p/>
- * On using this class:
- * <p/>
- * <p/>
- * By Bernardo Sulzbach.
+ * Created by Bernardo Sulzbach.
  */
 public class Loader {
 
@@ -81,7 +78,7 @@ public class Loader {
           table.insertRow(file.getName(), Utils.bytesToHuman(file.length()));
         }
         if (fileCount > 1) {
-          // TODO: implement a separator row in the table so that it is possible to add additional separators.
+          table.insertSeparator();
           table.insertRow("Sum of these " + fileCount + " files", Utils.bytesToHuman(byteCount));
         }
         table.print();

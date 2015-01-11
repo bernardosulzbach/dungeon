@@ -36,4 +36,8 @@ public class Dimensions {
     return Arrays.equals(dimensions, anotherObject.dimensions);
   }
 
+  public int get(int index) {
+    return dimensions[index];
+  }
+
 }
