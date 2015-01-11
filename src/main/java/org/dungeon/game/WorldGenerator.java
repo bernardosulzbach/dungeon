@@ -28,7 +28,7 @@ import java.util.List;
  * <p/>
  * Created by Bernardo Sulzbach on 14/10/14.
  */
-class WorldGenerator implements Serializable {
+public class WorldGenerator implements Serializable {
 
   private static final int MIN_CHUNK_SIDE = 1;
   private static final int DEF_CHUNK_SIDE = 5;

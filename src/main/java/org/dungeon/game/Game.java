@@ -17,6 +17,7 @@
 
 package org.dungeon.game;
 
+import org.dungeon.debug.DebugTools;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.help.Help;
 import org.dungeon.io.DLogger;

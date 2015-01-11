@@ -15,9 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.debug;
 
 import org.dungeon.creatures.Creature;
+import org.dungeon.game.Engine;
+import org.dungeon.game.Game;
+import org.dungeon.game.GameData;
+import org.dungeon.game.GameState;
+import org.dungeon.game.ID;
+import org.dungeon.game.IssuedCommand;
+import org.dungeon.game.Location;
+import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.items.Item;
@@ -31,7 +39,7 @@ import java.awt.Color;
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
-class DebugTools {
+public abstract class DebugTools {
 
   private static final String[] args = {"exploration", "tomorrow", "holidays", "saves", "location", "generator",
       "saved", "list", "time", "give", "dummy"};
@@ -62,7 +70,7 @@ class DebugTools {
     IO.writeString("Spawned a dummy.");
   }
 
-  private static void printIsSaved() {
+  public static void printIsSaved() {
     if (Game.getGameState().isSaved()) {
       IO.writeString("The game is saved.");
     } else {
@@ -70,11 +78,11 @@ class DebugTools {
     }
   }
 
-  private static void printTime() {
+  public static void printTime() {
     IO.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
   }
 
-  static void parseDebugCommand(IssuedCommand issuedCommand) {
+  public static void parseDebugCommand(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
       if (issuedCommand.firstArgumentEquals(args[0])) {
         IO.writeString(Game.getGameState().getHero().getExplorationLog().toString());

@@ -68,7 +68,7 @@ public class Location extends Entity {
     }
   }
 
-  Percentage getLightPermittivity() {
+  public Percentage getLightPermittivity() {
     return lightPermittivity;
   }
 
