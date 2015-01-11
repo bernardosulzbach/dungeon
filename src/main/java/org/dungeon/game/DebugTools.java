@@ -125,20 +125,7 @@ class DebugTools {
       } else if (issuedCommand.firstArgumentEquals(args[10])) {
         spawnDummyInHeroLocation();
       } else {
-        switch (Engine.RANDOM.nextInt(4)) {
-          case 0:
-            IO.writeString("FOOL! You cannot understand the power of 'debug'!", Color.RED);
-            break;
-          case 1:
-            IO.writeString("If you do not know how to use the debug command, do not use it.", Color.RED);
-            break;
-          case 2:
-            IO.writeString("Wrong are you.", Color.RED);
-            break;
-          case 3:
-            IO.writeString("Stop trying to cheat, will you?", Color.RED);
-            break;
-        }
+        IO.writeString("Command not recognized.");
       }
     } else {
       Utils.printMissingArgumentsMessage();
