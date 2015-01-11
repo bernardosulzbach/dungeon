@@ -55,9 +55,8 @@ import java.util.List;
  */
 public class Hero extends Creature {
 
-  private final static int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
+  private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
-  private final double minimumLuminosity = 0.3;
   private final Date dateOfBirth;
   private final ExplorationLog explorationLog;
   private final BattleStatistics battleStatistics;
@@ -276,6 +275,7 @@ public class Hero extends Creature {
    * @return a boolean indicating if the Hero can see other creatures or items in the current location.
    */
   boolean canSee() {
+    double minimumLuminosity = 0.3;
     return getLocation().getLuminosity() >= minimumLuminosity;
   }
 
