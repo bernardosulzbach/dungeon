@@ -17,10 +17,10 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.counters.BattleStatistics;
-import org.dungeon.util.CounterMap;
-import org.dungeon.creatures.Hero;
+import org.dungeon.game.Game;
 import org.dungeon.game.ID;
+import org.dungeon.stats.BattleStatistics;
+import org.dungeon.util.CounterMap;
 
 /**
  * The battle component of the achievements.
@@ -35,21 +35,21 @@ final class BattleComponent {
   int battleCount;
   int longestBattleLength;
 
-  public boolean isFulfilled(Hero hero) {
-    BattleStatistics stats = hero.getBattleStatistics();
-    if (stats.getBattleCount() < battleCount) {
+  public boolean isFulfilled() {
+    BattleStatistics statistics = Game.getGameState().getStatistics().getBattleStatistics();
+    if (statistics.getBattleCount() < battleCount) {
       return false;
     }
-    if (stats.getLongestBattleLength() < longestBattleLength) {
+    if (statistics.getLongestBattleLength() < longestBattleLength) {
       return false;
     }
-    if (!stats.getKillsByCreatureID().fulfills(killsByCreatureID)) {
+    if (!statistics.getKillsByCreatureID().fulfills(killsByCreatureID)) {
       return false;
     }
-    if (!stats.getKillsByCreatureType().fulfills(killsByCreatureType)) {
+    if (!statistics.getKillsByCreatureType().fulfills(killsByCreatureType)) {
       return false;
     }
-    if (!stats.getKillsByWeapon().fulfills(killsByWeapon)) {
+    if (!statistics.getKillsByWeapon().fulfills(killsByWeapon)) {
       return false;
     }
     return true;
