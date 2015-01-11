@@ -17,6 +17,7 @@
 
 package org.dungeon.game;
 
+import org.dungeon.io.DLogger;
 import org.dungeon.util.Utils;
 
 import java.util.Arrays;
@@ -64,11 +65,18 @@ public final class IssuedCommand {
     return tokens[1];
   }
 
-  public boolean firstArgumentEquals(String argument) {
+  /**
+   * Checks if the first argument of this IssuedCommand is case-insensitively equal to a given String.
+   *
+   * @param string the String used for comparison.
+   * @return true if the Strings are case-insensitively equal, false otherwise.
+   */
+  public boolean firstArgumentEquals(String string) {
     if (hasArguments()) {
-      return tokens[1].equalsIgnoreCase(argument);
+      return tokens[1].equalsIgnoreCase(string);
     } else {
-      throw new IllegalArgumentException("this command does not have arguments.");
+      DLogger.warning("Called firstArgumentEquals on an IssuedCommand that does not have arguments.");
+      return false;
     }
   }
 
