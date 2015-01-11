@@ -119,10 +119,25 @@ INFO: "Rests to fill about 60% of your health."
 ALIASES: ""
 ARGUMENTS: ""
 
+COMMAND: "rotation"
+INFO: "Either prints the current rotation or makes a new one."
+ALIASES: ""
+ARGUMENTS: "", "skillA > skillB"
+
 COMMAND: "save"
 INFO: "Saves the game."
 ALIASES: ""
 ARGUMENTS: "", "filename"
+
+COMMAND: "saves"
+INFO: "Prints a table with all the save files."
+ALIASES: "files"
+ARGUMENTS: ""
+
+COMMAND: "skills"
+INFO: "Prints a list with all the Skills the Hero knows."
+ALIASES: ""
+ARGUMENTS: ""
 
 COMMAND: "sleep"
 INFO: "Sleeps until the sun rises."
