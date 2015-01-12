@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.counters;
+package org.dungeon.stats;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Point;
@@ -28,14 +28,14 @@ import java.util.HashMap;
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
-public class ExplorationLog implements Serializable {
+public class ExplorationStatistics implements Serializable {
 
   // Hold data for each point (and not for each Location ID - what should suffice for now) so that in the future more
   // complex achievements can be made.
-  private final HashMap<Point, ExplorationData> entries;
+  private final HashMap<Point, ExplorationStatisticsEntry> entries;
 
-  public ExplorationLog() {
-    this.entries = new HashMap<Point, ExplorationData>();
+  public ExplorationStatistics() {
+    this.entries = new HashMap<Point, ExplorationStatisticsEntry>();
   }
 
   /**
@@ -47,7 +47,7 @@ public class ExplorationLog implements Serializable {
     if (entries.containsKey(point)) {
       entries.get(point).addVisit();
     } else {
-      entries.put(point, new ExplorationData(locationID, 1, 0));
+      entries.put(point, new ExplorationStatisticsEntry(locationID, 1, 0));
     }
   }
 
@@ -70,7 +70,7 @@ public class ExplorationLog implements Serializable {
    */
   public int getDistinctVisitCount(ID locationID) {
     int count = 0;
-    for (ExplorationData entry : entries.values()) {
+    for (ExplorationStatisticsEntry entry : entries.values()) {
       if (entry.getLocationID().equals(locationID)) {
         count++;
       }
@@ -86,7 +86,7 @@ public class ExplorationLog implements Serializable {
    */
   public int getSameLocationVisitCount(ID locationID) {
     int maximumVisitsToLocationWithThisID = 0;
-    for (ExplorationData entry : entries.values()) {
+    for (ExplorationStatisticsEntry entry : entries.values()) {
       if (entry.getLocationID().equals(locationID)) {
         if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
           maximumVisitsToLocationWithThisID = entry.getVisitCount();
@@ -104,7 +104,7 @@ public class ExplorationLog implements Serializable {
    */
   public int getKillCount(ID locationID) {
     int count = 0;
-    for (ExplorationData entry : entries.values()) {
+    for (ExplorationStatisticsEntry entry : entries.values()) {
       if (entry.getLocationID().equals(locationID)) {
         count += entry.getKillCount();
       }
@@ -117,12 +117,12 @@ public class ExplorationLog implements Serializable {
    */
   public String toString() {
     StringBuilder builder = new StringBuilder();
-    ExplorationData explorationData;
+    ExplorationStatisticsEntry explorationStatisticsEntry;
     for (Point point : entries.keySet()) {
-      explorationData = entries.get(point);
+      explorationStatisticsEntry = entries.get(point);
       builder.append(point.toString());
-      builder.append(" Visits: ").append(explorationData.getVisitCount());
-      builder.append(" Kills: ").append(explorationData.getKillCount());
+      builder.append(" Visits: ").append(explorationStatisticsEntry.getVisitCount());
+      builder.append(" Kills: ").append(explorationStatisticsEntry.getKillCount());
       builder.append("\n");
     }
     return builder.toString();

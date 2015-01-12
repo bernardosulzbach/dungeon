@@ -21,6 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
+import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
@@ -104,7 +105,8 @@ public class Engine {
     refreshSpawners(); // Update the spawners of the location the Hero moved to.
     hero.setLocation(destination);
     hero.look(dir.invert());
-    hero.getExplorationLog().addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
+    ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
+    explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
     return TimeConstants.WALK_SUCCESS;
   }
 
@@ -155,7 +157,7 @@ public class Engine {
       Hero hero = (Hero) attacker;
       boolean attackerWon = attacker == survivor;
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
-      hero.getExplorationLog().addKill(Game.getGameState().getHeroPosition());
+      Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
     }
     battleCleanup(survivor, defeated);
     return turns;

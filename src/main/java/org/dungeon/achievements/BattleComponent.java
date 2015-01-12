@@ -35,6 +35,9 @@ final class BattleComponent {
   int battleCount;
   int longestBattleLength;
 
+  /**
+   * Checks if this component of the Achievement is fulfilled or not.
+   */
   public boolean isFulfilled() {
     BattleStatistics statistics = Game.getGameState().getStatistics().getBattleStatistics();
     if (statistics.getBattleCount() < battleCount) {

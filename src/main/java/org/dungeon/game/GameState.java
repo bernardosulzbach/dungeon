@@ -62,7 +62,7 @@ public class GameState implements Serializable {
     hero = new Hero("Seth");
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
-    hero.getExplorationLog().addVisit(heroPosition, world.getLocation(heroPosition).getID());
+    getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getID());
   }
 
   public CommandHistory getCommandHistory() {

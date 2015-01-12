@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.counters;
+package org.dungeon.stats;
 
 import org.dungeon.game.ID;
 
@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
-class ExplorationData implements Serializable {
+public class ExplorationStatisticsEntry implements Serializable {
 
   private final ID locationID;
 
@@ -40,7 +40,7 @@ class ExplorationData implements Serializable {
    */
   private int killCount;
 
-  public ExplorationData(ID locationID, int visitCount, int killCount) {
+  public ExplorationStatisticsEntry(ID locationID, int visitCount, int killCount) {
     this.locationID = locationID;
     this.visitCount = visitCount;
     this.killCount = killCount;

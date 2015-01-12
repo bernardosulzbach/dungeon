@@ -29,9 +29,23 @@ import java.io.Serializable;
  */
 public final class Statistics implements Serializable {
 
-  private final BattleStatistics battleStatistics = new BattleStatistics();
   private final WorldStatistics worldStatistics = new WorldStatistics();
+  private final ExplorationStatistics explorationStatistics = new ExplorationStatistics();
+  private final BattleStatistics battleStatistics = new BattleStatistics();
   private final CommandStatistics commandStatistics = new CommandStatistics();
+
+  /**
+   * Returns the WorldStatistics object of this Statistics.
+   *
+   * @return a WorldStatistics object.
+   */
+  public WorldStatistics getWorldStatistics() {
+    return worldStatistics;
+  }
+
+  public ExplorationStatistics getExplorationStatistics() {
+    return explorationStatistics;
+  }
 
   /**
    * Returns the BattleStatistics object of this Statistics.
@@ -43,16 +57,7 @@ public final class Statistics implements Serializable {
   }
 
   /**
-   * Returns the WorldStatistics object of this Statistics.
-   *
-   * @return a WorldStatistics object.
-   */
-  public WorldStatistics getWorldStatistics() {
-    return worldStatistics;
-  }
-
-  /**
-   * Adds an issued command to the statistics.
+   * Adds an issued command to the CommandStatistics.
    */
   public void addCommand(IssuedCommand issuedCommand) {
     commandStatistics.addCommand(issuedCommand);

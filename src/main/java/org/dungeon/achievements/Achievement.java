@@ -143,18 +143,17 @@ public class Achievement {
   /**
    * Evaluates if a specified Hero fulfills this Achievement conditions.
    *
-   * @param hero the Hero.
    * @return a boolean.
    */
-  boolean isFulfilled(Hero hero) {
-    return battle.isFulfilled() && exploration.isFulfilled(hero);
+  boolean isFulfilled() {
+    return battle.isFulfilled() && exploration.isFulfilled();
   }
 
   /**
    * Updates the state of the Achievement.
    */
   public final void update(Hero hero) {
-    if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled(hero)) {
+    if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled()) {
       // All the requirements OK, unlock the achievement.
       printAchievementUnlocked();
       hero.getAchievementTracker().unlock(this);

@@ -26,7 +26,6 @@ Known Bugs
 Planned features
 ----------------
 - The Hero can have dreams during his sleep.
-- Remove the ``counters`` package. (Merge into ``stats``).
 - Alignment system. (Killing good creatures makes you evil)
 - Command objects. (How?)
 - Store command help in the respective Command object.

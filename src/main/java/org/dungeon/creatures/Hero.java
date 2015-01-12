@@ -18,7 +18,6 @@
 package org.dungeon.creatures;
 
 import org.dungeon.achievements.AchievementTracker;
-import org.dungeon.counters.ExplorationLog;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.game.Direction;
@@ -59,14 +58,12 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_LEARN_A_SKILL = 60;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private final Date dateOfBirth;
-  private final ExplorationLog explorationLog;
   private final AchievementTracker achievementTracker;
 
   public Hero(String name) {
     super(makeHeroBlueprint(name));
     setInventory(new CreatureInventory(this, 3));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
-    explorationLog = new ExplorationLog();
     achievementTracker = new AchievementTracker();
   }
 
@@ -80,10 +77,6 @@ public class Hero extends Creature {
     heroBlueprint.setMaxHealth(50);
     heroBlueprint.setCurHealth(50);
     return heroBlueprint;
-  }
-
-  public ExplorationLog getExplorationLog() {
-    return explorationLog;
   }
 
   public AchievementTracker getAchievementTracker() {

@@ -17,10 +17,10 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.util.CounterMap;
-import org.dungeon.counters.ExplorationLog;
-import org.dungeon.creatures.Hero;
+import org.dungeon.game.Game;
 import org.dungeon.game.ID;
+import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.CounterMap;
 
 /**
  * The exploration component of the achievements.
@@ -44,20 +44,23 @@ final class ExplorationComponent {
    */
   final CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
 
-  public boolean isFulfilled(Hero hero) {
-    ExplorationLog explorationLog = hero.getExplorationLog();
+  /**
+   * Checks if this component of the Achievement is fulfilled or not.
+   */
+  public boolean isFulfilled() {
+    ExplorationStatistics statistics = Game.getGameState().getStatistics().getExplorationStatistics();
     for (ID locationID : killCounter.keySet()) {
-      if (explorationLog.getKillCount(locationID) < killCounter.getCounter(locationID)) {
+      if (statistics.getKillCount(locationID) < killCounter.getCounter(locationID)) {
         return false;
       }
     }
     for (ID locationID : distinctLocationsVisitCount.keySet()) {
-      if (explorationLog.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
+      if (statistics.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
         return false;
       }
     }
     for (ID locationID : sameLocationVisitCounter.keySet()) {
-      if (explorationLog.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
+      if (statistics.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
         return false;
       }
     }
