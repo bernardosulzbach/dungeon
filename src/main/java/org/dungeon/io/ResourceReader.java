@@ -31,14 +31,21 @@ import java.util.HashMap;
  */
 public class ResourceReader implements Closeable {
 
-  private final HashMap<String, String> map;
+  private final HashMap<String, String> map = new HashMap<String, String>();
   private final ResourceParser resourceParser;
+  private final String filename;
 
   private Pair<String, String> lastPair;
 
-  public ResourceReader(InputStream inputStream) {
-    map = new HashMap<String, String>();
+  /**
+   * Constructs a ResourceReader from an InputStream and the respective resource file's name.
+   *
+   * @param inputStream the InputStream
+   * @param filename    the name of the resource file
+   */
+  public ResourceReader(InputStream inputStream, String filename) {
     resourceParser = new ResourceParser(new InputStreamReader(inputStream));
+    this.filename = filename;
   }
 
   /**
@@ -52,8 +59,7 @@ public class ResourceReader implements Closeable {
     // TODO: make a static final variable for the colon.
     int indexOfColon = string.indexOf(":");
     if (indexOfColon == -1) {
-      // TODO: point the line number.
-      DLogger.warning("Resource String without colon!");
+      logResourceStringWithoutColon();
     } else {
       parts[0] = string.substring(0, indexOfColon).trim();
       if (indexOfColon == string.length() - 1) {
@@ -63,6 +69,14 @@ public class ResourceReader implements Closeable {
       }
     }
     return new Pair<String, String>(parts[0], parts[1]);
+  }
+
+  /**
+   * Logs a warning with the filename and the line number where a resource String without a colon was found.
+   */
+  private void logResourceStringWithoutColon() {
+    String location = "Line " + resourceParser.getLineNumber() + " of " + filename;
+    DLogger.warning(location + " does not have a colon!");
   }
 
   /**

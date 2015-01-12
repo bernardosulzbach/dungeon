@@ -17,9 +17,9 @@
 
 package org.dungeon.io;
 
-import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.Reader;
 
 /**
@@ -29,11 +29,18 @@ import java.io.Reader;
  */
 class ResourceParser implements Closeable {
 
-  // The wrapped BufferedReader.
-  private final BufferedReader br;
+  // The wrapped LineNumberReader.
+  private final LineNumberReader reader;
 
   // The last line retrieved by the readLine method, wrapped in a ResourceLine object.
   private ResourceLine line;
+
+  /**
+   * Returns the line number the parser is currently in.
+   */
+  int getLineNumber() {
+    return reader.getLineNumber();
+  }
 
   /**
    * Creates a convenient buffered reader for reading Dungeon resource files.
@@ -41,16 +48,16 @@ class ResourceParser implements Closeable {
    * @param in the Reader.
    */
   public ResourceParser(Reader in) {
-    br = new BufferedReader(in);
+    reader = new LineNumberReader(in);
   }
 
   /**
-   * Read the next line from the BufferedReader to the private variable {@code line}.
+   * Read the next line from the LineNumberReader to the private variable {@code line}.
    */
   private void readLine() {
     do {
       try {
-        String text = br.readLine();
+        String text = reader.readLine();
         // Do not create a ResourceLine with a null String.
         if (text == null) {
           line = null;
@@ -90,12 +97,12 @@ class ResourceParser implements Closeable {
   }
 
   /**
-   * Closes the underlying BufferedReader.
+   * Closes the underlying LineNumberReader.
    */
   @Override
   public void close() {
     try {
-      br.close();
+      reader.close();
     } catch (IOException e) {
       DLogger.warning(e.getMessage());
     }

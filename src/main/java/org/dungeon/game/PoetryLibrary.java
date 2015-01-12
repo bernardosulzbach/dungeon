@@ -56,7 +56,7 @@ public final class PoetryLibrary extends Library {
   @Override
   void load() {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("poems.txt"));
+    ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("poems.txt"), "poems.txt");
     final String IDENTIFIER_ID = "ID";
     final String IDENTIFIER_TITLE = "TITLE";
     final String IDENTIFIER_AUTHOR = "AUTHOR";

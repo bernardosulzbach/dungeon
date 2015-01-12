@@ -54,7 +54,7 @@ public class HintLibrary extends Library {
   @Override
   void load() {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("hints.txt"));
+    ResourceReader reader = new ResourceReader(classLoader.getResourceAsStream("hints.txt"), "hints.txt");
     final String HINT = "HINT";
     while (reader.readNextElement()) {
       hints.add(reader.getValue(HINT));
