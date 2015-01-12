@@ -55,6 +55,8 @@ import java.util.List;
 public class Hero extends Creature {
 
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
+  private static final int SECONDS_TO_LOOK_AT_THE_COVER_OF_THE_BOOK = 6;
+  private static final int SECONDS_TO_LEARN_A_SKILL = 60;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private final Date dateOfBirth;
   private final ExplorationLog explorationLog;
@@ -458,11 +460,11 @@ public class Hero extends Creature {
         if (getSkillList().hasSkill(skill.getID())) {
           IO.writeString("You already know " + skill.getName() + ".");
           // It takes some time to look to the cover of the book.
-          return 6;
+          return SECONDS_TO_LOOK_AT_THE_COVER_OF_THE_BOOK;
         } else {
           getSkillList().addSkill(skill);
           IO.writeString("You learned " + skill.getName() + ".");
-          return 60;
+          return SECONDS_TO_LEARN_A_SKILL;
         }
       } else {
         IO.writeString("You can only read books.");
