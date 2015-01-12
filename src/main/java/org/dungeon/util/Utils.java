@@ -133,17 +133,7 @@ public class Utils {
    * Prints a humanized message warning the user that the command used requires arguments.
    */
   public static void printMissingArgumentsMessage() {
-    switch (Engine.RANDOM.nextInt(3)) {
-      case 0:
-        IO.writeString("Provide some arguments.", Color.BLUE);
-        break;
-      case 1:
-        IO.writeString("Missing arguments.", Color.BLUE);
-        break;
-      case 2:
-        IO.writeString("This command requires arguments.", Color.BLUE);
-        break;
-    }
+    IO.writeString("This command requires arguments.");
   }
 
   /**
