@@ -153,7 +153,8 @@ public class Engine {
     IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
     if (attacker instanceof Hero) {
       Hero hero = (Hero) attacker;
-      hero.getBattleStatistics().addBattle(attacker, defender, attacker == survivor, turns);
+      boolean attackerWon = attacker == survivor;
+      Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
       hero.getExplorationLog().addKill(Game.getGameState().getHeroPosition());
     }
     battleCleanup(survivor, defeated);

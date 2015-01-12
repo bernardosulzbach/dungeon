@@ -147,7 +147,7 @@ public class Achievement {
    * @return a boolean.
    */
   boolean isFulfilled(Hero hero) {
-    return battle.isFulfilled(hero) && exploration.isFulfilled(hero);
+    return battle.isFulfilled() && exploration.isFulfilled(hero);
   }
 
   /**

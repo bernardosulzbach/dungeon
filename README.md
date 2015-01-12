@@ -25,7 +25,6 @@ Known Bugs
 
 Planned features
 ----------------
-- Write a total row on the ``saves`` output.
 - The Hero can have dreams during his sleep.
 - Remove the ``counters`` package. (Merge into ``stats``).
 - Alignment system. (Killing good creatures makes you evil)

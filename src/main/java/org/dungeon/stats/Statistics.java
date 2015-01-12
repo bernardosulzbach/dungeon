@@ -29,8 +29,18 @@ import java.io.Serializable;
  */
 public final class Statistics implements Serializable {
 
+  private final BattleStatistics battleStatistics = new BattleStatistics();
   private final WorldStatistics worldStatistics = new WorldStatistics();
-  private final CommandStatistics commandStats = new CommandStatistics();
+  private final CommandStatistics commandStatistics = new CommandStatistics();
+
+  /**
+   * Returns the BattleStatistics object of this Statistics.
+   *
+   * @return a BattleStatistics object.
+   */
+  public BattleStatistics getBattleStatistics() {
+    return battleStatistics;
+  }
 
   /**
    * Returns the WorldStatistics object of this Statistics.
@@ -45,7 +55,7 @@ public final class Statistics implements Serializable {
    * Adds an issued command to the statistics.
    */
   public void addCommand(IssuedCommand issuedCommand) {
-    commandStats.addCommand(issuedCommand);
+    commandStatistics.addCommand(issuedCommand);
   }
 
   /**
@@ -60,9 +70,9 @@ public final class Statistics implements Serializable {
    * Prints the statistics tracked by CommandStatistics.
    */
   private void printCommandStatistics() {
-    int commandCount = commandStats.getCommandCount();
-    int chars = commandStats.getChars();
-    int words = commandStats.getWords();
+    int commandCount = commandStatistics.getCommandCount();
+    int chars = commandStatistics.getChars();
+    int words = commandStatistics.getWords();
     IO.writeKeyValueString("Commands issued", String.valueOf(commandCount));
     IO.writeKeyValueString("Characters entered", String.valueOf(chars));
     IO.writeKeyValueString("Average characters per command", String.format("%.2f", (double) chars / commandCount));

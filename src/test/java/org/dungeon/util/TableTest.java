@@ -25,17 +25,17 @@ import java.util.Random;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class DTableTest {
+public class TableTest {
 
-  private static DTable dTable;
+  private static Table table;
 
   @Before
   public void createTable() {
     // Always create a new table before running a test.
-    dTable = new DTable("A", "B", "C");
+    table = new Table("A", "B", "C");
     // Insert 100 integers into A.
     for (int i = 0; i < 100; i++) {
-      dTable.insertRow(String.valueOf(i));
+      table.insertRow(String.valueOf(i));
     }
   }
 
@@ -45,12 +45,12 @@ public class DTableTest {
     // Insert 200 rows in the table.
     for (int i = 0; i < 100; i++) {
       if (random.nextBoolean()) {
-        dTable.insertRow(String.valueOf(i), String.valueOf(random.nextInt()));
+        table.insertRow(String.valueOf(i), String.valueOf(random.nextInt()));
       } else {
-        dTable.insertRow(String.valueOf(i), String.valueOf(random.nextInt()), "");
+        table.insertRow(String.valueOf(i), String.valueOf(random.nextInt()), "");
       }
       // Test if nulls are handled properly.
-      dTable.insertRow(null, null, null);
+      table.insertRow(null, null, null);
     }
   }
 
@@ -58,18 +58,18 @@ public class DTableTest {
   public void testContains() throws Exception {
     // Check for the 100 values inserted by createTable().
     for (int i = 0; i < 100; i++) {
-      assertTrue(dTable.contains(String.valueOf(i)));
+      assertTrue(table.contains(String.valueOf(i)));
     }
     // There should be 200 empty Strings, 100 in B and 100 in C.
-    assertTrue(dTable.contains(""));
+    assertTrue(table.contains(""));
     // There should not be any null.
-    assertFalse(dTable.contains(null));
+    assertFalse(table.contains(null));
   }
 
   @Test
   public void testGetDimensions() throws Exception {
     Dimensions expectedDimensions = new Dimensions(100, 3);
-    assertTrue(dTable.getDimensions().equals(expectedDimensions));
+    assertTrue(table.getDimensions().equals(expectedDimensions));
   }
 
 }

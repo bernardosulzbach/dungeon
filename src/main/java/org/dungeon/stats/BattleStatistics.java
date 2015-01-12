@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.counters;
+package org.dungeon.stats;
 
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.ID;

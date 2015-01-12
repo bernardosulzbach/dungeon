@@ -24,20 +24,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * DTable class that provides table functionality for printing in-game tables. Currently, all data is stored as Strings.
+ * Table class that provides table functionality for printing in-game tables.
+ * <p/>
+ * Currently, all data is stored as Strings.
  * <p/>
  * Created by Bernardo Sulzbach on 13/12/14.
  */
-public class DTable {
+public class Table {
 
+  private static final char HORIZONTAL_BAR = '─';
+  private static final char VERTICAL_BAR = '|';
+
+  /**
+   * The content of the Table.
+   */
   private final ArrayList<Column> columns;
 
   /**
-   * Constructs a DTable using the provided Strings as column headers.
+   * A List of Integers representing which rows should be preceded by horizontal separators.
+   * <p/>
+   * Repeated integers make multiple horizontal separators.
+   */
+  private CounterMap<Integer> separators;
+
+  /**
+   * Constructs a Table using the provided Strings as column headers.
    *
    * @param headers the columns' headers.
    */
-  public DTable(String... headers) {
+  public Table(String... headers) {
     columns = new ArrayList<Column>(headers.length);
     for (String header : headers) {
       columns.add(new Column(header));
@@ -63,6 +78,16 @@ public class DTable {
     } else {
       DLogger.warning("Tried to insert more values than columns!");
     }
+  }
+
+  /**
+   * Inserts a horizontal separator at the last row of the Table.
+   */
+  public void insertSeparator() {
+    if (separators == null) {
+      separators = new CounterMap<Integer>();
+    }
+    separators.incrementCounter(getDimensions().get(0));
   }
 
   /**
@@ -97,7 +122,7 @@ public class DTable {
    */
   public void print() {
     if (columns.size() == 0) {
-      DLogger.warning("Tried to print an empty DTable.");
+      DLogger.warning("Tried to print an empty Table.");
       return;
     }
 
@@ -108,28 +133,33 @@ public class DTable {
 
     int rowCount = columns.get(0).rows.size();
 
-    StringBuilder sb = new StringBuilder(Constants.COLS * rowCount + 16);
+    StringBuilder builder = new StringBuilder(Constants.COLS * rowCount + 16);
     String[] currentRow = new String[columnCount];
 
     // Insert headers
     for (int i = 0; i < columnCount; i++) {
       currentRow[i] = columns.get(i).header;
     }
-    appendRow(sb, columnWidth, currentRow);
+    appendRow(builder, columnWidth, currentRow);
 
     // A horizontal separator.
-    appendHorizontalSeparator(sb, columnWidth, columnCount);
+    appendHorizontalSeparator(builder, columnWidth, columnCount);
 
     // Insert table body.
-    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-      for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-        currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
+    for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
+      for (int remainingSeparators = separators.getCounter(rowIndex); remainingSeparators > 0; remainingSeparators--) {
+        appendHorizontalSeparator(builder, columnWidth, columnCount);
       }
-      appendRow(sb, columnWidth, currentRow);
+      if (rowIndex != rowCount) {
+        for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+          currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
+        }
+        appendRow(builder, columnWidth, currentRow);
+      }
     }
 
     // Dump to the window.
-    IO.writeString(sb.toString());
+    IO.writeString(builder.toString());
   }
 
   /**
@@ -153,7 +183,7 @@ public class DTable {
         }
       }
       if (i < values.length - 1) {
-        stringBuilder.append('|');
+        stringBuilder.append(VERTICAL_BAR);
       }
     }
     stringBuilder.append('\n');
@@ -166,7 +196,7 @@ public class DTable {
    * @param columnWidth   the width of the columns of the table.
    */
   private void appendHorizontalSeparator(StringBuilder stringBuilder, int columnWidth, int columnCount) {
-    String pseudoValue = Utils.makeRepeatedCharacterString(columnWidth, '-');
+    String pseudoValue = Utils.makeRepeatedCharacterString(columnWidth, HORIZONTAL_BAR);
     String[] pseudoRow = new String[columnCount];
     Arrays.fill(pseudoRow, pseudoValue);
     appendRow(stringBuilder, columnWidth, pseudoRow);
@@ -174,8 +204,8 @@ public class DTable {
 
   private class Column {
     final String header;
-    int widestValue;
     final ArrayList<String> rows;
+    int widestValue;
 
     public Column(String header) {
       rows = new ArrayList<String>();
