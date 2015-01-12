@@ -32,7 +32,7 @@ import java.util.Arrays;
  */
 public class Table {
 
-  private static final char HORIZONTAL_BAR = '─';
+  private static final char HORIZONTAL_BAR = '-';
   private static final char VERTICAL_BAR = '|';
 
   /**
