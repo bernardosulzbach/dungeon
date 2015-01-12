@@ -117,7 +117,7 @@ public class Engine {
    * @param defender the defender.
    * @return an integer representing the number of turns the battle had.
    */
-  public static int battle(Creature attacker, Creature defender) {
+  public static int battle(Hero attacker, Creature defender) {
     if (attacker == defender) {
       // Two different messages.
       if (RANDOM.nextBoolean()) {
@@ -153,12 +153,9 @@ public class Engine {
       defeated = attacker;
     }
     IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
-    if (attacker instanceof Hero) {
-      Hero hero = (Hero) attacker;
-      boolean attackerWon = attacker == survivor;
-      Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
-      Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
-    }
+    boolean attackerWon = attacker == survivor;
+    Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
+    Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
     battleCleanup(survivor, defeated);
     return turns;
   }
