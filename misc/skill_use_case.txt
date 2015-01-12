@@ -1,6 +1,8 @@
-A sketch of the use case of Skill.
+Learning and Using Skills
 
 1. All Creatures are constructed with an empty SkillList.
-2. Call addSkill(Skill) with a static Skill in createHeroAndStartingLocation().
-3. AttackAlgorithm's attack() will check for Skills in the SkillSet.
-4. If a Skill is found, a message will be printed and the target will be damaged by the Skill's damage.
+2. The player, with a proper Item in hands, use the "read" command.
+3. Using the SkillDefinition stored in GameData for the Skill ID retrieved from the Item the game makes a new Skill.
+4. The program calls addSkill(Skill) on the Hero's SkillList.
+5. The player call the "rotation" command to set up a rotation of Skills.
+6. The Hero's attack algorithm is responsible for using the Skills set up in the rotation.
