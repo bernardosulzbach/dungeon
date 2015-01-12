@@ -120,12 +120,11 @@ public class Utils {
    * Simulates a random roll.
    *
    * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
+   *               Will be passed to Percentage's constructors in order to guarantee that it is a valid value.
    * @return a boolean indicating if the roll was successful or not.
    */
   public static boolean roll(double chance) {
-    if (chance < 0 || chance > 1) {
-      throw new IllegalArgumentException("chance must be nonnegative and smaller than 1.");
-    }
+    chance = (new Percentage(chance)).toDouble();
     return chance > Engine.RANDOM.nextDouble();
   }
 
@@ -145,21 +144,6 @@ public class Utils {
    */
   public static boolean startsWithIgnoreCase(String a, String b) {
     return a.toLowerCase().startsWith(b.toLowerCase());
-  }
-
-  /**
-   * Returns all the contents of a string after the first colon.
-   *
-   * @param string the string of text.
-   * @return a String smaller than the one passed as an argument.
-   */
-  public static String getAfterColon(String string) {
-    int colonPosition = string.indexOf(':');
-    if (colonPosition == -1) {
-      throw new IllegalArgumentException("string does not have a colon.");
-    } else {
-      return string.substring(colonPosition + 1);
-    }
   }
 
   /**
