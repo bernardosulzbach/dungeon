@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.io;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.game.Pair;
 
 import java.io.Closeable;
 import java.io.InputStream;
@@ -29,7 +29,7 @@ import java.util.HashMap;
  * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
-class ResourceReader implements Closeable {
+public class ResourceReader implements Closeable {
 
   private final HashMap<String, String> map;
   private final ResourceParser resourceParser;

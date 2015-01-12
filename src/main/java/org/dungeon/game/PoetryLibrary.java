@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
+import org.dungeon.io.ResourceReader;
 import org.dungeon.util.Poem;
 import org.dungeon.util.PoemBuilder;
 

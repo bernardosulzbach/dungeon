@@ -15,9 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
-
-import org.dungeon.io.DLogger;
+package org.dungeon.io;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

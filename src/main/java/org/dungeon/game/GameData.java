@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.io.DLogger;
+import org.dungeon.io.ResourceReader;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.util.StopWatch;

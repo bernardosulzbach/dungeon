@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
+import org.dungeon.io.ResourceReader;
 
 import java.util.ArrayList;
 
