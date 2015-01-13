@@ -98,6 +98,8 @@ public final class Statistics implements Serializable {
 
   /**
    * Prints the spawn statistics tracked by WorldStatistics.
+   *
+   * The Hero is not tracked anymore.
    */
   public void printSpawnStatistics() {
     CounterMap<String> spawnCounter = worldStatistics.getSpawnCounter();
