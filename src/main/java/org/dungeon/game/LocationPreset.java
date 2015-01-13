@@ -31,28 +31,40 @@ final class LocationPreset extends Entity {
   private final ArrayList<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
   private final ArrayList<ItemFrequencyPair> items = new ArrayList<ItemFrequencyPair>();
   private Percentage lightPermittivity;
+  private int blobSize;
 
   LocationPreset(String id, String type, String name) {
     super(new ID(id), type, name);
   }
 
-  public LocationPreset addSpawner(SpawnerPreset spawner) {
-    this.spawners.add(spawner);
-    return this;
-  }
-
-  public LocationPreset addItem(String id, Double likelihood) {
-    this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
-    return this;
+  public List<SpawnerPreset> getSpawners() {
+    return spawners;
   }
 
   /**
-   * Block exiting and entering into the location by a given direction.
+   * Adds a Spawner to this Location based on a SpawnerPreset.
    *
-   * @param direction a Direction to be blocked.
+   * @param preset the SpawnerPreset
+   * @return a reference to this LocationPreset
    */
-  public LocationPreset block(Direction direction) {
-    blockedEntrances.block(direction);
+  public LocationPreset addSpawner(SpawnerPreset preset) {
+    this.spawners.add(preset);
+    return this;
+  }
+
+  public List<ItemFrequencyPair> getItems() {
+    return items;
+  }
+
+  /**
+   * Adds an Item to this Location based on an ItemFrequencyPair.
+   *
+   * @param id         the ID string of the item
+   * @param likelihood the likelihood of the item appearing
+   * @return a reference to this LocationPreset
+   */
+  public LocationPreset addItem(String id, Double likelihood) {
+    this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
     return this;
   }
 
@@ -60,12 +72,14 @@ final class LocationPreset extends Entity {
     return new BlockedEntrances(blockedEntrances);
   }
 
-  public List<SpawnerPreset> getSpawners() {
-    return spawners;
-  }
-
-  public List<ItemFrequencyPair> getItems() {
-    return items;
+  /**
+   * Blocks exiting and entering into the location by a given direction.
+   *
+   * @param direction a Direction to be blocked.
+   */
+  public LocationPreset block(Direction direction) {
+    blockedEntrances.block(direction);
+    return this;
   }
 
   public Percentage getLightPermittivity() {
@@ -76,8 +90,16 @@ final class LocationPreset extends Entity {
     this.lightPermittivity = new Percentage(lightPermittivity);
   }
 
+  public int getBlobSize() {
+    return blobSize;
+  }
+
+  public void setBlobSize(int blobSize) {
+    this.blobSize = blobSize;
+  }
+
   /**
-   * Calling this method trims all ArrayLists to size, reducing the memory used by this LocationPreset.
+   * Trims all ArrayLists to size, reducing the memory used by this LocationPreset.
    * <p/>
    * This method should be called after all modifications have been made.
    */
