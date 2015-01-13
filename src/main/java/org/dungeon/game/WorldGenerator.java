@@ -17,8 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.IO;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,6 @@ public class WorldGenerator implements Serializable {
   private final World world;
   private final RiverGenerator riverGenerator;
   private int chunkSide;
-  private int generatedLocations;
 
   /**
    * Instantiates a new World generator. This should be called by the constructor of a World object.
@@ -74,18 +71,18 @@ public class WorldGenerator implements Serializable {
   }
 
   /**
-   * Retrieves a random Location made from a LocationPreset whose type is "Land".
+   * Retrieves a random LocationPreset whose type is "Land".
    *
-   * @return a Location.
+   * @return a LocationPreset
    */
-  private Location createRandomLandLocation() {
+  private LocationPreset getRandomLandLocationPreset() {
     // After getting something better than random locations, we will have the desired Location ID here.
     List<LocationPreset> locationPresets = new ArrayList<LocationPreset>(GameData.getLocationPresets().values());
-    LocationPreset selectedLocation;
+    LocationPreset selectedPreset;
     do {
-      selectedLocation = locationPresets.get(Engine.RANDOM.nextInt(locationPresets.size()));
-    } while (!"Land".equals(selectedLocation.getType()));
-    return new Location(selectedLocation, world);
+      selectedPreset = locationPresets.get(Engine.RANDOM.nextInt(locationPresets.size()));
+    } while (!"Land".equals(selectedPreset.getType()));
+    return selectedPreset;
   }
 
   private Location createRiverLocation() {
@@ -98,38 +95,34 @@ public class WorldGenerator implements Serializable {
 
   public void expand(Point p) {
     riverGenerator.expand(p, chunkSide);
-    Point current_point;
+    Point currentPoint;
     // Get the closest smaller chunkSide multiple of x and y.
     // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes x_start == -5 and y_start == 0.
+    LocationPreset currentLocationPreset = null;
+    int remainingLocationsOfCurrentPreset = 0;
     int pX = p.getX();
     int pY = p.getY();
     int x_start = pX < 0 ? chunkSide * (((pX + 1) / chunkSide) - 1) : chunkSide * (pX / chunkSide);
     int y_start = pY < 0 ? chunkSide * (((pY + 1) / chunkSide) - 1) : chunkSide * (pY / chunkSide);
     for (int x = x_start; x < x_start + chunkSide; x++) {
       for (int y = y_start; y < y_start + chunkSide; y++) {
-        current_point = new Point(x, y);
-        if (!world.hasLocation(current_point)) {
-          if (riverGenerator.isRiver(current_point)) {
-            world.addLocation(createRiverLocation(), current_point);
-          } else if (riverGenerator.isBridge(current_point)) {
-            world.addLocation(createBridgeLocation(), current_point);
+        currentPoint = new Point(x, y);
+        if (!world.hasLocation(currentPoint)) {
+          if (riverGenerator.isRiver(currentPoint)) {
+            world.addLocation(createRiverLocation(), currentPoint);
+          } else if (riverGenerator.isBridge(currentPoint)) {
+            world.addLocation(createBridgeLocation(), currentPoint);
           } else {
-            // TODO: come up with something better than random locations.
-            world.addLocation(createRandomLandLocation(), current_point);
+            if (currentLocationPreset == null || remainingLocationsOfCurrentPreset == 0) {
+              currentLocationPreset = getRandomLandLocationPreset();
+              remainingLocationsOfCurrentPreset = currentLocationPreset.getBlobSize();
+            }
+            world.addLocation(new Location(currentLocationPreset, world), currentPoint);
+            remainingLocationsOfCurrentPreset--;
           }
-          generatedLocations++;
         }
       }
     }
-  }
-
-  /**
-   * Outputs some basic statistics about this WorldGenerator.
-   */
-  public void printStatistics() {
-    IO.writeKeyValueString("Chunk side", String.valueOf(chunkSide));
-    IO.writeKeyValueString("Chunk size", String.valueOf(chunkSide * chunkSide));
-    IO.writeKeyValueString("Locations", String.valueOf(generatedLocations));
   }
 
 }
