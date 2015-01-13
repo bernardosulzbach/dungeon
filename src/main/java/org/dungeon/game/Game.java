@@ -126,7 +126,7 @@ public class Game {
     } else if (issuedCommand.firstTokenEquals("kill") || issuedCommand.firstTokenEquals("attack")) {
       result.turnLength = gameState.getHero().attackTarget(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("statistics")) {
-      gameState.printGameStatistics();
+      gameState.printStatistics(issuedCommand);
     } else if (issuedCommand.firstTokenEquals("achievements")) {
       gameState.printUnlockedAchievements();
     } else if (issuedCommand.firstTokenEquals("time") || issuedCommand.firstTokenEquals("date")) {

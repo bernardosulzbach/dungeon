@@ -19,8 +19,11 @@ package org.dungeon.stats;
 
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
+import org.dungeon.util.CounterMap;
 
 import java.io.Serializable;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Statistics class that stores, processes and prints game statistics.
@@ -91,7 +94,17 @@ public final class Statistics implements Serializable {
   private void printWorldStatistics() {
     IO.writeKeyValueString("Created Locations", String.valueOf(worldStatistics.getLocationCount()));
     IO.writeKeyValueString("Spawned Creatures", String.valueOf(worldStatistics.getCreatureCount()));
-    // TODO: print specific creature spawn counts (as a tree?).
+  }
+
+  /**
+   * Prints the spawn statistics tracked by WorldStatistics.
+   */
+  public void printSpawnStatistics() {
+    CounterMap<String> spawnCounter = worldStatistics.getSpawnCounter();
+    SortedSet<String> sortedSet = new TreeSet<String>(spawnCounter.keySet());
+    for (String string : sortedSet) {
+      IO.writeKeyValueString(string, String.valueOf(spawnCounter.getCounter(string)));
+    }
   }
 
 }

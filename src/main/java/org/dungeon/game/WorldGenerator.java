@@ -96,12 +96,12 @@ public class WorldGenerator implements Serializable {
   public void expand(Point p) {
     riverGenerator.expand(p, chunkSide);
     Point currentPoint;
-    // Get the closest smaller chunkSide multiple of x and y.
-    // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes x_start == -5 and y_start == 0.
     LocationPreset currentLocationPreset = null;
     int remainingLocationsOfCurrentPreset = 0;
     int pX = p.getX();
     int pY = p.getY();
+    // Get the closest smaller chunkSide multiple of x and y.
+    // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes x_start == -5 and y_start == 0.
     int x_start = pX < 0 ? chunkSide * (((pX + 1) / chunkSide) - 1) : chunkSide * (pX / chunkSide);
     int y_start = pY < 0 ? chunkSide * (((pY + 1) / chunkSide) - 1) : chunkSide * (pY / chunkSide);
     for (int x = x_start; x < x_start + chunkSide; x++) {

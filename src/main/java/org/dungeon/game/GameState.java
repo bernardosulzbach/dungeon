@@ -207,8 +207,13 @@ public class GameState implements Serializable {
   /**
    * Prints the game statistics.
    */
-  public void printGameStatistics() {
-    statistics.printAllStatistics();
+  // TODO: after implementing Command objects in the Game class, do not pass an IssuedCommand to this method.
+  public void printStatistics(IssuedCommand issuedCommand) {
+    if (issuedCommand.hasArguments() && issuedCommand.firstArgumentEquals("spawns")) {
+      statistics.printSpawnStatistics();
+    } else {
+      statistics.printAllStatistics();
+    }
   }
 
   /**
