@@ -19,6 +19,7 @@ package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
+import org.dungeon.util.AutomaticShuffledRange;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 public class HintLibrary extends Library {
 
   private final ArrayList<String> hints = new ArrayList<String>();
+
+  private AutomaticShuffledRange automaticShuffledRange;
 
   /**
    * Returns how many hints the library has.
@@ -45,10 +48,12 @@ public class HintLibrary extends Library {
   }
 
   /**
-   * Return the hint at the specified index.
+   * Returns the next Hint string according to the underlying {@code ShuffledRange}.
+   *
+   * @return the next Hint string
    */
-  public String getHint(int index) {
-    return hints.get(index);
+  public String getNextHint() {
+    return hints.get(automaticShuffledRange.getNext());
   }
 
   @Override
@@ -61,6 +66,7 @@ public class HintLibrary extends Library {
     }
     reader.close();
     hints.trimToSize();
+    automaticShuffledRange = new AutomaticShuffledRange(0, hints.size());
     DLogger.info("Loaded " + hints.size() + " hints.");
   }
 
