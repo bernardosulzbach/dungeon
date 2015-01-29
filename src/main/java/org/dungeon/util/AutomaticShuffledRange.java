@@ -20,8 +20,9 @@ package org.dungeon.util;
 /**
  * An automated ShuffledRange.
  * <p/>
- * Objects of this class wrap a {@code ShuffledRange} and allow retrieving elements from it until its end is reached.
- * When this happens, the index is reset and {@code shuffle} is called on the underlying {@code ShuffledRange}.
+ * Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}.
+ * When the end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on
+ * the {@code ShuffledRange}.
  * <p/>
  * Created by Bernardo on 19/01/2015.
  */
@@ -48,6 +49,7 @@ public class AutomaticShuffledRange {
   public int getNext() {
     int value = shuffledRange.get(index);
     index++;
+    // TODO: avoid letting the first integer after shuffling be equal to the last integer before shuffling.
     if (index == shuffledRange.getSize()) {
       index = 0;
       shuffledRange.shuffle();
