@@ -40,6 +40,7 @@ import java.util.Map;
 public final class GameData {
 
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
+  private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
 
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
@@ -53,6 +54,10 @@ public final class GameData {
 
   public static PoetryLibrary getPoetryLibrary() {
     return poetryLibrary;
+  }
+
+  public static DreamLibrary getDreamLibrary() {
+    return dreamLibrary;
   }
 
   public static HintLibrary getHintLibrary() {
