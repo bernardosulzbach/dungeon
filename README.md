@@ -26,18 +26,18 @@ Starting location seems empty at the beginning.
 
 Planned features
 ----------------
-- Alignment system. (Killing good creatures makes you evil)
-- Command objects. (How?)
-- Store command help in the respective Command object.
-- Store aliases independently and let the player add and remove aliases.
-- A ``map`` command that prints an ASCII map of the locations the player knows.
-- Creatures will have a bloodAlcoholContent variable (% by volume).
-- AttackAlgorithms will account for insobriety.
-- Implement a third coordinate to Point.
-- Implement dungeons. (in z = -1)
-- Farming. (Gathering seeds, planting and harvesting)
-- Factions.
-- Reputations.
+Alignment system. (Killing good creatures makes you evil)  
+Command objects. (How?)  
+Store command help in the respective Command object.  
+Store aliases independently and let the player add and remove aliases.  
+A ``map`` command that prints an ASCII map of the locations the player knows.  
+Creatures will have a bloodAlcoholContent variable (% by volume).  
+AttackAlgorithms will account for insobriety.  
+Implement a third coordinate to Point.  
+Implement dungeons. (in z = -1)  
+Farming. (Gathering seeds, planting and harvesting)  
+Factions.  
+Reputations.  
 
 License
 -------
