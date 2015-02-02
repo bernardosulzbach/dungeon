@@ -22,6 +22,7 @@ TODO
 
 Known Bugs
 ----------
+Starting location seems empty at the beginning.
 
 Planned features
 ----------------
