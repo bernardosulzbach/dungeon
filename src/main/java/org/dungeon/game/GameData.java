@@ -100,7 +100,7 @@ public final class GameData {
    * Loads all ItemBlueprints to a HashMap.
    */
   private static void loadItemBlueprints() {
-    ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("items.txt"), "items.txt");
+    ResourceReader resourceReader = new ResourceReader("items.txt");
     while (resourceReader.readNextElement()) {
       ItemBlueprint blueprint = new ItemBlueprint();
       blueprint.setID(new ID(resourceReader.getValue("ID")));
@@ -136,7 +136,7 @@ public final class GameData {
    * Loads all CreatureBlueprints to a HashMap.
    */
   private static void loadCreatureBlueprints() {
-    ResourceReader resourceReader = new ResourceReader(loader.getResourceAsStream("creatures.txt"), "creatures.txt");
+    ResourceReader resourceReader = new ResourceReader("creatures.txt");
     while (resourceReader.readNextElement()) {
       CreatureBlueprint blueprint = new CreatureBlueprint();
       blueprint.setID(new ID(resourceReader.getValue("ID")));
@@ -269,7 +269,7 @@ public final class GameData {
     // TODO: load this from a resource file.
     ACHIEVEMENTS = new HashMap<ID, Achievement>();
 
-    ResourceReader reader = new ResourceReader(loader.getResourceAsStream("achievements.txt"), "achievements.txt");
+    ResourceReader reader = new ResourceReader("achievements.txt");
 
     while (reader.readNextElement()) {
       String id = reader.getValue("ID");

@@ -35,16 +35,17 @@ public class ResourceReader implements Closeable {
   private final ResourceParser resourceParser;
   private final String filename;
 
+  private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
   private Pair<String, String> lastPair;
 
   /**
    * Constructs a ResourceReader from an InputStream and the respective resource file's name.
    *
-   * @param inputStream the InputStream
    * @param filename    the name of the resource file
    */
-  public ResourceReader(InputStream inputStream, String filename) {
-    resourceParser = new ResourceParser(new InputStreamReader(inputStream));
+  public ResourceReader(String filename) {
+    resourceParser = new ResourceParser(new InputStreamReader(classLoader.getResourceAsStream(filename)));
     this.filename = filename;
   }
 
