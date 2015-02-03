@@ -26,7 +26,6 @@ import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
-import org.dungeon.game.Pair;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.Selectable;
@@ -46,7 +45,9 @@ import org.dungeon.util.Utils;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -217,36 +218,24 @@ public class Hero extends Creature {
     Point pos = Game.getGameState().getHeroPosition();
     // An ArrayList of Pairs of String (Location name) and ArrayLists of Directions.
     // The elements of the first List relate Location names to all Directions where there is a Location with that name.
-    // TODO: substitute this by a HashMap of String, ArrayList<Direction>.
-    ArrayList<Pair<String, ArrayList<Direction>>> pairs = new ArrayList<Pair<String, ArrayList<Direction>>>();
+    HashMap<String, ArrayList<Direction>> visibleLocations = new HashMap<String, ArrayList<Direction>>();
     for (Direction dir : Direction.values()) {
-      // Avoids printing the name of the Location you just left.
+      // Do not print the name of the Location you just left.
       if (walkedInFrom == null || !dir.equals(walkedInFrom)) {
-        // True if a pair with this Location name was not found. False otherwise.
-        boolean pairWithNameNotFound = true;
         String locationName = world.getLocation(new Point(pos, dir)).getName();
-        for (Pair<String, ArrayList<Direction>> pair : pairs) {
-          if (pair.a.equals(locationName)) {
-            pair.b.add(dir);
-            pairWithNameNotFound = false;
-            // There will not be another positive match in the ArrayList, therefore it is good to break this loop.
-            break;
-          }
+        if (!visibleLocations.containsKey(locationName)) {
+          visibleLocations.put(locationName, new ArrayList<Direction>());
         }
-        if (pairWithNameNotFound) {
-          ArrayList<Direction> directionList = new ArrayList<Direction>();
-          directionList.add(dir);
-          pairs.add(new Pair<String, ArrayList<Direction>>(locationName, directionList));
-        }
+        visibleLocations.get(locationName).add(dir);
       }
     }
     // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
     StringBuilder stringBuilder = new StringBuilder(140);
-    for (Pair<String, ArrayList<Direction>> pair : pairs) {
+    for (Entry<String, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
       stringBuilder.append("To ");
-      stringBuilder.append(enumerateDirections(pair.b));
+      stringBuilder.append(enumerateDirections(entry.getValue()));
       stringBuilder.append(" you see ");
-      stringBuilder.append(pair.a);
+      stringBuilder.append(entry.getKey());
       stringBuilder.append(".\n");
     }
     IO.writeString(stringBuilder.toString());
