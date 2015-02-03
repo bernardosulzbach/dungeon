@@ -28,8 +28,7 @@ import java.awt.Color;
 import java.util.Random;
 
 /**
- * Engine class that contains most static methods that need to be called to
- * alter a GameState object.
+ * Engine class that contains most static methods that need to be called to alter a GameState object.
  *
  * @author Bernardo Sulzbach
  */
@@ -47,8 +46,7 @@ public class Engine {
   }
 
   /**
-   * Iterates over all achievements in GameData, trying to unlock yet to be
-   * unlocked achievements.
+   * Iterates over all achievements in GameData, trying to unlock yet to be unlocked achievements.
    */
   private static void refreshAchievements() {
     Hero hero = Game.getGameState().getHero();
@@ -58,8 +56,7 @@ public class Engine {
   }
 
   /**
-   * Refreshes all relevant Spawners in the world, currently, that is the
-   * spawner of the location the Hero is at.
+   * Refreshes all relevant Spawners in the world, currently, that is the spawner of the location the Hero is at.
    */
   private static void refreshSpawners() {
     Game.getGameState().getHeroLocation().refreshSpawners();
