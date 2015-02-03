@@ -39,6 +39,7 @@ public class Game {
     GameData.loadGameData();
     gameWindow = new GameWindow();
     gameState = Loader.loadGame(null);
+    Engine.refresh();
   }
 
   public static GameWindow getGameWindow() {
