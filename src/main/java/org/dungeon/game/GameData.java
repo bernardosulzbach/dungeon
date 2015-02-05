@@ -71,9 +71,7 @@ public final class GameData {
     loadCreatureBlueprints();
     createSkills();
     loadLocationPresets();
-
-    createAchievements();
-
+    loadAchievements();
     loadLicense();
 
     DLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
@@ -257,15 +255,9 @@ public final class GameData {
     DLogger.info("Created " + locationPresets.size() + " location presets.");
   }
 
-  /**
-   * Creates all Achievements.
-   */
-  private static void createAchievements() {
-    // TODO: load this from a resource file.
+  private static void loadAchievements() {
     ACHIEVEMENTS = new HashMap<ID, Achievement>();
-
     ResourceReader reader = new ResourceReader("achievements.txt");
-
     while (reader.readNextElement()) {
       String id = reader.getValue("ID");
       String name = reader.getValue("NAME");
