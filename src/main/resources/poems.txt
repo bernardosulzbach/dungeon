@@ -105,8 +105,8 @@ I hated you when it would have taken less courage     \
 to love.
 
 ID: 6
-TITLE: Do not go gentle into that good night
-AUTHOR: Dylan Thomas
+TITLE:   Do not go gentle into that good night
+AUTHOR:  Dylan Thomas
 CONTENT: \
 Do not go gentle into that good night,              \
 Old age should burn and rave at close of day;       \
@@ -134,8 +134,8 @@ Do not go gentle into that good night.              \
 Rage, rage against the dying of the light.
 
 ID: 7
-TITLE: In Flanders Fields
-AUTHOR: John McCrae
+TITLE:   In Flanders Fields
+AUTHOR:  John McCrae
 CONTENT: \
 In Flanders fields the poppies blow    \
 Between the crosses, row on row,       \
@@ -156,8 +156,8 @@ We shall not sleep, though poppies grow\
 In Flanders fields.
 
 ID: 8
-TITLE: Heaven Is What I Cannot Reach!
-AUTHOR: Emily Dickinson
+TITLE:   Heaven Is What I Cannot Reach!
+AUTHOR:  Emily Dickinson
 CONTENT: \
 Heaven is what I cannot reach!       \
 The apple on the tree,               \
@@ -170,8 +170,8 @@ Behind the hill, the house behind, --\
 There Paradise is found!
 
 ID: 9
-TITLE: The Raven
-AUTHOR: Edgar Allan Poe
+TITLE:   The Raven
+AUTHOR:  Edgar Allan Poe
 CONTENT: \
 ONCE upon a midnight dreary, while I pondered, weak and weary,              \
 Over many a quaint and curious volume of forgotten lore,—                   \
@@ -300,8 +300,8 @@ And my soul from out that shadow that lies floating on the floor            \
     Shall be lifted—nevermore!
 
 ID: 10
-TITLE: Morning
-AUTHOR: Billy Collins
+TITLE:   Morning
+AUTHOR:  Billy Collins
 CONTENT: \
 Why do we bother with the rest of the day,      \
 the swale of the afternoon,                     \
@@ -331,8 +331,8 @@ and the lawn steaming like a horse              \
 in the early morning.
 
 ID: 11
-TITLE: If You Forget Me
-AUTHOR: Pablo Neruda
+TITLE:   If You Forget Me
+AUTHOR:  Pablo Neruda
 CONTENT: \
 I want you to know                             \
 one thing.                                     \
@@ -389,8 +389,8 @@ and as long as you live it will be in your arms\
 without leaving mine.
 
 ID: 12
-TITLE: Dreams
-AUTHOR: Langston Hughes
+TITLE:   Dreams
+AUTHOR:  Langston Hughes
 CONTENT: \
 Hold fast to dreams         \
 For if dreams die           \
@@ -402,8 +402,8 @@ Life is a barren field      \
 Frozen with snow.
 
 ID: 13
-TITLE: Fox
-AUTHOR: Caki Wilkinson
+TITLE:   Fox
+AUTHOR:  Caki Wilkinson
 CONTENT: \
 The yards grow ghosts. Between the limbs and wings,\
 bleached street-lit things, I'm best at moving on. \
