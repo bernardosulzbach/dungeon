@@ -15,9 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.debug;
-
-import org.dungeon.game.IssuedCommand;
+package org.dungeon.game;
 
 /**
  * Command abstract class that defines a type for command objects.
@@ -28,19 +26,22 @@ import org.dungeon.game.IssuedCommand;
  */
 public abstract class Command {
 
-  private final String name;
+  public final String name;
+  public final String info;
 
   public Command(String name) {
     this.name = name;
+    this.info = null;
   }
 
-  public String getName() {
-    return name;
+  public Command(String name, String info) {
+    this.name = name;
+    this.info = info;
   }
 
   /**
    * Executes the Command, given an IssuedCommand.
    */
-  abstract void execute(IssuedCommand issuedCommand);
+  abstract public void execute(IssuedCommand issuedCommand);
 
 }

@@ -18,6 +18,7 @@
 package org.dungeon.debug;
 
 import org.dungeon.creatures.Creature;
+import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
@@ -54,7 +55,7 @@ public class DebugTools {
         initialize();
       }
       for (Command command : commands) {
-        if (issuedCommand.firstArgumentEquals(command.getName())) {
+        if (issuedCommand.firstArgumentEquals(command.name)) {
           command.execute(issuedCommand);
           return;
         }
@@ -80,44 +81,44 @@ public class DebugTools {
     });
     commands.add(new Command("tomorrow") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         Game.getGameState().getWorld().rollDate(24 * 60 * 60);
         IO.writeString("A day has passed.");
       }
     });
     commands.add(new Command("location") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         printCurrentLocationInformation();
       }
     });
     commands.add(new Command("saved") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         printIsSaved();
       }
     });
     commands.add(new Command("list") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         listAllArguments();
       }
     });
     commands.add(new Command("wait") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         DebugTools.wait(issuedCommand);
       }
     });
     commands.add(new Command("time") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         printTime();
       }
     });
     commands.add(new Command("give") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         if (issuedCommand.getTokenCount() >= 3) {
           give(issuedCommand.getArguments()[1]);
         } else {
@@ -128,7 +129,7 @@ public class DebugTools {
     // TODO: make a more generic command such as "spawn".
     commands.add(new Command("dummy") {
       @Override
-      void execute(IssuedCommand issuedCommand) {
+      public void execute(IssuedCommand issuedCommand) {
         spawnDummyInHeroLocation();
       }
     });
@@ -176,7 +177,7 @@ public class DebugTools {
     StringBuilder builder = new StringBuilder();
     builder.append("Valid commands:");
     for (Command command : commands) {
-      builder.append("\n ").append(command.getName());
+      builder.append("\n ").append(command.name);
     }
     IO.writeString(builder.toString());
   }
