@@ -43,7 +43,6 @@ public class DreamLibrary extends Library {
 
   @Override
   void load() {
-    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     ResourceReader reader = new ResourceReader("dreams.txt");
     while (reader.readNextElement()) {
       dreams.add(reader.getValue("DREAM"));

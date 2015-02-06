@@ -1,15 +1,5 @@
-ID: 1
 DREAM: You dream of a river of snakes. The snakes fly into the air, away from you.
-
-ID: 2
-DREAM: You awaken having dreams of power, flowing out from books, and flying into your head.
-
-ID: 3
+DREAM: You have dreams of power, flowing out from books, and flying into your head.
 DREAM: You have a nightmare about a tower burning endlessly through the night while laughter rings out.
-
-ID: 4
 DREAM: In your dreams, you see an orc stomping over two small rabbits.
-
-ID: 5
-DREAM: You dream about a man stronger than you staring you from the other side of a circular table.\
-       His grin terrifies you.
+DREAM: You dream about a man stronger than you staring you from the other side of a circular table. His grin terrifies you.

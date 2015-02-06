@@ -1,19 +1,6 @@
-ID: 1
 HINT: Attacks against critters deal 100% bonus damage.
-
-ID: 2
 HINT: Equipped items are colored purple in your inventory.
-
-ID: 3
 HINT: Every combatant movement is considered to be a battle turn.
-
-ID: 4
-HINT: \
-If the creature has a weapon, it will be used to perform the attack.\
-Otherwise, the creature will attack with its bare hands.
-
-ID: 5
+HINT: If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with its bare hands.
 HINT: The command 'achievements' will also show the total number of achievements.
-
-ID: 6
 HINT: There is a 'poem' command that prints a poem to the screen.
