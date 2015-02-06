@@ -20,7 +20,6 @@ package org.dungeon.util;
 import org.dungeon.game.Engine;
 import org.dungeon.game.GameData;
 import org.dungeon.game.Selectable;
-import org.dungeon.help.Help;
 import org.dungeon.io.IO;
 
 import java.awt.Color;
@@ -56,9 +55,7 @@ public class Utils {
    */
   public static void printInvalidCommandMessage(String command) {
     IO.writeString(String.format(Constants.INVALID_COMMAND, command), Color.RED);
-    if (Help.isInitialized()) {
-      IO.writeString(Constants.SUGGEST_COMMANDS, Color.ORANGE);
-    }
+    IO.writeString(Constants.SUGGEST_COMMANDS, Color.ORANGE);
   }
 
   /**
@@ -204,18 +201,6 @@ public class Utils {
   }
 
   /**
-   * Tests if a string only contains whitespaces and returns true if it does.
-   */
-  public static boolean isNotBlankString(String str) {
-    for (char c : str.toCharArray()) {
-      if (!Character.isWhitespace(c)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
    * Strips all newlines and spaces at the end of the string.
    */
   public static String clearEnd(String str) {
@@ -255,11 +240,7 @@ public class Utils {
   }
 
   public static void printAmbiguousSelectionMessage() {
-    if (Engine.RANDOM.nextBoolean()) {
-      IO.writeString("Provided input is ambiguous.");
-    } else {
-      IO.writeString("More than one entity with this name could be found.");
-    }
+    IO.writeString("Provided input is ambiguous.");
   }
 
   /**

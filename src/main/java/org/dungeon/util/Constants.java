@@ -42,7 +42,6 @@ public class Constants {
 
   // Selection entry default format.
   // Conforming to this format increases the uniformity of the output of the game, making it more readable.
-  public static final String COMMAND_HELP_FORMAT = "%-20s %s";
   public static final String LIST_ENTRY_FORMAT = "%-15s%s";
 
   // Inventory strings.
