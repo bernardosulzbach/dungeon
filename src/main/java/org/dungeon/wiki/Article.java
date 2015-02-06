@@ -19,7 +19,7 @@ package org.dungeon.wiki;
 
 /**
  * Article class that represents a wiki article.
- *
+ * <p/>
  * Created by Bernardo on 06/02/2015.
  */
 public class Article {

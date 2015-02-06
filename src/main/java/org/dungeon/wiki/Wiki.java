@@ -17,22 +17,31 @@
 
 package org.dungeon.wiki;
 
+import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
+import org.dungeon.util.Utils;
 
 /**
  * The Wiki class. Loads the contents of the wiki.txt file and manages wiki articles.
- *
+ * <p/>
  * Created by Bernardo on 06/02/2015.
  */
 public class Wiki {
 
+  private Wiki() {
+  }
+
   /**
    * Searches the wiki and prints the matching contents to the screen.
    *
-   * @param searchArguments the arguments of the issued command
+   * @param issuedCommand an IssuedCommand
    */
-  public void search(String searchArguments) {
-    IO.writeString("Wiki not yet implemented.");
+  public static void search(IssuedCommand issuedCommand) {
+    if (issuedCommand.hasArguments()) {
+      IO.writeString("Wiki not yet implemented.");
+    } else {
+      Utils.printMissingArgumentsMessage();
+    }
   }
 
 }

@@ -26,6 +26,7 @@ import org.dungeon.util.CommandHelp;
 import org.dungeon.util.Math;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
+import org.dungeon.wiki.Wiki;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,6 +263,12 @@ public class Game {
       public void execute(IssuedCommand issuedCommand) {
         // TODO: make this take some time.
         gameState.getHero().unequipWeapon();
+      }
+    });
+    commandList.add(new Command("wiki", "Searches the wiki for an article.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        Wiki.search(issuedCommand);
       }
     });
   }
