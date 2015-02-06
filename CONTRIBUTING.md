@@ -14,17 +14,16 @@ Commits and PRs
 
 Writing code
 ------------
-Readability, performance and simplicity (of code and of interface) are our main goals.
+Readability, performance and simplicity are our main goals.
 
-Our code style is a slightly modified version of Google Java Style.
 
-The fork is called [Dungeon Java Style]
+Code Style
+----------
+Our code style is a slightly modified version of Google Java Style called [Dungeon Java Style]
 (http://htmlpreview.github.io/?https://github.com/mafagafogigante/dungeon/blob/master/misc/style/dungeon_java_style.html).
 
 There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory.
-
 Download it and import it into the IDE to get proper Code Reformatting.
-
 *Note that this is not guaranteed to be 100% style-compliant, you may need to fix some things yourself.*
 
 
@@ -35,9 +34,9 @@ Do not use a generator, write the code yourself.
 
 Writing resource files
 ----------------------
+The entry format is
 ```
-All entries have the following syntax:
-  KEY: VALUE
+KEY: VALUE
 ```
 
 The key naming convention is
@@ -73,8 +72,9 @@ NAME: Lucas
 AGE: 22
 HEIGHT: 5' 11"
 
-...
+NAME: Third Element
+// ...
 ```
 
-Generates multiple objects, delimited by the key ``NAME``. Not all objects will have the same attributes, the only
-guarantee is that all objects will have a ``NAME`` field.
+Generates multiple elements, delimited by the key ``NAME``.
+Not all elements will have the same attributes, the only guarantee is that all elements will have a ``NAME`` field.
