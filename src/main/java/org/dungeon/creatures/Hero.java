@@ -165,11 +165,14 @@ public class Hero extends Creature {
    */
   public void look(Direction walkedInFrom) {
     Location location = getLocation(); // Avoid multiple calls to the getter.
+    String firstLine;
     if (walkedInFrom != null) {
-      IO.writeString("You arrive at " + location.getName() + ".");
+      firstLine = "You arrive at " + location.getName() + ".";
     } else {
-      IO.writeString("You are at " + location.getName() + ".");
+      firstLine = "You are at " + location.getName() + ".";
     }
+    firstLine += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
+    IO.writeString(firstLine);
     IO.writeNewLine();
     if (canSee()) {
       lookAdjacentLocations(walkedInFrom);
