@@ -25,7 +25,7 @@ There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory.
 
 Download it and import it into the IDE to get proper Code Reformatting.
 
-~~Note that this is not guaranteed to be 100% style-compliant, you may need to fix some things yourself.~~
+*Note that this is not guaranteed to be 100% style-compliant, you may need to fix some things yourself.*
 
 
 Writing GUI code
