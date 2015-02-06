@@ -33,9 +33,9 @@ import java.util.logging.Logger;
  */
 public class DLogger {
 
-  private static Logger logger;
   private static final String LOG_FILE_PATH = "logs/";
   private static final String LOG_FILE_NAME = "log.txt";
+  private static Logger logger;
 
   private DLogger() {
   }
@@ -80,6 +80,21 @@ public class DLogger {
     if (logger != null) {
       logger.warning(message);
     }
+  }
+
+  /**
+   * Logs a WARNING message with filename and line number.
+   * <p/>
+   * The message is produced by the following String concatenation
+   * <p/>
+   * {@code "Line " + lineNumber + " of " + filename + messageEnd}
+   *
+   * @param filename   the name of the file
+   * @param lineNumber the number of the line that caused the warning
+   * @param messageEnd how the message should end
+   */
+  public static void warning(String filename, int lineNumber, String messageEnd) {
+    warning("Line " + lineNumber + " of " + filename + messageEnd);
   }
 
   /**
