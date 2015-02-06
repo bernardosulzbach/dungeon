@@ -1,4 +1,3 @@
-ID: 1
 TITLE:   A Coat
 AUTHOR:  William Butler Yeats
 CONTENT: \
@@ -13,7 +12,6 @@ Song, let them take it      \
 For there's more enterprise \
 In walking naked.
 
-ID: 2
 TITLE:   The road not taken
 AUTHOR:  Robert Frost
 CONTENT: \
@@ -38,7 +36,6 @@ Two roads diverged in a wood, and I  \
 I took the one less traveled by,     \
 And that has made all the difference.
 
-ID: 3
 TITLE:   To the Virgins, to Make Much of Time
 AUTHOR:  Robert Herrick
 CONTENT: \
@@ -59,7 +56,6 @@ And, while ye may, go marry;          \
 For, having lost but once your prime, \
 You may forever tarry.
 
-ID: 4
 TITLE:   A Dream Within A Dream
 AUTHOR:  Edgar Allan Poe
 CONTENT: \
@@ -88,7 +84,6 @@ One from the pitiless wave?    \
 Is all that we see or seem     \
 But a dream within a dream?
 
-ID: 5
 TITLE:   As The Sparrow
 AUTHOR:  Charles Bukowski
 CONTENT: \
@@ -104,7 +99,6 @@ young; I cry when it is fashionable to laugh.         \
 I hated you when it would have taken less courage     \
 to love.
 
-ID: 6
 TITLE:   Do not go gentle into that good night
 AUTHOR:  Dylan Thomas
 CONTENT: \
@@ -133,7 +127,6 @@ Curse, bless, me now with your fierce tears, I pray.\
 Do not go gentle into that good night.              \
 Rage, rage against the dying of the light.
 
-ID: 7
 TITLE:   In Flanders Fields
 AUTHOR:  John McCrae
 CONTENT: \
@@ -155,7 +148,6 @@ If ye break faith with us who die      \
 We shall not sleep, though poppies grow\
 In Flanders fields.
 
-ID: 8
 TITLE:   Heaven Is What I Cannot Reach!
 AUTHOR:  Emily Dickinson
 CONTENT: \
@@ -169,7 +161,6 @@ The interdicted ground               \
 Behind the hill, the house behind, --\
 There Paradise is found!
 
-ID: 9
 TITLE:   The Raven
 AUTHOR:  Edgar Allan Poe
 CONTENT: \
@@ -299,7 +290,6 @@ And the lamp-light o'er him streaming throws his shadow on the floor:       \
 And my soul from out that shadow that lies floating on the floor            \
     Shall be lifted—nevermore!
 
-ID: 10
 TITLE:   Morning
 AUTHOR:  Billy Collins
 CONTENT: \
@@ -330,7 +320,6 @@ heavy clouds on the way                         \
 and the lawn steaming like a horse              \
 in the early morning.
 
-ID: 11
 TITLE:   If You Forget Me
 AUTHOR:  Pablo Neruda
 CONTENT: \
@@ -388,7 +377,6 @@ my love feeds on your love, beloved,           \
 and as long as you live it will be in your arms\
 without leaving mine.
 
-ID: 12
 TITLE:   Dreams
 AUTHOR:  Langston Hughes
 CONTENT: \
@@ -401,7 +389,6 @@ For when dreams go          \
 Life is a barren field      \
 Frozen with snow.
 
-ID: 13
 TITLE:   Fox
 AUTHOR:  Caki Wilkinson
 CONTENT: \
@@ -417,7 +404,6 @@ my senses swoon. A synonym for stay,               \
 I'm always coming back. I chew through traps.      \
 I love whatever doesn't get too close.
 
-ID: 14
 TITLE:   Serenity
 AUTHOR:  Edward Rowland Sill
 CONTENT: \
