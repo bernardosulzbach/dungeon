@@ -416,3 +416,34 @@ when evening lingers in the key of leaving         \
 my senses swoon. A synonym for stay,               \
 I'm always coming back. I chew through traps.      \
 I love whatever doesn't get too close.
+
+ID: 14
+TITLE:   Serenity
+AUTHOR:  Edward Rowland Sill
+CONTENT: \
+Brook,                              \
+Be still, - be still!               \
+Midnight's arch is broken           \
+In thy ceaseless ripples.           \
+Dark and cold below them            \
+Runs the troubled water, -          \
+Only on its bosom,                  \
+Shimmering and trembling,           \
+Doth the glinted star-shine         \
+                  Sparkle and cease.\
+                                    \
+                  Life,             \
+Be still, - be still!               \
+Boundless truth is shattered        \
+On thy hurrying current.            \
+Rest, with face uplifted,           \
+Calm, serenely quiet;               \
+Drink the deathless beauty -        \
+Thrills of love and wonder          \
+Sinking, shining, star-like;        \
+Till the mirrored heaven            \
+Hollow down within thee             \
+Holy deeps unfathomed,              \
+Where far thoughts go floating,     \
+And low voices wander               \
+                  Whispering peace.
