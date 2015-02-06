@@ -17,81 +17,61 @@
 
 package org.dungeon.io;
 
-import org.dungeon.game.Pair;
-
 import java.io.Closeable;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * ResourceReader class that eases the parsing of resource files.
+ * <p/>
+ * <b>Usage</b>
+ * <ol>
+ * <li>
+ * Construct an object of this class by calling the constructor with the name of a resource file.
+ * </li>
+ * <li>
+ * Call {@code readNextElement()} to parse the next element from the file. If an element was successfully read,
+ * {@code readNextElement()} returns {@code true}, otherwise it returns {@code false}.
+ * If this is the first time {@code readNextElement()} is called, a String holding the first key of the first element
+ * will be stored in this {@code ResourceReader}. The first element is considered finished when the parser finds a line
+ * with this same key.
+ * If this is not the first time {@code readNextElement()} is called, the stored String is used to determine when the
+ * next element is complete.
+ * </li>
+ * <li>
+ * Call {@code hasValue(String)} to check if the last read element has a given property.
+ * </li>
+ * <li>
+ * Based on the result of step 3, either ignore this property or read it using {@code getValue(String)}.
+ * Note that {@code getValue()} returns a {@code String}, which you may need to to convert to whatever type you need.
+ * </li>
+ * <li>
+ * Close the {@code ResourceReader} after reading all the elements you need by calling {@code close()}.
+ * </li>
+ * </ol>
+ * For more information on resource files, see {@code CONTRIBUTING.md}.
  * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
 public class ResourceReader implements Closeable {
 
+  private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   private final HashMap<String, String> map = new HashMap<String, String>();
   private final ResourceParser resourceParser;
   private final String filename;
-
-  private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-  private Pair<String, String> lastPair;
+  private String delimiterField;
+  private Entry<String, String> entry;
 
   /**
-   * Constructs a ResourceReader from an InputStream and the respective resource file's name.
+   * Constructs a ResourceReader from a resource file's name.
    *
-   * @param filename    the name of the resource file
+   * @param filename the name of the resource file
    */
   public ResourceReader(String filename) {
     resourceParser = new ResourceParser(new InputStreamReader(classLoader.getResourceAsStream(filename)));
     this.filename = filename;
-  }
-
-  /**
-   * Makes a Pair from a String. Both Strings of the Pair are trimmed.
-   *
-   * @param string a String of the format "key: value".
-   * @return a Pair of Strings, with the guarantee that none of them will be {@code null}.
-   */
-  private Pair<String, String> makePairFromString(String string) {
-    String[] parts = {"", ""};
-    // TODO: make a static final variable for the colon.
-    int indexOfColon = string.indexOf(":");
-    if (indexOfColon == -1) {
-      logResourceStringWithoutColon();
-    } else {
-      parts[0] = string.substring(0, indexOfColon).trim();
-      if (indexOfColon == string.length() - 1) {
-        DLogger.warning("Resource String with nothing after the colon!");
-      } else {
-        parts[1] = string.substring(indexOfColon + 1).trim();
-      }
-    }
-    return new Pair<String, String>(parts[0], parts[1]);
-  }
-
-  /**
-   * Logs a warning with the filename and the line number where a resource String without a colon was found.
-   */
-  private void logResourceStringWithoutColon() {
-    String location = "Line " + resourceParser.getLineNumber() + " of " + filename;
-    DLogger.warning(location + " does not have a colon!");
-  }
-
-  /**
-   * Checks if the Reader's last element has a value for a specified key.
-   *
-   * @param key the Key.
-   * @return true if the Reader has the key, false otherwise.
-   */
-  public boolean hasValue(String key) {
-    return map.containsKey(key);
-  }
-
-  public String getValue(String identifier) {
-    return map.get(identifier);
   }
 
   /**
@@ -100,35 +80,114 @@ public class ResourceReader implements Closeable {
    * @return true if a new element was read; false otherwise.
    */
   public boolean readNextElement() {
-    // TODO: all elements should start with an ID field and be considered complete when the parser hits the next id.
-    map.clear();
-    if (lastPair != null) {
-      map.put(lastPair.a, lastPair.b);
-    }
-    while (true) {
-      lastPair = readNextPair();
-      if (map.containsKey("ID")) {
-        if (lastPair == null || lastPair.a.equals("ID")) {
-          return true;
-        }
+    if (delimiterField == null) {
+      readNextEntry();
+      if (entry != null) {
+        delimiterField = entry.getKey();
+        do {
+          if (map.containsKey(entry.getKey())) {
+            logRepeatedValue();
+          } else {
+            map.put(entry.getKey(), entry.getValue());
+          }
+          readNextEntry();
+        } while (entry != null && !delimiterField.equals(entry.getKey()));
+        return true;
       } else {
-        if (lastPair == null) {
-          return false;
-        }
+        return false;
       }
-      map.put(lastPair.a, lastPair.b);
+    } else {
+      if (entry != null) {
+        map.clear();
+        do {
+          if (map.containsKey(entry.getKey())) {
+            logRepeatedValue();
+          } else {
+            map.put(entry.getKey(), entry.getValue());
+          }
+          readNextEntry();
+        } while (entry != null && !delimiterField.equals(entry.getKey()));
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
   /**
-   * Reads the next key-value pair from the ResourceParser.
+   * Reads the next Entry from the ResourceParser and assigns it to the private variable {@code entry}.
    */
-  private Pair<String, String> readNextPair() {
+  private void readNextEntry() {
     String string = resourceParser.readString();
-    if (string != null) {
-      return makePairFromString(string);
+    if (string == null) {
+      entry = null;
+    } else {
+      entry = makeEntryFromString(string);
     }
-    return null;
+  }
+
+  /**
+   * Makes a {@code SimpleEntry} from a String. Both key and value Strings are trimmed.
+   *
+   * @param string a String of the format "key: value"
+   * @return a {@code SimpleEntry} of two possibly empty Strings or {@code null}
+   */
+  private SimpleEntry<String, String> makeEntryFromString(String string) {
+    SimpleEntry<String, String> entry = null;
+    int indexOfColon = string.indexOf(":");
+    if (indexOfColon == -1) {
+      logMissingColon();
+    } else {
+      String key = string.substring(0, indexOfColon).trim();
+      entry = new SimpleEntry<String, String>(key, null);
+      if (indexOfColon == string.length() - 1) {
+        logMissingValue();
+      } else {
+        entry.setValue(string.substring(indexOfColon + 1).trim());
+      }
+    }
+    return entry;
+  }
+
+  /**
+   * Checks if the Reader's last element has a value for a specified key.
+   *
+   * @param key the key
+   * @return true if the Reader has a mapping for the key.
+   */
+  public boolean hasValue(String key) {
+    return map.containsKey(key);
+  }
+
+  /**
+   * Returns the value to which the specified key is mapped, or {@code null} if this {@code ResourceReader} contains no
+   * mapping for the key.
+   *
+   * @param key the key whose associated value is to be returned
+   */
+  public String getValue(String key) {
+    return map.get(key);
+  }
+
+  /**
+   * Logs a warning that a line redefines an already defined property.
+   */
+  private void logRepeatedValue() {
+    DLogger.warning(filename, resourceParser.getLineNumber(), " repeats a value of its element!");
+  }
+
+  /**
+   * Logs a warning with the filename and the line number where a resource String without a colon was found.
+   */
+  private void logMissingColon() {
+    DLogger.warning(filename, resourceParser.getLineNumber(), " does not have a colon!");
+  }
+
+  /**
+   * Logs a warning that a line has a colon but nothing after it.
+   */
+  private void logMissingValue() {
+    DLogger.warning(filename, resourceParser.getLineNumber(), " does not have a value!");
   }
 
   /**
