@@ -1,0 +1,8 @@
+ARTICLE: Combat
+CONTENT: Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent.
+
+ARTICLE: Luminosity
+CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what your character did. Currently, time is the only factor responsible by the changing of luminosity thorough the day.
+
+ARTICLE: Command History
+CONTENT: Pressing TAB while the cursor is on the input field will either do nothing, get the last similar command to what is already on the text field or return the last command (if the text field is empty and there is at least one command on the command history).
