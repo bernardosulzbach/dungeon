@@ -36,19 +36,19 @@ class ResourceParser implements Closeable {
   private ResourceLine line;
 
   /**
-   * Returns the line number the parser is currently in.
-   */
-  int getLineNumber() {
-    return reader.getLineNumber();
-  }
-
-  /**
    * Creates a convenient buffered reader for reading Dungeon resource files.
    *
    * @param in the Reader.
    */
   public ResourceParser(Reader in) {
     reader = new LineNumberReader(in);
+  }
+
+  /**
+   * Returns the line number the parser is currently in.
+   */
+  int getLineNumber() {
+    return reader.getLineNumber();
   }
 
   /**
@@ -82,11 +82,11 @@ class ResourceParser implements Closeable {
     }
     if (line.isContinued()) {
       StringBuilder sb = new StringBuilder();
-      sb.append(line.toString()).append('\n');
+      sb.append(line.toString());
       while (line.isContinued()) {
         readLine();
         if (line != null) {
-          sb.append(line.toString()).append('\n');
+          sb.append(line.toString());
         } else {
           break;
         }

@@ -1,8 +1,27 @@
-ARTICLE: Combat
-CONTENT: Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. Your character will always try to use its most powerful attack against its opponent.
+// Try to split lines (with a single backslash) at the end of a sentence.
 
-ARTICLE: Luminosity
-CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what your character did. Currently, time is the only factor responsible by the changing of luminosity thorough the day.
+ARTICLE: Combat
+CONTENT: Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target.\
+         Once in combat, all turns are simulated by the game engine.\
+         The character will either use the next available skill in the rotation or attack with the equipped weapon.
 
 ARTICLE: Command History
-CONTENT: Pressing TAB while the cursor is on the input field will either do nothing, get the last similar command to what is already on the text field or return the last command (if the text field is empty and there is at least one command on the command history).
+CONTENT: Pressing TAB while the cursor is on the input field will either do nothing,\
+         get the last similar command to what is already on the text field, or return the last command\
+         (if the text field is empty and there is at least one command on the command history).
+
+ARTICLE: Luminosity
+CONTENT: Currently, time and the current location of the character are the only factors responsible by the changing of\
+         luminosity thorough the day.\\
+         Luminosity is the product of the light permittivity (translucency) of the location and the luminosity provided\
+         by the sun or moon. When it is too dark, the character will not be able to see.
+
+ARTICLE: Spells
+CONTENT: The character may learn spells through tomes scattered throughout the world. In order to use this spells, the\
+         character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory.\
+         After reading the tome and learning the spell, 'rotation' is used to set up the spell rotation, which will be
+         used automatically when in combat.
+
+ARTICLE: Time
+CONTENT: Time passes after every turn.\
+         How much each turn lasts, however, depends on what your character did or tried to do.

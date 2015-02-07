@@ -30,7 +30,7 @@ TODO
 
 Known Bugs
 ----------
-Killing creatures with spells count as unarmed.
+Killing creatures with spells count as kills for the equipped weapon.
 
 Planned features
 ----------------

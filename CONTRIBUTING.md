@@ -59,6 +59,20 @@ strings:   Plain text.
 * Do not surround strings with quotation marks.
 * Do not use TRUE or FALSE for booleans.
 
+Strings of text can span multiple lines with the usage of line breaks. This is a table with all the valid line breaks.
+
+|Line break|Replaced by|
+|----------|-----------|
+|``\``     |`` ``¹     |
+|``\\``²   |``\n``     |
+
+¹ - A single whitespace.
+² - Two or more backslashes.
+
+An arbitrary amount of whitespaces may precede the line break or the first non-whitespace character of the line, the
+parser ignores all of them.
+
+
 **Important**
 
 An element (an object in a resource file) begins when the first key read from that resource file is read again.

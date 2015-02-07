@@ -17,8 +17,6 @@
 
 package org.dungeon.io;
 
-import org.dungeon.io.DLogger;
-
 /**
  * ResourceLine class that represents a line of a resource file.
  * <p/>
@@ -72,6 +70,23 @@ final class ResourceLine {
   }
 
   /**
+   * Counts the length of the sequence of adjacent line breaks at the end of the original String.
+   *
+   * @return the amount of line breaks at the end of the original String.
+   */
+  int countLineBreaks() {
+    int count = 0;
+    for (int i = text.length() - 1; i >= 0; i--) {
+      if (text.charAt(i) == LINE_BREAK) {
+        count++;
+      } else {
+        break;
+      }
+    }
+    return count;
+  }
+
+  /**
    * Predicate method that evaluates if this ResourceLine is a comment.
    *
    * @return true if the line starts with a comment escape sequence. False otherwise.
@@ -105,8 +120,9 @@ final class ResourceLine {
 
   private void makeReturnText() {
     returnText = text;
+    int lineBreakCount = countLineBreaks();
     if (isContinued()) {
-      returnText = returnText.substring(0, returnText.length() - 1);
+      returnText = returnText.substring(0, returnText.length() - lineBreakCount);
     }
     // Just loop if the String is not empty and the last character is a whitespace.
     if (!returnText.isEmpty() && Character.isWhitespace(returnText.charAt(returnText.length() - 1))) {
@@ -121,7 +137,11 @@ final class ResourceLine {
       }
       returnText = returnText.substring(0, indexOfFirstTrailingWhitespace);
     }
-
+    if (lineBreakCount == 1) {
+      returnText += ' ';
+    } else if (lineBreakCount > 1) {
+      returnText += '\n';
+    }
   }
 
 }
