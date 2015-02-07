@@ -91,7 +91,7 @@ public class GameWindow extends JFrame {
 
     textPane.setEditable(false);
     textPane.setBackground(SharedConstants.INSIDE_COLOR);
-    textPane.setFont(GameData.monospaced);
+    textPane.setFont(GameData.FONT);
 
     scrollPane.setViewportView(textPane);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -101,7 +101,7 @@ public class GameWindow extends JFrame {
     textField.setBackground(SharedConstants.INSIDE_COLOR);
     textField.setForeground(Constants.FORE_COLOR_NORMAL);
     textField.setCaretColor(Color.WHITE);
-    textField.setFont(GameData.monospaced);
+    textField.setFont(GameData.FONT);
     textField.setFocusTraversalKeysEnabled(false);
     textField.setBorder(BorderFactory.createEmptyBorder());
 
@@ -192,7 +192,7 @@ public class GameWindow extends JFrame {
    * @return a Dimension with the preferred TextPane dimensions.
    */
   private Dimension calculateTextPaneSize() {
-    FontMetrics fontMetrics = getFontMetrics(GameData.monospaced);
+    FontMetrics fontMetrics = getFontMetrics(GameData.FONT);
     int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
     int height = fontMetrics.getHeight() * ROWS;
     return new Dimension(width, height);

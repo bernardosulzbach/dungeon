@@ -567,7 +567,7 @@ public class Hero extends Creature {
       builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getDamage())).append(". ");
       builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getDamage()).append(".\n");
     } else {
-      builder.append("You are fighting bare handed.\n");
+      builder.append("You are fighting bare-handed.\n");
     }
     IO.writeString(builder.toString());
   }

@@ -40,12 +40,11 @@ import java.util.Map;
  */
 public final class GameData {
 
+  public static final Font FONT = getMonospacedFont();
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
-
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
-  public static Font monospaced;
   public static String LICENSE;
   private static Map<ID, CreatureBlueprint> creatureBlueprints = new HashMap<ID, CreatureBlueprint>();
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
@@ -67,26 +66,27 @@ public final class GameData {
   static void loadGameData() {
     StopWatch stopWatch = new StopWatch();
     DLogger.info("Started loading the game data.");
-
-    try {
-      InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
-      monospaced = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(16f);
-    } catch (FontFormatException bad) {
-      DLogger.warning(bad.getMessage());
-      Game.exit();
-    } catch (IOException bad) {
-      DLogger.warning(bad.getMessage());
-      Game.exit();
-    }
-
     loadItemBlueprints();
     loadCreatureBlueprints();
     createSkills();
     loadLocationPresets();
     loadAchievements();
     loadLicense();
-
     DLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
+  }
+
+  private static Font getMonospacedFont() {
+    final int FONT_SIZE = 15;
+    Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
+    try {
+      InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
+      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
+    } catch (FontFormatException bad) {
+      DLogger.warning(bad.getMessage());
+    } catch (IOException bad) {
+      DLogger.warning(bad.getMessage());
+    }
+    return font;
   }
 
   /**
