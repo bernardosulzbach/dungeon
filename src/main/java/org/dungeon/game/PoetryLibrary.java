@@ -77,7 +77,7 @@ public final class PoetryLibrary extends Library {
       if (pb.isComplete()) {
         poems.add(pb.createPoem());
       } else {
-        DLogger.warning("Parsed incomplete poem! Title is " + reader.getValue(IDENTIFIER_TITLE) + ")");
+        DLogger.warning("Parsed incomplete poem (" + reader.getValue(IDENTIFIER_TITLE) + ")!");
       }
     }
     reader.close();

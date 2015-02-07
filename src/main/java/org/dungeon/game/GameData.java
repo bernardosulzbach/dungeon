@@ -349,13 +349,15 @@ public final class GameData {
       // Get ID from the Achievement as it is an ID already (not a String).
       ACHIEVEMENTS.put(achievement.getID(), achievement);
     }
-    DLogger.info("Created " + ACHIEVEMENTS.size() + " achievements.");
+    reader.close();
+    DLogger.info("Loaded " + ACHIEVEMENTS.size() + " achievements.");
   }
 
   private static void loadLicense() {
     ResourceReader reader = new ResourceReader("license.txt");
     reader.readNextElement();
     LICENSE = reader.getValue("LICENSE");
+    reader.close();
   }
 
   public static Map<ID, CreatureBlueprint> getCreatureBlueprints() {
