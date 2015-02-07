@@ -94,7 +94,7 @@ public class Game {
     commandList.add(new Command("drop", "Drops the specified item.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        gameState.getHero().dropItem(issuedCommand);
+        turnResult.turnLength = gameState.getHero().dropItem(issuedCommand);
       }
     });
     commandList.add(new Command("eat", "Eats an item.") {
@@ -106,8 +106,7 @@ public class Game {
     commandList.add(new Command("equip", "Equips the specified item.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        // TODO: make this take some time.
-        gameState.getHero().parseEquip(issuedCommand);
+        turnResult.turnLength = gameState.getHero().parseEquip(issuedCommand);
       }
     });
     commandList.add(new Command("exit", "Exits the game.") {
@@ -255,8 +254,7 @@ public class Game {
     commandList.add(new Command("unequip", "Unequips the currently equipped item.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        // TODO: make this take some time.
-        gameState.getHero().unequipWeapon();
+        turnResult.turnLength = gameState.getHero().unequipWeapon();
       }
     });
     commandList.add(new Command("wiki", "Searches the wiki for an article.") {
