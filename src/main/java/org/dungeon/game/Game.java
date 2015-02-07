@@ -73,12 +73,6 @@ public class Game {
         CommandHelp.printCommandList(issuedCommand);
       }
     });
-    commandList.add(new Command("config", "Configures the specified option.") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.configurationsChanged = ConfigTools.parseConfigCommand(issuedCommand);
-      }
-    });
     commandList.add(new Command("debug", "Invokes a debugging command.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
