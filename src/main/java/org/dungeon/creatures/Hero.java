@@ -39,7 +39,6 @@ import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.util.Constants;
-import org.dungeon.util.Percentage;
 import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Utils;
 
@@ -557,16 +556,20 @@ public class Hero extends Creature {
    * Output a table with both the hero's status and his weapon's status.
    */
   public void printAllStatus() {
-    IO.writeString(getName());
-    IO.writeNamedBar("Health", new Percentage(getCurHealth() / (double) getMaxHealth()), Constants.HEALTH_BAR_COLOR);
-    IO.writeKeyValueString("Attack", Integer.toString(getAttack()));
+    StringBuilder builder = new StringBuilder();
+    builder.append(getName()).append("\n");
+    builder.append("You are ");
+    builder.append(HealthState.getHealthState(getCurHealth(), getMaxHealth()).toString().toLowerCase()).append(".\n");
+    builder.append("Your base attack is ").append(String.valueOf(getAttack())).append(".\n");
     if (hasWeapon()) {
       Item heroWeapon = getWeapon();
-      IO.writeString(heroWeapon.getQualifiedName());
-      IO.writeKeyValueString("Damage", Integer.toString(heroWeapon.getDamage()));
+      builder.append("You are currently equipping ").append(heroWeapon.getQualifiedName());
+      builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getDamage())).append(". ");
+      builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getDamage()).append(".\n");
     } else {
-      IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
+      builder.append("You are fighting bare handed.\n");
     }
+    IO.writeString(builder.toString());
   }
 
   /**
