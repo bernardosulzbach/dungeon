@@ -19,16 +19,30 @@ package org.dungeon.wiki;
 
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
+import org.dungeon.io.ResourceReader;
 import org.dungeon.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Wiki class. Loads the contents of the wiki.txt file and manages wiki articles.
  * <p/>
  * Created by Bernardo on 06/02/2015.
  */
-public class Wiki {
+public abstract class Wiki {
+
+  private static List<Article> articleList;
 
   private Wiki() {
+  }
+
+  private static void initialize() {
+    articleList = new ArrayList<Article>();
+    ResourceReader reader = new ResourceReader("wiki.txt");
+    while (reader.readNextElement()) {
+      articleList.add(new Article(reader.getValue("ARTICLE"), reader.getValue("CONTENT")));
+    }
   }
 
   /**
@@ -37,11 +51,53 @@ public class Wiki {
    * @param issuedCommand an IssuedCommand
    */
   public static void search(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      IO.writeString("Wiki not yet implemented.");
-    } else {
-      Utils.printMissingArgumentsMessage();
+    if (articleList == null) {
+      initialize();
     }
+    if (issuedCommand.hasArguments()) {
+      List<Article> matches = findMatches(issuedCommand.getArguments());
+      if (matches.isEmpty()) {
+        IO.writeString("No matches were found.");
+      } else if (matches.size() == 1) {
+        IO.writeString(matches.get(0).toString());
+      } else {
+        StringBuilder builder = new StringBuilder();
+        builder.append("The following articles match your query:\n");
+        for (Article match : matches) {
+          builder.append(toArticleListingEntry(match)).append("\n");
+        }
+        builder.append("Be more specific.");
+        IO.writeString(builder.toString());
+      }
+    } else {
+      writeArticleList();
+    }
+  }
+
+  /**
+   * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
+   */
+  private static void writeArticleList() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("The wiki has the following ").append(articleList.size()).append(" articles:\n");
+    for (Article article : articleList) {
+      builder.append(toArticleListingEntry(article)).append("\n");
+    }
+    IO.writeString(builder.toString());
+  }
+
+  private static String toArticleListingEntry(Article article) {
+    return "  " + article.title;
+  }
+
+  private static List<Article> findMatches(String[] searchArguments) {
+    List<Article> matches = new ArrayList<Article>();
+    for (Article article : articleList) {
+      if (Utils.checkQueryMatch(searchArguments, Utils.split(article.title))) {
+        matches.add(article);
+      }
+    }
+    return matches;
   }
 
 }
