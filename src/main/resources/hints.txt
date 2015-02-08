@@ -1,6 +1,6 @@
 HINT: Attacks against critters deal 100% bonus damage.
 HINT: Equipped items are colored purple in your inventory.
 HINT: Every combatant movement is considered to be a battle turn.
-HINT: If the creature has a weapon, it will be used to perform the attack. Otherwise, the creature will attack with its bare hands.
 HINT: The command 'achievements' will also show the total number of achievements.
 HINT: There is a 'poem' command that prints a poem to the screen.
+HINT: Use the 'wiki' command to browse the in-game wiki and to better understand the world of Dungeon.
