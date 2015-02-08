@@ -66,7 +66,7 @@ Strings of text can span multiple lines with the usage of line breaks. This is a
 |``\``     |`` ``¹     |
 |``\\``²   |``\n``     |
 
-¹ - A single whitespace.
+¹ - A single whitespace.  
 ² - Two or more backslashes.
 
 An arbitrary amount of whitespaces may precede the line break or the first non-whitespace character of the line, the
