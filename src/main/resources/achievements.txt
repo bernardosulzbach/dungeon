@@ -78,13 +78,13 @@ KILLS_BY_CREATURE_TYPE: Critter, 25
 ID: DEATH_PUNCH
 NAME: Death Punch
 INFO: Kill a creature unarmed.
-# An empty string means unarmed.
+// An empty string means unarmed.
 KILLS_BY_WEAPON: , 1
 
 ID: BOXER
 NAME: Boxer
 INFO: Kill 10 creatures unarmed.
-# An empty string means unarmed.
+// An empty string means unarmed.
 KILLS_BY_WEAPON: , 10
 
 ID: ON_THE_STICK
@@ -96,8 +96,8 @@ ID: STICKS_AND_STONES
 NAME: Sticks and Stones
 INFO: Kill 5 creatures with the Stone and 5 with the Stick.
 KILLS_BY_WEAPON: STICK, 5
-# TODO: use this!
-# KILLS_BY_WEAPON: STONE, 5
+// TODO: implement lists to use this.
+// KILLS_BY_WEAPON: STONE, 5
 
 ID: LUMBERJACK
 NAME: Lumberjack

@@ -73,6 +73,14 @@ An arbitrary amount of whitespaces may precede the line break or the first non-w
 parser ignores all of them.
 
 
+**Comments**
+
+Comments may be written by preceding the line with ``//``.
+Note that this does not mean 'ignore until the end of the line' as it would in C, C++, or Java. Instead, it signifies
+to the parser that the whole line should be ignored and it only works when the slashes are the first non-whitespace
+characters of the line.
+
+
 **Important**
 
 An element (an object in a resource file) begins when the first key read from that resource file is read again.

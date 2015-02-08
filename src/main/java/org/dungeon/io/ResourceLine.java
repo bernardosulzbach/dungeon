@@ -25,7 +25,7 @@ package org.dungeon.io;
 final class ResourceLine {
 
   private static final char LINE_BREAK = '\\';
-  private static final String[] COMMENT_ESCAPES = {"//", "#"};
+  private static final String COMMENT_ESCAPE = "//";
 
   private final String text;
   private final boolean valid;
@@ -92,14 +92,7 @@ final class ResourceLine {
    * @return true if the line starts with a comment escape sequence. False otherwise.
    */
   boolean isComment() {
-    if (valid) {
-      for (String escape : COMMENT_ESCAPES) {
-        if (text.startsWith(escape)) {
-          return true;
-        }
-      }
-    }
-    return false;
+    return valid && text.startsWith(COMMENT_ESCAPE);
   }
 
   @Override
