@@ -1,8 +1,9 @@
 // Try to split lines (with a single backslash) at the end of a sentence.
 
 ARTICLE: Combat
-CONTENT: Combat in dungeon is quite straightforward, issue 'attack' or 'kill' followed by the name of your target.\
+CONTENT: Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target.\
          Once in combat, all turns are simulated by the game engine.\
+         The player cannot interfere until either the attacker or the defender dies.\
          The character will either use the next available skill in the rotation or attack with the equipped weapon.
 
 ARTICLE: Command History
@@ -10,18 +11,29 @@ CONTENT: Pressing TAB while the cursor is on the input field will either do noth
          get the last similar command to what is already on the text field, or return the last command\
          (if the text field is empty and there is at least one command on the command history).
 
+ARTICLE: Keyboard Shortcuts
+CONTENT: There is a single implemented keyboard shortcut now, it is CTRL + S and it saves the game.
+
 ARTICLE: Luminosity
-CONTENT: Currently, time and the current location of the character are the only factors responsible by the changing of\
-         luminosity thorough the day.\\
+CONTENT: Currently, time and the current location of the character are the only factors responsible by the change of\
+         luminosity through the day.\\
          Luminosity is the product of the light permittivity (translucency) of the location and the luminosity provided\
          by the sun or moon. When it is too dark, the character will not be able to see.
 
-ARTICLE: Spells
-CONTENT: The character may learn spells through tomes scattered throughout the world. In order to use this spells, the\
+ARTICLE: Parts of Day
+CONTENT: The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00;\
+         morning, from 7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00;\
+		 dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00.
+
+ARTICLE: Skills
+CONTENT: The character may learn skills through tomes scattered throughout the world. In order to use these skills, the\
          character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory.\
-         After reading the tome and learning the spell, 'rotation' is used to set up the spell rotation, which will be
+         After reading the tome and learning the skill, 'rotation' is used to set up the skill rotation, which will be\
          used automatically when in combat.
 
 ARTICLE: Time
 CONTENT: Time passes after every turn.\
          How much each turn lasts, however, depends on what your character did or tried to do.
+
+ARTICLE: Tomes
+CONTENT: Tomes are books that can teach a skill for the player character.
