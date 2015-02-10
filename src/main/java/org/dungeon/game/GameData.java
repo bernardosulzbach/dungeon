@@ -321,9 +321,11 @@ public final class GameData {
 
       if (reader.hasValue("KILLS_BY_CREATURE_ID")) {
         try {
-          String killsByCreatureID = reader.getValue("KILLS_BY_CREATURE_ID");
-          String[] parts = killsByCreatureID.split(",");
-          achievement.incrementKillsByCreatureID(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+          String[] values = reader.getArrayOfValues("KILLS_BY_CREATURE_ID");
+          for (String value : values) {
+            String[] parts = value.split(",");
+            achievement.incrementKillsByCreatureID(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+          }
         } catch (NumberFormatException ignore) {
         }
       }

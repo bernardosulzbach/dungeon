@@ -17,10 +17,13 @@
 
 package org.dungeon.io;
 
+import com.sun.javafx.Utils;
+
 import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -58,7 +61,7 @@ import java.util.Map.Entry;
 public class ResourceReader implements Closeable {
 
   private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-  private final HashMap<String, String> map = new HashMap<String, String>();
+  private final Map<String, String[]> map = new HashMap<String, String[]>();
   private final ResourceParser resourceParser;
   private final String filename;
   private String delimiterField;
@@ -66,8 +69,6 @@ public class ResourceReader implements Closeable {
 
   /**
    * Constructs a ResourceReader from a resource file's name.
-   *
-   * @param filename the name of the resource file
    */
   public ResourceReader(String filename) {
     resourceParser = new ResourceParser(new InputStreamReader(classLoader.getResourceAsStream(filename)));
@@ -88,7 +89,7 @@ public class ResourceReader implements Closeable {
           if (map.containsKey(entry.getKey())) {
             logRepeatedValue();
           } else {
-            map.put(entry.getKey(), entry.getValue());
+            addToMap(entry.getKey(), entry.getValue());
           }
           readNextEntry();
         } while (entry != null && !delimiterField.equals(entry.getKey()));
@@ -103,7 +104,7 @@ public class ResourceReader implements Closeable {
           if (map.containsKey(entry.getKey())) {
             logRepeatedValue();
           } else {
-            map.put(entry.getKey(), entry.getValue());
+            addToMap(entry.getKey(), entry.getValue());
           }
           readNextEntry();
         } while (entry != null && !delimiterField.equals(entry.getKey()));
@@ -111,6 +112,24 @@ public class ResourceReader implements Closeable {
       } else {
         return false;
       }
+    }
+  }
+
+  private void addToMap(String key, String value) {
+    map.put(key, toArray(value));
+  }
+
+  /**
+   * Converts a String of data to an ArrayList of separate Strings.
+   * <p/>
+   * "[First Item | Second Item ]" becomes {"First Item", "Second Item"}.
+   */
+  private String[] toArray(String data) {
+    if (data.startsWith("[")) {
+      data = data.substring(1, data.length());
+      return Utils.split(data, "|");
+    } else {
+      return new String[]{data};
     }
   }
 
@@ -160,12 +179,31 @@ public class ResourceReader implements Closeable {
   }
 
   /**
-   * Returns the value to which the specified key is mapped, or {@code null} if this {@code ResourceReader} contains no
-   * mapping for the key.
+   * Returns the first String to which the specified key is mapped, or {@code null} if this {@code ResourceReader}
+   * contains no mapping for the key.
+   * If the array of Strings to which the key is mapped has more than one String, logs a warning about it.
+   * {@code getArrayOfValues} should be used instead.
    *
    * @param key the key whose associated value is to be returned
+   * @return the first String to which to key is mapped.
+   * @see org.dungeon.io.ResourceReader#getArrayOfValues getArrayOfValues
    */
   public String getValue(String key) {
+    String[] value = map.get(key);
+    if (value.length > 1) {
+      DLogger.warning("Used getValue with a nontrivial array.");
+    }
+    return value[0];
+  }
+
+  /**
+   * Returns the array of Strings to which the specified key is mapped, or {@code null} if this {@code ResourceReader}
+   * contains no mapping for the key.
+   *
+   * @param key the key whose associated value is to be returned
+   * @return the array of Strings to which this key is mapped.
+   */
+  public String[] getArrayOfValues(String key) {
     return map.get(key);
   }
 

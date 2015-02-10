@@ -92,14 +92,17 @@ NAME: On the Stick!
 INFO: Kill 2 creatures with the Stick.
 KILLS_BY_WEAPON: STICK, 2
 
-ID: STICKS_AND_STONES
-NAME: Sticks and Stones
-INFO: Kill 5 creatures with the Stone and 5 with the Stick.
-KILLS_BY_WEAPON: STICK, 5
-// TODO: implement lists to use this.
-// KILLS_BY_WEAPON: STONE, 5
-
 ID: LUMBERJACK
 NAME: Lumberjack
 INFO: Kill 10 creatures with the Axe.
 KILLS_BY_WEAPON: AXE, 10
+
+ID: STICKS_AND_STONES
+NAME: Sticks and Stones
+INFO: Kill 5 creatures with the Stone and 5 with the Stick.
+KILLS_BY_WEAPON: [STICK, 5 | STONE, 5]
+
+ID: WOOD_MASTER
+NAME: Wood Master
+INFO: Get one kill with a club, one with a staff and one with a stick.
+KILLS_BY_WEAPON: [CLUB, 1 | STAFF, 1 | STICK, 1]
