@@ -29,33 +29,31 @@ import org.dungeon.util.CounterMap;
  */
 final class BattleComponent {
 
-  final CounterMap<String> killsByCreatureType = new CounterMap<String>();
-  final CounterMap<ID> killsByCreatureID = new CounterMap<ID>();
-  final CounterMap<ID> killsByWeapon = new CounterMap<ID>();
-  int battleCount;
-  int longestBattleLength;
+  final int minimumBattleCount;
+  final int longestBattleLength;
+  final CounterMap<ID> killsByCreatureID;
+  final CounterMap<String> killsByCreatureType;
+  final CounterMap<ID> killsByWeapon;
+
+  BattleComponent(int minimumBattleCount, int longestBattleLength, CounterMap<ID> killsByCreatureID,
+      CounterMap<String> killsByCreatureType, CounterMap<ID> killsByWeapon) {
+    this.minimumBattleCount = minimumBattleCount;
+    this.longestBattleLength = longestBattleLength;
+    this.killsByCreatureID = killsByCreatureID;
+    this.killsByCreatureType = killsByCreatureType;
+    this.killsByWeapon = killsByWeapon;
+  }
 
   /**
    * Checks if this component of the Achievement is fulfilled or not.
    */
   public boolean isFulfilled() {
     BattleStatistics statistics = Game.getGameState().getStatistics().getBattleStatistics();
-    if (statistics.getBattleCount() < battleCount) {
-      return false;
-    }
-    if (statistics.getLongestBattleLength() < longestBattleLength) {
-      return false;
-    }
-    if (!statistics.getKillsByCreatureID().fulfills(killsByCreatureID)) {
-      return false;
-    }
-    if (!statistics.getKillsByCreatureType().fulfills(killsByCreatureType)) {
-      return false;
-    }
-    if (!statistics.getKillsByWeapon().fulfills(killsByWeapon)) {
-      return false;
-    }
-    return true;
+    return statistics.getBattleCount() >= minimumBattleCount
+        && statistics.getLongestBattleLength() >= longestBattleLength
+        && (killsByCreatureID == null || statistics.getKillsByCreatureID().fulfills(killsByCreatureID))
+        && (killsByCreatureType == null || statistics.getKillsByCreatureType().fulfills(killsByCreatureType))
+        && (killsByWeapon == null || statistics.getKillsByWeapon().fulfills(killsByWeapon));
   }
 
 }

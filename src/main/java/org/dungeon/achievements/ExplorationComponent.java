@@ -32,36 +32,49 @@ final class ExplorationComponent {
   /**
    * Stores how many kills in Locations with a specified ID the Hero must have.
    */
-  final CounterMap<ID> killCounter = new CounterMap<ID>();
+  final CounterMap<ID> killsByLocationID;
 
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  final CounterMap<ID> distinctLocationsVisitCount = new CounterMap<ID>();
+  final CounterMap<ID> distinctLocationsVisitCount;
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
-  final CounterMap<ID> sameLocationVisitCounter = new CounterMap<ID>();
+  final CounterMap<ID> sameLocationVisitCounter;
+
+  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> distinctLocationsVisitCount,
+      CounterMap<ID> sameLocationVisitCounter) {
+    this.killsByLocationID = killsByLocationID;
+    this.distinctLocationsVisitCount = distinctLocationsVisitCount;
+    this.sameLocationVisitCounter = sameLocationVisitCounter;
+  }
 
   /**
    * Checks if this component of the Achievement is fulfilled or not.
    */
   public boolean isFulfilled() {
     ExplorationStatistics statistics = Game.getGameState().getStatistics().getExplorationStatistics();
-    for (ID locationID : killCounter.keySet()) {
-      if (statistics.getKillCount(locationID) < killCounter.getCounter(locationID)) {
-        return false;
+    if (killsByLocationID != null) {
+      for (ID locationID : killsByLocationID.keySet()) {
+        if (statistics.getKillCount(locationID) < killsByLocationID.getCounter(locationID)) {
+          return false;
+        }
       }
     }
-    for (ID locationID : distinctLocationsVisitCount.keySet()) {
-      if (statistics.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
-        return false;
+    if (distinctLocationsVisitCount != null) {
+      for (ID locationID : distinctLocationsVisitCount.keySet()) {
+        if (statistics.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
+          return false;
+        }
       }
     }
-    for (ID locationID : sameLocationVisitCounter.keySet()) {
-      if (statistics.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
-        return false;
+    if (sameLocationVisitCounter != null) {
+      for (ID locationID : sameLocationVisitCounter.keySet()) {
+        if (statistics.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
+          return false;
+        }
       }
     }
     return true;

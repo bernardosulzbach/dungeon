@@ -20,8 +20,7 @@ package org.dungeon.achievements;
 import org.dungeon.creatures.Hero;
 import org.dungeon.game.ID;
 import org.dungeon.io.IO;
-import org.dungeon.util.Constants;
-import org.dungeon.util.Utils;
+import org.dungeon.util.CounterMap;
 
 /**
  * Achievement class.
@@ -33,21 +32,28 @@ public class Achievement {
   private final ID id;
   private final String name;
   private final String info;
+  private final String text;
 
-  private final BattleComponent battle = new BattleComponent();
-  private final ExplorationComponent exploration = new ExplorationComponent();
+  private final BattleComponent battle;
+  private final ExplorationComponent exploration;
 
   /**
    * Constructs an Achievement with the specified ID, name and info.
    *
-   * @param id   the achievement's ID.
-   * @param name the achievement's name.
-   * @param info the achievement's info.
+   * @param info the String displayed when the "Achievements" command is used
+   * @param text the String used to explain why the character unlocked the achievement
    */
-  public Achievement(String id, String name, String info) {
+  public Achievement(String id, String name, String info, String text, int minimumBattleCount, int longestBattleLength,
+      CounterMap<ID> killsByCreatureID, CounterMap<String> killsByCreatureType, CounterMap<ID> killsByWeapon,
+      CounterMap<ID> killsByLocationID, CounterMap<ID> distinctLocationsVisitCount,
+      CounterMap<ID> sameLocationVisitCounter) {
     this.id = new ID(id);
     this.name = name;
     this.info = info;
+    this.text = text;
+    battle = new BattleComponent(minimumBattleCount, longestBattleLength, killsByCreatureID, killsByCreatureType,
+        killsByWeapon);
+    exploration = new ExplorationComponent(killsByLocationID, distinctLocationsVisitCount, sameLocationVisitCounter);
   }
 
   public ID getID() {
@@ -63,87 +69,9 @@ public class Achievement {
   }
 
   /**
-   * Sets the minimum battle count to fulfill this Achievement.
+   * Evaluates if the statistics fulfill this Achievement's conditions.
    *
-   * @param minimumBattleCount the minimum battle count to fulfill this achievement.
-   */
-  public void setMinimumBattleCount(int minimumBattleCount) {
-    battle.battleCount = minimumBattleCount;
-  }
-
-  /**
-   * Sets the longest battle length to fulfill this Achievement.
-   *
-   * @param longestBattleLength the longest battle length to fulfill this Achievement.
-   */
-  public void setLongestBattleLength(int longestBattleLength) {
-    battle.longestBattleLength = longestBattleLength;
-  }
-
-  /**
-   * Increment how many kills with a certain weapon are needed in order to unlock this achievement.
-   *
-   * @param id     the id of the weapon.
-   * @param amount the increment.
-   */
-  public void incrementKillsByWeapon(String id, int amount) {
-    battle.killsByWeapon.incrementCounter(new ID(id), amount);
-  }
-
-  /**
-   * Increment how many kills of certain creature are needed in order to unlock this achievement.
-   *
-   * @param id     the creature's id.
-   * @param amount the increment.
-   */
-  public void incrementKillsByCreatureID(String id, int amount) {
-    battle.killsByCreatureID.incrementCounter(new ID(id), amount);
-  }
-
-  /**
-   * Increment how many kills of certain type of creature are needed in order to unlock this achievement.
-   *
-   * @param id     the creature type.
-   * @param amount the increment.
-   */
-  public void incrementKillsByCreatureType(String id, int amount) {
-    battle.killsByCreatureType.incrementCounter(id, amount);
-  }
-
-  /**
-   * Set the required kill count in a specified Location.
-   *
-   * @param locationID the CreatureID.
-   * @param amount     the required kill count.
-   */
-  public void incrementKillsByLocationID(String locationID, int amount) {
-    exploration.killCounter.incrementCounter(new ID(locationID), amount);
-  }
-
-  /**
-   * Increment the required visit count to distinct Locations with a specified Location ID.
-   *
-   * @param locationID the CreatureID.
-   * @param amount     the required kill count.
-   */
-  public void incrementVisitsToDistinctLocations(String locationID, int amount) {
-    exploration.distinctLocationsVisitCount.incrementCounter(new ID(locationID), amount);
-  }
-
-  /**
-   * Increment the required visit count to the same Location with a specified Location ID.
-   *
-   * @param locationID the CreatureID.
-   * @param amount     the required kill count.
-   */
-  public void incrementVisitsToTheSameLocation(String locationID, int amount) {
-    exploration.sameLocationVisitCounter.incrementCounter(new ID(locationID), amount);
-  }
-
-  /**
-   * Evaluates if a specified Hero fulfills this Achievement conditions.
-   *
-   * @return a boolean.
+   * @return true if the Achievement is fulfilled, false otherwise.
    */
   boolean isFulfilled() {
     return battle.isFulfilled() && exploration.isFulfilled();
@@ -164,7 +92,7 @@ public class Achievement {
    * Outputs an achievement unlocked message with some information about the unlocked achievement.
    */
   void printAchievementUnlocked() {
-    IO.writeString(Utils.centerString(Constants.ACHIEVEMENT_UNLOCKED, '-') + "\n" + getName() + "\n" + getInfo());
+    IO.writeString("You unlocked the achievement " + getName() + " because you " + text + ".");
   }
 
 }

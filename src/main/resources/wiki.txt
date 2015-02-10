@@ -1,5 +1,11 @@
 // Try to split lines (with a single backslash) at the end of a sentence.
 
+
+ARTICLE: Bat
+CONTENT: Bats are mammals whose forelimbs form webbed wings,\
+         making them the only mammals naturally capable of true and sustained flight.\
+         They are natural inhabitants of humid and quiet places, such as graveyards.
+
 ARTICLE: Combat
 CONTENT: Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target.\
          Once in combat, all turns are simulated by the game engine.\
@@ -10,6 +16,14 @@ ARTICLE: Command History
 CONTENT: Pressing TAB while the cursor is on the input field will either do nothing,\
          get the last similar command to what is already on the text field, or return the last command\
          (if the text field is empty and there is at least one command on the command history).
+
+ARTICLE: Fruit Bat
+CONTENT: Fruit bats are not always large: the smallest species is just six centimeters long.\
+         The largest attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms.\
+         Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests.\
+         Their sense of smell is excellent.\
+         In contrast to other bats, fruit bats do not use echolocation\
+         (with one exception, the Egyptian fruit bat, which uses high-pitched tongue clicks to navigate in caves).
 
 ARTICLE: Keyboard Shortcuts
 CONTENT: There is a single implemented keyboard shortcut now, it is CTRL + S and it saves the game.

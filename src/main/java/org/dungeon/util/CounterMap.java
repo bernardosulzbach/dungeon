@@ -44,6 +44,10 @@ public class CounterMap<K> implements Serializable {
     return map.keySet();
   }
 
+  public boolean isNotEmpty() {
+    return !map.isEmpty();
+  }
+
   /**
    * Increments the count of a given key in the CounterMap by 1.
    * <p/>
