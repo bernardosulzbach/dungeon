@@ -21,7 +21,6 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
-import org.dungeon.util.Constants;
 
 public class Item extends Entity {
 
@@ -166,6 +165,7 @@ public class Item extends Entity {
     return getHitRate() > Engine.RANDOM.nextDouble();
   }
 
+  // TODO: consider making an enum out of this.
   String getIntegrityString() {
     String weaponIntegrity;
     if (getCurIntegrity() == getMaxIntegrity()) {
@@ -182,8 +182,9 @@ public class Item extends Entity {
     return weaponIntegrity;
   }
 
-  public String toListEntry() {
-    return String.format(Constants.LIST_ENTRY_FORMAT, String.format("[%s]", getType()), getName());
+  @Override
+  public String toString() {
+    return name;
   }
 
 }
