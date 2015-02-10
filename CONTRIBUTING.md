@@ -27,6 +27,13 @@ Download it and import it into the IDE to get proper Code Reformatting.
 *Note that this is not guaranteed to be 100% style-compliant, you may need to fix some things yourself.*
 
 
+**Code comments**
+
+You may find several classes, interfaces and methods with complete Javadoc.
+This is no longer required. Aim for clear and concise implementation comments only.
+Note that these comments may follow the Javadoc rules, but don't need to.
+
+
 Writing GUI code
 ----------------
 Do not use a generator, write the code yourself.
@@ -73,7 +80,7 @@ An arbitrary amount of whitespaces may precede the line break or the first non-w
 parser ignores all of them.
 
 
-**Comments**
+**Resource comments**
 
 Comments may be written by preceding the line with ``//``.
 Note that this does not mean 'ignore until the end of the line' as it would in C, C++, or Java. Instead, it signifies
