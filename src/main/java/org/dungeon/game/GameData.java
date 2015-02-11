@@ -170,11 +170,12 @@ public final class GameData {
     SpawnerPreset fox = new SpawnerPreset("FOX", 4, 4);
     SpawnerPreset frog = new SpawnerPreset("FROG", 2, 2);
     SpawnerPreset fruitBat = new SpawnerPreset("FRUIT_BAT", 2, 2);
-    SpawnerPreset komodoDragon = new SpawnerPreset("KOMODO_DRAGON", 1, 4);
+    SpawnerPreset lizard = new SpawnerPreset("LIZARD", 1, 4);
     SpawnerPreset orc = new SpawnerPreset("ORC", 2, 2);
     SpawnerPreset rabbit = new SpawnerPreset("RABBIT", 8, 1);
     SpawnerPreset rat = new SpawnerPreset("RAT", 6, 2);
     SpawnerPreset skeleton = new SpawnerPreset("SKELETON", 1, 12);
+    SpawnerPreset greenIguana = new SpawnerPreset("GREEN_IGUANA", 2, 32);
     SpawnerPreset snake = new SpawnerPreset("SNAKE", 3, 4);
     SpawnerPreset spider = new SpawnerPreset("SPIDER", 2, 4);
     SpawnerPreset whiteTiger = new SpawnerPreset("WHITE_TIGER", 1, 24);
@@ -198,8 +199,7 @@ public final class GameData {
     locationPresets.put(desert.getID(), desert);
 
     LocationPreset forest = new LocationPreset("FOREST", "Land", "Forest");
-    forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(zombie);
-    forest.addSpawner(fruitBat);
+    forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(fruitBat);
     forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.1);
     forest.setLightPermittivity(0.7);
     forest.setBlobSize(25);
@@ -223,7 +223,7 @@ public final class GameData {
     locationPresets.put(meadow.getID(), meadow);
 
     LocationPreset pond = new LocationPreset("POND", "Land", "Pond");
-    pond.addSpawner(frog).addSpawner(komodoDragon).addSpawner(crocodile);
+    pond.addSpawner(frog).addSpawner(lizard).addSpawner(crocodile).addSpawner(greenIguana);
     pond.addItem("WATERMELON", 0.8).addItem("SPEAR", 0.3);
     pond.setLightPermittivity(0.96);
     pond.setBlobSize(1);
@@ -231,7 +231,7 @@ public final class GameData {
     locationPresets.put(pond.getID(), pond);
 
     LocationPreset swamp = new LocationPreset("SWAMP", "Land", "Swamp");
-    swamp.addSpawner(frog).addSpawner(snake).addSpawner(komodoDragon).addSpawner(crocodile);
+    swamp.addSpawner(frog).addSpawner(snake).addSpawner(lizard).addSpawner(crocodile);
     swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.12).addItem("CLUB", 0.4);
     swamp.setLightPermittivity(0.7);
     swamp.setBlobSize(10);
