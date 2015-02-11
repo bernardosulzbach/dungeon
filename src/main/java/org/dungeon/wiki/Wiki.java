@@ -34,9 +34,6 @@ public abstract class Wiki {
 
   private static List<Article> articleList;
 
-  private Wiki() {
-  }
-
   private static void initialize() {
     articleList = new ArrayList<Article>();
     ResourceReader reader = new ResourceReader("wiki.txt");
@@ -90,11 +87,46 @@ public abstract class Wiki {
     return "  " + article.title;
   }
 
+  /**
+   * Finds a List of equally good Articles matches based on an array of search arguments.
+   *
+   * @param searchArguments the arguments provided by the player
+   * @return a List with zero or more Articles
+   */
   private static List<Article> findMatches(String[] searchArguments) {
-    List<Article> matches = new ArrayList<Article>();
+    List<Article> listOfMatches = new ArrayList<Article>();
+    // Do not start with 0, as this would gather all Articles if the query did not match any Article.
+    double maximumSimilarity = 1e-6;
     for (Article article : articleList) {
-      if (Utils.checkQueryMatch(searchArguments, Utils.split(article.title))) {
-        matches.add(article);
+      String[] titleWords = Utils.split(article.title);
+      int matches = countMatches(searchArguments, titleWords);
+      double matchesOverTitleWords = matches / (double) titleWords.length;
+      double matchesOverSearchArgs = matches / (double) searchArguments.length;
+      double similarity = org.dungeon.util.Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
+      int comparisonResult = org.dungeon.util.Math.fuzzyCompare(similarity, maximumSimilarity);
+      if (comparisonResult > 0) {
+        maximumSimilarity = similarity;
+        listOfMatches.clear();
+        listOfMatches.add(article);
+      } else if (comparisonResult == 0) {
+        listOfMatches.add(article);
+      }
+    }
+    return listOfMatches;
+  }
+
+  /**
+   * Counts how many Strings in the entry array start with the Strings of the query array.
+   */
+  private static int countMatches(String[] query, String[] entry) {
+    int matches = 0;
+    int indexOfLastMatchPlusOne = 0;
+    for (int i = 0; i < query.length && indexOfLastMatchPlusOne < entry.length; i++) {
+      for (int j = indexOfLastMatchPlusOne; j < entry.length; j++) {
+        if (Utils.startsWithIgnoreCase(entry[j], query[i])) {
+          indexOfLastMatchPlusOne = j + 1;
+          matches++;
+        }
       }
     }
     return matches;

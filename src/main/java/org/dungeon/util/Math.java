@@ -34,6 +34,38 @@ public class Math {
    * The maximum allowed value for the fibonacci command.
    */
   private static final int FIBONACCI_MAX = 65535;
+  private static final double DEFAULT_DOUBLE_TOLERANCE = 1e-8;
+
+  /**
+   * Calculates the arithmetic mean of a sequence of doubles.
+   */
+  public static double mean(double... values) {
+    double sum = 0;
+    for (double value : values) {
+      sum += value;
+    }
+    return sum / values.length;
+  }
+
+  /**
+   * Compares two doubles with the default tolerance margin.
+   */
+  public static int fuzzyCompare(Double d1, Double d2) {
+    return fuzzyCompare(d1, d2, DEFAULT_DOUBLE_TOLERANCE);
+  }
+
+  /**
+   * Compares two doubles with a specified tolerance margin.
+   */
+  public static int fuzzyCompare(Double d1, Double d2, Double epsilon) {
+    if (d1 + epsilon < d2) {
+      return -1;
+    } else if (d1 - epsilon > d2) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 
   /**
    * The public method that should be invoked using the input words.
