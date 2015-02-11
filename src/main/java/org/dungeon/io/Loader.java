@@ -43,7 +43,7 @@ public class Loader {
   private static final String DEFAULT_SAVE_PATH = "saves/";
   // The directory.
   private static final File SAVES_FOLDER = new File(DEFAULT_SAVE_PATH);
-  private static final String DEFAULT_SAVE_NAME = "campaign";
+  private static final String DEFAULT_SAVE_NAME = "default";
   private static final String SAVE_EXTENSION = ".dungeon";
   // Messages.
   private static final String SAVE_ERROR = "Could not save the game.";
