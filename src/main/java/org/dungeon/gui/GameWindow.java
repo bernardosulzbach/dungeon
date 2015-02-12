@@ -295,9 +295,6 @@ public class GameWindow extends JFrame {
   void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
     StyleConstants.setForeground(attributeSet, fore);
     StyleConstants.setBackground(attributeSet, back);
-    if (Game.getGameState() != null) {
-      StyleConstants.setBold(attributeSet, Game.getGameState().isBold());
-    }
     try {
       document.insertString(document.getLength(), string, attributeSet);
       if (scrollDown) {
