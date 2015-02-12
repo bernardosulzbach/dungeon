@@ -31,8 +31,8 @@ public class AchievementBuilder {
   private CounterMap<String> killsByCreatureType;
   private CounterMap<ID> killsByWeapon;
   private CounterMap<ID> killsByLocationID;
-  private CounterMap<ID> distinctLocationsVisitCount;
-  private CounterMap<ID> sameLocationVisitCounter;
+  private CounterMap<ID> discoveredLocations;
+  private CounterMap<ID> maximumNumberOfVisits;
 
   public AchievementBuilder setId(String id) {
     this.id = id;
@@ -92,23 +92,23 @@ public class AchievementBuilder {
     return this;
   }
 
-  public AchievementBuilder setDistinctLocationsVisitCount(CounterMap<ID> distinctLocationsVisitCount) {
-    if (distinctLocationsVisitCount.isNotEmpty()) {
-      this.distinctLocationsVisitCount = distinctLocationsVisitCount;
+  public AchievementBuilder setDiscoveredLocations(CounterMap<ID> discoveredLocations) {
+    if (discoveredLocations.isNotEmpty()) {
+      this.discoveredLocations = discoveredLocations;
     }
     return this;
   }
 
-  public AchievementBuilder setSameLocationVisitCounter(CounterMap<ID> sameLocationVisitCounter) {
-    if (sameLocationVisitCounter.isNotEmpty()) {
-      this.sameLocationVisitCounter = sameLocationVisitCounter;
+  public AchievementBuilder setMaximumNumberOfVisits(CounterMap<ID> maximumNumberOfVisits) {
+    if (maximumNumberOfVisits.isNotEmpty()) {
+      this.maximumNumberOfVisits = maximumNumberOfVisits;
     }
     return this;
   }
 
   public Achievement createAchievement() {
     return new Achievement(id, name, info, text, minimumBattleCount, longestBattleLength, killsByCreatureID,
-        killsByCreatureType, killsByWeapon, killsByLocationID, distinctLocationsVisitCount, sameLocationVisitCounter);
+        killsByCreatureType, killsByWeapon, killsByLocationID, discoveredLocations, maximumNumberOfVisits);
   }
 
 }

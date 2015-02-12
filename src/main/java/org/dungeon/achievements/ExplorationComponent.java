@@ -37,18 +37,18 @@ final class ExplorationComponent {
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  final CounterMap<ID> distinctLocationsVisitCount;
+  final CounterMap<ID> discoveredLocations;
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
-  final CounterMap<ID> sameLocationVisitCounter;
+  final CounterMap<ID> maximumNumberOfVisits;
 
-  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> distinctLocationsVisitCount,
-      CounterMap<ID> sameLocationVisitCounter) {
+  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> discoveredLocations,
+      CounterMap<ID> maximumNumberOfVisits) {
     this.killsByLocationID = killsByLocationID;
-    this.distinctLocationsVisitCount = distinctLocationsVisitCount;
-    this.sameLocationVisitCounter = sameLocationVisitCounter;
+    this.discoveredLocations = discoveredLocations;
+    this.maximumNumberOfVisits = maximumNumberOfVisits;
   }
 
   /**
@@ -63,16 +63,16 @@ final class ExplorationComponent {
         }
       }
     }
-    if (distinctLocationsVisitCount != null) {
-      for (ID locationID : distinctLocationsVisitCount.keySet()) {
-        if (statistics.getDistinctVisitCount(locationID) < distinctLocationsVisitCount.getCounter(locationID)) {
+    if (discoveredLocations != null) {
+      for (ID locationID : discoveredLocations.keySet()) {
+        if (statistics.getDiscoveredLocations(locationID) < discoveredLocations.getCounter(locationID)) {
           return false;
         }
       }
     }
-    if (sameLocationVisitCounter != null) {
-      for (ID locationID : sameLocationVisitCounter.keySet()) {
-        if (statistics.getSameLocationVisitCount(locationID) < sameLocationVisitCounter.getCounter(locationID)) {
+    if (maximumNumberOfVisits != null) {
+      for (ID locationID : maximumNumberOfVisits.keySet()) {
+        if (statistics.getMaximumNumberOfVisits(locationID) < maximumNumberOfVisits.getCounter(locationID)) {
           return false;
         }
       }

@@ -63,40 +63,6 @@ public class ExplorationStatistics implements Serializable {
   }
 
   /**
-   * Returns how many different Locations with a specified ID the Hero visited.
-   *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
-   */
-  public int getDistinctVisitCount(ID locationID) {
-    int count = 0;
-    for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID)) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  /**
-   * Returns how many time the Hero visited the same Locations with a specified ID.
-   *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
-   */
-  public int getSameLocationVisitCount(ID locationID) {
-    int maximumVisitsToLocationWithThisID = 0;
-    for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID)) {
-        if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
-          maximumVisitsToLocationWithThisID = entry.getVisitCount();
-        }
-      }
-    }
-    return maximumVisitsToLocationWithThisID;
-  }
-
-  /**
    * Returns how many Creatures the Hero killed in Locations with a specified ID.
    *
    * @param locationID the ID of the Locations.
@@ -110,6 +76,40 @@ public class ExplorationStatistics implements Serializable {
       }
     }
     return count;
+  }
+
+  /**
+   * Returns how many Locations with the specified ID the Hero discovered.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getDiscoveredLocations(ID locationID) {
+    int count = 0;
+    for (ExplorationStatisticsEntry entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID)) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
+   * Returns the maximum number of visits for any Location with a specified ID so far.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getMaximumNumberOfVisits(ID locationID) {
+    int maximumVisitsToLocationWithThisID = 0;
+    for (ExplorationStatisticsEntry entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID)) {
+        if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
+          maximumVisitsToLocationWithThisID = entry.getVisitCount();
+        }
+      }
+    }
+    return maximumVisitsToLocationWithThisID;
   }
 
 }

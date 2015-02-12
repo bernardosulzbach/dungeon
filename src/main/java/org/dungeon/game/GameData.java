@@ -298,11 +298,11 @@ public final class GameData {
       CounterMap<ID> killsByLocationId = readIDCounterMap(reader, "KILLS_BY_LOCATION_ID");
       builder.setKillsByLocationID(killsByLocationId);
 
-      CounterMap<ID> visitsToDistinctLocations = readIDCounterMap(reader, "VISITS_TO_DISTINCT_LOCATIONS");
-      builder.setDistinctLocationsVisitCount(visitsToDistinctLocations);
+      CounterMap<ID> discoveredLocations = readIDCounterMap(reader, "DISCOVERED_LOCATIONS");
+      builder.setDiscoveredLocations(discoveredLocations);
 
-      CounterMap<ID> visitsToTheSameLocation = readIDCounterMap(reader, "VISITS_TO_THE_SAME_LOCATION");
-      builder.setSameLocationVisitCounter(visitsToTheSameLocation);
+      CounterMap<ID> maximumNumberOfVisits = readIDCounterMap(reader, "MAXIMUM_NUMBER_OF_VISITS");
+      builder.setMaximumNumberOfVisits(maximumNumberOfVisits);
 
       Achievement achievement = builder.createAchievement();
       ACHIEVEMENTS.put(achievement.getID(), achievement);

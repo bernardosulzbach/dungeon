@@ -32,19 +32,25 @@ ID: I_MISS_YOU
 NAME: I miss you!
 INFO: Visit the same graveyard 10 times.
 TEXT: visited the same graveyard ten times
-VISITS_TO_THE_SAME_LOCATION: GRAVEYARD, 10
+MAXIMUM_NUMBER_OF_VISITS: GRAVEYARD, 10
+
+ID: BRIDGE_FAN
+NAME: Bridge Fan
+INFO: Visit the same bridge 8 times.
+TEXT: visited the same bridge eight times
+MAXIMUM_NUMBER_OF_VISITS: BRIDGE, 8
 
 ID: ARCHAEOLOGIST
 NAME: Archaeologist
-INFO: Visit 10 different deserts.
-TEXT: visited ten different deserts
-VISITS_TO_DISTINCT_LOCATIONS: DESERT, 10
+INFO: Discover 10 different deserts.
+TEXT: discovered ten different deserts
+DISCOVERED_LOCATIONS: DESERT, 10
 
 ID: REAPER
 NAME: Reaper
-INFO: Visit 10 distinct graveyards.
-TEXT: visited ten distinct graveyards
-VISITS_TO_DISTINCT_LOCATIONS: GRAVEYARD, 10
+INFO: Discover 10 distinct graveyards.
+TEXT: discovered ten distinct graveyards
+DISCOVERED_LOCATIONS: GRAVEYARD, 10
 
 ID: EVIL_BASTARD
 NAME: Evil Bastard
