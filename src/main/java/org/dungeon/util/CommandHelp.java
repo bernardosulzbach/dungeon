@@ -52,7 +52,7 @@ public class CommandHelp {
           if (selectedCommand == null) {
             selectedCommand = command;
           } else {
-            Utils.printAmbiguousSelectionMessage();
+            Messenger.printAmbiguousSelectionMessage();
             return;
           }
         }
@@ -63,7 +63,7 @@ public class CommandHelp {
         IO.writeString(selectedCommand.name + " (Command) " + '\n' + selectedCommand.info);
       }
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
     }
   }
 

@@ -39,6 +39,7 @@ import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Messenger;
 import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Utils;
 
@@ -290,7 +291,7 @@ public class Hero extends Creature {
     if (issuedCommand.hasArguments()) {
       return getInventory().findItem(issuedCommand.getArguments());
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
       return null;
     }
   }
@@ -305,7 +306,7 @@ public class Hero extends Creature {
     if (issuedCommand.hasArguments()) {
       return getLocation().getInventory().findItem(issuedCommand.getArguments());
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
       return null;
     }
   }
@@ -374,7 +375,7 @@ public class Hero extends Creature {
     } else if (result.getDifferentNames() == 2 && result.hasName(getName())) {
       return result.getMatch(0).getName().equals(getName()) ? result.getMatch(1) : result.getMatch(0);
     } else {
-      Utils.printAmbiguousSelectionMessage();
+      Messenger.printAmbiguousSelectionMessage();
     }
     return null;
   }
@@ -502,7 +503,7 @@ public class Hero extends Creature {
     if (issuedCommand.hasArguments()) {
       target = getLocation().getInventory().findItem(issuedCommand.getArguments());
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
       target = null;
     }
     if (target != null) {

@@ -78,8 +78,8 @@ public class Math {
       for (String strArgument : issuedCommand.getArguments()) {
         try {
           intArgument = Integer.parseInt(strArgument);
-        } catch (NumberFormatException ignore) {
-          IO.writeString(String.format("Failed to parse " + strArgument + ".", Color.RED));
+        } catch (NumberFormatException warn) {
+          Messenger.printInvalidNumberFormatOrValue();
           return;
         }
         if (0 < intArgument && intArgument <= FIBONACCI_MAX) {
@@ -101,7 +101,7 @@ public class Math {
         }
       }
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
     }
   }
 

@@ -17,7 +17,7 @@
 
 package org.dungeon.io;
 
-import org.dungeon.util.Utils;
+import org.dungeon.util.Messenger;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class DLogger {
     File logFolder = new File(LOG_FILE_PATH);
     if (!logFolder.exists()) {
       if (!logFolder.mkdir()) {
-        Utils.printFailedToCreateDirectoryMessage(LOG_FILE_PATH);
+        Messenger.printFailedToCreateDirectoryMessage(LOG_FILE_PATH);
       }
     }
     return LOG_FILE_PATH + LOG_FILE_NAME;

@@ -18,6 +18,7 @@
 package org.dungeon.items;
 
 import org.dungeon.io.IO;
+import org.dungeon.util.Messenger;
 import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Utils;
 
@@ -74,7 +75,7 @@ public abstract class BaseInventory implements Serializable {
     } else if (selectionResult.size() == 1 || selectionResult.getDifferentNames() == 1) {
       return selectionResult.getMatch(0);
     } else {
-      Utils.printAmbiguousSelectionMessage();
+      Messenger.printAmbiguousSelectionMessage();
     }
     return null;
   }

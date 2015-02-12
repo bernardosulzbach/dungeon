@@ -24,6 +24,7 @@ import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.util.CommandHelp;
 import org.dungeon.util.Math;
+import org.dungeon.util.Messenger;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
 import org.dungeon.wiki.Wiki;
@@ -320,7 +321,7 @@ public class Game {
         return;
       }
     }
-    Utils.printInvalidCommandMessage(issuedCommand.getFirstToken());
+    Messenger.printInvalidCommandMessage(issuedCommand.getFirstToken());
   }
 
   /**

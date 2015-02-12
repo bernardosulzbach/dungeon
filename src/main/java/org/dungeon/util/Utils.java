@@ -22,7 +22,6 @@ import org.dungeon.game.GameData;
 import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 
-import java.awt.Color;
 import java.util.List;
 
 /**
@@ -48,14 +47,6 @@ public class Utils {
     } else {
       return original;
     }
-  }
-
-  /**
-   * Prints a message reporting the usage of an invalid command.
-   */
-  public static void printInvalidCommandMessage(String command) {
-    IO.writeString(String.format(Constants.INVALID_COMMAND, command), Color.RED);
-    IO.writeString(Constants.SUGGEST_COMMANDS, Color.ORANGE);
   }
 
   /**
@@ -126,13 +117,6 @@ public class Utils {
   }
 
   /**
-   * Prints a humanized message warning the user that the command used requires arguments.
-   */
-  public static void printMissingArgumentsMessage() {
-    IO.writeString("This command requires arguments.");
-  }
-
-  /**
    * Checks if a string starts with a given string, ignoring case differences.
    *
    * @param a the base string.
@@ -141,45 +125,6 @@ public class Utils {
    */
   public static boolean startsWithIgnoreCase(String a, String b) {
     return a.toLowerCase().startsWith(b.toLowerCase());
-  }
-
-  /**
-   * Centers a string.
-   *
-   * @param string the string to be centered.
-   * @param fill   the filling character.
-   * @return a centered string.
-   */
-  public static String centerString(String string, char fill) {
-    return centerString(string, Constants.COLS, fill);
-  }
-
-  /**
-   * Centers a string.
-   *
-   * @param string the string to be centered.
-   * @param width  the width of the resulting string.
-   * @param fill   the filling character.
-   * @return a centered string.
-   */
-  private static String centerString(String string, int width, char fill) {
-    int length = string.length();
-    if (length > width) {
-      throw new IllegalArgumentException("String is bigger than the desired width.");
-    } else {
-      StringBuilder builder = new StringBuilder();
-      for (int i = 0; i < (width - length) / 2; i++) {
-        builder.append(fill);
-      }
-      builder.append(string);
-      for (int i = 0; i < (width - length) / 2; i++) {
-        builder.append(fill);
-      }
-      if (builder.length() < width) {
-        builder.append(fill);
-      }
-      return builder.toString();
-    }
   }
 
   /**
@@ -237,18 +182,6 @@ public class Utils {
       sb.append(delimiter).append(elements[i]);
     }
     return sb.toString();
-  }
-
-  public static void printAmbiguousSelectionMessage() {
-    IO.writeString("Provided input is ambiguous.");
-  }
-
-  /**
-   * Prints a message warning the player that a directory creation failed. This method exists to avoid repeated code
-   * and improve
-   */
-  public static void printFailedToCreateDirectoryMessage(String directory) {
-    IO.writeString("Failed to create the " + directory + " directory.");
   }
 
   /**

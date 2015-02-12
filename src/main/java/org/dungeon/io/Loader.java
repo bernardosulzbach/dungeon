@@ -21,6 +21,7 @@ import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Messenger;
 import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
 
@@ -192,7 +193,7 @@ public class Loader {
     try {
       if (!SAVES_FOLDER.exists()) {
         if (!SAVES_FOLDER.mkdir()) {
-          Utils.printFailedToCreateDirectoryMessage(DEFAULT_SAVE_PATH);
+          Messenger.printFailedToCreateDirectoryMessage(DEFAULT_SAVE_PATH);
           return;
         }
       }

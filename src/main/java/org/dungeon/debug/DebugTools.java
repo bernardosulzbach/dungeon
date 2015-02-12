@@ -31,6 +31,7 @@ import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.Messenger;
 import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
 
@@ -66,7 +67,7 @@ public class DebugTools {
       }
       IO.writeString("Command not recognized.");
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
     }
 
   }
@@ -126,7 +127,7 @@ public class DebugTools {
         if (issuedCommand.getTokenCount() >= 3) {
           give(issuedCommand.getArguments()[1]);
         } else {
-          Utils.printMissingArgumentsMessage();
+          Messenger.printMissingArgumentsMessage();
         }
       }
     });
@@ -222,11 +223,10 @@ public class DebugTools {
         int seconds = Integer.parseInt(issuedCommand.getArguments()[1]);
         Game.getGameState().getWorld().rollDate(seconds);
       } catch (NumberFormatException warn) {
-        // TODO: maybe this and fibonacci should share a message for invalid number format.
-        IO.writeString("Not a valid amount of seconds.");
+        Messenger.printInvalidNumberFormatOrValue();
       }
     } else {
-      Utils.printMissingArgumentsMessage();
+      Messenger.printMissingArgumentsMessage();
     }
   }
 
