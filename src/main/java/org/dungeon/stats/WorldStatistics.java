@@ -29,23 +29,33 @@ import java.io.Serializable;
 public final class WorldStatistics implements Serializable {
 
   private final CounterMap<String> spawnCounter = new CounterMap<String>();
-  private int locations;
-  private int creatures;
-
-  /**
-   * Adds the creation of a new Location to the statistics.
-   */
-  public void addLocation(String location) {
-    // TODO: start to use Location name.
-    locations++;
-  }
+  private final CounterMap<String> locationCounter = new CounterMap<String>();
+  private int spawnCount;
+  private int locationCount;
 
   /**
    * Adds the spawn of a new Creature to the statistics.
    */
   public void addSpawn(String creature) {
-    creatures++;
+    spawnCount++;
     spawnCounter.incrementCounter(creature);
+  }
+
+  /**
+   * Adds the creation of a new Location to the statistics.
+   */
+  public void addLocation(String location) {
+    locationCount++;
+    locationCounter.incrementCounter(location);
+  }
+
+  /**
+   * Returns the Creature count.
+   *
+   * @return the Creature count.
+   */
+  public int getSpawnCount() {
+    return spawnCount;
   }
 
   /**
@@ -54,16 +64,7 @@ public final class WorldStatistics implements Serializable {
    * @return the Location count.
    */
   public int getLocationCount() {
-    return locations;
-  }
-
-  /**
-   * Returns the Creature count.
-   *
-   * @return the Creature count.
-   */
-  public int getCreatureCount() {
-    return creatures;
+    return locationCount;
   }
 
   /**
@@ -73,6 +74,10 @@ public final class WorldStatistics implements Serializable {
    */
   public CounterMap<String> getSpawnCounter() {
     return spawnCounter;
+  }
+
+  public CounterMap<String> getLocationCounter() {
+    return locationCounter;
   }
 
 }

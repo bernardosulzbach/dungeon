@@ -231,7 +231,7 @@ public class Game {
     commandList.add(new Command("statistics", "Displays all available game statistics.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        gameState.printStatistics(issuedCommand);
+        gameState.getStatistics().printStatistics();
       }
     });
     commandList.add(new Command("status", "Displays the character's status.") {
