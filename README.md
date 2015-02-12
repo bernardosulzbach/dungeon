@@ -3,17 +3,19 @@ Dungeon
 Text-based open-world RPG made with Java.
 
 
-System requirements
+System requirements¹
 -------------------
-|Spec|Required                    |
-|----|----------------------------|
-|Java|Updated Java SE 6 or newer. |
-|CPU |Pentium 2 266 MHz or faster.|
-|RAM |128 MB for JRE.             |
-|HD  |1 MB for JAR and saves.     |
+|Spec|Required                                   |
+|----|-------------------------------------------|
+|Java|Updated Java SE 6 or newer.                |
+|CPU²|Pentium 2 266 MHz or faster.               |
+|RAM |128 MB for JRE.                            |
+|HD  |127 MB for JRE, Java Update, JAR and saves.|
 
 If you have trouble running the game with a supposedly supported version of Java, tell me.
 
+¹ Based on Oracle's Java 7 System Requirements.  
+² A faster CPU is recommended.
 
 Running the game
 ----------------
