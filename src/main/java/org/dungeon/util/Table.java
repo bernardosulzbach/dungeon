@@ -147,8 +147,10 @@ public class Table {
 
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
-      for (int remainingSeparators = separators.getCounter(rowIndex); remainingSeparators > 0; remainingSeparators--) {
-        appendHorizontalSeparator(builder, columnWidth, columnCount);
+      if (separators != null) {
+        for (int remaining = separators.getCounter(rowIndex); remaining > 0; remaining--) {
+          appendHorizontalSeparator(builder, columnWidth, columnCount);
+        }
       }
       if (rowIndex != rowCount) {
         for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
