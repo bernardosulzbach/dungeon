@@ -25,14 +25,18 @@ import org.dungeon.game.GameState;
 import org.dungeon.game.ID;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
+import org.dungeon.game.LocationPreset;
 import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
+import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * A set of debugging tools.
@@ -76,7 +80,7 @@ public class DebugTools {
     commands.add(new Command("exploration") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        IO.writeString(Game.getGameState().getStatistics().getExplorationStatistics().toString());
+        printExplorationStatistics();
       }
     });
     commands.add(new Command("tomorrow") {
@@ -134,6 +138,19 @@ public class DebugTools {
       }
     });
     uninitialized = false;
+  }
+
+  private static void printExplorationStatistics() {
+    ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+    Table table = new Table("Name", "Kills", "Discovered so far", "Maximum number of visits");
+    for (Entry<ID, LocationPreset> entry : GameData.getLocationPresets().entrySet()) {
+      String name = entry.getValue().getName();
+      String kills = String.valueOf(explorationStatistics.getKillCount(entry.getKey()));
+      String discoveredSoFar = String.valueOf(explorationStatistics.getDistinctVisitCount(entry.getKey()));
+      String maximumNumberOfVisits = String.valueOf(explorationStatistics.getSameLocationVisitCount(entry.getKey()));
+      table.insertRow(name, kills, discoveredSoFar, maximumNumberOfVisits);
+    }
+    table.print();
   }
 
   /**

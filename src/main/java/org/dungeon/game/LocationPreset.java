@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * The LocationPreset class that serves as a recipe for Locations.
  */
-final class LocationPreset extends Entity {
+public final class LocationPreset extends Entity {
 
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final ArrayList<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
