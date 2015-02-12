@@ -49,7 +49,6 @@ public class AutomaticShuffledRange {
   public int getNext() {
     int value = shuffledRange.get(index);
     index++;
-    // TODO: avoid letting the first integer after shuffling be equal to the last integer before shuffling.
     if (index == shuffledRange.getSize()) {
       index = 0;
       shuffledRange.shuffle();

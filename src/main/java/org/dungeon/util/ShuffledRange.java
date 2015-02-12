@@ -66,14 +66,17 @@ public class ShuffledRange {
 
   /**
    * Shuffles the underlying List.
+   * <p/>
+   * If the List has more than one element, ensures that the next first integer is not the integer currently at the end.
    */
   public void shuffle() {
-    ArrayList<Integer> old = new ArrayList<Integer>(integers);
-    integers.clear();
-    for (int i = old.size(); i > 0; i--) {
-      int randomIndex = Engine.RANDOM.nextInt(i);
-      integers.add(old.get(randomIndex));
-      old.remove(randomIndex);
+    if (integers.size() > 1) {
+      ArrayList<Integer> old = new ArrayList<Integer>(integers);
+      integers.clear();
+      integers.add(old.remove(Engine.RANDOM.nextInt(old.size() - 1)));
+      for (int i = old.size(); i > 0; i--) {
+        integers.add(old.remove(Engine.RANDOM.nextInt(i)));
+      }
     }
   }
 
