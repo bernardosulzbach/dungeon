@@ -66,13 +66,13 @@ KILLS_BY_CREATURE_ID: BAT, 6
 
 ID: CAT
 NAME: Cat
-INFO: Kill four rats.
+INFO: Kill 4 rats.
 TEXT: killed four rats
 KILLS_BY_CREATURE_ID: RAT, 4
 
 ID: STAY_DEAD
 NAME: Stay Dead
-INFO: Kill two zombies.
+INFO: Kill 2 zombies.
 TEXT: killed two zombies
 KILLS_BY_CREATURE_ID: ZOMBIE, 2
 
@@ -134,6 +134,6 @@ KILLS_BY_WEAPON: [STICK, 5 | STONE, 5]
 
 ID: WOOD_MASTER
 NAME: Wood Master
-INFO: Get 1 one kill with a club, one with a staff and one with a stick.
+INFO: Get one kill with a club, one with a staff and one with a stick.
 TEXT: killed a creature with a club, one with a staff and one with a stick
 KILLS_BY_WEAPON: [CLUB, 1 | STAFF, 1 | STICK, 1]
