@@ -135,6 +135,8 @@ public class Hero extends Creature {
     if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
       IO.writeString("You fall asleep.");
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
+      // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
+      seconds += Engine.RANDOM.nextInt(15 * 60 + 1);
       int healing = getMaxHealth() * seconds / TimeConstants.HEAL_TEN_PERCENT / 10;
       if (!isCompletelyHealed()) {
         int health = getCurHealth() + healing;
@@ -144,16 +146,18 @@ public class Hero extends Creature {
           setCurHealth(getMaxHealth());
         }
       }
-      // The longest possible sleep starts at 19:00 and ends at 05:00 (takes 10 hours).
-      // It seems to me a good idea to let the Hero have one dream every 4 hours.
+      // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
+      // It seems a good idea to let the Hero have one dream every 4 hours.
       final int dreamDurationInSeconds = 4 * 60 * 60;
-      while (seconds > 0) {
-        if (seconds > dreamDurationInSeconds) {
+      // Make a copy of seconds as it must be returned unaltered so that the Engine rolls time forwards correctly.
+      int remainingSeconds = seconds;
+      while (remainingSeconds > 0) {
+        if (remainingSeconds > dreamDurationInSeconds) {
           Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * dreamDurationInSeconds / 3600);
           IO.writeString(GameData.getDreamLibrary().getNextDream());
-          seconds -= dreamDurationInSeconds;
+          remainingSeconds -= dreamDurationInSeconds;
         } else {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * seconds / 3600);
+          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / 3600);
           break;
         }
       }
