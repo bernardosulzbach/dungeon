@@ -20,6 +20,7 @@ package org.dungeon.debug;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.creatures.Creature;
+import org.dungeon.creatures.CreatureBlueprint;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
@@ -92,41 +93,16 @@ public class DebugTools {
         printExplorationStatistics();
       }
     });
-    commands.add(new Command("tomorrow") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        Game.getGameState().getWorld().rollDate(24 * 60 * 60);
-        IO.writeString("A day has passed.");
-      }
-    });
     commands.add(new Command("location") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
         printCurrentLocationInformation();
       }
     });
-    commands.add(new Command("saved") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        printIsSaved();
-      }
-    });
     commands.add(new Command("list") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
         listAllArguments();
-      }
-    });
-    commands.add(new Command("wait") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        DebugTools.wait(issuedCommand);
-      }
-    });
-    commands.add(new Command("time") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        printTime();
       }
     });
     commands.add(new Command("give") {
@@ -139,11 +115,35 @@ public class DebugTools {
         }
       }
     });
-    // TODO: make a more generic command such as "spawn".
-    commands.add(new Command("dummy") {
+    commands.add(new Command("saved") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        spawnDummyInHeroLocation();
+        printIsSaved();
+      }
+    });
+    commands.add(new Command("spawn") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        spawn(issuedCommand);
+      }
+    });
+    commands.add(new Command("tomorrow") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        Game.getGameState().getWorld().rollDate(24 * 60 * 60);
+        IO.writeString("A day has passed.");
+      }
+    });
+    commands.add(new Command("time") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        printTime();
+      }
+    });
+    commands.add(new Command("wait") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        DebugTools.wait(issuedCommand);
       }
     });
     uninitialized = false;
@@ -225,12 +225,25 @@ public class DebugTools {
   }
 
   /**
-   * Spawns a dummy in the Location the Hero is in.
+   * Spawns the specified creatures in the Location the Hero is in.
+   * <p/>
+   * Note that spawning creatures with this method does NOT change the game state to unsaved.
    */
-  private static void spawnDummyInHeroLocation() {
-    Creature dummy = new Creature(GameData.getCreatureBlueprints().get(new ID("DUMMY")));
-    Game.getGameState().getHeroLocation().addCreature(dummy);
-    IO.writeString("Spawned a dummy.");
+  private static void spawn(IssuedCommand issuedCommand) {
+    if (issuedCommand.getTokenCount() >= 3) {
+      for (int i = 1; i < issuedCommand.getArguments().length; i++) {
+        ID givenID = new ID(issuedCommand.getArguments()[i].toUpperCase());
+        CreatureBlueprint blueprint = GameData.getCreatureBlueprints().get(givenID);
+        if (blueprint != null) {
+          Game.getGameState().getHeroLocation().addCreature(new Creature(blueprint));
+          IO.writeString("Spawned a " + blueprint.getName() + ".");
+        } else {
+          IO.writeString(givenID + " does not match any CreatureBlueprint.");
+        }
+      }
+    } else {
+      Messenger.printMissingArgumentsMessage();
+    }
   }
 
   public static void printIsSaved() {
@@ -242,10 +255,11 @@ public class DebugTools {
   }
 
   public static void wait(IssuedCommand issuedCommand) {
-    if (issuedCommand.getTokenCount() > 2) {
+    if (issuedCommand.getTokenCount() >= 3) {
       try {
         int seconds = Integer.parseInt(issuedCommand.getArguments()[1]);
         Game.getGameState().getWorld().rollDate(seconds);
+        IO.writeString("Waited for " + seconds + " seconds.");
       } catch (NumberFormatException warn) {
         Messenger.printInvalidNumberFormatOrValue();
       }
