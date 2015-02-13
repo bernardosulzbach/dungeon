@@ -17,13 +17,15 @@
 
 package org.dungeon.io;
 
+import org.dungeon.achievements.Achievement;
+import org.dungeon.date.Period;
 import org.dungeon.game.Game;
 import org.dungeon.util.Constants;
-import org.dungeon.util.Percentage;
 import org.dungeon.util.Poem;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * IO class that encapsulates all Input/Output operations. This is the only class that should call the writing methods
@@ -152,32 +154,21 @@ public final class IO {
     writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false);
   }
 
-  /**
-   * Prints a bar to the window.
-   *
-   * @param percentage the percentage of the attribute.
-   * @param fore       the foreground Color.
-   */
-  public static void writeNamedBar(String name, Percentage percentage, Color fore) {
-    if (name.length() > Constants.BAR_NAME_LENGTH) {
-      DLogger.warning("Passed a too long bar name.");
-    }
-    writeString(name, Constants.FORE_COLOR_NORMAL, false);
-    int size = Constants.COLS - Constants.BAR_NAME_LENGTH;
-    // Perform a ceiling, as small percentages must be represented by at least one bar.
-    int bars = (int) (size * percentage.toDouble()) + 1;
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < Constants.BAR_NAME_LENGTH - name.length(); i++) {
-      sb.append(' ');
-    }
-    for (int i = 0; i < size; i++) {
-      if (i < bars) {
-        sb.append('|');
-      } else {
-        sb.append(' ');
+  public static void writeAchievementList(List<Achievement> achievementList) {
+    writeAchievementList(achievementList, null);
+  }
+
+  public static void writeAchievementList(List<Achievement> achievementList, List<Period> timeSinceUnlockList) {
+    for (int i = 0; i < achievementList.size(); i++) {
+      Achievement achievement = achievementList.get(i);
+      String achievementName = achievement.getName();
+      if (timeSinceUnlockList != null) {
+        Period timeSinceUnlock = timeSinceUnlockList.get(i);
+        achievementName += " (" + timeSinceUnlock + " ago)";
       }
+      IO.writeString(achievementName, Color.ORANGE);
+      IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
     }
-    writeString(sb.toString(), fore, true);
   }
 
 }

@@ -30,6 +30,7 @@ import org.dungeon.util.CommandHistory;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class GameState implements Serializable {
 
@@ -138,21 +139,21 @@ public class GameState implements Serializable {
    * Prints all unlocked achievements.
    */
   public void printUnlockedAchievements() {
-    String dateDifference;
-    Achievement achievement;
     Date now = world.getWorldDate();
     AchievementTracker tracker = hero.getAchievementTracker();
-    IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
+    ArrayList<Achievement> achievements = new ArrayList<Achievement>();
+    ArrayList<Period> timeSinceUnlocked = new ArrayList<Period>();
     for (UnlockedAchievement ua : tracker.getUnlockedAchievementArray()) {
-      achievement = GameData.ACHIEVEMENTS.get(ua.id);
+      Achievement achievement = GameData.ACHIEVEMENTS.get(ua.id);
       if (achievement != null) {
-        dateDifference = new Period(ua.date, now).toString();
-        IO.writeString(achievement.getName() + " (" + dateDifference + " ago)", Color.ORANGE);
-        IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
+        achievements.add(achievement);
+        timeSinceUnlocked.add(new Period(ua.date, now));
       } else {
         DLogger.warning("Unlocked achievement ID not found in GameData.");
       }
     }
+    IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
+    IO.writeAchievementList(achievements, timeSinceUnlocked);
   }
 
   /**

@@ -17,6 +17,8 @@
 
 package org.dungeon.debug;
 
+import org.dungeon.achievements.Achievement;
+import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
@@ -78,6 +80,12 @@ public class DebugTools {
    * This method also sets {@code uninitialized} to false.
    */
   private static void initialize() {
+    commands.add(new Command("achievements") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        printNotYetUnlockedAchievements();
+      }
+    });
     commands.add(new Command("exploration") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
@@ -139,6 +147,22 @@ public class DebugTools {
       }
     });
     uninitialized = false;
+  }
+
+  private static void printNotYetUnlockedAchievements() {
+    AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
+    int notYetUnlockedCount = GameData.ACHIEVEMENTS.size() - tracker.getUnlockedCount();
+    ArrayList<Achievement> notYetUnlockedAchievements = new ArrayList<Achievement>(notYetUnlockedCount);
+    for (Achievement achievement : GameData.ACHIEVEMENTS.values()) {
+      if (!tracker.isUnlocked(achievement)) {
+        notYetUnlockedAchievements.add(achievement);
+      }
+    }
+    if (notYetUnlockedAchievements.isEmpty()) {
+      IO.writeString("All achievements have been unlocked.");
+    } else {
+      IO.writeAchievementList(notYetUnlockedAchievements);
+    }
   }
 
   private static void printExplorationStatistics() {
