@@ -33,9 +33,6 @@ public class Constants {
   public static final int COLS = 100;
   public static final String FILE_FOUND = "A saved campaign was found.";
 
-  public static final String SUICIDE_ATTEMPT_1 = "You cannot attempt suicide.";
-  public static final String SUICIDE_ATTEMPT_2 = "You cannot target yourself.";
-
   // The string used to alert the player about invalid input.
   public static final String INVALID_INPUT = "Invalid input.";
 
@@ -52,8 +49,6 @@ public class Constants {
   public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
   public static final Color FORE_COLOR_DARKER = Color.GRAY;
 
-  // How many characters the bar name should occupy.
-  public static final int BAR_NAME_LENGTH = 16;
 
   // IDs
   public static final ID HERO_ID = new ID("HERO");

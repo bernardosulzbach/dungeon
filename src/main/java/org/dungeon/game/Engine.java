@@ -34,7 +34,9 @@ import java.util.Random;
  */
 public class Engine {
 
-  // The single Random object used by all the methods.
+  /**
+   * The Random object shared by all the classes.
+   */
   public static final Random RANDOM = new Random();
 
   /**
@@ -50,8 +52,8 @@ public class Engine {
    */
   private static void refreshAchievements() {
     Hero hero = Game.getGameState().getHero();
-    for (Achievement a : GameData.ACHIEVEMENTS.values()) {
-      a.update(hero);
+    for (Achievement achievement : GameData.ACHIEVEMENTS.values()) {
+      achievement.update(hero);
     }
   }
 
@@ -116,17 +118,10 @@ public class Engine {
    */
   public static int battle(Hero attacker, Creature defender) {
     if (attacker == defender) {
-      // Two different messages.
-      if (RANDOM.nextBoolean()) {
-        IO.writeString(Constants.SUICIDE_ATTEMPT_1);
-      } else {
-        IO.writeString(Constants.SUICIDE_ATTEMPT_2);
-      }
+      IO.writeString("You cannot attempt suicide.");
       return 0;
     }
-    /**
-     * A counter variable that register how many turns the battle had.
-     */
+    // A counter variable that register how many turns the battle had.
     int turns = 0;
     while (attacker.isAlive() && defender.isAlive()) {
       attacker.hit(defender);
@@ -149,7 +144,7 @@ public class Engine {
       survivor = defender;
       defeated = attacker;
     }
-    IO.writeString(String.format("%s managed to kill %s.", survivor.getName(), defeated.getName()), Color.CYAN);
+    IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
     boolean attackerWon = attacker == survivor;
     Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
     Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
