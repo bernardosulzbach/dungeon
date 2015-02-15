@@ -27,7 +27,7 @@ import org.dungeon.date.Period;
  * <p/>
  * Updated by Bernardo Sulzbach on 21/11/2014: added starting hours.
  */
-public enum PartOfDay {
+public enum PartOfDay implements Selectable {
 
   // Keep this array sorted by the startingHour in ascending order. See getCorrespondingConstant to understand why.
   NIGHT("Night", 0.4, 1),
@@ -108,6 +108,13 @@ public enum PartOfDay {
       throw new IllegalArgumentException("startingHour must be in the range [0, 23]");
     }
     this.startingHour = startingHour;
+  }
+
+  @Override
+  public String getName() {
+    // Whenever the player sees a PartOfDay, he or she sees the return value of toString().
+    // Therefore it makes sense to delegate the name of a PartOfDay to the toString() method.
+    return toString();
   }
 
   @Override

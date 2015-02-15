@@ -29,16 +29,19 @@ import org.dungeon.game.ID;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.LocationPreset;
+import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Messenger;
+import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -256,12 +259,26 @@ public class DebugTools {
 
   public static void wait(IssuedCommand issuedCommand) {
     if (issuedCommand.getTokenCount() >= 3) {
-      try {
-        int seconds = Integer.parseInt(issuedCommand.getArguments()[1]);
+      int seconds = 0;
+      boolean gotSeconds = false;
+      String argument = issuedCommand.getArguments()[1];
+      SelectionResult<PartOfDay> matches = Utils.selectFromList(Arrays.asList(PartOfDay.values()), argument);
+      if (matches.size() == 1) {
+        seconds = PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0));
+        gotSeconds = true;
+      } else if (matches.size() > 1) {
+        Messenger.printAmbiguousSelectionMessage();
+      } else {
+        try {
+          seconds = Integer.parseInt(argument);
+          gotSeconds = true;
+        } catch (NumberFormatException warn) {
+          Messenger.printInvalidNumberFormatOrValue();
+        }
+      }
+      if (gotSeconds) {
         Game.getGameState().getWorld().rollDate(seconds);
         IO.writeString("Waited for " + seconds + " seconds.");
-      } catch (NumberFormatException warn) {
-        Messenger.printInvalidNumberFormatOrValue();
       }
     } else {
       Messenger.printMissingArgumentsMessage();

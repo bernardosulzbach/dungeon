@@ -58,11 +58,11 @@ public class Utils {
    * <p/>
    * (e. g.: "g b r" will match "Giant Black Rat" as "W Watch" will match "Wrist Watch")
    *
-   * @param candidates a list of Selectable candidates.
-   * @param tokens     the text tokens.
+   * @param candidates a list of Selectable candidates
+   * @param tokens     the text tokens
    * @return a SelectionResult object with all the matches found.
    */
-  public static <T extends Selectable> SelectionResult<T> selectFromList(List<T> candidates, String[] tokens) {
+  public static <T extends Selectable> SelectionResult<T> selectFromList(List<T> candidates, String... tokens) {
     SelectionResult<T> selectionResult = new SelectionResult<T>();
     for (T candidate : candidates) {
       if (checkQueryMatch(tokens, split(candidate.getName()))) {
