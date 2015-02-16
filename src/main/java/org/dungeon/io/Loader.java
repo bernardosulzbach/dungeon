@@ -92,6 +92,13 @@ public class Loader {
   }
 
   /**
+   * Generates a new GameState and returns it.
+   */
+  public static GameState newGame() {
+    return new GameState();
+  }
+
+  /**
    * Handles all the save loading at startup and during gameplay.
    *
    * @return a saved campaign or a new demo campaign.
@@ -121,12 +128,8 @@ public class Loader {
         // There is a save. Do not save the new demo campaign.
         return new GameState();
       } else {
-        // Could not find a saved campaign.
-        // Instantiate a new demo campaign and save it to disk.
-        GameState newGameState = new GameState();
-        saveFile(newGameState, DEFAULT_SAVE_NAME, true);
-        // Return the new campaign.
-        return newGameState;
+        // Could not find a saved game. Delegate the result to newGame().
+        return newGame();
       }
     }
   }

@@ -174,6 +174,12 @@ public class Game {
         gameState.getHero().look(null);
       }
     });
+    commandList.add(new Command("new", "Starts a new game.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        gameState = Loader.newGame();
+      }
+    });
     commandList.add(new Command("pick", "Attempts to pick up an item from the current location.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
