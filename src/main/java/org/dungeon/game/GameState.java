@@ -55,7 +55,7 @@ public class GameState implements Serializable {
    * Creates the Hero and the starting Location.
    */
   private void createHeroAndStartingLocation() {
-    hero = new Hero("Seth");
+    hero = new Hero();
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
     getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getID());

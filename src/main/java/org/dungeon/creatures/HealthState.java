@@ -39,7 +39,7 @@ public enum HealthState {
 
   public static HealthState getHealthState(int curHealth, int maxHealth) {
     double fraction = curHealth / (double) maxHealth;
-    return values()[(int) (5 * (1 - fraction))];
+    return values()[(int) ((values().length - 1) * (1 - fraction))];
   }
 
   @Override

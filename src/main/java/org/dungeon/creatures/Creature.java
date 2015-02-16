@@ -18,6 +18,7 @@
 package org.dungeon.creatures;
 
 import org.dungeon.game.Entity;
+import org.dungeon.game.ID;
 import org.dungeon.game.Location;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
@@ -41,12 +42,18 @@ public class Creature extends Entity {
   private Item weapon;
   private Location location;
 
-  public Creature(CreatureBlueprint bp) {
-    super(bp.getID(), bp.getType(), bp.getName());
-    attackAlgorithm = bp.getAttackAlgorithmID();
-    attack = bp.getAttack();
-    maxHealth = bp.getMaxHealth();
-    curHealth = bp.getCurHealth();
+  public Creature(ID id, String type, String name, int health, int attack, String attackAlgorithm) {
+    super(id, type, name);
+    maxHealth = curHealth = health;
+    this.attack = attack;
+    this.attackAlgorithm = attackAlgorithm;
+  }
+
+  /**
+   * The copy constructor. Used to generate Creatures that populate the World from model creatures.
+   */
+  Creature(Creature original) {
+    this(original.getID(), original.type, original.name, original.maxHealth, original.attack, original.attackAlgorithm);
   }
 
   SkillList getSkillList() {
@@ -109,7 +116,9 @@ public class Creature extends Entity {
     this.location = location;
   }
 
-  // Increments the creature's health by a certain amount, never exceeding its maximum health.
+  /**
+   * Increments the creature's health by a certain amount, without exceeding its maximum health.
+   */
   void addHealth(int amount) {
     int sum = amount + getCurHealth();
     if (sum > getMaxHealth()) {
@@ -131,17 +140,14 @@ public class Creature extends Entity {
     }
   }
 
-  // Checks if the creature is alive.
   public boolean isAlive() {
     return getCurHealth() > 0;
   }
 
-  // Checks if the creature is dead.
   public boolean isDead() {
     return !isAlive();
   }
 
-  // Checks if the creature has a weapon.
   boolean hasWeapon() {
     return getWeapon() != null;
   }

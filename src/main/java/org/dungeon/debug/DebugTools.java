@@ -20,7 +20,7 @@ package org.dungeon.debug;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.CreatureBlueprint;
+import org.dungeon.creatures.CreatureFactory;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
@@ -236,12 +236,12 @@ public class DebugTools {
     if (issuedCommand.getTokenCount() >= 3) {
       for (int i = 1; i < issuedCommand.getArguments().length; i++) {
         ID givenID = new ID(issuedCommand.getArguments()[i].toUpperCase());
-        CreatureBlueprint blueprint = GameData.getCreatureBlueprints().get(givenID);
-        if (blueprint != null) {
-          Game.getGameState().getHeroLocation().addCreature(new Creature(blueprint));
-          IO.writeString("Spawned a " + blueprint.getName() + ".");
+        Creature clone = CreatureFactory.makeCreature(givenID);
+        if (clone != null) {
+          Game.getGameState().getHeroLocation().addCreature(clone);
+          IO.writeString("Spawned a " + clone.getName() + ".");
         } else {
-          IO.writeString(givenID + " does not match any CreatureBlueprint.");
+          IO.writeString(givenID + " does not match any known creature.");
         }
       }
     } else {

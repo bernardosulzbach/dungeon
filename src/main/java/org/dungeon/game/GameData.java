@@ -19,7 +19,7 @@ package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
-import org.dungeon.creatures.CreatureBlueprint;
+import org.dungeon.creatures.Creature;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.items.ItemBlueprint;
@@ -49,7 +49,7 @@ public final class GameData {
   private static final String COUNTER_MAP_KEY_VALUE_SEPARATOR = ",";
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
-  private static Map<ID, CreatureBlueprint> creatureBlueprints = new HashMap<ID, CreatureBlueprint>();
+  private static Map<ID, Creature> creatures = new HashMap<ID, Creature>();
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
   private static Map<ID, LocationPreset> locationPresets = new HashMap<ID, LocationPreset>();
@@ -108,34 +108,34 @@ public final class GameData {
    * Loads all ItemBlueprints to a HashMap.
    */
   private static void loadItemBlueprints() {
-    ResourceReader resourceReader = new ResourceReader("items.txt");
-    while (resourceReader.readNextElement()) {
+    ResourceReader reader = new ResourceReader("items.txt");
+    while (reader.readNextElement()) {
       ItemBlueprint blueprint = new ItemBlueprint();
-      blueprint.setID(new ID(resourceReader.getValue("ID")));
-      blueprint.setType(resourceReader.getValue("TYPE"));
-      blueprint.setName(resourceReader.getValue("NAME"));
-      blueprint.setCurIntegrity(Integer.parseInt(resourceReader.getValue("CUR_INTEGRITY")));
-      blueprint.setMaxIntegrity(Integer.parseInt(resourceReader.getValue("MAX_INTEGRITY")));
-      blueprint.setRepairable(Integer.parseInt(resourceReader.getValue("REPAIRABLE")) == 1);
-      blueprint.setWeapon(Integer.parseInt(resourceReader.getValue("WEAPON")) == 1);
-      blueprint.setDamage(Integer.parseInt(resourceReader.getValue("DAMAGE")));
-      blueprint.setHitRate(Double.parseDouble(resourceReader.getValue("HIT_RATE")));
-      blueprint.setIntegrityDecrementOnHit(Integer.parseInt(resourceReader.getValue("INTEGRITY_DECREMENT_ON_HIT")));
-      blueprint.setFood(Integer.parseInt(resourceReader.getValue("FOOD")) == 1);
-      if (resourceReader.hasValue("NUTRITION")) {
-        blueprint.setNutrition(Integer.parseInt(resourceReader.getValue("NUTRITION")));
+      blueprint.setID(new ID(reader.getValue("ID")));
+      blueprint.setType(reader.getValue("TYPE"));
+      blueprint.setName(reader.getValue("NAME"));
+      blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
+      blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
+      blueprint.setRepairable(readIntegerFromResourceReader(reader, "REPAIRABLE") == 1);
+      blueprint.setWeapon(readIntegerFromResourceReader(reader, "WEAPON") == 1);
+      blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
+      blueprint.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
+      blueprint.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
+      blueprint.setFood(readIntegerFromResourceReader(reader, "FOOD") == 1);
+      if (reader.hasValue("NUTRITION")) {
+        blueprint.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
       }
-      if (resourceReader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
-        blueprint.setIntegrityDecrementOnEat(Integer.parseInt(resourceReader.getValue("INTEGRITY_DECREMENT_ON_EAT")));
+      if (reader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
+        blueprint.setIntegrityDecrementOnEat(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_EAT"));
       }
-      blueprint.setClock(Integer.parseInt(resourceReader.getValue("CLOCK")) == 1);
-      blueprint.setBook(Integer.parseInt(resourceReader.getValue("BOOK")) == 1);
-      if (resourceReader.hasValue("SKILL")) {
-        blueprint.setSkill(resourceReader.getValue("SKILL"));
+      blueprint.setClock(readIntegerFromResourceReader(reader, "CLOCK") == 1);
+      blueprint.setBook(readIntegerFromResourceReader(reader, "BOOK") == 1);
+      if (reader.hasValue("SKILL")) {
+        blueprint.setSkill(reader.getValue("SKILL"));
       }
       itemBlueprints.put(blueprint.getID(), blueprint);
     }
-    resourceReader.close();
+    reader.close();
     itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
     DLogger.info("Loaded " + itemBlueprints.size() + " item blueprints.");
   }
@@ -146,19 +146,17 @@ public final class GameData {
   private static void loadCreatureBlueprints() {
     ResourceReader resourceReader = new ResourceReader("creatures.txt");
     while (resourceReader.readNextElement()) {
-      CreatureBlueprint blueprint = new CreatureBlueprint();
-      blueprint.setID(new ID(resourceReader.getValue("ID")));
-      blueprint.setType(resourceReader.getValue("TYPE"));
-      blueprint.setName(resourceReader.getValue("NAME"));
-      blueprint.setCurHealth(Integer.parseInt(resourceReader.getValue("CUR_HEALTH")));
-      blueprint.setMaxHealth(Integer.parseInt(resourceReader.getValue("MAX_HEALTH")));
-      blueprint.setAttack(Integer.parseInt(resourceReader.getValue("ATTACK")));
-      blueprint.setAttackAlgorithmID(resourceReader.getValue("ATTACK_ALGORITHM_ID"));
-      creatureBlueprints.put(blueprint.getID(), blueprint);
+      ID id = new ID(resourceReader.getValue("ID"));
+      String type = resourceReader.getValue("TYPE");
+      String name = resourceReader.getValue("NAME");
+      int health = readIntegerFromResourceReader(resourceReader, "HEALTH");
+      int attack = readIntegerFromResourceReader(resourceReader, "ATTACK");
+      String attackAlgorithmID = resourceReader.getValue("ATTACK_ALGORITHM_ID");
+      creatures.put(id, new Creature(id, type, name, health, attack, attackAlgorithmID));
     }
     resourceReader.close();
-    creatureBlueprints = Collections.unmodifiableMap(creatureBlueprints);
-    DLogger.info("Loaded " + creatureBlueprints.size() + " creature blueprints.");
+    creatures = Collections.unmodifiableMap(creatures);
+    DLogger.info("Loaded " + creatures.size() + " creatures.");
   }
 
   private static void loadLocationPresets() {
@@ -312,6 +310,24 @@ public final class GameData {
   }
 
   /**
+   * Attempts to read a double from a ResourceReader given a key.
+   *
+   * @param reader a ResourceReader
+   * @param key    the String key
+   * @return the double, if it could be obtained, or 0
+   */
+  private static double readDoubleFromResourceReader(ResourceReader reader, String key) {
+    if (reader.hasValue(key)) {
+      try {
+        return Double.parseDouble(reader.getValue(key));
+      } catch (NumberFormatException log) {
+        DLogger.warning("Could not parse the value of " + key + ".");
+      }
+    }
+    return 0.0;
+  }
+
+  /**
    * Attempts to read an integer from a ResourceReader given a key.
    *
    * @param reader a ResourceReader
@@ -384,8 +400,8 @@ public final class GameData {
     reader.close();
   }
 
-  public static Map<ID, CreatureBlueprint> getCreatureBlueprints() {
-    return creatureBlueprints;
+  public static Map<ID, Creature> getCreatureModels() {
+    return creatures;
   }
 
   public static Map<ID, ItemBlueprint> getItemBlueprints() {

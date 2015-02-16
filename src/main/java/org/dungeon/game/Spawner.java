@@ -18,7 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.CreatureBlueprint;
+import org.dungeon.creatures.CreatureFactory;
 
 import java.io.Serializable;
 
@@ -49,10 +49,8 @@ class Spawner implements Serializable {
    */
   public void refresh() {
     long worldTime = getWorldTime();
-    CreatureBlueprint blueprint = GameData.getCreatureBlueprints().get(id);
     while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
-      location.addCreature(new Creature(blueprint));
-      Game.getGameState().getStatistics().getWorldStatistics().addSpawn(blueprint.getName());
+      location.addCreature(CreatureFactory.makeCreature(id));
       // Simulate that the creature was spawned just when it should have been.
       lastChange += spawnDelay;
     }

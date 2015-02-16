@@ -67,23 +67,11 @@ public class Hero extends Creature {
   private final Date dateOfBirth;
   private final AchievementTracker achievementTracker;
 
-  public Hero(String name) {
-    super(makeHeroBlueprint(name));
+  public Hero() {
+    super(Constants.HERO_ID, "Hero", "Seth", 50, 5, "HERO");
     setInventory(new CreatureInventory(this, 3));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
     achievementTracker = new AchievementTracker();
-  }
-
-  private static CreatureBlueprint makeHeroBlueprint(String name) {
-    CreatureBlueprint heroBlueprint = new CreatureBlueprint();
-    heroBlueprint.setID(Constants.HERO_ID);
-    heroBlueprint.setName(name);
-    heroBlueprint.setType("Hero");
-    heroBlueprint.setAttack(4);
-    heroBlueprint.setAttackAlgorithmID("HERO");
-    heroBlueprint.setMaxHealth(50);
-    heroBlueprint.setCurHealth(50);
-    return heroBlueprint;
   }
 
   public AchievementTracker getAchievementTracker() {
@@ -253,14 +241,14 @@ public class Hero extends Creature {
    * Prints a human-readable description of what the Hero sees on the ground.
    */
   private void lookItems() {
-    if (getLocation().getItemCount() != 0){
+    if (getLocation().getItemCount() != 0) {
       IO.writeString("On the ground you see " + enumerate(getLocation().getItemList()) + ".");
     }
   }
 
   /**
    * Enumerates the elements of a List in a human-readable way.
-   *
+   * <p/>
    * This method calls {@code toString()} on each object, so the result depends on what that method returns.
    *
    * @param list the List of Objects.
