@@ -34,76 +34,64 @@ public class AchievementBuilder {
   private CounterMap<ID> discoveredLocations;
   private CounterMap<ID> maximumNumberOfVisits;
 
-  public AchievementBuilder setId(String id) {
+  public void setId(String id) {
     this.id = id;
-    return this;
   }
 
-  public AchievementBuilder setName(String name) {
+  public void setName(String name) {
     this.name = name;
-    return this;
   }
 
-  public AchievementBuilder setInfo(String info) {
+  public void setInfo(String info) {
     this.info = info;
-    return this;
   }
 
-  public AchievementBuilder setText(String text) {
+  public void setText(String text) {
     this.text = text;
-    return this;
   }
 
-  public AchievementBuilder setMinimumBattleCount(int minimumBattleCount) {
+  public void setMinimumBattleCount(int minimumBattleCount) {
     this.minimumBattleCount = minimumBattleCount;
-    return this;
   }
 
-  public AchievementBuilder setLongestBattleLength(int longestBattleLength) {
+  public void setLongestBattleLength(int longestBattleLength) {
     this.longestBattleLength = longestBattleLength;
-    return this;
   }
 
-  public AchievementBuilder setKillsByCreatureID(CounterMap<ID> killsByCreatureID) {
+  public void setKillsByCreatureID(CounterMap<ID> killsByCreatureID) {
     if (killsByCreatureID.isNotEmpty()) {
       this.killsByCreatureID = killsByCreatureID;
     }
-    return this;
   }
 
-  public AchievementBuilder setKillsByCreatureType(CounterMap<String> killsByCreatureType) {
+  public void setKillsByCreatureType(CounterMap<String> killsByCreatureType) {
     if (killsByCreatureType.isNotEmpty()) {
       this.killsByCreatureType = killsByCreatureType;
     }
-    return this;
   }
 
-  public AchievementBuilder setKillsByWeapon(CounterMap<ID> killsByWeapon) {
+  public void setKillsByWeapon(CounterMap<ID> killsByWeapon) {
     if (killsByWeapon.isNotEmpty()) {
       this.killsByWeapon = killsByWeapon;
     }
-    return this;
   }
 
-  public AchievementBuilder setKillsByLocationID(CounterMap<ID> killsByLocationID) {
+  public void setKillsByLocationID(CounterMap<ID> killsByLocationID) {
     if (killsByLocationID.isNotEmpty()) {
       this.killsByLocationID = killsByLocationID;
     }
-    return this;
   }
 
-  public AchievementBuilder setDiscoveredLocations(CounterMap<ID> discoveredLocations) {
+  public void setDiscoveredLocations(CounterMap<ID> discoveredLocations) {
     if (discoveredLocations.isNotEmpty()) {
       this.discoveredLocations = discoveredLocations;
     }
-    return this;
   }
 
-  public AchievementBuilder setMaximumNumberOfVisits(CounterMap<ID> maximumNumberOfVisits) {
+  public void setMaximumNumberOfVisits(CounterMap<ID> maximumNumberOfVisits) {
     if (maximumNumberOfVisits.isNotEmpty()) {
       this.maximumNumberOfVisits = maximumNumberOfVisits;
     }
-    return this;
   }
 
   public Achievement createAchievement() {
