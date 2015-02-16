@@ -43,7 +43,7 @@ public final class PoetryLibrary extends Library {
    * yet.
    */
   public int getPoemCount() {
-    if (!isInitialized()) {
+    if (isUninitialized()) {
       initialize();
     }
     return poems.size();

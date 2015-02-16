@@ -41,7 +41,7 @@ public class HintLibrary extends Library {
    * yet.
    */
   public int getHintCount() {
-    if (!isInitialized()) {
+    if (isUninitialized()) {
       initialize();
     }
     return hints.size();

@@ -34,8 +34,7 @@ public class DreamLibrary extends Library {
   private AutomaticShuffledRange automaticShuffledRange;
 
   public String getNextDream() {
-    // TODO: make it isUninitialized in the superclass.
-    if (!isInitialized()) {
+    if (isUninitialized()) {
       initialize();
     }
     return dreams.get(automaticShuffledRange.getNext());

@@ -28,13 +28,13 @@ import org.dungeon.util.StopWatch;
  */
 abstract class Library {
 
-  private boolean initialized = false;
+  private boolean uninitialized = true;
 
   /**
    * Returns true if the data has already been loaded; false otherwise.
    */
-  final boolean isInitialized() {
-    return initialized;
+  final boolean isUninitialized() {
+    return uninitialized;
   }
 
   /**
@@ -45,13 +45,13 @@ abstract class Library {
    * If this method is called after data has been loaded, a warning is logged.
    */
   final void initialize() {
-    if (initialized) {
-      DLogger.warning("Tried to initialize an already initialized Library class.");
-    } else {
+    if (uninitialized) {
       StopWatch stopWatch = new StopWatch();
       load();
       DLogger.info("Loading took " + stopWatch.toString() + ".");
-      initialized = true;
+      uninitialized = false;
+    } else {
+      DLogger.warning("Tried to initialize an already initialized Library class.");
     }
   }
 
