@@ -1,62 +1,66 @@
-// Try to split lines (with a single backslash) at the end of a sentence.
-
+// Avoid lines that are more than 120 characters long.
 
 ARTICLE: Bat
-CONTENT: Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and sustained flight.\
-They are natural inhabitants of humid and quiet places, such as graveyards.
+CONTENT: Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and\
+sustained flight. They are natural inhabitants of humid and quiet places, such as graveyards.
 
 ARTICLE: Combat
-CONTENT: Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target.\
-Once in combat, all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies.\
+CONTENT: Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat,\
+all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies.\
 The character will either use the next available skill in the rotation or attack with the equipped weapon.
 
 ARTICLE: Command History
-CONTENT: Pressing TAB while the cursor is on the input field will either do nothing,\
-get the last similar command to what is already on the text field, or return the last command\
-(if the text field is empty and there is at least one command on the command history).
+CONTENT: The game stores your last 200 commands (as of 02/15/2015). Pressing TAB while the cursor is on the input field\
+will either do nothing (if the command history is empty), get the last similar command to what is already on the text\
+field (if there is one), or return the last command (if the text field is empty and there is at least one command on\
+the command history).
 
 ARTICLE: Fruit Bat
-CONTENT: Fruit bats are not always large: the smallest species is just six centimeters long.\
-The largest attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms.\
-Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests.\
-Their sense of smell is excellent.\
-In contrast to other bats, fruit bats do not use echolocation (with one exception, the Egyptian fruit bat, which uses high-pitched tongue clicks to navigate in caves).
+CONTENT: Fruit bats are not always large: the smallest species is just six centimeters long. The largest attain a\
+wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually\
+in twilight and inside caves and forests. Their sense of smell is excellent. In contrast to other bats, fruit bats do\
+not use echolocation (with one exception, the Egyptian fruit bat, which uses high-pitched tongue clicks to navigate in\
+caves).
 
 ARTICLE: Green Iguana
-CONTENT: The green iguana or common iguana is a large, arboreal, mostly herbivorous species of lizard of the genus Iguana.\
-Despite their name, green iguanas can come in different colors. They are diurnal, arboreal, and are often found near water.\
-When frightened by a predator, green iguanas will attempt to flee, and if near a body of water, they dive into it and swim away.\
-Agile climbers, iguanas can fall up to fifteen meters and land unhurt (iguanas use their hind leg claws to clasp leaves and branches to break a fall).\
-During cold, wet weather, green iguanas prefer to stay on the ground for greater warmth.\
-When swimming, an iguana remains submerged, letting its four legs hang limply against its side.\
-They propel through the water with powerful tail strokes.
+CONTENT: The green iguana or common iguana is a large, arboreal, mostly herbivorous species of lizard of the genus\
+Iguana. Despite their name, green iguanas can come in different colors. They are diurnal, arboreal, and are often found\
+near water. When frightened by a predator, green iguanas will attempt to flee, and if near a body of water, they dive\
+into it and swim away. Agile climbers, iguanas can fall up to fifteen meters and land unhurt (iguanas use their hind\
+leg claws to clasp leaves and branches to break a fall). During cold, wet weather, green iguanas prefer to stay on the\
+ground for greater warmth. When swimming, an iguana remains submerged, letting its four legs hang limply against its\
+side. They propel through the water with powerful tail strokes.
 
 ARTICLE: Keyboard Shortcuts
 CONTENT: There is a single implemented keyboard shortcut now, it is CTRL + S and it saves the game.
 
 ARTICLE: Lizard
-CONTENT: Lizards typically have feet and external ears, while snakes lack both of these characteristics.\
-However, because they are defined negatively as excluding snakes, lizards have no unique distinguishing characteristic as a group.
+CONTENT: Lizards typically have feet and external ears, while snakes lack both of these characteristics. However,\
+because they are defined negatively as excluding snakes, lizards have no unique distinguishing characteristic as a\
+group.
 
 ARTICLE: Luminosity
-CONTENT: Currently, time and the current location of the character are the only factors responsible by the change of luminosity through the day.\\
-Luminosity is the product of the light permittivity (translucency) of the location and the luminosity provided by the sun or moon.\
-When it is too dark, the character will not be able to see.
+CONTENT: Currently, time and the current location of the character are the only factors responsible by the change of\
+luminosity through the day.\\
+Luminosity is the product of the light permittivity (translucency) of the location and the luminosity provided by the\
+sun or moon. When it is too dark, the character will not be able to see.
 
 ARTICLE: Parts of Day
-CONTENT: The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from 7:01 to 11:00;\
-noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00.
+CONTENT: The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from\
+7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from\
+19:01 to 23:00; and midnight, from 23:01 to 1:00.
 
 ARTICLE: Skills
 CONTENT: The character may learn skills through tomes scattered throughout the world. In order to use these skills,\
 the character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory.\
-After reading the tome and learning the skill, 'rotation' is used to set up the skill rotation, which will be used automatically when in combat.
+After reading the tome and learning the skill, 'rotation' is used to set up the skill rotation, which will be used\
+automatically when in combat.
 
 ARTICLE: Sleeping
 CONTENT: The character can sleep when it is dark, waking up when it is dawn. During the sleep, the character may dream.
 
 ARTICLE: Time
-CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what your character did or tried to do.
+CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what the character did.
 
 ARTICLE: Tomes
 CONTENT: Tomes are books that can teach a skill for the player character.
