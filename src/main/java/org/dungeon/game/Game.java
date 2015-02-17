@@ -80,12 +80,6 @@ public class Game {
         DebugTools.parseDebugCommand(issuedCommand);
       }
     });
-    commandList.add(new Command("debug", "Prints a poem from the poem library.") {
-      @Override
-      public void execute(IssuedCommand issuedCommand) {
-        DebugTools.parseDebugCommand(issuedCommand);
-      }
-    });
     commandList.add(new Command("destroy", "Destroys an item on the ground.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
