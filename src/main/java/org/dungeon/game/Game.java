@@ -168,6 +168,13 @@ public class Game {
         gameState.getHero().look(null);
       }
     });
+    commandList.add(new Command("map", "Shows a map of your surroundings.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        WorldMap map = new WorldMap(gameState.getWorld(), gameState.getHeroPosition());
+        IO.writeString(map.toString());
+      }
+    });
     commandList.add(new Command("new", "Starts a new game.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
