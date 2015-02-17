@@ -500,8 +500,9 @@ public class Hero extends Creature {
     }
     if (target != null) {
       if (target.isRepairable()) {
-        if (!target.isBroken()) {
-
+        if (target.isBroken()) {
+          IO.writeString(target.getName() + " is already crashed.");
+        } else {
           target.setCurIntegrity(0);
           IO.writeString(getName() + " crashed " + target.getName() + ".");
         }
