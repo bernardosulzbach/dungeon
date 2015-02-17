@@ -28,9 +28,7 @@ import java.util.List;
  */
 public class WorldGenerator implements Serializable {
 
-  private static final int MIN_CHUNK_SIDE = 1;
-  private static final int DEF_CHUNK_SIDE = 5;
-  private static final int MAX_CHUNK_SIDE = 50;
+  private static final int CHUNK_SIDE = 5;
   private static final int MIN_DIST_RIVER = 6;
   private static final int MAX_DIST_RIVER = 11;
   private final World world;
@@ -41,33 +39,13 @@ public class WorldGenerator implements Serializable {
    * Instantiates a new World generator. This should be called by the constructor of a World object.
    */
   public WorldGenerator(World world) {
-    this(world, DEF_CHUNK_SIDE);
+    this(world, CHUNK_SIDE);
   }
 
   private WorldGenerator(World world, int chunkSide) {
     this.world = world;
     this.chunkSide = chunkSide;
     riverGenerator = new RiverGenerator(MIN_DIST_RIVER, MAX_DIST_RIVER);
-  }
-
-  public int getChunkSide() {
-    return chunkSide;
-  }
-
-  /**
-   * Set a new value for the chunk side.
-   *
-   * @param chunkSide the new value for the chunk side.
-   * @return the value actually set, it may be different from the provided chunk side.
-   */
-  public int setChunkSide(int chunkSide) {
-    if (chunkSide < MIN_CHUNK_SIDE) {
-      return this.chunkSide = MIN_CHUNK_SIDE;
-    } else if (chunkSide > MAX_CHUNK_SIDE) {
-      return this.chunkSide = MAX_CHUNK_SIDE;
-    } else {
-      return this.chunkSide = chunkSide;
-    }
   }
 
   /**
@@ -101,11 +79,11 @@ public class WorldGenerator implements Serializable {
     int pX = p.getX();
     int pY = p.getY();
     // Get the closest smaller chunkSide multiple of x and y.
-    // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes x_start == -5 and y_start == 0.
-    int x_start = pX < 0 ? chunkSide * (((pX + 1) / chunkSide) - 1) : chunkSide * (pX / chunkSide);
-    int y_start = pY < 0 ? chunkSide * (((pY + 1) / chunkSide) - 1) : chunkSide * (pY / chunkSide);
-    for (int x = x_start; x < x_start + chunkSide; x++) {
-      for (int y = y_start; y < y_start + chunkSide; y++) {
+    // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes xStart == -5 and yStart == 0.
+    int xStart = pX < 0 ? chunkSide * (((pX + 1) / chunkSide) - 1) : chunkSide * (pX / chunkSide);
+    int yStart = pY < 0 ? chunkSide * (((pY + 1) / chunkSide) - 1) : chunkSide * (pY / chunkSide);
+    for (int x = xStart; x < xStart + chunkSide; x++) {
+      for (int y = yStart; y < yStart + chunkSide; y++) {
         currentPoint = new Point(x, y);
         if (!world.hasLocation(currentPoint)) {
           if (riverGenerator.isRiver(currentPoint)) {
