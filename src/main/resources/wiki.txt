@@ -15,6 +15,10 @@ will either do nothing (if the command history is empty), get the last similar c
 field (if there is one), or return the last command (if the text field is empty and there is at least one command on\
 the command history).
 
+ARTICLE: Eating
+CONTENT: As of 0.0.7, eating only heals you until you are uninjured (better than resting, as good as sleeping). There\
+are no bonuses for eating regularly neither do the character ever feels hungry.
+
 ARTICLE: Fruit Bat
 CONTENT: Fruit bats are not always large: the smallest species is just six centimeters long. The largest attain a\
 wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually\
