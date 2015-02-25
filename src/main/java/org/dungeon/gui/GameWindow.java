@@ -208,7 +208,7 @@ public class GameWindow extends JFrame {
       setIdle(false);
       SwingWorker inputRenderer = new SwingWorker<Void, Void>() {
         @Override
-        protected Void doInBackground() throws Exception {
+        protected Void doInBackground() {
           Game.renderTurn(new IssuedCommand(text));
           return null;
         }
