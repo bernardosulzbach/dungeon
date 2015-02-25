@@ -18,6 +18,7 @@
 package org.dungeon.creatures;
 
 import org.dungeon.game.Engine;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
@@ -34,8 +35,10 @@ import java.awt.Color;
  */
 class AttackAlgorithm {
 
+  private static final double BEAST_HIT_RATE = 0.9;
   private static final double HERO_CRITICAL_CHANCE = 0.1;
   private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
+  private static final double UNDEAD_UNARMED_HIT_RATE = 0.85;
 
   public static void attack(Creature attacker, Creature defender, String algorithmID) {
     if (algorithmID.equals("BAT")) {
@@ -51,7 +54,7 @@ class AttackAlgorithm {
     } else if (algorithmID.equals("HERO")) {
       heroAttack(attacker, defender);
     } else {
-      throw new IllegalArgumentException("algorithmID does not match any implemented algorithm.");
+      DLogger.warning("algorithmID does not match any implemented algorithm.");
     }
   }
 
@@ -60,7 +63,7 @@ class AttackAlgorithm {
     double luminosity = attacker.getLocation().getLuminosity();
     // At complete darkness: 90% hit chance.
     //      noon's sunlight: 40% hit chance.
-    if (Utils.roll(0.9 - luminosity / 2)) {
+    if (Utils.roll(BEAST_HIT_RATE - luminosity / 2)) {
       int hitDamage = attacker.getAttack();
       if (luminosity == 0.0) {
         hitDamage *= 2;
@@ -75,8 +78,7 @@ class AttackAlgorithm {
   }
 
   private static void beastAttack(Creature attacker, Creature defender) {
-    // 10% miss chance.
-    if (Utils.roll(0.9)) {
+    if (Utils.roll(BEAST_HIT_RATE)) {
       int hitDamage = attacker.getAttack();
       defender.takeDamage(hitDamage);
       printInflictedDamage(attacker, hitDamage, defender, false);
@@ -117,8 +119,7 @@ class AttackAlgorithm {
         return;
       }
     } else {
-      // Hardcoded 15% miss chance.
-      if (0.85 > Engine.RANDOM.nextDouble()) {
+      if (Utils.roll(UNDEAD_UNARMED_HIT_RATE)) {
         hitDamage = attacker.getAttack();
         printInflictedDamage(attacker, hitDamage, defender, false);
       } else {
