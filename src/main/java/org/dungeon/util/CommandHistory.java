@@ -65,10 +65,11 @@ public class CommandHistory implements Serializable {
   }
 
   /**
-   * @param issuedCommand a Command to be appended to the end of this CommandHistory.
+   * Adds an IssuedCommand to this CommandHistory and moves the cursor to the end.
    */
   public void addCommand(IssuedCommand issuedCommand) {
     commands.add(issuedCommand.getStringRepresentation());
+    getCursor().moveToEnd();
   }
 
   /**

@@ -210,7 +210,6 @@ public class GameWindow extends JFrame {
         @Override
         protected Void doInBackground() throws Exception {
           Game.renderTurn(new IssuedCommand(text));
-          Game.getGameState().getCommandHistory().getCursor().moveToEnd();
           return null;
         }
 
@@ -250,14 +249,11 @@ public class GameWindow extends JFrame {
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
           textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
         } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-          String trimmedTextFieldText = getTrimmedTextFieldText();
-          if (trimmedTextFieldText.isEmpty() && !commandHistory.isEmpty()) {
-            textField.setText(commandHistory.getCursor().moveToEnd().moveUp().getSelectedCommand());
-          } else {
-            String lastSimilarCommand = commandHistory.getLastSimilarCommand(trimmedTextFieldText);
-            if (lastSimilarCommand != null) {
-              textField.setText(lastSimilarCommand);
-            }
+          // Using the empty String to get the last similar command will always retrieve the last command.
+          // Therefore, there is no need to check if there is something in the text field.
+          String lastSimilarCommand = commandHistory.getLastSimilarCommand(getTrimmedTextFieldText());
+          if (lastSimilarCommand != null) {
+            textField.setText(lastSimilarCommand);
           }
         }
       }
