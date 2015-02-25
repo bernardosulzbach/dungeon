@@ -50,17 +50,17 @@ public class Math {
   /**
    * Compares two doubles with the default tolerance margin.
    */
-  public static int fuzzyCompare(Double d1, Double d2) {
-    return fuzzyCompare(d1, d2, DEFAULT_DOUBLE_TOLERANCE);
+  public static int fuzzyCompare(double a, double b) {
+    return fuzzyCompare(a, b, DEFAULT_DOUBLE_TOLERANCE);
   }
 
   /**
    * Compares two doubles with a specified tolerance margin.
    */
-  public static int fuzzyCompare(Double d1, Double d2, Double epsilon) {
-    if (d1 + epsilon < d2) {
+  private static int fuzzyCompare(double a, double b, double epsilon) {
+    if (a + epsilon < b) {
       return -1;
-    } else if (d1 - epsilon > d2) {
+    } else if (a - epsilon > b) {
       return 1;
     } else {
       return 0;
