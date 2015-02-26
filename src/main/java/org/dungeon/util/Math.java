@@ -20,7 +20,6 @@ package org.dungeon.util;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
 
-import java.awt.Color;
 import java.math.BigInteger;
 
 /**
@@ -30,11 +29,8 @@ import java.math.BigInteger;
  */
 public class Math {
 
-  /**
-   * The maximum allowed value for the fibonacci command.
-   */
-  private static final int FIBONACCI_MAX = 65535;
   private static final double DEFAULT_DOUBLE_TOLERANCE = 1e-8;
+  private static final String TIMEOUT = "TIMEOUT";
 
   /**
    * Calculates the arithmetic mean of a sequence of doubles.
@@ -68,36 +64,27 @@ public class Math {
   }
 
   /**
-   * The public method that should be invoked using the input words.
-   *
-   * @param issuedCommand the command entered by the player.
+   * Parses the "fibonacci" command.
    */
-  public static void fibonacci(IssuedCommand issuedCommand) {
-    int intArgument;
+  public static void parseFibonacci(IssuedCommand issuedCommand) {
+    int n;
     if (issuedCommand.hasArguments()) {
-      for (String strArgument : issuedCommand.getArguments()) {
+      for (String argument : issuedCommand.getArguments()) {
         try {
-          intArgument = Integer.parseInt(strArgument);
+          n = Integer.parseInt(argument);
         } catch (NumberFormatException warn) {
           Messenger.printInvalidNumberFormatOrValue();
           return;
         }
-        if (0 < intArgument && intArgument <= FIBONACCI_MAX) {
-          char[] result = fibonacci(intArgument).toCharArray();
-          StringBuilder sb = new StringBuilder(result.length + 64);
-          sb.append("fibonacci").append('(').append(intArgument).append(')').append(" = ");
-          int newLineCharacters = 0;
-          for (char character : result) {
-            if ((sb.length() + 1 - newLineCharacters) % Constants.COLS == 0) {
-              sb.append("\\\n");
-              newLineCharacters++;
-            } else {
-              sb.append(character);
-            }
-          }
-          IO.writeString(sb.toString());
+        if (n < 1) {
+          Messenger.printInvalidNumberFormatOrValue();
+          return;
+        }
+        String result = fibonacci(n);
+        if (result.equals(TIMEOUT)) {
+          IO.writeString("Calculation exceeded the time limit.");
         } else {
-          IO.writeString("n must be positive and smaller than " + (FIBONACCI_MAX + 1) + ".", Color.ORANGE);
+          IO.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
         }
       }
     } else {
@@ -106,14 +93,14 @@ public class Math {
   }
 
   /**
-   * Returns the n-th element of the fibonacci sequence.
+   * Finds the n-th element of the fibonacci sequence if it can be computed in less than one second.
    *
-   * @param n the position of the element on the sequence. Must be positive.
+   * @param n the position of the element on the sequence
+   * @return a String representation of the number or the {@code TIMEOUT} constant
    */
   private static String fibonacci(int n) {
-    if (n < 1) {
-      throw new IllegalArgumentException("n must be positive.");
-    }
+    // Allow this method to run for a trillion nanoseconds (a second).
+    final long interruptTime = System.nanoTime() + 1000000000;
     BigInteger a = BigInteger.ZERO;
     BigInteger b = BigInteger.ONE;
     // Swap variable.
@@ -122,8 +109,51 @@ public class Math {
       s = a;
       a = b;
       b = b.add(s);
+      if (System.nanoTime() >= interruptTime) {
+        return TIMEOUT;
+      }
     }
     return a.toString();
+  }
+
+  /**
+   * Makes a pretty String representation of a function evaluation.
+   * <p/>
+   * Example: {@code functionName(argument) = result}
+   * <p/>
+   * If the String exceeds the maximum number of columns, a backslash is used to break lines.
+   *
+   * @param functionName the name of the function
+   * @param argument     the argument passed to the function
+   * @param result       the result of the evaluation
+   * @return a String longer than the three provided Strings combined
+   */
+  private static String functionEvaluationString(String functionName, String argument, String result) {
+    String original = String.format("%s(%s) = %s", functionName, argument, result);
+    return insertBreaksAtTheColumnLimit(original);
+  }
+
+  /**
+   * Inserts line breaks (a backslash followed by a newline) at all the indices that are multiples of the column count.
+   *
+   * @param string the original String
+   * @return a String with no lines longer than the column count defined in org.dungeon.util.Constants
+   */
+  private static String insertBreaksAtTheColumnLimit(String string) {
+    if (string.length() <= Constants.COLS) {
+      return string;
+    }
+    StringBuilder builder = new StringBuilder();
+    int charactersOnThisLine = 0;
+    for (char character : string.toCharArray()) {
+      if (charactersOnThisLine == Constants.COLS) {
+        builder.insert(builder.length() - 1, "\\\n");
+        charactersOnThisLine = 1; // The last number "fell" to the newest line after the insertion.
+      }
+      builder.append(character);
+      charactersOnThisLine++;
+    }
+    return builder.toString();
   }
 
 }

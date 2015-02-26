@@ -113,8 +113,7 @@ public class Game {
     commandList.add(new Command("fibonacci", "Displays the specified term of the Fibonacci's sequence.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        // TODO: consider renaming this to parseFibonacci.
-        Math.fibonacci(issuedCommand);
+        Math.parseFibonacci(issuedCommand);
       }
     });
     commandList.add(new Command("go", "Makes the character move in the specified direction.") {
