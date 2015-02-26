@@ -35,6 +35,7 @@ import java.awt.Color;
  */
 class AttackAlgorithm {
 
+  private static final double BAT_CRITICAL_MAXIMUM_LUMINOSITY = 0.5;
   private static final double BEAST_HIT_RATE = 0.9;
   private static final double HERO_CRITICAL_CHANCE = 0.1;
   private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
@@ -61,11 +62,9 @@ class AttackAlgorithm {
   // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
   private static void batAttack(Creature attacker, Creature defender) {
     double luminosity = attacker.getLocation().getLuminosity();
-    // At complete darkness: 90% hit chance.
-    //      noon's sunlight: 40% hit chance.
-    if (Utils.roll(BEAST_HIT_RATE - luminosity / 2)) {
+    if (Utils.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
       int hitDamage = attacker.getAttack();
-      if (luminosity == 0.0) {
+      if (luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY) {
         hitDamage *= 2;
         printInflictedDamage(attacker, hitDamage, defender, true);
       } else {
