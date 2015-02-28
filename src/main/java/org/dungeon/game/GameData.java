@@ -96,11 +96,11 @@ public final class GameData {
    * Creates all the Skills (hardcoded).
    */
   private static void createSkills() {
-    SkillDefinition fireball = new SkillDefinition("FIREBALL", "Skill", "Fireball", 10, 6);
-    skillDefinitions.put(fireball.getID(), fireball);
+    SkillDefinition fireball = new SkillDefinition("FIREBALL", "Fireball", 10, 6);
+    skillDefinitions.put(fireball.id, fireball);
 
-    SkillDefinition burningGround = new SkillDefinition("BURNING_GROUND", "Skill", "Burning Ground", 18, 12);
-    skillDefinitions.put(burningGround.getID(), burningGround);
+    SkillDefinition burningGround = new SkillDefinition("BURNING_GROUND", "Burning Ground", 18, 12);
+    skillDefinitions.put(burningGround.id, burningGround);
     skillDefinitions = Collections.unmodifiableMap(skillDefinitions);
   }
 

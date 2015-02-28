@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 /**
  * Entity abstract class that is a common type for everything that can be placed into a Location and interacted with.
+ * Namely, items and creatures.
  * <p/>
  * All subclasses of Entity are Selectable and Serializable.
  *

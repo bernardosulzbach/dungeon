@@ -17,9 +17,9 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.game.Entity;
 import org.dungeon.game.ID;
-import org.dungeon.game.Selectable;
+
+import java.io.Serializable;
 
 /**
  * SkillDefinition class that is what the name says: the definition of a Skill.
@@ -32,13 +32,16 @@ import org.dungeon.game.Selectable;
  * <p/>
  * Created by Bernardo Sulzbach on 10/01/15.
  */
-public final class SkillDefinition extends Entity implements Selectable {
+public final class SkillDefinition implements Serializable {
 
+  public final ID id;
+  public final String name;
   public final int damage;
   public final int coolDown;
 
-  public SkillDefinition(String id, String type, String name, int damage, int coolDown) {
-    super(new ID(id), type, name);
+  public SkillDefinition(String id, String name, int damage, int coolDown) {
+    this.id = new ID(id);
+    this.name = name;
     this.damage = damage;
     this.coolDown = coolDown;
   }
