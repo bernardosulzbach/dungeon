@@ -113,7 +113,7 @@ public final class GameData {
       ItemBlueprint blueprint = new ItemBlueprint();
       blueprint.setID(new ID(reader.getValue("ID")));
       blueprint.setType(reader.getValue("TYPE"));
-      blueprint.setName(reader.getValue("NAME"));
+      blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
       blueprint.setRepairable(readIntegerFromResourceReader(reader, "REPAIRABLE") == 1);
@@ -148,7 +148,7 @@ public final class GameData {
     while (resourceReader.readNextElement()) {
       ID id = new ID(resourceReader.getValue("ID"));
       String type = resourceReader.getValue("TYPE");
-      String name = resourceReader.getValue("NAME");
+      Name name = nameFromArray(resourceReader.getArrayOfValues("NAME"));
       int health = readIntegerFromResourceReader(resourceReader, "HEALTH");
       int attack = readIntegerFromResourceReader(resourceReader, "ATTACK");
       String attackAlgorithmID = resourceReader.getValue("ATTACK_ALGORITHM_ID");
@@ -380,6 +380,23 @@ public final class GameData {
    */
   private static CounterMap<ID> readIDCounterMap(ResourceReader reader, String key) {
     return toIDCounterMap(readStringCounterMap(reader, key));
+  }
+
+  /**
+   * Convenience method that creates a Name from an array of Strings.
+   *
+   * @param strings the array of Strings
+   * @return a Name
+   */
+  private static Name nameFromArray(String[] strings) {
+    if (strings.length == 1) {
+      return Name.newInstance(strings[0]);
+    } else if (strings.length > 1) {
+      return Name.newInstance(strings[0], strings[1]);
+    } else {
+      DLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
+      return Name.newInstance("ERROR");
+    }
   }
 
   private static void loadLicense() {

@@ -22,10 +22,12 @@ import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.game.Direction;
 import org.dungeon.game.Engine;
+import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
+import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.Selectable;
@@ -68,7 +70,7 @@ public class Hero extends Creature {
   private final AchievementTracker achievementTracker;
 
   public Hero() {
-    super(Constants.HERO_ID, "Hero", "Seth", 50, 5, "HERO");
+    super(Constants.HERO_ID, "Hero", Name.newInstance("Seth"), 50, 5, "HERO");
     setInventory(new CreatureInventory(this, 3));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
     achievementTracker = new AchievementTracker();
@@ -174,30 +176,7 @@ public class Hero extends Creature {
     IO.writeNewLine();
     if (canSee()) {
       lookAdjacentLocations(walkedInFrom);
-      if (location.getCreatureCount() == 1) {
-        if (Engine.RANDOM.nextBoolean()) {
-          IO.writeString("You do not see anyone here.");
-        } else {
-          IO.writeString("Only you are in this location.");
-        }
-      } else {
-        String curName;
-        int curCount;
-        ArrayList<String> alreadyListedCreatures = new ArrayList<String>();
-        alreadyListedCreatures.add(getName()); // Avoid listing the Hero.
-        for (Creature creature : location.getCreatures()) {
-          curName = creature.getName();
-          if (!alreadyListedCreatures.contains(curName)) {
-            alreadyListedCreatures.add(curName);
-            curCount = location.getCreatureCount(creature.getID());
-            if (curCount > 1) {
-              IO.writeKeyValueString(curName, Integer.toString(curCount));
-            } else {
-              IO.writeString(curName);
-            }
-          }
-        }
-      }
+      lookCreatures();
       IO.writeNewLine();
       lookItems();
     } else {
@@ -238,12 +217,50 @@ public class Hero extends Creature {
   }
 
   /**
+   * Prints a human-readable description of what Creatures the Hero sees.
+   */
+  private void lookCreatures() {
+    if (getLocation().getCreatureCount() < 2) { // At least two in order to ignore the Hero.
+      IO.writeString("You cannot see anyone here.");
+    } else {
+      List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatureCount());
+      creatures.addAll(getLocation().getCreatures());
+      creatures.remove(this);
+      IO.writeString("Here you can see " + enumerateEntities(creatures) + ".");
+    }
+  }
+
+  /**
    * Prints a human-readable description of what the Hero sees on the ground.
    */
   private void lookItems() {
     if (getLocation().getItemCount() != 0) {
-      IO.writeString("On the ground you see " + enumerate(getLocation().getItemList()) + ".");
+      IO.writeString("On the ground you see " + enumerateEntities(getLocation().getItemList()) + ".");
     }
+  }
+
+  private int countEntitiesByName(final List<? extends Entity> listOfEntities, String name) {
+    int counter = 0;
+    for (Entity entity : listOfEntities) {
+      if (entity.getName().equals(name)) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  private String enumerateEntities(final List<? extends Entity> listOfEntities) {
+    ArrayList<String> quantifiedNames = new ArrayList<String>();
+    ArrayList<String> alreadyListedEntities = new ArrayList<String>();
+    for (Entity entity : listOfEntities) {
+      String name = entity.getName();
+      if (!alreadyListedEntities.contains(name)) {
+        int count = countEntitiesByName(listOfEntities, name);
+        quantifiedNames.add(entity.getQuantifiedName(count));
+        alreadyListedEntities.add(name);
+      }
+    }
+    return enumerate(quantifiedNames);
   }
 
   /**

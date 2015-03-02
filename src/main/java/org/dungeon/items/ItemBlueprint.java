@@ -18,12 +18,13 @@
 package org.dungeon.items;
 
 import org.dungeon.game.ID;
+import org.dungeon.game.Name;
 
 public final class ItemBlueprint {
 
   ID id;
   String type;
-  String name;
+  Name name;
 
   int maxIntegrity;
   int curIntegrity;
@@ -62,96 +63,52 @@ public final class ItemBlueprint {
     this.type = type;
   }
 
-  public String getName() {
+  public Name getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(Name name) {
     this.name = name;
-  }
-
-  public int getMaxIntegrity() {
-    return maxIntegrity;
   }
 
   public void setMaxIntegrity(int maxIntegrity) {
     this.maxIntegrity = maxIntegrity;
   }
 
-  public int getCurIntegrity() {
-    return curIntegrity;
-  }
-
   public void setCurIntegrity(int curIntegrity) {
     this.curIntegrity = curIntegrity;
-  }
-
-  public boolean isRepairable() {
-    return repairable;
   }
 
   public void setRepairable(boolean repairable) {
     this.repairable = repairable;
   }
 
-  public boolean isWeapon() {
-    return weapon;
-  }
-
   public void setWeapon(boolean weapon) {
     this.weapon = weapon;
-  }
-
-  public int getDamage() {
-    return damage;
   }
 
   public void setDamage(int damage) {
     this.damage = damage;
   }
 
-  public double getHitRate() {
-    return hitRate;
-  }
-
   public void setHitRate(double hitRate) {
     this.hitRate = hitRate;
-  }
-
-  public int getIntegrityDecrementOnHit() {
-    return integrityDecrementOnHit;
   }
 
   public void setIntegrityDecrementOnHit(int integrityDecrementOnHit) {
     this.integrityDecrementOnHit = integrityDecrementOnHit;
   }
 
-  public boolean isFood() {
-    return food;
-  }
-
   public void setFood(boolean food) {
     this.food = food;
-  }
-
-  public int getNutrition() {
-    return nutrition;
   }
 
   public void setNutrition(int nutrition) {
     this.nutrition = nutrition;
   }
 
-  public int getIntegrityDecrementOnEat() {
-    return integrityDecrementOnEat;
-  }
-
   public void setIntegrityDecrementOnEat(int integrityDecrementOnEat) {
     this.integrityDecrementOnEat = integrityDecrementOnEat;
-  }
-
-  public boolean isClock() {
-    return clock;
   }
 
   public void setClock(boolean clock) {
@@ -164,10 +121,6 @@ public final class ItemBlueprint {
 
   public void setSkill(String skill) {
     this.skill = new ID(skill);
-  }
-
-  public boolean isBook() {
-    return book;
   }
 
   public void setBook(boolean book) {

@@ -20,6 +20,7 @@ package org.dungeon.creatures;
 import org.dungeon.game.Entity;
 import org.dungeon.game.ID;
 import org.dungeon.game.Location;
+import org.dungeon.game.Name;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
 import org.dungeon.skill.SkillList;
@@ -42,7 +43,7 @@ public class Creature extends Entity {
   private Item weapon;
   private Location location;
 
-  public Creature(ID id, String type, String name, int health, int attack, String attackAlgorithm) {
+  public Creature(ID id, String type, Name name, int health, int attack, String attackAlgorithm) {
     super(id, type, name);
     maxHealth = curHealth = health;
     this.attack = attack;

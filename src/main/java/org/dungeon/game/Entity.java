@@ -30,10 +30,10 @@ import java.io.Serializable;
 public abstract class Entity implements Selectable, Serializable {
 
   protected final String type;
-  protected final String name;
+  protected final Name name;
   private final ID id;
 
-  protected Entity(ID id, String type, String name) {
+  protected Entity(ID id, String type, Name name) {
     this.id = id;
     this.type = type;
     this.name = name;
@@ -49,7 +49,11 @@ public abstract class Entity implements Selectable, Serializable {
 
   @Override
   public String getName() {
-    return name;
+    return name.getName();
+  }
+
+  public String getQuantifiedName(int quantity) {
+    return name.getQuantifiedName(quantity);
   }
 
 }
