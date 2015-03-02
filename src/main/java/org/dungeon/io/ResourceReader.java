@@ -17,8 +17,6 @@
 
 package org.dungeon.io;
 
-import com.sun.javafx.Utils;
-
 import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
@@ -76,6 +74,21 @@ public class ResourceReader implements Closeable {
   }
 
   /**
+   * Converts a String of data to an ArrayList of separate Strings.
+   * <p/>
+   * "[ First Item | Second Item ]" becomes {"First Item", "Second Item"}.
+   */
+  protected static String[] toArray(String data) {
+    if (data.startsWith("[") && data.endsWith("]")) {
+      data = data.substring(1, data.length() - 1).trim();
+      // Zero or more whitespaces, the pipe character, and zero more or more whitespaces.
+      return data.split("\\s*\\|\\s*");
+    } else {
+      return new String[]{data};
+    }
+  }
+
+  /**
    * Reads the next element in the resource file to memory.
    *
    * @return true if a new element was read; false otherwise.
@@ -117,20 +130,6 @@ public class ResourceReader implements Closeable {
 
   private void addToMap(String key, String value) {
     map.put(key, toArray(value));
-  }
-
-  /**
-   * Converts a String of data to an ArrayList of separate Strings.
-   * <p/>
-   * "[First Item | Second Item ]" becomes {"First Item", "Second Item"}.
-   */
-  private String[] toArray(String data) {
-    if (data.startsWith("[")) {
-      data = data.substring(1, data.length() - 1);
-      return Utils.split(data, "|");
-    } else {
-      return new String[]{data};
-    }
   }
 
   /**
