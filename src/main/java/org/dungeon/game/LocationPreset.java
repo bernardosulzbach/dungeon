@@ -21,7 +21,11 @@ import org.dungeon.util.Percentage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * The LocationPreset class that serves as a recipe for Locations.
@@ -32,8 +36,8 @@ public final class LocationPreset implements Serializable {
   private final String type;
   private final String name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
-  private final ArrayList<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
-  private final ArrayList<ItemFrequencyPair> items = new ArrayList<ItemFrequencyPair>();
+  private final List<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
+  private final Map<ID, Percentage> items = new HashMap<ID, Percentage>();
   private Percentage lightPermittivity;
   private int blobSize;
 
@@ -70,8 +74,8 @@ public final class LocationPreset implements Serializable {
     return this;
   }
 
-  public List<ItemFrequencyPair> getItems() {
-    return items;
+  public Set<Entry<ID, Percentage>> getItems() {
+    return items.entrySet();
   }
 
   /**
@@ -82,7 +86,7 @@ public final class LocationPreset implements Serializable {
    * @return a reference to this LocationPreset
    */
   public LocationPreset addItem(String id, Double likelihood) {
-    this.items.add(new ItemFrequencyPair(new ID(id), likelihood));
+    items.put(new ID(id), new Percentage(likelihood));
     return this;
   }
 
@@ -114,16 +118,6 @@ public final class LocationPreset implements Serializable {
 
   public void setBlobSize(int blobSize) {
     this.blobSize = blobSize;
-  }
-
-  /**
-   * Trims all ArrayLists to size, reducing the memory used by this LocationPreset.
-   * <p/>
-   * This method should be called after all modifications have been made.
-   */
-  void finish() {
-    spawners.trimToSize();
-    items.trimToSize();
   }
 
 }

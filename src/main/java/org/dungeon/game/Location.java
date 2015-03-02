@@ -23,10 +23,12 @@ import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.LocationInventory;
 import org.dungeon.util.Percentage;
+import org.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * The Location class that defines a Location of a World.
@@ -56,13 +58,13 @@ public class Location implements Serializable {
       spawners.add(new Spawner(spawner, this));
     }
     this.items = new LocationInventory();
-    for (ItemFrequencyPair pair : preset.getItems()) {
-      if (Engine.RANDOM.nextDouble() < pair.getFrequency()) {
-        ItemBlueprint blueprint = GameData.getItemBlueprints().get(pair.getID());
+    for (Entry<ID, Percentage> entry : preset.getItems()) {
+      if (Utils.roll(entry.getValue())) {
+        ItemBlueprint blueprint = GameData.getItemBlueprints().get(entry.getKey());
         if (blueprint != null) {
           this.addItem(new Item(blueprint));
         } else {
-          DLogger.warning("ItemBlueprint not found: " + pair.getID().toString());
+          DLogger.warning("ItemBlueprint not found: " + entry.getKey().toString());
         }
       }
     }

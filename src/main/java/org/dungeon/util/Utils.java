@@ -29,7 +29,10 @@ import java.util.List;
  *
  * @author Bernardo Sulzbach
  */
-public class Utils {
+public final class Utils {
+
+  private Utils() {
+  }
 
   /**
    * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is
@@ -112,8 +115,17 @@ public class Utils {
    * @return a boolean indicating if the roll was successful or not.
    */
   public static boolean roll(double chance) {
-    chance = (new Percentage(chance)).toDouble();
-    return chance > Engine.RANDOM.nextDouble();
+    return roll(new Percentage(chance));
+  }
+
+  /**
+   * Simulates a random roll.
+   *
+   * @param chance the probability of a true result.
+   * @return a boolean indicating if the roll was successful or not.
+   */
+  public static boolean roll(Percentage chance) {
+    return chance.toDouble() > Engine.RANDOM.nextDouble();
   }
 
   /**
