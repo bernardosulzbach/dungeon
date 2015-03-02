@@ -69,10 +69,6 @@ public class Item extends Entity {
     return owner != null && owner.getWeapon() == this;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public String getQualifiedName() {
     if (getCurIntegrity() == getMaxIntegrity()) {
       return getName();

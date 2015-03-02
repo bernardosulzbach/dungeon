@@ -64,14 +64,6 @@ public class Creature extends Entity {
     return skillRotation;
   }
 
-  public String getType() {
-    return type;
-  }
-
-  public String getName() {
-    return name;
-  }
-
   int getMaxHealth() {
     return maxHealth;
   }
