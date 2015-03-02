@@ -19,14 +19,18 @@ package org.dungeon.game;
 
 import org.dungeon.util.Percentage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The LocationPreset class that serves as a recipe for Locations.
  */
-public final class LocationPreset extends Entity {
+public final class LocationPreset implements Serializable {
 
+  private final ID id;
+  private final String type;
+  private final String name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final ArrayList<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
   private final ArrayList<ItemFrequencyPair> items = new ArrayList<ItemFrequencyPair>();
@@ -34,7 +38,21 @@ public final class LocationPreset extends Entity {
   private int blobSize;
 
   LocationPreset(String id, String type, String name) {
-    super(new ID(id), type, name);
+    this.id = new ID(id);
+    this.type = type;
+    this.name = name;
+  }
+
+  public ID getID() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public List<SpawnerPreset> getSpawners() {
