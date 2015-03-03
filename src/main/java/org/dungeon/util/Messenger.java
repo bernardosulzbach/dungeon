@@ -55,7 +55,7 @@ public class Messenger {
    * Prints a warning that a directory creation failed.
    */
   public static void printFailedToCreateDirectoryMessage(String directory) {
-    IO.writeString("Failed to create the " + directory + " directory.");
+    IO.writeString("Failed to create the '" + directory + "' directory.");
   }
 
 }

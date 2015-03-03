@@ -44,7 +44,12 @@ public class Game {
     GameData.loadGameData();
     initializeCommands();
     gameWindow = new GameWindow();
-    gameState = Loader.loadGame(null);
+    GameState loadedGameState = Loader.loadGame();
+    if (loadedGameState == null) {
+      setGameState(Loader.newGame());
+    } else {
+      setGameState(loadedGameState);
+    }
     Engine.refresh();
   }
 
@@ -157,7 +162,7 @@ public class Game {
       public void execute(IssuedCommand issuedCommand) {
         GameState loadedGameState = Loader.loadGame(issuedCommand);
         if (loadedGameState != null) {
-          gameState = loadedGameState;
+          setGameState(loadedGameState);
         }
       }
     });
@@ -177,7 +182,7 @@ public class Game {
     commandList.add(new Command("new", "Starts a new game.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        gameState = Loader.newGame();
+        setGameState(Loader.newGame());
       }
     });
     commandList.add(new Command("pick", "Attempts to pick up an item from the current location.") {
@@ -287,6 +292,18 @@ public class Game {
   }
 
   /**
+   * Sets a new GameState to the static field.
+   * This setter also invokes the {@code Hero.look()} method on the Hero of the specified GameState.
+   *
+   * @param state the new GameState (should not be {@code null})
+   */
+  private static void setGameState(GameState state) {
+    gameState = state;
+    IO.writeNewLine(); // Improves readability.
+    gameState.getHero().look(null);
+  }
+
+  /**
    * Renders a turn based on the last IssuedCommand.
    *
    * @param issuedCommand the last IssuedCommand.
@@ -298,7 +315,7 @@ public class Game {
     if (gameState.getHero().isDead()) {
       IO.writeString("You died.");
       // After the player's death, just prompt to load the default save file.
-      gameState = Loader.loadGame(null);
+      setGameState(Loader.loadGame());
     } else {
       // Advance the campaign's world date.
       gameState.getWorld().rollDate(turnResult.turnLength);

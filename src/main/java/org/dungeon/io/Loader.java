@@ -20,7 +20,6 @@ package org.dungeon.io;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
-import org.dungeon.util.Constants;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
@@ -40,28 +39,13 @@ import java.io.ObjectOutputStream;
  */
 public class Loader {
 
-  // File-related strings.
-  private static final String DEFAULT_SAVE_PATH = "saves/";
-  // The directory.
-  private static final File SAVES_FOLDER = new File(DEFAULT_SAVE_PATH);
-  private static final String DEFAULT_SAVE_NAME = "default";
+  private static final File SAVES_FOLDER = new File("saves/");
+
   private static final String SAVE_EXTENSION = ".dungeon";
-  // Messages.
-  private static final String SAVE_ERROR = "Could not save the game.";
-  private static final String SAVE_SUCCESS = "Successfully saved the game.";
+  private static final String DEFAULT_SAVE_NAME = "default" + SAVE_EXTENSION;
+
   private static final String SAVE_CONFIRM = "Do you want to save the game?";
-
-  private static final String LOAD_ERROR = "Could not load the saved game.";
-  private static final String LOAD_SUCCESS = "Successfully loaded the game.";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
-
-  /**
-   * Check if the default save file exists.
-   */
-  private static boolean checkForDefaultSave() {
-    File savedCampaign = new File(SAVES_FOLDER, DEFAULT_SAVE_NAME + SAVE_EXTENSION);
-    return savedCampaign.exists() && savedCampaign.isFile();
-  }
 
   /**
    * Pretty-prints all the files in the saves folder.
@@ -92,68 +76,40 @@ public class Loader {
   }
 
   /**
-   * Generates a new GameState and returns it.
-   */
-  public static GameState newGame() {
-    return new GameState();
-  }
-
-  /**
-   * Handles all the save loading at startup and during gameplay.
+   * Evaluates if a File is a save file by checking that it both is a file and
    *
-   * @return a saved campaign or a new demo campaign.
+   * @param file a File object
+   * @return true if the specified File is not {@code null} and has the properties of a save file
    */
-  public static GameState loadGame(IssuedCommand issuedCommand) {
-    if (issuedCommand != null && issuedCommand.hasArguments()) {
-      // A save name was provided.
-      File save;
-      if (issuedCommand.getFirstArgument().contains(SAVE_EXTENSION)) {
-        save = new File(SAVES_FOLDER, issuedCommand.getFirstArgument());
-      } else {
-        save = new File(SAVES_FOLDER, issuedCommand.getFirstArgument() + SAVE_EXTENSION);
-      }
-      if (save.exists() && save.isFile()) {
-        return loadFile(save);
-      } else {
-        IO.writeString(save.getName() + " does not exist or is not a file.");
-        return null;
-      }
+  private static boolean isSaveFile(File file) {
+    if (file == null) {
+      return false;
     } else {
-      // A save name was not provided.
-      if (checkForDefaultSave()) {
-        IO.writeString(Constants.FILE_FOUND);
-        if (confirmOperation(LOAD_CONFIRM)) {
-          return loadFile(new File(SAVES_FOLDER, DEFAULT_SAVE_NAME + SAVE_EXTENSION));
+      return file.getName().endsWith(SAVE_EXTENSION) && file.isFile();
+    }
+  }
+
+  /**
+   * Check if the default save file exists.
+   */
+  private static boolean checkForDefaultSave() {
+    File defaultSave = new File(SAVES_FOLDER, DEFAULT_SAVE_NAME);
+    return isSaveFile(defaultSave);
+  }
+
+  /**
+   * Checks if any file in the saves folder ends with the save extension.
+   */
+  private static boolean checkForAnySave() {
+    File[] files = SAVES_FOLDER.listFiles();
+    if (files != null) {
+      for (File file : files) {
+        if (isSaveFile(file)) {
+          return true;
         }
-        // There is a save. Do not save the new demo campaign.
-        return new GameState();
-      } else {
-        // Could not find a saved game. Delegate the result to newGame().
-        return newGame();
       }
     }
-  }
-
-  /**
-   * Handles all the saving process.
-   */
-  public static void saveGame(GameState gameState) {
-    if (confirmOperation(SAVE_CONFIRM)) {
-      saveFile(gameState, DEFAULT_SAVE_NAME, false);
-    }
-  }
-
-  /**
-   * Handles all the saving process, assigning a new name for the save file, if provided.
-   */
-  public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      if (confirmOperation(SAVE_CONFIRM)) {
-        saveFile(gameState, issuedCommand.getFirstArgument(), false);
-      }
-    } else {
-      saveGame(gameState);
-    }
+    return false;
   }
 
   /**
@@ -165,8 +121,99 @@ public class Loader {
     return result == JOptionPane.YES_OPTION;
   }
 
-  // The following two methods are the only methods that perform (de)serialization.
-  // Loads game state from a file.
+  /**
+   * Appends the save file extension to a file name it if it does not ends with it already.
+   *
+   * @param name a file name
+   * @return a String ending with the file extension
+   */
+  private static String ensureSaveEndsWithExtension(String name) {
+    return name.endsWith(SAVE_EXTENSION) ? name : name + SAVE_EXTENSION;
+  }
+
+  /**
+   * Generates a new GameState and returns it.
+   */
+  public static GameState newGame() {
+    IO.writeString("Created a new game.");
+    return new GameState();
+  }
+
+  /**
+   * Loads the default save file if it exists. If it does not exist, this returns another existing save. Lastly, if the
+   * saves folder is empty or does not exist, the method returns {@code null}.
+   * Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code null}.
+   */
+  public static GameState loadGame() {
+    if (checkForDefaultSave()) {
+      if (confirmOperation(LOAD_CONFIRM)) {
+        return loadFile(new File(SAVES_FOLDER, DEFAULT_SAVE_NAME));
+      }
+    } else if (checkForAnySave()) {
+      if (confirmOperation(LOAD_CONFIRM)) {
+        File[] files = SAVES_FOLDER.listFiles();
+        if (files != null) {
+          File firstListedFile = files[0];
+          return loadFile(firstListedFile);
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Attempts to load the save file indicated by the first argument of the "load" command. If the load command was
+   * issued without arguments, this method delegates save loading to {@code Loader.loadGame()}.
+   */
+  public static GameState loadGame(IssuedCommand issuedCommand) {
+    if (issuedCommand == null) {
+      DLogger.warning("Passed null to Loader.loadGame(IssuedCommand)!");
+      return null;
+    }
+    if (issuedCommand.hasArguments()) {
+      // A save name was provided.
+      String argument = issuedCommand.getFirstArgument();
+      argument = ensureSaveEndsWithExtension(argument);
+      File save = new File(SAVES_FOLDER, argument);
+      if (isSaveFile(save)) {
+        return loadFile(save);
+      } else {
+        IO.writeString(save.getName() + " does not exist or is not a file.");
+        return null;
+      }
+    } else {
+      return loadGame();
+    }
+  }
+
+  /**
+   * Saves the specified GameState to the default save file.
+   */
+  public static void saveGame(GameState gameState) {
+    if (confirmOperation(SAVE_CONFIRM)) {
+      saveFile(gameState, DEFAULT_SAVE_NAME);
+    }
+  }
+
+  /**
+   * Saves a GameState, assigning a new name for the save file, if provided.
+   */
+  public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
+    if (issuedCommand.hasArguments()) {
+      if (confirmOperation(SAVE_CONFIRM)) {
+        saveFile(gameState, issuedCommand.getFirstArgument());
+      }
+    } else {
+      saveGame(gameState);
+    }
+  }
+
+  /**
+   * Attempts to load a GameState from a file.
+   *
+   * @param file a File object
+   * @return a GameState or {@code null} if something goes wrong.
+   */
   private static GameState loadFile(File file) {
     FileInputStream fileInStream;
     ObjectInputStream objectInStream;
@@ -175,28 +222,30 @@ public class Loader {
       objectInStream = new ObjectInputStream(fileInStream);
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
-      IO.writeString(LOAD_SUCCESS);
-      IO.writeString("Read " + Utils.bytesToHuman(file.length()) + " from " + file.getName());
-      loadedGameState.setSaved(true);
+      String formatString = "Successfully loaded the game (read %s from %s).";
+      IO.writeString(String.format(formatString, Utils.bytesToHuman(file.length()), file.getName()));
       return loadedGameState;
-    } catch (IOException ex) {
-      IO.writeString(LOAD_ERROR);
-      return new GameState();
-    } catch (ClassNotFoundException ex) {
-      IO.writeString(LOAD_ERROR);
-      return new GameState();
+    } catch (Exception bad) {
+      IO.writeString("Could not load the saved game.");
+      return null;
     }
   }
 
-  // Serializes the current game state to a file.
-  private static void saveFile(GameState state, String name, boolean quiet) {
-    File file = new File(SAVES_FOLDER, name + SAVE_EXTENSION);
+  /**
+   * Serializes the specified {@code GameState} state to a file.
+   *
+   * @param state a GameState
+   * @param name  the name of the file
+   */
+  private static void saveFile(GameState state, String name) {
+    name = ensureSaveEndsWithExtension(name);
+    File file = new File(SAVES_FOLDER, name);
     FileOutputStream fileOutStream;
     ObjectOutputStream objectOutStream;
     try {
       if (!SAVES_FOLDER.exists()) {
         if (!SAVES_FOLDER.mkdir()) {
-          Messenger.printFailedToCreateDirectoryMessage(DEFAULT_SAVE_PATH);
+          Messenger.printFailedToCreateDirectoryMessage(SAVES_FOLDER.getName());
           return;
         }
       }
@@ -205,15 +254,11 @@ public class Loader {
       objectOutStream.writeObject(state);
       objectOutStream.close();
       state.setSaved(true);
-      if (!quiet) {
-        IO.writeString(SAVE_SUCCESS);
-        long bytes = file.length();
-        IO.writeString("Wrote " + Utils.bytesToHuman(bytes) + " to " + file.getName());
-      }
-    } catch (IOException ex) {
-      if (!quiet) {
-        IO.writeString(SAVE_ERROR);
-      }
+      long bytes = file.length();
+      String formatString = "Successfully saved the game (wrote %s to %s).";
+      IO.writeString(String.format(formatString, Utils.bytesToHuman(bytes), file.getName()));
+    } catch (IOException bad) {
+      IO.writeString("Could not save the game.");
     }
   }
 
