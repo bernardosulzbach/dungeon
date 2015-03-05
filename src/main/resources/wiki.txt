@@ -64,7 +64,12 @@ ARTICLE: Sleeping
 CONTENT: The character can sleep when it is dark, waking up when it is dawn. During the sleep, the character may dream.
 
 ARTICLE: Time
-CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what the character did.
+CONTENT: Time passes after every turn. How much each turn lasts, however, depends on what the character did. Watches\
+are used to keep precise track of time. Looking the time (using a watch) costs a little time, though. The character\
+needs about four seconds to see what time it is in an equipped watch and around ten seconds to look up the time in a\
+clock placed on his or hers backpack. A broken watch usually displays the time it broke. If the character is equipping\
+a broken watch but has a working one in his or hers backpack, any attempt to look up the time will result in the\
+character picking up the watch in his or hers backpack.
 
 ARTICLE: Tomes
 CONTENT: Tomes are books that can teach a skill for the player character.

@@ -532,24 +532,6 @@ public class Hero extends Creature {
     return 0;
   }
 
-  boolean hasClock() {
-    for (Item item : getInventory().getItems()) {
-      if (item.isClock()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Item getClock() {
-    for (Item item : getInventory().getItems()) {
-      if (item.isClock()) {
-        return item;
-      }
-    }
-    return null;
-  }
-
   void equipWeapon(Item weapon) {
     if (hasWeapon()) {
       if (getWeapon() == weapon) {
@@ -604,24 +586,56 @@ public class Hero extends Creature {
 
   /**
    * Makes the hero read the current date and time as well as he can.
+   * <p/>
+   * The easiest-to-access unbroken clock of the Hero is used to get the time. If the Hero has no unbroken clock, the
+   * easiest-to-access broken clock is used. Lastly, if the Hero does not have a clock at all, time is not read.
    *
-   * @return how many seconds the action lasted.
+   * @return how many seconds the action took
    */
   public int printDateAndTime() {
-    World world = getLocation().getWorld();
-    int timeSpent = 2;
-    if (hasClock()) {
-      if (hasWeapon() && getWeapon().isClock() && !getWeapon().isBroken()) {
-        // Reading the time from an equipped clock is the fastest possible action.
-        timeSpent += 2;
-      } else {
-        // The hero needed to pick up a watch or something from his inventory, consuming more time.
-        timeSpent += 8;
+    // TODO: improve code readability and reduce code repetition.
+    Item clock = null;
+    int timeSpent = 0;
+    if (hasWeapon() && getWeapon().isClock()) {
+      if (!getWeapon().isBroken()) {
+        clock = getWeapon();
+        timeSpent = 4;
+      } else { // The Hero is equipping a broken clock: check if he has a working one in his inventory.
+        for (Item item : getInventory().getItems()) {
+          if (item.isClock() && !item.isBroken()) {
+            clock = item;
+            timeSpent = 10;
+            break;
+          }
+        }
+        if (clock == null) {
+          clock = getWeapon(); // The Hero does not have a working clock in his inventory: use the equipped one.
+          timeSpent = 4;
+        }
       }
-      // Prints whatever the clock shows.
-      IO.writeString(getClock().getClockComponent().getTimeString());
+    } else { // The Hero is not equipping a clock.
+      Item brokenClock = null;
+      for (Item item : getInventory().getItems()) {
+        if (item.isClock()) {
+          if (item.isBroken() && brokenClock == null) {
+            brokenClock = item;
+          } else {
+            clock = item;
+            timeSpent = 10;
+            break;
+          }
+        }
+      }
+      if (brokenClock != null) {
+        timeSpent = 10;
+        clock = brokenClock;
+      }
+    }
+    if (clock != null) {
+      IO.writeString(clock.getClockComponent().getTimeString());
     }
 
+    World world = getLocation().getWorld();
     Date worldDate = world.getWorldDate();
     IO.writeString("You think it is " + worldDate.toDateString() + ".");
 
