@@ -221,7 +221,7 @@ public class Hero extends Creature {
    */
   private void lookCreatures() {
     if (getLocation().getCreatureCount() < 2) { // At least two in order to ignore the Hero.
-      IO.writeString("You cannot see anyone here.");
+      IO.writeString("You don't see anyone here.");
     } else {
       List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatureCount());
       creatures.addAll(getLocation().getCreatures());
