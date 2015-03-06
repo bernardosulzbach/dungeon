@@ -18,8 +18,10 @@
 package org.dungeon.util;
 
 import org.dungeon.game.Engine;
+import org.dungeon.io.DLogger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * ShuffledRange class that provides a List of shuffled non-repeating integers from a lower bound up to an upper bound.
@@ -31,18 +33,22 @@ public class ShuffledRange {
   /**
    * Constructs a new {@code ShuffledRange} given a lower bound and an upper bound.
    * <p/>
-   * This constructor populates a {@code List} with the integers {@code {start, start + 1, ..., end}} and calls
+   * This constructor populates a {@code List} with the integers {@code {start, start + 1, ..., end - 1}} and calls
    * {@code shuffle}.
    *
    * @param start the lower bound (inclusive)
    * @param end   the higher bound (exclusive)
    */
   public ShuffledRange(int start, int end) {
-    integers = new ArrayList<Integer>(end - start - 1);
-    for (int i = start; i < end; i++) {
-      integers.add(i);
+    if (start >= end) {
+      DLogger.warning("Tried to create a ShuffledRange of negative or zero length.");
+    } else {
+      integers = new ArrayList<Integer>(end - start);
+      for (int i = start; i < end; i++) {
+        integers.add(i);
+      }
+      shuffle();
     }
-    shuffle();
   }
 
   /**
@@ -65,18 +71,23 @@ public class ShuffledRange {
   }
 
   /**
+   * Returns the last integer of the range according to its current ordering.
+   */
+  public int getLast() {
+    return integers.get(integers.size() - 1);
+  }
+
+  /**
    * Shuffles the underlying List.
    * <p/>
    * If the List has more than one element, ensures that the next first integer is not the integer currently at the end.
    */
   public void shuffle() {
-    if (integers.size() > 1) {
-      ArrayList<Integer> old = new ArrayList<Integer>(integers);
-      integers.clear();
-      integers.add(old.remove(Engine.RANDOM.nextInt(old.size() - 1)));
-      for (int i = old.size(); i > 0; i--) {
-        integers.add(old.remove(Engine.RANDOM.nextInt(i)));
-      }
+    int lastInteger = getLast();
+    Collections.shuffle(integers);
+    if (getSize() > 1 && get(0) == lastInteger) {
+      // Swap a random integer that is not the first into the first position.
+      Collections.swap(integers, 0, 1 + Engine.RANDOM.nextInt(getSize() - 1));
     }
   }
 
