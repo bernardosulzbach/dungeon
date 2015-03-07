@@ -18,7 +18,6 @@
 package org.dungeon.items;
 
 import org.dungeon.creatures.Creature;
-import org.dungeon.game.Engine;
 import org.dungeon.io.IO;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Utils;
@@ -43,11 +42,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
 
   public void printItems() {
     if (items.size() == 0) {
-      if (Engine.RANDOM.nextBoolean()) {
-        IO.writeString("Inventory is empty.");
-      } else {
-        IO.writeString("There are no items in the inventory.");
-      }
+      IO.writeString("Inventory is empty.");
     } else {
       for (Item item : items) {
         printItem(item);
