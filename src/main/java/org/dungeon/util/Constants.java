@@ -31,7 +31,6 @@ import java.text.SimpleDateFormat;
 public class Constants {
 
   public static final int COLS = 100;
-  public static final String FILE_FOUND = "A saved campaign was found.";
 
   // The string used to alert the player about invalid input.
   public static final String INVALID_INPUT = "Invalid input.";
