@@ -18,6 +18,8 @@
 package org.dungeon.items;
 
 import org.dungeon.creatures.Creature;
+import org.dungeon.game.Weight;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Utils;
@@ -31,22 +33,41 @@ import java.awt.Color;
  */
 public class CreatureInventory extends BaseInventory implements LimitedInventory {
 
-  private static final long serialVersionUID = 1L;
   private final Creature owner;
-  private int limit;
+  private final int itemLimit;
+  private final Weight weightLimit;
 
-  public CreatureInventory(Creature owner, int limit) {
+  public CreatureInventory(Creature owner, int itemLimit, double weightLimit) {
     this.owner = owner;
-    this.limit = limit;
+    this.itemLimit = itemLimit;
+    this.weightLimit = Weight.newInstance(weightLimit);
   }
 
+  @Override
+  public int getItemLimit() {
+    return itemLimit;
+  }
+
+  @Override
+  public Weight getWeightLimit() {
+    return weightLimit;
+  }
+
+  public Weight getWeight() {
+    Weight sum = Weight.ZERO;
+    for (Item item : getItems()) {
+      sum = sum.add(item.getWeight());
+    }
+    return sum;
+  }
+
+  /**
+   * Prints all items in this {@code CreatureInventory}.
+   */
   public void printItems() {
-    if (items.size() == 0) {
-      IO.writeString("Inventory is empty.");
-    } else {
-      for (Item item : items) {
-        printItem(item);
-      }
+    // TODO: enumerate items instead.
+    for (Item item : items) {
+      printItem(item);
     }
   }
 
@@ -66,22 +87,34 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
 
   /**
    * Attempts to add an item object to the inventory.
+   *
+   * @param item the Item to be added
+   * @return true if successful, false otherwise
    */
-  public boolean addItem(Item newItem) {
-    // Check that the new item is not already in the inventory.
-    if (hasItem(newItem)) {
-      throw new IllegalArgumentException("newItem is already in the inventory.");
+  public boolean addItem(Item item) {
+    if (hasItem(item)) { // Check that the new item is not already in the inventory.
+      DLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
+      return false;
     }
     if (isFull()) {
-      // Print the default inventory full message.
-      IO.writeString(Constants.INVENTORY_FULL);
+      IO.writeString("Your inventory is full.");
+    } else if (willExceedWeightLimitAfterAdding(item)) {
+      IO.writeString("You can't carry more weight.");
     } else {
-      items.add(newItem);
-      newItem.setOwner(owner);
-      IO.writeString("Added " + newItem.getName() + " to the inventory.");
+      items.add(item);
+      item.setOwner(owner);
+      IO.writeString("Added " + item.getName() + " to the inventory.");
       return true;
     }
     return false;
+  }
+
+  private boolean isFull() {
+    return getItemCount() == getItemLimit();
+  }
+
+  private boolean willExceedWeightLimitAfterAdding(Item item) {
+    return getWeight().add(item.getWeight()).compareTo(getWeightLimit()) > 0;
   }
 
   public void removeItem(Item item) {
@@ -90,18 +123,6 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     }
     items.remove(item);
     item.setOwner(null);
-  }
-
-  public int getLimit() {
-    return limit;
-  }
-
-  public void setLimit(int limit) {
-    this.limit = limit;
-  }
-
-  public boolean isFull() {
-    return this.items.size() == this.limit;
   }
 
 }

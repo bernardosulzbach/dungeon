@@ -21,6 +21,7 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
+import org.dungeon.game.Weight;
 
 public class Item extends Entity {
 
@@ -30,14 +31,16 @@ public class Item extends Entity {
   private final int damage;
   private final double hitRate;
   private final int integrityDecrementOnHit;
+  private final Weight weight;
   private Creature owner;
   private int curIntegrity;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
-
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
+
+    weight = Weight.newInstance(1); // TODO: remove this hack.
 
     repairable = bp.repairable;
     maxIntegrity = bp.maxIntegrity;
@@ -59,6 +62,10 @@ public class Item extends Entity {
     if (bp.book) {
       bookComponent = new BookComponent(bp.getSkill());
     }
+  }
+
+  public Weight getWeight() {
+    return weight;
   }
 
   public void setOwner(Creature owner) {

@@ -15,14 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.game;
 
-import org.dungeon.game.Weight;
+/**
+ * QuantificationMode helper enumerated type.
+ * <p/>
+ * Created by Bernardo on 07/03/2015.
+ */
+public enum QuantificationMode {
 
-interface LimitedInventory {
-
-  public int getItemLimit();
-
-  public Weight getWeightLimit();
+  WORD, NUMBER
 
 }

@@ -19,12 +19,15 @@ package org.dungeon.items;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
+import org.dungeon.game.Weight;
 
 public final class ItemBlueprint {
 
   ID id;
   String type;
   Name name;
+
+  Weight weight;
 
   int maxIntegrity;
   int curIntegrity;
@@ -43,9 +46,6 @@ public final class ItemBlueprint {
   boolean book;
   private ID skill;
 
-  public void setSkill(ID skill) {
-    this.skill = skill;
-  }
 
   public ID getID() {
     return id;
@@ -69,6 +69,14 @@ public final class ItemBlueprint {
 
   public void setName(Name name) {
     this.name = name;
+  }
+
+  public Weight getWeight() {
+    return weight;
+  }
+
+  public void setWeight(Weight weight) {
+    this.weight = weight;
   }
 
   public void setMaxIntegrity(int maxIntegrity) {

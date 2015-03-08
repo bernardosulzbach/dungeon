@@ -36,9 +36,6 @@ public class Constants {
   // The string used to alert the player about invalid input.
   public static final String INVALID_INPUT = "Invalid input.";
 
-  // Inventory strings.
-  public static final String INVENTORY_FULL = "Inventory is full.";
-
   // Item not found messages.
   public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
   public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
@@ -48,7 +45,6 @@ public class Constants {
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
   public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
   public static final Color FORE_COLOR_DARKER = Color.GRAY;
-
 
   // IDs
   public static final ID HERO_ID = new ID("HERO");

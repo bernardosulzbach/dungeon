@@ -53,7 +53,7 @@ public abstract class Entity implements Selectable, Serializable {
   }
 
   public String getQuantifiedName(int quantity) {
-    return name.getQuantifiedName(quantity);
+    return name.getQuantifiedName(quantity, QuantificationMode.WORD);
   }
 
 }

@@ -17,6 +17,8 @@
 
 package org.dungeon.game;
 
+import org.dungeon.io.DLogger;
+
 import java.io.Serializable;
 
 /**
@@ -65,14 +67,31 @@ public final class Name implements Serializable {
     return singular;
   }
 
-  public String getQuantifiedName(int quantity) {
-    String name;
-    if (quantity == 1) {
+  /**
+   * Returns a String representing a quantified name.
+   * <p/>
+   * {@code e.g.: "Two Bears", "8 Tigers", "One Elephant"}
+   *
+   * @param quantity the quantity, must be positive
+   * @param mode     a QuantificationMode constant
+   * @return a String
+   */
+  public String getQuantifiedName(int quantity, QuantificationMode mode) {
+    String name = null;
+    if (quantity < 0) {
+      DLogger.warning("Called getQuantifiedName with nonpositive quantity.");
+    } else if (quantity == 1) {
       name = singular;
     } else {
       name = plural;
     }
-    return Numeral.getCorrespondingNumeral(quantity).toString().toLowerCase() + " " + name;
+    String number;
+    if (mode == QuantificationMode.NUMBER) {
+      number = String.valueOf(quantity);
+    } else {
+      number = Numeral.getCorrespondingNumeral(quantity).toString().toLowerCase();
+    }
+    return number + " " + name;
   }
 
 }

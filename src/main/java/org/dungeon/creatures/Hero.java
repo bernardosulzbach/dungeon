@@ -30,6 +30,7 @@ import org.dungeon.game.Location;
 import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
+import org.dungeon.game.QuantificationMode;
 import org.dungeon.game.Selectable;
 import org.dungeon.game.TimeConstants;
 import org.dungeon.game.World;
@@ -71,7 +72,7 @@ public class Hero extends Creature {
 
   public Hero() {
     super(Constants.HERO_ID, "Hero", Name.newInstance("Seth"), 50, 5, "HERO");
-    setInventory(new CreatureInventory(this, 3));
+    setInventory(new CreatureInventory(this, 12, 6));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
     achievementTracker = new AchievementTracker();
   }
@@ -396,10 +397,7 @@ public class Hero extends Creature {
     if (canSee()) {
       Item selectedItem = selectLocationItem(issuedCommand);
       if (selectedItem != null) {
-        if (getInventory().isFull()) {
-          IO.writeString(Constants.INVENTORY_FULL);
-        } else {
-          getInventory().addItem(selectedItem);
+        if (getInventory().addItem(selectedItem)) { // addItem returns false if the item was not added.
           getLocation().removeItem(selectedItem);
           return SECONDS_TO_PICK_UP_AN_ITEM;
         }
@@ -445,7 +443,18 @@ public class Hero extends Creature {
   }
 
   public void printInventory() {
-    IO.writeString("Items: " + getInventory().getItemCount() + "/" + getInventory().getLimit(), Color.CYAN);
+    Name item = Name.newInstance("item");
+    String firstLine;
+    if (getInventory().getItemCount() == 0) {
+      firstLine = "Your inventory is empty.";
+    } else {
+      String itemCount = item.getQuantifiedName(getInventory().getItemCount(), QuantificationMode.NUMBER);
+      firstLine = "You are carrying " + itemCount + ". Your inventory weights " + getInventory().getWeight() + ".";
+    }
+    IO.writeString(firstLine);
+    // Local variable to improve readability.
+    String itemLimit = item.getQuantifiedName(getInventory().getItemLimit(), QuantificationMode.NUMBER);
+    IO.writeString("Your maximum carrying capacity is " + itemLimit + " and " + getInventory().getWeightLimit() + ".");
     getInventory().printItems();
   }
 
