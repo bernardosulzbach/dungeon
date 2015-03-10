@@ -18,6 +18,7 @@
 package org.dungeon.wiki;
 
 import org.dungeon.game.IssuedCommand;
+import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.util.Utils;
@@ -52,7 +53,7 @@ public abstract class Wiki {
       initialize();
     }
     if (issuedCommand.hasArguments()) {
-      List<Article> matches = findMatches(issuedCommand.getArguments());
+      List<Article> matches = findMatches(articleList, issuedCommand.getArguments());
       if (matches.isEmpty()) {
         IO.writeString("No matches were found.");
       } else if (matches.size() == 1) {
@@ -93,12 +94,12 @@ public abstract class Wiki {
    * @param searchArguments the arguments provided by the player
    * @return a List with zero or more Articles
    */
-  private static List<Article> findMatches(String[] searchArguments) {
-    List<Article> listOfMatches = new ArrayList<Article>();
+  public static <T extends Selectable> List<T> findMatches(List<T> list, String[] searchArguments) {
+    List<T> listOfMatches = new ArrayList<T>();
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
     double maximumSimilarity = 1e-6;
-    for (Article article : articleList) {
-      String[] titleWords = Utils.split(article.title);
+    for (T candidate : list) {
+      String[] titleWords = Utils.split(candidate.getName());
       int matches = countMatches(searchArguments, titleWords);
       double matchesOverTitleWords = matches / (double) titleWords.length;
       double matchesOverSearchArgs = matches / (double) searchArguments.length;
@@ -107,9 +108,9 @@ public abstract class Wiki {
       if (comparisonResult > 0) {
         maximumSimilarity = similarity;
         listOfMatches.clear();
-        listOfMatches.add(article);
+        listOfMatches.add(candidate);
       } else if (comparisonResult == 0) {
-        listOfMatches.add(article);
+        listOfMatches.add(candidate);
       }
     }
     return listOfMatches;

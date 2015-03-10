@@ -17,12 +17,14 @@
 
 package org.dungeon.wiki;
 
+import org.dungeon.game.Selectable;
+
 /**
  * Article class that represents a wiki article.
  * <p/>
  * Created by Bernardo on 06/02/2015.
  */
-final class Article {
+final class Article implements Selectable {
 
   public final String title;
   public final String content;
@@ -30,6 +32,14 @@ final class Article {
   public Article(String title, String content) {
     this.title = title;
     this.content = content;
+  }
+
+  /**
+   * Returns the title of this Article.
+   */
+  @Override
+  public String getName() {
+    return title;
   }
 
   @Override
