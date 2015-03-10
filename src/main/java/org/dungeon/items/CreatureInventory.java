@@ -21,10 +21,6 @@ import org.dungeon.creatures.Creature;
 import org.dungeon.game.Weight;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
-import org.dungeon.util.Constants;
-import org.dungeon.util.Utils;
-
-import java.awt.Color;
 
 /**
  * Inventory class that defines a common general-purpose Item storage and query structure.
@@ -59,30 +55,6 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       sum = sum.add(item.getWeight());
     }
     return sum;
-  }
-
-  /**
-   * Prints all items in this {@code CreatureInventory}.
-   */
-  public void printItems() {
-    // TODO: enumerate items instead.
-    for (Item item : items) {
-      printItem(item);
-    }
-  }
-
-  private void printItem(Item item) {
-    Color color = item.isEquipped() ? Color.MAGENTA : Constants.FORE_COLOR_NORMAL;
-    int typeTagLength = 10;
-    String typeString = "[" + item.getType() + "]";
-    String extraSpace = Utils.makeRepeatedCharacterString(typeTagLength - typeString.length(), ' ');
-    IO.writeString(typeString, color, false);
-    if (item.isPerfect()) {
-      IO.writeString(extraSpace + item.getName(), color);
-    } else {
-      IO.writeString(extraSpace + item.getIntegrityString(), Constants.FORE_COLOR_DARKER, false);
-      IO.writeString(" " + item.getName(), color);
-    }
   }
 
   /**

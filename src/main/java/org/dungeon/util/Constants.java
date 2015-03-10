@@ -35,8 +35,6 @@ public class Constants {
   // The string used to alert the player about invalid input.
   public static final String INVALID_INPUT = "Invalid input.";
 
-  // Item not found messages.
-  public static final String NOT_EQUIPPING_A_WEAPON = "You are not equipping a weapon.";
   public static final String CANT_SEE_ANYTHING = "It's too dark, you can't see anything.";
 
   // DateFormats for time and date printing.

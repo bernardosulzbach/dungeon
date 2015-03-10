@@ -248,4 +248,28 @@ public final class Utils {
     }
   }
 
+  /**
+   * Enumerates the elements of a List in a human-readable way.
+   * <p/>
+   * This method calls {@code toString()} on each object, so the result depends on what that method returns.
+   *
+   * @param list the List of Objects.
+   * @return a String.
+   */
+  public static String enumerate(final List list) {
+    StringBuilder stringBuilder = new StringBuilder();
+    for (int i = 0; i < list.size(); i++) {
+      stringBuilder.append(list.get(i).toString());
+      if (i < list.size() - 2) {
+        stringBuilder.append(", ");
+      } else if (i == list.size() - 2) {
+        if (list.size() >= 3) {
+          // A serial comma (only used when we have three or more items).
+          stringBuilder.append(",");
+        }
+        stringBuilder.append(" and ");
+      }
+    }
+    return stringBuilder.toString();
+  }
 }

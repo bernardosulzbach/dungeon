@@ -208,7 +208,7 @@ public class Hero extends Creature {
     StringBuilder stringBuilder = new StringBuilder(140);
     for (Entry<String, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
       stringBuilder.append("To ");
-      stringBuilder.append(enumerate(entry.getValue()));
+      stringBuilder.append(Utils.enumerate(entry.getValue()));
       stringBuilder.append(" you see ");
       stringBuilder.append(entry.getKey());
       stringBuilder.append(".\n");
@@ -261,32 +261,7 @@ public class Hero extends Creature {
         alreadyListedEntities.add(name);
       }
     }
-    return enumerate(quantifiedNames);
-  }
-
-  /**
-   * Enumerates the elements of a List in a human-readable way.
-   * <p/>
-   * This method calls {@code toString()} on each object, so the result depends on what that method returns.
-   *
-   * @param list the List of Objects.
-   * @return a String.
-   */
-  private String enumerate(final List list) {
-    StringBuilder stringBuilder = new StringBuilder();
-    for (int i = 0; i < list.size(); i++) {
-      stringBuilder.append(list.get(i).toString());
-      if (i < list.size() - 2) {
-        stringBuilder.append(", ");
-      } else if (i == list.size() - 2) {
-        if (list.size() >= 3) {
-          // A serial comma (only used when we have three or more items).
-          stringBuilder.append(",");
-        }
-        stringBuilder.append(" and ");
-      }
-    }
-    return stringBuilder.toString();
+    return Utils.enumerate(quantifiedNames);
   }
 
   /**
@@ -455,7 +430,24 @@ public class Hero extends Creature {
     // Local variable to improve readability.
     String itemLimit = item.getQuantifiedName(getInventory().getItemLimit(), QuantificationMode.NUMBER);
     IO.writeString("Your maximum carrying capacity is " + itemLimit + " and " + getInventory().getWeightLimit() + ".");
-    getInventory().printItems();
+    if (getInventory().getItemCount() != 0) {
+      printItems();
+    }
+    if (hasWeapon()) {
+      IO.writeString("You are equipping " + getWeapon().getQualifiedName() + ".");
+    }
+  }
+
+  /**
+   * Prints all items in the Hero's inventory. This function should only be called if the inventory is not empty.
+   */
+  private void printItems() {
+    ArrayList<String> names = new ArrayList<String>(getInventory().getItemCount());
+    for (Item item : getInventory().getItems()) {
+      names.add(String.format("%s (%s)", item.getQualifiedName(), item.getWeight()));
+    }
+    IO.writeString("You are carrying " + Utils.enumerate(names) + ".");
+
   }
 
   /**
@@ -560,7 +552,7 @@ public class Hero extends Creature {
       setWeapon(null);
       return SECONDS_TO_UNEQUIP;
     } else {
-      IO.writeString(Constants.NOT_EQUIPPING_A_WEAPON);
+      IO.writeString("You are not equipping a weapon.");
     }
     return 0;
   }
