@@ -321,14 +321,11 @@ public class Hero extends Creature {
    * @return a target Creature or {@code null}.
    */
   Creature selectTarget(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
+    // If there are arguments or just two different names (the Hero's name and one other type of creature).
+    if (issuedCommand.hasArguments() || Utils.selectFromList(getLocation().getCreatures()).getDifferentNames() == 2) {
       return findCreature(issuedCommand.getArguments());
     } else {
-      if (Engine.RANDOM.nextBoolean()) {
-        IO.writeString("Attack what?", Color.ORANGE);
-      } else {
-        IO.writeString("You must specify a target.", Color.ORANGE);
-      }
+      IO.writeString("You must specify a target.");
       return null;
     }
   }
