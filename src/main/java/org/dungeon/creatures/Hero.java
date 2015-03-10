@@ -42,8 +42,8 @@ import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
-import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
@@ -321,13 +321,31 @@ public class Hero extends Creature {
    * @return a target Creature or {@code null}.
    */
   Creature selectTarget(IssuedCommand issuedCommand) {
-    // If there are arguments or just two different names (the Hero's name and one other type of creature).
-    if (issuedCommand.hasArguments() || Utils.selectFromList(getLocation().getCreatures()).getDifferentNames() == 2) {
+    if (issuedCommand.hasArguments() || checkIfEmptyKillIsUnambiguous()) {
       return findCreature(issuedCommand.getArguments());
     } else {
       IO.writeString("You must specify a target.");
       return null;
     }
+  }
+
+  /**
+   * Returns whether invoking "kill" in the current location without any arguments is unambiguous or not.
+   */
+  private boolean checkIfEmptyKillIsUnambiguous() {
+    String lastName = null;
+    for (Creature creature : getLocation().getCreatures()) {
+      if (creature != this) {
+        if (lastName == null) {
+          lastName = creature.getName();
+        } else {
+          if (!creature.getName().equals(lastName)) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   /**
@@ -349,12 +367,12 @@ public class Hero extends Creature {
    * @return a Creature or null.
    */
   Creature findCreature(String[] tokens) {
-    SelectionResult<Creature> result = Utils.selectFromList(getLocation().getCreatures(), tokens);
+    Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
     if (result.size() == 0) {
       IO.writeString("Creature not found.");
     } else if (result.size() == 1 || result.getDifferentNames() == 1) {
       return result.getMatch(0);
-    } else if (result.getDifferentNames() == 2 && result.hasName(getName())) {
+    } else if (result.getDifferentNames() == 2 && result.hasMatchWithName(getName())) {
       return result.getMatch(0).getName().equals(getName()) ? result.getMatch(1) : result.getMatch(0);
     } else {
       Messenger.printAmbiguousSelectionMessage();
@@ -691,7 +709,7 @@ public class Hero extends Creature {
         getSkillRotation().resetRotation();
         ArrayList<Selectable> skillsList = new ArrayList<Selectable>(getSkillList().toListOfSelectable());
         for (String[] skillName : skillNames) {
-          SelectionResult<Selectable> result = Utils.selectFromList(skillsList, skillName);
+          Matches<Selectable> result = Utils.findBestCompleteMatches(skillsList, skillName);
           if (result.size() == 0) {
             IO.writeString(Utils.stringArrayToString(skillName, " ") + " did not match any skill!");
           } else {

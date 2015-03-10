@@ -23,6 +23,7 @@ import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -51,61 +52,6 @@ public final class Utils {
     } else {
       return original;
     }
-  }
-
-  /**
-   * Parses a list of Selectable candidates trying to find a match based on a query string.
-   * <p/>
-   * This method is not case-sensitive.
-   * <p/>
-   * Parts of individual tokens will result in a match if the parts order matches the order of the candidate's name.
-   * <p/>
-   * (e. g.: "g b r" will match "Giant Black Rat" as "W Watch" will match "Wrist Watch")
-   *
-   * @param candidates a list of Selectable candidates
-   * @param tokens     the text tokens
-   * @return a SelectionResult object with all the matches found.
-   */
-  public static <T extends Selectable> SelectionResult<T> selectFromList(List<T> candidates, String... tokens) {
-    SelectionResult<T> selectionResult = new SelectionResult<T>();
-    for (T candidate : candidates) {
-      if (checkQueryMatch(tokens, split(candidate.getName()))) {
-        selectionResult.addMatch(candidate);
-      }
-    }
-    return selectionResult;
-  }
-
-  /**
-   * Checks if two string arrays match. Not case-sensitive. Only checks for the same starting characters.
-   * <p/>
-   * "g", "g b", "g r" and "b r" match "Giant Black Rat". "g r b", "b g r", "b r g", "r b g", "r g b" do not.
-   *
-   * @param query     the query array.
-   * @param candidate the candidate array.
-   * @return a boolean indicating if the tokens match or not.
-   */
-  public static boolean checkQueryMatch(String[] query, String[] candidate) {
-    if (query.length > candidate.length) {
-      return false;
-    }
-    boolean foundMatch = false;
-    int indexOfLastMatchInCandidate = 0;
-    for (String queryToken : query) {
-      // TODO: reword this. Too messy.
-      while (indexOfLastMatchInCandidate < candidate.length && !foundMatch) {
-        if (startsWithIgnoreCase(candidate[indexOfLastMatchInCandidate], queryToken)) {
-          foundMatch = true;
-        }
-        indexOfLastMatchInCandidate++;
-      }
-      if (!foundMatch) {
-        return false;
-      } else {
-        foundMatch = false;
-      }
-    }
-    return true;
   }
 
   /**
@@ -275,31 +221,65 @@ public final class Utils {
   }
 
   /**
-   * Finds a List of equally good Articles matches based on an array of search arguments.
+   * Finds the best matches to the provided tokens among the {@code Selectable}s of a specified {@code Collection}.
    *
-   * @param searchArguments the arguments provided by the player
-   * @return a List with zero or more Articles
+   * @param collection a {@code Collection} of {@code Selectable} objects
+   * @param tokens     the search Strings
+   * @param <T>        a type T that extends {@code Selectable}
+   * @return a {@code Matches} object with zero or more elements of type T
    */
-  public static <T extends Selectable> List<T> findMatches(List<T> list, String[] searchArguments) {
+  public static <T extends Selectable> Matches<T> findBestMatches(Collection<T> collection, String... tokens) {
+    return findMatches(collection, false, tokens);
+  }
+
+  /**
+   * Finds the best complete matches to the provided tokens among the {@code Selectable}s of a specified
+   * {@code Collection}. A match is considered complete if it has a word for each provided token.
+   * <p/>
+   * This is the method that should be used to select objects of the class {@code Entity}, as, for instance,
+   * {@code "Fruit Bat"} should never match a {@code "Bat"}.
+   *
+   * @param collection a {@code Collection} of {@code Selectable} objects
+   * @param tokens     the search Strings
+   * @param <T>        a type T that extends {@code Selectable}
+   * @return a {@code Matches} object with zero or more elements of type T
+   */
+  public static <T extends Selectable> Matches<T> findBestCompleteMatches(Collection<T> collection, String... tokens) {
+    return findMatches(collection, true, tokens);
+  }
+
+  /**
+   * Finds matches of {@code Selectable}s based on a given {@code Collection} of objects and an array of search tokens.
+   *
+   * @param collection a {@code Collection} of {@code Selectable} objects
+   * @param complete   if true, only elements that match all tokens are returned
+   * @param tokens     the search Strings
+   * @param <T>        a type T that extends {@code Selectable}
+   * @return a {@code Matches} object with zero or more elements of type T
+   */
+  public static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,
+      String... tokens) {
     List<T> listOfMatches = new ArrayList<T>();
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
     double maximumSimilarity = 1e-6;
-    for (T candidate : list) {
+    for (T candidate : collection) {
       String[] titleWords = split(candidate.getName());
-      int matches = countMatches(searchArguments, titleWords);
-      double matchesOverTitleWords = matches / (double) titleWords.length;
-      double matchesOverSearchArgs = matches / (double) searchArguments.length;
-      double similarity = Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
-      int comparisonResult = Math.fuzzyCompare(similarity, maximumSimilarity);
-      if (comparisonResult > 0) {
-        maximumSimilarity = similarity;
-        listOfMatches.clear();
-        listOfMatches.add(candidate);
-      } else if (comparisonResult == 0) {
-        listOfMatches.add(candidate);
+      int matches = countMatches(tokens, titleWords);
+      if (!complete || matches == tokens.length) {
+        double matchesOverTitleWords = matches / (double) titleWords.length;
+        double matchesOverSearchArgs = matches / (double) tokens.length;
+        double similarity = Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
+        int comparisonResult = Math.fuzzyCompare(similarity, maximumSimilarity);
+        if (comparisonResult > 0) {
+          maximumSimilarity = similarity;
+          listOfMatches.clear();
+          listOfMatches.add(candidate);
+        } else if (comparisonResult == 0) {
+          listOfMatches.add(candidate);
+        }
       }
     }
-    return listOfMatches;
+    return Matches.fromCollection(listOfMatches);
   }
 
   /**
@@ -318,4 +298,5 @@ public final class Utils {
     }
     return matches;
   }
+
 }

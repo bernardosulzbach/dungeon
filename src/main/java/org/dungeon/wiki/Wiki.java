@@ -20,6 +20,7 @@ package org.dungeon.wiki;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
 import org.dungeon.io.ResourceReader;
+import org.dungeon.util.Matches;
 import org.dungeon.util.Utils;
 
 import java.util.ArrayList;
@@ -52,16 +53,16 @@ public abstract class Wiki {
       initialize();
     }
     if (issuedCommand.hasArguments()) {
-      List<Article> matches = Utils.findMatches(articleList, issuedCommand.getArguments());
-      if (matches.isEmpty()) {
+      Matches<Article> matches = Utils.findBestMatches(articleList, issuedCommand.getArguments());
+      if (matches.size() == 0) {
         IO.writeString("No matches were found.");
       } else if (matches.size() == 1) {
-        IO.writeString(matches.get(0).toString());
+        IO.writeString(matches.getMatch(0).toString());
       } else {
         StringBuilder builder = new StringBuilder();
         builder.append("The following articles match your query:\n");
-        for (Article match : matches) {
-          builder.append(toArticleListingEntry(match)).append("\n");
+        for (int i = 0; i < matches.size(); i++) {
+          builder.append(toArticleListingEntry(matches.getMatch(i))).append("\n");
         }
         builder.append("Be more specific.");
         IO.writeString(builder.toString());

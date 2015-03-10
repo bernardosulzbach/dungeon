@@ -23,29 +23,6 @@ import org.junit.Test;
 public class UtilsTest {
 
   @Test
-  public void testCheckQueryMatch() throws Exception {
-    String[] candidateTokens = Utils.split("Big White Tiger");
-
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("b"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("b w"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("b t"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("b w t"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("w"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("w t"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("t"), candidateTokens));
-
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("big white tiger"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("big white"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("big tiger"), candidateTokens));
-    Assert.assertTrue(Utils.checkQueryMatch(Utils.split("white tiger"), candidateTokens));
-
-    Assert.assertFalse(Utils.checkQueryMatch(Utils.split("t w b"), candidateTokens));
-    Assert.assertFalse(Utils.checkQueryMatch(Utils.split("t w"), candidateTokens));
-    Assert.assertFalse(Utils.checkQueryMatch(Utils.split("t b"), candidateTokens));
-    Assert.assertFalse(Utils.checkQueryMatch(Utils.split("w b"), candidateTokens));
-  }
-
-  @Test
   public void testRoll() throws Exception {
     for (int i = 0; i < 100; i++) {
       Assert.assertFalse(Utils.roll(0.0));

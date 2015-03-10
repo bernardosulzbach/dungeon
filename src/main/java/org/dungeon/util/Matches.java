@@ -20,27 +20,34 @@ package org.dungeon.util;
 import org.dungeon.game.Selectable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 /**
- * Wraps a list of Selectable objects that match a given query. This class provides methods to get a match from the list
- * of matches, get the size of the list of matches and a method to retrieve the number of matches with a different
- * name.
+ * A collection of Selectable objects that match a given query.
  * <p/>
- * Created by Bernardo Sulzbach on 15/11/14.
+ * Created by Bernardo Sulzbach on 2015-03-10.
  */
-public class SelectionResult<T extends Selectable> {
+public class Matches<T extends Selectable> {
 
   private final List<T> matches;
 
   private int differentNames;
   private boolean differentNamesUpToDate;
 
-  public SelectionResult() {
+  private Matches() {
     matches = new ArrayList<T>();
     differentNames = 0;
     differentNamesUpToDate = true;
+  }
+
+  public static <T extends Selectable> Matches<T> fromCollection(Collection<T> collection) {
+    Matches<T> newInstance = new Matches<T>();
+    for (T t : collection) {
+      newInstance.addMatch(t);
+    }
+    return newInstance;
   }
 
   public void addMatch(T match) {
@@ -55,10 +62,10 @@ public class SelectionResult<T extends Selectable> {
   /**
    * Returns true if there is a match with the given name, false otherwise.
    *
-   * @param name the name used for comparison.
-   * @return true if there is a match with the given name, false otherwise.
+   * @param name the name used for comparison
+   * @return true if there is a match with the given name, false otherwise
    */
-  public boolean hasName(String name) {
+  public boolean hasMatchWithName(String name) {
     for (T match : matches) {
       if (match.getName().equals(name)) {
         return true;
@@ -68,15 +75,11 @@ public class SelectionResult<T extends Selectable> {
   }
 
   /**
-   * Returns the number of matches in this SelectionResult.
-   *
-   * @return the number of matches in this SelectionResult.
+   * Returns the number of matches.
    */
   public int size() {
     return matches.size();
   }
-
-  // TODO: write tests for this class (mainly, for this method).
 
   /**
    * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects
@@ -85,14 +88,6 @@ public class SelectionResult<T extends Selectable> {
    * This method will calculate how many different names are in the list of matches or use the last calculated value,
    * if the matches list did not change since the last calculation. Therefore, after adding all matches and calling
    * this method once, subsequent method calls should be substantially faster.
-   * <p/>
-   * Adding more elements to the SelectionResult will make necessary a new iteration through the list before returning
-   * the new amount of different names.
-   * <p/>
-   * This is more efficient than updating the counter after every addition as it allows many matches to be added with
-   * little overhead, letting the different names calculation to the end.
-   *
-   * @return how many different names the matches have.
    */
   public int getDifferentNames() {
     if (!differentNamesUpToDate) {

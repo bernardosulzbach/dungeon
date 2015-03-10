@@ -35,8 +35,8 @@ import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
-import org.dungeon.util.SelectionResult;
 import org.dungeon.util.Table;
 import org.dungeon.util.Utils;
 
@@ -262,7 +262,7 @@ public class DebugTools {
       int seconds = 0;
       boolean gotSeconds = false;
       String argument = issuedCommand.getArguments()[1];
-      SelectionResult<PartOfDay> matches = Utils.selectFromList(Arrays.asList(PartOfDay.values()), argument);
+      Matches<PartOfDay> matches = Utils.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), argument);
       if (matches.size() == 1) {
         seconds = PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0));
         gotSeconds = true;
