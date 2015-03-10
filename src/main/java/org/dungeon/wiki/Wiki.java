@@ -18,7 +18,6 @@
 package org.dungeon.wiki;
 
 import org.dungeon.game.IssuedCommand;
-import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.util.Utils;
@@ -53,7 +52,7 @@ public abstract class Wiki {
       initialize();
     }
     if (issuedCommand.hasArguments()) {
-      List<Article> matches = findMatches(articleList, issuedCommand.getArguments());
+      List<Article> matches = Utils.findMatches(articleList, issuedCommand.getArguments());
       if (matches.isEmpty()) {
         IO.writeString("No matches were found.");
       } else if (matches.size() == 1) {
@@ -86,51 +85,6 @@ public abstract class Wiki {
 
   private static String toArticleListingEntry(Article article) {
     return "  " + article.title;
-  }
-
-  /**
-   * Finds a List of equally good Articles matches based on an array of search arguments.
-   *
-   * @param searchArguments the arguments provided by the player
-   * @return a List with zero or more Articles
-   */
-  public static <T extends Selectable> List<T> findMatches(List<T> list, String[] searchArguments) {
-    List<T> listOfMatches = new ArrayList<T>();
-    // Do not start with 0, as this would gather all Articles if the query did not match any Article.
-    double maximumSimilarity = 1e-6;
-    for (T candidate : list) {
-      String[] titleWords = Utils.split(candidate.getName());
-      int matches = countMatches(searchArguments, titleWords);
-      double matchesOverTitleWords = matches / (double) titleWords.length;
-      double matchesOverSearchArgs = matches / (double) searchArguments.length;
-      double similarity = org.dungeon.util.Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
-      int comparisonResult = org.dungeon.util.Math.fuzzyCompare(similarity, maximumSimilarity);
-      if (comparisonResult > 0) {
-        maximumSimilarity = similarity;
-        listOfMatches.clear();
-        listOfMatches.add(candidate);
-      } else if (comparisonResult == 0) {
-        listOfMatches.add(candidate);
-      }
-    }
-    return listOfMatches;
-  }
-
-  /**
-   * Counts how many Strings in the entry array start with the Strings of the query array.
-   */
-  private static int countMatches(String[] query, String[] entry) {
-    int matches = 0;
-    int indexOfLastMatchPlusOne = 0;
-    for (int i = 0; i < query.length && indexOfLastMatchPlusOne < entry.length; i++) {
-      for (int j = indexOfLastMatchPlusOne; j < entry.length; j++) {
-        if (Utils.startsWithIgnoreCase(entry[j], query[i])) {
-          indexOfLastMatchPlusOne = j + 1;
-          matches++;
-        }
-      }
-    }
-    return matches;
   }
 
 }

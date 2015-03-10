@@ -22,6 +22,7 @@ import org.dungeon.game.GameData;
 import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -271,5 +272,50 @@ public final class Utils {
       }
     }
     return stringBuilder.toString();
+  }
+
+  /**
+   * Finds a List of equally good Articles matches based on an array of search arguments.
+   *
+   * @param searchArguments the arguments provided by the player
+   * @return a List with zero or more Articles
+   */
+  public static <T extends Selectable> List<T> findMatches(List<T> list, String[] searchArguments) {
+    List<T> listOfMatches = new ArrayList<T>();
+    // Do not start with 0, as this would gather all Articles if the query did not match any Article.
+    double maximumSimilarity = 1e-6;
+    for (T candidate : list) {
+      String[] titleWords = split(candidate.getName());
+      int matches = countMatches(searchArguments, titleWords);
+      double matchesOverTitleWords = matches / (double) titleWords.length;
+      double matchesOverSearchArgs = matches / (double) searchArguments.length;
+      double similarity = Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
+      int comparisonResult = Math.fuzzyCompare(similarity, maximumSimilarity);
+      if (comparisonResult > 0) {
+        maximumSimilarity = similarity;
+        listOfMatches.clear();
+        listOfMatches.add(candidate);
+      } else if (comparisonResult == 0) {
+        listOfMatches.add(candidate);
+      }
+    }
+    return listOfMatches;
+  }
+
+  /**
+   * Counts how many Strings in the entry array start with the Strings of the query array.
+   */
+  private static int countMatches(String[] query, String[] entry) {
+    int matches = 0;
+    int indexOfLastMatchPlusOne = 0;
+    for (int i = 0; i < query.length && indexOfLastMatchPlusOne < entry.length; i++) {
+      for (int j = indexOfLastMatchPlusOne; j < entry.length; j++) {
+        if (startsWithIgnoreCase(entry[j], query[i])) {
+          indexOfLastMatchPlusOne = j + 1;
+          matches++;
+        }
+      }
+    }
+    return matches;
   }
 }
