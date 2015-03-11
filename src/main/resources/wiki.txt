@@ -15,6 +15,14 @@ will either do nothing (if the command history is empty), get the last similar c
 field (if there is one), or return the last command (if the text field is empty and there is at least one command on\
 the command history).
 
+ARTICLE: Contributors
+CONTENT: Everyone that contributed to the project in a significant way and their e-mail addresses:\\
+\\
+Bernardo Sulzbach                       - mafagafogigante@gmail.com\\
+Gabriel Bellini Bohmer                  - gabrielbellinibohmer@gmail.com\\
+\\
+If you want your name on this list, consider coding, reporting bugs, or writing new content to the game.
+
 ARTICLE: Eating
 CONTENT: As of 0.0.7, eating only heals you until you are uninjured (better than resting, as good as sleeping). There\
 are no bonuses for eating regularly neither do the character ever feels hungry.
