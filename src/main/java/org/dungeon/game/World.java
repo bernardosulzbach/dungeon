@@ -26,15 +26,13 @@ import java.util.HashMap;
 
 public class World implements Serializable {
 
-
   private final WorldGenerator generator;
 
   private final HashMap<Point, Location> locations;
 
   private final Date worldCreationDate;
-  private Date worldDate;
-
   private final WorldStatistics worldStatistics;
+  private Date worldDate;
 
   /**
    * Creates a new World.
@@ -49,20 +47,12 @@ public class World implements Serializable {
     generator = new WorldGenerator(this);
   }
 
-  public WorldGenerator getGenerator() {
-    return generator;
-  }
-
   public Date getWorldCreationDate() {
     return worldCreationDate;
   }
 
   public Date getWorldDate() {
     return worldDate;
-  }
-
-  public WorldStatistics getWorldStatistics() {
-    return worldStatistics;
   }
 
   public void addLocation(Location locationObject, Point coordinates) {

@@ -299,6 +299,7 @@ public class Game {
    */
   private static void setGameState(GameState state) {
     gameState = state;
+    Engine.refresh();
     IO.writeNewLine(); // Improves readability.
     gameState.getHero().look(null);
   }
