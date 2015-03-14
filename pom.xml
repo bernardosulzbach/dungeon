@@ -20,7 +20,7 @@
 
     <groupId>org.dungeon</groupId>
     <artifactId>dungeon</artifactId>
-    <version>v0.0.7</version>
+    <version>v0.0.7.2</version>
 
     <developers>
         <developer>
