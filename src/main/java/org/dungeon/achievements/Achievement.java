@@ -45,14 +45,14 @@ public class Achievement {
    */
   public Achievement(String id, String name, String info, String text, int minimumBattleCount, int longestBattleLength,
       CounterMap<ID> killsByCreatureID, CounterMap<String> killsByCreatureType, CounterMap<ID> killsByWeapon,
-      CounterMap<ID> killsByLocationID, CounterMap<ID> discoveredLocations, CounterMap<ID> maximumNumberOfVisits) {
+      CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations, CounterMap<ID> maximumNumberOfVisits) {
     this.id = new ID(id);
     this.name = name;
     this.info = info;
     this.text = text;
     battle = new BattleComponent(minimumBattleCount, longestBattleLength, killsByCreatureID, killsByCreatureType,
         killsByWeapon);
-    exploration = new ExplorationComponent(killsByLocationID, discoveredLocations, maximumNumberOfVisits);
+    exploration = new ExplorationComponent(killsByLocationID, visitedLocations, maximumNumberOfVisits);
   }
 
   public ID getID() {

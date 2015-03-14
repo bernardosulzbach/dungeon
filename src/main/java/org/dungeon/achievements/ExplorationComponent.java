@@ -37,17 +37,17 @@ final class ExplorationComponent {
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  final CounterMap<ID> discoveredLocations;
+  final CounterMap<ID> visitedLocations;
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
   final CounterMap<ID> maximumNumberOfVisits;
 
-  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> discoveredLocations,
+  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations,
       CounterMap<ID> maximumNumberOfVisits) {
     this.killsByLocationID = killsByLocationID;
-    this.discoveredLocations = discoveredLocations;
+    this.visitedLocations = visitedLocations;
     this.maximumNumberOfVisits = maximumNumberOfVisits;
   }
 
@@ -63,9 +63,9 @@ final class ExplorationComponent {
         }
       }
     }
-    if (discoveredLocations != null) {
-      for (ID locationID : discoveredLocations.keySet()) {
-        if (statistics.getDiscoveredLocations(locationID) < discoveredLocations.getCounter(locationID)) {
+    if (visitedLocations != null) {
+      for (ID locationID : visitedLocations.keySet()) {
+        if (statistics.getVisitedLocations(locationID) < visitedLocations.getCounter(locationID)) {
           return false;
         }
       }

@@ -41,6 +41,7 @@ import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
+import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
@@ -197,7 +198,11 @@ public class Hero extends Creature {
     for (Direction dir : Direction.values()) {
       // Do not print the name of the Location you just left.
       if (walkedInFrom == null || !dir.equals(walkedInFrom)) {
-        String locationName = world.getLocation(new Point(pos, dir)).getName();
+        Point adjacentPoint = new Point(pos, dir);
+        Location adjacentLocation = world.getLocation(adjacentPoint);
+        ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+        explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getID());
+        String locationName = adjacentLocation.getName();
         if (!visibleLocations.containsKey(locationName)) {
           visibleLocations.put(locationName, new ArrayList<Direction>());
         }

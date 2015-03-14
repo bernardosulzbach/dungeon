@@ -42,15 +42,15 @@ MAXIMUM_NUMBER_OF_VISITS: BRIDGE, 8
 
 ID: ARCHAEOLOGIST
 NAME: Archaeologist
-INFO: Discover 10 different deserts.
-TEXT: discovered ten different deserts
-DISCOVERED_LOCATIONS: DESERT, 10
+INFO: Visit 10 different deserts.
+TEXT: visited ten different deserts
+VISITED_LOCATIONS: DESERT, 10
 
 ID: REAPER
 NAME: Reaper
-INFO: Discover 10 distinct graveyards.
-TEXT: discovered ten distinct graveyards
-DISCOVERED_LOCATIONS: GRAVEYARD, 10
+INFO: Visit 10 distinct graveyards.
+TEXT: visited ten distinct graveyards
+VISITED_LOCATIONS: GRAVEYARD, 10
 
 ID: EVIL_BASTARD
 NAME: Evil Bastard

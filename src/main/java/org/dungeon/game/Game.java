@@ -22,6 +22,7 @@ import org.dungeon.gui.GameWindow;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
+import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CommandHelp;
 import org.dungeon.util.Math;
 import org.dungeon.util.Messenger;
@@ -175,7 +176,10 @@ public class Game {
     commandList.add(new Command("map", "Shows a map of your surroundings.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        WorldMap map = new WorldMap(gameState.getWorld(), gameState.getHeroPosition());
+        World world = gameState.getWorld();
+        ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
+        Point heroPosition = gameState.getHeroPosition();
+        WorldMap map = new WorldMap(world, explorationStatistics, heroPosition);
         IO.writeString(map.toString());
       }
     });

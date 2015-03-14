@@ -31,7 +31,7 @@ public class AchievementBuilder {
   private CounterMap<String> killsByCreatureType;
   private CounterMap<ID> killsByWeapon;
   private CounterMap<ID> killsByLocationID;
-  private CounterMap<ID> discoveredLocations;
+  private CounterMap<ID> visitedLocations;
   private CounterMap<ID> maximumNumberOfVisits;
 
   public void setId(String id) {
@@ -82,9 +82,9 @@ public class AchievementBuilder {
     }
   }
 
-  public void setDiscoveredLocations(CounterMap<ID> discoveredLocations) {
-    if (discoveredLocations.isNotEmpty()) {
-      this.discoveredLocations = discoveredLocations;
+  public void setVisitedLocations(CounterMap<ID> visitedLocations) {
+    if (visitedLocations.isNotEmpty()) {
+      this.visitedLocations = visitedLocations;
     }
   }
 
@@ -96,7 +96,7 @@ public class AchievementBuilder {
 
   public Achievement createAchievement() {
     return new Achievement(id, name, info, text, minimumBattleCount, longestBattleLength, killsByCreatureID,
-        killsByCreatureType, killsByWeapon, killsByLocationID, discoveredLocations, maximumNumberOfVisits);
+        killsByCreatureType, killsByWeapon, killsByLocationID, visitedLocations, maximumNumberOfVisits);
   }
 
 }

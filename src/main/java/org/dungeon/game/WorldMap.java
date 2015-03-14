@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.gui.GameWindow;
+import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 
 /**
@@ -27,17 +28,16 @@ import org.dungeon.util.Constants;
  */
 public class WorldMap {
 
-  // TODO '?' to what the hero does not know yet.
-  // TODO '~' to what the world hasn't generated yet.
+  private static final char HERO_SYMBOL = '@';
+  private static final char NOT_YET_SEEN_SYMBOL = '?';
+  private static final char NOT_YET_GENERATED_SYMBOL = '~';
   // TODO colors (to avoid problems such as Swamp and Savannah both starting with 'S' and to make the map prettier).
   private String map;
 
   /**
    * Constructs a map based on the position of the Hero in the World.
-   * <p/>
-   * The hero is represented with an "at" sign ('@') at the center of the map.
    */
-  public WorldMap(World world, Point heroPosition) {
+  public WorldMap(World world, ExplorationStatistics explorationStatistics, Point heroPosition) {
     int rows = GameWindow.ROWS - 1;
     int cols = Constants.COLS;
     int initX = heroPosition.getX() - (cols - 1) / 2;
@@ -50,11 +50,15 @@ public class WorldMap {
       for (int curX = initX; curX <= lastX; curX++) {
         Point currentPosition = new Point(curX, curY);
         if (currentPosition.equals(heroPosition)) {
-          builder.append('@');
+          builder.append(HERO_SYMBOL);
         } else if (world.hasLocation(currentPosition)) {
-          builder.append(world.getLocation(currentPosition).getName().charAt(0));
+          if (explorationStatistics.hasBeenSeen(currentPosition)) {
+            builder.append(world.getLocation(currentPosition).getName().charAt(0));
+          } else {
+            builder.append(NOT_YET_SEEN_SYMBOL);
+          }
         } else {
-          builder.append('?');
+          builder.append(NOT_YET_GENERATED_SYMBOL);
         }
       }
       builder.append('\n');

@@ -285,8 +285,8 @@ public final class GameData {
       CounterMap<ID> killsByLocationId = readIDCounterMap(reader, "KILLS_BY_LOCATION_ID");
       builder.setKillsByLocationID(killsByLocationId);
 
-      CounterMap<ID> discoveredLocations = readIDCounterMap(reader, "DISCOVERED_LOCATIONS");
-      builder.setDiscoveredLocations(discoveredLocations);
+      CounterMap<ID> visitedLocations = readIDCounterMap(reader, "VISITED_LOCATIONS");
+      builder.setVisitedLocations(visitedLocations);
 
       CounterMap<ID> maximumNumberOfVisits = readIDCounterMap(reader, "MAXIMUM_NUMBER_OF_VISITS");
       builder.setMaximumNumberOfVisits(maximumNumberOfVisits);

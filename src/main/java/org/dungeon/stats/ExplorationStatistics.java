@@ -24,18 +24,28 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * ExplorationLog class that enables tracking visited locations.
+ * ExplorationStatistics class that tracks the Hero's exploration progress.
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
 public class ExplorationStatistics implements Serializable {
 
-  // Hold data for each point (and not for each Location ID - what should suffice for now) so that in the future more
-  // complex achievements can be made.
   private final HashMap<Point, ExplorationStatisticsEntry> entries;
 
   public ExplorationStatistics() {
     this.entries = new HashMap<Point, ExplorationStatisticsEntry>();
+  }
+
+  /**
+   * Creates an ExplorationStatisticsEntry for a Point if one does not exist yet.
+   *
+   * @param point      the Point object
+   * @param locationID the ID of the Location at the specified Point
+   */
+  public void createEntryIfNotExists(Point point, ID locationID) {
+    if (!hasBeenSeen(point)) {
+      entries.put(point, new ExplorationStatisticsEntry(locationID, 0, 0));
+    }
   }
 
   /**
@@ -44,11 +54,8 @@ public class ExplorationStatistics implements Serializable {
    * @param point the visited Point.
    */
   public void addVisit(Point point, ID locationID) {
-    if (entries.containsKey(point)) {
-      entries.get(point).addVisit();
-    } else {
-      entries.put(point, new ExplorationStatisticsEntry(locationID, 1, 0));
-    }
+    createEntryIfNotExists(point, locationID);
+    entries.get(point).addVisit();
   }
 
   /**
@@ -57,9 +64,34 @@ public class ExplorationStatistics implements Serializable {
    * @param point the Point where the Hero just killed something.
    */
   public void addKill(Point point) {
-    // No longer checks for a not existing point as the player needs to have visited (and thus created) a given
-    // point before killing anything in it.
+    // Don't call createEntryIfNotExists as the player needs to visit a Point before killing anything in it.
     entries.get(point).addKill();
+  }
+
+  /**
+   * Returns whether or not a specific Point has already been seen by the Hero.
+   *
+   * @param point a Point object
+   * @return true if the Hero visited this Point at least once
+   */
+  public boolean hasBeenSeen(Point point) {
+    return entries.containsKey(point);
+  }
+
+  /**
+   * Returns how many Locations with the specified ID the Hero visited.
+   *
+   * @param locationID the ID of the Locations.
+   * @return a nonnegative integer.
+   */
+  public int getVisitedLocations(ID locationID) {
+    int count = 0;
+    for (ExplorationStatisticsEntry entry : entries.values()) {
+      if (entry.getLocationID().equals(locationID) && entry.getVisitCount() > 0) {
+        count++;
+      }
+    }
+    return count;
   }
 
   /**
@@ -73,22 +105,6 @@ public class ExplorationStatistics implements Serializable {
     for (ExplorationStatisticsEntry entry : entries.values()) {
       if (entry.getLocationID().equals(locationID)) {
         count += entry.getKillCount();
-      }
-    }
-    return count;
-  }
-
-  /**
-   * Returns how many Locations with the specified ID the Hero discovered.
-   *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
-   */
-  public int getDiscoveredLocations(ID locationID) {
-    int count = 0;
-    for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID)) {
-        count++;
       }
     }
     return count;
