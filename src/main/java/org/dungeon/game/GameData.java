@@ -190,6 +190,7 @@ public final class GameData {
     LocationPreset desert = new LocationPreset("DESERT", "Land", "Desert");
     desert.addSpawner(rat).addSpawner(snake).addSpawner(zombie).addSpawner(boar);
     desert.addItem("MACE", 0.1).addItem("STAFF", 0.2).addItem("DAGGER", 0.15).addItem("SPEAR", 0.1);
+    desert.addItem("SWORD", 0.25);
     desert.setLightPermittivity(1.0);
     desert.setBlobSize(50);
     locationPresets.put(desert.getID(), desert);
@@ -197,6 +198,7 @@ public final class GameData {
     LocationPreset forest = new LocationPreset("FOREST", "Land", "Forest");
     forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(fruitBat);
     forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.1);
+    forest.addItem("SWORD", 0.15);
     forest.setLightPermittivity(0.7);
     forest.setBlobSize(25);
     locationPresets.put(forest.getID(), forest);

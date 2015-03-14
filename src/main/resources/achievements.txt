@@ -120,6 +120,12 @@ INFO: Kill 2 creatures with a Stick.
 TEXT: killed two creatures with the stick
 KILLS_BY_WEAPON: STICK, 2
 
+ID: SWORDSMAN
+NAME: Swordsman
+INFO: Kill 10 enemies with a sword.
+TEXT: killed ten enemies with the sword
+KILLS_BY_WEAPON: SWORD, 10
+
 ID: LUMBERJACK
 NAME: Lumberjack
 INFO: Kill 10 creatures with a Axe.
