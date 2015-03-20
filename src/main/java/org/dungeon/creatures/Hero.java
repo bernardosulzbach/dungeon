@@ -36,6 +36,7 @@ import org.dungeon.game.TimeConstants;
 import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.io.Sleeper;
+import org.dungeon.items.BaseInventory;
 import org.dungeon.items.BookComponent;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.FoodComponent;
@@ -49,6 +50,7 @@ import org.dungeon.util.Utils;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -278,23 +280,29 @@ public class Hero extends Creature {
   }
 
   Item selectInventoryItem(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      return getInventory().findItem(issuedCommand.getArguments());
-    } else {
-      Messenger.printMissingArgumentsMessage();
-      return null;
-    }
+    return selectItem(issuedCommand, getInventory());
   }
 
   /**
    * Select an item of the current location based on the arguments of a command.
    *
-   * @param issuedCommand the command whose arguments will determine the item search.
-   * @return an Item or {@code null}.
+   * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
+   * @return an Item or {@code null}
    */
   Item selectLocationItem(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      return getLocation().getInventory().findItem(issuedCommand.getArguments());
+    return selectItem(issuedCommand, getLocation().getInventory());
+  }
+
+  /**
+   * Selects an item of the specified {@code BaseInventory} based on the arguments of a command.
+   *
+   * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
+   * @param inventory     an object of a subclass of {@code BaseInventory}
+   * @return an Item or {@code null}
+   */
+  private Item selectItem(IssuedCommand issuedCommand, BaseInventory inventory) {
+    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(inventory.getItems())) {
+      return inventory.findItem(issuedCommand.getArguments());
     } else {
       Messenger.printMissingArgumentsMessage();
       return null;
@@ -326,7 +334,7 @@ public class Hero extends Creature {
    * @return a target Creature or {@code null}.
    */
   Creature selectTarget(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments() || checkIfEmptyKillIsUnambiguous()) {
+    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(getLocation().getCreatures(), this)) {
       return findCreature(issuedCommand.getArguments());
     } else {
       IO.writeString("You must specify a target.");
@@ -335,16 +343,30 @@ public class Hero extends Creature {
   }
 
   /**
-   * Returns whether invoking "kill" in the current location without any arguments is unambiguous or not.
+   * Returns whether all Entities in a Collection have the same name or not.
+   *
+   * @param entities a {@code Collection} of Entities
+   * @return a boolean indicating if all Entities in the collection have the same name
    */
-  private boolean checkIfEmptyKillIsUnambiguous() {
-    String lastName = null;
-    for (Creature creature : getLocation().getCreatures()) {
-      if (creature != this) {
-        if (lastName == null) {
-          lastName = creature.getName();
+  private boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities) {
+    return checkIfAllEntitiesHaveTheSameName(entities, null);
+  }
+
+  /**
+   * Returns whether all Entities in a Collection have the same name or not.
+   *
+   * @param entities a {@code Collection} of Entities
+   * @param ignored  an Entity to be ignored, should be {@code null} if no Entity is to be ignored
+   * @return a boolean indicating if all Entities in the collection have the same name
+   */
+  private boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities, Entity ignored) {
+    String lastSeenName = null;
+    for (Entity entity : entities) {
+      if (ignored == null || entity != ignored) {
+        if (lastSeenName == null) {
+          lastSeenName = entity.getName();
         } else {
-          if (!creature.getName().equals(lastName)) {
+          if (!entity.getName().equals(lastSeenName)) { // Got an Entity with a different name.
             return false;
           }
         }
