@@ -141,7 +141,7 @@ public class Item extends Entity {
   }
 
   public void incrementIntegrity(int integrityIncrement) {
-    setCurIntegrity(getCurIntegrity() + integrityIncrement);
+    setCurIntegrity(Math.min(getCurIntegrity() + integrityIncrement, getMaxIntegrity()));
   }
 
   public void decrementIntegrityByHit() {
