@@ -25,6 +25,7 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
+import org.dungeon.game.ID;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
@@ -762,6 +763,26 @@ public class Hero extends Creature {
       }
     }
 
+  }
+
+  public int castRepairOnEquippedItem() {
+    ID repairID = new ID("REPAIR");
+    if (getSkillList().hasSkill(repairID)) {
+      if (hasWeapon()) {
+        if (getWeapon().isRepairable()) {
+          getWeapon().incrementIntegrity(GameData.getSkillDefinitions().get(repairID).repair);
+          IO.writeString("You casted Repair on " + getWeapon().getName() + ".");
+          return 10; // Ten seconds to cast.
+        } else {
+          IO.writeString("The equipped item is not repairable.");
+        }
+      } else {
+        IO.writeString("You are not equipping anything.");
+      }
+    } else {
+      IO.writeString("You don't know how to cast Repair.");
+    }
+    return 0;
   }
 
 }

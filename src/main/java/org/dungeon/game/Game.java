@@ -207,6 +207,12 @@ public class Game {
         turnResult.turnLength = gameState.getHero().readItem(issuedCommand);
       }
     });
+    commandList.add(new Command("repair", "Attempts to cast Repair on the equipped item.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        turnResult.turnLength = gameState.getHero().castRepairOnEquippedItem();
+      }
+    });
     commandList.add(new Command("rest", "Rests until healing about three fifths of the character's health.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
