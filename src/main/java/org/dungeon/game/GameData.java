@@ -229,14 +229,14 @@ public final class GameData {
 
     LocationPreset swamp = new LocationPreset("SWAMP", "Land", "Swamp");
     swamp.addSpawner(frog).addSpawner(snake).addSpawner(lizard).addSpawner(crocodile);
-    swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.12).addItem("CLUB", 0.4);
+    swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.10).addItem("CLUB", 0.4);
     swamp.setLightPermittivity(0.7);
     swamp.setBlobSize(10);
     locationPresets.put(swamp.getID(), swamp);
 
     LocationPreset wasteland = new LocationPreset("WASTELAND", "Land", "Wasteland");
     wasteland.addSpawner(rat).addSpawner(spider).addSpawner(snake);
-    wasteland.addItem("STONE", 0.3).addItem("STICK", 0.18);
+    wasteland.addItem("STONE", 0.3).addItem("STICK", 0.15).addItem("TOME_OF_REPAIR", 0.05);
     wasteland.setLightPermittivity(1.0);
     wasteland.setBlobSize(10);
     locationPresets.put(wasteland.getID(), wasteland);
