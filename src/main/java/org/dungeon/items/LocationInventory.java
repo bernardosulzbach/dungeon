@@ -27,7 +27,6 @@ public class LocationInventory extends BaseInventory {
   @Override
   public boolean addItem(Item item) {
     items.add(item);
-    item.setOwner(null);
     return true;
   }
 

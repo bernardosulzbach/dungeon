@@ -74,7 +74,6 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       IO.writeString("You can't carry more weight.");
     } else {
       items.add(item);
-      item.setOwner(owner);
       IO.writeString("Added " + item.getName() + " to the inventory.");
       return true;
     }
@@ -94,7 +93,6 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       owner.setWeapon(null);
     }
     items.remove(item);
-    item.setOwner(null);
   }
 
 }

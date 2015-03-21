@@ -17,7 +17,6 @@
 
 package org.dungeon.items;
 
-import org.dungeon.creatures.Creature;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
@@ -32,11 +31,11 @@ public class Item extends Entity {
   private final double hitRate;
   private final int integrityDecrementOnHit;
   private final Weight weight;
-  private Creature owner;
   private int curIntegrity;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
+
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
 
@@ -66,14 +65,6 @@ public class Item extends Entity {
 
   public Weight getWeight() {
     return weight;
-  }
-
-  public void setOwner(Creature owner) {
-    this.owner = owner;
-  }
-
-  public boolean isEquipped() {
-    return owner != null && owner.getWeapon() == this;
   }
 
   public String getQualifiedName() {
@@ -149,11 +140,8 @@ public class Item extends Entity {
     return getCurIntegrity() == 0;
   }
 
-  /**
-   * @return true if the item's current integrity is equals to its maximum integrity. False otherwise.
-   */
-  public boolean isPerfect() {
-    return getCurIntegrity() == getMaxIntegrity();
+  public void incrementIntegrity(int integrityIncrement) {
+    setCurIntegrity(getCurIntegrity() + integrityIncrement);
   }
 
   public void decrementIntegrityByHit() {

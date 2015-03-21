@@ -17,9 +17,14 @@
 
 package org.dungeon.skill;
 
+import org.dungeon.creatures.Creature;
 import org.dungeon.game.ID;
 import org.dungeon.game.Selectable;
+import org.dungeon.io.IO;
+import org.dungeon.items.Item;
+import org.dungeon.util.Constants;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -36,6 +41,23 @@ public class Skill implements Selectable, Serializable {
     this.definition = definition;
   }
 
+  /**
+   * Prints a message about the inflicted damage due to a casted Skill.
+   *
+   * @param skill  the Skill casted.
+   * @param caster the Creature that performed the attack.
+   * @param target the target of the attack.
+   */
+  public static void printSkillCast(Skill skill, Creature caster, Creature target) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(caster.getName()).append(" casted ").append(skill.getName());
+    if (skill.getDamage() > 0) {
+      builder.append(" and inflicted ").append(skill.getDamage()).append(" damage points to ").append(target.getName());
+    }
+    builder.append(".");
+    IO.writeBattleString(builder.toString(), caster.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+  }
+
   public ID getID() {
     return definition.id;
   }
@@ -49,11 +71,26 @@ public class Skill implements Selectable, Serializable {
     return definition.damage;
   }
 
+  public int getRepair() {
+    return definition.repair;
+  }
+
   /**
    * Starts the cool down of this Skill.
    */
-  public void startCoolDown() {
+  private void startCoolDown() {
     remainingCoolDown = definition.coolDown;
+  }
+
+  public void cast(Creature caster, Creature target) {
+    target.takeDamage(getDamage());
+    printSkillCast(this, caster, target);
+    Item casterWeapon = caster.getWeapon();
+    if (casterWeapon != null && casterWeapon.isRepairable()) {
+      casterWeapon.incrementIntegrity(getRepair());
+      IO.writeString(casterWeapon.getName() + " was repaired.");
+    }
+    startCoolDown();
   }
 
   /**

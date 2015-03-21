@@ -132,14 +132,12 @@ class AttackAlgorithm {
   }
 
   private static void heroAttack(Creature attacker, Creature defender) {
-    Item weapon = attacker.getWeapon();
-    int hitDamage;
     if (attacker.getSkillRotation().hasReadySkill()) {
       Skill skill = attacker.getSkillRotation().getNextSkill();
-      hitDamage = skill.getDamage();
-      skill.startCoolDown();
-      printSkillCast(attacker, skill, defender);
+      skill.cast(attacker, defender);
     } else {
+      Item weapon = attacker.getWeapon();
+      int hitDamage;
       // Check that there is a weapon and that it is not broken.
       if (weapon != null && !weapon.isBroken()) {
         if (weapon.rollForHit()) {
@@ -170,10 +168,10 @@ class AttackAlgorithm {
           printInflictedDamage(attacker, hitDamage, defender, false);
         }
       }
+      defender.takeDamage(hitDamage);
+      // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
+      // after an eventual "weaponName broke" message, what looks really weird.
     }
-    defender.takeDamage(hitDamage);
-    // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-    // after an eventual "weaponName broke" message, what looks really weird.
   }
 
   /**
@@ -205,21 +203,6 @@ class AttackAlgorithm {
     }
     builder.append(".");
     IO.writeBattleString(builder.toString(), attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
-  }
-
-  /**
-   * Prints a message about the inflicted damage due to a casted Skill.
-   *
-   * @param attacker the Creature that performed the attack.
-   * @param skill    the Skill casted.
-   * @param defender the target of the attack.
-   */
-  private static void printSkillCast(Creature attacker, Skill skill, Creature defender) {
-    String result = attacker.getName() + " casted " +
-        skill.getName() + " and inflicted " +
-        skill.getDamage() + " damage points to " +
-        defender.getName() + ".";
-    IO.writeBattleString(result, attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }
 
   /**
