@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo Sulzbach on 26/12/14.
  */
-public class Percentage implements Serializable {
+public class Percentage implements Comparable<Percentage>, Serializable {
 
   private static final double ONE = 1.0;
   private static final double ZERO = 0.0;
@@ -47,6 +47,11 @@ public class Percentage implements Serializable {
 
   public double toDouble() {
     return value;
+  }
+
+  @Override
+  public int compareTo(Percentage o) {
+    return Math.fuzzyCompare(toDouble(), o.toDouble());
   }
 
   @Override
