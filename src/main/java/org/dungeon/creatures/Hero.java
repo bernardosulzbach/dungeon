@@ -47,6 +47,7 @@ import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
+import org.dungeon.util.Percentage;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
@@ -276,8 +277,8 @@ public class Hero extends Creature {
    * @return a boolean indicating if the Hero can see other creatures or items in the current location.
    */
   boolean canSee() {
-    double minimumLuminosity = 0.3;
-    return getLocation().getLuminosity() >= minimumLuminosity;
+    Percentage minimumLuminosity = new Percentage(0.3);
+    return getLocation().getLuminosity().compareTo(minimumLuminosity) >= 0;
   }
 
   Item selectInventoryItem(IssuedCommand issuedCommand) {

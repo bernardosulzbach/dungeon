@@ -96,9 +96,8 @@ public class Location implements Serializable {
    * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
    * light permittivity.
    */
-  // TODO: make this method return a Percentage
-  public double getLuminosity() {
-    return getLightPermittivity().toDouble() * getWorld().getPartOfDay().getLuminosity();
+  public Percentage getLuminosity() {
+    return getLightPermittivity().multiply(getWorld().getPartOfDay().getLuminosity());
   }
 
   public List<Creature> getCreatures() {

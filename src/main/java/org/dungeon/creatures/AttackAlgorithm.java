@@ -61,7 +61,7 @@ class AttackAlgorithm {
 
   // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
   private static void batAttack(Creature attacker, Creature defender) {
-    double luminosity = attacker.getLocation().getLuminosity();
+    double luminosity = attacker.getLocation().getLuminosity().toDouble();
     if (Utils.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
       int hitDamage = attacker.getAttack();
       if (luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY) {
