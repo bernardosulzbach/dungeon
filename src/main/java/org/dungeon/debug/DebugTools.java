@@ -193,12 +193,14 @@ public class DebugTools {
     sb.append(Utils.padString("Point:", WIDTH)).append(heroPosition.toString()).append('\n');
     sb.append(Utils.padString("Creatures (" + location.getCreatureCount() + "):", WIDTH)).append('\n');
     for (Creature creature : location.getCreatures()) {
-      sb.append("  ").append(creature.getName()).append('\n');
+      sb.append(Utils.padString("  " + creature.getName(), WIDTH));
+      sb.append(creature.getVisibility()).append('\n');
     }
     if (location.getItemCount() != 0) {
       sb.append(Utils.padString("Items (" + location.getItemCount() + "):", WIDTH)).append('\n');
       for (Item item : location.getItemList()) {
-        sb.append("  ").append(item.getQualifiedName()).append('\n');
+        sb.append(Utils.padString("  " + item.getQualifiedName(), WIDTH));
+        sb.append(item.getVisibility()).append('\n');
       }
     } else {
       sb.append("No items.\n");
