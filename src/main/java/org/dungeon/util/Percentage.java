@@ -49,6 +49,10 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return value;
   }
 
+  public Percentage multiply(Percentage o) {
+    return new Percentage(toDouble() * o.toDouble());
+  }
+
   @Override
   public int compareTo(Percentage o) {
     return Math.fuzzyCompare(toDouble(), o.toDouble());
