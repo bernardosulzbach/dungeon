@@ -17,6 +17,8 @@
 
 package org.dungeon.game;
 
+import org.dungeon.util.Percentage;
+
 import java.io.Serializable;
 
 /**
@@ -32,11 +34,13 @@ public abstract class Entity implements Selectable, Serializable {
   protected final String type;
   protected final Name name;
   private final ID id;
+  private final Percentage visibility;
 
   protected Entity(ID id, String type, Name name) {
     this.id = id;
     this.type = type;
     this.name = name;
+    this.visibility = new Percentage(0.3); // TODO: remove this hack.
   }
 
   public ID getID() {
@@ -54,6 +58,10 @@ public abstract class Entity implements Selectable, Serializable {
 
   public String getQuantifiedName(int quantity) {
     return name.getQuantifiedName(quantity, QuantificationMode.WORD);
+  }
+
+  public Percentage getVisibility() {
+    return visibility;
   }
 
 }

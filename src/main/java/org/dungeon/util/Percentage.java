@@ -58,6 +58,10 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return Math.fuzzyCompare(toDouble(), o.toDouble());
   }
 
+  public boolean biggerThanOrEqualTo(Percentage o) {
+    return compareTo(o) >= 0;
+  }
+
   @Override
   public String toString() {
     return String.format("%.2f%%", value * 100);
