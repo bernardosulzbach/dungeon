@@ -38,6 +38,10 @@ public final class IO {
   // How many milliseconds the game 'lags' after writing a string of battle output.
   private static final int WRITE_BATTLE_STRING_WAIT = 300;
 
+  private IO() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
+
   /**
    * Writes a string of text using the default output color.
    *

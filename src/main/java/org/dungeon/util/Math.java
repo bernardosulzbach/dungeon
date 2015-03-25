@@ -27,10 +27,14 @@ import java.math.BigInteger;
  * <p/>
  * Created by Bernardo on 22/10/2014.
  */
-public class Math {
+public final class Math {
 
   private static final double DEFAULT_DOUBLE_TOLERANCE = 1e-8;
   private static final String TIMEOUT = "TIMEOUT";
+
+  private Math() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
 
   /**
    * Calculates the arithmetic mean of a sequence of doubles.

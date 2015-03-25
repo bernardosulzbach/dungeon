@@ -33,7 +33,8 @@ import java.util.List;
  */
 public final class Utils {
 
-  private Utils() {
+  private Utils() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
   }
 
   /**

@@ -41,7 +41,6 @@ import java.util.Map;
  * Created by Bernardo on 22/10/2014.
  */
 public final class GameData {
-
   public static final Font FONT = getMonospacedFont();
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
@@ -53,6 +52,10 @@ public final class GameData {
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
   private static Map<ID, LocationPreset> locationPresets = new HashMap<ID, LocationPreset>();
+
+  private GameData() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
 
   public static PoetryLibrary getPoetryLibrary() {
     return poetryLibrary;
