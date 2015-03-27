@@ -59,6 +59,10 @@ public class Matches<T extends Selectable> {
     return matches.get(index);
   }
 
+  public List<T> toList() {
+    return new ArrayList<T>(matches);
+  }
+
   /**
    * Returns true if there is a match with the given name, false otherwise.
    *

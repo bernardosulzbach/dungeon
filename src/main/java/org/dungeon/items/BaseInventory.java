@@ -17,11 +17,6 @@
 
 package org.dungeon.items;
 
-import org.dungeon.io.IO;
-import org.dungeon.util.Matches;
-import org.dungeon.util.Messenger;
-import org.dungeon.util.Utils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,22 +57,5 @@ public abstract class BaseInventory implements Serializable {
   public abstract boolean addItem(Item item);
 
   public abstract void removeItem(Item item);
-
-  /**
-   * Attempts to find an item by its name.
-   *
-   * @return an Item object if there is a match. null otherwise.
-   */
-  public Item findItem(String[] tokens) {
-    Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
-    if (matches.size() == 0) {
-      IO.writeString("Item not found.");
-    } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
-      return matches.getMatch(0);
-    } else {
-      Messenger.printAmbiguousSelectionMessage();
-    }
-    return null;
-  }
 
 }

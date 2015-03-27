@@ -40,7 +40,7 @@ public abstract class Entity implements Selectable, Serializable {
     this.id = id;
     this.type = type;
     this.name = name;
-    this.visibility = new Percentage(0.3); // TODO: remove this hack.
+    this.visibility = new Percentage(0.3);
   }
 
   public ID getID() {

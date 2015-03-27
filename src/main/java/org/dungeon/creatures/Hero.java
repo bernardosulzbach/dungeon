@@ -72,8 +72,9 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_UNEQUIP = 4;
   private static final int SECONDS_TO_EQUIP = 6;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
-  private final Date dateOfBirth;
+  private static final Percentage LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS = new Percentage(0.4);
   private final AchievementTracker achievementTracker;
+  private final Date dateOfBirth;
 
   public Hero() {
     super(Constants.HERO_ID, "Hero", Name.newInstance("Seth"), 50, 5, "HERO");
@@ -84,10 +85,6 @@ public class Hero extends Creature {
 
   public AchievementTracker getAchievementTracker() {
     return achievementTracker;
-  }
-
-  private Date getDateOfBirth() {
-    return dateOfBirth;
   }
 
   /**
@@ -165,6 +162,55 @@ public class Hero extends Creature {
   }
 
   /**
+   * Checks if the Hero can see a given Entity based on the luminosity of the Location the Hero is in and on the
+   * visibility of the specified Entity.
+   */
+  private boolean canSee(Entity entity) {
+    return getLocation().getLuminosity().biggerThanOrEqualTo(entity.getVisibility());
+  }
+
+  /**
+   * Checks if the Hero is able to see any Creature other than himself or herself at the current Location.
+   *
+   * @return true if the Hero is able to see any Creature other than himself or herself at the current Location
+   */
+  private boolean canSeeACreature() {
+    for (Creature creature : getLocation().getCreatures()) {
+      if (creature != this && canSee(creature)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean canSeeAnItem() {
+    for (Item item : getLocation().getItemList()) {
+      if (canSee(item)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean canSeeAdjacentLocations() {
+    return getLocation().getLuminosity().biggerThanOrEqualTo(LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS);
+  }
+
+  private <T extends Entity> List<T> filterByVisibility(List<T> list) {
+    List<T> visible = new ArrayList<T>();
+    for (T entity : list) {
+      if (canSee(entity)) {
+        visible.add(entity);
+      }
+    }
+    return visible;
+  }
+
+  private <T extends Entity> Matches<T> filterByVisibility(Matches<T> matches) {
+    return Matches.fromCollection(filterByVisibility(matches.toList()));
+  }
+
+  /**
    * Prints the name of the player's current location and lists all creatures and items the character sees.
    *
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
@@ -180,14 +226,15 @@ public class Hero extends Creature {
     firstLine += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
     IO.writeString(firstLine);
     IO.writeNewLine();
-    if (canSee()) {
+    if (canSeeAdjacentLocations()) {
       lookAdjacentLocations(walkedInFrom);
-      lookCreatures();
-      IO.writeNewLine();
-      lookItems();
     } else {
-      IO.writeString(Constants.CANT_SEE_ANYTHING);
+      IO.writeString("You can't clearly see the surrounding locations.");
     }
+    IO.writeNewLine();
+    lookCreatures();
+    IO.writeNewLine();
+    lookItems();
   }
 
   /**
@@ -223,19 +270,18 @@ public class Hero extends Creature {
       stringBuilder.append(".\n");
     }
     IO.writeString(stringBuilder.toString());
-    IO.writeNewLine();
   }
 
   /**
    * Prints a human-readable description of what Creatures the Hero sees.
    */
   private void lookCreatures() {
-    if (getLocation().getCreatureCount() < 2) { // At least two in order to ignore the Hero.
+    List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatures());
+    creatures.remove(this);
+    creatures = filterByVisibility(creatures);
+    if (creatures.isEmpty()) {
       IO.writeString("You don't see anyone here.");
     } else {
-      List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatureCount());
-      creatures.addAll(getLocation().getCreatures());
-      creatures.remove(this);
       IO.writeString("Here you can see " + enumerateEntities(creatures) + ".");
     }
   }
@@ -244,14 +290,23 @@ public class Hero extends Creature {
    * Prints a human-readable description of what the Hero sees on the ground.
    */
   private void lookItems() {
-    if (getLocation().getItemCount() != 0) {
-      IO.writeString("On the ground you see " + enumerateEntities(getLocation().getItemList()) + ".");
+    List<Item> items = getLocation().getItemList();
+    items = filterByVisibility(items);
+    if (!items.isEmpty()) {
+      IO.writeString("On the ground you see " + enumerateEntities(items) + ".");
     }
   }
 
-  private int countEntitiesByName(final List<? extends Entity> listOfEntities, String name) {
+  /**
+   * Counts how many Entities in a specified Collection have a given name.
+   *
+   * @param entities a Collection of Entities
+   * @param name     the name as a String
+   * @return a nonnegative integer
+   */
+  private int countEntitiesByName(final Collection<? extends Entity> entities, String name) {
     int counter = 0;
-    for (Entity entity : listOfEntities) {
+    for (Entity entity : entities) {
       if (entity.getName().equals(name)) {
         counter++;
       }
@@ -273,16 +328,8 @@ public class Hero extends Creature {
     return Utils.enumerate(quantifiedNames);
   }
 
-  /**
-   * @return a boolean indicating if the Hero can see other creatures or items in the current location.
-   */
-  boolean canSee() {
-    Percentage minimumLuminosity = new Percentage(0.3);
-    return getLocation().getLuminosity().compareTo(minimumLuminosity) >= 0;
-  }
-
   Item selectInventoryItem(IssuedCommand issuedCommand) {
-    return selectItem(issuedCommand, getInventory());
+    return selectItem(issuedCommand, getInventory(), false);
   }
 
   /**
@@ -292,23 +339,49 @@ public class Hero extends Creature {
    * @return an Item or {@code null}
    */
   Item selectLocationItem(IssuedCommand issuedCommand) {
-    return selectItem(issuedCommand, getLocation().getInventory());
+    return selectItem(issuedCommand, getLocation().getInventory(), true);
   }
 
   /**
    * Selects an item of the specified {@code BaseInventory} based on the arguments of a command.
    *
-   * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
-   * @param inventory     an object of a subclass of {@code BaseInventory}
+   * @param issuedCommand      an IssuedCommand object whose arguments will determine the item search
+   * @param inventory          an object of a subclass of {@code BaseInventory}
+   * @param checkForVisibility true if only visible items should be selectable
    * @return an Item or {@code null}
    */
-  private Item selectItem(IssuedCommand issuedCommand, BaseInventory inventory) {
-    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(inventory.getItems())) {
-      return inventory.findItem(issuedCommand.getArguments());
+  private Item selectItem(IssuedCommand issuedCommand, BaseInventory inventory, boolean checkForVisibility) {
+    List<Item> visibleItems;
+    if (checkForVisibility) {
+      visibleItems = filterByVisibility(inventory.getItems());
+    } else {
+      visibleItems = inventory.getItems();
+    }
+    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleItems)) {
+      return findItem(visibleItems, issuedCommand.getArguments());
     } else {
       Messenger.printMissingArgumentsMessage();
       return null;
     }
+  }
+
+  /**
+   * Attempts to find an item by its name in a specified Inventory.
+   * Applies filterByVisibility so that items not seen by the player are not taken into account.
+   *
+   * @return an Item object if there is a match. null otherwise.
+   */
+  public Item findItem(List<Item> items, String[] tokens) {
+    Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
+    matches = filterByVisibility(matches);
+    if (matches.size() == 0) {
+      IO.writeString("Item not found.");
+    } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
+      return matches.getMatch(0);
+    } else {
+      Messenger.printAmbiguousSelectionMessage();
+    }
+    return null;
   }
 
   /**
@@ -318,13 +391,13 @@ public class Hero extends Creature {
    * @return an integer representing how many seconds the battle lasted.
    */
   public int attackTarget(IssuedCommand issuedCommand) {
-    if (canSee()) {
+    if (canSeeACreature()) {
       Creature target = selectTarget(issuedCommand);
       if (target != null) {
         return Engine.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
       }
     } else {
-      IO.writeString("It is too dark to find your target.");
+      IO.writeString("You do not see a possible target.");
     }
     return 0;
   }
@@ -336,12 +409,46 @@ public class Hero extends Creature {
    * @return a target Creature or {@code null}.
    */
   Creature selectTarget(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(getLocation().getCreatures(), this)) {
+    List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
+    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
       return findCreature(issuedCommand.getArguments());
     } else {
       IO.writeString("You must specify a target.");
       return null;
     }
+  }
+
+  /**
+   * Attempts to find a creature in the current location comparing its name to an array of string tokens.
+   * <p/>
+   * If there are no matches, {@code null} is returned.
+   * <p/>
+   * If there is one match, it is returned.
+   * <p/>
+   * If there are multiple matches but all have the same name, the first one is returned.
+   * <p/>
+   * If there are multiple matches with only two different names and one of these names is the Hero's name, the first
+   * creature match is returned.
+   * <p/>
+   * Lastly, if there are multiple matches that do not fall in one of the two categories above, {@code null} is
+   * returned.
+   *
+   * @param tokens an array of string tokens.
+   * @return a Creature or null.
+   */
+  Creature findCreature(String[] tokens) {
+    Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
+    result = filterByVisibility(result);
+    if (result.size() == 0) {
+      IO.writeString("Creature not found.");
+    } else if (result.size() == 1 || result.getDifferentNames() == 1) {
+      return result.getMatch(0);
+    } else if (result.getDifferentNames() == 2 && result.hasMatchWithName(getName())) {
+      return result.getMatch(0).getName().equals(getName()) ? result.getMatch(1) : result.getMatch(0);
+    } else {
+      Messenger.printAmbiguousSelectionMessage();
+    }
+    return null;
   }
 
   /**
@@ -378,42 +485,10 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to find a creature in the current location comparing its name to an array of string tokens.
-   * <p/>
-   * If there are no matches, {@code null} is returned.
-   * <p/>
-   * If there is one match, it is returned.
-   * <p/>
-   * If there are multiple matches but all have the same name, the first one is returned.
-   * <p/>
-   * If there are multiple matches with only two different names and one of these names is the Hero's name, the first
-   * creature match is returned.
-   * <p/>
-   * Lastly, if there are multiple matches that do not fall in one of the two categories above, {@code null} is
-   * returned.
-   *
-   * @param tokens an array of string tokens.
-   * @return a Creature or null.
-   */
-  Creature findCreature(String[] tokens) {
-    Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
-    if (result.size() == 0) {
-      IO.writeString("Creature not found.");
-    } else if (result.size() == 1 || result.getDifferentNames() == 1) {
-      return result.getMatch(0);
-    } else if (result.getDifferentNames() == 2 && result.hasMatchWithName(getName())) {
-      return result.getMatch(0).getName().equals(getName()) ? result.getMatch(1) : result.getMatch(0);
-    } else {
-      Messenger.printAmbiguousSelectionMessage();
-    }
-    return null;
-  }
-
-  /**
    * Attempts to pick and item and add it to the inventory.
    */
   public int pickItem(IssuedCommand issuedCommand) {
-    if (canSee()) {
+    if (canSeeAnItem()) {
       Item selectedItem = selectLocationItem(issuedCommand);
       if (selectedItem != null) {
         if (getInventory().addItem(selectedItem)) { // addItem returns false if the item was not added.
@@ -422,7 +497,7 @@ public class Hero extends Creature {
         }
       }
     } else {
-      IO.writeString("It is too dark for you too see anything.");
+      IO.writeString("You do not see any item you could pick up.");
     }
     return 0;
   }
@@ -555,7 +630,7 @@ public class Hero extends Creature {
   public int destroyItem(IssuedCommand issuedCommand) {
     Item target;
     if (issuedCommand.hasArguments()) {
-      target = getLocation().getInventory().findItem(issuedCommand.getArguments());
+      target = selectItem(issuedCommand, getLocation().getInventory(), true);
     } else {
       Messenger.printMissingArgumentsMessage();
       target = null;
@@ -625,7 +700,7 @@ public class Hero extends Creature {
    * Prints the hero's age.
    */
   public void printAge() {
-    String age = new Period(getDateOfBirth(), Game.getGameState().getWorld().getWorldDate()).toString();
+    String age = new Period(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
     IO.writeString(String.format("You are %s old.", age), Color.CYAN);
   }
 
@@ -684,8 +759,7 @@ public class Hero extends Creature {
     Date worldDate = world.getWorldDate();
     IO.writeString("You think it is " + worldDate.toDateString() + ".");
 
-    Date dob = getDateOfBirth();
-    if (worldDate.getMonth() == dob.getMonth() && worldDate.getDay() == dob.getDay()) {
+    if (worldDate.getMonth() == dateOfBirth.getMonth() && worldDate.getDay() == dateOfBirth.getDay()) {
       IO.writeString("Today is your birthday.");
     }
 
