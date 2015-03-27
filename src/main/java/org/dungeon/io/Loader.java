@@ -31,6 +31,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Loader class that handles saving / loading the game.
@@ -47,6 +49,8 @@ public class Loader {
   private static final String SAVE_CONFIRM = "Do you want to save the game?";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
 
+  private static final SimpleDateFormat LAST_MODIFIED_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
   /**
    * Pretty-prints all the files in the saves folder.
    */
@@ -54,13 +58,14 @@ public class Loader {
     File[] files = SAVES_FOLDER.listFiles();
     if (files != null) {
       if (files.length != 0) {
-        Table table = new Table("Name", "Size");
+        Table table = new Table("Name", "Size", "Last modified");
         int fileCount = 0;
         int byteCount = 0;
         for (File file : files) {
           fileCount += 1;
           byteCount += file.length();
-          table.insertRow(file.getName(), Utils.bytesToHuman(file.length()));
+          Date lastModified = new Date(file.lastModified());
+          table.insertRow(file.getName(), Utils.bytesToHuman(file.length()), LAST_MODIFIED_FORMAT.format(lastModified));
         }
         if (fileCount > 1) {
           table.insertSeparator();
