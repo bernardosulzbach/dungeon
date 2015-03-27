@@ -17,7 +17,6 @@
 
 package org.dungeon.util;
 
-import org.dungeon.game.Engine;
 import org.dungeon.game.GameData;
 import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
@@ -53,27 +52,6 @@ public final class Utils {
     } else {
       return original;
     }
-  }
-
-  /**
-   * Simulates a random roll.
-   *
-   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
-   *               Will be passed to Percentage's constructors in order to guarantee that it is a valid value.
-   * @return a boolean indicating if the roll was successful or not.
-   */
-  public static boolean roll(double chance) {
-    return roll(new Percentage(chance));
-  }
-
-  /**
-   * Simulates a random roll.
-   *
-   * @param chance the probability of a true result.
-   * @return a boolean indicating if the roll was successful or not.
-   */
-  public static boolean roll(Percentage chance) {
-    return chance.toDouble() > Engine.RANDOM.nextDouble();
   }
 
   /**

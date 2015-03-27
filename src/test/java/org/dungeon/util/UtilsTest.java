@@ -17,6 +17,7 @@
 
 package org.dungeon.util;
 
+import org.dungeon.game.Engine;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,8 +26,8 @@ public class UtilsTest {
   @Test
   public void testRoll() throws Exception {
     for (int i = 0; i < 100; i++) {
-      Assert.assertFalse(Utils.roll(0.0));
-      Assert.assertTrue(Utils.roll(1.0));
+      Assert.assertFalse(Engine.roll(0.0));
+      Assert.assertTrue(Engine.roll(1.0));
     }
   }
 

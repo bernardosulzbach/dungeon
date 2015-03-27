@@ -23,7 +23,6 @@ import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.util.Constants;
-import org.dungeon.util.Utils;
 
 import java.awt.Color;
 
@@ -62,7 +61,7 @@ class AttackAlgorithm {
   // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
   private static void batAttack(Creature attacker, Creature defender) {
     double luminosity = attacker.getLocation().getLuminosity().toDouble();
-    if (Utils.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
+    if (Engine.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
       int hitDamage = attacker.getAttack();
       if (luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY) {
         hitDamage *= 2;
@@ -77,7 +76,7 @@ class AttackAlgorithm {
   }
 
   private static void beastAttack(Creature attacker, Creature defender) {
-    if (Utils.roll(BEAST_HIT_RATE)) {
+    if (Engine.roll(BEAST_HIT_RATE)) {
       int hitDamage = attacker.getAttack();
       defender.takeDamage(hitDamage);
       printInflictedDamage(attacker, hitDamage, defender, false);
@@ -118,7 +117,7 @@ class AttackAlgorithm {
         return;
       }
     } else {
-      if (Utils.roll(UNDEAD_UNARMED_HIT_RATE)) {
+      if (Engine.roll(UNDEAD_UNARMED_HIT_RATE)) {
         hitDamage = attacker.getAttack();
         printInflictedDamage(attacker, hitDamage, defender, false);
       } else {
@@ -142,7 +141,7 @@ class AttackAlgorithm {
       if (weapon != null && !weapon.isBroken()) {
         if (weapon.rollForHit()) {
           hitDamage = weapon.getDamage() + attacker.getAttack();
-          if (Utils.roll(HERO_CRITICAL_CHANCE)) {
+          if (Engine.roll(HERO_CRITICAL_CHANCE)) {
             hitDamage *= 2;
             printInflictedDamage(attacker, hitDamage, defender, true);
           } else {
@@ -161,7 +160,7 @@ class AttackAlgorithm {
         }
       } else {
         hitDamage = attacker.getAttack();
-        if (Utils.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
+        if (Engine.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
           hitDamage *= 2;
           printInflictedDamage(attacker, hitDamage, defender, true);
         } else {

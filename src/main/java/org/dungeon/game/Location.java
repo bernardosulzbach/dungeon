@@ -23,7 +23,6 @@ import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.LocationInventory;
 import org.dungeon.util.Percentage;
-import org.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class Location implements Serializable {
     }
     this.items = new LocationInventory();
     for (Entry<ID, Percentage> entry : preset.getItems()) {
-      if (Utils.roll(entry.getValue())) {
+      if (Engine.roll(entry.getValue())) {
         ItemBlueprint blueprint = GameData.getItemBlueprints().get(entry.getKey());
         if (blueprint != null) {
           this.addItem(new Item(blueprint));
