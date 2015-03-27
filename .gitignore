@@ -2,6 +2,9 @@
 *.class
 *.jar
 
+# MS Windows?
+**/Thumbs.db
+
 # Except exported IDEA settings.
 !misc/idea/*.jar
 
