@@ -34,15 +34,15 @@ public final class LocationPreset implements Serializable {
 
   private final ID id;
   private final String type;
-  private final String name;
+  private final Name name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final List<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
   private final Map<ID, Percentage> items = new HashMap<ID, Percentage>();
   private Percentage lightPermittivity;
   private int blobSize;
 
-  LocationPreset(String id, String type, String name) {
-    this.id = new ID(id);
+  LocationPreset(ID id, String type, Name name) {
+    this.id = id;
     this.type = type;
     this.name = name;
   }
@@ -56,7 +56,7 @@ public final class LocationPreset implements Serializable {
   }
 
   public String getName() {
-    return name;
+    return name.getName();
   }
 
   public List<SpawnerPreset> getSpawners() {

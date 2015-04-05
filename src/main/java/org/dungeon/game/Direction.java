@@ -43,6 +43,21 @@ public enum Direction {
     this.y = y;
   }
 
+  /**
+   * Returns the Direction that a given abbreviation corresponds to.
+   *
+   * @param abbreviation an abbreviation such as "N" or "E"
+   * @return a Direction value or null if there is no match
+   */
+  public static Direction fromAbbreviation(String abbreviation) {
+    for (Direction direction : values()) {
+      if (direction.abbreviation.equals(abbreviation)) {
+        return direction;
+      }
+    }
+    return null;
+  }
+
   public int getY() {
     return y;
   }

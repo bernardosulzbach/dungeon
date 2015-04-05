@@ -20,6 +20,7 @@ package org.dungeon.io;
 import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,11 +79,24 @@ public class ResourceReader implements Closeable {
    * <p/>
    * "[ First Item | Second Item ]" becomes {"First Item", "Second Item"}.
    */
-  protected static String[] toArray(String data) {
+  public static String[] toArray(String data) {
     if (data.startsWith("[") && data.endsWith("]")) {
-      data = data.substring(1, data.length() - 1).trim();
-      // Zero or more whitespaces, the pipe character, and zero more or more whitespaces.
-      return data.split("\\s*\\|\\s*");
+      ArrayList<String> elements = new ArrayList<String>();
+      int startOfLastElement = 1;
+      int levelsDeep = 1; // How many levels deep we are (each inner list increments a level). Start at 1.
+      for (int i = 1; i < data.length(); i++) {
+        char c = data.charAt(i);
+        if (c == '[') {
+          levelsDeep++;
+        } else if (c == ']') {
+          levelsDeep--;
+        } else if (c == '|' && levelsDeep == 1) {
+          elements.add(data.substring(startOfLastElement, i).trim());
+          startOfLastElement = i + 1;
+        }
+      }
+      elements.add(data.substring(startOfLastElement, data.length() - 1).trim());
+      return elements.toArray(new String[elements.size()]);
     } else {
       return new String[]{data};
     }

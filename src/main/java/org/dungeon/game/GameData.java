@@ -166,106 +166,47 @@ public final class GameData {
   }
 
   private static void loadLocationPresets() {
-    // TODO: move this to a resource file.
-    SpawnerPreset bat = new SpawnerPreset("BAT", 1, 6);
-    SpawnerPreset bear = new SpawnerPreset("BEAR", 1, 12);
-    SpawnerPreset boar = new SpawnerPreset("BOAR", 3, 8);
-    SpawnerPreset crocodile = new SpawnerPreset("CROCODILE", 1, 6);
-    SpawnerPreset fox = new SpawnerPreset("FOX", 4, 4);
-    SpawnerPreset frog = new SpawnerPreset("FROG", 2, 2);
-    SpawnerPreset fruitBat = new SpawnerPreset("FRUIT_BAT", 2, 2);
-    SpawnerPreset lizard = new SpawnerPreset("LIZARD", 1, 4);
-    SpawnerPreset orc = new SpawnerPreset("ORC", 2, 2);
-    SpawnerPreset rabbit = new SpawnerPreset("RABBIT", 8, 1);
-    SpawnerPreset rat = new SpawnerPreset("RAT", 6, 2);
-    SpawnerPreset skeleton = new SpawnerPreset("SKELETON", 1, 12);
-    SpawnerPreset greenIguana = new SpawnerPreset("GREEN_IGUANA", 2, 32);
-    SpawnerPreset snake = new SpawnerPreset("SNAKE", 3, 4);
-    SpawnerPreset spider = new SpawnerPreset("SPIDER", 2, 4);
-    SpawnerPreset whiteTiger = new SpawnerPreset("WHITE_TIGER", 1, 24);
-    SpawnerPreset wolf = new SpawnerPreset("WOLF", 3, 12);
-    SpawnerPreset zombie = new SpawnerPreset("ZOMBIE", 2, 4);
-
-    LocationPreset clearing = new LocationPreset("CLEARING", "Land", "Clearing");
-    clearing.addSpawner(frog).addSpawner(rabbit).addSpawner(spider).addSpawner(fox);
-    clearing.addItem("CHERRY", 0.6).addItem("STICK", 0.9);
-    clearing.setLightPermittivity(1.0);
-    clearing.setBlobSize(2);
-    locationPresets.put(clearing.getID(), clearing);
-
-    LocationPreset desert = new LocationPreset("DESERT", "Land", "Desert");
-    desert.addSpawner(rat).addSpawner(snake).addSpawner(zombie).addSpawner(boar);
-    desert.addItem("MACE", 0.1).addItem("STAFF", 0.2).addItem("DAGGER", 0.15).addItem("SPEAR", 0.1);
-    desert.addItem("SWORD", 0.25);
-    desert.setLightPermittivity(1.0);
-    desert.setBlobSize(50);
-    locationPresets.put(desert.getID(), desert);
-
-    LocationPreset forest = new LocationPreset("FOREST", "Land", "Forest");
-    forest.addSpawner(bear).addSpawner(frog).addSpawner(rabbit).addSpawner(whiteTiger).addSpawner(fruitBat);
-    forest.addItem("AXE", 0.2).addItem("POCKET_WATCH", 0.03).addItem("STICK", 0.5).addItem("TOME_OF_FIREBALL", 0.1);
-    forest.addItem("SWORD", 0.15);
-    forest.setLightPermittivity(0.7);
-    forest.setBlobSize(25);
-    locationPresets.put(forest.getID(), forest);
-
-    LocationPreset graveyard = new LocationPreset("GRAVEYARD", "Land", "Graveyard");
-    graveyard.addSpawner(bat).addSpawner(skeleton).addSpawner(zombie).addSpawner(orc);
-    graveyard.addItem("LONGSWORD", 0.15).addItem("WRIST_WATCH", 0.025).addItem("TOME_OF_BURNING_GROUND", 0.1);
-    graveyard.setLightPermittivity(0.9);
-    graveyard.setBlobSize(1);
-    locationPresets.put(graveyard.getID(), graveyard);
-
-    LocationPreset meadow = new LocationPreset("MEADOW", "Land", "Meadow");
-    meadow.addSpawner(whiteTiger).addSpawner(wolf);
-    meadow.addItem("STONE", 0.8).addItem("WATERMELON", 0.4).addItem("APPLE", 0.7);
-    meadow.setLightPermittivity(1.0);
-    meadow.setBlobSize(5);
-    locationPresets.put(meadow.getID(), meadow);
-
-    LocationPreset pond = new LocationPreset("POND", "Land", "Pond");
-    pond.addSpawner(frog).addSpawner(lizard).addSpawner(crocodile).addSpawner(greenIguana);
-    pond.addItem("WATERMELON", 0.8).addItem("SPEAR", 0.3);
-    pond.setLightPermittivity(0.96);
-    pond.setBlobSize(1);
-    locationPresets.put(pond.getID(), pond);
-
-    LocationPreset swamp = new LocationPreset("SWAMP", "Land", "Swamp");
-    swamp.addSpawner(frog).addSpawner(snake).addSpawner(lizard).addSpawner(crocodile);
-    swamp.addItem("STICK", 0.9).addItem("WATERMELON", 0.10).addItem("CLUB", 0.4);
-    swamp.setLightPermittivity(0.7);
-    swamp.setBlobSize(10);
-    locationPresets.put(swamp.getID(), swamp);
-
-    LocationPreset wasteland = new LocationPreset("WASTELAND", "Land", "Wasteland");
-    wasteland.addSpawner(rat).addSpawner(spider).addSpawner(snake);
-    wasteland.addItem("STONE", 0.3).addItem("STICK", 0.15).addItem("TOME_OF_REPAIR", 0.05);
-    wasteland.setLightPermittivity(1.0);
-    wasteland.setBlobSize(10);
-    locationPresets.put(wasteland.getID(), wasteland);
-
-    LocationPreset savannah = new LocationPreset("SAVANNAH", "Land", "Savannah");
-    savannah.addSpawner(boar).addSpawner(snake).addSpawner(whiteTiger);
-    savannah.addItem("APPLE", 0.8).addItem("AXE", 0.3);
-    savannah.setLightPermittivity(1.0);
-    savannah.setBlobSize(5);
-    locationPresets.put(savannah.getID(), savannah);
-
-    LocationPreset river = new LocationPreset("RIVER", "River", "River");
-    river.block(Direction.WEST).block(Direction.EAST);
-    river.setLightPermittivity(1.0);
-    // Blob size does not apply.
-    locationPresets.put(river.getID(), river);
-
-    LocationPreset bridge = new LocationPreset("BRIDGE", "Bridge", "Bridge");
-    bridge.addItem("TOME_OF_FIREBALL", 0.15);
-    bridge.block(Direction.NORTH).block(Direction.SOUTH);
-    bridge.setLightPermittivity(1.0);
-    // Blob size does not apply.
-    locationPresets.put(bridge.getID(), bridge);
-
+    ResourceReader resourceReader = new ResourceReader("locations.txt");
+    while (resourceReader.readNextElement()) {
+      ID id = new ID(resourceReader.getValue("ID"));
+      String type = resourceReader.getValue("TYPE");
+      Name name = nameFromArray(resourceReader.getArrayOfValues("NAME"));
+      LocationPreset preset = new LocationPreset(id, type, name);
+      preset.setBlobSize(readIntegerFromResourceReader(resourceReader, "BLOB_SIZE"));
+      preset.setLightPermittivity(readDoubleFromResourceReader(resourceReader, "LIGHT_PERMITTIVITY"));
+      // Spawners.
+      if (resourceReader.hasValue("SPAWNERS")) {
+        for (String dungeonList : resourceReader.getArrayOfValues("SPAWNERS")) {
+          String[] spawner = ResourceReader.toArray(dungeonList);
+          String spawnerID = spawner[0];
+          int population = Integer.parseInt(spawner[1]);
+          int delay = Integer.parseInt(spawner[2]);
+          preset.addSpawner(new SpawnerPreset(spawnerID, population, delay));
+        }
+      }
+      // Items.
+      if (resourceReader.hasValue("ITEMS")) {
+        for (String dungeonList : resourceReader.getArrayOfValues("ITEMS")) {
+          String[] item = ResourceReader.toArray(dungeonList);
+          String itemID = item[0];
+          double frequency = Double.parseDouble(item[1]);
+          preset.addItem(itemID, frequency);
+        }
+      }
+      // Blocked Entrances.
+      if (resourceReader.hasValue("BLOCKED_ENTRANCES")) {
+        for (String dungeonList : resourceReader.getArrayOfValues("BLOCKED_ENTRANCES")) {
+          String[] entrances = ResourceReader.toArray(dungeonList);
+          for (String entrance : entrances) {
+            preset.block(Direction.fromAbbreviation(entrance));
+          }
+        }
+      }
+      locationPresets.put(preset.getID(), preset);
+    }
+    resourceReader.close();
     locationPresets = Collections.unmodifiableMap(locationPresets);
-    DLogger.info("Created " + locationPresets.size() + " location presets.");
+    DLogger.info("Loaded " + locationPresets.size() + " location presets.");
   }
 
   private static void loadAchievements() {

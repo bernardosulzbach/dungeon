@@ -31,6 +31,8 @@ public class ResourceReaderTest {
     assertArrayEquals(new String[]{"Foo"}, ResourceReader.toArray("[Foo]"));
     assertArrayEquals(new String[]{"A", "B", "C"}, ResourceReader.toArray("[A | B | C]"));
     assertArrayEquals(new String[]{"First", "Second"}, ResourceReader.toArray("[ First | Second ]"));
+    assertArrayEquals(new String[]{"A", "[B | C]"}, ResourceReader.toArray("[A | [B | C]]"));
+    assertArrayEquals(new String[]{"[A | B | C]"}, ResourceReader.toArray("[[A | B | C]]"));
   }
 
 }
