@@ -207,6 +207,7 @@ public class DebugTools {
     }
     sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity()).append('\n');
     sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
+    sb.append(Utils.padString("Blocked Entrances:", WIDTH)).append(location.getBlockedEntrances()).append('\n');
     IO.writeString(sb.toString());
   }
 

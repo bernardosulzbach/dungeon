@@ -17,8 +17,13 @@
 
 package org.dungeon.game;
 
+import org.dungeon.io.DLogger;
+import org.dungeon.util.Utils;
+
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * BlockedEntrances class that defines a allows blocking the entrances of a Locations.
@@ -27,7 +32,7 @@ import java.util.HashSet;
  */
 public class BlockedEntrances implements Serializable {
 
-  private HashSet<Direction> blockedEntrances;
+  private Set<Direction> setOfBlockedEntrances = new HashSet<Direction>();
 
   public BlockedEntrances() {
   }
@@ -38,20 +43,24 @@ public class BlockedEntrances implements Serializable {
    * @param source the object to be copied.
    */
   public BlockedEntrances(BlockedEntrances source) {
-    if (source.blockedEntrances != null) {
-      blockedEntrances = new HashSet<Direction>(source.blockedEntrances);
-    }
+    setOfBlockedEntrances = new HashSet<Direction>(source.setOfBlockedEntrances);
   }
 
   public void block(Direction direction) {
-    if (blockedEntrances == null) {
-      blockedEntrances = new HashSet<Direction>();
+    if (isBlocked(direction)) {
+      DLogger.warning("Tried to block an already blocked direction!");
+    } else {
+      setOfBlockedEntrances.add(direction);
     }
-    blockedEntrances.add(direction);
   }
 
   public boolean isBlocked(Direction direction) {
-    return blockedEntrances != null && blockedEntrances.contains(direction);
+    return setOfBlockedEntrances.contains(direction);
+  }
+
+  @Override
+  public String toString() {
+    return Utils.enumerate(Arrays.asList(setOfBlockedEntrances.toArray()));
   }
 
 }

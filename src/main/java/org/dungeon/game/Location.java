@@ -154,6 +154,10 @@ public class Location implements Serializable {
     return world;
   }
 
+  public BlockedEntrances getBlockedEntrances() {
+    return blockedEntrances;
+  }
+
   public boolean isBlocked(Direction direction) {
     return blockedEntrances.isBlocked(direction);
   }
