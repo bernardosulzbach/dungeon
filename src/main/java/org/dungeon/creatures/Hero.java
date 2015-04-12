@@ -329,7 +329,12 @@ public class Hero extends Creature {
   }
 
   Item selectInventoryItem(IssuedCommand issuedCommand) {
-    return selectItem(issuedCommand, getInventory(), false);
+    if (getInventory().getItemCount() == 0) {
+      IO.writeString("Your inventory is empty.");
+      return null;
+    } else {
+      return selectItem(issuedCommand, getInventory(), false);
+    }
   }
 
   /**
@@ -339,7 +344,12 @@ public class Hero extends Creature {
    * @return an Item or {@code null}
    */
   Item selectLocationItem(IssuedCommand issuedCommand) {
-    return selectItem(issuedCommand, getLocation().getInventory(), true);
+    if (filterByVisibility(getLocation().getItemList()).isEmpty()) {
+      IO.writeString("You don't see any items here.");
+      return null;
+    } else {
+      return selectItem(issuedCommand, getLocation().getInventory(), true);
+    }
   }
 
   /**
@@ -360,7 +370,7 @@ public class Hero extends Creature {
     if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleItems)) {
       return findItem(visibleItems, issuedCommand.getArguments());
     } else {
-      Messenger.printMissingArgumentsMessage();
+      IO.writeString("You must specify an item.");
       return null;
     }
   }
@@ -628,13 +638,7 @@ public class Hero extends Creature {
    * Tries to destroy an item from the current location.
    */
   public int destroyItem(IssuedCommand issuedCommand) {
-    Item target;
-    if (issuedCommand.hasArguments()) {
-      target = selectItem(issuedCommand, getLocation().getInventory(), true);
-    } else {
-      Messenger.printMissingArgumentsMessage();
-      target = null;
-    }
+    Item target = selectLocationItem(issuedCommand);
     if (target != null) {
       if (target.isRepairable()) {
         if (target.isBroken()) {
