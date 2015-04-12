@@ -76,6 +76,12 @@ INFO: Kill 2 zombies.
 TEXT: killed two zombies
 KILLS_BY_CREATURE_ID: [[ZOMBIE | 2]]
 
+ID: ORC_HUNTER
+NAME: Orc Hunter
+INFO: Kill 3 orcs.
+TEXT: killed three orcs
+KILLS_BY_CREATURE_ID: [[ORC | 3]]
+
 ID: DISSECTION
 NAME: Dissection
 INFO: Kill 6 frogs.
@@ -116,7 +122,7 @@ KILLS_BY_WEAPON: [[ | 10]]
 
 ID: ON_THE_STICK
 NAME: On the Stick!
-INFO: Kill 2 creatures with a Stick.
+INFO: Kill 2 creatures with a stick.
 TEXT: killed two creatures with the stick
 KILLS_BY_WEAPON: [[STICK | 2]]
 
@@ -128,13 +134,13 @@ KILLS_BY_WEAPON: [[SWORD | 10]]
 
 ID: LUMBERJACK
 NAME: Lumberjack
-INFO: Kill 10 creatures with a Axe.
+INFO: Kill 10 creatures with a axe.
 TEXT: killed ten creatures with the axe
 KILLS_BY_WEAPON: [[AXE | 10]]
 
 ID: STICKS_AND_STONES
 NAME: Sticks and Stones
-INFO: Kill 5 creatures with a Stone and 5 with a Stick.
+INFO: Kill 5 creatures with a stone and 5 with a stick.
 TEXT: killed five creatures with a stone and five with a stick
 KILLS_BY_WEAPON: [[STICK | 5] | [STONE | 5]]
 
