@@ -45,7 +45,6 @@ public final class GameData {
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
-  private static final String COUNTER_MAP_KEY_VALUE_SEPARATOR = ",";
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static Map<ID, Creature> creatures = new HashMap<ID, Creature>();
@@ -295,8 +294,8 @@ public final class GameData {
     if (reader.hasValue(key)) {
       try {
         String[] values = reader.getArrayOfValues(key);
-        for (String value : values) {
-          String[] parts = value.split(COUNTER_MAP_KEY_VALUE_SEPARATOR);
+        for (String dungeonList : values) {
+          String[] parts = ResourceReader.toArray(dungeonList);
           counterMap.incrementCounter(parts[0].trim(), Integer.parseInt(parts[1].trim()));
         }
       } catch (NumberFormatException log) {
