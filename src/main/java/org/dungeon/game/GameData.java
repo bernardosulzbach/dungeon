@@ -56,6 +56,23 @@ public final class GameData {
     throw new AssertionError();
   }
 
+  /**
+   * Returns the monospaced font used by the game interface.
+   */
+  private static Font getMonospacedFont() {
+    final int FONT_SIZE = 15;
+    Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
+    try {
+      InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
+      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
+    } catch (FontFormatException bad) {
+      DLogger.warning(bad.getMessage());
+    } catch (IOException bad) {
+      DLogger.warning(bad.getMessage());
+    }
+    return font;
+  }
+
   public static PoetryLibrary getPoetryLibrary() {
     return poetryLibrary;
   }
@@ -80,24 +97,14 @@ public final class GameData {
     DLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
   }
 
-  private static Font getMonospacedFont() {
-    final int FONT_SIZE = 15;
-    Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
-    try {
-      InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
-      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
-    } catch (FontFormatException bad) {
-      DLogger.warning(bad.getMessage());
-    } catch (IOException bad) {
-      DLogger.warning(bad.getMessage());
-    }
-    return font;
-  }
-
   /**
    * Creates all the Skills (hardcoded).
    */
   private static void createSkills() {
+    if (!skillDefinitions.isEmpty()) {
+      throw new AssertionError();
+    }
+
     SkillDefinition fireball = new SkillDefinition("FIREBALL", "Fireball", 10, 0, 6);
     skillDefinitions.put(fireball.id, fireball);
 
