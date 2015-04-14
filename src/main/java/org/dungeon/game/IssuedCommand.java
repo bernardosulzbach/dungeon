@@ -50,10 +50,6 @@ public final class IssuedCommand {
     return tokens[0];
   }
 
-  public boolean firstTokenEquals(String token) {
-    return tokens[0].equalsIgnoreCase(token);
-  }
-
   /**
    * @return true if there are at least two tokens, false otherwise.
    */

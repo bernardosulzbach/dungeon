@@ -87,11 +87,7 @@ public class Loader {
    * @return true if the specified File is not {@code null} and has the properties of a save file
    */
   private static boolean isSaveFile(File file) {
-    if (file == null) {
-      return false;
-    } else {
-      return file.getName().endsWith(SAVE_EXTENSION) && file.isFile();
-    }
+    return file != null && file.getName().endsWith(SAVE_EXTENSION) && file.isFile();
   }
 
   /**

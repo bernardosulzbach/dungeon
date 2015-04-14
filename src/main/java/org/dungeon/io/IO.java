@@ -122,17 +122,6 @@ public final class IO {
   }
 
   /**
-   * Writes a key, value pair separated with enough dots to fill a line. The key and value are written using the
-   * default color and the filling dots are written using a darker color.
-   *
-   * @param key   the key string.
-   * @param value the value string.
-   */
-  public static void writeKeyValueString(String key, String value) {
-    writeKeyValueString(key, value, Constants.FORE_COLOR_NORMAL, Constants.FORE_COLOR_DARKER);
-  }
-
-  /**
    * Writes a key, value pair separated with enough dots to fill a line using the specified colors.
    *
    * @param key       the key string.
