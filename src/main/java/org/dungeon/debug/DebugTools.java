@@ -34,7 +34,9 @@ import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
+import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Table;
@@ -96,6 +98,12 @@ public class DebugTools {
         printExplorationStatistics();
       }
     });
+    commands.add(new Command("kills") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        printKills();
+      }
+    });
     commands.add(new Command("location") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
@@ -150,6 +158,19 @@ public class DebugTools {
       }
     });
     uninitialized = false;
+  }
+
+  private static void printKills() {
+    CounterMap<CauseOfDeath> map = Game.getGameState().getStatistics().getBattleStatistics().getKillsByCauseOfDeath();
+    if (map.isNotEmpty()) {
+      Table table = new Table("Type", "Count");
+      for (CauseOfDeath causeOfDeath : map.keySet()) {
+        table.insertRow(causeOfDeath.toString(), String.valueOf(map.getCounter(causeOfDeath)));
+      }
+      table.print();
+    } else {
+      IO.writeString("You haven't killed anything yet. Go kill something!");
+    }
   }
 
   private static void printNotYetUnlockedAchievements() {

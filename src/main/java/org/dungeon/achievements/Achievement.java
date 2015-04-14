@@ -20,6 +20,7 @@ package org.dungeon.achievements;
 import org.dungeon.creatures.Hero;
 import org.dungeon.game.ID;
 import org.dungeon.io.IO;
+import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
 /**
@@ -44,14 +45,15 @@ public class Achievement {
    * @param text the String used to explain why the character unlocked the achievement
    */
   public Achievement(String id, String name, String info, String text, int minimumBattleCount, int longestBattleLength,
-      CounterMap<ID> killsByCreatureID, CounterMap<String> killsByCreatureType, CounterMap<ID> killsByWeapon,
+      CounterMap<ID> killsByCreatureID, CounterMap<String> killsByCreatureType,
+      CounterMap<CauseOfDeath> killsByCauseOfDeath,
       CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations, CounterMap<ID> maximumNumberOfVisits) {
     this.id = new ID(id);
     this.name = name;
     this.info = info;
     this.text = text;
     battle = new BattleComponent(minimumBattleCount, longestBattleLength, killsByCreatureID, killsByCreatureType,
-        killsByWeapon);
+        killsByCauseOfDeath);
     exploration = new ExplorationComponent(killsByLocationID, visitedLocations, maximumNumberOfVisits);
   }
 

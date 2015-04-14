@@ -111,41 +111,47 @@ NAME: Death Punch
 INFO: Kill a creature unarmed.
 TEXT: killed a creature unarmed
 // An empty string means unarmed.
-KILLS_BY_WEAPON: [[ | 1]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | | 1]]
 
 ID: BOXER
 NAME: Boxer
 INFO: Kill 10 creatures unarmed.
 // An empty string means unarmed.
 TEXT: killed ten creatures unarmed
-KILLS_BY_WEAPON: [[ | 10]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | | 10]]
 
 ID: ON_THE_STICK
 NAME: On the Stick!
 INFO: Kill 2 creatures with a stick.
 TEXT: killed two creatures with the stick
-KILLS_BY_WEAPON: [[STICK | 2]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | STICK | 2]]
 
 ID: SWORDSMAN
 NAME: Swordsman
 INFO: Kill 10 enemies with a sword.
 TEXT: killed ten enemies with the sword
-KILLS_BY_WEAPON: [[SWORD | 10]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | SWORD | 10]]
 
 ID: LUMBERJACK
 NAME: Lumberjack
 INFO: Kill 10 creatures with a axe.
 TEXT: killed ten creatures with the axe
-KILLS_BY_WEAPON: [[AXE | 10]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | AXE | 10]]
 
 ID: STICKS_AND_STONES
 NAME: Sticks and Stones
 INFO: Kill 5 creatures with a stone and 5 with a stick.
 TEXT: killed five creatures with a stone and five with a stick
-KILLS_BY_WEAPON: [[STICK | 5] | [STONE | 5]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | STICK | 5] | [WEAPON | STONE | 5]]
 
 ID: WOOD_MASTER
 NAME: Wood Master
 INFO: Get one kill with a club, one with a staff and one with a stick.
 TEXT: killed a creature with a club, one with a staff and one with a stick
-KILLS_BY_WEAPON: [[CLUB | 1] | [STAFF | 1] | [STICK | 1]]
+KILLS_BY_CAUSE_OF_DEATH: [[WEAPON | CLUB | 1] | [WEAPON | STAFF | 1] | [WEAPON | STICK | 1]]
+
+ID: FIRE_WIZARD
+NAME: Fire Wizard
+INFO: Kill 4 foes with the Fireball skill.
+TEXT: killed four foes with the Fireball skill
+KILLS_BY_CAUSE_OF_DEATH: [[SKILL | FIREBALL | 4]]

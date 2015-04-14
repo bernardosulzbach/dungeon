@@ -24,6 +24,8 @@ import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.skill.SkillDefinition;
+import org.dungeon.stats.CauseOfDeath;
+import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.StopWatch;
 
@@ -234,8 +236,18 @@ public final class GameData {
       CounterMap<String> killsByCreatureType = readStringCounterMap(reader, "KILLS_BY_CREATURE_TYPE");
       builder.setKillsByCreatureType(killsByCreatureType);
 
-      CounterMap<ID> killsByWeapon = readIDCounterMap(reader, "KILLS_BY_WEAPON");
-      builder.setKillsByWeapon(killsByWeapon);
+      CounterMap<CauseOfDeath> killsByCauseOfDeath = new CounterMap<CauseOfDeath>();
+      if (reader.hasValue("KILLS_BY_CAUSE_OF_DEATH")) {
+        String[] arrayOfCausesOfDeath = reader.getArrayOfValues("KILLS_BY_CAUSE_OF_DEATH");
+        for (String dungeonList : arrayOfCausesOfDeath) {
+          String[] elements = ResourceReader.toArray(dungeonList);
+          TypeOfCauseOfDeath typeOfCauseOfDeath = TypeOfCauseOfDeath.valueOf(elements[0]);
+          ID id = new ID(elements[1]);
+          int amount = Integer.parseInt(elements[2]);
+          killsByCauseOfDeath.incrementCounter(new CauseOfDeath(typeOfCauseOfDeath, id), amount);
+        }
+        builder.setKillsByCauseOfDeath(killsByCauseOfDeath);
+      }
 
       CounterMap<ID> killsByLocationId = readIDCounterMap(reader, "KILLS_BY_LOCATION_ID");
       builder.setKillsByLocationID(killsByLocationId);

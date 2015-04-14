@@ -20,6 +20,7 @@ package org.dungeon.achievements;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
 import org.dungeon.stats.BattleStatistics;
+import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
 /**
@@ -33,15 +34,15 @@ final class BattleComponent {
   final int longestBattleLength;
   final CounterMap<ID> killsByCreatureID;
   final CounterMap<String> killsByCreatureType;
-  final CounterMap<ID> killsByWeapon;
+  final CounterMap<CauseOfDeath> killsByCauseOfDeath;
 
   BattleComponent(int minimumBattleCount, int longestBattleLength, CounterMap<ID> killsByCreatureID,
-      CounterMap<String> killsByCreatureType, CounterMap<ID> killsByWeapon) {
+      CounterMap<String> killsByCreatureType, CounterMap<CauseOfDeath> killsByCauseOfDeath) {
     this.minimumBattleCount = minimumBattleCount;
     this.longestBattleLength = longestBattleLength;
     this.killsByCreatureID = killsByCreatureID;
     this.killsByCreatureType = killsByCreatureType;
-    this.killsByWeapon = killsByWeapon;
+    this.killsByCauseOfDeath = killsByCauseOfDeath;
   }
 
   /**
@@ -53,7 +54,7 @@ final class BattleComponent {
         && statistics.getLongestBattleLength() >= longestBattleLength
         && (killsByCreatureID == null || statistics.getKillsByCreatureID().fulfills(killsByCreatureID))
         && (killsByCreatureType == null || statistics.getKillsByCreatureType().fulfills(killsByCreatureType))
-        && (killsByWeapon == null || statistics.getKillsByWeapon().fulfills(killsByWeapon));
+        && (killsByCauseOfDeath == null || statistics.getKillsByCauseOfDeath().fulfills(killsByCauseOfDeath));
   }
 
 }

@@ -22,6 +22,8 @@ import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
+import org.dungeon.stats.CauseOfDeath;
+import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
@@ -40,7 +42,18 @@ class AttackAlgorithm {
   private static final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
   private static final double UNDEAD_UNARMED_HIT_RATE = 0.85;
 
-  public static void attack(Creature attacker, Creature defender, String algorithmID) {
+  /**
+   * Makes the specified attacker attack the defender using the specified attack algorithm.
+   * <p/>
+   * Returns what would be the CauseOfDeath if the attack killed the defender.
+   * If the attack algorithm is not the Hero's one or even if it is but the Hero missed, null is returned.
+   *
+   * @param attacker    the Creature that is attacking
+   * @param defender    the Creature that is being attacked
+   * @param algorithmID the algorithm's ID String
+   * @return what would be the CauseOfDeath if the attack killed the defender
+   */
+  public static CauseOfDeath attack(Creature attacker, Creature defender, String algorithmID) {
     if (algorithmID.equals("BAT")) {
       batAttack(attacker, defender);
     } else if (algorithmID.equals("BEAST")) {
@@ -52,10 +65,11 @@ class AttackAlgorithm {
     } else if (algorithmID.equals("UNDEAD")) {
       undeadAttack(attacker, defender);
     } else if (algorithmID.equals("HERO")) {
-      heroAttack(attacker, defender);
+      return heroAttack(attacker, defender);
     } else {
       DLogger.warning("algorithmID does not match any implemented algorithm.");
     }
+    return null;
   }
 
   // Similar to beastAttack, but with miss chance dependant on luminosity and critical chance in complete darkness.
@@ -130,10 +144,12 @@ class AttackAlgorithm {
     // after an eventual "weaponName broke" message, what looks really weird.
   }
 
-  private static void heroAttack(Creature attacker, Creature defender) {
+  private static CauseOfDeath heroAttack(Creature attacker, Creature defender) {
+    CauseOfDeath causeOfDeath;
     if (attacker.getSkillRotation().hasReadySkill()) {
       Skill skill = attacker.getSkillRotation().getNextSkill();
       skill.cast(attacker, defender);
+      causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.SKILL, skill.getID());
     } else {
       Item weapon = attacker.getWeapon();
       int hitDamage;
@@ -154,9 +170,10 @@ class AttackAlgorithm {
               attacker.getInventory().removeItem(weapon);
             }
           }
+          causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, weapon.getID());
         } else {
           printMiss(attacker);
-          return;
+          return null;
         }
       } else {
         hitDamage = attacker.getAttack();
@@ -166,11 +183,13 @@ class AttackAlgorithm {
         } else {
           printInflictedDamage(attacker, hitDamage, defender, false);
         }
+        causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, Constants.UNARMED_ID);
       }
       defender.takeDamage(hitDamage);
       // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
       // after an eventual "weaponName broke" message, what looks really weird.
     }
+    return causeOfDeath;
   }
 
   /**

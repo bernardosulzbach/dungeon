@@ -21,6 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
+import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Percentage;
@@ -134,43 +135,46 @@ public class Engine {
   /**
    * Simulates a battle between two Creatures and returns the number of turns the battle had.
    *
-   * @param attacker the attacker.
-   * @param defender the defender.
+   * @param hero the attacker.
+   * @param foe the defender.
    * @return an integer representing the number of turns the battle had.
    */
-  public static int battle(Hero attacker, Creature defender) {
-    if (attacker == defender) {
+  // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.
+  public static int battle(Hero hero, Creature foe) {
+    if (hero == foe) {
       IO.writeString("You cannot attempt suicide.");
       return 0;
     }
+    CauseOfDeath causeOfDeath = null;
     // A counter variable that register how many turns the battle had.
     int turns = 0;
-    while (attacker.isAlive() && defender.isAlive()) {
-      attacker.hit(defender);
-      attacker.getSkillRotation().refresh();
-      defender.getSkillRotation().refresh();
+    while (hero.isAlive() && foe.isAlive()) {
+      causeOfDeath = hero.hit(foe);
+      hero.getSkillRotation().refresh();
+      foe.getSkillRotation().refresh();
       turns++;
-      if (defender.isAlive()) {
-        defender.hit(attacker);
-        attacker.getSkillRotation().refresh();
-        defender.getSkillRotation().refresh();
+      if (foe.isAlive()) {
+        foe.hit(hero);
+        hero.getSkillRotation().refresh();
+        foe.getSkillRotation().refresh();
         turns++;
       }
     }
     Creature survivor;
     Creature defeated;
-    if (attacker.isAlive()) {
-      survivor = attacker;
-      defeated = defender;
+    if (hero.isAlive()) {
+      survivor = hero;
+      defeated = foe;
     } else {
-      survivor = defender;
-      defeated = attacker;
+      survivor = foe;
+      defeated = hero;
     }
     IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
-    boolean attackerWon = attacker == survivor;
-    Game.getGameState().getStatistics().getBattleStatistics().addBattle(attacker, defender, attackerWon, turns);
-    Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
-    battleCleanup(survivor, defeated);
+    if (hero == survivor) {
+      Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, turns);
+      Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
+      battleCleanup(survivor, defeated);
+    }
     return turns;
   }
 

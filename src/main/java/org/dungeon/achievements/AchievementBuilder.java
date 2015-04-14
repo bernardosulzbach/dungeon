@@ -18,6 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.game.ID;
+import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
 public class AchievementBuilder {
@@ -29,7 +30,7 @@ public class AchievementBuilder {
   private int longestBattleLength;
   private CounterMap<ID> killsByCreatureID;
   private CounterMap<String> killsByCreatureType;
-  private CounterMap<ID> killsByWeapon;
+  private CounterMap<CauseOfDeath> killsByCauseOfDeath;
   private CounterMap<ID> killsByLocationID;
   private CounterMap<ID> visitedLocations;
   private CounterMap<ID> maximumNumberOfVisits;
@@ -70,9 +71,9 @@ public class AchievementBuilder {
     }
   }
 
-  public void setKillsByWeapon(CounterMap<ID> killsByWeapon) {
-    if (killsByWeapon.isNotEmpty()) {
-      this.killsByWeapon = killsByWeapon;
+  public void setKillsByCauseOfDeath(CounterMap<CauseOfDeath> killsByCauseOfDeath) {
+    if (killsByCauseOfDeath.isNotEmpty()) {
+      this.killsByCauseOfDeath = killsByCauseOfDeath;
     }
   }
 
@@ -96,7 +97,7 @@ public class AchievementBuilder {
 
   public Achievement createAchievement() {
     return new Achievement(id, name, info, text, minimumBattleCount, longestBattleLength, killsByCreatureID,
-        killsByCreatureType, killsByWeapon, killsByLocationID, visitedLocations, maximumNumberOfVisits);
+        killsByCreatureType, killsByCauseOfDeath, killsByLocationID, visitedLocations, maximumNumberOfVisits);
   }
 
 }

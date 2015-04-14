@@ -25,6 +25,7 @@ import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.Item;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
+import org.dungeon.stats.CauseOfDeath;
 
 /**
  * The Creature class.
@@ -121,8 +122,14 @@ public class Creature extends Entity {
     }
   }
 
-  public void hit(Creature target) {
-    AttackAlgorithm.attack(this, target, getAttackAlgorithm());
+  /**
+   * Hits the specified target Creature. Returns what would be the CauseOfDeath if the target died for this attack.
+   *
+   * @param target the target
+   * @return the possible CauseOfDeath
+   */
+  public CauseOfDeath hit(Creature target) {
+    return AttackAlgorithm.attack(this, target, getAttackAlgorithm());
   }
 
   public void takeDamage(int damage) {

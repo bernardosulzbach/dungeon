@@ -19,8 +19,6 @@ package org.dungeon.stats;
 
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.ID;
-import org.dungeon.items.Item;
-import org.dungeon.util.Constants;
 import org.dungeon.util.CounterMap;
 
 import java.io.Serializable;
@@ -36,35 +34,28 @@ public class BattleStatistics implements Serializable {
 
   private final CounterMap<String> killsByCreatureType;
   private final CounterMap<ID> killsByCreatureID;
-  private final CounterMap<ID> killsByWeapon;
+  private final CounterMap<CauseOfDeath> killsByCauseOfDeath;
   private int battleCount;
   private int longestBattleLength;
 
   public BattleStatistics() {
     killsByCreatureType = new CounterMap<String>();
     killsByCreatureID = new CounterMap<ID>();
-    killsByWeapon = new CounterMap<ID>();
+    killsByCauseOfDeath = new CounterMap<CauseOfDeath>();
   }
 
   /**
    * Adds the outcome of a battle to the statistics.
    *
-   * @param attacker    the attacking Creature (the one the started the battle).
-   * @param defender    the defending Creature.
-   * @param attackerWon true if the attacker won, false otherwise.
-   * @param turns       how many turns the battle took.
+   * @param foe   the hero's foe
+   * @param turns how many turns the battle took.
    */
-  public void addBattle(Creature attacker, Creature defender, boolean attackerWon, int turns) {
-    if (attackerWon) {
-      killsByCreatureType.incrementCounter(defender.getType());
-      killsByCreatureID.incrementCounter(defender.getID());
-      Item weapon = attacker.getWeapon();
-      killsByWeapon.incrementCounter(weapon != null ? weapon.getID() : Constants.UNARMED_ID);
-    }
+  public void addBattle(Creature foe, CauseOfDeath causeOfDeath, int turns) {
     battleCount++;
-    if (turns > longestBattleLength) {
-      longestBattleLength = turns;
-    }
+    killsByCreatureType.incrementCounter(foe.getType());
+    killsByCreatureID.incrementCounter(foe.getID());
+    killsByCauseOfDeath.incrementCounter(causeOfDeath);
+    longestBattleLength = Math.max(longestBattleLength, turns);
   }
 
   public int getBattleCount() {
@@ -83,8 +74,8 @@ public class BattleStatistics implements Serializable {
     return killsByCreatureID;
   }
 
-  public CounterMap<ID> getKillsByWeapon() {
-    return killsByWeapon;
+  public CounterMap<CauseOfDeath> getKillsByCauseOfDeath() {
+    return killsByCauseOfDeath;
   }
 
 }
