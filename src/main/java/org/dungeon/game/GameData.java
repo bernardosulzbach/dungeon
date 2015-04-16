@@ -130,6 +130,7 @@ public final class GameData {
       blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
+      blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       blueprint.setRepairable(readIntegerFromResourceReader(reader, "REPAIRABLE") == 1);
       blueprint.setWeapon(readIntegerFromResourceReader(reader, "WEAPON") == 1);
       blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));

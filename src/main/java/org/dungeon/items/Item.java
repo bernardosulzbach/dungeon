@@ -39,7 +39,7 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
 
-    weight = Weight.newInstance(1); // TODO: remove this hack.
+    weight = bp.weight;
 
     repairable = bp.repairable;
     maxIntegrity = bp.maxIntegrity;

@@ -78,7 +78,7 @@ public class Hero extends Creature {
 
   public Hero() {
     super(Constants.HERO_ID, "Hero", Name.newInstance("Seth"), 50, 5, "HERO");
-    setInventory(new CreatureInventory(this, 12, 6));
+    setInventory(new CreatureInventory(this, 12, 10));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
     achievementTracker = new AchievementTracker();
   }
