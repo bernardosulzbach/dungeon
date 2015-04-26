@@ -204,24 +204,13 @@ class AttackAlgorithm {
    */
   private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
       boolean healthStateChanged) {
-    StringBuilder builder = new StringBuilder();
-    builder.append(attacker.getName());
-    builder.append(" inflicted ");
-    builder.append(hitDamage);
-    builder.append(" damage points to ");
-    builder.append(defender.getName());
-    if (criticalHit) {
-      builder.append(" with a critical hit");
-    }
-    builder.append(".");
+    String s = String.format("%s inflicted %d damage points to %s", attacker.getName(), hitDamage, defender.getName());
+    s += criticalHit ? " with a critical hit." : ".";
     if (healthStateChanged) {
-      builder.append(" It looks ");
       HealthState currentHealthState = HealthState.getHealthState(defender.getCurHealth(), defender.getMaxHealth());
-      String healthStateString = currentHealthState.toString().toLowerCase();
-      builder.append(healthStateString);
-      builder.append(".");
+      s += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
     }
-    IO.writeBattleString(builder.toString(), attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+    IO.writeBattleString(s, attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }
 
   /**
