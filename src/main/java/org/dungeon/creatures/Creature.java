@@ -132,12 +132,20 @@ public class Creature extends Entity {
     return AttackAlgorithm.attack(this, target, getAttackAlgorithm());
   }
 
-  public void takeDamage(int damage) {
+  /**
+   * Makes the Creature take a given amount of damage and returns whether its HealthState changed.
+   * @param damage the amount of damage the Creature should take
+   * @return true if the Creature's HealthState changed
+   */
+  public boolean takeDamage(int damage) {
+    HealthState initialHealthState = HealthState.getHealthState(getCurHealth(), getMaxHealth());
     if (damage > getCurHealth()) {
       setCurHealth(0);
     } else {
       setCurHealth(getCurHealth() - damage);
     }
+    HealthState finalHealthState = HealthState.getHealthState(getCurHealth(), getMaxHealth());
+    return finalHealthState != initialHealthState;
   }
 
   public boolean isAlive() {

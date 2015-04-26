@@ -77,13 +77,12 @@ class AttackAlgorithm {
     double luminosity = attacker.getLocation().getLuminosity().toDouble();
     if (Engine.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
       int hitDamage = attacker.getAttack();
-      if (luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY) {
+      boolean criticalHit = luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY;
+      if (criticalHit) {
         hitDamage *= 2;
-        printInflictedDamage(attacker, hitDamage, defender, true);
-      } else {
-        printInflictedDamage(attacker, hitDamage, defender, false);
       }
-      defender.takeDamage(hitDamage);
+      boolean healthStateChanged = defender.takeDamage(hitDamage);
+      printInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
     } else {
       printMiss(attacker);
     }
@@ -92,8 +91,8 @@ class AttackAlgorithm {
   private static void beastAttack(Creature attacker, Creature defender) {
     if (Engine.roll(BEAST_HIT_RATE)) {
       int hitDamage = attacker.getAttack();
-      defender.takeDamage(hitDamage);
-      printInflictedDamage(attacker, hitDamage, defender, false);
+      boolean healthStateChanged = defender.takeDamage(hitDamage);
+      printInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
     } else {
       printMiss(attacker);
     }
@@ -114,18 +113,13 @@ class AttackAlgorithm {
   private static void undeadAttack(Creature attacker, Creature defender) {
     Item weapon = attacker.getWeapon();
     int hitDamage;
+    boolean weaponBroke = false;
     // Check that there is a weapon and that it is not broken.
     if (weapon != null && !weapon.isBroken()) {
       if (weapon.rollForHit()) {
         hitDamage = weapon.getDamage() + attacker.getAttack();
-        printInflictedDamage(attacker, hitDamage, defender, false);
         weapon.decrementIntegrityByHit();
-        if (weapon.isBroken()) {
-          printWeaponBreak(weapon);
-          if (!weapon.isRepairable()) {
-            attacker.getInventory().removeItem(weapon);
-          }
-        }
+        weaponBroke = weapon.isBroken();
       } else {
         printMiss(attacker);
         return;
@@ -133,15 +127,19 @@ class AttackAlgorithm {
     } else {
       if (Engine.roll(UNDEAD_UNARMED_HIT_RATE)) {
         hitDamage = attacker.getAttack();
-        printInflictedDamage(attacker, hitDamage, defender, false);
       } else {
         printMiss(attacker);
         return;
       }
     }
-    defender.takeDamage(hitDamage);
-    // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-    // after an eventual "weaponName broke" message, what looks really weird.
+    boolean healthStateChanged = defender.takeDamage(hitDamage);
+    printInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
+    if (weaponBroke) {
+      printWeaponBreak(weapon);
+      if (!weapon.isRepairable()) {
+        attacker.getInventory().removeItem(weapon);
+      }
+    }
   }
 
   private static CauseOfDeath heroAttack(Creature attacker, Creature defender) {
@@ -152,24 +150,16 @@ class AttackAlgorithm {
       causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.SKILL, skill.getID());
     } else {
       Item weapon = attacker.getWeapon();
+      boolean weaponBroke = false;
+      boolean criticalHit;
       int hitDamage;
       // Check that there is a weapon and that it is not broken.
       if (weapon != null && !weapon.isBroken()) {
         if (weapon.rollForHit()) {
           hitDamage = weapon.getDamage() + attacker.getAttack();
-          if (Engine.roll(HERO_CRITICAL_CHANCE)) {
-            hitDamage *= 2;
-            printInflictedDamage(attacker, hitDamage, defender, true);
-          } else {
-            printInflictedDamage(attacker, hitDamage, defender, false);
-          }
+          criticalHit = Engine.roll(HERO_CRITICAL_CHANCE);
           weapon.decrementIntegrityByHit();
-          if (weapon.isBroken()) {
-            printWeaponBreak(weapon);
-            if (!weapon.isRepairable()) {
-              attacker.getInventory().removeItem(weapon);
-            }
-          }
+          weaponBroke = weapon.isBroken();
           causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, weapon.getID());
         } else {
           printMiss(attacker);
@@ -177,17 +167,20 @@ class AttackAlgorithm {
         }
       } else {
         hitDamage = attacker.getAttack();
-        if (Engine.roll(HERO_CRITICAL_CHANCE_UNARMED)) {
-          hitDamage *= 2;
-          printInflictedDamage(attacker, hitDamage, defender, true);
-        } else {
-          printInflictedDamage(attacker, hitDamage, defender, false);
-        }
+        criticalHit = Engine.roll(HERO_CRITICAL_CHANCE_UNARMED);
         causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, Constants.UNARMED_ID);
       }
-      defender.takeDamage(hitDamage);
-      // The inflicted damage message cannot be here (what would avoid code duplication) as that would make it appear
-      // after an eventual "weaponName broke" message, what looks really weird.
+      if (criticalHit) {
+        hitDamage *= 2;
+      }
+      boolean healthStateChanged = defender.takeDamage(hitDamage);
+      printInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
+      if (weaponBroke) {
+        printWeaponBreak(weapon);
+        if (!weapon.isRepairable()) {
+          attacker.getInventory().removeItem(weapon);
+        }
+      }
     }
     return causeOfDeath;
   }
@@ -209,7 +202,8 @@ class AttackAlgorithm {
    * @param defender    the target of the attack.
    * @param criticalHit a boolean indicating if the attack was a critical hit or not.
    */
-  private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
+  private static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
+      boolean healthStateChanged) {
     StringBuilder builder = new StringBuilder();
     builder.append(attacker.getName());
     builder.append(" inflicted ");
@@ -220,6 +214,13 @@ class AttackAlgorithm {
       builder.append(" with a critical hit");
     }
     builder.append(".");
+    if (healthStateChanged) {
+      builder.append(" It looks ");
+      HealthState currentHealthState = HealthState.getHealthState(defender.getCurHealth(), defender.getMaxHealth());
+      String healthStateString = currentHealthState.toString().toLowerCase();
+      builder.append(healthStateString);
+      builder.append(".");
+    }
     IO.writeBattleString(builder.toString(), attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }
 
