@@ -101,7 +101,7 @@ public class Loader {
   /**
    * Checks if any file in the saves folder ends with the save extension.
    */
-  private static boolean checkForAnySave() {
+  public static boolean checkForAnySave() {
     File[] files = SAVES_FOLDER.listFiles();
     if (files != null) {
       for (File file : files) {

@@ -48,6 +48,11 @@ public class Game {
     GameState loadedGameState = Loader.loadGame();
     if (loadedGameState == null) {
       setGameState(Loader.newGame());
+      // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
+      // So check for any save in the folder.
+      if (!Loader.checkForAnySave()) { // Suggest the tutorial only if no saved game exists.
+        suggestTutorial();
+      }
     } else {
       setGameState(loadedGameState);
     }
@@ -291,6 +296,11 @@ public class Game {
         Wiki.search(issuedCommand);
       }
     });
+  }
+
+  private static void suggestTutorial() {
+    IO.writeNewLine();
+    IO.writeString("You may want to issue 'tutorial' to learn the basics.");
   }
 
   // This method enables other parts of the code to issue commands, is this bad design?
