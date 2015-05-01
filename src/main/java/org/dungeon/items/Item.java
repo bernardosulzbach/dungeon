@@ -21,6 +21,7 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
 import org.dungeon.game.Weight;
+import org.dungeon.util.Percentage;
 
 public class Item extends Entity {
 
@@ -64,7 +65,12 @@ public class Item extends Entity {
   }
 
   public Weight getWeight() {
-    return weight;
+    if (isFood()) {
+      Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
+      return weight.percentageOf(integrityPercentage);
+    } else {
+      return weight;
+    }
   }
 
   public String getQualifiedName() {
