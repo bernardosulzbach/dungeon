@@ -273,6 +273,12 @@ public class Game {
         turnResult.turnLength = gameState.getHero().printDateAndTime();
       }
     });
+    commandList.add(new Command("tutorial", "Displays the tutorial.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        IO.writeString(GameData.getTutorial());
+      }
+    });
     commandList.add(new Command("unequip", "Unequips the currently equipped item.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {

@@ -47,6 +47,7 @@ public final class GameData {
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
+  private static String tutorial = null;
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static Map<ID, Creature> creatures = new HashMap<ID, Creature>();
@@ -85,6 +86,13 @@ public final class GameData {
 
   public static HintLibrary getHintLibrary() {
     return hintLibrary;
+  }
+
+  public static String getTutorial() {
+    if (tutorial == null) {
+      loadTutorial();
+    }
+    return tutorial;
   }
 
   static void loadGameData() {
@@ -371,6 +379,16 @@ public final class GameData {
     ResourceReader reader = new ResourceReader("license.txt");
     reader.readNextElement();
     LICENSE = reader.getValue("LICENSE");
+    reader.close();
+  }
+
+  private static void loadTutorial() {
+    if (tutorial != null) { // Should only be called once.
+      throw new AssertionError();
+    }
+    ResourceReader reader = new ResourceReader("tutorial.txt");
+    reader.readNextElement();
+    tutorial = reader.getValue("TUTORIAL");
     reader.close();
   }
 
