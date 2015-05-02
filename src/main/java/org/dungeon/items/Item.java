@@ -67,7 +67,7 @@ public class Item extends Entity {
   public Weight getWeight() {
     if (isFood()) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
-      return weight.percentageOf(integrityPercentage);
+      return weight.multiply(integrityPercentage);
     } else {
       return weight;
     }

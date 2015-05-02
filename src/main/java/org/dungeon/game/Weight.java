@@ -21,6 +21,9 @@ import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Weight class that represents an amount of weight, in kilograms.
@@ -28,6 +31,12 @@ import java.io.Serializable;
  * Created by Bernardo on 07/03/2015.
  */
 public class Weight implements Comparable<Weight>, Serializable {
+
+  private static final DecimalFormat WEIGHT_FORMAT = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+
+  static {
+    WEIGHT_FORMAT.applyPattern("0.### kg");
+  }
 
   public static final Weight ZERO = newInstance(0);
 
@@ -56,17 +65,17 @@ public class Weight implements Comparable<Weight>, Serializable {
   }
 
   /**
-   * Produces a new Weight object representing p percent of this object's weight.
+   * Returns a Weight object that is equal to this Weight multiplied by a Percentage.
    *
    * @param p a Percentage object
    * @return a Weight object representing the relative value
    */
-  public Weight percentageOf(Percentage p) {
+  public Weight multiply(Percentage p) {
     return newInstance(this.value * p.toDouble());
   }
 
   public String toString() {
-    return String.valueOf(value + " kg");
+    return String.format(WEIGHT_FORMAT.format(value));
   }
 
   @Override
