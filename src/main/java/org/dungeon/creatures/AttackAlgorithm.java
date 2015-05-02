@@ -136,7 +136,7 @@ class AttackAlgorithm {
     printInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
     if (weaponBroke) {
       printWeaponBreak(weapon);
-      if (!weapon.isRepairable()) {
+      if (!weapon.hasTag(Item.Tag.REPAIRABLE)) {
         attacker.getInventory().removeItem(weapon);
       }
     }
@@ -177,7 +177,7 @@ class AttackAlgorithm {
       printInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
       if (weaponBroke) {
         printWeaponBreak(weapon);
-        if (!weapon.isRepairable()) {
+        if (!weapon.hasTag(Item.Tag.REPAIRABLE)) {
           attacker.getInventory().removeItem(weapon);
         }
       }

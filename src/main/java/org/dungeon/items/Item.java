@@ -23,10 +23,14 @@ import org.dungeon.game.Game;
 import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
+import java.util.HashSet;
+
 public class Item extends Entity {
 
+  public enum Tag { WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_VARIES_WITH_INTEGRITY }
+
+  private final HashSet<Tag> tags;
   private final int maxIntegrity;
-  private final boolean repairable;
   private final Weight weight;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
@@ -37,29 +41,37 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
 
+    tags = new HashSet<Tag>(Tag.values().length);
+
     weight = bp.weight;
 
-    repairable = bp.repairable;
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
 
+    if (bp.repairable) {
+      tags.add(Tag.REPAIRABLE);
+    }
     if (bp.weapon) {
+      tags.add(Tag.WEAPON);
       weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
     }
     if (bp.food) {
+      tags.add(Tag.FOOD);
       foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
     if (bp.clock) {
+      tags.add(Tag.CLOCK);
       clockComponent = new ClockComponent();
       clockComponent.setMaster(this);
     }
     if (bp.book) {
+      tags.add(Tag.BOOK);
       bookComponent = new BookComponent(bp.getSkill());
     }
   }
 
   public Weight getWeight() {
-    if (isFood()) {
+    if (hasTag(Tag.WEIGHT_VARIES_WITH_INTEGRITY)) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
       return weight.multiply(integrityPercentage);
     } else {
@@ -89,33 +101,21 @@ public class Item extends Entity {
     } else {
       this.curIntegrity = 0;
       // TODO: maybe we should extract the "breaking routine" to another method.
-      if (isClock()) {
+      if (hasTag(Tag.CLOCK)) {
         // A clock just broke! Update its last time record.
         clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
       }
     }
   }
 
-  public boolean isRepairable() {
-    return repairable;
-  }
-
-  public boolean isWeapon() {
-    return weaponComponent != null;
+  public boolean hasTag(Tag tag) {
+    return tags.contains(tag);
   }
 
   public WeaponComponent getWeaponComponent() { return weaponComponent; }
 
-  public boolean isFood() {
-    return foodComponent != null;
-  }
-
   public FoodComponent getFoodComponent() {
     return foodComponent;
-  }
-
-  public boolean isClock() {
-    return clockComponent != null;
   }
 
   public ClockComponent getClockComponent() {
