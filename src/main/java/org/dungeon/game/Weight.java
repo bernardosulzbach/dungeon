@@ -56,12 +56,12 @@ public class Weight implements Comparable<Weight>, Serializable {
   }
 
   /**
-   * Produces a new Weight object representing p percent of this object's weight.
+   * Produces a new Weight object by multiplying this object with percentage p.
    *
    * @param p a Percentage object
    * @return a Weight object representing the relative value
    */
-  public Weight percentageOf(Percentage p) {
+  public Weight multiplyBy(Percentage p) {
     return newInstance(this.value * p.toDouble());
   }
 
