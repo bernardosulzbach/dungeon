@@ -117,7 +117,7 @@ class AttackAlgorithm {
     // Check that there is a weapon and that it is not broken.
     if (weapon != null && !weapon.isBroken()) {
       if (weapon.rollForHit()) {
-        hitDamage = weapon.getDamage() + attacker.getAttack();
+        hitDamage = weapon.getWeaponComponent().getDamage() + attacker.getAttack();
         weapon.decrementIntegrityByHit();
         weaponBroke = weapon.isBroken();
       } else {
@@ -136,7 +136,7 @@ class AttackAlgorithm {
     printInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
     if (weaponBroke) {
       printWeaponBreak(weapon);
-      if (!weapon.isRepairable()) {
+      if (!weapon.hasTag(Item.Tag.REPAIRABLE)) {
         attacker.getInventory().removeItem(weapon);
       }
     }
@@ -156,7 +156,7 @@ class AttackAlgorithm {
       // Check that there is a weapon and that it is not broken.
       if (weapon != null && !weapon.isBroken()) {
         if (weapon.rollForHit()) {
-          hitDamage = weapon.getDamage() + attacker.getAttack();
+          hitDamage = weapon.getWeaponComponent().getDamage() + attacker.getAttack();
           criticalHit = Engine.roll(HERO_CRITICAL_CHANCE);
           weapon.decrementIntegrityByHit();
           weaponBroke = weapon.isBroken();
@@ -177,7 +177,7 @@ class AttackAlgorithm {
       printInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
       if (weaponBroke) {
         printWeaponBreak(weapon);
-        if (!weapon.isRepairable()) {
+        if (!weapon.hasTag(Item.Tag.REPAIRABLE)) {
           attacker.getInventory().removeItem(weapon);
         }
       }

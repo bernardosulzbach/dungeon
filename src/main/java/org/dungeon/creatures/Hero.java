@@ -518,7 +518,7 @@ public class Hero extends Creature {
   public int parseEquip(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
-      if (selectedItem.isWeapon()) {
+      if (selectedItem.hasTag(Item.Tag.WEAPON)) {
         equipWeapon(selectedItem);
         return SECONDS_TO_EQUIP;
       } else {
@@ -585,7 +585,7 @@ public class Hero extends Creature {
   public int eatItem(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
-      if (selectedItem.isFood()) {
+      if (selectedItem.hasTag(Item.Tag.FOOD)) {
         FoodComponent food = selectedItem.getFoodComponent();
         double remainingBites = selectedItem.getCurIntegrity() / (double) food.getIntegrityDecrementOnEat();
         if (remainingBites >= 1.0) {
@@ -595,7 +595,7 @@ public class Hero extends Creature {
           addHealth((int) (food.getNutrition() * remainingBites));
         }
         selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
-        if (selectedItem.isBroken() && !selectedItem.isRepairable()) {
+        if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
           IO.writeString("You ate " + selectedItem.getName() + ".");
           getInventory().removeItem(selectedItem);
         } else {
@@ -640,7 +640,7 @@ public class Hero extends Creature {
   public int destroyItem(IssuedCommand issuedCommand) {
     Item target = selectLocationItem(issuedCommand);
     if (target != null) {
-      if (target.isRepairable()) {
+      if (target.hasTag(Item.Tag.REPAIRABLE)) {
         if (target.isBroken()) {
           IO.writeString(target.getName() + " is already crashed.");
         } else {
@@ -692,8 +692,8 @@ public class Hero extends Creature {
     if (hasWeapon()) {
       Item heroWeapon = getWeapon();
       builder.append("You are currently equipping ").append(heroWeapon.getQualifiedName());
-      builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getDamage())).append(". ");
-      builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getDamage()).append(".\n");
+      builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getWeaponComponent().getDamage())).append(". ");
+      builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getWeaponComponent().getDamage()).append(".\n");
     } else {
       builder.append("You are fighting bare-handed.\n");
     }
@@ -720,13 +720,13 @@ public class Hero extends Creature {
     // TODO: improve code readability and reduce code repetition.
     Item clock = null;
     int timeSpent = 0;
-    if (hasWeapon() && getWeapon().isClock()) {
+    if (hasWeapon() && getWeapon().hasTag(Item.Tag.CLOCK)) {
       if (!getWeapon().isBroken()) {
         clock = getWeapon();
         timeSpent = 4;
       } else { // The Hero is equipping a broken clock: check if he has a working one in his inventory.
         for (Item item : getInventory().getItems()) {
-          if (item.isClock() && !item.isBroken()) {
+          if (item.hasTag(Item.Tag.CLOCK) && !item.isBroken()) {
             clock = item;
             timeSpent = 10;
             break;
@@ -740,7 +740,7 @@ public class Hero extends Creature {
     } else { // The Hero is not equipping a clock.
       Item brokenClock = null;
       for (Item item : getInventory().getItems()) {
-        if (item.isClock()) {
+        if (item.hasTag(Item.Tag.CLOCK)) {
           if (item.isBroken() && brokenClock == null) {
             brokenClock = item;
           } else {
@@ -848,7 +848,7 @@ public class Hero extends Creature {
     ID repairID = new ID("REPAIR");
     if (getSkillList().hasSkill(repairID)) {
       if (hasWeapon()) {
-        if (getWeapon().isRepairable()) {
+        if (getWeapon().hasTag(Item.Tag.REPAIRABLE)) {
           getWeapon().incrementIntegrity(GameData.getSkillDefinitions().get(repairID).repair);
           IO.writeString("You casted Repair on " + getWeapon().getName() + ".");
           return 10; // Ten seconds to cast.

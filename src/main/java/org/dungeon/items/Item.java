@@ -23,16 +23,17 @@ import org.dungeon.game.Game;
 import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
+import java.util.HashSet;
+
 public class Item extends Entity {
 
+  public enum Tag { WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_VARIES_WITH_INTEGRITY }
+
+  private final HashSet<Tag> tags;
   private final int maxIntegrity;
-  private final boolean repairable;
-  private final boolean weapon;
-  private final int damage;
-  private final double hitRate;
-  private final int integrityDecrementOnHit;
   private final Weight weight;
   private int curIntegrity;
+  private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
@@ -40,32 +41,30 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
 
+    tags = bp.tags;
+
     weight = bp.weight;
 
-    repairable = bp.repairable;
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
 
-    weapon = bp.weapon;
-    damage = bp.damage;
-    hitRate = bp.hitRate;
-    integrityDecrementOnHit = bp.integrityDecrementOnHit;
-
-    if (bp.food) {
+    if (hasTag(Tag.WEAPON)) {
+      weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
+    }
+    if (hasTag(Tag.FOOD)) {
       foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
-
-    if (bp.clock) {
+    if (hasTag(Tag.CLOCK)) {
       clockComponent = new ClockComponent();
       clockComponent.setMaster(this);
     }
-    if (bp.book) {
+    if (hasTag(Tag.BOOK)) {
       bookComponent = new BookComponent(bp.getSkill());
     }
   }
 
   public Weight getWeight() {
-    if (isFood()) {
+    if (hasTag(Tag.WEIGHT_VARIES_WITH_INTEGRITY)) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
       return weight.multiply(integrityPercentage);
     } else {
@@ -95,43 +94,21 @@ public class Item extends Entity {
     } else {
       this.curIntegrity = 0;
       // TODO: maybe we should extract the "breaking routine" to another method.
-      if (isClock()) {
+      if (hasTag(Tag.CLOCK)) {
         // A clock just broke! Update its last time record.
         clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
       }
     }
   }
 
-  public boolean isRepairable() {
-    return repairable;
+  public boolean hasTag(Tag tag) {
+    return tags.contains(tag);
   }
 
-  public boolean isWeapon() {
-    return weapon;
-  }
-
-  public int getDamage() {
-    return damage;
-  }
-
-  double getHitRate() {
-    return hitRate;
-  }
-
-  int getIntegrityDecrementOnHit() {
-    return integrityDecrementOnHit;
-  }
-
-  public boolean isFood() {
-    return foodComponent != null;
-  }
+  public WeaponComponent getWeaponComponent() { return weaponComponent; }
 
   public FoodComponent getFoodComponent() {
     return foodComponent;
-  }
-
-  public boolean isClock() {
-    return clockComponent != null;
   }
 
   public ClockComponent getClockComponent() {
@@ -151,7 +128,7 @@ public class Item extends Entity {
   }
 
   public void decrementIntegrityByHit() {
-    setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
+    setCurIntegrity(getCurIntegrity() - weaponComponent.getIntegrityDecrementOnHit());
   }
 
   public void decrementIntegrity(int integrityDecrement) {
@@ -159,7 +136,7 @@ public class Item extends Entity {
   }
 
   public boolean rollForHit() {
-    return getHitRate() > Engine.RANDOM.nextDouble();
+    return weaponComponent.getHitRate() > Engine.RANDOM.nextDouble();
   }
 
   // TODO: consider making an enum out of this.
