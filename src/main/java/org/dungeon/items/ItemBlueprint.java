@@ -21,6 +21,8 @@ import org.dungeon.game.ID;
 import org.dungeon.game.Name;
 import org.dungeon.game.Weight;
 
+import java.util.HashSet;
+
 public final class ItemBlueprint {
 
   ID id;
@@ -29,21 +31,18 @@ public final class ItemBlueprint {
 
   Weight weight;
 
+  HashSet<Item.Tag> tags;
+
   int maxIntegrity;
   int curIntegrity;
-  boolean repairable;
 
-  boolean weapon;
   int damage;
   double hitRate;
   int integrityDecrementOnHit;
 
-  boolean food;
   int nutrition;
   int integrityDecrementOnEat;
 
-  boolean clock;
-  boolean book;
   private ID skill;
 
 
@@ -79,20 +78,20 @@ public final class ItemBlueprint {
     this.weight = weight;
   }
 
+  public HashSet<Item.Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(HashSet<Item.Tag> tags) {
+    this.tags = tags;
+  }
+
   public void setMaxIntegrity(int maxIntegrity) {
     this.maxIntegrity = maxIntegrity;
   }
 
   public void setCurIntegrity(int curIntegrity) {
     this.curIntegrity = curIntegrity;
-  }
-
-  public void setRepairable(boolean repairable) {
-    this.repairable = repairable;
-  }
-
-  public void setWeapon(boolean weapon) {
-    this.weapon = weapon;
   }
 
   public void setDamage(int damage) {
@@ -107,10 +106,6 @@ public final class ItemBlueprint {
     this.integrityDecrementOnHit = integrityDecrementOnHit;
   }
 
-  public void setFood(boolean food) {
-    this.food = food;
-  }
-
   public void setNutrition(int nutrition) {
     this.nutrition = nutrition;
   }
@@ -119,20 +114,12 @@ public final class ItemBlueprint {
     this.integrityDecrementOnEat = integrityDecrementOnEat;
   }
 
-  public void setClock(boolean clock) {
-    this.clock = clock;
-  }
-
   public ID getSkill() {
     return skill;
   }
 
   public void setSkill(String skill) {
     this.skill = new ID(skill);
-  }
-
-  public void setBook(boolean book) {
-    this.book = book;
   }
 
 }
