@@ -27,12 +27,9 @@ public class Item extends Entity {
 
   private final int maxIntegrity;
   private final boolean repairable;
-  private final boolean weapon;
-  private final int damage;
-  private final double hitRate;
-  private final int integrityDecrementOnHit;
   private final Weight weight;
   private int curIntegrity;
+  private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
@@ -46,15 +43,12 @@ public class Item extends Entity {
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
 
-    weapon = bp.weapon;
-    damage = bp.damage;
-    hitRate = bp.hitRate;
-    integrityDecrementOnHit = bp.integrityDecrementOnHit;
-
+    if (bp.weapon) {
+      weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
+    }
     if (bp.food) {
       foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
-
     if (bp.clock) {
       clockComponent = new ClockComponent();
       clockComponent.setMaster(this);
@@ -107,20 +101,10 @@ public class Item extends Entity {
   }
 
   public boolean isWeapon() {
-    return weapon;
+    return weaponComponent != null;
   }
 
-  public int getDamage() {
-    return damage;
-  }
-
-  double getHitRate() {
-    return hitRate;
-  }
-
-  int getIntegrityDecrementOnHit() {
-    return integrityDecrementOnHit;
-  }
+  public WeaponComponent getWeaponComponent() { return weaponComponent; }
 
   public boolean isFood() {
     return foodComponent != null;
@@ -151,7 +135,7 @@ public class Item extends Entity {
   }
 
   public void decrementIntegrityByHit() {
-    setCurIntegrity(getCurIntegrity() - getIntegrityDecrementOnHit());
+    setCurIntegrity(getCurIntegrity() - weaponComponent.getIntegrityDecrementOnHit());
   }
 
   public void decrementIntegrity(int integrityDecrement) {
@@ -159,7 +143,7 @@ public class Item extends Entity {
   }
 
   public boolean rollForHit() {
-    return getHitRate() > Engine.RANDOM.nextDouble();
+    return weaponComponent.getHitRate() > Engine.RANDOM.nextDouble();
   }
 
   // TODO: consider making an enum out of this.

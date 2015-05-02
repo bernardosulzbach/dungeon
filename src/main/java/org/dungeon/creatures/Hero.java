@@ -692,8 +692,8 @@ public class Hero extends Creature {
     if (hasWeapon()) {
       Item heroWeapon = getWeapon();
       builder.append("You are currently equipping ").append(heroWeapon.getQualifiedName());
-      builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getDamage())).append(". ");
-      builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getDamage()).append(".\n");
+      builder.append(", whose base damage is ").append(String.valueOf(heroWeapon.getWeaponComponent().getDamage())).append(". ");
+      builder.append("This makes your total damage ").append(getAttack() + heroWeapon.getWeaponComponent().getDamage()).append(".\n");
     } else {
       builder.append("You are fighting bare-handed.\n");
     }
