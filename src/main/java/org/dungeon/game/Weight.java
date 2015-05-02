@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
+import org.dungeon.util.Percentage;
 
 import java.io.Serializable;
 
@@ -52,6 +53,16 @@ public class Weight implements Comparable<Weight>, Serializable {
    */
   public Weight add(Weight o) {
     return newInstance(this.value + o.value);
+  }
+
+  /**
+   * Produces a new Weight object by multiplying this object with percentage p.
+   *
+   * @param p a Percentage object
+   * @return a Weight object representing the relative value
+   */
+  public Weight multiplyBy(Percentage p) {
+    return newInstance(this.value * p.toDouble());
   }
 
   public String toString() {
