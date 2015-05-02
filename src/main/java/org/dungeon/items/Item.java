@@ -41,31 +41,24 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp) {
     super(bp.id, bp.type, bp.name);
 
-    tags = new HashSet<Tag>(Tag.values().length);
+    tags = bp.tags;
 
     weight = bp.weight;
 
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
 
-    if (bp.repairable) {
-      tags.add(Tag.REPAIRABLE);
-    }
-    if (bp.weapon) {
-      tags.add(Tag.WEAPON);
+    if (hasTag(Tag.WEAPON)) {
       weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
     }
-    if (bp.food) {
-      tags.add(Tag.FOOD);
+    if (hasTag(Tag.FOOD)) {
       foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
-    if (bp.clock) {
-      tags.add(Tag.CLOCK);
+    if (hasTag(Tag.CLOCK)) {
       clockComponent = new ClockComponent();
       clockComponent.setMaster(this);
     }
-    if (bp.book) {
-      tags.add(Tag.BOOK);
+    if (hasTag(Tag.BOOK)) {
       bookComponent = new BookComponent(bp.getSkill());
     }
   }

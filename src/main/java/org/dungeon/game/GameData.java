@@ -22,6 +22,7 @@ import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.creatures.Creature;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
+import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.stats.CauseOfDeath;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -136,23 +138,19 @@ public final class GameData {
       blueprint.setID(new ID(reader.getValue("ID")));
       blueprint.setType(reader.getValue("TYPE"));
       blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
+      blueprint.setTags(itemTagSetFromArray(reader.getArrayOfValues("TAGS")));
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
       blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
-      blueprint.setRepairable(readIntegerFromResourceReader(reader, "REPAIRABLE") == 1);
-      blueprint.setWeapon(readIntegerFromResourceReader(reader, "WEAPON") == 1);
       blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
       blueprint.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
       blueprint.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
-      blueprint.setFood(readIntegerFromResourceReader(reader, "FOOD") == 1);
       if (reader.hasValue("NUTRITION")) {
         blueprint.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
       }
       if (reader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
         blueprint.setIntegrityDecrementOnEat(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_EAT"));
       }
-      blueprint.setClock(readIntegerFromResourceReader(reader, "CLOCK") == 1);
-      blueprint.setBook(readIntegerFromResourceReader(reader, "BOOK") == 1);
       if (reader.hasValue("SKILL")) {
         blueprint.setSkill(reader.getValue("SKILL"));
       }
@@ -373,6 +371,28 @@ public final class GameData {
       DLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
       return Name.newInstance("ERROR");
     }
+  }
+
+  /**
+   * Convenience method that creates a HashSet&lt;Item.Tag&gt; from an array of Strings.
+   *
+   * @param strings the array of Strings
+   * @return a HashSet of Item Tags.
+   */
+  private static HashSet<Item.Tag> itemTagSetFromArray(String[] strings) {
+    HashSet<Item.Tag> tags = new HashSet<Item.Tag>(strings.length);
+    if (strings.length > 0) {
+      for(String s : strings) {
+        try {
+          tags.add(Item.Tag.valueOf(s));
+        } catch (IllegalArgumentException iae) {
+          DLogger.warning("Unrecognized tag \""+s+"\" ignored.");
+        }
+      }
+    } else {
+      DLogger.warning("Empty array used to create a Tag Set! Using empty set.");
+    }
+    return tags;
   }
 
   private static void loadLicense() {
