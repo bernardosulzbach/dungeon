@@ -20,8 +20,9 @@ package org.dungeon.items;
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
 import org.dungeon.game.Weight;
+import org.dungeon.items.Item.Tag;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public final class ItemBlueprint {
 
@@ -31,7 +32,7 @@ public final class ItemBlueprint {
 
   Weight weight;
 
-  HashSet<Item.Tag> tags;
+  Set<Item.Tag> tags;
 
   int maxIntegrity;
   int curIntegrity;
@@ -44,7 +45,6 @@ public final class ItemBlueprint {
   int integrityDecrementOnEat;
 
   private ID skill;
-
 
   public ID getID() {
     return id;
@@ -70,19 +70,11 @@ public final class ItemBlueprint {
     this.name = name;
   }
 
-  public Weight getWeight() {
-    return weight;
-  }
-
   public void setWeight(Weight weight) {
     this.weight = weight;
   }
 
-  public HashSet<Item.Tag> getTags() {
-    return tags;
-  }
-
-  public void setTags(HashSet<Item.Tag> tags) {
+  public void setTags(Set<Tag> tags) {
     this.tags = tags;
   }
 

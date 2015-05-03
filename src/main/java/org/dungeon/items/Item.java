@@ -23,13 +23,13 @@ import org.dungeon.game.Game;
 import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class Item extends Entity {
 
-  public enum Tag { WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_VARIES_WITH_INTEGRITY }
+  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_VARIES_WITH_INTEGRITY}
 
-  private final HashSet<Tag> tags;
+  private final Set<Tag> tags;
   private final int maxIntegrity;
   private final Weight weight;
   private int curIntegrity;
@@ -105,7 +105,9 @@ public class Item extends Entity {
     return tags.contains(tag);
   }
 
-  public WeaponComponent getWeaponComponent() { return weaponComponent; }
+  public WeaponComponent getWeaponComponent() {
+    return weaponComponent;
+  }
 
   public FoodComponent getFoodComponent() {
     return foodComponent;
