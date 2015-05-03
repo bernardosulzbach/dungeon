@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * The weapon part of some items.
  * <p/>
- * Created by neuro on 2/5/2015.
+ * Created by Neurolytic on 2/5/2015.
  */
 public class WeaponComponent implements Serializable {
 
