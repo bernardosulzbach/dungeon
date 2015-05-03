@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -374,25 +375,24 @@ public final class GameData {
   }
 
   /**
-   * Convenience method that creates a HashSet&lt;Item.Tag&gt; from an array of Strings.
+   * Creates a Set of Item.Tag from an array of Strings.
    *
    * @param strings the array of Strings
-   * @return a HashSet of Item Tags.
+   * @return a Set of Item.Tag
    */
-  private static HashSet<Item.Tag> itemTagSetFromArray(String[] strings) {
-    HashSet<Item.Tag> tags = new HashSet<Item.Tag>(strings.length);
-    if (strings.length > 0) {
-      for(String s : strings) {
-        try {
-          tags.add(Item.Tag.valueOf(s));
-        } catch (IllegalArgumentException iae) {
-          DLogger.warning("Unrecognized tag \""+s+"\" ignored.");
-        }
+  private static Set<Item.Tag> itemTagSetFromArray(String[] strings) {
+    Set<Item.Tag> set = new HashSet<Item.Tag>();
+    for (String tag : strings) {
+      try {
+        set.add(Item.Tag.valueOf(tag));
+      } catch (IllegalArgumentException fatal) {
+        String message = "Invalid tag '" + tag + "' found!";
+        DLogger.warning(message);
+        // Guarantees that bugged resource files are not going to make it to a release.
+        throw new Error(message, fatal);
       }
-    } else {
-      DLogger.warning("Empty array used to create a Tag Set! Using empty set.");
     }
-    return tags;
+    return set;
   }
 
   private static void loadLicense() {
