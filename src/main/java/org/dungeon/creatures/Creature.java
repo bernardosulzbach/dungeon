@@ -21,7 +21,9 @@ import org.dungeon.game.Entity;
 import org.dungeon.game.ID;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
+import org.dungeon.io.IO;
 import org.dungeon.items.CreatureInventory;
+import org.dungeon.items.CreatureInventory.AdditionResult;
 import org.dungeon.items.Item;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
@@ -40,22 +42,23 @@ public class Creature extends Entity {
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
   private int curHealth;
-  private CreatureInventory inventory;
+  private CreatureInventory inventory = new CreatureInventory(this, 4, 8);
   private Item weapon;
   private Location location;
+
+  public Creature(CreaturePreset preset) {
+    super(preset.getID(), preset.getType(), preset.getName());
+    maxHealth = preset.getHealth();
+    curHealth = preset.getHealth();
+    attack = preset.getAttack();
+    attackAlgorithm = preset.getAttackAlgorithm();
+  }
 
   public Creature(ID id, String type, Name name, int health, int attack, String attackAlgorithm) {
     super(id, type, name);
     maxHealth = curHealth = health;
     this.attack = attack;
     this.attackAlgorithm = attackAlgorithm;
-  }
-
-  /**
-   * The copy constructor. Used to generate Creatures that populate the World from model creatures.
-   */
-  Creature(Creature original) {
-    this(original.getID(), original.type, original.name, original.maxHealth, original.attack, original.attackAlgorithm);
   }
 
   SkillList getSkillList() {
@@ -134,6 +137,7 @@ public class Creature extends Entity {
 
   /**
    * Makes the Creature take a given amount of damage and returns whether its HealthState changed.
+   *
    * @param damage the amount of damage the Creature should take
    * @return true if the Creature's HealthState changed
    */
@@ -158,6 +162,46 @@ public class Creature extends Entity {
 
   boolean hasWeapon() {
     return getWeapon() != null;
+  }
+
+  /**
+   * Attempts to add an Item object to this Creature's inventory.
+   * <p/>
+   * Writes the results of the attempt, for a quiet version of this method, see {@code CreatureInventory.addItem(Item)}.
+   *
+   * @param item the Item to be added
+   * @return true if successful, false otherwise
+   */
+  public boolean addItem(Item item) {
+    AdditionResult result = getInventory().addItem(item);
+    switch (result) {
+      case AMOUNT_LIMIT:
+        IO.writeString("Your inventory is full.");
+        break;
+      case WEIGHT_LIMIT:
+        IO.writeString("You can't carry more weight.");
+        break;
+      case SUCCESSFUL:
+        IO.writeString("Added " + item.getName() + " to the inventory.");
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Effectively drops an item.
+   *
+   * @param item the Item to be dropped
+   */
+  public void dropItem(Item item) {
+    getInventory().removeItem(item);
+    getLocation().addItem(item);
+  }
+
+  public void dropEverything() {
+    for (Item item : getInventory().getItems()) {
+      dropItem(item);
+    }
   }
 
 }

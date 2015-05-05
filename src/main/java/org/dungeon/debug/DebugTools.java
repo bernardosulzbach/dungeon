@@ -235,7 +235,7 @@ public class DebugTools {
   private static void give(String itemID) {
     ItemBlueprint bp = GameData.getItemBlueprints().get(new ID(itemID.toUpperCase()));
     if (bp != null) {
-      if (Game.getGameState().getHero().getInventory().addItem(new Item(bp))) {
+      if (Game.getGameState().getHero().addItem(new Item(bp))) {
         return;
       }
     }

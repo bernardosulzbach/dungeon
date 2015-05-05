@@ -129,6 +129,12 @@ public class Location implements Serializable {
     return items.getItems().size();
   }
 
+  /**
+   * Adds a Creature to this Location's Creature Collection.
+   * Also sets the location attribute of the specified Creature to this Location.
+   *
+   * @param creature a Creature object
+   */
   public void addCreature(Creature creature) {
     creature.setLocation(this);
     creatures.add(creature);

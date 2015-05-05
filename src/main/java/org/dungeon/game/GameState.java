@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.achievements.UnlockedAchievement;
+import org.dungeon.creatures.CreatureFactory;
 import org.dungeon.creatures.Hero;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
@@ -55,7 +56,7 @@ public class GameState implements Serializable {
    * Creates the Hero and the starting Location.
    */
   private void createHeroAndStartingLocation() {
-    hero = new Hero();
+    hero = CreatureFactory.makeHero();
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
     getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getID());

@@ -20,7 +20,6 @@ package org.dungeon.items;
 import org.dungeon.creatures.Creature;
 import org.dungeon.game.Weight;
 import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
 
 /**
  * Inventory class that defines a common general-purpose Item storage and query structure.
@@ -58,26 +57,24 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
   }
 
   /**
-   * Attempts to add an item object to the inventory.
+   * Attempts to add an item object to this Inventory.
    *
    * @param item the Item to be added
    * @return true if successful, false otherwise
    */
-  public boolean addItem(Item item) {
+  public AdditionResult addItem(Item item) {
     if (hasItem(item)) { // Check that the new item is not already in the inventory.
       DLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
-      return false;
+      return AdditionResult.ALREADY_IN_THE_INVENTORY;
     }
     if (isFull()) {
-      IO.writeString("Your inventory is full.");
+      return AdditionResult.AMOUNT_LIMIT;
     } else if (willExceedWeightLimitAfterAdding(item)) {
-      IO.writeString("You can't carry more weight.");
+      return AdditionResult.WEIGHT_LIMIT;
     } else {
       items.add(item);
-      IO.writeString("Added " + item.getName() + " to the inventory.");
-      return true;
+      return AdditionResult.SUCCESSFUL;
     }
-    return false;
   }
 
   private boolean isFull() {
@@ -94,5 +91,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     }
     items.remove(item);
   }
+
+  public enum AdditionResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}
 
 }
