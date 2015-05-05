@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class Item extends Entity {
 
-  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_VARIES_WITH_INTEGRITY}
+  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
 
   private final Set<Tag> tags;
   private final int maxIntegrity;
@@ -64,7 +64,7 @@ public class Item extends Entity {
   }
 
   public Weight getWeight() {
-    if (hasTag(Tag.WEIGHT_VARIES_WITH_INTEGRITY)) {
+    if (hasTag(Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY)) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
       return weight.multiply(integrityPercentage);
     } else {
