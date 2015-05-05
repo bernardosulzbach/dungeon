@@ -18,9 +18,7 @@
 package org.dungeon.creatures;
 
 import org.dungeon.game.Entity;
-import org.dungeon.game.ID;
 import org.dungeon.game.Location;
-import org.dungeon.game.Name;
 import org.dungeon.io.IO;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.CreatureInventory.AdditionResult;
@@ -52,13 +50,6 @@ public class Creature extends Entity {
     curHealth = preset.getHealth();
     attack = preset.getAttack();
     attackAlgorithm = preset.getAttackAlgorithm();
-  }
-
-  public Creature(ID id, String type, Name name, int health, int attack, String attackAlgorithm) {
-    super(id, type, name);
-    maxHealth = curHealth = health;
-    this.attack = attack;
-    this.attackAlgorithm = attackAlgorithm;
   }
 
   SkillList getSkillList() {

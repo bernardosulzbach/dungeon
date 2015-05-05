@@ -44,7 +44,7 @@ public class ExplorationStatistics implements Serializable {
    */
   public void createEntryIfNotExists(Point point, ID locationID) {
     if (!hasBeenSeen(point)) {
-      entries.put(point, new ExplorationStatisticsEntry(locationID, 0, 0));
+      entries.put(point, new ExplorationStatisticsEntry(locationID));
     }
   }
 

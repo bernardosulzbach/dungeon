@@ -43,15 +43,6 @@ public abstract class Entity implements Selectable, Serializable {
     this.visibility = new Percentage(0.3);
   }
 
-  /**
-   * Entity's copy constructor.
-   *
-   * @param original the original Entity
-   */
-  protected Entity(Entity original) {
-    this(original.id, original.type, original.name);
-  }
-
   public ID getID() {
     return id;
   }

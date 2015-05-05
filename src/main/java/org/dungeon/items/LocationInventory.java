@@ -24,9 +24,8 @@ package org.dungeon.items;
  */
 public class LocationInventory extends BaseInventory {
 
-  public boolean addItem(Item item) {
+  public void addItem(Item item) {
     items.add(item);
-    return true;
   }
 
   public void removeItem(Item item) {
