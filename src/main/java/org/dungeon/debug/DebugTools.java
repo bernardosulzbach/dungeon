@@ -34,6 +34,7 @@ import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
+import org.dungeon.items.ItemFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
@@ -233,9 +234,9 @@ public class DebugTools {
   }
 
   private static void give(String itemID) {
-    ItemBlueprint bp = GameData.getItemBlueprints().get(new ID(itemID.toUpperCase()));
-    if (bp != null) {
-      if (Game.getGameState().getHero().addItem(new Item(bp))) {
+    Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()));
+    if (item != null) {
+      if (Game.getGameState().getHero().addItem(item)) {
         return;
       }
     }
