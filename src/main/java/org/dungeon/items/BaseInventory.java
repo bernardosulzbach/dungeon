@@ -17,6 +17,8 @@
 
 package org.dungeon.items;
 
+import org.dungeon.items.Item.Tag;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,24 @@ public abstract class BaseInventory implements Serializable {
    */
   boolean hasItem(Item itemObject) {
     return items.contains(itemObject);
+  }
+
+  /**
+   * Removes an item from the Inventory.
+   *
+   * @param item the Item to be removed
+   */
+  public abstract void removeItem(Item item);
+
+  /**
+   * Iterates through the inventory, removing items that shouldn't exist anymore.
+   */
+  public void refreshItems() {
+    for (Item item : items) {
+      if (item.hasTag(Tag.DECOMPOSES) && item.getAge() > item.getDecompositionPeriod()) {
+        removeItem(item);
+      }
+    }
   }
 
 }

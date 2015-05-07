@@ -21,6 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.CreatureFactory;
+import org.dungeon.date.Date;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
@@ -33,7 +34,6 @@ import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.io.IO;
 import org.dungeon.items.Item;
-import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.ItemFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
@@ -234,7 +234,8 @@ public class DebugTools {
   }
 
   private static void give(String itemID) {
-    Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()));
+    Date date = Game.getGameState().getWorld().getWorldDate();
+    Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()), date);
     if (item != null) {
       if (Game.getGameState().getHero().addItem(item)) {
         return;

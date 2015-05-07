@@ -142,6 +142,9 @@ public final class GameData {
       blueprint.setType(reader.getValue("TYPE"));
       blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
       blueprint.setTags(itemTagSetFromArray(reader.getArrayOfValues("TAGS")));
+      if (reader.hasValue("DECOMPOSITION_PERIOD")) {
+        blueprint.setPutrefactionPeriod(readIntegerFromResourceReader(reader, "DECOMPOSITION_PERIOD"));
+      }
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
       blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));

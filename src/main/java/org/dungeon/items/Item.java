@@ -17,6 +17,8 @@
 
 package org.dungeon.items;
 
+import org.dungeon.date.Date;
+import org.dungeon.date.Period;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
@@ -27,20 +29,24 @@ import java.util.Set;
 
 public class Item extends Entity {
 
-  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
-
   private final Set<Tag> tags;
   private final int maxIntegrity;
+  private final Date dateOfCreation;
+  private final long decompositionPeriod;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
 
-  public Item(ItemBlueprint bp) {
+  public Item(ItemBlueprint bp, Date date) {
     super(bp.id, bp.type, bp.name, bp.weight);
 
     tags = bp.tags;
+
+    dateOfCreation = date;
+
+    decompositionPeriod = bp.putrefactionPeriod;
 
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
@@ -68,6 +74,16 @@ public class Item extends Entity {
     } else {
       return weight;
     }
+  }
+
+  /**
+   * Returns how many seconds have passed since this Item was created.
+   *
+   * @return a long representing an amount of seconds
+   */
+  public long getAge() {
+    Period existence = new Period(dateOfCreation, Game.getGameState().getWorld().getWorldDate());
+    return existence.getSeconds();
   }
 
   public String getQualifiedName() {
@@ -160,5 +176,11 @@ public class Item extends Entity {
   public String toString() {
     return getName();
   }
+
+  public long getDecompositionPeriod() {
+    return decompositionPeriod;
+  }
+
+  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, DECOMPOSES, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
 
 }

@@ -20,7 +20,6 @@ package org.dungeon.game;
 import org.dungeon.creatures.Creature;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.Item;
-import org.dungeon.items.ItemBlueprint;
 import org.dungeon.items.ItemFactory;
 import org.dungeon.items.LocationInventory;
 import org.dungeon.util.Percentage;
@@ -60,7 +59,7 @@ public class Location implements Serializable {
     this.items = new LocationInventory();
     for (Entry<ID, Percentage> entry : preset.getItems()) {
       if (Engine.roll(entry.getValue())) {
-        Item item = ItemFactory.makeItem(entry.getKey());
+        Item item = ItemFactory.makeItem(entry.getKey(), world.getWorldDate());
         if (item != null) {
           this.addItem(item);
         } else {

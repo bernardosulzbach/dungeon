@@ -17,12 +17,12 @@
 
 package org.dungeon.creatures;
 
+import org.dungeon.date.Date;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
 import org.dungeon.items.CreatureInventory.AdditionResult;
-import org.dungeon.items.Item;
 import org.dungeon.items.ItemFactory;
 import org.dungeon.util.Constants;
 
@@ -53,7 +53,8 @@ public abstract class CreatureFactory {
 
   private static void giveItems(Creature creature, ID id) {
     for (ID itemID : GameData.getCreaturePresets().get(id).getItems()) {
-      AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID));
+      Date date = Game.getGameState().getWorld().getWorldDate();
+      AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID, date));
       if (result != AdditionResult.SUCCESSFUL) {
         DLogger.warning("Could not add " + itemID + " to " + id + "! Got " + result + ".");
       }

@@ -29,22 +29,21 @@ public final class ItemBlueprint {
   ID id;
   String type;
   Name name;
-
   Weight weight;
-
   Set<Item.Tag> tags;
-
   int maxIntegrity;
   int curIntegrity;
-
   int damage;
   double hitRate;
   int integrityDecrementOnHit;
-
   int nutrition;
   int integrityDecrementOnEat;
-
+  long putrefactionPeriod;
   private ID skill;
+
+  public void setPutrefactionPeriod(long putrefactionPeriod) {
+    this.putrefactionPeriod = putrefactionPeriod;
+  }
 
   public ID getID() {
     return id;

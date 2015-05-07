@@ -68,6 +68,7 @@ public class Engine {
   public static void refresh() {
     refreshAchievements();
     refreshSpawners();
+    refreshItems();
   }
 
   /**
@@ -85,6 +86,11 @@ public class Engine {
    */
   private static void refreshSpawners() {
     Game.getGameState().getHeroLocation().refreshSpawners();
+  }
+
+  private static void refreshItems() {
+    Game.getGameState().getHeroLocation().getInventory().refreshItems();
+    Game.getGameState().getHero().getInventory().refreshItems();
   }
 
   /**

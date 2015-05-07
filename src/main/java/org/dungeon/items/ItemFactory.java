@@ -17,6 +17,7 @@
 
 package org.dungeon.items;
 
+import org.dungeon.date.Date;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
 
@@ -25,10 +26,10 @@ public abstract class ItemFactory {
   /**
    * Attempts to create an item from the ItemBlueprint specified by an ID. Returns null if no blueprint was found.
    */
-  public static Item makeItem(ID id) {
+  public static Item makeItem(ID id, Date date) {
     ItemBlueprint blueprint = GameData.getItemBlueprints().get(id);
     if (blueprint != null) {
-      return new Item(blueprint);
+      return new Item(blueprint, date);
     } else {
       return null;
     }
