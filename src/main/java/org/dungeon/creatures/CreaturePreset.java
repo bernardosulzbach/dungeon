@@ -19,6 +19,7 @@ package org.dungeon.creatures;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
+import org.dungeon.game.Weight;
 import org.dungeon.io.DLogger;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public final class CreaturePreset {
   private ID id;
   private String type;
   private Name name;
+  private Weight weight;
   private int health;
   private int attack;
   private String attackAlgorithm;
@@ -80,6 +82,14 @@ public final class CreaturePreset {
 
   public void setName(Name name) {
     this.name = name;
+  }
+
+  public Weight getWeight() {
+    return weight;
+  }
+
+  public void setWeight(Weight weight) {
+    this.weight = weight;
   }
 
   public int getHealth() {

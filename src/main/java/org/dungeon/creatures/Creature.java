@@ -45,7 +45,7 @@ public class Creature extends Entity {
   private Location location;
 
   public Creature(CreaturePreset preset) {
-    super(preset.getID(), preset.getType(), preset.getName());
+    super(preset.getID(), preset.getType(), preset.getName(), preset.getWeight());
     maxHealth = preset.getHealth();
     curHealth = preset.getHealth();
     attack = preset.getAttack();

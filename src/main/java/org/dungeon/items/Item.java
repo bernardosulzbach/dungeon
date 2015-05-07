@@ -31,7 +31,6 @@ public class Item extends Entity {
 
   private final Set<Tag> tags;
   private final int maxIntegrity;
-  private final Weight weight;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
@@ -39,11 +38,9 @@ public class Item extends Entity {
   private BookComponent bookComponent;
 
   public Item(ItemBlueprint bp) {
-    super(bp.id, bp.type, bp.name);
+    super(bp.id, bp.type, bp.name, bp.weight);
 
     tags = bp.tags;
-
-    weight = bp.weight;
 
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
@@ -63,6 +60,7 @@ public class Item extends Entity {
     }
   }
 
+  @Override
   public Weight getWeight() {
     if (hasTag(Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY)) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
