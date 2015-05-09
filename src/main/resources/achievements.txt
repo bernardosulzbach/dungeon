@@ -17,7 +17,7 @@ TEXT: killed ten creatures
 MINIMUM_BATTLE_COUNT: 10
 
 ID: DIE_HARD
-NAME: Die hard
+NAME: Die Hard
 INFO: Take 10 turns or more to kill a creature.
 TEXT: took more than nine turns to kill a creature
 LONGEST_BATTLE_LENGTH: 10
@@ -29,7 +29,7 @@ TEXT: killed ten creatures in forests
 KILLS_BY_LOCATION_ID: [[FOREST | 10]]
 
 ID: I_MISS_YOU
-NAME: I miss you!
+NAME: I Miss You!
 INFO: Visit the same graveyard 10 times.
 TEXT: visited the same graveyard ten times
 MAXIMUM_NUMBER_OF_VISITS: [[GRAVEYARD | 10]]
