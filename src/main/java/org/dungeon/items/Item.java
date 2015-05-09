@@ -155,21 +155,8 @@ public class Item extends Entity {
     return weaponComponent.getHitRate() > Engine.RANDOM.nextDouble();
   }
 
-  // TODO: consider making an enum out of this.
   String getIntegrityString() {
-    String weaponIntegrity;
-    if (getCurIntegrity() == getMaxIntegrity()) {
-      weaponIntegrity = "";
-    } else if (getCurIntegrity() >= getMaxIntegrity() * 0.65) {
-      weaponIntegrity = "Slightly Damaged";
-    } else if (getCurIntegrity() >= getMaxIntegrity() * 0.3) {
-      weaponIntegrity = "Damaged";
-    } else if (getCurIntegrity() > 0) {
-      weaponIntegrity = "Severely Damaged";
-    } else {
-      weaponIntegrity = "Broken";
-    }
-    return weaponIntegrity;
+    return IntegrityState.getIntegrityState(getCurIntegrity(), getMaxIntegrity()).toString();
   }
 
   @Override
