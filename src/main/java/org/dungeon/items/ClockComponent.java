@@ -30,14 +30,14 @@ import java.io.Serializable;
  */
 public class ClockComponent implements Serializable {
 
-  private Item master;
+  private final Item master;
 
   /**
    * Used to store the date the clock had when it was broken.
    */
   private Date lastTime;
 
-  public void setMaster(Item master) {
+  ClockComponent(Item master) {
     this.master = master;
   }
 

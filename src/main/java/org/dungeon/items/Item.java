@@ -58,8 +58,7 @@ public class Item extends Entity {
       foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
     }
     if (hasTag(Tag.CLOCK)) {
-      clockComponent = new ClockComponent();
-      clockComponent.setMaster(this);
+      clockComponent = new ClockComponent(this);
     }
     if (hasTag(Tag.BOOK)) {
       bookComponent = new BookComponent(bp.getSkill());
