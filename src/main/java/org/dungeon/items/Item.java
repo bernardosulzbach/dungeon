@@ -101,16 +101,29 @@ public class Item extends Entity {
     return curIntegrity;
   }
 
+  /**
+   * Sets the current integrity attribute of this Item to the specified value.
+   * If the supplied value is bigger than the maximum integrity, this maximum allowed value is used.
+   * Similarly, if the provided value is smaller than zero, zero is used.
+   *
+   * @param curIntegrity the wanted new integrity for the item
+   */
   public void setCurIntegrity(int curIntegrity) {
-    if (curIntegrity > 0) {
-      this.curIntegrity = curIntegrity;
+    if (curIntegrity <= 0) {
+      setIntegrityToZero();
     } else {
-      this.curIntegrity = 0;
-      // TODO: maybe we should extract the "breaking routine" to another method.
-      if (hasTag(Tag.CLOCK)) {
-        // A clock just broke! Update its last time record.
-        clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
-      }
+      this.curIntegrity = Math.min(curIntegrity, maxIntegrity);
+    }
+  }
+
+  /**
+   * This method should be used to set the integrity to zero because it also manages item breaking.
+   */
+  private void setIntegrityToZero() {
+    this.curIntegrity = 0;
+    if (hasTag(Tag.CLOCK)) {
+      // A clock just broke! Update its last time record.
+      clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
     }
   }
 
@@ -139,7 +152,7 @@ public class Item extends Entity {
   }
 
   public void incrementIntegrity(int integrityIncrement) {
-    setCurIntegrity(Math.min(getCurIntegrity() + integrityIncrement, getMaxIntegrity()));
+    setCurIntegrity(getCurIntegrity() + integrityIncrement);
   }
 
   public void decrementIntegrityByHit() {
