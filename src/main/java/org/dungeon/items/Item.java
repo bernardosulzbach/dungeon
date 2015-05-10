@@ -163,8 +163,13 @@ public class Item extends Entity {
     setCurIntegrity(getCurIntegrity() - integrityDecrement);
   }
 
+  /**
+   * Rolls for a hit.
+   *
+   * @return true if the next attack should hit, false otherwise
+   */
   public boolean rollForHit() {
-    return weaponComponent.getHitRate() > Engine.RANDOM.nextDouble();
+    return Engine.roll(weaponComponent.getHitRate());
   }
 
   String getIntegrityString() {
