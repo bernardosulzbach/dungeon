@@ -30,18 +30,21 @@ import java.io.Serializable;
  */
 public class Date implements Serializable {
 
-  private static final long SECONDS_IN_MINUTE = 60;
-  private static final long MINUTES_IN_HOUR = 60;
-  private static final long HOURS_IN_DAY = 24;
+  public static final long MILLIS_IN_SECOND = 1000;
+  public static final long SECONDS_IN_MINUTE = 60;
+  public static final long MINUTES_IN_HOUR = 60;
+  public static final long HOURS_IN_DAY = 24;
   public static final long DAYS_IN_MONTH = 10;
   public static final long MONTHS_IN_YEAR = 10;
 
-  private static final long MILLIS_IN_SECOND = 1000;
-  private static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
-  private static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;
-  static final long MILLIS_IN_DAY = MILLIS_IN_HOUR * HOURS_IN_DAY;
-  static final long MILLIS_IN_MONTH = MILLIS_IN_DAY * DAYS_IN_MONTH;
-  static final long MILLIS_IN_YEAR = MILLIS_IN_MONTH * MONTHS_IN_YEAR;
+  public static final long SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
+  public static final long SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY;
+
+  public static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
+  public static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;
+  public static final long MILLIS_IN_DAY = MILLIS_IN_HOUR * HOURS_IN_DAY;
+  public static final long MILLIS_IN_MONTH = MILLIS_IN_DAY * DAYS_IN_MONTH;
+  public static final long MILLIS_IN_YEAR = MILLIS_IN_MONTH * MONTHS_IN_YEAR;
 
   private long time;
 

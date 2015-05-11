@@ -40,6 +40,8 @@ public class Engine {
    * The Random object shared by all the classes.
    */
   public static final Random RANDOM = new Random();
+  private static final int WALK_BLOCKED = 2;
+  private static final int WALK_SUCCESS = 200;
 
   /**
    * Simulates a random roll.
@@ -127,7 +129,7 @@ public class Engine {
     Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
     if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
       IO.writeString("You cannot go " + dir + ".");
-      return TimeConstants.WALK_BLOCKED;
+      return WALK_BLOCKED;
     }
     Location destination = gameState.getWorld().moveHero(dir);
     refreshSpawners(); // Update the spawners of the location the Hero moved to.
@@ -135,14 +137,14 @@ public class Engine {
     hero.look(dir.invert());
     ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
     explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
-    return TimeConstants.WALK_SUCCESS;
+    return WALK_SUCCESS;
   }
 
   /**
    * Simulates a battle between two Creatures and returns the number of turns the battle had.
    *
    * @param hero the attacker.
-   * @param foe the defender.
+   * @param foe  the defender.
    * @return an integer representing the number of turns the battle had.
    */
   // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.

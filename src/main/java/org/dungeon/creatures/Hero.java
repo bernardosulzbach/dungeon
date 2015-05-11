@@ -33,7 +33,6 @@ import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.QuantificationMode;
 import org.dungeon.game.Selectable;
-import org.dungeon.game.TimeConstants;
 import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.io.Sleeper;
@@ -61,6 +60,9 @@ import java.util.Map.Entry;
  */
 public class Hero extends Creature {
 
+  // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
+  // It seems a good idea to let the Hero have one dream every 4 hours.
+  private static final int DREAM_DURATION_IN_SECONDS = 4 * (int) Date.SECONDS_IN_HOUR;
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
   private static final int SECONDS_TO_LOOK_AT_THE_COVER_OF_A_BOOK = 6;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
@@ -72,6 +74,8 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_EQUIP = 6;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private static final Percentage LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS = new Percentage(0.4);
+  private static final int BATTLE_TURN_DURATION = 30;
+  private static final int HEAL_TEN_PERCENT = 3600;
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
 
@@ -108,7 +112,7 @@ public class Hero extends Creature {
       IO.writeString("Resting...");
       setCurHealth((int) (healthFractionThroughRest * getMaxHealth()));
       IO.writeString("You feel rested.");
-      return (int) (TimeConstants.HEAL_TEN_PERCENT * fractionHealed * 10);
+      return (int) (HEAL_TEN_PERCENT * fractionHealed * 10);
     }
   }
 
@@ -128,7 +132,7 @@ public class Hero extends Creature {
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
       // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
       seconds += Engine.RANDOM.nextInt(15 * 60 + 1);
-      int healing = getMaxHealth() * seconds / TimeConstants.HEAL_TEN_PERCENT / 10;
+      int healing = getMaxHealth() * seconds / HEAL_TEN_PERCENT / 10;
       if (!isCompletelyHealed()) {
         int health = getCurHealth() + healing;
         if (health < getMaxHealth()) {
@@ -137,18 +141,15 @@ public class Hero extends Creature {
           setCurHealth(getMaxHealth());
         }
       }
-      // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
-      // It seems a good idea to let the Hero have one dream every 4 hours.
-      final int dreamDurationInSeconds = 4 * 60 * 60;
       // Make a copy of seconds as it must be returned unaltered so that the Engine rolls time forwards correctly.
       int remainingSeconds = seconds;
       while (remainingSeconds > 0) {
-        if (remainingSeconds > dreamDurationInSeconds) {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * dreamDurationInSeconds / 3600);
+        if (remainingSeconds > DREAM_DURATION_IN_SECONDS) {
+          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * DREAM_DURATION_IN_SECONDS / (int) Date.SECONDS_IN_HOUR);
           IO.writeString(GameData.getDreamLibrary().getNextDream());
-          remainingSeconds -= dreamDurationInSeconds;
+          remainingSeconds -= DREAM_DURATION_IN_SECONDS;
         } else {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / 3600);
+          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / (int) Date.SECONDS_IN_HOUR);
           break;
         }
       }
@@ -402,7 +403,7 @@ public class Hero extends Creature {
     if (canSeeACreature()) {
       Creature target = selectTarget(issuedCommand);
       if (target != null) {
-        return Engine.battle(this, target) * TimeConstants.BATTLE_TURN_DURATION;
+        return Engine.battle(this, target) * BATTLE_TURN_DURATION;
       }
     } else {
       IO.writeString("You do not see a possible target.");

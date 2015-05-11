@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.creatures.CreaturePreset;
+import org.dungeon.date.Date;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.items.Item;
@@ -48,7 +49,9 @@ import java.util.Set;
  * Created by Bernardo on 22/10/2014.
  */
 public final class GameData {
+
   public static final Font FONT = getMonospacedFont();
+  private static final double CORPSE_HIT_RATE = 0.5;
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
@@ -166,6 +169,9 @@ public final class GameData {
     DLogger.info("Loaded " + itemBlueprints.size() + " item blueprints.");
   }
 
+  /**
+   * Loads all creature presets from the resource files. Also makes the ItemBlueprints used by the corpses.
+   */
   private static void loadCreaturePresets() {
     ResourceReader reader = new ResourceReader("creatures.txt");
     while (reader.readNextElement()) {
@@ -197,9 +203,10 @@ public final class GameData {
     corpse.setType("CORPSE");
     corpse.setName(Name.newInstance(preset.getName().getName() + " Corpse"));
     corpse.setWeight(preset.getWeight());
-    corpse.setPutrefactionPeriod(24 * 60 * 60);
+    corpse.setPutrefactionPeriod(Date.SECONDS_IN_DAY);
     int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.
     corpse.setMaxIntegrity(integrity);
+    corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setCurIntegrity(integrity);
     corpse.setIntegrityDecrementOnHit(5);
     Set<Item.Tag> tags = new HashSet<Item.Tag>();
