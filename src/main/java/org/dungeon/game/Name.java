@@ -94,4 +94,32 @@ public final class Name implements Serializable {
     return number + " " + name;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Name name = (Name) o;
+
+    if (singular != null ? !singular.equals(name.singular) : name.singular != null) {
+      return false;
+    }
+    if (plural != null ? !plural.equals(name.plural) : name.plural != null) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = singular != null ? singular.hashCode() : 0;
+    result = 31 * result + (plural != null ? plural.hashCode() : 0);
+    return result;
+  }
+
 }
