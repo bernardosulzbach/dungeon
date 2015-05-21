@@ -63,6 +63,16 @@ public final class Name implements Serializable {
     return new Name(singular, plural);
   }
 
+  /**
+   * Creates the Name the corpse Item of a creature whose name is provided should have.
+   *
+   * @param creatureName the Name of the creature
+   * @return a Name object
+   */
+  public static Name newCorpseName(Name creatureName) {
+    return newInstance(creatureName.getName() + " Corpse");
+  }
+
   public String getName() {
     return singular;
   }
@@ -77,9 +87,10 @@ public final class Name implements Serializable {
    * @return a String
    */
   public String getQuantifiedName(int quantity, QuantificationMode mode) {
-    String name = null;
+    String name;
     if (quantity < 0) {
       DLogger.warning("Called getQuantifiedName with nonpositive quantity.");
+      throw new AssertionError("Negative quantity passed to getQuantifiedName()!");
     } else if (quantity == 1) {
       name = singular;
     } else {
@@ -89,7 +100,12 @@ public final class Name implements Serializable {
     if (mode == QuantificationMode.NUMBER) {
       number = String.valueOf(quantity);
     } else {
-      number = Numeral.getCorrespondingNumeral(quantity).toString().toLowerCase();
+      Numeral correspondingNumeral = Numeral.getCorrespondingNumeral(quantity);
+      if (correspondingNumeral == null) {
+        throw new AssertionError("Numeral.getCorrespondingNumeral() returned null!");
+      } else {
+        number = correspondingNumeral.toString().toLowerCase();
+      }
     }
     return number + " " + name;
   }
