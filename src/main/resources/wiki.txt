@@ -23,6 +23,10 @@ Gabriel Bellini Bohmer                  - gabrielbellinibohmer@gmail.com\\
 \\
 If you want your name on this list, consider coding, reporting bugs, or writing new content to the game.
 
+ARTICLE: Corpses
+CONTENT: Corpses weight as much as the creature and will eventually decompose. The integrity of a corpse is directly\
+proportional to the health of the creature when it was uninjured.
+
 ARTICLE: Eating
 CONTENT: As of 0.0.7, eating only heals you until you are uninjured (better than resting, as good as sleeping). There\
 are no bonuses for eating regularly neither do the character ever feels hungry.
