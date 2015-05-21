@@ -52,8 +52,9 @@ import java.util.Set;
 public final class GameData {
 
   public static final Font FONT = getMonospacedFont();
-  public static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
-  public static final long CORPSE_PUTREFACTION_PERIOD = Date.SECONDS_IN_DAY;
+  private static final int CORPSE_DAMAGE = 2;
+  private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
+  private static final long CORPSE_PUTREFACTION_PERIOD = Date.SECONDS_IN_DAY;
   private static final double CORPSE_HIT_RATE = 0.5;
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
@@ -212,6 +213,7 @@ public final class GameData {
     corpse.setCurIntegrity(integrity);
     corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
+    corpse.setDamage(CORPSE_DAMAGE);
     Set<Item.Tag> tags = new HashSet<Item.Tag>();
     tags.add(Item.Tag.WEAPON);
     tags.add(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
