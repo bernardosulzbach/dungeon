@@ -21,6 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.Hero;
 import org.dungeon.io.IO;
+import org.dungeon.items.ItemFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
@@ -187,14 +188,16 @@ public class Engine {
   }
 
   /**
-   * Battle cleanup routine.
-   * This method removes the defeated creature and resets the SkillRotation of the survivor.
+   * Battle cleanup routine. This method removes the defeated Creature, drops all its Items onto the floor, makes and
+   * adds its corpse Item to the Location and resets the SkillRotation of the survivor.
    *
    * @param survivor the Creature that is still alive.
    * @param defeated the Creature that was killed.
    */
   private static void battleCleanup(Creature survivor, Creature defeated) {
-    defeated.getLocation().removeCreature(defeated);
+    Location defeatedLocation = defeated.getLocation();
+    defeatedLocation.removeCreature(defeated);
+    defeatedLocation.addItem(ItemFactory.makeCorpse(defeated, defeatedLocation.getWorld().getWorldDate()));
     defeated.dropEverything();
     survivor.getSkillRotation().restartRotation();
   }

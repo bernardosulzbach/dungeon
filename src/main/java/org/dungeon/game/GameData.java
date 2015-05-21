@@ -25,6 +25,7 @@ import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.items.Item;
 import org.dungeon.items.ItemBlueprint;
+import org.dungeon.items.ItemFactory;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
@@ -199,7 +200,7 @@ public final class GameData {
 
   public static ItemBlueprint makeCorpseBlueprint(CreaturePreset preset) {
     ItemBlueprint corpse = new ItemBlueprint();
-    corpse.setID(new ID(preset.getID() + "_CORPSE"));
+    corpse.setID(ItemFactory.makeCorpseIDFromCreatureID(preset.getID()));
     corpse.setType("CORPSE");
     corpse.setName(Name.newInstance(preset.getName().getName() + " Corpse"));
     corpse.setWeight(preset.getWeight());

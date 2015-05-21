@@ -17,6 +17,7 @@
 
 package org.dungeon.items;
 
+import org.dungeon.creatures.Creature;
 import org.dungeon.date.Date;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
@@ -33,6 +34,24 @@ public abstract class ItemFactory {
     } else {
       return null;
     }
+  }
+
+  /**
+   * Makes a corpse from the provided Creature. The creation Date of the corpse should be the Date of death.
+   *
+   * @param creature the Creature object
+   * @param date     the Date when the Creature died
+   * @return an Item that represents the corpse of the Creature
+   */
+  public static Item makeCorpse(Creature creature, Date date) {
+    return makeItem(makeCorpseIDFromCreatureID(creature.getID()), date);
+  }
+
+  /**
+   * Given a Creature ID, this method returns the corresponding corpse's ID.
+   */
+  public static ID makeCorpseIDFromCreatureID(ID id) {
+    return new ID(id + "_CORPSE");
   }
 
 }
