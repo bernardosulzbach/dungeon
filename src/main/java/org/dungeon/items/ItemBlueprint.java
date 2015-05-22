@@ -22,15 +22,13 @@ import org.dungeon.game.Name;
 import org.dungeon.game.Weight;
 import org.dungeon.items.Item.Tag;
 
-import java.util.Set;
-
 public final class ItemBlueprint {
 
+  final TagSet tagSet = new TagSet();
   ID id;
   String type;
   Name name;
   Weight weight;
-  Set<Item.Tag> tags;
   int maxIntegrity;
   int curIntegrity;
   int damage;
@@ -73,8 +71,8 @@ public final class ItemBlueprint {
     this.weight = weight;
   }
 
-  public void setTags(Set<Tag> tags) {
-    this.tags = tags;
+  public void addTag(Tag tag) {
+    tagSet.addTag(tag);
   }
 
   public int getMaxIntegrity() {

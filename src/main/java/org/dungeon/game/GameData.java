@@ -148,7 +148,9 @@ public final class GameData {
       blueprint.setID(new ID(reader.getValue("ID")));
       blueprint.setType(reader.getValue("TYPE"));
       blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
-      blueprint.setTags(itemTagSetFromArray(reader.getArrayOfValues("TAGS")));
+      for (Item.Tag tag : itemTagSetFromArray(reader.getArrayOfValues("TAGS"))) {
+        blueprint.addTag(tag);
+      }
       if (reader.hasValue("DECOMPOSITION_PERIOD")) {
         blueprint.setPutrefactionPeriod(readIntegerFromResourceReader(reader, "DECOMPOSITION_PERIOD"));
       }
@@ -214,11 +216,9 @@ public final class GameData {
     corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
     corpse.setDamage(CORPSE_DAMAGE);
-    Set<Item.Tag> tags = new HashSet<Item.Tag>();
-    tags.add(Item.Tag.WEAPON);
-    tags.add(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
-    tags.add(Item.Tag.DECOMPOSES);
-    corpse.setTags(tags);
+    corpse.addTag(Item.Tag.WEAPON);
+    corpse.addTag(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
+    corpse.addTag(Item.Tag.DECOMPOSES);
     return corpse;
   }
 

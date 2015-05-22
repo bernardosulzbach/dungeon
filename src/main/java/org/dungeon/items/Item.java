@@ -25,14 +25,12 @@ import org.dungeon.game.Game;
 import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
-import java.util.Set;
-
 public class Item extends Entity {
 
-  private final Set<Tag> tags;
   private final int maxIntegrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;
+  private final TagSet tagSet;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
@@ -42,7 +40,7 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp, Date date) {
     super(bp.id, bp.type, bp.name, bp.weight);
 
-    tags = bp.tags;
+    tagSet = bp.tagSet;
 
     dateOfCreation = date;
 
@@ -129,7 +127,7 @@ public class Item extends Entity {
   }
 
   public boolean hasTag(Tag tag) {
-    return tags.contains(tag);
+    return tagSet.hasTag(tag);
   }
 
   public WeaponComponent getWeaponComponent() {
