@@ -296,28 +296,11 @@ public class Hero extends Creature {
     }
   }
 
-  /**
-   * Counts how many Entities in a specified Collection have a given name.
-   *
-   * @param entities a Collection of Entities
-   * @param name     the name as a String
-   * @return a nonnegative integer
-   */
-  private int countEntitiesByName(final Collection<? extends Entity> entities, String name) {
-    int counter = 0;
-    for (Entity entity : entities) {
-      if (entity.getName().getSingular().equals(name)) {
-        counter++;
-      }
-    }
-    return counter;
-  }
-
   private String enumerateEntities(final List<? extends Entity> listOfEntities) {
     ArrayList<String> quantifiedNames = new ArrayList<String>();
-    ArrayList<String> alreadyListedEntities = new ArrayList<String>();
+    ArrayList<Name> alreadyListedEntities = new ArrayList<Name>();
     for (Entity entity : listOfEntities) {
-      String name = entity.getName().getSingular();
+      Name name = entity.getName();
       if (!alreadyListedEntities.contains(name)) {
         int count = countEntitiesByName(listOfEntities, name);
         quantifiedNames.add(entity.getName().getQuantifiedName(count));
@@ -325,6 +308,23 @@ public class Hero extends Creature {
       }
     }
     return Utils.enumerate(quantifiedNames);
+  }
+
+  /**
+   * Counts how many Entities in a specified Collection have a given name.
+   *
+   * @param entities a Collection of Entities
+   * @param name     the Name object
+   * @return a nonnegative integer
+   */
+  private int countEntitiesByName(final Collection<? extends Entity> entities, Name name) {
+    int counter = 0;
+    for (Entity entity : entities) {
+      if (entity.getName().equals(name)) {
+        counter++;
+      }
+    }
+    return counter;
   }
 
   Item selectInventoryItem(IssuedCommand issuedCommand) {
