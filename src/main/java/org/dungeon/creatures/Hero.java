@@ -43,6 +43,7 @@ import org.dungeon.items.FoodComponent;
 import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
@@ -296,35 +297,19 @@ public class Hero extends Creature {
     }
   }
 
+  /**
+   * Returns a String representation of the enumeration of all the Entities in a given List.
+   */
   private String enumerateEntities(final List<? extends Entity> listOfEntities) {
-    ArrayList<String> quantifiedNames = new ArrayList<String>();
-    ArrayList<Name> alreadyListedEntities = new ArrayList<Name>();
+    CounterMap<Name> nameOccurrences = new CounterMap<Name>();
     for (Entity entity : listOfEntities) {
-      Name name = entity.getName();
-      if (!alreadyListedEntities.contains(name)) {
-        int count = countEntitiesByName(listOfEntities, name);
-        quantifiedNames.add(entity.getName().getQuantifiedName(count));
-        alreadyListedEntities.add(name);
-      }
+      nameOccurrences.incrementCounter(entity.getName());
+    }
+    ArrayList<String> quantifiedNames = new ArrayList<String>();
+    for (Name name : nameOccurrences.keySet()) {
+      quantifiedNames.add(name.getQuantifiedName(nameOccurrences.getCounter(name)));
     }
     return Utils.enumerate(quantifiedNames);
-  }
-
-  /**
-   * Counts how many Entities in a specified Collection have a given name.
-   *
-   * @param entities a Collection of Entities
-   * @param name     the Name object
-   * @return a nonnegative integer
-   */
-  private int countEntitiesByName(final Collection<? extends Entity> entities, Name name) {
-    int counter = 0;
-    for (Entity entity : entities) {
-      if (entity.getName().equals(name)) {
-        counter++;
-      }
-    }
-    return counter;
   }
 
   Item selectInventoryItem(IssuedCommand issuedCommand) {
