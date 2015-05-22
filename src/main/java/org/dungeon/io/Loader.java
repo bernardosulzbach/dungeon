@@ -22,7 +22,6 @@ import org.dungeon.game.GameState;
 import org.dungeon.game.IssuedCommand;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Table;
-import org.dungeon.util.Utils;
 
 import javax.swing.JOptionPane;
 import java.io.File;
@@ -66,11 +65,11 @@ public final class Loader {
           fileCount += 1;
           byteCount += file.length();
           Date lastModified = new Date(file.lastModified());
-          table.insertRow(file.getName(), Utils.bytesToHuman(file.length()), LAST_MODIFIED_FORMAT.format(lastModified));
+          table.insertRow(file.getName(), bytesToHuman(file.length()), LAST_MODIFIED_FORMAT.format(lastModified));
         }
         if (fileCount > 1) {
           table.insertSeparator();
-          table.insertRow("Sum of these " + fileCount + " files", Utils.bytesToHuman(byteCount));
+          table.insertRow("Sum of these " + fileCount + " files", bytesToHuman(byteCount));
         }
         table.print();
       } else {
@@ -245,7 +244,7 @@ public final class Loader {
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
       String formatString = "Successfully loaded the game (read %s from %s).";
-      IO.writeString(String.format(formatString, Utils.bytesToHuman(file.length()), file.getName()));
+      IO.writeString(String.format(formatString, bytesToHuman(file.length()), file.getName()));
       return loadedGameState;
     } catch (Exception bad) {
       IO.writeString("Could not load the saved game.");
@@ -277,10 +276,33 @@ public final class Loader {
       state.setSaved(true);
       long bytes = file.length();
       String formatString = "Successfully saved the game (wrote %s to %s).";
-      IO.writeString(String.format(formatString, Utils.bytesToHuman(bytes), file.getName()));
+      IO.writeString(String.format(formatString, bytesToHuman(bytes), file.getName()));
     } catch (IOException bad) {
       IO.writeString("Could not save the game.");
     }
+  }
+
+  /**
+   * Converts a given number of bytes to a human readable format.
+   *
+   * @return a String
+   */
+  private static String bytesToHuman(long bytes) {
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
+    // 2 ^ 10 (1 kB) has (63 - 10) = 53 leading zeros.
+    // 2 ^ 20 (1 MB) has (63 - 20) = 43 leading zeros.
+    // And so forth.
+    // Bits used to represent the number of bytes = number of bits available - number of leading zeros.
+    int bitsUsed = 63 - Long.numberOfLeadingZeros(bytes);
+    // (1L << (bitsUsed - bitsUsed % 10)) shifts the one (in binary) to the left by a multiple of 10.
+    // This is a fast way to get the power of 1024 by which we must divide the number of bytes.
+    double significand = (double) bytes / (1L << (bitsUsed - bitsUsed % 10));
+    // By dividing the number of bits used by 10, get the prefix that should be used.
+    // Subtract one as Strings are zero indexed.
+    char prefix = "kMGTPE".charAt(bitsUsed / 10 - 1);
+    return String.format("%.1f %sB", significand, prefix);
   }
 
 }
