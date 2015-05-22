@@ -19,7 +19,7 @@ package org.dungeon.game;
 
 /**
  * TurnResult class that stores the result of a turn.
- *
+ * <p/>
  * Created on 19/12/2014.
  */
 class TurnResult {

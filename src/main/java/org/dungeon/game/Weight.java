@@ -32,13 +32,12 @@ import java.util.Locale;
  */
 public class Weight implements Comparable<Weight>, Serializable {
 
+  public static final Weight ZERO = newInstance(0);
   private static final DecimalFormat WEIGHT_FORMAT = (DecimalFormat) NumberFormat.getInstance(Locale.US);
 
   static {
     WEIGHT_FORMAT.applyPattern("0.### kg");
   }
-
-  public static final Weight ZERO = newInstance(0);
 
   private final double value;
 
@@ -75,7 +74,7 @@ public class Weight implements Comparable<Weight>, Serializable {
   }
 
   public String toString() {
-    return String.format(WEIGHT_FORMAT.format(value));
+    return WEIGHT_FORMAT.format(value);
   }
 
   @Override
