@@ -21,7 +21,11 @@ import org.dungeon.io.IO;
 
 import java.util.Date;
 
-public class SystemInfo {
+public final class SystemInfo {
+
+  private SystemInfo() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
 
   /**
    * Prints some information about the system.
@@ -40,7 +44,10 @@ public class SystemInfo {
   }
 
   private static String getOSVersionString() {
-    return String.format("%s (%s) %s", System.getProperty("os.name"), System.getProperty("os.arch"), System.getProperty("os.version"));
+    String name = System.getProperty("os.name");
+    String arch = System.getProperty("os.arch");
+    String version = System.getProperty("os.version");
+    return String.format("%s (%s) %s", name, arch, version);
   }
 
 }
