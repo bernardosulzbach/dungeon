@@ -60,6 +60,17 @@ public class Table {
   }
 
   /**
+   * Creates a string of repeated characters.
+   */
+  private static String makeRepeatedCharacterString(int repetitions, char character) {
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < repetitions; i++) {
+      builder.append(character);
+    }
+    return builder.toString();
+  }
+
+  /**
    * Inserts a row of values in the end of the table. If not enough values are supplied, the remaining columns are
    * filled with empty strings.
    *
@@ -198,7 +209,7 @@ public class Table {
    * @param columnWidth   the width of the columns of the table.
    */
   private void appendHorizontalSeparator(StringBuilder stringBuilder, int columnWidth, int columnCount) {
-    String pseudoValue = Utils.makeRepeatedCharacterString(columnWidth, HORIZONTAL_BAR);
+    String pseudoValue = makeRepeatedCharacterString(columnWidth, HORIZONTAL_BAR);
     String[] pseudoRow = new String[columnCount];
     Arrays.fill(pseudoRow, pseudoValue);
     appendRow(stringBuilder, columnWidth, pseudoRow);

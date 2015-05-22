@@ -66,17 +66,6 @@ public final class Utils {
   }
 
   /**
-   * Creates a string of repeated characters.
-   */
-  public static String makeRepeatedCharacterString(int repetitions, char character) {
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < repetitions; i++) {
-      builder.append(character);
-    }
-    return builder.toString();
-  }
-
-  /**
    * Split a string of text into an array of words.
    */
   public static String[] split(String string) {
@@ -213,7 +202,7 @@ public final class Utils {
    * @param <T>        a type T that extends {@code Selectable}
    * @return a {@code Matches} object with zero or more elements of type T
    */
-  public static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,
+  private static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,
       String... tokens) {
     List<T> listOfMatches = new ArrayList<T>();
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
