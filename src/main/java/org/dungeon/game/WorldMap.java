@@ -53,7 +53,7 @@ public class WorldMap {
           builder.append(HERO_SYMBOL);
         } else if (world.hasLocation(currentPosition)) {
           if (explorationStatistics.hasBeenSeen(currentPosition)) {
-            builder.append(world.getLocation(currentPosition).getName().charAt(0));
+            builder.append(world.getLocation(currentPosition).getName().getSingular().charAt(0));
           } else {
             builder.append(NOT_YET_SEEN_SYMBOL);
           }

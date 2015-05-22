@@ -36,7 +36,7 @@ public class Location implements Serializable {
 
   private final ID id;
   private final String type;
-  private final String name;
+  private final Name name;
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
   private final List<Spawner> spawners;
@@ -77,7 +77,7 @@ public class Location implements Serializable {
     return type;
   }
 
-  public String getName() {
+  public Name getName() {
     return name;
   }
 

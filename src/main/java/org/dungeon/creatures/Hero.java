@@ -252,7 +252,7 @@ public class Hero extends Creature {
         Location adjacentLocation = world.getLocation(adjacentPoint);
         ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
         explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getID());
-        String locationName = adjacentLocation.getName();
+        String locationName = adjacentLocation.getName().getSingular();
         if (!visibleLocations.containsKey(locationName)) {
           visibleLocations.put(locationName, new ArrayList<Direction>());
         }
@@ -306,7 +306,7 @@ public class Hero extends Creature {
   private int countEntitiesByName(final Collection<? extends Entity> entities, String name) {
     int counter = 0;
     for (Entity entity : entities) {
-      if (entity.getName().equals(name)) {
+      if (entity.getName().getSingular().equals(name)) {
         counter++;
       }
     }
@@ -317,10 +317,10 @@ public class Hero extends Creature {
     ArrayList<String> quantifiedNames = new ArrayList<String>();
     ArrayList<String> alreadyListedEntities = new ArrayList<String>();
     for (Entity entity : listOfEntities) {
-      String name = entity.getName();
+      String name = entity.getName().getSingular();
       if (!alreadyListedEntities.contains(name)) {
         int count = countEntitiesByName(listOfEntities, name);
-        quantifiedNames.add(entity.getQuantifiedName(count));
+        quantifiedNames.add(entity.getName().getQuantifiedName(count));
         alreadyListedEntities.add(name);
       }
     }
@@ -478,7 +478,7 @@ public class Hero extends Creature {
    * @return a boolean indicating if all Entities in the collection have the same name
    */
   private boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities, Entity ignored) {
-    String lastSeenName = null;
+    Name lastSeenName = null;
     for (Entity entity : entities) {
       if (ignored == null || entity != ignored) {
         if (lastSeenName == null) {

@@ -36,7 +36,7 @@ public abstract class CreatureFactory {
   public static Creature makeCreature(ID id) {
     CreaturePreset preset = GameData.getCreaturePresets().get(id);
     if (preset != null) {
-      Game.getGameState().getStatistics().getWorldStatistics().addSpawn(preset.getName().getName());
+      Game.getGameState().getStatistics().getWorldStatistics().addSpawn(preset.getName().getSingular());
       Creature creature = new Creature(preset);
       giveItems(creature, id);
       return creature;

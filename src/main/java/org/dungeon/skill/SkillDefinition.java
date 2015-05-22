@@ -18,6 +18,7 @@
 package org.dungeon.skill;
 
 import org.dungeon.game.ID;
+import org.dungeon.game.Name;
 
 import java.io.Serializable;
 
@@ -35,14 +36,14 @@ import java.io.Serializable;
 public final class SkillDefinition implements Serializable {
 
   public final ID id;
-  public final String name;
+  public final Name name;
   public final int damage;
   public final int repair;
   public final int coolDown;
 
   public SkillDefinition(String id, String name, int damage, int repair, int coolDown) {
     this.id = new ID(id);
-    this.name = name;
+    this.name = Name.newInstance(name);
     this.damage = damage;
     this.repair = repair;
     this.coolDown = coolDown;

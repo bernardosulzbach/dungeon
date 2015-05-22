@@ -17,6 +17,7 @@
 
 package org.dungeon.wiki;
 
+import org.dungeon.game.Name;
 import org.dungeon.game.Selectable;
 
 /**
@@ -26,11 +27,11 @@ import org.dungeon.game.Selectable;
  */
 final class Article implements Selectable {
 
-  public final String title;
+  public final Name title;
   public final String content;
 
   public Article(String title, String content) {
-    this.title = title;
+    this.title = Name.newInstance(title);
     this.content = content;
   }
 
@@ -38,7 +39,7 @@ final class Article implements Selectable {
    * Returns the title of this Article.
    */
   @Override
-  public String getName() {
+  public Name getName() {
     return title;
   }
 

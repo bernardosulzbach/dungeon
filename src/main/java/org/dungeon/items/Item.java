@@ -86,10 +86,11 @@ public class Item extends Entity {
   }
 
   public String getQualifiedName() {
+    String singularName = getName().getSingular();
     if (getCurIntegrity() == getMaxIntegrity()) {
-      return getName();
+      return singularName;
     } else {
-      return getIntegrityString() + " " + getName();
+      return getIntegrityString() + " " + singularName;
     }
   }
 
@@ -176,13 +177,13 @@ public class Item extends Entity {
     return IntegrityState.getIntegrityState(getCurIntegrity(), getMaxIntegrity()).toString();
   }
 
-  @Override
-  public String toString() {
-    return getName();
-  }
-
   public long getDecompositionPeriod() {
     return decompositionPeriod;
+  }
+
+  @Override
+  public String toString() {
+    return getName().toString();
   }
 
   public enum Tag {WEAPON, FOOD, CLOCK, BOOK, DECOMPOSES, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}

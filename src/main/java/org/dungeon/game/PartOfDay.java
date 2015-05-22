@@ -40,7 +40,7 @@ public enum PartOfDay implements Selectable {
   EVENING("Evening", 0.4, 19),
   MIDNIGHT("Midnight", 0.2, 23);
 
-  private final String stringRepresentation;
+  private final Name name;
 
   // How bright is the sun at this part of the day?
   // Should be bigger than or equal to 0 and smaller than or equal to 1.
@@ -48,8 +48,8 @@ public enum PartOfDay implements Selectable {
 
   private int startingHour;
 
-  PartOfDay(String stringRepresentation, double luminosity, int startingHour) {
-    this.stringRepresentation = stringRepresentation;
+  PartOfDay(String name, double luminosity, int startingHour) {
+    this.name = Name.newInstance(name);
     this.luminosity = new Percentage(luminosity);
     setStartingHour(startingHour);
   }
@@ -105,15 +105,15 @@ public enum PartOfDay implements Selectable {
   }
 
   @Override
-  public String getName() {
+  public Name getName() {
     // Whenever the player sees a PartOfDay, he or she sees the return value of toString().
     // Therefore it makes sense to delegate the name of a PartOfDay to the toString() method.
-    return toString();
+    return name;
   }
 
   @Override
   public String toString() {
-    return stringRepresentation;
+    return name.toString();
   }
 
 }

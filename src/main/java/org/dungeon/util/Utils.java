@@ -242,7 +242,7 @@ public final class Utils {
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
     double maximumSimilarity = 1e-6;
     for (T candidate : collection) {
-      String[] titleWords = split(candidate.getName());
+      String[] titleWords = split(candidate.getName().getSingular());
       int matches = countMatches(tokens, titleWords);
       if (!complete || matches == tokens.length) {
         double matchesOverTitleWords = matches / (double) titleWords.length;

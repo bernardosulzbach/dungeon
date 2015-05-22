@@ -17,6 +17,7 @@
 
 package org.dungeon.util;
 
+import org.dungeon.game.Name;
 import org.dungeon.game.Selectable;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class Matches<T extends Selectable> {
    * @param name the name used for comparison
    * @return true if there is a match with the given name, false otherwise
    */
-  public boolean hasMatchWithName(String name) {
+  public boolean hasMatchWithName(Name name) {
     for (T match : matches) {
       if (match.getName().equals(name)) {
         return true;
@@ -104,7 +105,7 @@ public class Matches<T extends Selectable> {
    * Updates the differentNames variable after iterating over the list of matches.
    */
   private void updateDifferentNamesCount() {
-    HashSet<String> uniqueNames = new HashSet<String>();
+    HashSet<Name> uniqueNames = new HashSet<Name>();
     for (T match : matches) {
       uniqueNames.add(match.getName());
     }

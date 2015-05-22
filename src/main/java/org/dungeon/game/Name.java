@@ -70,11 +70,26 @@ public final class Name implements Serializable {
    * @return a Name object
    */
   public static Name newCorpseName(Name creatureName) {
-    return newInstance(creatureName.getName() + " Corpse");
+    return newInstance(creatureName.getSingular() + " Corpse");
   }
 
-  public String getName() {
+  /**
+   * Returns the singular form of this Name.
+   */
+  public String getSingular() {
     return singular;
+  }
+
+  /**
+   * Returns a String representing a quantified name.
+   * <p/>
+   * {@code e.g.: "Two Bears", "8 Tigers", "One Elephant"}
+   *
+   * @param quantity the quantity, must be positive
+   * @return a String
+   */
+  public String getQuantifiedName(int quantity) {
+    return getQuantifiedName(quantity, QuantificationMode.WORD);
   }
 
   /**
@@ -136,6 +151,11 @@ public final class Name implements Serializable {
     int result = singular != null ? singular.hashCode() : 0;
     result = 31 * result + (plural != null ? plural.hashCode() : 0);
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return getSingular();
   }
 
 }

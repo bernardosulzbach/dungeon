@@ -57,7 +57,7 @@ public class World implements Serializable {
 
   public void addLocation(Location locationObject, Point coordinates) {
     locations.put(coordinates, locationObject);
-    worldStatistics.addLocation(locationObject.getName());
+    worldStatistics.addLocation(locationObject.getName().getSingular());
   }
 
   /**
