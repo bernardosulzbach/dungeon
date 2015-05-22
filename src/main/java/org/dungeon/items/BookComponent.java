@@ -23,10 +23,10 @@ import java.io.Serializable;
 
 /**
  * BookComponent class.
- *
+ * <p/>
  * Created by Bernardo Sulzbach on 09/01/15.
  */
-public class BookComponent implements Serializable{
+public class BookComponent implements Serializable {
 
   private final ID skillID;
 
