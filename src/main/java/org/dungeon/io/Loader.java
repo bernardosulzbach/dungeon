@@ -39,17 +39,18 @@ import java.util.Date;
  * <p/>
  * Created by Bernardo Sulzbach.
  */
-public class Loader {
+public final class Loader {
 
   private static final File SAVES_FOLDER = new File("saves/");
-
   private static final String SAVE_EXTENSION = ".dungeon";
   private static final String DEFAULT_SAVE_NAME = "default" + SAVE_EXTENSION;
-
   private static final String SAVE_CONFIRM = "Do you want to save the game?";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
-
   private static final SimpleDateFormat LAST_MODIFIED_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+  private Loader() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
 
   /**
    * Pretty-prints all the files in the saves folder.
