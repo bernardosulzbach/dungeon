@@ -95,7 +95,7 @@ public final class Loader {
    * Check if the default save file exists.
    */
   private static boolean checkForDefaultSave() {
-    File defaultSave = new File(SAVES_FOLDER, DEFAULT_SAVE_NAME);
+    File defaultSave = createFileFromName(DEFAULT_SAVE_NAME);
     return isSaveFile(defaultSave);
   }
 
@@ -149,7 +149,7 @@ public final class Loader {
   public static GameState loadGame() {
     if (checkForDefaultSave()) {
       if (confirmOperation(LOAD_CONFIRM)) {
-        return loadFile(new File(SAVES_FOLDER, DEFAULT_SAVE_NAME));
+        return loadFile(createFileFromName(DEFAULT_SAVE_NAME));
       }
     } else if (checkForAnySave()) {
       if (confirmOperation(LOAD_CONFIRM)) {
@@ -176,7 +176,7 @@ public final class Loader {
       // A save name was provided.
       String argument = issuedCommand.getFirstArgument();
       argument = ensureSaveEndsWithExtension(argument);
-      File save = new File(SAVES_FOLDER, argument);
+      File save = createFileFromName(argument);
       if (isSaveFile(save)) {
         return loadFile(save);
       } else {
@@ -192,22 +192,42 @@ public final class Loader {
    * Saves the specified GameState to the default save file.
    */
   public static void saveGame(GameState gameState) {
-    if (confirmOperation(SAVE_CONFIRM)) {
-      saveFile(gameState, DEFAULT_SAVE_NAME);
+    saveGame(gameState, null);
+  }
+
+  /**
+   * Saves the specified GameState, using the default save file or the one defined in the IssuedCommand.
+   * <p/>
+   * Only asks for confirmation if there already is a save file with the name.
+   */
+  public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
+    String saveName = DEFAULT_SAVE_NAME;
+    if (issuedCommand != null && issuedCommand.hasArguments()) {
+      saveName = issuedCommand.getFirstArgument();
+    }
+    if (saveFileDoesNotExist(saveName) || confirmOperation(SAVE_CONFIRM)) {
+      saveFile(gameState, saveName);
     }
   }
 
   /**
-   * Saves a GameState, assigning a new name for the save file, if provided.
+   * Tests whether the save file corresponding to the provided name does not exist.
+   *
+   * @param name the provided filename
+   * @return true if the corresponding file does not exist
    */
-  public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      if (confirmOperation(SAVE_CONFIRM)) {
-        saveFile(gameState, issuedCommand.getFirstArgument());
-      }
-    } else {
-      saveGame(gameState);
-    }
+  private static boolean saveFileDoesNotExist(String name) {
+    return !createFileFromName(name).exists();
+  }
+
+  /**
+   * Returns a File object for the corresponding save file for a specified name.
+   *
+   * @param name the provided filename
+   * @return a File object
+   */
+  private static File createFileFromName(String name) {
+    return new File(SAVES_FOLDER, ensureSaveEndsWithExtension(name));
   }
 
   /**
@@ -240,8 +260,7 @@ public final class Loader {
    * @param name  the name of the file
    */
   private static void saveFile(GameState state, String name) {
-    name = ensureSaveEndsWithExtension(name);
-    File file = new File(SAVES_FOLDER, name);
+    File file = createFileFromName(name);
     FileOutputStream fileOutStream;
     ObjectOutputStream objectOutStream;
     try {
