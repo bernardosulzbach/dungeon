@@ -83,10 +83,6 @@ public class Creature extends Entity {
     return attack;
   }
 
-  String getAttackAlgorithm() {
-    return attackAlgorithm;
-  }
-
   public CreatureInventory getInventory() {
     return inventory;
   }
@@ -130,7 +126,7 @@ public class Creature extends Entity {
    * @return the possible CauseOfDeath
    */
   public CauseOfDeath hit(Creature target) {
-    return AttackAlgorithm.attack(this, target, getAttackAlgorithm());
+    return AttackAlgorithm.attack(this, target, attackAlgorithm);
   }
 
   /**
