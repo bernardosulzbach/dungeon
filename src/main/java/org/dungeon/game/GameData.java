@@ -19,6 +19,7 @@ package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
+import org.dungeon.creatures.Creature;
 import org.dungeon.creatures.CreaturePreset;
 import org.dungeon.date.Date;
 import org.dungeon.io.DLogger;
@@ -38,8 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -148,7 +149,7 @@ public final class GameData {
       blueprint.setID(new ID(reader.getValue("ID")));
       blueprint.setType(reader.getValue("TYPE"));
       blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
-      for (Item.Tag tag : itemTagSetFromArray(reader.getArrayOfValues("TAGS"))) {
+      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, reader.getArrayOfValues("TAGS"))) {
         blueprint.addTag(tag);
       }
       if (reader.hasValue("DECOMPOSITION_PERIOD")) {
@@ -185,6 +186,11 @@ public final class GameData {
       preset.setID(new ID(reader.getValue("ID")));
       preset.setType(reader.getValue("TYPE"));
       preset.setName(nameFromArray(reader.getArrayOfValues("NAME")));
+      if (reader.hasValue("TAGS")) {
+        for (Creature.Tag tag : tagSetFromArray(Creature.Tag.class, reader.getArrayOfValues("TAGS"))) {
+          preset.addTag(tag);
+        }
+      }
       preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
@@ -193,9 +199,10 @@ public final class GameData {
         preset.setItems(readIDList(reader, "ITEMS"));
       }
       creaturesPresets.put(preset.getID(), preset);
-      // TODO: after having creature tags, check for a corpse tag here.
-      ItemBlueprint corpse = makeCorpseBlueprint(preset);
-      itemBlueprints.put(corpse.getID(), corpse);
+      if (preset.hasTag(Creature.Tag.CORPSE)) {
+        ItemBlueprint corpse = makeCorpseBlueprint(preset);
+        itemBlueprints.put(corpse.getID(), corpse);
+      }
     }
     reader.close();
     itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
@@ -416,16 +423,18 @@ public final class GameData {
   }
 
   /**
-   * Creates a Set of Item.Tag from an array of Strings.
+   * Creates a Set of tags from an array of Strings.
    *
-   * @param strings the array of Strings
+   * @param enumClass the Class of the enum
+   * @param strings   the array of Strings
+   * @param <E>       an Enum type
    * @return a Set of Item.Tag
    */
-  private static Set<Item.Tag> itemTagSetFromArray(String[] strings) {
-    Set<Item.Tag> set = new HashSet<Item.Tag>();
+  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, String[] strings) {
+    Set<E> set = EnumSet.noneOf(enumClass);
     for (String tag : strings) {
       try {
-        set.add(Item.Tag.valueOf(tag));
+        set.add(Enum.valueOf(enumClass, tag));
       } catch (IllegalArgumentException fatal) {
         String message = "Invalid tag '" + tag + "' found!";
         DLogger.warning(message);

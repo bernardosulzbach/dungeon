@@ -19,6 +19,7 @@ package org.dungeon.creatures;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
+import org.dungeon.game.TagSet;
 import org.dungeon.game.Weight;
 import org.dungeon.io.DLogger;
 
@@ -32,6 +33,7 @@ import java.util.List;
  */
 public final class CreaturePreset {
 
+  private final TagSet<Creature.Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private ID id;
   private String type;
   private Name name;
@@ -58,6 +60,18 @@ public final class CreaturePreset {
       DLogger.warning(s);
       return minimum;
     }
+  }
+
+  TagSet<Creature.Tag> getTagSet() {
+    return tagSet;
+  }
+
+  public boolean hasTag(Creature.Tag corpse) {
+    return tagSet.hasTag(corpse);
+  }
+
+  public void addTag(Creature.Tag tag) {
+    tagSet.addTag(tag);
   }
 
   public ID getID() {

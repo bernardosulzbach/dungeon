@@ -44,6 +44,9 @@ public abstract class ItemFactory {
    * @return an Item that represents the corpse of the Creature
    */
   public static Item makeCorpse(Creature creature, Date date) {
+    if (!creature.hasTag(Creature.Tag.CORPSE)) {
+      throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
+    }
     return makeItem(makeCorpseIDFromCreatureID(creature.getID()), date);
   }
 

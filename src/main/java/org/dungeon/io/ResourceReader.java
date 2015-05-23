@@ -224,7 +224,8 @@ public class ResourceReader implements Closeable {
    * Logs a warning that a line redefines an already defined property.
    */
   private void logRepeatedValue() {
-    DLogger.warning(filename, resourceParser.getLineNumber(), " repeats a value of its element!");
+    String message = " repeats a value of its element (first occurrence was used)!";
+    DLogger.warning(filename, resourceParser.getLineNumber(), message);
   }
 
   /**

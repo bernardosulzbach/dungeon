@@ -197,7 +197,9 @@ public class Engine {
   private static void battleCleanup(Creature survivor, Creature defeated) {
     Location defeatedLocation = defeated.getLocation();
     defeatedLocation.removeCreature(defeated);
-    defeatedLocation.addItem(ItemFactory.makeCorpse(defeated, defeatedLocation.getWorld().getWorldDate()));
+    if (defeated.hasTag(Creature.Tag.CORPSE)) {
+      defeatedLocation.addItem(ItemFactory.makeCorpse(defeated, defeatedLocation.getWorld().getWorldDate()));
+    }
     defeated.dropEverything();
     survivor.getSkillRotation().restartRotation();
   }

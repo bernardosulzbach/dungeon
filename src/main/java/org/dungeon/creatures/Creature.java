@@ -19,6 +19,7 @@ package org.dungeon.creatures;
 
 import org.dungeon.game.Entity;
 import org.dungeon.game.Location;
+import org.dungeon.game.TagSet;
 import org.dungeon.io.IO;
 import org.dungeon.items.CreatureInventory;
 import org.dungeon.items.CreatureInventory.AdditionResult;
@@ -39,6 +40,7 @@ public class Creature extends Entity {
   private final String attackAlgorithm;
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
+  private final TagSet<Tag> tagSet;
   private int curHealth;
   private CreatureInventory inventory = new CreatureInventory(this, 4, 8);
   private Item weapon;
@@ -49,6 +51,7 @@ public class Creature extends Entity {
     maxHealth = preset.getHealth();
     curHealth = preset.getHealth();
     attack = preset.getAttack();
+    tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithm = preset.getAttackAlgorithm();
   }
 
@@ -58,6 +61,10 @@ public class Creature extends Entity {
 
   public SkillRotation getSkillRotation() {
     return skillRotation;
+  }
+
+  public boolean hasTag(Tag tag) {
+    return tagSet.hasTag(tag);
   }
 
   int getMaxHealth() {
@@ -194,5 +201,7 @@ public class Creature extends Entity {
       dropItem(item);
     }
   }
+
+  public enum Tag {CORPSE}
 
 }
