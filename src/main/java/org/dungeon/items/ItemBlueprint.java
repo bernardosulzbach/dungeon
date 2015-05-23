@@ -19,12 +19,12 @@ package org.dungeon.items;
 
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
+import org.dungeon.game.TagSet;
 import org.dungeon.game.Weight;
-import org.dungeon.items.Item.Tag;
 
 public final class ItemBlueprint {
 
-  final TagSet tagSet = new TagSet();
+  final TagSet<Item.Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   ID id;
   String type;
   Name name;
@@ -71,7 +71,7 @@ public final class ItemBlueprint {
     this.weight = weight;
   }
 
-  public void addTag(Tag tag) {
+  public void addTag(Item.Tag tag) {
     tagSet.addTag(tag);
   }
 

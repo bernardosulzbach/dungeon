@@ -15,13 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
-import org.dungeon.items.Item.Tag;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -29,9 +28,35 @@ import java.util.Set;
  * <p/>
  * Created by Bernardo on 22/05/2015.
  */
-public class TagSet implements Serializable {
+public class TagSet<E extends Enum<E>> implements Serializable {
 
-  private final Set<Tag> set = new HashSet<Tag>();
+  private final Set<E> set;
+
+  private TagSet(EnumSet<E> set) {
+    this.set = set;
+  }
+
+  /**
+   * Returns an empty TagSet.
+   *
+   * @param enumClass the Class of the Enum type
+   * @param <E>       an Enum type
+   * @return a new TagSet
+   */
+  public static <E extends Enum<E>> TagSet<E> makeEmptyTagSet(Class<E> enumClass) {
+    return new TagSet<E>(EnumSet.noneOf(enumClass));
+  }
+
+  /**
+   * Returns a copy of the specified TagSet such that Tags can be added without affecting the original TagSet.
+   *
+   * @param tagSet the original TagSet
+   * @param <E>    an Enum type
+   * @return a new TagSet
+   */
+  public static <E extends Enum<E>> TagSet<E> copyTagSet(TagSet<E> tagSet) {
+    return new TagSet<E>(EnumSet.copyOf(tagSet.set));
+  }
 
   /**
    * Checks if this TagSet has a specified Tag.
@@ -39,14 +64,14 @@ public class TagSet implements Serializable {
    * @param tag the Tag object
    * @return true if this set contains the specified Tag
    */
-  public boolean hasTag(Tag tag) {
+  public boolean hasTag(E tag) {
     return set.contains(tag);
   }
 
   /**
    * Adds a Tag to this TagSet.
    */
-  public void addTag(Tag tag) {
+  public void addTag(E tag) {
     if (!set.add(tag)) {
       DLogger.warning("Tried to add a Tag that was already in the TagSet!");
     }

@@ -22,6 +22,7 @@ import org.dungeon.date.Period;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
+import org.dungeon.game.TagSet;
 import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
@@ -30,7 +31,7 @@ public class Item extends Entity {
   private final int maxIntegrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;
-  private final TagSet tagSet;
+  private final TagSet<Tag> tagSet;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
@@ -40,7 +41,7 @@ public class Item extends Entity {
   public Item(ItemBlueprint bp, Date date) {
     super(bp.id, bp.type, bp.name, bp.weight);
 
-    tagSet = bp.tagSet;
+    tagSet = TagSet.copyTagSet(bp.tagSet);
 
     dateOfCreation = date;
 
