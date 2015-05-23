@@ -29,6 +29,7 @@ import java.math.BigInteger;
  */
 public final class Math {
 
+  private static final int SECOND_IN_NANOSECONDS = 1000000000;
   private static final double DEFAULT_DOUBLE_TOLERANCE = 1e-8;
   private static final String TIMEOUT = "TIMEOUT";
 
@@ -103,8 +104,8 @@ public final class Math {
    * @return a String representation of the number or the {@code TIMEOUT} constant
    */
   private static String fibonacci(int n) {
-    // Allow this method to run for a trillion nanoseconds (a second).
-    final long interruptTime = System.nanoTime() + 1000000000;
+    // Allow this method to run for one second.
+    final long interruptTime = System.nanoTime() + SECOND_IN_NANOSECONDS;
     BigInteger a = BigInteger.ZERO;
     BigInteger b = BigInteger.ONE;
     // Swap variable.
