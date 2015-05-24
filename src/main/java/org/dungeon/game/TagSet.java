@@ -32,7 +32,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
 
   private final Set<E> set;
 
-  private TagSet(EnumSet<E> set) {
+  private TagSet(Set<E> set) {
     this.set = set;
   }
 
