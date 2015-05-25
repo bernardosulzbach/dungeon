@@ -42,7 +42,6 @@ public class Item extends Entity {
     super(bp.id, bp.type, bp.name, bp.weight);
 
     tagSet = TagSet.copyTagSet(bp.tagSet);
-
     dateOfCreation = date;
 
     decompositionPeriod = bp.putrefactionPeriod;
@@ -60,7 +59,7 @@ public class Item extends Entity {
       clockComponent = new ClockComponent(this);
     }
     if (hasTag(Tag.BOOK)) {
-      bookComponent = new BookComponent(bp.getSkill());
+      bookComponent = new BookComponent(bp.getSkill(), bp.text);
     }
   }
 

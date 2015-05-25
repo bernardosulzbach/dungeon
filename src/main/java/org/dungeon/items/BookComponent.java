@@ -29,16 +29,28 @@ import java.io.Serializable;
 public class BookComponent implements Serializable {
 
   private final ID skillID;
+  private final String text;
 
-  public BookComponent(ID skillID) {
+  public BookComponent(ID skillID, String text) {
+    if (text == null) {
+      throw new AssertionError("Tried to create a BookComponent with null text!");
+    }
     this.skillID = skillID;
+    this.text = text;
   }
 
   /**
-   * @return the ID of the Skill this books teaches.
+   * Returns the ID of the Skill this books teaches.
    */
   public ID getSkillID() {
     return skillID;
+  }
+
+  /**
+   * Returns the readable text of the book.
+   */
+  public String getText() {
+    return text;
   }
 
 }

@@ -152,6 +152,9 @@ public final class GameData {
       for (Item.Tag tag : tagSetFromArray(Item.Tag.class, reader.getArrayOfValues("TAGS"))) {
         blueprint.addTag(tag);
       }
+      if (blueprint.hasTag(Item.Tag.BOOK)) {
+        blueprint.setText(reader.getValue("TEXT"));
+      }
       if (reader.hasValue("DECOMPOSITION_PERIOD")) {
         blueprint.setPutrefactionPeriod(readIntegerFromResourceReader(reader, "DECOMPOSITION_PERIOD"));
       }

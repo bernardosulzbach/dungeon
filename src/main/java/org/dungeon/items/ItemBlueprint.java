@@ -37,6 +37,7 @@ public final class ItemBlueprint {
   int nutrition;
   int integrityDecrementOnEat;
   long putrefactionPeriod;
+  String text;
   private ID skill;
 
   public void setPutrefactionPeriod(long putrefactionPeriod) {
@@ -59,6 +60,10 @@ public final class ItemBlueprint {
     this.type = type;
   }
 
+  public void setText(String text) {
+    this.text = text;
+  }
+
   public Name getName() {
     return name;
   }
@@ -69,6 +74,10 @@ public final class ItemBlueprint {
 
   public void setWeight(Weight weight) {
     this.weight = weight;
+  }
+
+  public boolean hasTag(Item.Tag tag) {
+    return tagSet.hasTag(tag);
   }
 
   public void addTag(Item.Tag tag) {

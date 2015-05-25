@@ -172,6 +172,8 @@ DAMAGE: 6
 HIT_RATE: 0.7
 INTEGRITY_DECREMENT_ON_HIT: 4
 SKILL: FIREBALL
+TEXT: The Fireball is a classic and powerful spell. The caster creates a sphere of fire from concentrated magical\
+energy and throws it at its target.
 
 ID: TOME_OF_BURNING_GROUND
 TYPE: Book
@@ -184,6 +186,7 @@ DAMAGE: 6
 HIT_RATE: 0.7
 INTEGRITY_DECREMENT_ON_HIT: 4
 SKILL: BURNING_GROUND
+TEXT: The Burning Ground spell sets the ground the target is standing on ablaze, damaging its constitution.
 
 ID: TOME_OF_REPAIR
 TYPE: Book
@@ -196,6 +199,8 @@ DAMAGE: 6
 HIT_RATE: 0.7
 INTEGRITY_DECREMENT_ON_HIT: 4
 SKILL: REPAIR
+TEXT: The Repair spell allows the caster to channel a burst of magical energy into an item, possibly reassembling\
+broken parts and restoring its integrity.
 
 ID: POCKET_WATCH
 TYPE: Misc
