@@ -21,8 +21,8 @@ import org.dungeon.game.Weight;
 
 interface LimitedInventory {
 
-  public int getItemLimit();
+  int getItemLimit();
 
-  public Weight getWeightLimit();
+  Weight getWeightLimit();
 
 }
