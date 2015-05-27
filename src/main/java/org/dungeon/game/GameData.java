@@ -52,7 +52,6 @@ import java.util.Set;
  */
 public final class GameData {
 
-  public static final Font FONT = getMonospacedFont();
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = Date.SECONDS_IN_DAY;
@@ -60,6 +59,8 @@ public final class GameData {
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
+  private static final int FONT_SIZE = 15;
+  public static final Font FONT = getMonospacedFont();
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
@@ -76,7 +77,6 @@ public final class GameData {
    * Returns the monospaced font used by the game interface.
    */
   private static Font getMonospacedFont() {
-    final int FONT_SIZE = 15;
     Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
     try {
       InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
