@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.creatures.Creature;
+import org.dungeon.creatures.CreatureFactory;
 import org.dungeon.creatures.CreaturePreset;
 import org.dungeon.date.Date;
 import org.dungeon.io.DLogger;
@@ -64,7 +65,6 @@ public final class GameData {
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
-  private static Map<ID, CreaturePreset> creaturesPresets = new HashMap<ID, CreaturePreset>();
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
   private static Map<ID, LocationPreset> locationPresets = new HashMap<ID, LocationPreset>();
@@ -181,8 +181,11 @@ public final class GameData {
 
   /**
    * Loads all creature presets from the resource files. Also makes the ItemBlueprints used by the corpses.
+   * <p/>
+   * This is the method that makes the itemBlueprints field unmodifiable.
    */
   private static void loadCreaturePresets() {
+    Map<ID, CreaturePreset> creaturePresetMap = new HashMap<ID, CreaturePreset>();
     ResourceReader reader = new ResourceReader("creatures.txt");
     while (reader.readNextElement()) {
       CreaturePreset preset = new CreaturePreset();
@@ -201,7 +204,7 @@ public final class GameData {
       if (reader.hasValue("ITEMS")) {
         preset.setItems(readIDList(reader, "ITEMS"));
       }
-      creaturesPresets.put(preset.getID(), preset);
+      creaturePresetMap.put(preset.getID(), preset);
       if (preset.hasTag(Creature.Tag.CORPSE)) {
         ItemBlueprint corpse = makeCorpseBlueprint(preset);
         itemBlueprints.put(corpse.getID(), corpse);
@@ -209,8 +212,8 @@ public final class GameData {
     }
     reader.close();
     itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
-    creaturesPresets = Collections.unmodifiableMap(creaturesPresets);
-    DLogger.info("Loaded " + creaturesPresets.size() + " creature presets.");
+    CreatureFactory.setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
+    DLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
   }
 
   public static ItemBlueprint makeCorpseBlueprint(CreaturePreset preset) {
@@ -471,10 +474,6 @@ public final class GameData {
     reader.readNextElement();
     tutorial = reader.getValue("TUTORIAL");
     reader.close();
-  }
-
-  public static Map<ID, CreaturePreset> getCreaturePresets() {
-    return creaturesPresets;
   }
 
   public static Map<ID, ItemBlueprint> getItemBlueprints() {
