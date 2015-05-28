@@ -40,7 +40,7 @@ public final class CreaturePreset {
   private Weight weight;
   private int health;
   private int attack;
-  private String attackAlgorithm;
+  private ID attackAlgorithmID;
   private List<ID> items = new ArrayList<ID>();
 
   /**
@@ -124,12 +124,12 @@ public final class CreaturePreset {
     this.attack = attack;
   }
 
-  public String getAttackAlgorithm() {
-    return attackAlgorithm;
+  public ID getAttackAlgorithmID() {
+    return attackAlgorithmID;
   }
 
-  public void setAttackAlgorithm(String attackAlgorithm) {
-    this.attackAlgorithm = attackAlgorithm;
+  public void setAttackAlgorithmID(ID attackAlgorithmID) {
+    this.attackAlgorithmID = attackAlgorithmID;
   }
 
   public List<ID> getItems() {

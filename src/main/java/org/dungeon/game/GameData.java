@@ -200,7 +200,7 @@ public final class GameData {
       preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
-      preset.setAttackAlgorithm(reader.getValue("ATTACK_ALGORITHM_ID"));
+      preset.setAttackAlgorithmID(new ID(reader.getValue("ATTACK_ALGORITHM_ID")));
       if (reader.hasValue("ITEMS")) {
         preset.setItems(readIDList(reader, "ITEMS"));
       }

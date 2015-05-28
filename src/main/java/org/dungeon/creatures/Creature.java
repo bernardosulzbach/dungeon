@@ -18,6 +18,7 @@
 package org.dungeon.creatures;
 
 import org.dungeon.game.Entity;
+import org.dungeon.game.ID;
 import org.dungeon.game.Location;
 import org.dungeon.game.TagSet;
 import org.dungeon.io.IO;
@@ -37,7 +38,7 @@ public class Creature extends Entity {
 
   private final int maxHealth;
   private final int attack;
-  private final String attackAlgorithm;
+  private final ID attackAlgorithmID;
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
@@ -52,7 +53,7 @@ public class Creature extends Entity {
     curHealth = preset.getHealth();
     attack = preset.getAttack();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
-    attackAlgorithm = preset.getAttackAlgorithm();
+    attackAlgorithmID = preset.getAttackAlgorithmID();
   }
 
   SkillList getSkillList() {
@@ -126,7 +127,7 @@ public class Creature extends Entity {
    * @return the possible CauseOfDeath
    */
   public CauseOfDeath hit(Creature target) {
-    return AttackAlgorithm.attack(this, target, attackAlgorithm);
+    return AttackAlgorithms.renderAttack(this, target);
   }
 
   /**
@@ -196,6 +197,10 @@ public class Creature extends Entity {
     for (Item item : getInventory().getItems()) {
       dropItem(item);
     }
+  }
+
+  public ID getAttackAlgorithmID() {
+    return attackAlgorithmID;
   }
 
   public enum Tag {CORPSE}
