@@ -24,7 +24,6 @@ import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
-import org.dungeon.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +33,10 @@ import java.util.Map;
  * <p/>
  * Created by Bernardo on 27/05/2015.
  */
-public final class AttackAlgorithms {
+final class AttackAlgorithms {
 
-  static final Map<ID, AttackAlgorithm> ATTACK_ALGORITHM_MAP = new HashMap<ID, AttackAlgorithm>();
+  private static final ID UNARMED_ID = new ID("");
+  private static final Map<ID, AttackAlgorithm> ATTACK_ALGORITHM_MAP = new HashMap<ID, AttackAlgorithm>();
 
   static {
 
@@ -158,7 +158,7 @@ public final class AttackAlgorithms {
           } else {
             hitDamage = attacker.getAttack();
             criticalHit = Engine.roll(HERO_CRITICAL_CHANCE_UNARMED);
-            causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, Constants.UNARMED_ID);
+            causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, UNARMED_ID);
           }
           if (criticalHit) {
             hitDamage *= 2;

@@ -63,6 +63,7 @@ public class GameWindow extends JFrame {
    * Returns how many text rows are shown in the Window.
    */
   public static final int ROWS = 30;
+  private static final String WINDOW_TITLE = "Dungeon";
 
   /**
    * The border, in pixels.
@@ -130,7 +131,7 @@ public class GameWindow extends JFrame {
     c.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
     panel.add(textField, c);
 
-    setTitle(Constants.NAME);
+    setTitle(WINDOW_TITLE);
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     addWindowListener(new WindowAdapter() {
@@ -291,7 +292,7 @@ public class GameWindow extends JFrame {
    * @param back       the Color of the background text.
    * @param scrollDown if true, the TextPane will be scrolled down after writing.
    */
-  void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
+  private void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
     StyleConstants.setForeground(attributeSet, fore);
     StyleConstants.setBackground(attributeSet, back);
     try {
