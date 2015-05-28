@@ -14,7 +14,9 @@ Commits and PRs
 
 Writing code
 ------------
-Readability, performance and simplicity are our main goals.
+Readability, simplicity and performance (*in this order*) are our main goals.
+
+**"Strive to write a good program rather than a fast one."** (adapted from Effective Java 2nd Edition).
 
 
 Code Style
@@ -22,7 +24,7 @@ Code Style
 Our code style is a slightly modified version of Google Java Style called [Dungeon Java Style]
 (http://htmlpreview.github.io/?https://github.com/mafagafogigante/dungeon/blob/master/misc/style/dungeon_java_style.html).
 
-There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory.
+There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory. IDEA 14.1.2 works fine with it.
 Download it and import it into the IDE to get proper Code Reformatting.
 *Note that this is not guaranteed to be 100% style-compliant, you may need to fix some things yourself.*
 
@@ -30,7 +32,7 @@ Download it and import it into the IDE to get proper Code Reformatting.
 **Code comments**
 
 You may find several classes, interfaces and methods with complete Javadoc.
-This is no longer required. Aim for clear and concise implementation comments only.
+This is no longer required. Clear and concise implementation comments are enough.
 Note that these comments may follow the Javadoc rules, but don't need to.
 
 
