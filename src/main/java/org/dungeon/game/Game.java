@@ -41,7 +41,6 @@ public class Game {
   private static List<Command> commandList;
 
   public static void main(String[] args) {
-    DLogger.initialize();
     GameData.loadGameData();
     initializeCommands();
     gameWindow = new GameWindow();

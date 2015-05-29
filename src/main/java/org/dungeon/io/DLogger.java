@@ -31,31 +31,27 @@ import java.util.logging.Logger;
  * <p/>
  * Created by Bernardo Sulzbach on 14/11/14.
  */
-public class DLogger {
+public final class DLogger {
 
   private static final String LOG_FILE_PATH = "logs/";
   private static final String LOG_FILE_NAME = "log.txt";
   private static Logger logger;
 
-  private DLogger() {
+  static {
+    try {
+      logger = Logger.getLogger("org.dungeon");
+      Handler handler = new FileHandler(getLogFilePath(), true);
+      handler.setFormatter(new DFormatter());
+      logger.setUseParentHandlers(false);
+      logger.addHandler(handler);
+      logger.setLevel(Level.ALL);
+    } catch (IOException ignored) {
+      // It is not possible to log an exception that prevented us from getting a logger.
+    }
   }
 
-  /**
-   * Initialize this logger. Nothing will be logged until the logger is initialized.
-   */
-  public static void initialize() {
-    if (logger == null) {
-      try {
-        logger = Logger.getLogger("org.dungeon");
-        Handler handler = new FileHandler(getLogFilePath(), true);
-        handler.setFormatter(new DFormatter());
-        logger.setUseParentHandlers(false);
-        logger.addHandler(handler);
-        logger.setLevel(Level.ALL);
-      } catch (IOException ignored) {
-        // It is not possible to log an exception that prevented us from getting a logger.
-      }
-    }
+  private DLogger() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
   }
 
   /**
