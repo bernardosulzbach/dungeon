@@ -67,11 +67,9 @@ public final class LocationPreset implements Serializable {
    * Adds a Spawner to this Location based on a SpawnerPreset.
    *
    * @param preset the SpawnerPreset
-   * @return a reference to this LocationPreset
    */
-  public LocationPreset addSpawner(SpawnerPreset preset) {
+  public void addSpawner(SpawnerPreset preset) {
     this.spawners.add(preset);
-    return this;
   }
 
   public Set<Entry<ID, Percentage>> getItems() {
@@ -83,11 +81,9 @@ public final class LocationPreset implements Serializable {
    *
    * @param id         the ID string of the item
    * @param likelihood the likelihood of the item appearing
-   * @return a reference to this LocationPreset
    */
-  public LocationPreset addItem(String id, Double likelihood) {
+  public void addItem(String id, Double likelihood) {
     items.put(new ID(id), new Percentage(likelihood));
-    return this;
   }
 
   public BlockedEntrances getBlockedEntrances() {
@@ -99,9 +95,8 @@ public final class LocationPreset implements Serializable {
    *
    * @param direction a Direction to be blocked.
    */
-  public LocationPreset block(Direction direction) {
+  public void block(Direction direction) {
     blockedEntrances.block(direction);
-    return this;
   }
 
   public Percentage getLightPermittivity() {
