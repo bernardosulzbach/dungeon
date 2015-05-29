@@ -78,13 +78,20 @@ public final class GameData {
    */
   private static Font getMonospacedFont() {
     Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
+    InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
     try {
-      InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
       font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
     } catch (FontFormatException bad) {
       DLogger.warning(bad.getMessage());
     } catch (IOException bad) {
       DLogger.warning(bad.getMessage());
+    } finally {
+      if (fontStream != null) {
+        try {
+          fontStream.close();
+        } catch (IOException ignore) {
+        }
+      }
     }
     return font;
   }
