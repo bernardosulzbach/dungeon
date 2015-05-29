@@ -148,7 +148,7 @@ public final class Utils {
    * @param list the List of Objects.
    * @return a String.
    */
-  public static String enumerate(final List list) {
+  public static String enumerate(final List<?> list) {
     StringBuilder stringBuilder = new StringBuilder();
     for (int i = 0; i < list.size(); i++) {
       stringBuilder.append(list.get(i).toString());

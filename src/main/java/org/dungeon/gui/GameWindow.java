@@ -210,7 +210,7 @@ public class GameWindow extends JFrame {
     if (!text.isEmpty()) {
       clearTextField();
       setIdle(false);
-      SwingWorker inputRenderer = new SwingWorker<Void, Void>() {
+      SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
         @Override
         protected Void doInBackground() {
           Game.renderTurn(new IssuedCommand(text));
