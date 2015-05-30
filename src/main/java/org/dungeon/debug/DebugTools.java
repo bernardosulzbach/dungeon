@@ -55,7 +55,7 @@ import java.util.Map.Entry;
  */
 public class DebugTools {
 
-  private static List<Command> commands = new ArrayList<Command>();
+  private static final List<Command> commands = new ArrayList<Command>();
   private static boolean uninitialized = true;
 
   /**
@@ -275,7 +275,7 @@ public class DebugTools {
     }
   }
 
-  public static void printIsSaved() {
+  private static void printIsSaved() {
     if (Game.getGameState().isSaved()) {
       IO.writeString("The game is saved.");
     } else {
@@ -283,7 +283,7 @@ public class DebugTools {
     }
   }
 
-  public static void wait(IssuedCommand issuedCommand) {
+  private static void wait(IssuedCommand issuedCommand) {
     if (issuedCommand.getTokenCount() >= 3) {
       int seconds = 0;
       boolean gotSeconds = false;
@@ -303,15 +303,23 @@ public class DebugTools {
         }
       }
       if (gotSeconds) {
-        Game.getGameState().getWorld().rollDate(seconds);
-        IO.writeString("Waited for " + seconds + " seconds.");
+        rollDate(seconds);
       }
     } else {
       Messenger.printMissingArgumentsMessage();
     }
   }
 
-  public static void printTime() {
+  private static void rollDate(int seconds) {
+    if (seconds > 0) {
+      Game.getGameState().getWorld().rollDate(seconds);
+      IO.writeString("Waited for " + seconds + " seconds.");
+    } else {
+      IO.writeString("The amount of seconds should be positive!");
+    }
+  }
+
+  private static void printTime() {
     IO.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
   }
 
