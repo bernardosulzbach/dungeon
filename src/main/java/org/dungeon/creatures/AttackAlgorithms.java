@@ -24,6 +24,8 @@ import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
+import org.dungeon.util.Math;
+import org.dungeon.util.Percentage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,13 +43,16 @@ final class AttackAlgorithms {
   static {
 
     final double BAT_CRITICAL_MAXIMUM_LUMINOSITY = 0.5;
+    final double BAT_HIT_RATE_MAX_LUMINOSITY = 0.9;
+    final double BAT_HIT_RATE_MIN_LUMINOSITY = 0.1;
     registerAttackAlgorithm("BAT", new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
-        double luminosity = attacker.getLocation().getLuminosity().toDouble();
-        if (Engine.roll(0.9 - luminosity / 2)) { // If the permittivity is 1, this value ranges from 0.8 to 0.4.
+        Percentage luminosity = attacker.getLocation().getLuminosity();
+        double hitRate = Math.weightedAverage(BAT_HIT_RATE_MIN_LUMINOSITY, BAT_HIT_RATE_MAX_LUMINOSITY, luminosity);
+        if (Engine.roll(hitRate)) {
           int hitDamage = attacker.getAttack();
-          boolean criticalHit = luminosity <= BAT_CRITICAL_MAXIMUM_LUMINOSITY;
+          boolean criticalHit = luminosity.toDouble() <= BAT_CRITICAL_MAXIMUM_LUMINOSITY;
           if (criticalHit) {
             hitDamage *= 2;
           }

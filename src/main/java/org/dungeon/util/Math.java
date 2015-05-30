@@ -38,6 +38,18 @@ public final class Math {
   }
 
   /**
+   * Evaluates the weighted average of two values.
+   *
+   * @param a             the first value
+   * @param b             the second value
+   * @param bContribution how much the second value contributes to the average
+   * @return the weighted average between the two values
+   */
+  public static double weightedAverage(double a, double b, Percentage bContribution) {
+    return a + (b - a) * bContribution.toDouble();
+  }
+
+  /**
    * Calculates the arithmetic mean of a sequence of doubles.
    */
   public static double mean(double... values) {
