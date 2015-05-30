@@ -24,7 +24,9 @@ import java.io.Serializable;
 /**
  * Dungeon Date class. Stores an immutable time stamp.
  * <p/>
- * The new Date system has eras of 800 years, years of 10 months, months of 10 days and days of 24 hours of 60 minutes.
+ * Dungeon's date system has years of 10 months, months of 10 days and days of 24 hours of 60 minutes of 60 seconds.
+ * All the public constants made available by this class refer to this date system.
+ * Therefore they should not be used to represent or take place into calculations of real world time.
  * <p/>
  * Created by Bernardo Sulzbach on 16/12/14.
  */
