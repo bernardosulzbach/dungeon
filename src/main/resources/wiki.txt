@@ -6,6 +6,10 @@ sustained flight. They are natural inhabitants of humid and quiet places, such a
 in Dungeon varies according to the locations' luminosity. The darker the place is, more likely the bats are to hit and\
 to critically hit. Engaging bats during daytime out in the open vastly increases the chance of success.
 
+ARTICLE: Calendar
+CONTENT: The World of Dungeon has years of 10 months, months of 10 days and days of 24 hours. Each hour lasts 60\
+minutes of 60 seconds.
+
 ARTICLE: Combat
 CONTENT: Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat,\
 all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies.\
