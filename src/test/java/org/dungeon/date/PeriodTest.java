@@ -24,14 +24,14 @@ public class PeriodTest {
 
   @Test
   public void testToString() throws Exception {
-    Date start = new Date(2014, 10, 20, 0, 0, 0);
-    Date end = new Date(2014, 10, 20, 0, 0, 0);
+    Date start = new Date(2014, Date.MONTHS_IN_YEAR, Date.DAYS_IN_MONTH, 0, 0, 0);
+    Date end = new Date(2014, Date.MONTHS_IN_YEAR, Date.DAYS_IN_MONTH, 0, 0, 0);
 
     end = end.plusDays(1);
     Assert.assertEquals("1 day", new Period(start, end).toString());
     end = end.plusDays(1);
     Assert.assertEquals("2 days", new Period(start, end).toString());
-    end = end.plusDays(-2);
+    end = end.minusDays(2);
 
     end = end.plusMonths(1);
     Assert.assertEquals("1 month", new Period(start, end).toString());
@@ -41,8 +41,8 @@ public class PeriodTest {
     Assert.assertEquals("2 months and 1 day", new Period(start, end).toString());
     end = end.plusDays(1);
     Assert.assertEquals("2 months and 2 days", new Period(start, end).toString());
-    end = end.plusDays(-2);
-    end = end.plusMonths(-2);
+    end = end.minusDays(2);
+    end = end.minusMonths(2);
 
     end = end.plusYears(1);
     Assert.assertEquals("1 year", new Period(start, end).toString());
@@ -50,7 +50,7 @@ public class PeriodTest {
     Assert.assertEquals("2 years", new Period(start, end).toString());
     end = end.plusDays(1);
     Assert.assertEquals("2 years and 1 day", new Period(start, end).toString());
-    end = end.plusDays(-1);
+    end = end.minusDays(1);
     end = end.plusMonths(1);
     Assert.assertEquals("2 years and 1 month", new Period(start, end).toString());
     end = end.plusDays(1);
