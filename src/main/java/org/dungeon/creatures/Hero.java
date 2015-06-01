@@ -73,10 +73,12 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_DROP_AN_ITEM = 2;
   private static final int SECONDS_TO_UNEQUIP = 4;
   private static final int SECONDS_TO_EQUIP = 6;
+  private static final int SECONDS_TO_MILK_A_CREATURE = 45;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private static final Percentage LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS = new Percentage(0.4);
   private static final int BATTLE_TURN_DURATION = 30;
   private static final int HEAL_TEN_PERCENT = 3600;
+  private static final int MILK_NUTRITION = 12;
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
 
@@ -88,6 +90,20 @@ public class Hero extends Creature {
 
   public AchievementTracker getAchievementTracker() {
     return achievementTracker;
+  }
+
+  /**
+   * Increments the Hero's health by a certain amount, without exceeding its maximum health.
+   * If at the end the Hero is completely healed, a messaging about this is written.
+   */
+  private void addHealth(int amount) {
+    int sum = amount + getCurHealth();
+    if (sum > getMaxHealth()) {
+      setCurHealth(getMaxHealth());
+      IO.writeString("You are completely healed.");
+    } else {
+      setCurHealth(sum);
+    }
   }
 
   /**
@@ -183,6 +199,19 @@ public class Hero extends Creature {
     return false;
   }
 
+  /**
+   * Convenience method that avoids code duplication.
+   * Returns whether the Hero can see a Creature, writing a warning if the Hero cannot.
+   */
+  private boolean checkForCreatureVisibilityWarningIfFalse() {
+    if (canSeeACreature()) {
+      return true;
+    } else {
+      IO.writeString("You do not see a possible target.");
+      return false;
+    }
+  }
+
   private boolean canSeeAnItem() {
     for (Item item : getLocation().getItemList()) {
       if (canSee(item)) {
@@ -208,6 +237,19 @@ public class Hero extends Creature {
 
   private <T extends Entity> Matches<T> filterByVisibility(Matches<T> matches) {
     return Matches.fromCollection(filterByVisibility(matches.toList()));
+  }
+
+  /**
+   * Filters a List of Creatures, returning all that have a specified Tag.
+   */
+  private List<Creature> filterByTag(List<Creature> list, Creature.Tag tag) {
+    List<Creature> visible = new ArrayList<Creature>();
+    for (Creature candidate : list) {
+      if (candidate.hasTag(tag)) {
+        visible.add(candidate);
+      }
+    }
+    return visible;
   }
 
   /**
@@ -385,13 +427,11 @@ public class Hero extends Creature {
    * @return an integer representing how many seconds the battle lasted.
    */
   public int attackTarget(IssuedCommand issuedCommand) {
-    if (canSeeACreature()) {
+    if (checkForCreatureVisibilityWarningIfFalse()) {
       Creature target = selectTarget(issuedCommand);
       if (target != null) {
         return Engine.battle(this, target) * BATTLE_TURN_DURATION;
       }
-    } else {
-      IO.writeString("You do not see a possible target.");
     }
     return 0;
   }
@@ -571,11 +611,12 @@ public class Hero extends Creature {
       if (selectedItem.hasTag(Item.Tag.FOOD)) {
         FoodComponent food = selectedItem.getFoodComponent();
         double remainingBites = selectedItem.getCurIntegrity() / (double) food.getIntegrityDecrementOnEat();
+        int healthIncrement;
         if (remainingBites >= 1.0) {
-          addHealth(food.getNutrition());
+          healthIncrement = food.getNutrition();
         } else {
           // The healing may vary from 0 up to (nutrition - 1) if there is not enough for a bite.
-          addHealth((int) (food.getNutrition() * remainingBites));
+          healthIncrement = (int) (food.getNutrition() * remainingBites);
         }
         selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
         if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
@@ -584,15 +625,53 @@ public class Hero extends Creature {
         } else {
           IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
         }
-        if (isCompletelyHealed()) {
-          IO.writeString("You are completely healed.");
-        }
+        addHealth(healthIncrement);
         return SECONDS_TO_EAT_AN_ITEM;
       } else {
         IO.writeString("You can only eat food.");
       }
     }
     return 0;
+  }
+
+  /**
+   * The method that enables a Hero to drink milk from a Creature.
+   *
+   * @param issuedCommand the command entered by the player
+   * @return how many seconds this action took
+   */
+  public int parseMilk(IssuedCommand issuedCommand) {
+    if (checkForCreatureVisibilityWarningIfFalse()) {
+      if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
+        Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
+        if (selectedCreature != null) {
+          if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
+            milk(selectedCreature);
+          } else {
+            IO.writeString("This creature is not milkable.");
+          }
+        }
+      } else { // Filter milkable creatures.
+        List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
+        List<Creature> milkableCreatures = filterByTag(visibleCreatures, Tag.MILKABLE);
+        if (milkableCreatures.isEmpty()) {
+          IO.writeString("You can't find a milkable creature.");
+        } else {
+          if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
+            milk(milkableCreatures.get(0));
+          } else {
+            IO.writeString("You need to be more specific.");
+          }
+        }
+      }
+    }
+    return 0;
+  }
+
+  private int milk(Creature creature) {
+    IO.writeString("You drink milk directly from " + creature.getName().getSingular() + ".");
+    addHealth(MILK_NUTRITION);
+    return SECONDS_TO_MILK_A_CREATURE;
   }
 
   public int readItem(IssuedCommand issuedCommand) {

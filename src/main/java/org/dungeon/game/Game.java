@@ -187,6 +187,12 @@ public class Game {
         IO.writeString(map.toString());
       }
     });
+    commandList.add(new Command("milk", "Attempts to milk a creature.") {
+      @Override
+      public void execute(IssuedCommand issuedCommand) {
+        gameState.getHero().parseMilk(issuedCommand);
+      }
+    });
     commandList.add(new Command("new", "Starts a new game.") {
       @Override
       public void execute(IssuedCommand issuedCommand) {

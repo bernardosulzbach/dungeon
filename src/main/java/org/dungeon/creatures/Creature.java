@@ -109,18 +109,6 @@ public class Creature extends Entity {
   }
 
   /**
-   * Increments the creature's health by a certain amount, without exceeding its maximum health.
-   */
-  void addHealth(int amount) {
-    int sum = amount + getCurHealth();
-    if (sum > getMaxHealth()) {
-      setCurHealth(getMaxHealth());
-    } else {
-      setCurHealth(sum);
-    }
-  }
-
-  /**
    * Hits the specified target Creature. Returns what would be the CauseOfDeath if the target died for this attack.
    *
    * @param target the target
@@ -203,6 +191,6 @@ public class Creature extends Entity {
     return attackAlgorithmID;
   }
 
-  public enum Tag {CORPSE}
+  public enum Tag {MILKABLE, CORPSE}
 
 }
