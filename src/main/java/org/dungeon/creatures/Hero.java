@@ -646,7 +646,7 @@ public class Hero extends Creature {
         Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
         if (selectedCreature != null) {
           if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
-            milk(selectedCreature);
+            return milk(selectedCreature);
           } else {
             IO.writeString("This creature is not milkable.");
           }
@@ -658,7 +658,7 @@ public class Hero extends Creature {
           IO.writeString("You can't find a milkable creature.");
         } else {
           if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
-            milk(milkableCreatures.get(0));
+            return milk(milkableCreatures.get(0));
           } else {
             IO.writeString("You need to be more specific.");
           }
