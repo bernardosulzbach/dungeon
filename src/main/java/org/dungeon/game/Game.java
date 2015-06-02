@@ -350,7 +350,9 @@ public class Game {
       setGameState(Loader.loadGame());
     } else {
       // Advance the campaign's world date.
-      gameState.getWorld().rollDate(turnResult.turnLength);
+      if (turnResult.turnLength > 0) {
+        gameState.getWorld().rollDate(turnResult.turnLength);
+      }
       // Refresh the campaign state.
       Engine.refresh();
       // If the last turn changed the GameState, set the game as not saved.

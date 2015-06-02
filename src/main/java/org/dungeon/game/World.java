@@ -19,6 +19,7 @@ package org.dungeon.game;
 
 import org.dungeon.creatures.Hero;
 import org.dungeon.date.Date;
+import org.dungeon.io.DLogger;
 import org.dungeon.stats.WorldStatistics;
 
 import java.io.Serializable;
@@ -99,7 +100,11 @@ public class World implements Serializable {
    * Rolls the world date a given amount of seconds forward.
    */
   public void rollDate(int seconds) {
-    worldDate = worldDate.plusSeconds(seconds);
+    if (seconds <= 0) {
+      DLogger.warning("Cannot roll the World's Date back!");
+    } else {
+      worldDate = worldDate.plusSeconds(seconds);
+    }
   }
 
 }
