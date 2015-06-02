@@ -32,15 +32,15 @@ import java.io.Serializable;
  */
 public class Date implements Serializable {
 
-  public static final long MILLIS_IN_SECOND = 1000;
-  public static final long SECONDS_IN_MINUTE = 60;
-  public static final long MINUTES_IN_HOUR = 60;
-  public static final long HOURS_IN_DAY = 24;
-  public static final long DAYS_IN_MONTH = 10;
-  public static final long MONTHS_IN_YEAR = 10;
+  public static final int MILLIS_IN_SECOND = 1000;
+  public static final int SECONDS_IN_MINUTE = 60;
+  public static final int MINUTES_IN_HOUR = 60;
+  public static final int HOURS_IN_DAY = 24;
+  public static final int DAYS_IN_MONTH = 10;
+  public static final int MONTHS_IN_YEAR = 10;
 
-  public static final long SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
-  public static final long SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY;
+  public static final int SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
+  public static final int SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY;
 
   public static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
   public static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;

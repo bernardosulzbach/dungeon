@@ -142,7 +142,7 @@ public class DebugTools {
     commands.add(new Command("tomorrow") {
       @Override
       public void execute(IssuedCommand issuedCommand) {
-        Game.getGameState().getWorld().rollDate((int) Date.SECONDS_IN_DAY);
+        Game.getGameState().getWorld().rollDate(Date.SECONDS_IN_DAY);
         IO.writeString("A day has passed.");
       }
     });
