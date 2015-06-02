@@ -74,6 +74,8 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_UNEQUIP = 4;
   private static final int SECONDS_TO_EQUIP = 6;
   private static final int SECONDS_TO_MILK_A_CREATURE = 45;
+  private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
+  private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private static final Percentage LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS = new Percentage(0.4);
   private static final int BATTLE_TURN_DURATION = 30;
@@ -354,7 +356,7 @@ public class Hero extends Creature {
     return Utils.enumerate(quantifiedNames);
   }
 
-  Item selectInventoryItem(IssuedCommand issuedCommand) {
+  private Item selectInventoryItem(IssuedCommand issuedCommand) {
     if (getInventory().getItemCount() == 0) {
       IO.writeString("Your inventory is empty.");
       return null;
@@ -369,7 +371,7 @@ public class Hero extends Creature {
    * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
    * @return an Item or {@code null}
    */
-  Item selectLocationItem(IssuedCommand issuedCommand) {
+  private Item selectLocationItem(IssuedCommand issuedCommand) {
     if (filterByVisibility(getLocation().getItemList()).isEmpty()) {
       IO.writeString("You don't see any items here.");
       return null;
@@ -407,7 +409,7 @@ public class Hero extends Creature {
    *
    * @return an Item object if there is a match. null otherwise.
    */
-  public Item findItem(List<Item> items, String[] tokens) {
+  private Item findItem(List<Item> items, String[] tokens) {
     Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
     matches = filterByVisibility(matches);
     if (matches.size() == 0) {
@@ -442,7 +444,7 @@ public class Hero extends Creature {
    * @param issuedCommand the command entered by the player.
    * @return a target Creature or {@code null}.
    */
-  Creature selectTarget(IssuedCommand issuedCommand) {
+  private Creature selectTarget(IssuedCommand issuedCommand) {
     List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
     if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
       return findCreature(issuedCommand.getArguments());
@@ -470,7 +472,7 @@ public class Hero extends Creature {
    * @param tokens an array of string tokens.
    * @return a Creature or null.
    */
-  Creature findCreature(String[] tokens) {
+  private Creature findCreature(String[] tokens) {
     Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
     result = filterByVisibility(result);
     if (result.size() == 0) {
@@ -720,7 +722,7 @@ public class Hero extends Creature {
     return 0;
   }
 
-  void equipWeapon(Item weapon) {
+  private void equipWeapon(Item weapon) {
     if (hasWeapon()) {
       if (getWeapon() == weapon) {
         IO.writeString(getName() + " is already equipping " + weapon.getName() + ".");
@@ -774,31 +776,45 @@ public class Hero extends Creature {
 
   /**
    * Makes the hero read the current date and time as well as he can.
-   * <p/>
-   * The easiest-to-access unbroken clock of the Hero is used to get the time. If the Hero has no unbroken clock, the
-   * easiest-to-access broken clock is used. Lastly, if the Hero does not have a clock at all, time is not read.
    *
    * @return how many seconds the action took
    */
   public int printDateAndTime() {
-    // TODO: improve code readability and reduce code repetition.
+    ItemIntegerPair pair = getBestClock();
+    Item clock = pair.getItem();
+    if (clock != null) {
+      IO.writeString(clock.getClockComponent().getTimeString());
+    }
+    World world = getLocation().getWorld();
+    Date worldDate = getLocation().getWorld().getWorldDate();
+    IO.writeString("You think it is " + worldDate.toDateString() + ".");
+    if (worldDate.getMonth() == dateOfBirth.getMonth() && worldDate.getDay() == dateOfBirth.getDay()) {
+      IO.writeString("Today is your birthday.");
+    }
+    IO.writeString("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+    return pair.getInteger();
+  }
+
+  /**
+   * Gets the easiest-to-access unbroken clock of the Hero. If the Hero has no unbroken clock, the easiest-to-access
+   * broken clock. Lastly, if the Hero does not have a clock at all, null is returned.
+   *
+   * @return an ItemIntegerPair object with the clock Item (or null) and how many seconds the search took in game time
+   */
+  private ItemIntegerPair getBestClock() {
     Item clock = null;
-    int timeSpent = 0;
     if (hasWeapon() && getWeapon().hasTag(Item.Tag.CLOCK)) {
       if (!getWeapon().isBroken()) {
         clock = getWeapon();
-        timeSpent = 4;
       } else { // The Hero is equipping a broken clock: check if he has a working one in his inventory.
         for (Item item : getInventory().getItems()) {
           if (item.hasTag(Item.Tag.CLOCK) && !item.isBroken()) {
             clock = item;
-            timeSpent = 10;
             break;
           }
         }
         if (clock == null) {
           clock = getWeapon(); // The Hero does not have a working clock in his inventory: use the equipped one.
-          timeSpent = 4;
         }
       }
     } else { // The Hero is not equipping a clock.
@@ -809,30 +825,23 @@ public class Hero extends Creature {
             brokenClock = item;
           } else {
             clock = item;
-            timeSpent = 10;
             break;
           }
         }
       }
       if (brokenClock != null) {
-        timeSpent = 10;
         clock = brokenClock;
       }
     }
-    if (clock != null) {
-      IO.writeString(clock.getClockComponent().getTimeString());
+    int timeSpent;
+    if (clock == null) {
+      timeSpent = 0;
+    } else if (clock == getWeapon()) {
+      timeSpent = SECONDS_TO_READ_EQUIPPED_CLOCK;
+    } else {
+      timeSpent = SECONDS_TO_READ_UNEQUIPPED_CLOCK;
     }
-
-    World world = getLocation().getWorld();
-    Date worldDate = world.getWorldDate();
-    IO.writeString("You think it is " + worldDate.toDateString() + ".");
-
-    if (worldDate.getMonth() == dateOfBirth.getMonth() && worldDate.getDay() == dateOfBirth.getDay()) {
-      IO.writeString("Today is your birthday.");
-    }
-
-    IO.writeString("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
-    return timeSpent;
+    return new ItemIntegerPair(clock, timeSpent);
   }
 
   /**
