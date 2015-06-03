@@ -38,6 +38,8 @@ public class ExplorationStatistics implements Serializable {
 
   /**
    * Creates an ExplorationStatisticsEntry for a Point if one does not exist yet.
+   * Should be called whenever the Hero sees a Point, as the current criteria for "seen" locations on the in-game map is
+   * having an Entry in the ExplorationStatistics.
    *
    * @param point      the Point object
    * @param locationID the ID of the Location at the specified Point
