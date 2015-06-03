@@ -17,6 +17,11 @@
 
 package org.dungeon.game;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Direction enum that implements all the possible movement directions in the game.
  * <p/>
@@ -56,6 +61,17 @@ public enum Direction {
       }
     }
     return null;
+  }
+
+  /**
+   * Returns a modifiable Collection with all the Directions except the specified one.
+   *
+   * @param exception the exception (passing null retrieves all Directions)
+   */
+  public static Collection<Direction> getAllExcept(Direction exception) {
+    List<Direction> directions = new ArrayList<Direction>(Arrays.asList(values()));
+    directions.remove(exception);
+    return directions;
   }
 
   public int getY() {

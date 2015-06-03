@@ -203,9 +203,9 @@ public class Hero extends Creature {
 
   /**
    * Convenience method that avoids code duplication.
-   * Returns whether the Hero can see a Creature, writing a warning if the Hero cannot.
+   * Returns whether the Hero can see a Creature, writing a warning if he or she can't.
    */
-  private boolean checkForCreatureVisibilityWarningIfFalse() {
+  private boolean canSeeACreatureWarnIfNot() {
     if (canSeeACreature()) {
       return true;
     } else {
@@ -214,6 +214,9 @@ public class Hero extends Creature {
     }
   }
 
+  /**
+   * Returns whether any Item of the current Location is visible to the Hero.
+   */
   private boolean canSeeAnItem() {
     for (Item item : getLocation().getItemList()) {
       if (canSee(item)) {
@@ -270,11 +273,7 @@ public class Hero extends Creature {
     firstLine += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
     IO.writeString(firstLine);
     IO.writeNewLine();
-    if (canSeeAdjacentLocations()) {
-      lookAdjacentLocations(walkedInFrom);
-    } else {
-      IO.writeString("You can't clearly see the surrounding locations.");
-    }
+    lookAdjacentLocations(walkedInFrom);
     IO.writeNewLine();
     lookCreatures();
     IO.writeNewLine();
@@ -282,36 +281,33 @@ public class Hero extends Creature {
   }
 
   /**
-   * Looks to the Locations adjacent to the one the Hero is in.
+   * Looks to the Locations adjacent to the one the Hero is in, informing if the Hero cannot see the adjacent Locations.
    *
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   private void lookAdjacentLocations(Direction walkedInFrom) {
+    if (!canSeeAdjacentLocations()) {
+      IO.writeString("You can't clearly see the surrounding locations.");
+      return;
+    }
     World world = Game.getGameState().getWorld();
     Point pos = Game.getGameState().getHeroPosition();
     HashMap<String, ArrayList<Direction>> visibleLocations = new HashMap<String, ArrayList<Direction>>();
-    for (Direction dir : Direction.values()) {
-      // Do not print the name of the Location you just left.
-      if (walkedInFrom == null || !dir.equals(walkedInFrom)) {
-        Point adjacentPoint = new Point(pos, dir);
-        Location adjacentLocation = world.getLocation(adjacentPoint);
-        ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-        explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getID());
-        String locationName = adjacentLocation.getName().getSingular();
-        if (!visibleLocations.containsKey(locationName)) {
-          visibleLocations.put(locationName, new ArrayList<Direction>());
-        }
-        visibleLocations.get(locationName).add(dir);
+    Collection<Direction> directions = Direction.getAllExcept(walkedInFrom); // Don't print the Location you just left.
+    for (Direction dir : directions) {
+      Point adjacentPoint = new Point(pos, dir);
+      Location adjacentLocation = world.getLocation(adjacentPoint);
+      ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+      explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getID());
+      String locationName = adjacentLocation.getName().getSingular();
+      if (!visibleLocations.containsKey(locationName)) {
+        visibleLocations.put(locationName, new ArrayList<Direction>());
       }
+      visibleLocations.get(locationName).add(dir);
     }
-    // "To North you see Graveyard.\n" four times takes 112 characters, therefore 140 should be enough for anything.
-    StringBuilder stringBuilder = new StringBuilder(140);
+    StringBuilder stringBuilder = new StringBuilder();
     for (Entry<String, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-      stringBuilder.append("To ");
-      stringBuilder.append(Utils.enumerate(entry.getValue()));
-      stringBuilder.append(" you see ");
-      stringBuilder.append(entry.getKey());
-      stringBuilder.append(".\n");
+      stringBuilder.append(String.format("To %s you see %s.\n", Utils.enumerate(entry.getValue()), entry.getKey()));
     }
     IO.writeString(stringBuilder.toString());
   }
@@ -429,7 +425,7 @@ public class Hero extends Creature {
    * @return an integer representing how many seconds the battle lasted.
    */
   public int attackTarget(IssuedCommand issuedCommand) {
-    if (checkForCreatureVisibilityWarningIfFalse()) {
+    if (canSeeACreatureWarnIfNot()) {
       Creature target = selectTarget(issuedCommand);
       if (target != null) {
         return Engine.battle(this, target) * BATTLE_TURN_DURATION;
@@ -643,7 +639,7 @@ public class Hero extends Creature {
    * @return how many seconds this action took
    */
   public int parseMilk(IssuedCommand issuedCommand) {
-    if (checkForCreatureVisibilityWarningIfFalse()) {
+    if (canSeeACreatureWarnIfNot()) {
       if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
         Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
         if (selectedCreature != null) {
