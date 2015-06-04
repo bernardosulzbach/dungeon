@@ -35,6 +35,9 @@ You may find several classes, interfaces and methods with complete Javadoc.
 This is no longer required. Clear and concise implementation comments are enough.
 Note that these comments may follow the Javadoc rules, but don't need to.
 
+Do not write jokes on source code files.
+
+Do not pollute comments with unnecessary data.
 
 Writing GUI code
 ----------------
