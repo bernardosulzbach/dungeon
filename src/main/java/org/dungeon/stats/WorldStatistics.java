@@ -23,8 +23,6 @@ import java.io.Serializable;
 
 /**
  * WorldStatistics class that tracks world statistics.
- * <p/>
- * Created by Bernardo Sulzbach on 12/31/14.
  */
 public final class WorldStatistics implements Serializable {
 

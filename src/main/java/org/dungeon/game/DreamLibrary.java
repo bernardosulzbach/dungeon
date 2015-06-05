@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 /**
  * The Dream Library.
- * <p/>
- * Created by Bernardo on 29/01/2015.
  */
 public class DreamLibrary extends Library {
 

@@ -22,8 +22,6 @@ import java.util.Comparator;
 
 /**
  * A comparator that compares UnlockedAchievements by their name.
- * <p/>
- * Created by Bernardo Sulzbach on 10/12/14.
  */
 class UnlockedAchievementNameComparator implements Comparator<UnlockedAchievement>, Serializable {
 

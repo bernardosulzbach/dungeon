@@ -21,8 +21,6 @@ package org.dungeon.game;
  * Command abstract class that defines a type for command objects.
  * <p/>
  * Make anonymous classes from this one to define commands.
- * <p/>
- * Created by Bernardo Sulzbach on 11/01/15.
  */
 public abstract class Command {
 

@@ -24,8 +24,6 @@ import java.util.TreeSet;
 
 /**
  * A sorted set of integers that can be expanded from both ends.
- * <p/>
- * Created by Bernardo Sulzbach on 01/12/14.
  */
 class ExpandableIntegerSet implements Serializable {
 
@@ -56,7 +54,7 @@ class ExpandableIntegerSet implements Serializable {
   /**
    * Generate the first integer of the set. This method should not be invoked twice.
    */
-  void initialize() {
+  private void initialize() {
     if (set.size() != 0) {
       throw new IllegalStateException("set already has an element.");
     } else {

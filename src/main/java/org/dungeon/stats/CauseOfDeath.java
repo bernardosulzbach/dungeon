@@ -23,13 +23,11 @@ import java.io.Serializable;
 
 /**
  * CauseOfDeath class that defines what kind of death happened and the ID of the related Item or Skill.
- * <p/>
- * Created by Bernardo on 14/04/2015.
  */
 public class CauseOfDeath implements Serializable {
 
-  public final TypeOfCauseOfDeath type;
-  public final ID id;
+  private final TypeOfCauseOfDeath type;
+  private final ID id;
 
   /**
    * Gets a CauseOfDeath with the specified TypeOfCauseOfDeath and ID.

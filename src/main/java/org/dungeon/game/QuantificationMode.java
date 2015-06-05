@@ -19,8 +19,6 @@ package org.dungeon.game;
 
 /**
  * QuantificationMode helper enumerated type.
- * <p/>
- * Created by Bernardo on 07/03/2015.
  */
 public enum QuantificationMode {
 

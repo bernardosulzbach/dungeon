@@ -19,14 +19,11 @@ package org.dungeon.game;
 
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
+import org.dungeon.util.Selectable;
 import org.dungeon.util.Percentage;
 
 /**
  * Enumerated type of the parts of the day.
- * <p/>
- * Created by Bernardo Sulzbach on 24/09/2014.
- * <p/>
- * Updated by Bernardo Sulzbach on 21/11/2014: added starting hours.
  */
 public enum PartOfDay implements Selectable {
 
@@ -44,7 +41,7 @@ public enum PartOfDay implements Selectable {
 
   // How bright is the sun at this part of the day?
   // Should be bigger than or equal to 0 and smaller than or equal to 1.
-  private Percentage luminosity;
+  private final Percentage luminosity;
 
   private int startingHour;
 

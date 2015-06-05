@@ -18,10 +18,10 @@
 package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
-import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.Hero;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.creatures.Hero;
+import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.IO;
-import org.dungeon.items.ItemFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
@@ -32,8 +32,6 @@ import java.util.Random;
 
 /**
  * Engine class that contains most static methods that need to be called to alter a GameState object.
- *
- * @author Bernardo Sulzbach
  */
 public class Engine {
 

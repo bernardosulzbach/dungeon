@@ -19,8 +19,6 @@ package org.dungeon.util;
 
 /**
  * Poem class that defines a poem storage data structure.
- * <p/>
- * Created by Bernardo Sulzbach on 28/10/2014.
  */
 public class Poem {
 

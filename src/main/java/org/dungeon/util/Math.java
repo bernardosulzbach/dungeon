@@ -24,8 +24,6 @@ import java.math.BigInteger;
 
 /**
  * A collection of mathematical utility methods.
- * <p/>
- * Created by Bernardo on 22/10/2014.
  */
 public final class Math {
 

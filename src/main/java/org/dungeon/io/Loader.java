@@ -35,9 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Loader class that handles saving / loading the game.
- * <p/>
- * Created by Bernardo Sulzbach.
+ * Loader class that handles saving and loading the game.
  */
 public final class Loader {
 

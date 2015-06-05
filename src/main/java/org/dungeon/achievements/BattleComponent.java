@@ -25,16 +25,14 @@ import org.dungeon.util.CounterMap;
 
 /**
  * The battle component of the achievements.
- * <p/>
- * Created by Bernardo on 07/12/2014.
  */
 final class BattleComponent {
 
-  final int minimumBattleCount;
-  final int longestBattleLength;
-  final CounterMap<ID> killsByCreatureID;
-  final CounterMap<String> killsByCreatureType;
-  final CounterMap<CauseOfDeath> killsByCauseOfDeath;
+  private final int minimumBattleCount;
+  private final int longestBattleLength;
+  private final CounterMap<ID> killsByCreatureID;
+  private final CounterMap<String> killsByCreatureType;
+  private final CounterMap<CauseOfDeath> killsByCauseOfDeath;
 
   BattleComponent(int minimumBattleCount, int longestBattleLength, CounterMap<ID> killsByCreatureID,
       CounterMap<String> killsByCreatureType, CounterMap<CauseOfDeath> killsByCauseOfDeath) {

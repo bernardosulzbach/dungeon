@@ -17,8 +17,8 @@
 
 package org.dungeon.skill;
 
+import org.dungeon.util.Selectable;
 import org.dungeon.game.ID;
-import org.dungeon.game.Selectable;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 
@@ -28,12 +28,10 @@ import java.util.List;
 
 /**
  * SkillList class that stores references to all the Skills a Creature has.
- * <p/>
- * Created by Bernardo Sulzbach on 07/01/15.
  */
 public class SkillList implements Serializable {
 
-  private final ArrayList<Skill> skillList = new ArrayList<Skill>();
+  private final List<Skill> skillList = new ArrayList<Skill>();
 
   /**
    * Add a Skill to this SkillList. If the Skill is already present, a warning will be logged.

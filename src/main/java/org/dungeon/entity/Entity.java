@@ -15,34 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.entity;
 
-import org.dungeon.util.Percentage;
+import org.dungeon.game.ID;
+import org.dungeon.game.Name;
+import org.dungeon.util.Selectable;
 
 import java.io.Serializable;
 
 /**
  * Entity abstract class that is a common type for everything that can be placed into a Location and interacted with.
  * Namely, items and creatures.
- * <p/>
- * All subclasses of Entity are Selectable and Serializable.
- *
- * @author Bernardo Sulzbach
  */
 public abstract class Entity implements Selectable, Serializable {
 
-  protected final String type;
-  protected final Name name;
-  protected final Weight weight;
+  private final String type;
+  private final Name name;
+  private final Weight weight;
   private final ID id;
-  private final Percentage visibility;
+  private final Visibility visibility;
 
-  protected Entity(ID id, String type, Name name, Weight weight) {
-    this.id = id;
-    this.type = type;
-    this.name = name;
-    this.weight = weight;
-    this.visibility = new Percentage(0.3);
+  protected Entity(Preset preset) {
+    this.id = preset.getID();
+    this.type = preset.getType();
+    this.name = preset.getName();
+    this.weight = preset.getWeight();
+    this.visibility = preset.getVisibility();
   }
 
   public ID getID() {
@@ -58,11 +56,11 @@ public abstract class Entity implements Selectable, Serializable {
     return name;
   }
 
-  public Weight getWeight() {
+  protected Weight getWeight() {
     return weight;
   }
 
-  public Percentage getVisibility() {
+  public Visibility getVisibility() {
     return visibility;
   }
 

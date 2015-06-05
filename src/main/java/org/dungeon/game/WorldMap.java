@@ -23,16 +23,14 @@ import org.dungeon.util.Constants;
 
 /**
  * WorldMap class that represents an ASCII map from the surroundings of the player.
- * <p/>
- * Created by Bernardo on 17/02/2015.
  */
-public class WorldMap {
+class WorldMap {
 
   private static final char HERO_SYMBOL = '@';
   private static final char NOT_YET_SEEN_SYMBOL = '?';
   private static final char NOT_YET_GENERATED_SYMBOL = '~';
   // TODO colors (to avoid problems such as Swamp and Savannah both starting with 'S' and to make the map prettier).
-  private String map;
+  private final String map;
 
   /**
    * Constructs a map based on the position of the Hero in the World.

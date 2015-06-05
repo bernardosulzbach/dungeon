@@ -15,15 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity.items;
 
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
+import org.dungeon.entity.Entity;
+import org.dungeon.entity.TagSet;
+import org.dungeon.entity.Weight;
 import org.dungeon.game.Engine;
-import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
-import org.dungeon.game.TagSet;
-import org.dungeon.game.Weight;
 import org.dungeon.util.Percentage;
 
 public class Item extends Entity {
@@ -39,7 +39,7 @@ public class Item extends Entity {
   private BookComponent bookComponent;
 
   public Item(ItemBlueprint bp, Date date) {
-    super(bp.id, bp.type, bp.name, bp.weight);
+    super(bp);
 
     tagSet = TagSet.copyTagSet(bp.tagSet);
     dateOfCreation = date;
@@ -65,6 +65,7 @@ public class Item extends Entity {
 
   @Override
   public Weight getWeight() {
+    Weight weight = super.getWeight();
     if (hasTag(Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY)) {
       Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
       return weight.multiply(integrityPercentage);
@@ -92,7 +93,7 @@ public class Item extends Entity {
     }
   }
 
-  int getMaxIntegrity() {
+  private int getMaxIntegrity() {
     return maxIntegrity;
   }
 
@@ -171,7 +172,7 @@ public class Item extends Entity {
     return Engine.roll(weaponComponent.getHitRate());
   }
 
-  String getIntegrityString() {
+  private String getIntegrityString() {
     return IntegrityState.getIntegrityState(getCurIntegrity(), getMaxIntegrity()).toString();
   }
 

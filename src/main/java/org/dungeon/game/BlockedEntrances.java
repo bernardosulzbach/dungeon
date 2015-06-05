@@ -27,8 +27,6 @@ import java.util.Set;
 
 /**
  * BlockedEntrances class that defines a allows blocking the entrances of a Locations.
- * <p/>
- * Created by Bernardo Sulzbach on 02/12/14.
  */
 public class BlockedEntrances implements Serializable {
 

@@ -26,8 +26,6 @@ import java.util.TreeSet;
 
 /**
  * Statistics class that stores, processes and prints game statistics.
- * <p/>
- * Created by Bernardo on 07/12/2014.
  */
 public final class Statistics implements Serializable {
 

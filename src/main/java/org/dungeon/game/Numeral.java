@@ -21,8 +21,6 @@ import org.dungeon.io.DLogger;
 
 /**
  * Numeral enumerated type.
- * <p/>
- * Created by Bernardo on 02/03/2015.
  */
 public enum Numeral {
 

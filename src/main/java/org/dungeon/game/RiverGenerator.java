@@ -22,8 +22,6 @@ import java.util.HashMap;
 
 /**
  * The component of WorldGenerator that generates rivers.
- * <p/>
- * Created by Bernardo Sulzbach on 01/12/14.
  */
 final class RiverGenerator implements Serializable {
 

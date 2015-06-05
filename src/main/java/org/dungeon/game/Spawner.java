@@ -17,8 +17,8 @@
 
 package org.dungeon.game;
 
-import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.CreatureFactory;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.creatures.CreatureFactory;
 
 import java.io.Serializable;
 

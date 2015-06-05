@@ -19,9 +19,11 @@ package org.dungeon.debug;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
-import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.CreatureFactory;
 import org.dungeon.date.Date;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.creatures.CreatureFactory;
+import org.dungeon.entity.items.Item;
+import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
@@ -33,8 +35,6 @@ import org.dungeon.game.LocationPreset;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.io.IO;
-import org.dungeon.items.Item;
-import org.dungeon.items.ItemFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
@@ -50,8 +50,6 @@ import java.util.Map.Entry;
 
 /**
  * A set of debugging tools.
- * <p/>
- * Created by Bernardo Sulzbach on 03/11/14.
  */
 public class DebugTools {
 
@@ -216,13 +214,13 @@ public class DebugTools {
     sb.append(Utils.padString("Creatures (" + location.getCreatureCount() + "):", WIDTH)).append('\n');
     for (Creature creature : location.getCreatures()) {
       sb.append(Utils.padString("  " + creature.getName(), WIDTH));
-      sb.append(creature.getVisibility()).append('\n');
+      sb.append(creature.getVisibility().toPercentage()).append('\n');
     }
     if (location.getItemCount() != 0) {
       sb.append(Utils.padString("Items (" + location.getItemCount() + "):", WIDTH)).append('\n');
       for (Item item : location.getItemList()) {
         sb.append(Utils.padString("  " + item.getQualifiedName(), WIDTH));
-        sb.append(item.getVisibility()).append('\n');
+        sb.append(item.getVisibility().toPercentage()).append('\n');
       }
     } else {
       sb.append("No items.\n");

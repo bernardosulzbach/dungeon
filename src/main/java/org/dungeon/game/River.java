@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * River class that implements a river (a line of water in the World).
- * <p/>
- * Created by Bernardo Sulzbach on 01/12/14.
  */
 class River implements Serializable {
 

@@ -19,12 +19,11 @@ package org.dungeon.game;
 
 /**
  * TurnResult class that stores the result of a turn.
- * <p/>
- * Created on 19/12/2014.
  */
 class TurnResult {
+
   int turnLength;
-  boolean configurationsChanged;
+  private boolean configurationsChanged;
 
   /**
    * Resets the fields. Should be called after the results were read to prepare the class for the next turn.
@@ -42,4 +41,5 @@ class TurnResult {
   boolean gameStateChanged() {
     return turnLength != 0 || configurationsChanged;
   }
+
 }

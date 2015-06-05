@@ -15,24 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
-import org.dungeon.game.Entity;
+import org.dungeon.entity.Entity;
+import org.dungeon.entity.TagSet;
+import org.dungeon.entity.items.CreatureInventory;
+import org.dungeon.entity.items.CreatureInventory.AdditionResult;
+import org.dungeon.entity.items.Item;
 import org.dungeon.game.ID;
 import org.dungeon.game.Location;
-import org.dungeon.game.TagSet;
 import org.dungeon.io.IO;
-import org.dungeon.items.CreatureInventory;
-import org.dungeon.items.CreatureInventory.AdditionResult;
-import org.dungeon.items.Item;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
 
 /**
  * The Creature class.
- *
- * @author Bernardo Sulzbach
  */
 public class Creature extends Entity {
 
@@ -48,7 +46,7 @@ public class Creature extends Entity {
   private Location location;
 
   public Creature(CreaturePreset preset) {
-    super(preset.getID(), preset.getType(), preset.getName(), preset.getWeight());
+    super(preset);
     maxHealth = preset.getHealth();
     curHealth = preset.getHealth();
     attack = preset.getAttack();
@@ -176,7 +174,7 @@ public class Creature extends Entity {
    *
    * @param item the Item to be dropped
    */
-  public void dropItem(Item item) {
+  void dropItem(Item item) {
     getInventory().removeItem(item);
     getLocation().addItem(item);
   }

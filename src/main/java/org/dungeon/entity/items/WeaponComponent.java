@@ -15,14 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity.items;
 
-import org.dungeon.game.Weight;
+import java.io.Serializable;
 
-interface LimitedInventory {
+/**
+ * The weapon component of some items.
+ */
+public class WeaponComponent implements Serializable {
 
-  int getItemLimit();
+  private final int damage;
+  private final double hitRate;
+  private final int integrityDecrementOnHit;
 
-  Weight getWeightLimit();
+  public WeaponComponent(int damage, double hitRate, int integrityDecrementOnHit) {
+    this.damage = damage;
+    this.hitRate = hitRate;
+    this.integrityDecrementOnHit = integrityDecrementOnHit;
+  }
+
+  public int getDamage() {
+    return damage;
+  }
+
+  public double getHitRate() {
+    return hitRate;
+  }
+
+  public int getIntegrityDecrementOnHit() {
+    return integrityDecrementOnHit;
+  }
 
 }

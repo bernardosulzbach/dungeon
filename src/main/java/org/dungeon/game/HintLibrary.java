@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 /**
  * A Library of Hints (represented by Strings).
- * <p/>
- * Created by Bernardo Sulzbach on 30/12/14.
  */
 public class HintLibrary extends Library {
 

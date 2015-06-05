@@ -24,8 +24,6 @@ import java.io.Serializable;
 
 /**
  * UnlockedAchievement class that records the unlocking of an achievement.
- * <p/>
- * Created by Bernardo Sulzbach on 09/12/14.
  */
 public final class UnlockedAchievement implements Serializable {
 

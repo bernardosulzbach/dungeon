@@ -23,8 +23,6 @@ import java.io.Serializable;
 
 /**
  * CommandHistory class that is used to keep track of all the commands issued by the player.
- * <p/>
- * Created by Bernardo Sulzbach on 23/09/2014.
  */
 public class CommandHistory implements Serializable {
 
@@ -53,14 +51,14 @@ public class CommandHistory implements Serializable {
   /**
    * @return the number of commands in this CommandHistory.
    */
-  int size() {
+  private int size() {
     return commands.size();
   }
 
   /**
    * @return true if this CommandHistory contains no commands.
    */
-  public boolean isEmpty() {
+  private boolean isEmpty() {
     return commands.isEmpty();
   }
 

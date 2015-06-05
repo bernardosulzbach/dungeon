@@ -15,15 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.entity.items;
+
+import java.io.Serializable;
 
 /**
- * Selectable interface that tags entities that are selectable through their name.
+ * The food part of some items.
  * <p/>
- * Created by Bernardo Sulzbach on 13/11/14.
+ * Created by Bernardo on 14/10/2014.
  */
-public interface Selectable {
+public class FoodComponent implements Serializable {
 
-  Name getName();
+  private final int nutrition;
+  private final int integrityDecrementOnEat;
+
+  public FoodComponent(int nutrition, int integrityDecrementOnEat) {
+    this.nutrition = nutrition;
+    this.integrityDecrementOnEat = integrityDecrementOnEat;
+  }
+
+  public int getNutrition() {
+    return nutrition;
+  }
+
+  public int getIntegrityDecrementOnEat() {
+    return integrityDecrementOnEat;
+  }
 
 }

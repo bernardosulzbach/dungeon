@@ -23,8 +23,6 @@ import java.awt.Color;
 
 /**
  * Messenger helper class that defines several static methods to print uniform warning messages.
- * <p/>
- * Created by Bernardo on 12/02/2015.
  */
 public class Messenger {
 

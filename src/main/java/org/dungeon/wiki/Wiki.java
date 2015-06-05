@@ -28,8 +28,6 @@ import java.util.List;
 
 /**
  * The Wiki class. Loads the contents of the wiki.txt file and manages wiki articles.
- * <p/>
- * Created by Bernardo on 06/02/2015.
  */
 public abstract class Wiki {
 
@@ -85,7 +83,7 @@ public abstract class Wiki {
   }
 
   private static String toArticleListingEntry(Article article) {
-    return "  " + article.title;
+    return "  " + article.getName();
   }
 
 }

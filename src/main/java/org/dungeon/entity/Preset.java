@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,21 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity;
+
+import org.dungeon.game.ID;
+import org.dungeon.game.Name;
 
 /**
- * The inventory used by Location objects.
- * <p/>
- * Created by Bernardo Sulzbach on 15/11/14.
+ * An interface that simplifies Entity instantiation.
  */
-public class LocationInventory extends BaseInventory {
+public interface Preset {
 
-  public void addItem(Item item) {
-    items.add(item);
-  }
+  ID getID();
 
-  public void removeItem(Item item) {
-    items.remove(item);
-  }
+  String getType();
+
+  Name getName();
+
+  Weight getWeight();
+
+  Visibility getVisibility();
 
 }

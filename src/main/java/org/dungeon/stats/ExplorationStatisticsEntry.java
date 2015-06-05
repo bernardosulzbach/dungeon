@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <p/>
  * Created by Bernardo Sulzbach on 03/11/14.
  */
-public class ExplorationStatisticsEntry implements Serializable {
+class ExplorationStatisticsEntry implements Serializable {
 
   private final ID locationID;
 

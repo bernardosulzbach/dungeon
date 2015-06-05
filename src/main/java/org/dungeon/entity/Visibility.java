@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,35 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.wiki;
+package org.dungeon.entity;
 
-import org.dungeon.util.Selectable;
-import org.dungeon.game.Name;
+import org.dungeon.util.Percentage;
+
+import java.io.Serializable;
 
 /**
- * Article class that represents a wiki article.
+ * A simple wrapper for a Percentage object.
  */
-final class Article implements Selectable {
+public class Visibility implements Serializable {
 
-  private final Name title;
-  private final String content;
+  private final Percentage value;
 
-  public Article(String title, String content) {
-    this.title = Name.newInstance(title);
-    this.content = content;
+  public Visibility(Percentage value) {
+    this.value = value;
   }
 
-  /**
-   * Returns the title of this Article.
-   */
-  @Override
-  public Name getName() {
-    return title;
-  }
-
-  @Override
-  public String toString() {
-    return title + "\n\n" + content;
+  public Percentage toPercentage() {
+    return value;
   }
 
 }

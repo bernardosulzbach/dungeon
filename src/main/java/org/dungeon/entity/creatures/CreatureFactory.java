@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
 import org.dungeon.date.Date;
+import org.dungeon.entity.items.CreatureInventory.AdditionResult;
+import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
-import org.dungeon.items.CreatureInventory.AdditionResult;
-import org.dungeon.items.ItemFactory;
 import org.dungeon.util.Constants;
 
 import java.util.Map;

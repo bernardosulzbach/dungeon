@@ -23,12 +23,10 @@ package org.dungeon.util;
  * Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}.
  * When the end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on
  * the {@code ShuffledRange}.
- * <p/>
- * Created by Bernardo on 19/01/2015.
  */
 public class AutomaticShuffledRange {
 
-  ShuffledRange shuffledRange;
+  private final ShuffledRange shuffledRange;
   private int index;
 
   /**

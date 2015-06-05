@@ -19,14 +19,11 @@ package org.dungeon.io;
 
 /**
  * Sleeper class that handles Thread sleeping.
- * <p/>
- * This class should not be instantiated.
- * <p/>
- * Created by Bernardo Sulzbach on 09/01/15.
  */
-final public class Sleeper {
+public final class Sleeper {
 
   private Sleeper() {
+    throw new AssertionError();
   }
 
   /**

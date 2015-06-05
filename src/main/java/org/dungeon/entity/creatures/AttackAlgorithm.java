@@ -15,35 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.wiki;
+package org.dungeon.entity.creatures;
 
-import org.dungeon.util.Selectable;
-import org.dungeon.game.Name;
+import org.dungeon.stats.CauseOfDeath;
 
 /**
- * Article class that represents a wiki article.
+ * AttackAlgorithm interface that defines a single renderAttack method.
  */
-final class Article implements Selectable {
+interface AttackAlgorithm {
 
-  private final Name title;
-  private final String content;
-
-  public Article(String title, String content) {
-    this.title = Name.newInstance(title);
-    this.content = content;
-  }
-
-  /**
-   * Returns the title of this Article.
-   */
-  @Override
-  public Name getName() {
-    return title;
-  }
-
-  @Override
-  public String toString() {
-    return title + "\n\n" + content;
-  }
+  CauseOfDeath renderAttack(Creature attacker, Creature defender);
 
 }

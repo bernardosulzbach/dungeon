@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * Period class to calculate, store and print date differences.
- * <p/>
- * Created by Bernardo Sulzbach on 16/12/14.
  */
 public class Period implements Serializable {
 

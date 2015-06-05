@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity.items;
 
 /**
  * IntegrityState enumerated type that defines some constants to humanize the representation of the state of an Item.
- * <p/>
- * Created by Bernardo on 09/05/2015.
  */
 public enum IntegrityState {
 

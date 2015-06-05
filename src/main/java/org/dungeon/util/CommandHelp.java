@@ -26,8 +26,6 @@ import java.util.List;
 
 /**
  * CommandHelp class that provides useful information about a single Command.
- * <p/>
- * Created by Bernardo on 06/02/2015.
  */
 public class CommandHelp {
 

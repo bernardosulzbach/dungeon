@@ -15,14 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
+import org.dungeon.entity.Entity;
+import org.dungeon.util.Selectable;
+import org.dungeon.entity.items.BaseInventory;
+import org.dungeon.entity.items.BookComponent;
+import org.dungeon.entity.items.CreatureInventory;
+import org.dungeon.entity.items.FoodComponent;
+import org.dungeon.entity.items.Item;
 import org.dungeon.game.Direction;
 import org.dungeon.game.Engine;
-import org.dungeon.game.Entity;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
@@ -32,15 +38,9 @@ import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.QuantificationMode;
-import org.dungeon.game.Selectable;
 import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.io.Sleeper;
-import org.dungeon.items.BaseInventory;
-import org.dungeon.items.BookComponent;
-import org.dungeon.items.CreatureInventory;
-import org.dungeon.items.FoodComponent;
-import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
@@ -184,7 +184,7 @@ public class Hero extends Creature {
    * visibility of the specified Entity.
    */
   private boolean canSee(Entity entity) {
-    return getLocation().getLuminosity().biggerThanOrEqualTo(entity.getVisibility());
+    return getLocation().getLuminosity().biggerThanOrEqualTo(entity.getVisibility().toPercentage());
   }
 
   /**

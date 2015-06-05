@@ -24,8 +24,6 @@ import java.util.ArrayList;
 
 /**
  * SkillRotation class that represents a rotation of Skills.
- * <p/>
- * Created by Bernardo Sulzbach on 07/01/15.
  */
 public class SkillRotation implements Serializable {
 

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.entity;
 
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
@@ -27,8 +27,6 @@ import java.util.Locale;
 
 /**
  * Weight class that represents an amount of weight, in kilograms.
- * <p/>
- * Created by Bernardo on 07/03/2015.
  */
 public class Weight implements Comparable<Weight>, Serializable {
 

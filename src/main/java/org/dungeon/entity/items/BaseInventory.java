@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity.items;
 
-import org.dungeon.items.Item.Tag;
+import org.dungeon.entity.items.Item.Tag;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public abstract class BaseInventory implements Serializable {
    *
    * @param item the Item to be removed
    */
-  public abstract void removeItem(Item item);
+  protected abstract void removeItem(Item item);
 
   /**
    * Iterates through the inventory, removing items that shouldn't exist anymore.

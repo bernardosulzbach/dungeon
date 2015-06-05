@@ -17,11 +17,11 @@
 
 package org.dungeon.game;
 
-import org.dungeon.creatures.Creature;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.items.Item;
+import org.dungeon.entity.items.ItemFactory;
+import org.dungeon.entity.items.LocationInventory;
 import org.dungeon.io.DLogger;
-import org.dungeon.items.Item;
-import org.dungeon.items.ItemFactory;
-import org.dungeon.items.LocationInventory;
 import org.dungeon.util.Percentage;
 
 import java.io.Serializable;

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.entity;
 
 import org.dungeon.io.DLogger;
 
@@ -25,8 +25,6 @@ import java.util.Set;
 
 /**
  * A set of Tags.
- * <p/>
- * Created by Bernardo on 22/05/2015.
  */
 public class TagSet<E extends Enum<E>> implements Serializable {
 

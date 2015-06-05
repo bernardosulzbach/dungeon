@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
+import org.dungeon.entity.items.Item;
 import org.dungeon.game.Engine;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
-import org.dungeon.items.Item;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
@@ -32,8 +32,6 @@ import java.util.Map;
 
 /**
  * This class presents a static renderAttack method that retrieves the appropriate algorithm to render an attack.
- * <p/>
- * Created by Bernardo on 27/05/2015.
  */
 final class AttackAlgorithms {
 

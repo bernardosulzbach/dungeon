@@ -23,8 +23,6 @@ import org.dungeon.util.StopWatch;
 /**
  * Library class that serves as an abstract superclass to data classes that should only load from secondary storage
  * when, and if, their content is demanded.
- * <p/>
- * Created by Bernardo Sulzbach on 12/30/14.
  */
 abstract class Library {
 

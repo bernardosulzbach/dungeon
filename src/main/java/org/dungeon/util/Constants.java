@@ -25,8 +25,6 @@ import java.text.SimpleDateFormat;
 
 /**
  * Constants class is a general-purpose constant storing class.
- *
- * @author Bernardo Sulzbach
  */
 public class Constants {
 

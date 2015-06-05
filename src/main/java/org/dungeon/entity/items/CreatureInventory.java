@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
+package org.dungeon.entity.items;
 
-import org.dungeon.creatures.Creature;
-import org.dungeon.game.Weight;
+import org.dungeon.entity.Weight;
+import org.dungeon.entity.creatures.Creature;
 import org.dungeon.io.DLogger;
 
 /**

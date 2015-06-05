@@ -19,8 +19,6 @@ package org.dungeon.io;
 
 /**
  * ResourceLine class that represents a line of a resource file.
- * <p/>
- * Created by Bernardo Sulzbach on 12/28/14.
  */
 final class ResourceLine {
 
@@ -74,7 +72,7 @@ final class ResourceLine {
    *
    * @return the amount of line breaks at the end of the original String.
    */
-  int countLineBreaks() {
+  private int countLineBreaks() {
     int count = 0;
     for (int i = text.length() - 1; i >= 0; i--) {
       if (text.charAt(i) == LINE_BREAK) {

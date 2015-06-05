@@ -26,8 +26,6 @@ import java.util.Arrays;
  * IssuedCommand class that wraps a String entered by the user and provides powerful query methods.
  * <p/>
  * An IssuedCommand is made up of at least one token (word) and is not case-sensitive.
- * <p/>
- * Created by Bernardo Sulzbach on 21/11/14.
  */
 public final class IssuedCommand {
 

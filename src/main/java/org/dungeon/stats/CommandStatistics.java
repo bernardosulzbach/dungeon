@@ -23,8 +23,6 @@ import java.io.Serializable;
 
 /**
  * CommandStatistics class that is a component of Statistics.
- * <p/>
- * Created by Bernardo on 07/12/2014.
  */
 final class CommandStatistics implements Serializable {
 

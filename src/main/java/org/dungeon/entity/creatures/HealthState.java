@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
 /**
  * HealthState enum that defines the six stages of healthiness.
- * <p/>
- * Created by Bernardo on 06/02/2015.
  */
 public enum HealthState {
 

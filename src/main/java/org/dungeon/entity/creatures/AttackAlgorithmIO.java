@@ -15,19 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
+import org.dungeon.entity.items.Item;
 import org.dungeon.game.Engine;
 import org.dungeon.io.IO;
-import org.dungeon.items.Item;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
 
 /**
  * This class is uninstantiable and provides utility IO methods for AttackAlgorithm implementations.
- * <p/>
- * Created by Bernardo on 27/05/2015.
  */
 class AttackAlgorithmIO {
 

@@ -17,12 +17,12 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.creatures.Creature;
+import org.dungeon.util.Selectable;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.items.Item;
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
-import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
-import org.dungeon.items.Item;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
@@ -30,8 +30,6 @@ import java.io.Serializable;
 
 /**
  * The Skill class.
- * <p/>
- * Created by Bernardo Sulzbach on 07/01/15.
  */
 public class Skill implements Selectable, Serializable {
 
@@ -49,7 +47,7 @@ public class Skill implements Selectable, Serializable {
    * @param caster the Creature that performed the attack.
    * @param target the target of the attack.
    */
-  public static void printSkillCast(Skill skill, Creature caster, Creature target) {
+  private static void printSkillCast(Skill skill, Creature caster, Creature target) {
     StringBuilder builder = new StringBuilder();
     builder.append(caster.getName()).append(" casted ").append(skill.getName());
     if (skill.getDamage() > 0) {
@@ -68,11 +66,11 @@ public class Skill implements Selectable, Serializable {
    *
    * @return the damage of this Skill.
    */
-  public int getDamage() {
+  private int getDamage() {
     return definition.damage;
   }
 
-  public int getRepair() {
+  private int getRepair() {
     return definition.repair;
   }
 

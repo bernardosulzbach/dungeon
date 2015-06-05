@@ -25,10 +25,6 @@ import java.util.Arrays;
 
 /**
  * Table class that provides table functionality for printing in-game tables.
- * <p/>
- * Currently, all data is stored as Strings.
- * <p/>
- * Created by Bernardo Sulzbach on 13/12/14.
  */
 public class Table {
 

@@ -21,8 +21,6 @@ package org.dungeon.util;
  * A StopWatch class used to measure time distance between two or more instants.
  * <p/>
  * The precision of the measurements performed with a StopWatch are dependent on System.nanoTime() precision.
- * <p/>
- * Created by Bernardo Sulzbach on 12/26/14.
  */
 public class StopWatch {
 

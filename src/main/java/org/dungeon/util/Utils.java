@@ -18,7 +18,6 @@
 package org.dungeon.util;
 
 import org.dungeon.game.GameData;
-import org.dungeon.game.Selectable;
 import org.dungeon.io.IO;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ import java.util.List;
 
 /**
  * General utility class. All utility methods of the game should be placed in this class.
- *
- * @author Bernardo Sulzbach
  */
 public final class Utils {
 

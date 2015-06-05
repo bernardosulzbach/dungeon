@@ -27,8 +27,6 @@ import java.io.Serializable;
  * The wrapped String is guaranteed to only contain valid characters.
  * <p/>
  * Valid characters are: uppercase ASCII letters, digits and underscores.
- * <p/>
- * Created by Bernardo Sulzbach on 15/12/14.
  */
 public final class ID implements Serializable {
 

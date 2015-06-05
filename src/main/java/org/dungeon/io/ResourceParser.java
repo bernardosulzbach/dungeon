@@ -24,8 +24,6 @@ import java.io.Reader;
 
 /**
  * Dungeon custom buffered reader. Allow easier input of text-based data formatted according to the Dungeon convention.
- * <p/>
- * Created on 05/12/14.
  */
 class ResourceParser implements Closeable {
 

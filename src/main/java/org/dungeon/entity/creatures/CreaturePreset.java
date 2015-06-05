@@ -15,12 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
+import org.dungeon.entity.Preset;
+import org.dungeon.entity.TagSet;
+import org.dungeon.entity.Visibility;
+import org.dungeon.entity.Weight;
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
-import org.dungeon.game.TagSet;
-import org.dungeon.game.Weight;
 import org.dungeon.io.DLogger;
 
 import java.util.ArrayList;
@@ -28,10 +30,8 @@ import java.util.List;
 
 /**
  * CreaturePreset class that stores the information that the CreatureFactory uses to produce creatures.
- * <p/>
- * Created by Bernardo on 05/05/2015.
  */
-public final class CreaturePreset {
+public final class CreaturePreset implements Preset {
 
   private final TagSet<Creature.Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private ID id;
@@ -42,6 +42,7 @@ public final class CreaturePreset {
   private int attack;
   private ID attackAlgorithmID;
   private List<ID> items = new ArrayList<ID>();
+  private Visibility visibility;
 
   /**
    * Ensures that an integer value is greater than or equal to a provided minimum.
@@ -66,8 +67,8 @@ public final class CreaturePreset {
     return tagSet;
   }
 
-  public boolean hasTag(Creature.Tag corpse) {
-    return tagSet.hasTag(corpse);
+  public boolean hasTag(Creature.Tag tag) {
+    return tagSet.hasTag(tag);
   }
 
   public void addTag(Creature.Tag tag) {
@@ -138,6 +139,14 @@ public final class CreaturePreset {
 
   public void setItems(List<ID> items) {
     this.items = items;
+  }
+
+  public org.dungeon.entity.Visibility getVisibility() {
+    return visibility;
+  }
+
+  public void setVisibility(Visibility visibility) {
+    this.visibility = visibility;
   }
 
 }

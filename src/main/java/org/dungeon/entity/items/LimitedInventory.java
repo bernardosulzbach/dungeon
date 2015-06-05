@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Bernardo Sulzbach
+ * Copyright (C) 2014 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,31 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.items;
 
-import org.dungeon.items.Item;
+import org.dungeon.entity.Weight;
 
-/**
- * A convenience immutable class that represents a pair of an Item and an Integer.
- * <p/>
- * Created by Bernardo on 01/06/2015.
- */
-class ItemIntegerPair {
+interface LimitedInventory {
 
-  private final Item item;
-  private final Integer integer;
+  int getItemLimit();
 
-  ItemIntegerPair(Item item, Integer integer) {
-    this.item = item;
-    this.integer = integer;
-  }
-
-  public Item getItem() {
-    return item;
-  }
-
-  public Integer getInteger() {
-    return integer;
-  }
+  Weight getWeightLimit();
 
 }

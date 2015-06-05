@@ -15,37 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.items;
-
-import java.io.Serializable;
+package org.dungeon.entity.items;
 
 /**
- * The weapon part of some items.
- * <p/>
- * Created by Neurolytic on 2/5/2015.
+ * The inventory used by Location objects.
  */
-public class WeaponComponent implements Serializable {
+public class LocationInventory extends BaseInventory {
 
-  private final int damage;
-  private final double hitRate;
-  private final int integrityDecrementOnHit;
-
-  public WeaponComponent(int damage, double hitRate, int integrityDecrementOnHit) {
-    this.damage = damage;
-    this.hitRate = hitRate;
-    this.integrityDecrementOnHit = integrityDecrementOnHit;
+  public void addItem(Item item) {
+    items.add(item);
   }
 
-  public int getDamage() {
-    return damage;
-  }
-
-  public double getHitRate() {
-    return hitRate;
-  }
-
-  public int getIntegrityDecrementOnHit() {
-    return integrityDecrementOnHit;
+  public void removeItem(Item item) {
+    items.remove(item);
   }
 
 }

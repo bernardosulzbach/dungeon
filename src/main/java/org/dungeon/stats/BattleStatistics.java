@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.creatures.Creature;
+import org.dungeon.entity.creatures.Creature;
 import org.dungeon.game.ID;
 import org.dungeon.util.CounterMap;
 
@@ -25,10 +25,6 @@ import java.io.Serializable;
 
 /**
  * BattleStatistics class that stores battle statistics to enable achievements.
- * <p/>
- * This class is intended to be more lightweight and faster at achievement unlock checking than BattleLog.
- * <p/>
- * Created by Bernardo Sulzbach on 16/11/2014 as a replacement for BattleLog.
  */
 public class BattleStatistics implements Serializable {
 

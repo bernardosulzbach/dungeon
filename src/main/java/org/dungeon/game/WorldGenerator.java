@@ -23,17 +23,15 @@ import java.util.List;
 
 /**
  * The world generator. This class should be instantiated by a World object.
- * <p/>
- * Created by Bernardo Sulzbach on 14/10/14.
  */
-public class WorldGenerator implements Serializable {
+class WorldGenerator implements Serializable {
 
   private static final int CHUNK_SIDE = 5;
   private static final int MIN_DIST_RIVER = 6;
   private static final int MAX_DIST_RIVER = 11;
   private final World world;
   private final RiverGenerator riverGenerator;
-  private int chunkSide;
+  private final int chunkSide;
 
   /**
    * Instantiates a new World generator. This should be called by the constructor of a World object.

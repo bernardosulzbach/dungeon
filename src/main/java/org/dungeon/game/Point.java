@@ -24,8 +24,6 @@ import java.io.Serializable;
  * <p/>
  * Its objects are used by the World to map coordinates to Location objects. Campaign also uses Point objects to store
  * the position of some creatures in the world.
- *
- * @author Bernardo Sulzbach
  */
 public class Point implements Serializable {
 

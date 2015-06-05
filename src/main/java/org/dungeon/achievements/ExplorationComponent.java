@@ -24,25 +24,23 @@ import org.dungeon.util.CounterMap;
 
 /**
  * The exploration component of the achievements.
- * <p/>
- * Created by Bernardo on 07/12/2014.
  */
 final class ExplorationComponent {
 
   /**
    * Stores how many kills in Locations with a specified ID the Hero must have.
    */
-  final CounterMap<ID> killsByLocationID;
+  private final CounterMap<ID> killsByLocationID;
 
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  final CounterMap<ID> visitedLocations;
+  private final CounterMap<ID> visitedLocations;
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
-  final CounterMap<ID> maximumNumberOfVisits;
+  private final CounterMap<ID> maximumNumberOfVisits;
 
   ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations,
       CounterMap<ID> maximumNumberOfVisits) {

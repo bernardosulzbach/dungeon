@@ -18,7 +18,6 @@
 package org.dungeon.util;
 
 import org.dungeon.game.Name;
-import org.dungeon.game.Selectable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,8 +26,6 @@ import java.util.List;
 
 /**
  * A collection of Selectable objects that match a given query.
- * <p/>
- * Created by Bernardo Sulzbach on 2015-03-10.
  */
 public class Matches<T extends Selectable> {
 
@@ -51,7 +48,7 @@ public class Matches<T extends Selectable> {
     return newInstance;
   }
 
-  public void addMatch(T match) {
+  void addMatch(T match) {
     matches.add(match);
     differentNamesUpToDate = false;
   }

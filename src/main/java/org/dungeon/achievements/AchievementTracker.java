@@ -27,8 +27,6 @@ import java.util.TreeSet;
 
 /**
  * AchievementTracker that tracks the unlocked achievements.
- * <p/>
- * Created by Bernardo Sulzbach on 16/11/14.
  */
 public class AchievementTracker implements Serializable {
 
@@ -69,7 +67,7 @@ public class AchievementTracker implements Serializable {
    * @param achievement an Achievement object.
    * @return the UnlockedAchievement that corresponds to this Achievement.
    */
-  UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
+  private UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
     ID id = achievement.getID();
     for (UnlockedAchievement ua : unlockedAchievements) {
       if (ua.id.equals(id)) {

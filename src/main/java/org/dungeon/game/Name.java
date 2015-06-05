@@ -23,8 +23,6 @@ import java.io.Serializable;
 
 /**
  * Name Final class that stores a singular and a pluralized name for an Entity.
- * <p/>
- * Created by Bernardo on 02/03/2015.
  */
 public final class Name implements Serializable {
 

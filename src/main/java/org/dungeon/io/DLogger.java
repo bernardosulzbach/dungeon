@@ -28,8 +28,6 @@ import java.util.logging.Logger;
 
 /**
  * Dungeon logger class.
- * <p/>
- * Created by Bernardo Sulzbach on 14/11/14.
  */
 public final class DLogger {
 

@@ -30,8 +30,6 @@ import java.io.Serializable;
  * A Skill differs from a SkillDefinition as it has Creature-specific data. For instance, all Fireballs share the same
  * definition, but each Creature's SkillList should have a specific Skill object for the Fireball, such that its
  * remaining cool down is not shared among different Creatures.
- * <p/>
- * Created by Bernardo Sulzbach on 10/01/15.
  */
 public final class SkillDefinition implements Serializable {
 

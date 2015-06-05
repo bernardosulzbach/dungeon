@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.creatures;
+package org.dungeon.entity.creatures;
 
-import org.dungeon.stats.CauseOfDeath;
+import org.dungeon.entity.items.Item;
 
 /**
- * AttackAlgorithm interface that defines a single renderAttack method.
- * <p/>
- * Created by Bernardo Sulzbach on 27/05/2015.
+ * A convenience immutable class that represents a pair of an Item and an Integer.
  */
-interface AttackAlgorithm {
+class ItemIntegerPair {
 
-  CauseOfDeath renderAttack(Creature attacker, Creature defender);
+  private final Item item;
+  private final Integer integer;
+
+  ItemIntegerPair(Item item, Integer integer) {
+    this.item = item;
+    this.integer = integer;
+  }
+
+  public Item getItem() {
+    return item;
+  }
+
+  public Integer getInteger() {
+    return integer;
+  }
 
 }

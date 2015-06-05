@@ -30,8 +30,6 @@ import java.util.List;
 /**
  * IO class that encapsulates all Input/Output operations. This is the only class that should call the writing methods
  * of the game window.
- *
- * @author Bernardo Sulzbach - 13/09/2014
  */
 public final class IO {
 
@@ -58,30 +56,7 @@ public final class IO {
    * @param color  the color of the text.
    */
   public static void writeString(String string, Color color) {
-    writeString(string, color, true);
-  }
-
-  /**
-   * Writes a string of text using a specific color.
-   *
-   * @param string  the string of text to be written.
-   * @param color   the color of the text. If {@code null}, the default color will be used.
-   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
-   */
-  public static void writeString(String string, Color color, boolean newLine) {
-    writeString(string, color, newLine, true, 0);
-  }
-
-  /**
-   * Writes a string of text using a specific color.
-   *
-   * @param string     the string of text to be written.
-   * @param color      the color of the text. If {@code null}, the default color will be used.
-   * @param newLine    if true, a newline will be added to the end of the string after its end is cleared.
-   * @param scrollDown if true, the TextPane will be scrolled down after writing.
-   */
-  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown) {
-    writeString(string, color, newLine, scrollDown, 0);
+    writeString(string, color, true, true, 0);
   }
 
   /**
@@ -121,30 +96,8 @@ public final class IO {
     writeString("");
   }
 
-  /**
-   * Writes a key, value pair separated with enough dots to fill a line using the specified colors.
-   *
-   * @param key       the key string.
-   * @param value     the value string.
-   * @param textColor the color used to write the key and the value.
-   * @param fillColor the color used to write the dots.
-   */
-  private static void writeKeyValueString(String key, String value, Color textColor, Color fillColor) {
-    int dots = Constants.COLS - key.length() - value.length();  // The amount of dots necessary.
-    if (dots < 0) {
-      DLogger.warning("Passed too large strings to writeKeyValueString.");
-    }
-    writeString(key, textColor, false);
-    StringBuilder stringBuilder = new StringBuilder();
-    for (; dots > 0; dots--) {
-      stringBuilder.append('.');
-    }
-    writeString(stringBuilder.toString(), fillColor, false);
-    writeString(value, textColor, true);
-  }
-
   public static void writePoem(Poem poem) {
-    writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false);
+    writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false, 0);
   }
 
   public static void writeAchievementList(List<Achievement> achievementList) {

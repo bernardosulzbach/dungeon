@@ -17,6 +17,9 @@
 
 package org.dungeon.io;
 
+import org.dungeon.entity.Visibility;
+import org.dungeon.util.Percentage;
+
 import java.io.Closeable;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
@@ -218,6 +221,18 @@ public class ResourceReader implements Closeable {
    */
   public String[] getArrayOfValues(String key) {
     return map.get(key);
+  }
+
+  /**
+   * Returns a Visibility object corresponding to the value of "VISIBILITY" currently in this ResourceReader.
+   * If the value is not a valid representation of a Percentage or if it is not present, this method returns null.
+   */
+  public Visibility readVisibility() {
+    if (hasValue("VISIBILITY") && Percentage.isValidPercentageString(getValue("VISIBILITY"))) {
+      return new Visibility(Percentage.fromString(getValue("VISIBILITY")));
+    } else {
+      return null;
+    }
   }
 
   /**

@@ -23,8 +23,6 @@ import java.util.Set;
 
 /**
  * Counter class that maps a generic key to an integer and provides methods manipulate this integer.
- *
- * @author Bernardo Sulzbach
  */
 public class CounterMap<K> implements Serializable {
 

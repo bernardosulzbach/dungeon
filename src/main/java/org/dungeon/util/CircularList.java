@@ -25,8 +25,6 @@ import java.util.ArrayList;
  * <p/>
  * After the specified maximum capacity is reached, when a new element is added, the oldest element on the list
  * is removed.
- * <p/>
- * Created by Bernardo Sulzbach on 10/12/14.
  */
 final class CircularList<T> implements Serializable {
 
@@ -80,7 +78,7 @@ final class CircularList<T> implements Serializable {
    *
    * @return true if this CircularList is at its maximum capacity. False otherwise.
    */
-  boolean isFull() {
+  private boolean isFull() {
     return size() == capacity;
   }
 

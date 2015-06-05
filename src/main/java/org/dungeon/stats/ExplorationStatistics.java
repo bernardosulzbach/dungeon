@@ -25,8 +25,6 @@ import java.util.HashMap;
 
 /**
  * ExplorationStatistics class that tracks the Hero's exploration progress.
- * <p/>
- * Created by Bernardo Sulzbach on 03/11/14.
  */
 public class ExplorationStatistics implements Serializable {
 

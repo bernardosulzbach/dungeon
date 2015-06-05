@@ -26,8 +26,6 @@ import java.awt.Rectangle;
 
 /**
  * Dungeon's custom ScrollBarUI that is a subclass of BasicScrollBarUI.
- * <p/>
- * Created by Bernardo Sulzbach on 12/12/14.
  */
 class DScrollBarUI extends BasicScrollBarUI {
 

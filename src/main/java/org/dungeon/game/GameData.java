@@ -19,15 +19,16 @@ package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
-import org.dungeon.creatures.Creature;
-import org.dungeon.creatures.CreatureFactory;
-import org.dungeon.creatures.CreaturePreset;
 import org.dungeon.date.Date;
+import org.dungeon.entity.Weight;
+import org.dungeon.entity.creatures.Creature;
+import org.dungeon.entity.creatures.CreatureFactory;
+import org.dungeon.entity.creatures.CreaturePreset;
+import org.dungeon.entity.items.Item;
+import org.dungeon.entity.items.ItemBlueprint;
+import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.ResourceReader;
-import org.dungeon.items.Item;
-import org.dungeon.items.ItemBlueprint;
-import org.dungeon.items.ItemFactory;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
@@ -48,8 +49,6 @@ import java.util.Set;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
- * <p/>
- * Created by Bernardo on 22/10/2014.
  */
 public final class GameData {
 
@@ -167,6 +166,7 @@ public final class GameData {
       }
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
+      blueprint.setVisibility(reader.readVisibility());
       blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
       blueprint.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
@@ -204,8 +204,9 @@ public final class GameData {
           preset.addTag(tag);
         }
       }
-      preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
+      preset.setVisibility(reader.readVisibility());
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
+      preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
       preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
       preset.setAttackAlgorithmID(new ID(reader.getValue("ATTACK_ALGORITHM_ID")));
       if (reader.hasValue("ITEMS")) {
@@ -233,6 +234,7 @@ public final class GameData {
     int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.
     corpse.setMaxIntegrity(integrity);
     corpse.setCurIntegrity(integrity);
+    corpse.setVisibility(preset.getVisibility());
     corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
     corpse.setDamage(CORPSE_DAMAGE);

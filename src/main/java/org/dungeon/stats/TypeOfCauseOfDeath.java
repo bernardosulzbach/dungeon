@@ -21,14 +21,12 @@ import java.io.Serializable;
 
 /**
  * TypeOfCauseOfDeath enumerated type that defines the possible types of causes of death.
- * <p/>
- * Created by Bernardo on 14/04/2015.
  */
 public enum TypeOfCauseOfDeath implements Serializable {
 
   WEAPON("Weapon"), SKILL("Skill");
 
-  public final String stringRepresentation;
+  private final String stringRepresentation;
 
   TypeOfCauseOfDeath(String stringRepresentation) {
     this.stringRepresentation = stringRepresentation;
