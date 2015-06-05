@@ -27,10 +27,6 @@ import org.dungeon.game.Name;
 public final class ItemBlueprint implements Preset {
 
   final TagSet<Item.Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
-  private ID id;
-  private String type;
-  private Name name;
-  private Weight weight;
   int maxIntegrity;
   int curIntegrity;
   int damage;
@@ -40,6 +36,10 @@ public final class ItemBlueprint implements Preset {
   int integrityDecrementOnEat;
   long putrefactionPeriod;
   String text;
+  private ID id;
+  private String type;
+  private Name name;
+  private Weight weight;
   private Visibility visibility;
   private ID skill;
 

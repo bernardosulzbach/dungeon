@@ -19,8 +19,8 @@ package org.dungeon.game;
 
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
-import org.dungeon.util.Selectable;
 import org.dungeon.util.Percentage;
+import org.dungeon.util.Selectable;
 
 /**
  * Enumerated type of the parts of the day.

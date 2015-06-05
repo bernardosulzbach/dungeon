@@ -17,12 +17,13 @@
 
 package org.dungeon.gui;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  * Dungeon's custom ScrollBarUI that is a subclass of BasicScrollBarUI.

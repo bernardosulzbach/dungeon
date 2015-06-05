@@ -21,7 +21,6 @@ import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
-import org.dungeon.util.Selectable;
 import org.dungeon.entity.items.BaseInventory;
 import org.dungeon.entity.items.BookComponent;
 import org.dungeon.entity.items.CreatureInventory;
@@ -47,6 +46,7 @@ import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
+import org.dungeon.util.Selectable;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;

@@ -17,10 +17,10 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.util.Selectable;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
+import org.dungeon.util.Selectable;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -17,13 +17,13 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.util.Selectable;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.ID;
 import org.dungeon.game.Name;
 import org.dungeon.io.IO;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Selectable;
 
 import java.awt.Color;
 import java.io.Serializable;

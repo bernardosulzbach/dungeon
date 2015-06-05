@@ -17,8 +17,8 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.util.Selectable;
 import org.dungeon.game.Name;
+import org.dungeon.util.Selectable;
 
 /**
  * Article class that represents a wiki article.
