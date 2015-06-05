@@ -28,6 +28,10 @@ import java.awt.Color;
  */
 public class Messenger {
 
+  private Messenger() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
+
   /**
    * Prints a message reporting the usage of an invalid command.
    */
