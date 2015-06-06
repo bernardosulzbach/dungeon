@@ -30,6 +30,8 @@ import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
 
+import java.util.Iterator;
+
 /**
  * The Creature class.
  */
@@ -201,9 +203,13 @@ public class Creature extends Entity {
     getLocation().addItem(item);
   }
 
+  /**
+   * Iterates though the Creature's inventory, dropping all Items on the ground.
+   */
   public void dropEverything() {
-    for (Item item : getInventory().getItems()) {
-      dropItem(item);
+    for (Iterator<Item> iterator = getInventory().getItems().iterator(); iterator.hasNext();) {
+      getLocation().addItem(iterator.next());
+      iterator.remove();
     }
   }
 
