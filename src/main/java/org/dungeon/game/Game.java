@@ -308,8 +308,7 @@ public class Game {
     IO.writeString("You may want to issue 'tutorial' to learn the basics.");
   }
 
-  // This method enables other parts of the code to issue commands, is this bad design?
-  // CommandData could be a component of Command that contained name and info but that did not provide execute().
+  // TODO CommandData could be a component of Command that contained name and info but that did not provide execute().
   public static List<Command> getCommandList() {
     return commandList;
   }
