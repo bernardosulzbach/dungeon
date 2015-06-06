@@ -50,7 +50,7 @@ public abstract class CreatureFactory {
     if (preset != null) {
       Game.getGameState().getStatistics().getWorldStatistics().addSpawn(preset.getName().getSingular());
       Creature creature = new Creature(preset);
-      giveItems(creature, id);
+      giveItems(creature);
       return creature;
     } else {
       return null;
@@ -59,20 +59,20 @@ public abstract class CreatureFactory {
 
   public static Hero makeHero() {
     Hero hero = new Hero(creaturePresetMap.get(Constants.HERO_ID));
-    giveItems(hero, Constants.HERO_ID);
+    giveItems(hero);
     return hero;
   }
 
   /**
    * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
    */
-  private static void giveItems(Creature creature, ID id) {
-    CreaturePreset preset = creaturePresetMap.get(id);
+  private static void giveItems(Creature creature) {
+    CreaturePreset preset = creaturePresetMap.get(creature.getID());
     for (ID itemID : preset.getItems()) {
       Date date = Game.getGameState().getWorld().getWorldDate();
       AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID, date));
       if (result != AdditionResult.SUCCESSFUL) {
-        DLogger.warning("Could not add " + itemID + " to " + id + "! Got " + result + ".");
+        DLogger.warning("Could not add " + itemID + " to " + creature.getID() + "! Got " + result + ".");
       }
     }
     equipWeapon(creature, preset);
@@ -88,7 +88,7 @@ public abstract class CreatureFactory {
         }
       }
       if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
-        DLogger.warning(String.format("%s not found in the inventory of %s!", preset.getWeaponID(), preset.getID()));
+        DLogger.warning(String.format("%s not found in the inventory of %s!", preset.getWeaponID(), creature.getID()));
       }
     }
   }
