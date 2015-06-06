@@ -727,14 +727,14 @@ public class Hero extends Creature {
         unequipWeapon();
       }
     }
-    this.setWeapon(weapon);
+    setWeapon(weapon);
     IO.writeString(getName() + " equipped " + weapon.getName() + ".");
   }
 
   public int unequipWeapon() {
     if (hasWeapon()) {
       IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
-      setWeapon(null);
+      unsetWeapon();
       return SECONDS_TO_UNEQUIP;
     } else {
       IO.writeString("You are not equipping a weapon.");

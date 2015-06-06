@@ -52,7 +52,7 @@ public abstract class BaseInventory implements Serializable {
   /**
    * Checks if an item is already in the inventory.
    */
-  boolean hasItem(Item itemObject) {
+  public boolean hasItem(Item itemObject) {
     return items.contains(itemObject);
   }
 

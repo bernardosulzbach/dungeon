@@ -19,6 +19,7 @@ package org.dungeon.entity.creatures;
 
 import org.dungeon.date.Date;
 import org.dungeon.entity.items.CreatureInventory.AdditionResult;
+import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
@@ -62,12 +63,32 @@ public abstract class CreatureFactory {
     return hero;
   }
 
+  /**
+   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
+   */
   private static void giveItems(Creature creature, ID id) {
-    for (ID itemID : creaturePresetMap.get(id).getItems()) {
+    CreaturePreset preset = creaturePresetMap.get(id);
+    for (ID itemID : preset.getItems()) {
       Date date = Game.getGameState().getWorld().getWorldDate();
       AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID, date));
       if (result != AdditionResult.SUCCESSFUL) {
         DLogger.warning("Could not add " + itemID + " to " + id + "! Got " + result + ".");
+      }
+    }
+    equipWeapon(creature, preset);
+  }
+
+  private static void equipWeapon(Creature creature, CreaturePreset preset) {
+    if (preset.getWeaponID() != null) {
+      // Get the weapon from the creature's inventory.
+      for (Item item : creature.getInventory().getItems()) {
+        if (item.getID().equals(preset.getWeaponID())) {
+          creature.setWeapon(item);
+          break;
+        }
+      }
+      if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
+        DLogger.warning(String.format("%s not found in the inventory of %s!", preset.getWeaponID(), preset.getID()));
       }
     }
   }

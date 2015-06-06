@@ -24,6 +24,7 @@ import org.dungeon.entity.items.CreatureInventory.AdditionResult;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.ID;
 import org.dungeon.game.Location;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
@@ -94,8 +95,29 @@ public class Creature extends Entity {
     return weapon;
   }
 
+  /**
+   * Sets an Item as the currently equipped weapon. The Item must be in this Creature's inventory and have the WEAPON
+   * tag.
+   *
+   * @param weapon an Item that must be in this Creature's inventory and have the WEAPON tag
+   */
   public void setWeapon(Item weapon) {
-    this.weapon = weapon;
+    if (inventory.hasItem(weapon)) {
+      if (weapon.hasTag(Item.Tag.WEAPON)) {
+        this.weapon = weapon;
+      } else {
+        DLogger.warning(String.format("Tried to equip %s (no WEAPON tag) on %s!", weapon.getName(), getName()));
+      }
+    } else {
+      DLogger.warning("Tried to equip an Item that is not in the inventory of " + getName() + "!");
+    }
+  }
+
+  /**
+   * Unequips the currently equipped weapon.
+   */
+  public void unsetWeapon() {
+    this.weapon = null;
   }
 
   public Location getLocation() {

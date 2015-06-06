@@ -43,6 +43,7 @@ public final class CreaturePreset implements Preset {
   private ID attackAlgorithmID;
   private List<ID> items = new ArrayList<ID>();
   private Visibility visibility;
+  private ID weaponID;
 
   /**
    * Ensures that an integer value is greater than or equal to a provided minimum.
@@ -147,6 +148,14 @@ public final class CreaturePreset implements Preset {
 
   public void setVisibility(Visibility visibility) {
     this.visibility = visibility;
+  }
+
+  public ID getWeaponID() {
+    return weaponID;
+  }
+
+  public void setWeaponID(ID weaponID) {
+    this.weaponID = weaponID;
   }
 
 }

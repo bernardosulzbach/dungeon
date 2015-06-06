@@ -85,9 +85,14 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     return getWeight().add(item.getWeight()).compareTo(getWeightLimit()) > 0;
   }
 
+  /**
+   * Removes an Item from the CreatureInventory, unequipping it if it is the currently equipped weapon.
+   *
+   * @param item the Item to be removed from the CreatureInventory
+   */
   public void removeItem(Item item) {
     if (owner.getWeapon() == item) {
-      owner.setWeapon(null);
+      owner.unsetWeapon();
     }
     items.remove(item);
   }
