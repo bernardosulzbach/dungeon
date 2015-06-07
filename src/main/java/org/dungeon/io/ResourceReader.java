@@ -78,7 +78,7 @@ public class ResourceReader implements Closeable {
   }
 
   /**
-   * Converts a String of data to an ArrayList of separate Strings.
+   * Converts a String of data to an array of separate Strings.
    * <p/>
    * "[ First Item | Second Item ]" becomes {"First Item", "Second Item"}.
    */
