@@ -276,7 +276,6 @@ public class Hero extends Creature {
     lookAdjacentLocations(walkedInFrom);
     IO.writeNewLine();
     lookCreatures();
-    IO.writeNewLine();
     lookItems();
   }
 
@@ -333,6 +332,7 @@ public class Hero extends Creature {
     List<Item> items = getLocation().getItemList();
     items = filterByVisibility(items);
     if (!items.isEmpty()) {
+      IO.writeNewLine();
       IO.writeString("On the ground you see " + enumerateEntities(items) + ".");
     }
   }
