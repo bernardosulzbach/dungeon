@@ -44,18 +44,24 @@ public class Game {
     GameData.loadGameData();
     initializeCommands();
     gameWindow = new GameWindow();
-    GameState loadedGameState = Loader.loadGame();
-    if (loadedGameState == null) {
-      setGameState(Loader.newGame());
+    setGameState(loadAGameStateOrCreateANewOne());
+  }
+
+  /**
+   * Loads a saved GameState or creates a new one.
+   * If a new GameState is created and the saves folder is empty, the tutorial is suggested.
+   */
+  private static GameState loadAGameStateOrCreateANewOne() {
+    GameState gameState = Loader.loadGame();
+    if (gameState == null) {
+      gameState = Loader.newGame();
       // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
       // So check for any save in the folder.
       if (!Loader.checkForAnySave()) { // Suggest the tutorial only if no saved game exists.
         suggestTutorial();
       }
-    } else {
-      setGameState(loadedGameState);
     }
-    Engine.refresh();
+    return gameState;
   }
 
   /**
@@ -324,6 +330,8 @@ public class Game {
   /**
    * Sets a new GameState to the static field.
    * This setter also invokes the {@code Hero.look()} method on the Hero of the specified GameState.
+   * <p/>
+   * There is no need to call Engine.refresh() after invoking this method.
    *
    * @param state the new GameState (should not be {@code null})
    */
@@ -345,8 +353,7 @@ public class Game {
     processInput(issuedCommand);
     if (gameState.getHero().isDead()) {
       IO.writeString("You died.");
-      // After the player's death, just prompt to load the default save file.
-      setGameState(Loader.loadGame());
+      setGameState(loadAGameStateOrCreateANewOne());
     } else {
       // Advance the campaign's world date.
       if (turnResult.turnLength > 0) {
