@@ -21,6 +21,7 @@ import org.dungeon.entity.items.Item.Tag;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,6 +35,10 @@ public abstract class BaseInventory implements Serializable {
 
   BaseInventory() {
     items = new ArrayList<Item>();
+  }
+
+  private static boolean isDecomposed(Item item) {
+    return (item.hasTag(Tag.DECOMPOSES) && item.getAge() >= item.getDecompositionPeriod());
   }
 
   public List<Item> getItems() {
@@ -67,9 +72,10 @@ public abstract class BaseInventory implements Serializable {
    * Iterates through the inventory, removing items that shouldn't exist anymore.
    */
   public void refreshItems() {
-    for (Item item : items) {
-      if (item.hasTag(Tag.DECOMPOSES) && item.getAge() > item.getDecompositionPeriod()) {
-        removeItem(item);
+    for (Iterator<Item> iterator = items.iterator(); iterator.hasNext(); ) {
+      Item item = iterator.next();
+      if (isDecomposed(item)) {
+        iterator.remove(); // The Item will disappear from the game. No need to set its inventory to null.
       }
     }
   }
