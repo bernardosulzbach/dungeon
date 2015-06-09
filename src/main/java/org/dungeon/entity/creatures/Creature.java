@@ -207,8 +207,8 @@ public class Creature extends Entity {
    * Iterates though the Creature's inventory, dropping all Items on the ground.
    */
   public void dropEverything() {
-    for (Iterator<Item> iterator = getInventory().getItems().iterator(); iterator.hasNext();) {
-      getLocation().addItem(iterator.next());
+    for (Iterator<Item> iterator = getInventory().getItems().iterator(); iterator.hasNext(); ) {
+      getLocation().addItem(iterator.next()); // addItem will set the Item the correct Inventory.
       iterator.remove();
     }
   }

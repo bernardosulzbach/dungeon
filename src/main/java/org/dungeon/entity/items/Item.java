@@ -24,6 +24,7 @@ import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
+import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
 public class Item extends Entity {
@@ -37,6 +38,8 @@ public class Item extends Entity {
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
+  /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
+  private BaseInventory inventory;
 
   public Item(ItemBlueprint bp, Date date) {
     super(bp);
@@ -121,6 +124,10 @@ public class Item extends Entity {
    */
   private void setIntegrityToZero() {
     this.curIntegrity = 0;
+    if (!hasTag(Tag.REPAIRABLE)) {
+      inventory.removeItem(this);
+      return; // The Item object will disappear from the game, don't worry about its state.
+    }
     if (hasTag(Tag.CLOCK)) {
       // A clock just broke! Update its last time record.
       clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
@@ -147,6 +154,10 @@ public class Item extends Entity {
     return bookComponent;
   }
 
+  public void setInventory(BaseInventory inventory) {
+    this.inventory = inventory;
+  }
+
   public boolean isBroken() {
     return getCurIntegrity() == 0;
   }
@@ -156,11 +167,27 @@ public class Item extends Entity {
   }
 
   public void decrementIntegrityByHit() {
-    setCurIntegrity(getCurIntegrity() - weaponComponent.getIntegrityDecrementOnHit());
+    decrementIntegrity(weaponComponent.getIntegrityDecrementOnHit());
   }
 
-  public void decrementIntegrity(int integrityDecrement) {
-    setCurIntegrity(getCurIntegrity() - integrityDecrement);
+  public void decrementIntegrityByEat() {
+    decrementIntegrity(foodComponent.getIntegrityDecrementOnEat());
+  }
+
+  /**
+   * The method that should ultimately be called to decrement the integrity of an item.
+   *
+   * @param decrement how much to decrement, must be positive
+   */
+  private void decrementIntegrity(int decrement) {
+    if (decrement <= 0) {
+      DLogger.warning("Got nonpositive integrity decrement value for a " + getName() + "!");
+      throw new IllegalArgumentException("Integrity decrement must be positive!");
+    }
+    if (isBroken()) {
+      DLogger.warning("Attempted to decrement the integrity of an already broken " + getName() + "!");
+    }
+    setCurIntegrity(getCurIntegrity() - decrement);
   }
 
   /**

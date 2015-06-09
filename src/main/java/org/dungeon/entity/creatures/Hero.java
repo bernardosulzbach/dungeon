@@ -616,10 +616,9 @@ public class Hero extends Creature {
           // The healing may vary from 0 up to (nutrition - 1) if there is not enough for a bite.
           healthIncrement = (int) (food.getNutrition() * remainingBites);
         }
-        selectedItem.decrementIntegrity(food.getIntegrityDecrementOnEat());
+        selectedItem.decrementIntegrityByEat();
         if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
           IO.writeString("You ate " + selectedItem.getName() + ".");
-          getInventory().removeItem(selectedItem);
         } else {
           IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
         }
