@@ -168,4 +168,9 @@ public class Location implements Serializable {
     return blockedEntrances.isBlocked(direction);
   }
 
+  @Override
+  public String toString() {
+    return name.getSingular();
+  }
+
 }
