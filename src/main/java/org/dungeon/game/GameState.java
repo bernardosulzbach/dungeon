@@ -41,13 +41,12 @@ public class GameState implements Serializable {
   private Hero hero;
   private Point heroPosition;
 
-  transient private boolean saved;
+  transient private boolean saved = false;
 
   public GameState() {
     commandHistory = new CommandHistory();
     world = new World(statistics.getWorldStatistics());
     createHeroAndStartingLocation();
-    saved = true;
   }
 
   /**
