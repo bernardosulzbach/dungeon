@@ -46,21 +46,27 @@ final class CommandStatistics implements Serializable {
   }
 
   /**
-   * @return how many commands the user has issued so far.
+   * Returns how many commands the user has issued so far.
+   *
+   * @return the command count
    */
   public int getCommandCount() {
     return commands;
   }
 
   /**
-   * @return how many printable characters the user has entered so far.
+   * Returns how many printable characters the user has entered so far.
+   *
+   * @return the character count
    */
   public int getChars() {
     return chars;
   }
 
   /**
-   * @return how many words the user has entered so far.
+   * Returns how many words the user has entered so far.
+   *
+   * @return the word count
    */
   public int getWords() {
     return words;
