@@ -37,9 +37,7 @@ public class GameState implements Serializable {
 
   private final CommandHistory commandHistory;
   private final World world;
-
   private final Statistics statistics = new Statistics();
-
   private Hero hero;
   private Point heroPosition;
 
@@ -50,6 +48,16 @@ public class GameState implements Serializable {
     world = new World(statistics.getWorldStatistics());
     createHeroAndStartingLocation();
     saved = true;
+  }
+
+  /**
+   * Returns a String with a story about how the character got where he or she currently is.
+   */
+  public String getPreface() {
+    String prefaceFormat = "You wake up at %s. Your head hurts and you can't remember what happened to you.\n"
+        + "You were born in a city called Everdusk and raised by your parents, a man who was a trader and a woman who "
+        + "helped him and owned the local watermill.";
+    return String.format(prefaceFormat, hero.getLocation());
   }
 
   /**

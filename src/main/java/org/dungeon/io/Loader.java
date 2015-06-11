@@ -136,9 +136,12 @@ public final class Loader {
    * Generates a new GameState and returns it.
    */
   public static GameState newGame() {
+    GameState gameState = new GameState();
     IO.writeString("Created a new game.");
+    IO.writeNewLine();
+    IO.writeString(gameState.getPreface());
     Game.getGameWindow().requestFocusOnTextField();
-    return new GameState();
+    return gameState;
   }
 
   /**
