@@ -62,6 +62,14 @@ side. They propel through the water with powerful tail strokes.
 ARTICLE: Keyboard Shortcuts
 CONTENT: There is a single implemented keyboard shortcut now, it is CTRL + S and it saves the game.
 
+ARTICLE: License
+CONTENT: The GNU General Public License is the most widely used free software license, which guarantees end users\
+(individuals, organizations, companies) the freedoms to run, study, share, and modify the software. The license was\
+originally written by Richard Stallman of the Free Software Foundation.\\
+The founder of this project (Bernardo Sulzbach) believes in the power of free software. Dungeon is released under GNU\
+GPLv3 license because according to his thoughts everyone should be free to run, study, and modify the game as he or she\
+intends. This license also requires that any program which uses code from Dungeon to also be open source.
+
 ARTICLE: Lizard
 CONTENT: Lizards typically have feet and external ears, while snakes lack both of these characteristics. However,\
 because they are defined negatively as excluding snakes, lizards have no unique distinguishing characteristic as a\
