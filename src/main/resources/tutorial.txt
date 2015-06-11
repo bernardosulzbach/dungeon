@@ -1,13 +1,24 @@
 TUTORIAL:\\
 The Game\\
-Dungeon is an open-world role-playing game made with Java and released under the GNU General Public License v3.0. There is a list of contributors in the "contributors" article of the wiki. You can see more about the license with the 'license' command.\\
+Dungeon is an text-based, turn-based, open-world role-playing game.\\
 \\
 The World\\
 You are in control of a character and completely free to explore the world in which you start. This world is a bidimensional grid of locations varying from arid deserts to warm and moist swamps. Different foes lurk the land but will not attack you unless you harm them, what allows you to explore the world freely while searching for items.\\
 On the ground, you will find a wide variety of items, from small edible fruits to fearsome weapons and tomes about magical spells. Collecting these items and using them in the appropriate occasions is the difference between conquering this world and dying to a rat.\\
+\\
+The Character\\
+The character is a human who woke up one day without remembering anything about what happened.\
+He finds himself in a completely strange place and surrounded by various different creatures.\
+While some of these creatures are familiar to him, there are some monsters he has never seen before.\
+His instincts tell him to quickly grab something to hit beasts with, otherwise he won't last very long.\
 \\
 Commands\\
 At any time, you can issue 'commands' to see a complete list of commands.\\
 In order to walk to a given direction, issue 'go' followed by the direction towards which you want to move the character. e.g., 'go north'. Alternatively, use only the first character of the direction, as in 'go s'.\\
 To issue your character to attempt to kill a creature use 'kill' followed by part of the name of the creature.\\
 The wiki is a quite useful resource. Simply use the 'wiki' command followed by whatever you want to search.
+\\
+The Project\\
+Dungeon is made with Java (SE 6) and released under the GNU General Public License v3.0.\\
+There is a list of contributors in the "Contributors" article of the wiki.\\
+The 'license' command displays some text from the license. There is also a wiki entry ("License") on the license.\\
