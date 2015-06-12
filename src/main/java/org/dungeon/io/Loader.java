@@ -248,6 +248,7 @@ public final class Loader {
       objectInStream = new ObjectInputStream(fileInStream);
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
+      loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
       String sizeString = bytesToHuman(file.length());
       DLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
       IO.writeString(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
