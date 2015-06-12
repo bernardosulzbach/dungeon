@@ -20,9 +20,9 @@ package org.dungeon.gui;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.Loader;
-import org.dungeon.util.CommandHistory;
+import org.dungeon.commands.CommandHistory;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;

@@ -17,13 +17,18 @@
 
 package org.dungeon.game;
 
+import org.dungeon.commands.Command;
+import org.dungeon.commands.CommandDescription;
+import org.dungeon.commands.CommandHelp;
+import org.dungeon.commands.CommandResult;
+import org.dungeon.commands.IssuedCommand;
+import org.dungeon.commands.SimpleCommandResult;
 import org.dungeon.debug.DebugTools;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.stats.ExplorationStatistics;
-import org.dungeon.util.CommandHelp;
 import org.dungeon.util.Math;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.SystemInfo;
@@ -35,10 +40,11 @@ import java.util.List;
 
 public class Game {
 
-  private static final TurnResult turnResult = new TurnResult();
   private static GameWindow gameWindow;
   private static GameState gameState;
   private static List<Command> commandList;
+  private static List<CommandDescription> descriptions = new ArrayList<CommandDescription>();
+  private static CommandResult lastCommandResult;
 
   public static void main(String[] args) {
     GameData.loadGameData();
@@ -66,6 +72,7 @@ public class Game {
 
   /**
    * Creates the anonymous subclasses of Command and add them to the List of Commands.
+   * Also adds all the CommandDescriptions to the proper List.
    */
   private static void initializeCommands() {
     // When referring to the playable character, "character" should be used instead of "you" or "player".
@@ -74,249 +81,285 @@ public class Game {
     // Commands, alphabetically sorted using the name as key.
     commandList.add(new Command("achievements", "Displays the achievements the character already unlocked.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.printUnlockedAchievements();
+        return null;
       }
     });
     commandList.add(new Command("age", "Displays the character's age.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().printAge();
+        return null;
       }
     });
     commandList.add(new Command("commands", "Displays a list of valid commands.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         CommandHelp.printCommandList(issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("debug", "Invokes a debugging command.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        DebugTools.parseDebugCommand(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        return DebugTools.parseDebugCommand(issuedCommand);
       }
     });
     commandList.add(new Command("destroy", "Destroys an item on the ground.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().destroyItem(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().destroyItem(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("drop", "Drops the specified item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().dropItem(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().dropItem(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("eat", "Eats an item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().eatItem(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().eatItem(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("equip", "Equips the specified item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().parseEquip(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().parseEquip(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("exit", "Exits the game.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Game.exit();
+        return null;
       }
     });
     commandList.add(new Command("fibonacci", "Displays the specified term of the Fibonacci's sequence.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Math.parseFibonacci(issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("go", "Makes the character move in the specified direction.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = Engine.parseHeroWalk(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = Engine.parseHeroWalk(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("help", "Displays the help text for a specified command.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         CommandHelp.printHelp(issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("hint", "Displays a random hint of the game.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.printNextHint();
+        return null;
       }
     });
     commandList.add(new Command("items", "Lists the items in the character's inventory.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().printInventory();
+        return null;
       }
     });
     commandList.add(new Command("kill", "Attacks the target chosen by the player.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().attackTarget(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().attackTarget(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("license", "Displays the game's license.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Utils.printLicense();
+        return null;
       }
     });
     commandList.add(new Command("load", "Loads a saved game.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         GameState loadedGameState = Loader.loadGame(issuedCommand);
         if (loadedGameState != null) {
           setGameState(loadedGameState);
         }
+        return null;
       }
     });
     commandList.add(new Command("look", "Describes what the character can see.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().look(null);
+        return null;
       }
     });
     commandList.add(new Command("map", "Shows a map of your surroundings.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         World world = gameState.getWorld();
         ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
         Point heroPosition = gameState.getHeroPosition();
         WorldMap map = new WorldMap(world, explorationStatistics, heroPosition);
         IO.writeString(map.toString());
+        return null;
       }
     });
     commandList.add(new Command("milk", "Attempts to milk a creature.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().parseMilk(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().parseMilk(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("new", "Starts a new game.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         setGameState(Loader.newGame());
+        return null;
       }
     });
     commandList.add(new Command("pick", "Attempts to pick up an item from the current location.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().pickItem(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().pickItem(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("poem", "Prints a poem from the poem library.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.printPoem(issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("read", "Reads the specified item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().readItem(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().readItem(issuedCommand);
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("repair", "Attempts to cast Repair on the equipped item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().castRepairOnEquippedItem();
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().castRepairOnEquippedItem();
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("rest", "Rests until healing about three fifths of the character's health.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().rest();
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().rest();
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("rotation", "Either displays the current skill rotation or sets up a new one.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().editRotation(issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("save", "Saves the game.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Loader.saveGame(gameState, issuedCommand);
+        return null;
       }
     });
     commandList.add(new Command("saves", "Displays a table with all the save files.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Loader.printFilesInSavesFolder();
+        return null;
       }
     });
     commandList.add(new Command("skills", "Displays a list with all skills known by the character.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().printSkills();
+        return null;
       }
     });
     commandList.add(new Command("sleep", "Sleeps until the sun rises. The character may dream during it.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().sleep();
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().sleep();
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("statistics", "Displays all available game statistics.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getStatistics().printStatistics();
+        return null;
       }
     });
     commandList.add(new Command("status", "Displays the character's status.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         gameState.getHero().printAllStatus();
+        return null;
       }
     });
     commandList.add(new Command("system", "Displays information about the underlying system.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         SystemInfo.printSystemInfo();
+        return null;
       }
     });
     commandList.add(new Command("time", "Displays what the character knows about the current time and date.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().printDateAndTime();
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().printDateAndTime();
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("tutorial", "Displays the tutorial.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         IO.writeString(GameData.getTutorial());
+        return null;
       }
     });
     commandList.add(new Command("unequip", "Unequips the currently equipped item.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        turnResult.turnLength = gameState.getHero().unequipWeapon();
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int duration = gameState.getHero().unequipWeapon();
+        return new SimpleCommandResult(duration);
       }
     });
     commandList.add(new Command("wiki", "Searches the wiki for an article.") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         Wiki.search(issuedCommand);
+        return null;
       }
     });
+    // Put the CommandDescriptions in their List.
+    for (Command command : commandList) {
+      descriptions.add(command.getDescription());
+    }
   }
 
   private static void suggestTutorial() {
     IO.writeNewLine();
     IO.writeString("You may want to issue 'tutorial' to learn the basics.");
-  }
-
-  // TODO CommandData could be a component of Command that contained name and info but that did not provide execute().
-  public static List<Command> getCommandList() {
-    return commandList;
   }
 
   public static GameWindow getGameWindow() {
@@ -342,6 +385,10 @@ public class Game {
     gameState.getHero().look(null);
   }
 
+  public static List<CommandDescription> getCommandDescriptions() {
+    return descriptions;
+  }
+
   /**
    * Renders a turn based on the last IssuedCommand.
    *
@@ -356,22 +403,23 @@ public class Game {
       setGameState(loadAGameStateOrCreateANewOne());
     } else {
       // Advance the campaign's world date.
-      if (turnResult.turnLength > 0) {
-        gameState.getWorld().rollDate(turnResult.turnLength);
+      if (lastCommandResult != null) {
+        if (lastCommandResult.getDuration() > 0) {
+          gameState.getWorld().rollDate(lastCommandResult.getDuration());
+        }
+        // If the last turn changed the GameState, set the game as not saved.
+        if (lastCommandResult.evaluateIfGameStateChanged()) {
+          gameState.setSaved(false);
+        }
       }
       // Refresh the campaign state.
       Engine.refresh();
-      // If the last turn changed the GameState, set the game as not saved.
-      if (turnResult.gameStateChanged()) {
-        gameState.setSaved(false);
-      }
     }
-    // Clear the results of the last turn.
-    turnResult.clear();
   }
 
   /**
-   * Processes the player input.
+   * Processes the player's input. Adds the IssuedCommand to the CommandHistory and to the CommandStatistics. Finally,
+   * this method finds and executes the corresponding Command object or prints a message if there is not such Command.
    *
    * @param issuedCommand the last IssuedCommand.
    */
@@ -379,8 +427,8 @@ public class Game {
     gameState.getCommandHistory().addCommand(issuedCommand);
     gameState.getStatistics().addCommand(issuedCommand);
     for (Command command : commandList) {
-      if (command.name.equalsIgnoreCase(issuedCommand.getFirstToken())) {
-        command.execute(issuedCommand);
+      if (command.getDescription().getName().equalsIgnoreCase(issuedCommand.getFirstToken())) {
+        lastCommandResult = command.execute(issuedCommand);
         return;
       }
     }

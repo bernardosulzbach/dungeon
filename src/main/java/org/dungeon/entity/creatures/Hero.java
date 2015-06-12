@@ -31,7 +31,7 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;
@@ -742,7 +742,7 @@ public class Hero extends Creature {
   }
 
   /**
-   * Output a table with both the hero's status and his weapon's status.
+   * Prints a message with the current status of the Hero.
    */
   public void printAllStatus() {
     StringBuilder builder = new StringBuilder();
@@ -762,7 +762,7 @@ public class Hero extends Creature {
   }
 
   /**
-   * Prints the hero's age.
+   * Prints the Hero's age.
    */
   public void printAge() {
     String age = new Period(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
@@ -770,7 +770,7 @@ public class Hero extends Creature {
   }
 
   /**
-   * Makes the hero read the current date and time as well as he can.
+   * Makes the Hero read the current date and time as well as he can.
    *
    * @return how many seconds the action took
    */

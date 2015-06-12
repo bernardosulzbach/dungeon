@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.commands;
 
 /**
  * Command abstract class that defines a type for command objects.
@@ -24,22 +24,26 @@ package org.dungeon.game;
  */
 public abstract class Command {
 
-  public final String name;
-  public final String info;
+  private final CommandDescription description;
 
   public Command(String name) {
-    this.name = name;
-    this.info = null;
+    this(name, null);
   }
 
   public Command(String name, String info) {
-    this.name = name;
-    this.info = info;
+    description = new CommandDescription(name, info);
+  }
+
+  public CommandDescription getDescription() {
+    return description;
   }
 
   /**
-   * Executes the Command, given an IssuedCommand.
+   * Executes this Command, given an IssuedCommand object. Returns a CommandResult object or null.
+   * If the duration of the execution is zero and if the game state is not changed, this method may return null.
+   *
+   * @return a CommandResult object or null
    */
-  abstract public void execute(IssuedCommand issuedCommand);
+  public abstract CommandResult execute(IssuedCommand issuedCommand);
 
 }

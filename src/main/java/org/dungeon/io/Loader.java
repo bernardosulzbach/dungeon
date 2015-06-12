@@ -19,7 +19,7 @@ package org.dungeon.io;
 
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
 import org.dungeon.util.Table;

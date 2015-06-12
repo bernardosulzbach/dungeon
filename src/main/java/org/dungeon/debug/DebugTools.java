@@ -19,17 +19,18 @@ package org.dungeon.debug;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
+import org.dungeon.commands.Command;
+import org.dungeon.commands.CommandResult;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
-import org.dungeon.game.Command;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
 import org.dungeon.game.ID;
-import org.dungeon.game.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.LocationPreset;
 import org.dungeon.game.PartOfDay;
@@ -59,24 +60,24 @@ public class DebugTools {
   /**
    * Parses an IssuedCommand and executes the corresponding debugging Command if there is one.
    *
-   * @param issuedCommand the last command issued by the player.
+   * @param issuedCommand the last command issued by the player
+   * @return a CommandResult representing the result of this debug command or null
    */
-  public static void parseDebugCommand(IssuedCommand issuedCommand) {
+  public static CommandResult parseDebugCommand(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
       if (uninitialized) {
         initialize();
       }
       for (Command command : commands) {
-        if (issuedCommand.firstArgumentEquals(command.name)) {
-          command.execute(issuedCommand);
-          return;
+        if (issuedCommand.firstArgumentEquals(command.getDescription().getName())) {
+          return command.execute(issuedCommand);
         }
       }
       IO.writeString("Command not recognized.");
     } else {
       Messenger.printMissingArgumentsMessage();
     }
-
+    return null;
   }
 
   /**
@@ -87,73 +88,88 @@ public class DebugTools {
   private static void initialize() {
     commands.add(new Command("achievements") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printNotYetUnlockedAchievements();
+        return null;
       }
     });
     commands.add(new Command("exploration") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printExplorationStatistics();
+        return null;
       }
     });
     commands.add(new Command("kills") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printKills();
+        return null;
       }
     });
     commands.add(new Command("location") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printCurrentLocationInformation();
+        return null;
       }
     });
     commands.add(new Command("list") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         listAllArguments();
+        return null;
       }
     });
     commands.add(new Command("give") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         if (issuedCommand.getTokenCount() >= 3) {
           give(issuedCommand.getArguments()[1]);
+          return new DebugCommandResult(0, true);
         } else {
           Messenger.printMissingArgumentsMessage();
+          return null;
         }
       }
     });
     commands.add(new Command("saved") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printIsSaved();
+        return null;
       }
     });
     commands.add(new Command("spawn") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        spawn(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        if (spawn(issuedCommand)) {
+          return new DebugCommandResult(0, true);
+        } else {
+          return null;
+        }
       }
     });
     commands.add(new Command("tomorrow") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        Game.getGameState().getWorld().rollDate(Date.SECONDS_IN_DAY);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int timeWaiting = evaluateWaitedSeconds(Date.SECONDS_IN_DAY);
         IO.writeString("A day has passed.");
+        return new DebugCommandResult(timeWaiting, false);
       }
     });
     commands.add(new Command("time") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
+      public CommandResult execute(IssuedCommand issuedCommand) {
         printTime();
+        return null;
       }
     });
     commands.add(new Command("wait") {
       @Override
-      public void execute(IssuedCommand issuedCommand) {
-        DebugTools.wait(issuedCommand);
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        int timeWaiting = DebugTools.wait(issuedCommand);
+        return new DebugCommandResult(timeWaiting, false);
       }
     });
     uninitialized = false;
@@ -231,22 +247,29 @@ public class DebugTools {
     IO.writeString(sb.toString());
   }
 
-  private static void give(String itemID) {
+  /**
+   * Attempts to give an Item to the Hero. Returns whether or not this operation was successful.
+   *
+   * @param itemID the ID of the Item, as provided by the player
+   * @return true if an Item was given, false otherwise
+   */
+  private static boolean give(String itemID) {
     Date date = Game.getGameState().getWorld().getWorldDate();
     Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()), date);
     if (item != null) {
       if (Game.getGameState().getHero().addItem(item)) {
-        return;
+        return true;
       }
     }
     IO.writeString("Item could not be added to your inventory.");
+    return false;
   }
 
   private static void listAllArguments() {
     StringBuilder builder = new StringBuilder();
     builder.append("Valid commands:");
     for (Command command : commands) {
-      builder.append("\n ").append(command.name);
+      builder.append("\n ").append(command.getDescription().getName());
     }
     IO.writeString(builder.toString());
   }
@@ -255,8 +278,10 @@ public class DebugTools {
    * Spawns the specified creatures in the Location the Hero is in.
    * <p/>
    * Note that spawning creatures with this method does NOT change the game state to unsaved.
+   *
+   * @return true if a creature was spawned, false otherwise
    */
-  private static void spawn(IssuedCommand issuedCommand) {
+  private static boolean spawn(IssuedCommand issuedCommand) {
     if (issuedCommand.getTokenCount() >= 3) {
       for (int i = 1; i < issuedCommand.getArguments().length; i++) {
         ID givenID = new ID(issuedCommand.getArguments()[i].toUpperCase());
@@ -264,6 +289,7 @@ public class DebugTools {
         if (clone != null) {
           Game.getGameState().getHeroLocation().addCreature(clone);
           IO.writeString("Spawned a " + clone.getName() + ".");
+          return true;
         } else {
           IO.writeString(givenID + " does not match any known creature.");
         }
@@ -271,6 +297,7 @@ public class DebugTools {
     } else {
       Messenger.printMissingArgumentsMessage();
     }
+    return false;
   }
 
   private static void printIsSaved() {
@@ -281,7 +308,10 @@ public class DebugTools {
     }
   }
 
-  private static void wait(IssuedCommand issuedCommand) {
+  /**
+   * Returns how many seconds the Hero waited. This method does not modify the GameState object.
+   */
+  private static int wait(IssuedCommand issuedCommand) {
     if (issuedCommand.getTokenCount() >= 3) {
       int seconds = 0;
       boolean gotSeconds = false;
@@ -301,19 +331,21 @@ public class DebugTools {
         }
       }
       if (gotSeconds) {
-        rollDate(seconds);
+        return evaluateWaitedSeconds(seconds);
       }
     } else {
       Messenger.printMissingArgumentsMessage();
     }
+    return 0;
   }
 
-  private static void rollDate(int seconds) {
+  private static int evaluateWaitedSeconds(int seconds) {
     if (seconds > 0) {
-      Game.getGameState().getWorld().rollDate(seconds);
       IO.writeString("Waited for " + seconds + " seconds.");
+      return seconds;
     } else {
       IO.writeString("The amount of seconds should be positive!");
+      return 0;
     }
   }
 

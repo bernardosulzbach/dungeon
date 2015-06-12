@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,31 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.commands;
 
 /**
- * TurnResult class that stores the result of a turn.
+ * Simple wrapper for a name and info of a Command.
  */
-class TurnResult {
+public class CommandDescription {
 
-  int turnLength;
-  private boolean configurationsChanged;
+  private final String name;
+  private final String info;
 
-  /**
-   * Resets the fields. Should be called after the results were read to prepare the class for the next turn.
-   */
-  void clear() {
-    turnLength = 0;
-    configurationsChanged = false;
+  public CommandDescription(String name, String info) {
+    if (name == null) {
+      throw new IllegalArgumentException("Cannot create CommandDescription with null name.");
+    }
+    this.name = name;
+    this.info = info;
   }
 
-  /**
-   * Evaluates if the GameState has changed.
-   * <p/>
-   * Basically, returns {@code turnLength != 0 || configurationsChanged}.
-   */
-  boolean gameStateChanged() {
-    return turnLength != 0 || configurationsChanged;
+  public String getName() {
+    return name;
+  }
+
+  public String getInfo() {
+    return info;
   }
 
 }

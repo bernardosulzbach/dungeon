@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.IO;
 
 import java.math.BigInteger;

@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.commands;
 
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.util.CircularList;
+import org.dungeon.util.Utils;
 
 import java.io.Serializable;
 

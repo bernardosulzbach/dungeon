@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 
 import java.io.Serializable;
 

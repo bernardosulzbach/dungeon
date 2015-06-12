@@ -17,7 +17,7 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.game.IssuedCommand;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.IO;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.util.Matches;

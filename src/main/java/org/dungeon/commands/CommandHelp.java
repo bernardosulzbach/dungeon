@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.commands;
 
-import org.dungeon.game.Command;
 import org.dungeon.game.Game;
-import org.dungeon.game.IssuedCommand;
 import org.dungeon.io.IO;
+import org.dungeon.util.Messenger;
+import org.dungeon.util.Utils;
 
 import java.util.List;
 
@@ -43,12 +43,12 @@ public class CommandHelp {
    */
   public static void printHelp(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
-      List<Command> commandList = Game.getCommandList();
-      Command selectedCommand = null;
-      for (Command command : commandList) {
-        if (Utils.startsWithIgnoreCase(command.name, issuedCommand.getFirstArgument())) {
+      List<CommandDescription> commandDescriptionList = Game.getCommandDescriptions();
+      CommandDescription selectedCommand = null;
+      for (CommandDescription description : commandDescriptionList) {
+        if (Utils.startsWithIgnoreCase(description.getName(), issuedCommand.getFirstArgument())) {
           if (selectedCommand == null) {
-            selectedCommand = command;
+            selectedCommand = description;
           } else {
             Messenger.printAmbiguousSelectionMessage();
             return;
@@ -58,7 +58,7 @@ public class CommandHelp {
       if (selectedCommand == null) {
         IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
       } else {
-        IO.writeString(selectedCommand.name + " (Command) " + '\n' + selectedCommand.info);
+        IO.writeString(selectedCommand.getName() + " (Command) " + '\n' + selectedCommand.getInfo());
       }
     } else {
       Messenger.printMissingArgumentsMessage();
@@ -75,15 +75,14 @@ public class CommandHelp {
     if (issuedCommand.hasArguments()) {
       filter = issuedCommand.getFirstArgument();
     }
-    List<Command> commandList = Game.getCommandList();
-    // 80 characters per command should be enough.
-    final int CHARACTERS_PER_LIST_ENTRY = 80;
+    List<CommandDescription> commandList = Game.getCommandDescriptions();
+    final int CHARACTERS_PER_LIST_ENTRY = 80; // 80 characters per command should be enough.
     final int NAME_COLUMN_WIDTH = 20;
     StringBuilder builder = new StringBuilder(CHARACTERS_PER_LIST_ENTRY * commandList.size());
-    for (Command command : Game.getCommandList()) {
-      if (filter == null || Utils.startsWithIgnoreCase(command.name, filter)) {
-        builder.append(Utils.padString(command.name, NAME_COLUMN_WIDTH));
-        builder.append(command.info);
+    for (CommandDescription command : commandList) {
+      if (filter == null || Utils.startsWithIgnoreCase(command.getName(), filter)) {
+        builder.append(Utils.padString(command.getName(), NAME_COLUMN_WIDTH));
+        builder.append(command.getInfo());
         builder.append('\n');
       }
     }

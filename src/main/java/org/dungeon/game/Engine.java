@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.achievements.Achievement;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.items.ItemFactory;
