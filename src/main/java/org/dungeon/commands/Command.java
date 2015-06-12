@@ -46,4 +46,9 @@ public abstract class Command {
    */
   public abstract CommandResult execute(IssuedCommand issuedCommand);
 
+  @Override
+  public String toString() {
+    return description.toString();
+  }
+
 }

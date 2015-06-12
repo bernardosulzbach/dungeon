@@ -27,9 +27,12 @@ import java.util.List;
 /**
  * CommandHelp class that provides useful information about a single Command.
  */
-public class CommandHelp {
+public final class CommandHelp {
 
-  private CommandHelp() {
+  private static final int COMMAND_NAME_COLUMN_WIDTH = 20;
+
+  private CommandHelp() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
   }
 
   private static String noCommandStartsWith(String providedString) {
@@ -58,7 +61,7 @@ public class CommandHelp {
       if (selectedCommand == null) {
         IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
       } else {
-        IO.writeString(selectedCommand.getName() + " (Command) " + '\n' + selectedCommand.getInfo());
+        IO.writeString(selectedCommand.toString());
       }
     } else {
       Messenger.printMissingArgumentsMessage();
@@ -76,20 +79,19 @@ public class CommandHelp {
       filter = issuedCommand.getFirstArgument();
     }
     List<CommandDescription> commandList = Game.getCommandDescriptions();
-    final int CHARACTERS_PER_LIST_ENTRY = 80; // 80 characters per command should be enough.
-    final int NAME_COLUMN_WIDTH = 20;
-    StringBuilder builder = new StringBuilder(CHARACTERS_PER_LIST_ENTRY * commandList.size());
+    StringBuilder builder = new StringBuilder();
     for (CommandDescription command : commandList) {
       if (filter == null || Utils.startsWithIgnoreCase(command.getName(), filter)) {
-        builder.append(Utils.padString(command.getName(), NAME_COLUMN_WIDTH));
+        builder.append(Utils.padString(command.getName(), COMMAND_NAME_COLUMN_WIDTH));
         builder.append(command.getInfo());
         builder.append('\n');
       }
     }
     if (builder.length() == 0) {
       IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
+    } else {
+      IO.writeString(builder.toString());
     }
-    IO.writeString(builder.toString());
   }
 
 }

@@ -21,6 +21,7 @@ import org.dungeon.commands.CommandResult;
 
 /**
  * An implementation of CommandResult focused on debug commands.
+ * This implementation allows signalling GameState changes even when the turn duration is zero.
  */
 public class DebugCommandResult implements CommandResult{
 

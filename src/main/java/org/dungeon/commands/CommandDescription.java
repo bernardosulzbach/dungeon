@@ -41,4 +41,9 @@ public class CommandDescription {
     return info;
   }
 
+  @Override
+  public String toString() {
+    return getName() + " : " + getInfo();
+  }
+
 }

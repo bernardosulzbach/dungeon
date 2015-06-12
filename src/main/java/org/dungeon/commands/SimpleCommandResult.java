@@ -18,7 +18,9 @@
 package org.dungeon.commands;
 
 /**
- * A basic implementation of the CommandResult interface.
+ * An implementation of the CommandResult interface designed for standard commands.
+ * This implementation supports only duration-based GameState changes.
+ * Therefore, no standard command should ever change the GameState without consuming time.
  */
 public class SimpleCommandResult implements CommandResult {
 
