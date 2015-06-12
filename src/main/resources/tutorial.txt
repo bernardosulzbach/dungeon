@@ -16,9 +16,9 @@ Commands\\
 At any time, you can issue 'commands' to see a complete list of commands.\\
 In order to walk to a given direction, issue 'go' followed by the direction towards which you want to move the character. e.g., 'go north'. Alternatively, use only the first character of the direction, as in 'go s'.\\
 To issue your character to attempt to kill a creature use 'kill' followed by part of the name of the creature.\\
-The wiki is a quite useful resource. Simply use the 'wiki' command followed by whatever you want to search.
+The wiki is a quite useful resource. Simply use the 'wiki' command followed by whatever you want to search.\\
 \\
 The Project\\
 Dungeon is made with Java (SE 6) and released under the GNU General Public License v3.0.\\
 There is a list of contributors in the "Contributors" article of the wiki.\\
-The 'license' command displays some text from the license. There is also a wiki entry ("License") on the license.\\
+The 'license' command displays some text from the license. There is also a wiki entry ("License") on the license.
