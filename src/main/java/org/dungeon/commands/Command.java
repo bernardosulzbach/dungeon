@@ -26,16 +26,49 @@ public abstract class Command {
 
   private final CommandDescription description;
 
+  /**
+   * Creates a new Command object with the provided name.
+   *
+   * @param name a String for name, not null, lowercase
+   */
   public Command(String name) {
     this(name, null);
   }
 
+  /**
+   * Creates a new Command object with the provided name and info.
+   *
+   * @param name a String for name, not null, lowercase
+   * @param info a String for info, nullable
+   */
   public Command(String name, String info) {
     description = new CommandDescription(name, info);
   }
 
   public CommandDescription getDescription() {
     return description;
+  }
+
+  /**
+   * Indicates whether a Command is "equal to" this one.
+   * <p/>
+   * Two Commands are considered to be equal when their names are equal.
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Command command = (Command) o;
+    return description.getName().equals(command.description.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    return description.getName().hashCode();
   }
 
   /**

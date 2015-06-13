@@ -18,6 +18,7 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.achievements.AchievementTracker;
+import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
@@ -31,7 +32,6 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;

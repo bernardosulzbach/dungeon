@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.achievements.UnlockedAchievement;
+import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
@@ -28,7 +29,6 @@ import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.stats.Statistics;
-import org.dungeon.commands.CommandHistory;
 
 import java.awt.Color;
 import java.io.Serializable;

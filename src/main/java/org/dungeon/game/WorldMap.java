@@ -24,7 +24,7 @@ import org.dungeon.util.Constants;
 /**
  * WorldMap class that represents an ASCII map from the surroundings of the player.
  */
-class WorldMap {
+public class WorldMap {
 
   private static final char HERO_SYMBOL = '@';
   private static final char NOT_YET_SEEN_SYMBOL = '?';
