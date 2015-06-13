@@ -125,8 +125,12 @@ public class DebugTools {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
         if (issuedCommand.getTokenCount() >= 3) {
-          give(issuedCommand.getArguments()[1]);
-          return new DebugCommandResult(0, true);
+          boolean gaveItem = give(issuedCommand.getArguments()[1]);
+          if (gaveItem) {
+            return new DebugCommandResult(0, true);
+          } else {
+            return null;
+          }
         } else {
           Messenger.printMissingArgumentsMessage();
           return null;
