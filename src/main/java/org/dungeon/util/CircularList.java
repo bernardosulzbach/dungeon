@@ -19,17 +19,18 @@ package org.dungeon.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * CircularList class that provides a list with maximum capacity.
+ * CircularList class that provides a list with a maximum capacity.
  * <p/>
- * After the specified maximum capacity is reached, when a new element is added, the oldest element on the list
- * is removed.
+ * After the specified maximum capacity is reached, when a new element is added, the oldest element on the list is
+ * removed.
  */
 public final class CircularList<T> implements Serializable {
 
   private final int capacity;
-  private final ArrayList<T> list;
+  private final List<T> list;
   /**
    * The index where the element that should be at 0 actually is. Initially 0.
    */
@@ -39,14 +40,14 @@ public final class CircularList<T> implements Serializable {
     if (capacity < 1) {
       throw new IllegalArgumentException("capacity must be positive.");
     }
-    list = new ArrayList<T>(capacity);
     this.capacity = capacity;
+    this.list = new ArrayList<T>(capacity);
   }
 
   /**
    * Add an element to this CircularList.
    *
-   * @param t the element to be added.
+   * @param t the element to be added
    */
   public void add(T t) {
     if (isFull()) {
@@ -67,7 +68,7 @@ public final class CircularList<T> implements Serializable {
   /**
    * Returns the number of elements in this CircularList.
    *
-   * @return the number of elements in this CircularList.
+   * @return the number of elements in this CircularList
    */
   public int size() {
     return list.size();
@@ -76,16 +77,16 @@ public final class CircularList<T> implements Serializable {
   /**
    * Returns true if this CircularList is at its maximum capacity. False otherwise.
    *
-   * @return true if this CircularList is at its maximum capacity. False otherwise.
+   * @return true if this CircularList is full
    */
-  private boolean isFull() {
+  protected boolean isFull() {
     return size() == capacity;
   }
 
   /**
    * Returns true if this CircularList contains no elements.
    *
-   * @return true if this CircularList contains no elements.
+   * @return true if this CircularList contains no elements
    */
   public boolean isEmpty() {
     return list.isEmpty();
