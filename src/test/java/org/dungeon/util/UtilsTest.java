@@ -18,6 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.game.Engine;
+
 import org.junit.Assert;
 import org.junit.Test;
 

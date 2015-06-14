@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.date.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 

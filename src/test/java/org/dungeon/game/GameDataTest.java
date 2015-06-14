@@ -17,9 +17,10 @@
 
 package org.dungeon.game;
 
-import junit.framework.TestCase;
 import org.dungeon.entity.creatures.CreaturePreset;
 import org.dungeon.entity.items.ItemBlueprint;
+
+import junit.framework.TestCase;
 
 public class GameDataTest extends TestCase {
 

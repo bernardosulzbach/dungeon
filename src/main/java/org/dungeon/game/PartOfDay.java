@@ -18,6 +18,7 @@
 package org.dungeon.game;
 
 import org.dungeon.date.Date;
+import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.date.Period;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.Selectable;
@@ -88,7 +89,7 @@ public enum PartOfDay implements Selectable {
    */
   public static int getSecondsToNext(Date cur, PartOfDay pod) {
     // The day on which the next part of day will happen.
-    Date day = cur.getHour() < pod.getStartingHour() ? cur : cur.plusDays(1);
+    Date day = cur.getHour() < pod.getStartingHour() ? cur : cur.plus(1, DungeonTimeUnit.DAY);
     day = new Date(day.getYear(), day.getMonth(), day.getDay(), pod.getStartingHour(), 0, 0);
     return (int) new Period(cur, day).getSeconds();
   }

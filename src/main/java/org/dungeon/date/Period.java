@@ -44,9 +44,9 @@ public class Period implements Serializable {
 
   @Override
   public String toString() {
-    long years = difference / Date.MILLIS_IN_YEAR;
-    long months = (difference % Date.MILLIS_IN_YEAR) / Date.MILLIS_IN_MONTH;
-    long days = (difference % Date.MILLIS_IN_MONTH) / Date.MILLIS_IN_DAY;
+    long years = difference / DungeonTimeUnit.YEAR.milliseconds;
+    long months = (difference % DungeonTimeUnit.YEAR.milliseconds) / DungeonTimeUnit.MONTH.milliseconds;
+    long days = (difference % DungeonTimeUnit.MONTH.milliseconds) / DungeonTimeUnit.DAY.milliseconds;
     StringBuilder builder = new StringBuilder();
     if (years != 0) {
       if (years == 1) {

@@ -17,6 +17,13 @@
 
 package org.dungeon.date;
 
+import static org.dungeon.date.DungeonTimeUnit.DAY;
+import static org.dungeon.date.DungeonTimeUnit.HOUR;
+import static org.dungeon.date.DungeonTimeUnit.MINUTE;
+import static org.dungeon.date.DungeonTimeUnit.MONTH;
+import static org.dungeon.date.DungeonTimeUnit.SECOND;
+import static org.dungeon.date.DungeonTimeUnit.YEAR;
+
 import org.dungeon.io.DLogger;
 
 import java.io.Serializable;
@@ -30,23 +37,7 @@ import java.io.Serializable;
  */
 public class Date implements Serializable {
 
-  public static final int MILLIS_IN_SECOND = 1000;
-  public static final int SECONDS_IN_MINUTE = 60;
-  public static final int MINUTES_IN_HOUR = 60;
-  public static final int HOURS_IN_DAY = 24;
-  public static final int DAYS_IN_MONTH = 10;
-  public static final int MONTHS_IN_YEAR = 10;
-
-  public static final int SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
-  public static final int SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY;
-
-  public static final long MILLIS_IN_MINUTE = MILLIS_IN_SECOND * SECONDS_IN_MINUTE;
-  public static final long MILLIS_IN_HOUR = MILLIS_IN_MINUTE * MINUTES_IN_HOUR;
-  public static final long MILLIS_IN_DAY = MILLIS_IN_HOUR * HOURS_IN_DAY;
-  public static final long MILLIS_IN_MONTH = MILLIS_IN_DAY * DAYS_IN_MONTH;
-  public static final long MILLIS_IN_YEAR = MILLIS_IN_MONTH * MONTHS_IN_YEAR;
-
-  private long time;
+  private long time; // Supports 1067519911 full years.
 
   private Date(long millis) {
     time = millis;
@@ -57,28 +48,28 @@ public class Date implements Serializable {
     if (hour < 0) {
       DLogger.warning("Tried to construct Date with negative hour!");
       hour = 0;
-    } else if (hour >= HOURS_IN_DAY) {
+    } else if (hour >= DAY.as(HOUR)) {
       DLogger.warning("Tried to construct Date with nonexistent hour.");
       // First hour of the next day. Even if the code supplied this, log a warning as this is likely a bug.
-      hour = HOURS_IN_DAY;
+      hour = DAY.as(HOUR);
     }
     if (minute < 0) {
       DLogger.warning("Tried to construct Date with negative minute!");
       minute = 0;
-    } else if (minute >= MINUTES_IN_HOUR) {
+    } else if (minute >= HOUR.as(MINUTE)) {
       DLogger.warning("Tried to construct Date with nonexistent minute.");
       // First minute of the next hour. Even if the code supplied this, log a warning as this is likely a bug.
-      minute = MINUTES_IN_HOUR;
+      minute = HOUR.as(MINUTE);
     }
     if (second < 0) {
       DLogger.warning("Tried to construct Date with negative second!");
       second = 0;
-    } else if (second >= SECONDS_IN_MINUTE) {
+    } else if (second >= MINUTE.as(SECOND)) {
       DLogger.warning("Tried to construct Date with nonexistent second.");
       // First second of the next minute. Even if the code supplied this, log a warning as this is likely a bug.
-      second = SECONDS_IN_MINUTE;
+      second = MINUTE.as(SECOND);
     }
-    time += hour * MILLIS_IN_HOUR + minute * MILLIS_IN_MINUTE + second * MILLIS_IN_SECOND;
+    time += hour * HOUR.milliseconds + minute * MINUTE.milliseconds + second * SECOND.milliseconds;
   }
 
   public Date(long year, long month, long day) {
@@ -89,18 +80,18 @@ public class Date implements Serializable {
     if (month <= 0) {
       DLogger.warning("Tried to construct Date with nonpositive month!");
       month = 1;
-    } else if (month > MONTHS_IN_YEAR) {
+    } else if (month > YEAR.as(MONTH)) {
       DLogger.warning("Tried to construct Date with nonexistent month.");
-      month = MONTHS_IN_YEAR;
+      month = YEAR.as(MONTH);
     }
     if (day <= 0) {
       DLogger.warning("Tried to construct Date with nonpositive day!");
       day = 1;
-    } else if (day > DAYS_IN_MONTH) {
+    } else if (day > MONTH.as(DAY)) {
       DLogger.warning("Tried to construct Date with nonexistent day.");
-      day = DAYS_IN_MONTH;
+      day = MONTH.as(DAY);
     }
-    time = MILLIS_IN_YEAR * (year - 1) + MILLIS_IN_MONTH * (month - 1) + MILLIS_IN_DAY * (day - 1);
+    time = YEAR.milliseconds * (year - 1) + MONTH.milliseconds * (month - 1) + DAY.milliseconds * (day - 1);
   }
 
   public long getTime() {
@@ -108,111 +99,63 @@ public class Date implements Serializable {
   }
 
   private long getSecond() {
-    return (time % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
+    return (time % MINUTE.milliseconds) / SECOND.milliseconds;
   }
 
   private long getMinute() {
-    return (time % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
+    return (time % HOUR.milliseconds) / MINUTE.milliseconds;
   }
 
   public long getHour() {
-    return (time % MILLIS_IN_DAY) / MILLIS_IN_HOUR;
+    return (time % DAY.milliseconds) / HOUR.milliseconds;
   }
 
   public long getDay() {
-    return (time % MILLIS_IN_MONTH) / MILLIS_IN_DAY + 1;
+    return (time % MONTH.milliseconds) / DAY.milliseconds + 1;
   }
 
   public long getMonth() {
-    return (time % MILLIS_IN_YEAR) / MILLIS_IN_MONTH + 1;
+    return (time % YEAR.milliseconds) / MONTH.milliseconds + 1;
   }
 
   public long getYear() {
-    return time / MILLIS_IN_YEAR + 1;
+    return time / YEAR.milliseconds + 1;
   }
 
-  public Date minusSeconds(int seconds) {
-    if (seconds < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
+  /**
+   * Returns a new Date object corresponding to this Date plus the specified amount of time.
+   *
+   * @param amount a positive integer
+   * @param unit   a DungeonTimeUnit value, not null
+   * @return a new Date object
+   * @throws IllegalArgumentException if amount is not positive or if unit is null
+   */
+  public Date plus(int amount, DungeonTimeUnit unit) {
+    if (amount <= 0) {
+      throw new IllegalArgumentException("amount must be positive.");
+    } else if (unit == null) {
+      throw new IllegalArgumentException("unit should not be null.");
+    } else {
+      return new Date(time + amount * unit.milliseconds);
     }
-    return new Date(time - seconds * MILLIS_IN_SECOND);
   }
 
-  public Date minusMinutes(int minutes) {
-    if (minutes < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
+  /**
+   * Returns a new Date object corresponding to this Date minus the specified amount of time.
+   *
+   * @param amount a positive integer
+   * @param unit   a DungeonTimeUnit value, not null
+   * @return a new Date object
+   * @throws IllegalArgumentException if amount is not positive or if unit is null
+   */
+  public Date minus(int amount, DungeonTimeUnit unit) {
+    if (amount <= 0) {
+      throw new IllegalArgumentException("amount must be positive.");
+    } else if (unit == null) {
+      throw new IllegalArgumentException("unit should not be null.");
+    } else {
+      return new Date(time - amount * unit.milliseconds);
     }
-    return new Date(time - minutes * MILLIS_IN_MINUTE);
-  }
-
-  public Date minusHours(int hours) {
-    if (hours < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
-    }
-    return new Date(time - hours * MILLIS_IN_HOUR);
-  }
-
-  public Date minusDays(int days) {
-    if (days < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
-    }
-    return new Date(time - days * MILLIS_IN_DAY);
-  }
-
-  public Date minusMonths(int months) {
-    if (months < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
-    }
-    return new Date(time - months * MILLIS_IN_MONTH);
-  }
-
-  public Date minusYears(int years) {
-    if (years < 0) {
-      DLogger.warning("Passed negative argument to minus method.");
-    }
-    return new Date(time - years * MILLIS_IN_YEAR);
-  }
-
-  public Date plusSeconds(int seconds) {
-    if (seconds < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + seconds * MILLIS_IN_SECOND);
-  }
-
-  public Date plusMinutes(int minutes) {
-    if (minutes < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + minutes * MILLIS_IN_MINUTE);
-  }
-
-  public Date plusHours(int hours) {
-    if (hours < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + hours * MILLIS_IN_HOUR);
-  }
-
-  public Date plusDays(int days) {
-    if (days < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + days * MILLIS_IN_DAY);
-  }
-
-  public Date plusMonths(int months) {
-    if (months < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + months * MILLIS_IN_MONTH);
-  }
-
-  public Date plusYears(int years) {
-    if (years < 0) {
-      DLogger.warning("Passed negative argument to plus method.");
-    }
-    return new Date(time + years * MILLIS_IN_YEAR);
   }
 
   public String toDateString() {
@@ -221,6 +164,17 @@ public class Date implements Serializable {
 
   public String toTimeString() {
     return String.format("%02d:%02d:%02d", getHour(), getMinute(), getSecond());
+  }
+
+  /**
+   * Returns a String representation of this date, from year to second.
+   *
+   * @return a String
+   */
+  @Override
+  public String toString() {
+    String format = "%d-%02d-%02d %02d:%02d:%02d";
+    return String.format(format, getYear(), getMonth(), getDay(), getHour(), getMinute(), getSecond());
   }
 
 }

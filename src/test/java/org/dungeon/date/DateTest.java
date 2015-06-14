@@ -17,9 +17,12 @@
 
 package org.dungeon.date;
 
-import org.junit.Test;
-
+import static org.dungeon.date.DungeonTimeUnit.DAY;
+import static org.dungeon.date.DungeonTimeUnit.MONTH;
+import static org.dungeon.date.DungeonTimeUnit.YEAR;
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class DateTest {
 
@@ -30,14 +33,14 @@ public class DateTest {
 
   @Test
   public void testGetDay() throws Exception {
-    for (int i = 1; i <= Date.DAYS_IN_MONTH; i++) {
+    for (int i = 1; i <= MONTH.as(DAY); i++) {
       assertEquals(i, new Date(1, 1, i).getDay());
     }
   }
 
   @Test
   public void testGetMonth() throws Exception {
-    for (int i = 1; i <= Date.MONTHS_IN_YEAR; i++) {
+    for (int i = 1; i <= YEAR.as(MONTH); i++) {
       assertEquals(i, new Date(1, i, 1).getMonth());
     }
   }
@@ -51,19 +54,19 @@ public class DateTest {
 
   @Test
   public void testMinusDays() throws Exception {
-    Date date = new Date(1, 1, Date.DAYS_IN_MONTH);
-    for (long i = Date.DAYS_IN_MONTH; i > 0; i--) {
+    Date date = new Date(1, 1, MONTH.as(DAY));
+    for (long i = MONTH.as(DAY); i > 0; i--) {
       assertEquals(i, date.getDay());
-      date = date.minusDays(1);
+      date = date.minus(1, DungeonTimeUnit.DAY);
     }
   }
 
   @Test
   public void testMinusMonths() throws Exception {
-    Date date = new Date(1, Date.MONTHS_IN_YEAR, 1);
-    for (long i = Date.MONTHS_IN_YEAR; i > 0; i--) {
+    Date date = new Date(1, YEAR.as(MONTH), 1);
+    for (long i = YEAR.as(MONTH); i > 0; i--) {
       assertEquals(i, date.getMonth());
-      date = date.minusMonths(1);
+      date = date.minus(1, DungeonTimeUnit.MONTH);
     }
   }
 
@@ -72,25 +75,25 @@ public class DateTest {
     Date date = new Date(MAX_YEAR, 1, 1);
     for (long i = MAX_YEAR; i > 0; i--) {
       assertEquals(i, date.getYear());
-      date = date.minusYears(1);
+      date = date.minus(1, DungeonTimeUnit.YEAR);
     }
   }
 
   @Test
   public void testPlusDays() throws Exception {
     Date date = new Date(1, 1, 1);
-    for (long i = 1; i <= Date.DAYS_IN_MONTH; i++) {
+    for (long i = 1; i <= MONTH.as(DAY); i++) {
       assertEquals(i, date.getDay());
-      date = date.plusDays(1);
+      date = date.plus(1, DungeonTimeUnit.DAY);
     }
   }
 
   @Test
   public void testPlusMonths() throws Exception {
     Date date = new Date(1, 1, 1);
-    for (long i = 1; i <= Date.MONTHS_IN_YEAR; i++) {
+    for (long i = 1; i <= YEAR.as(MONTH); i++) {
       assertEquals(i, date.getMonth());
-      date = date.plusMonths(1);
+      date = date.plus(1, DungeonTimeUnit.MONTH);
     }
   }
 
@@ -99,7 +102,7 @@ public class DateTest {
     Date date = new Date(1, 1, 1);
     for (long i = 1; i <= MAX_YEAR; i++) {
       assertEquals(i, date.getYear());
-      date = date.plusYears(1);
+      date = date.plus(1, DungeonTimeUnit.YEAR);
     }
   }
 

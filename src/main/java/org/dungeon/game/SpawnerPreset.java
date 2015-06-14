@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.date.Date;
+import org.dungeon.date.DungeonTimeUnit;
 
 class SpawnerPreset {
 
@@ -35,7 +35,7 @@ class SpawnerPreset {
   public SpawnerPreset(String id, int population, int delayInHours) {
     this.id = new ID(id);
     this.population = population;
-    this.spawnDelay = delayInHours * (int) Date.MILLIS_IN_HOUR;
+    this.spawnDelay = delayInHours * (int) DungeonTimeUnit.HOUR.milliseconds;
   }
 
 }

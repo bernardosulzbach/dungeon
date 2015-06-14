@@ -17,6 +17,9 @@
 
 package org.dungeon.entity.creatures;
 
+import static org.dungeon.date.DungeonTimeUnit.HOUR;
+import static org.dungeon.date.DungeonTimeUnit.SECOND;
+
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
@@ -63,7 +66,7 @@ public class Hero extends Creature {
 
   // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
   // It seems a good idea to let the Hero have one dream every 4 hours.
-  private static final int DREAM_DURATION_IN_SECONDS = 4 * Date.SECONDS_IN_HOUR;
+  private static final long DREAM_DURATION_IN_SECONDS = 4 * HOUR.as(SECOND);
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
   private static final int SECONDS_TO_LOOK_AT_THE_COVER_OF_A_BOOK = 6;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
@@ -164,11 +167,11 @@ public class Hero extends Creature {
       int remainingSeconds = seconds;
       while (remainingSeconds > 0) {
         if (remainingSeconds > DREAM_DURATION_IN_SECONDS) {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * DREAM_DURATION_IN_SECONDS / Date.SECONDS_IN_HOUR);
+          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * DREAM_DURATION_IN_SECONDS / HOUR.as(SECOND));
           IO.writeString(GameData.getDreamLibrary().getNextDream());
           remainingSeconds -= DREAM_DURATION_IN_SECONDS;
         } else {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / Date.SECONDS_IN_HOUR);
+          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / HOUR.as(SECOND));
           break;
         }
       }

@@ -17,6 +17,9 @@
 
 package org.dungeon.debug;
 
+import static org.dungeon.date.DungeonTimeUnit.DAY;
+import static org.dungeon.date.DungeonTimeUnit.SECOND;
+
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.commands.Command;
@@ -157,7 +160,7 @@ public class DebugTools {
     commands.add(new Command("tomorrow") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        int timeWaiting = evaluateWaitedSeconds(Date.SECONDS_IN_DAY);
+        int timeWaiting = evaluateWaitedSeconds((int) DAY.as(SECOND));
         IO.writeString("A day has passed.");
         return new DebugCommandResult(timeWaiting, false);
       }

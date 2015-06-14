@@ -17,9 +17,11 @@
 
 package org.dungeon.game;
 
+import static org.dungeon.date.DungeonTimeUnit.DAY;
+import static org.dungeon.date.DungeonTimeUnit.SECOND;
+
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
-import org.dungeon.date.Date;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.AttackAlgorithmID;
 import org.dungeon.entity.creatures.Creature;
@@ -51,7 +53,7 @@ public final class GameData {
 
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
-  private static final long CORPSE_PUTREFACTION_PERIOD = Date.SECONDS_IN_DAY;
+  private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
   private static final double CORPSE_HIT_RATE = 0.5;
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();

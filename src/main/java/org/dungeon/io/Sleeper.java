@@ -29,9 +29,9 @@ public final class Sleeper {
   /**
    * Sleeps for a specified amount of milliseconds.
    *
-   * @param milliseconds how many milliseconds should this thread sleep for.
+   * @param milliseconds how many milliseconds should this thread sleep for
    */
-  public static void sleep(int milliseconds) {
+  public static void sleep(long milliseconds) {
     if (milliseconds > 0) {
       try {
         Thread.sleep(milliseconds);
