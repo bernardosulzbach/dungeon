@@ -53,10 +53,10 @@ public final class DLogger {
   }
 
   /**
-   * Log an INFO message. This method can be called even if the logger was not initialized yet, in this case, the
-   * message is unceremoniously discarded.
+   * Logs an info message.
+   * If the logger could not be initialized, the message will be unceremoniously discarded.
    *
-   * @param message the log message.
+   * @param message the log message
    */
   public static void info(String message) {
     if (logger != null) {
@@ -65,10 +65,10 @@ public final class DLogger {
   }
 
   /**
-   * Log a WARNING message. This method can be called even if the logger was not initialized yet, in this case, the
-   * message is unceremoniously discarded.
+   * Logs a warning message.
+   * If the logger could not be initialized, the message will be unceremoniously discarded.
    *
-   * @param message the log message.
+   * @param message the log message
    */
   public static void warning(String message) {
     if (logger != null) {
@@ -89,6 +89,19 @@ public final class DLogger {
    */
   public static void warning(String filename, int lineNumber, String messageEnd) {
     warning("Line " + lineNumber + " of " + filename + messageEnd);
+  }
+
+  /**
+   * Logs a severe message.
+   * Only errors that cause fatal application termination are considered to be severe.
+   * If the logger could not be initialized, the message will be unceremoniously discarded.
+   *
+   * @param message the log message
+   */
+  public static void severe(String message) {
+    if (logger != null) {
+      logger.severe(message);
+    }
   }
 
   /**

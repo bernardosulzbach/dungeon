@@ -22,7 +22,6 @@ import org.dungeon.entity.TagSet;
 import org.dungeon.entity.items.CreatureInventory;
 import org.dungeon.entity.items.CreatureInventory.AdditionResult;
 import org.dungeon.entity.items.Item;
-import org.dungeon.game.ID;
 import org.dungeon.game.Location;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
@@ -39,7 +38,7 @@ public class Creature extends Entity {
 
   private final int maxHealth;
   private final int attack;
-  private final ID attackAlgorithmID;
+  private final AttackAlgorithmID attackAlgorithmID;
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
@@ -213,7 +212,7 @@ public class Creature extends Entity {
     }
   }
 
-  public ID getAttackAlgorithmID() {
+  public AttackAlgorithmID getAttackAlgorithmID() {
     return attackAlgorithmID;
   }
 

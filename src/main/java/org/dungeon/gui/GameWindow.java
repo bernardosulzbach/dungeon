@@ -42,6 +42,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -98,9 +99,9 @@ public class GameWindow extends JFrame {
     try {
       font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
     } catch (FontFormatException bad) {
-      DLogger.warning(bad.getMessage());
+      DLogger.warning("threw FontFormatException during font creation.");
     } catch (IOException bad) {
-      DLogger.warning(bad.getMessage());
+      DLogger.warning("threw IOException during font creation.");
     } finally {
       if (fontStream != null) {
         try {
@@ -249,11 +250,27 @@ public class GameWindow extends JFrame {
 
         @Override
         protected void done() {
+          try {
+            get();
+          } catch (InterruptedException ignore) {
+          } catch (ExecutionException fatal) {
+            logExecutionExceptionAndExit(fatal);
+          }
           setIdle(true);
         }
       };
       inputRenderer.execute();
     }
+  }
+
+  private void logExecutionExceptionAndExit(ExecutionException fatal) {
+    Throwable cause = fatal.getCause();
+    String message = cause.toString();
+    if (cause.getMessage() != null) {
+      message += cause.getMessage();
+    }
+    DLogger.severe(message);
+    System.exit(1);
   }
 
   /**

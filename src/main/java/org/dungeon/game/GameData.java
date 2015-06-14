@@ -21,6 +21,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.date.Date;
 import org.dungeon.entity.Weight;
+import org.dungeon.entity.creatures.AttackAlgorithmID;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.creatures.CreaturePreset;
@@ -179,7 +180,7 @@ public final class GameData {
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
       preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
-      preset.setAttackAlgorithmID(new ID(reader.getValue("ATTACK_ALGORITHM_ID")));
+      preset.setAttackAlgorithmID(AttackAlgorithmID.valueOf(reader.getValue("ATTACK_ALGORITHM_ID")));
       if (reader.hasValue("ITEMS")) {
         preset.setItems(readIDList(reader, "ITEMS"));
       }

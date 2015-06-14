@@ -20,14 +20,13 @@ package org.dungeon.entity.creatures;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Engine;
 import org.dungeon.game.ID;
-import org.dungeon.io.DLogger;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.Math;
 import org.dungeon.util.Percentage;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -36,14 +35,15 @@ import java.util.Map;
 final class AttackAlgorithms {
 
   private static final ID UNARMED_ID = new ID("");
-  private static final Map<ID, AttackAlgorithm> ATTACK_ALGORITHM_MAP = new HashMap<ID, AttackAlgorithm>();
+  private static final Map<AttackAlgorithmID, AttackAlgorithm> ATTACK_ALGORITHM_MAP =
+      new EnumMap<AttackAlgorithmID, AttackAlgorithm>(AttackAlgorithmID.class);
 
   static {
 
     final double BAT_CRITICAL_MAXIMUM_LUMINOSITY = 0.5;
     final double BAT_HIT_RATE_MAX_LUMINOSITY = 0.9;
     final double BAT_HIT_RATE_MIN_LUMINOSITY = 0.1;
-    registerAttackAlgorithm("BAT", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.BAT, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Percentage luminosity = attacker.getLocation().getLuminosity();
@@ -64,7 +64,7 @@ final class AttackAlgorithms {
     });
 
     final double BEAST_HIT_RATE = 0.9;
-    registerAttackAlgorithm("BEAST", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.BEAST, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         if (Engine.roll(BEAST_HIT_RATE)) {
@@ -78,7 +78,7 @@ final class AttackAlgorithms {
       }
     });
 
-    registerAttackAlgorithm("CRITTER", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.CRITTER, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         AttackAlgorithmIO.writeCritterAttackMessage(attacker);
@@ -86,7 +86,7 @@ final class AttackAlgorithms {
       }
     });
 
-    registerAttackAlgorithm("DUMMY", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.DUMMY, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         AttackAlgorithmIO.writeDummyAttackMessage(attacker);
@@ -97,7 +97,7 @@ final class AttackAlgorithms {
     final double ORC_UNARMED_HIT_RATE = 0.95;
     final double ORC_MIN_CRITICAL_CHANCE = 0.1;
     final double ORC_MAX_CRITICAL_CHANCE = 0.5;
-    registerAttackAlgorithm("ORC", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.ORC, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Item weapon = attacker.getWeapon();
@@ -134,7 +134,7 @@ final class AttackAlgorithms {
     });
 
     final double UNDEAD_UNARMED_HIT_RATE = 0.85;
-    registerAttackAlgorithm("UNDEAD", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.UNDEAD, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Item weapon = attacker.getWeapon();
@@ -167,7 +167,7 @@ final class AttackAlgorithms {
 
     final double HERO_CRITICAL_CHANCE = 0.1;
     final double HERO_CRITICAL_CHANCE_UNARMED = 0.05;
-    registerAttackAlgorithm("HERO", new AttackAlgorithm() {
+    registerAttackAlgorithm(AttackAlgorithmID.HERO, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         CauseOfDeath causeOfDeath;
@@ -208,6 +208,8 @@ final class AttackAlgorithms {
       }
     });
 
+    validateMap();
+
   }
 
   private AttackAlgorithms() { // Ensure that this class cannot be instantiated.
@@ -215,12 +217,22 @@ final class AttackAlgorithms {
   }
 
   /**
-   * Registers an AttackAlgorithm using the ID produced by the specified name.
+   * Ensure that all AttackAlgorithmsID got implemented.
    */
-  private static void registerAttackAlgorithm(String name, AttackAlgorithm algorithm) {
-    ID id = new ID(name);
+  private static void validateMap() {
+    for (AttackAlgorithmID id : AttackAlgorithmID.values()) {
+      if (!ATTACK_ALGORITHM_MAP.containsKey(id)) {
+        throw new AssertionError(id + " is not mapped to an AttackAlgorithm!");
+      }
+    }
+  }
+
+  /**
+   * Registers an AttackAlgorithm using specified AttackAlgorithmID.
+   */
+  private static void registerAttackAlgorithm(AttackAlgorithmID id, AttackAlgorithm algorithm) {
     if (ATTACK_ALGORITHM_MAP.containsKey(id)) {
-      throw new AssertionError("There is an AttackAlgorithm already defined with the ID produced by this name!");
+      throw new IllegalStateException("There is an AttackAlgorithm already defined for this AttackAlgorithmID!");
     }
     ATTACK_ALGORITHM_MAP.put(id, algorithm);
   }
@@ -236,13 +248,7 @@ final class AttackAlgorithms {
    * @return what would be the CauseOfDeath if the attack killed the defender
    */
   public static CauseOfDeath renderAttack(Creature attacker, Creature defender) {
-    AttackAlgorithm attackAlgorithm = ATTACK_ALGORITHM_MAP.get(attacker.getAttackAlgorithmID());
-    if (attackAlgorithm != null) {
-      return attackAlgorithm.renderAttack(attacker, defender);
-    } else {
-      DLogger.warning("AttackAlgorithmID does not match any implemented algorithm.");
-      return null;
-    }
+    return ATTACK_ALGORITHM_MAP.get(attacker.getAttackAlgorithmID()).renderAttack(attacker, defender);
   }
 
 }

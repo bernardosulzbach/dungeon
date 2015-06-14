@@ -40,7 +40,7 @@ public final class CreaturePreset implements Preset {
   private Weight weight;
   private int health;
   private int attack;
-  private ID attackAlgorithmID;
+  private AttackAlgorithmID attackAlgorithmID;
   private List<ID> items = new ArrayList<ID>();
   private Visibility visibility;
   private ID weaponID;
@@ -126,11 +126,11 @@ public final class CreaturePreset implements Preset {
     this.attack = attack;
   }
 
-  public ID getAttackAlgorithmID() {
+  public AttackAlgorithmID getAttackAlgorithmID() {
     return attackAlgorithmID;
   }
 
-  public void setAttackAlgorithmID(ID attackAlgorithmID) {
+  public void setAttackAlgorithmID(AttackAlgorithmID attackAlgorithmID) {
     this.attackAlgorithmID = attackAlgorithmID;
   }
 
