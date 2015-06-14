@@ -264,12 +264,7 @@ public class GameWindow extends JFrame {
   }
 
   private void logExecutionExceptionAndExit(ExecutionException fatal) {
-    Throwable cause = fatal.getCause();
-    String message = cause.toString();
-    if (cause.getMessage() != null) {
-      message += cause.getMessage();
-    }
-    DLogger.severe(message);
+    DLogger.severe(fatal.getCause().toString());
     System.exit(1);
   }
 

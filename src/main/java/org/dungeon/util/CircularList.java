@@ -92,7 +92,17 @@ public final class CircularList<T> implements Serializable {
     return list.isEmpty();
   }
 
+  /**
+   * Returns the element at the specified position in this list.
+   *
+   * @param index index of the element to return
+   * @return the element at the specified position in this list
+   * @throws IndexOutOfBoundsException if the index is bigger than the size of this CircularList
+   */
   public T get(final int index) {
+    if (index > size()) {
+      throw new IndexOutOfBoundsException();
+    }
     return list.get((index + zeroIndex) % capacity);
   }
 
