@@ -250,6 +250,9 @@ public class GameWindow extends JFrame {
 
         @Override
         protected void done() {
+          // This method is invoked on the EDT after doInBackground finishes.
+          // Only by calling get() we can get any exceptions that might have been thrown during doInBackground().
+          // The default behaviour is to log the exception and exit the game with code 1.
           try {
             get();
           } catch (InterruptedException ignore) {
