@@ -20,13 +20,15 @@ package org.dungeon.gui;
 import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.Game;
-import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
+import org.dungeon.io.DLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -38,6 +40,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -64,6 +68,8 @@ public class GameWindow extends JFrame {
    * Returns how many text rows are shown in the Window.
    */
   public static final int ROWS = 30;
+  private static final int FONT_SIZE = 15;
+  private static final Font FONT = getMonospacedFont();
   private static final String WINDOW_TITLE = "Dungeon";
 
   /**
@@ -83,6 +89,29 @@ public class GameWindow extends JFrame {
     setIdle(true);
   }
 
+  /**
+   * Returns the monospaced font used by the game interface.
+   */
+  private static Font getMonospacedFont() {
+    Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
+    InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
+    try {
+      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
+    } catch (FontFormatException bad) {
+      DLogger.warning(bad.getMessage());
+    } catch (IOException bad) {
+      DLogger.warning(bad.getMessage());
+    } finally {
+      if (fontStream != null) {
+        try {
+          fontStream.close();
+        } catch (IOException ignore) {
+        }
+      }
+    }
+    return font;
+  }
+
   private void initComponents() {
     setSystemLookAndFeel();
 
@@ -96,7 +125,7 @@ public class GameWindow extends JFrame {
 
     textPane.setEditable(false);
     textPane.setBackground(SharedConstants.INSIDE_COLOR);
-    textPane.setFont(GameData.FONT);
+    textPane.setFont(FONT);
 
     scrollPane.setViewportView(textPane);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -106,7 +135,7 @@ public class GameWindow extends JFrame {
     textField.setBackground(SharedConstants.INSIDE_COLOR);
     textField.setForeground(Constants.FORE_COLOR_NORMAL);
     textField.setCaretColor(Color.WHITE);
-    textField.setFont(GameData.FONT);
+    textField.setFont(FONT);
     textField.setFocusTraversalKeysEnabled(false);
     textField.setBorder(BorderFactory.createEmptyBorder());
 
@@ -197,7 +226,7 @@ public class GameWindow extends JFrame {
    * @return a Dimension with the preferred TextPane dimensions.
    */
   private Dimension calculateTextPaneSize() {
-    FontMetrics fontMetrics = getFontMetrics(GameData.FONT);
+    FontMetrics fontMetrics = getFontMetrics(FONT);
     int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
     int height = fontMetrics.getHeight() * ROWS;
     return new Dimension(width, height);

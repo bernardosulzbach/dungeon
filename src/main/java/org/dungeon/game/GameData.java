@@ -35,10 +35,6 @@ import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.StopWatch;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -52,7 +48,6 @@ import java.util.Set;
  */
 public final class GameData {
 
-  public static final Font FONT = getMonospacedFont();
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = Date.SECONDS_IN_DAY;
@@ -60,7 +55,6 @@ public final class GameData {
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
-  private static final int FONT_SIZE = 15;
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
@@ -70,29 +64,6 @@ public final class GameData {
 
   private GameData() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
-  }
-
-  /**
-   * Returns the monospaced font used by the game interface.
-   */
-  private static Font getMonospacedFont() {
-    Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
-    InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
-    try {
-      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
-    } catch (FontFormatException bad) {
-      DLogger.warning(bad.getMessage());
-    } catch (IOException bad) {
-      DLogger.warning(bad.getMessage());
-    } finally {
-      if (fontStream != null) {
-        try {
-          fontStream.close();
-        } catch (IOException ignore) {
-        }
-      }
-    }
-    return font;
   }
 
   public static PoetryLibrary getPoetryLibrary() {
