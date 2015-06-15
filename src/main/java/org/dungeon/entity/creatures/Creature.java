@@ -216,6 +216,11 @@ public class Creature extends Entity {
     return attackAlgorithmID;
   }
 
+  @Override
+  public String toString() {
+    return getName().getSingular();
+  }
+
   public enum Tag {MILKABLE, CORPSE}
 
 }
