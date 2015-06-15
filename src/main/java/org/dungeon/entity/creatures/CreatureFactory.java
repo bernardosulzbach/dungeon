@@ -72,7 +72,7 @@ public abstract class CreatureFactory {
       Date date = Game.getGameState().getWorld().getWorldDate();
       AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID, date));
       if (result != AdditionResult.SUCCESSFUL) {
-        DLogger.warning("Could not add " + itemID + " to " + creature.getID() + "! Got " + result + ".");
+        DLogger.warning("Could not add " + itemID + " to " + creature.getID() + "! Reason: " + result + ".");
       }
     }
     equipWeapon(creature, preset);
