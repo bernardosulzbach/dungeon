@@ -125,10 +125,6 @@ public class Location implements Serializable {
     return count;
   }
 
-  public int getItemCount() {
-    return items.getItems().size();
-  }
-
   /**
    * Adds a Creature to this Location's Creature Collection.
    * Also sets the location attribute of the specified Creature to this Location.

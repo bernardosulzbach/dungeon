@@ -240,8 +240,8 @@ public class DebugTools {
       sb.append(Utils.padString("  " + creature.getName(), WIDTH));
       sb.append(creature.getVisibility().toPercentage()).append('\n');
     }
-    if (location.getItemCount() != 0) {
-      sb.append(Utils.padString("Items (" + location.getItemCount() + "):", WIDTH)).append('\n');
+    if (!location.getItemList().isEmpty()) {
+      sb.append(Utils.padString("Items (" + location.getItemList().size() + "):", WIDTH)).append('\n');
       for (Item item : location.getItemList()) {
         sb.append(Utils.padString("  " + item.getQualifiedName(), WIDTH));
         sb.append(item.getVisibility().toPercentage()).append('\n');
