@@ -36,4 +36,14 @@ public class Visibility implements Serializable {
     return value;
   }
 
+  /**
+   * Evaluates if an Entity with this Visibility should be visible under the specified luminosity.
+   *
+   * @param luminosity a Percentage, not null
+   * @return true if an Entity with this Visibility is visible, false otherwise
+   */
+  public boolean visibleUnder(Percentage luminosity) {
+    return luminosity.toDouble() >= 1 - value.toDouble();
+  }
+
 }

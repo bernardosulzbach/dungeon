@@ -186,7 +186,7 @@ public class Hero extends Creature {
    * visibility of the specified Entity.
    */
   private boolean canSee(Entity entity) {
-    return getLocation().getLuminosity().biggerThanOrEqualTo(entity.getVisibility().toPercentage());
+    return entity.getVisibility().visibleUnder(getLocation().getLuminosity());
   }
 
   /**
@@ -403,13 +403,11 @@ public class Hero extends Creature {
 
   /**
    * Attempts to find an item by its name in a specified Inventory.
-   * Applies filterByVisibility so that items not seen by the player are not taken into account.
    *
    * @return an Item object if there is a match. null otherwise.
    */
   private Item findItem(List<Item> items, String[] tokens) {
     Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
-    matches = filterByVisibility(matches);
     if (matches.size() == 0) {
       IO.writeString("Item not found.");
     } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
