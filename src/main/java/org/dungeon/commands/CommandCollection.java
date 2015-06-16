@@ -195,6 +195,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("new", "Starts a new game.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
+        Game.setGameState(null);
         Game.setGameState(Loader.newGame());
         return null;
       }

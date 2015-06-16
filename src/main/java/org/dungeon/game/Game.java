@@ -71,17 +71,21 @@ public class Game {
 
   /**
    * Sets a new GameState to the static field.
-   * This setter also invokes the {@code Hero.look()} method on the Hero of the specified GameState.
-   * <p/>
-   * There is no need to call Engine.refresh() after invoking this method.
+   * Can be used to nullify the GameState, something that should be done while another GameState is being created.
+   * If the provided GameState is not null, this setter also invokes Hero.look() and Engine.refresh().
    *
-   * @param state the new GameState (should not be {@code null})
+   * @param state another GameState object, or null
    */
   public static void setGameState(GameState state) {
     gameState = state;
-    Engine.refresh();
-    IO.writeNewLine(); // Improves readability.
-    gameState.getHero().look(null);
+    if (state == null) {
+      DLogger.info("Set the GameState field in Game to null.");
+    } else {
+      DLogger.info("Set the GameState field in Game to a GameState.");
+      Engine.refresh();
+      IO.writeNewLine(); // Improves readability.
+      gameState.getHero().look(null);
+    }
   }
 
   /**

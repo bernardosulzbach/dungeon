@@ -57,19 +57,38 @@ public abstract class CreatureFactory {
     }
   }
 
-  public static Hero makeHero() {
+  /**
+   * Creates the Hero.
+   *
+   * @param date the Date when the Items the Hero has were created
+   * @return the Hero object
+   */
+  public static Hero makeHero(Date date) {
     Hero hero = new Hero(creaturePresetMap.get(Constants.HERO_ID));
-    giveItems(hero);
+    giveItems(hero, date);
     return hero;
   }
 
   /**
    * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
+   * The Date of creation of the Items will be retrieved from the GameState stored in Game.
+   * If that field is null or invalid, use the overloaded version of this method that requires a Date object.
+   *
+   * @param creature the Creature
    */
   private static void giveItems(Creature creature) {
+    giveItems(creature, Game.getGameState().getWorld().getWorldDate());
+  }
+
+  /**
+   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
+   *
+   * @param creature the Creature
+   * @param date     the Date when the Items this Creature has were created
+   */
+  private static void giveItems(Creature creature, Date date) {
     CreaturePreset preset = creaturePresetMap.get(creature.getID());
     for (ID itemID : preset.getItems()) {
-      Date date = Game.getGameState().getWorld().getWorldDate();
       Item item = ItemFactory.makeItem(itemID, date);
       SimulationResult result = creature.getInventory().simulateItemAddition(item);
       if (result == SimulationResult.SUCCESSFUL) {
