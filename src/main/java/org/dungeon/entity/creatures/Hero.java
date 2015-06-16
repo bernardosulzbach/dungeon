@@ -552,7 +552,7 @@ public class Hero extends Creature {
       getInventory().addItem(item);
       IO.writeString(String.format("Added %s to the inventory.", item.getQualifiedName()));
     } else {
-      throw new IllegalStateException(" simulateItemAddition did not return SUCCESSFUL.");
+      throw new IllegalStateException("simulateItemAddition did not return SUCCESSFUL.");
     }
   }
 

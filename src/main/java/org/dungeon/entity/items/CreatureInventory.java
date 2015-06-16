@@ -68,7 +68,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       item.setInventory(this);
       DLogger.inventoryManagement(String.format("Added %s to the inventory of %s.", item.getQualifiedName(), owner));
     } else {
-      throw new IllegalStateException(" simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
+      throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
     }
   }
 
