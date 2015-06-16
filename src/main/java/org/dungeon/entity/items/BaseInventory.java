@@ -21,6 +21,7 @@ import org.dungeon.entity.items.Item.Tag;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,8 +42,13 @@ public abstract class BaseInventory implements Serializable {
     return (item.hasTag(Tag.DECOMPOSES) && item.getAge() >= item.getDecompositionPeriod());
   }
 
+  /**
+   * Returns an unmodifiable view of the list of the Items. Use removeItem(Item) to remove items.
+   *
+   * @return an unmodifiable view of the list of the Items
+   */
   public List<Item> getItems() {
-    return items;
+    return Collections.unmodifiableList(items);
   }
 
   /**
