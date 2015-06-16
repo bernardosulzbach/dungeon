@@ -178,6 +178,8 @@ public final class GameData {
           preset.addTag(tag);
         }
       }
+      preset.setInventoryItemLimit(readIntegerFromResourceReader(reader, "INVENTORY_ITEM_LIMIT"));
+      preset.setInventoryWeightLimit(readDoubleFromResourceReader(reader, "INVENTORY_WEIGHT_LIMIT"));
       preset.setVisibility(reader.readVisibility());
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));

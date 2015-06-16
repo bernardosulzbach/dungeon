@@ -20,16 +20,14 @@ package org.dungeon.entity.creatures;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.items.CreatureInventory;
-import org.dungeon.entity.items.CreatureInventory.AdditionResult;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Location;
 import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * The Creature class.
@@ -42,8 +40,8 @@ public class Creature extends Entity {
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
+  private final CreatureInventory inventory;
   private int curHealth;
-  private CreatureInventory inventory = new CreatureInventory(this, 4, 8);
   private Item weapon;
   private Location location;
 
@@ -54,6 +52,7 @@ public class Creature extends Entity {
     attack = preset.getAttack();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithmID = preset.getAttackAlgorithmID();
+    inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
   }
 
   SkillList getSkillList() {
@@ -86,10 +85,6 @@ public class Creature extends Entity {
 
   public CreatureInventory getInventory() {
     return inventory;
-  }
-
-  void setInventory(CreatureInventory inventory) {
-    this.inventory = inventory;
   }
 
   public Item getWeapon() {
@@ -169,30 +164,6 @@ public class Creature extends Entity {
   }
 
   /**
-   * Attempts to add an Item object to this Creature's inventory.
-   * <p/>
-   * Writes the results of the attempt, for a quiet version of this method, see {@code CreatureInventory.addItem(Item)}.
-   *
-   * @param item the Item to be added
-   * @return true if successful, false otherwise
-   */
-  public boolean addItem(Item item) {
-    AdditionResult result = getInventory().addItem(item);
-    switch (result) {
-      case AMOUNT_LIMIT:
-        IO.writeString("Your inventory is full.");
-        break;
-      case WEIGHT_LIMIT:
-        IO.writeString("You can't carry more weight.");
-        break;
-      case SUCCESSFUL:
-        IO.writeString("Added " + item.getName() + " to the inventory.");
-        return true;
-    }
-    return false;
-  }
-
-  /**
    * Effectively drops an item.
    *
    * @param item the Item to be dropped
@@ -206,9 +177,9 @@ public class Creature extends Entity {
    * Iterates though the Creature's inventory, dropping all Items on the ground.
    */
   public void dropEverything() {
-    for (Iterator<Item> iterator = getInventory().getItems().iterator(); iterator.hasNext(); ) {
-      getLocation().addItem(iterator.next()); // addItem will set the Item the correct Inventory.
-      iterator.remove();
+    for (Item item : new ArrayList<Item>(getInventory().getItems())) {
+      getInventory().removeItem(item);
+      getLocation().addItem(item);
     }
   }
 

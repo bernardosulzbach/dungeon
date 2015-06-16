@@ -28,6 +28,7 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.CreatureFactory;
+import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
@@ -258,17 +259,23 @@ public class DebugTools {
    * Attempts to give an Item to the Hero. Returns whether or not this operation was successful.
    *
    * @param itemID the ID of the Item, as provided by the player
-   * @return true if an Item was given, false otherwise
+   * @return true if an Item was created, false otherwise
    */
   private static boolean give(String itemID) {
     Date date = Game.getGameState().getWorld().getWorldDate();
     Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()), date);
     if (item != null) {
-      if (Game.getGameState().getHero().addItem(item)) {
-        return true;
+      IO.writeString("Item successfully created.");
+      if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
+        Game.getGameState().getHero().addItem(item);
+      } else {
+        Game.getGameState().getHeroLocation().addItem(item);
+        IO.writeString("Item could not be added to your inventory. It was added to the current location instead.");
       }
+      return true;
+    } else {
+      IO.writeString("Item could not be created.");
     }
-    IO.writeString("Item could not be added to your inventory.");
     return false;
   }
 

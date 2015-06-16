@@ -57,24 +57,38 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
   }
 
   /**
-   * Attempts to add an item object to this Inventory.
+   * Attempts to add an Item to this Inventory.
+   * As a precondition, simulateItemAddition should return SUCCESSFUL.
    *
-   * @param item the Item to be added
-   * @return true if successful, false otherwise
+   * @param item the Item to be added, not null
    */
-  public AdditionResult addItem(Item item) {
-    if (hasItem(item)) { // Check that the new item is not already in the inventory.
-      DLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
-      return AdditionResult.ALREADY_IN_THE_INVENTORY;
-    }
-    if (isFull()) {
-      return AdditionResult.AMOUNT_LIMIT;
-    } else if (willExceedWeightLimitAfterAdding(item)) {
-      return AdditionResult.WEIGHT_LIMIT;
-    } else {
+  public void addItem(Item item) {
+    if (simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
       items.add(item);
       item.setInventory(this);
-      return AdditionResult.SUCCESSFUL;
+      DLogger.inventoryManagement(String.format("Added %s to the inventory of %s.", item.getQualifiedName(), owner));
+    } else {
+      throw new IllegalStateException(" simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
+    }
+  }
+
+  /**
+   * Simulates the addition of an Item to this CreatureInventory and returns the result.
+   *
+   * @param item the Item to be added, not null
+   * @return a SimulationResult value
+   */
+  public SimulationResult simulateItemAddition(Item item) {
+    if (hasItem(item)) { // Check that the new item is not already in the inventory.
+      DLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
+      return SimulationResult.ALREADY_IN_THE_INVENTORY;
+    }
+    if (isFull()) {
+      return SimulationResult.AMOUNT_LIMIT;
+    } else if (willExceedWeightLimitAfterAdding(item)) {
+      return SimulationResult.WEIGHT_LIMIT;
+    } else {
+      return SimulationResult.SUCCESSFUL;
     }
   }
 
@@ -97,8 +111,9 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     }
     items.remove(item);
     item.setInventory(null);
+    DLogger.inventoryManagement(String.format("Removed %s from the inventory of %s.", item.getQualifiedName(), owner));
   }
 
-  public enum AdditionResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}
+  public enum SimulationResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}
 
 }

@@ -18,7 +18,7 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.date.Date;
-import org.dungeon.entity.items.CreatureInventory.AdditionResult;
+import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
@@ -70,9 +70,12 @@ public abstract class CreatureFactory {
     CreaturePreset preset = creaturePresetMap.get(creature.getID());
     for (ID itemID : preset.getItems()) {
       Date date = Game.getGameState().getWorld().getWorldDate();
-      AdditionResult result = creature.getInventory().addItem(ItemFactory.makeItem(itemID, date));
-      if (result != AdditionResult.SUCCESSFUL) {
-        DLogger.warning("Could not add " + itemID + " to " + creature.getID() + "! Reason: " + result + ".");
+      Item item = ItemFactory.makeItem(itemID, date);
+      SimulationResult result = creature.getInventory().simulateItemAddition(item);
+      if (result == SimulationResult.SUCCESSFUL) {
+        creature.getInventory().addItem(item);
+      } else {
+        DLogger.warning("Could not add " + itemID + " to " + creature.getID() + ". Reason: " + result + ".");
       }
     }
     equipWeapon(creature, preset);

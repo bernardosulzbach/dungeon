@@ -44,6 +44,8 @@ public final class CreaturePreset implements Preset {
   private List<ID> items = new ArrayList<ID>();
   private Visibility visibility;
   private ID weaponID;
+  private int inventoryItemLimit;
+  private double inventoryWeightLimit;
 
   /**
    * Ensures that an integer value is greater than or equal to a provided minimum.
@@ -156,6 +158,22 @@ public final class CreaturePreset implements Preset {
 
   public void setWeaponID(ID weaponID) {
     this.weaponID = weaponID;
+  }
+
+  public int getInventoryItemLimit() {
+    return inventoryItemLimit;
+  }
+
+  public void setInventoryItemLimit(int inventoryItemLimit) {
+    this.inventoryItemLimit = inventoryItemLimit;
+  }
+
+  public double getInventoryWeightLimit() {
+    return inventoryWeightLimit;
+  }
+
+  public void setInventoryWeightLimit(double inventoryWeightLimit) {
+    this.inventoryWeightLimit = inventoryWeightLimit;
   }
 
 }

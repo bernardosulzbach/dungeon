@@ -27,7 +27,7 @@ import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.items.BaseInventory;
 import org.dungeon.entity.items.BookComponent;
-import org.dungeon.entity.items.CreatureInventory;
+import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.FoodComponent;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Direction;
@@ -89,7 +89,6 @@ public class Hero extends Creature {
 
   Hero(CreaturePreset preset) {
     super(preset);
-    setInventory(new CreatureInventory(this, 12, 10));
     dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
   }
 
@@ -520,14 +519,20 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to pick and item and add it to the inventory.
+   * Attempts to pick an Item and add it to the inventory.
    */
   public int pickItem(IssuedCommand issuedCommand) {
     if (canSeeAnItem()) {
       Item selectedItem = selectLocationItem(issuedCommand);
       if (selectedItem != null) {
-        if (addItem(selectedItem)) { // addItem returns false if the item was not added.
+        SimulationResult result = getInventory().simulateItemAddition(selectedItem);
+        if (result == SimulationResult.AMOUNT_LIMIT) {
+          IO.writeString("Your inventory is full.");
+        } else if (result == SimulationResult.WEIGHT_LIMIT) {
+          IO.writeString("You can't carry more weight.");
+        } else if (result == SimulationResult.SUCCESSFUL) {
           getLocation().removeItem(selectedItem);
+          addItem(selectedItem);
           return SECONDS_TO_PICK_UP_AN_ITEM;
         }
       }
@@ -535,6 +540,20 @@ public class Hero extends Creature {
       IO.writeString("You do not see any item you could pick up.");
     }
     return 0;
+  }
+
+  /**
+   * Adds an Item object to the inventory. As a precondition, simulateItemAddition(Item) should return SUCCESSFUL.
+   *
+   * @param item the Item to be added, not null
+   */
+  public void addItem(Item item) {
+    if (getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
+      getInventory().addItem(item);
+      IO.writeString(String.format("Added %s to the inventory.", item.getQualifiedName()));
+    } else {
+      throw new IllegalStateException(" simulateItemAddition did not return SUCCESSFUL.");
+    }
   }
 
   /**
@@ -564,7 +583,7 @@ public class Hero extends Creature {
         totalTime += unequipWeapon();
       }
       dropItem(selectedItem);
-      IO.writeString("Dropped " + selectedItem.getName() + ".");
+      IO.writeString(String.format("Dropped %s.", selectedItem.getQualifiedName()));
       return totalTime;
     }
     return 0;
