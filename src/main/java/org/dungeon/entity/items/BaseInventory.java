@@ -22,7 +22,6 @@ import org.dungeon.entity.items.Item.Tag;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -63,8 +62,8 @@ public abstract class BaseInventory implements Serializable {
   /**
    * Checks if an item is already in the inventory.
    */
-  public boolean hasItem(Item itemObject) {
-    return items.contains(itemObject);
+  public boolean hasItem(Item item) {
+    return items.contains(item);
   }
 
   /**
@@ -78,10 +77,9 @@ public abstract class BaseInventory implements Serializable {
    * Iterates through the inventory, removing items that shouldn't exist anymore.
    */
   public void refreshItems() {
-    for (Iterator<Item> iterator = items.iterator(); iterator.hasNext(); ) {
-      Item item = iterator.next();
+    for (Item item : new ArrayList<Item>(items)) {
       if (isDecomposed(item)) {
-        iterator.remove(); // The Item will disappear from the game. No need to set its inventory to null.
+        removeItem(item);
       }
     }
   }
