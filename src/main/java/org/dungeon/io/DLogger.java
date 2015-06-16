@@ -105,6 +105,17 @@ public final class DLogger {
   }
 
   /**
+   * Logs an inventory management message.
+   *
+   * @param message the log message
+   */
+  public static void inventoryManagement(String message) {
+    if (logger != null) {
+      logger.fine(message);
+    }
+  }
+
+  /**
    * Retrieves the path of a plain text file to be used to store logging messages. If the logging directory does not
    * exist, it will be created.
    *
