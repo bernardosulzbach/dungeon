@@ -241,4 +241,14 @@ public final class Utils {
     return matches;
   }
 
+  /**
+   * Returns zero if the specified Integer is null, otherwise returns the value.
+   *
+   * @param integer an Integer, or null
+   * @return an int
+   */
+  public static int zeroIfNull(Integer integer) {
+    return integer == null ? 0 : integer;
+  }
+
 }
