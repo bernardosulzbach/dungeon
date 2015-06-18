@@ -58,7 +58,7 @@ class ExpandableIntegerSet implements Serializable {
     if (set.size() != 0) {
       throw new IllegalStateException("set already has an element.");
     } else {
-      set.add(Engine.RANDOM.nextInt(MIN_DBI));
+      set.add(Random.nextInteger(MIN_DBI));
     }
   }
 
@@ -74,13 +74,13 @@ class ExpandableIntegerSet implements Serializable {
     ArrayList<Integer> integerList = new ArrayList<Integer>();
     int integer = set.last();
     while (a >= integer) {
-      integer += MIN_DBI + Engine.RANDOM.nextInt(DIFF);
+      integer += MIN_DBI + Random.nextInteger(DIFF);
       integerList.add(integer);
       set.add(integer);
     }
     integer = set.first();
     while (a <= integer) {
-      integer -= MIN_DBI + Engine.RANDOM.nextInt(DIFF);
+      integer -= MIN_DBI + Random.nextInteger(DIFF);
       integerList.add(integer);
       set.add(integer);
     }

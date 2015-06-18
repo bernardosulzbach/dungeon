@@ -56,7 +56,7 @@ class WorldGenerator implements Serializable {
     List<LocationPreset> locationPresets = new ArrayList<LocationPreset>(GameData.getLocationPresets().values());
     LocationPreset selectedPreset;
     do {
-      selectedPreset = locationPresets.get(Engine.RANDOM.nextInt(locationPresets.size()));
+      selectedPreset = locationPresets.get(Random.nextInteger(locationPresets.size()));
     } while (!"Land".equals(selectedPreset.getType()));
     return selectedPreset;
   }
@@ -66,7 +66,7 @@ class WorldGenerator implements Serializable {
   }
 
   private Location createBridgeLocation() {
-    ID bridgeID = new ID(Engine.RANDOM.nextBoolean() ? "STONE_BRIDGE" : "WOOD_BRIDGE");
+    ID bridgeID = new ID(Random.nextBoolean() ? "STONE_BRIDGE" : "WOOD_BRIDGE");
     return new Location(GameData.getLocationPresets().get(bridgeID), world);
   }
 

@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.game.Engine;
+import org.dungeon.game.Random;
 import org.dungeon.io.DLogger;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class ShuffledRange {
     Collections.shuffle(integers);
     if (getSize() > 1 && get(0) == lastInteger) {
       // Swap a random integer that is not the first into the first position.
-      Collections.swap(integers, 0, 1 + Engine.RANDOM.nextInt(getSize() - 1));
+      Collections.swap(integers, 0, 1 + Random.nextInteger(getSize() - 1));
     }
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,21 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.game;
 
-import org.dungeon.game.Engine;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Assert;
+import org.dungeon.util.Percentage;
+
 import org.junit.Test;
 
-public class UtilsTest {
+public class RandomTest {
 
   @Test
-  public void testRoll() throws Exception {
-    for (int i = 0; i < 100; i++) {
-      Assert.assertFalse(Engine.roll(0.0));
-      Assert.assertTrue(Engine.roll(1.0));
-    }
+  public void testRollWithDoubles() throws Exception {
+    assertFalse(Random.roll(0.0));
+    assertTrue(Random.roll(1.0));
+  }
+
+  @Test
+  public void testRollWithPercentages() throws Exception {
+    assertFalse(Random.roll(new Percentage(0.0)));
+    assertTrue(Random.roll(new Percentage(1.0)));
   }
 
 }

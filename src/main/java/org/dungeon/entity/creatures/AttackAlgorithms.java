@@ -18,8 +18,8 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.items.Item;
-import org.dungeon.game.Engine;
 import org.dungeon.game.ID;
+import org.dungeon.game.Random;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
@@ -48,7 +48,7 @@ final class AttackAlgorithms {
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Percentage luminosity = attacker.getLocation().getLuminosity();
         double hitRate = Math.weightedAverage(BAT_HIT_RATE_MIN_LUMINOSITY, BAT_HIT_RATE_MAX_LUMINOSITY, luminosity);
-        if (Engine.roll(hitRate)) {
+        if (Random.roll(hitRate)) {
           int hitDamage = attacker.getAttack();
           boolean criticalHit = luminosity.toDouble() <= BAT_CRITICAL_MAXIMUM_LUMINOSITY;
           if (criticalHit) {
@@ -67,7 +67,7 @@ final class AttackAlgorithms {
     registerAttackAlgorithm(AttackAlgorithmID.BEAST, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
-        if (Engine.roll(BEAST_HIT_RATE)) {
+        if (Random.roll(BEAST_HIT_RATE)) {
           int hitDamage = attacker.getAttack();
           boolean healthStateChanged = defender.takeDamage(hitDamage);
           AttackAlgorithmIO.printInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
@@ -104,7 +104,7 @@ final class AttackAlgorithms {
         int hitDamage;
         Percentage healthiness = new Percentage(attacker.getCurHealth() / (double) attacker.getMaxHealth());
         double criticalChance = Math.weightedAverage(ORC_MIN_CRITICAL_CHANCE, ORC_MAX_CRITICAL_CHANCE, healthiness);
-        boolean criticalHit = Engine.roll(criticalChance);
+        boolean criticalHit = Random.roll(criticalChance);
         if (weapon != null && !weapon.isBroken()) {
           if (weapon.rollForHit()) {
             hitDamage = weapon.getWeaponComponent().getDamage() + attacker.getAttack();
@@ -114,7 +114,7 @@ final class AttackAlgorithms {
             return null;
           }
         } else {
-          if (Engine.roll(ORC_UNARMED_HIT_RATE)) {
+          if (Random.roll(ORC_UNARMED_HIT_RATE)) {
             hitDamage = attacker.getAttack();
           } else {
             AttackAlgorithmIO.printMiss(attacker);
@@ -149,7 +149,7 @@ final class AttackAlgorithms {
             return null;
           }
         } else {
-          if (Engine.roll(UNDEAD_UNARMED_HIT_RATE)) {
+          if (Random.roll(UNDEAD_UNARMED_HIT_RATE)) {
             hitDamage = attacker.getAttack();
           } else {
             AttackAlgorithmIO.printMiss(attacker);
@@ -183,7 +183,7 @@ final class AttackAlgorithms {
           if (weapon != null && !weapon.isBroken()) {
             if (weapon.rollForHit()) {
               hitDamage = weapon.getWeaponComponent().getDamage() + attacker.getAttack();
-              criticalHit = Engine.roll(HERO_CRITICAL_CHANCE);
+              criticalHit = Random.roll(HERO_CRITICAL_CHANCE);
               weapon.decrementIntegrityByHit();
               causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, weapon.getID());
             } else {
@@ -192,7 +192,7 @@ final class AttackAlgorithms {
             }
           } else {
             hitDamage = attacker.getAttack();
-            criticalHit = Engine.roll(HERO_CRITICAL_CHANCE_UNARMED);
+            criticalHit = Random.roll(HERO_CRITICAL_CHANCE_UNARMED);
             causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, UNARMED_ID);
           }
           if (criticalHit) {

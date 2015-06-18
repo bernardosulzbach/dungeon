@@ -40,6 +40,7 @@ import org.dungeon.game.Name;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.QuantificationMode;
+import org.dungeon.game.Random;
 import org.dungeon.game.World;
 import org.dungeon.io.IO;
 import org.dungeon.io.Sleeper;
@@ -152,7 +153,7 @@ public class Hero extends Creature {
       IO.writeString("You fall asleep.");
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
       // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
-      seconds += Engine.RANDOM.nextInt(15 * 60 + 1);
+      seconds += Random.nextInteger(15 * 60 + 1);
       int healing = getMaxHealth() * seconds / HEAL_TEN_PERCENT / 10;
       if (!isCompletelyHealed()) {
         int health = getCurHealth() + healing;

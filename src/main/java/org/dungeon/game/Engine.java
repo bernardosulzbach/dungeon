@@ -26,43 +26,16 @@ import org.dungeon.io.IO;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
-import org.dungeon.util.Percentage;
 
 import java.awt.Color;
-import java.util.Random;
 
 /**
  * Engine class that contains most static methods that need to be called to alter a GameState object.
  */
 public class Engine {
 
-  /**
-   * The Random object shared by all the classes.
-   */
-  public static final Random RANDOM = new Random();
   private static final int WALK_BLOCKED = 2;
   private static final int WALK_SUCCESS = 200;
-
-  /**
-   * Simulates a random roll.
-   *
-   * @param chance the probability of a true result.
-   * @return a boolean indicating if the roll was successful or not.
-   */
-  public static boolean roll(Percentage chance) {
-    return chance.toDouble() > RANDOM.nextDouble();
-  }
-
-  /**
-   * Simulates a random roll.
-   *
-   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
-   *               Will be passed to Percentage's constructors in order to guarantee that it is a valid value.
-   * @return a boolean indicating if the roll was successful or not.
-   */
-  public static boolean roll(double chance) {
-    return roll(new Percentage(chance));
-  }
 
   /**
    * Refreshes the game, should be called after every turn.

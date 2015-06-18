@@ -18,8 +18,8 @@
 package org.dungeon.entity.items;
 
 import org.dungeon.date.Date;
-import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
+import org.dungeon.game.Random;
 
 import java.io.Serializable;
 
@@ -52,7 +52,7 @@ public class ClockComponent implements Serializable {
   public String getTimeString() {
     if (master.isBroken()) {
       if (lastTime == null) {
-        if (Engine.RANDOM.nextBoolean()) {
+        if (Random.nextBoolean()) {
           return "The clock is pure junk.";
         } else {
           return "The clock is completely smashed.";

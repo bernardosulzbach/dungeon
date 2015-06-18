@@ -22,8 +22,8 @@ import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Weight;
-import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
+import org.dungeon.game.Random;
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
@@ -196,7 +196,7 @@ public class Item extends Entity {
    * @return true if the next attack should hit, false otherwise
    */
   public boolean rollForHit() {
-    return Engine.roll(weaponComponent.getHitRate());
+    return Random.roll(weaponComponent.getHitRate());
   }
 
   private String getIntegrityString() {

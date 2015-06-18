@@ -58,7 +58,7 @@ public class Location implements Serializable {
     }
     this.items = new LocationInventory();
     for (Entry<ID, Percentage> entry : preset.getItems()) {
-      if (Engine.roll(entry.getValue())) {
+      if (Random.roll(entry.getValue())) {
         Item item = ItemFactory.makeItem(entry.getKey(), world.getWorldDate());
         if (item != null) {
           this.addItem(item);
