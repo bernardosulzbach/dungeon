@@ -71,21 +71,14 @@ public class ShuffledRange {
   }
 
   /**
-   * Returns the last integer of the range according to its current ordering.
-   */
-  public int getLast() {
-    return integers.get(integers.size() - 1);
-  }
-
-  /**
    * Shuffles the underlying List.
    * <p/>
    * If the List has more than one element, ensures that the next first integer is not the integer currently at the end.
    */
   public void shuffle() {
-    int lastInteger = getLast();
+    int lastIntegerBeforeShuffling = integers.get(integers.size() - 1);
     Collections.shuffle(integers);
-    if (getSize() > 1 && get(0) == lastInteger) {
+    if (getSize() > 1 && get(0) == lastIntegerBeforeShuffling) {
       // Swap a random integer that is not the first into the first position.
       Collections.swap(integers, 0, 1 + Random.nextInteger(getSize() - 1));
     }

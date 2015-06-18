@@ -28,7 +28,7 @@ public class ShuffledRangeTest {
   public void testShuffle() throws Exception {
     // The special case of a ShuffledRange of a single element.
     ShuffledRange shuffledRange = new ShuffledRange(1, 2);
-    int oldLast = shuffledRange.getLast();
+    int oldLast = shuffledRange.get(shuffledRange.getSize() - 1);
     shuffledRange.shuffle();
     int newFirst = shuffledRange.get(0);
     assertEquals(oldLast, newFirst);
@@ -36,7 +36,7 @@ public class ShuffledRangeTest {
     for (int rangeEnd = 3; rangeEnd <= 5; rangeEnd++) {
       shuffledRange = new ShuffledRange(1, rangeEnd);
       for (int i = 0; i < 100; i++) {
-        oldLast = shuffledRange.getLast();
+        oldLast = shuffledRange.get(shuffledRange.getSize() - 1);
         shuffledRange.shuffle();
         newFirst = shuffledRange.get(0);
         assertNotEquals(oldLast, newFirst);
