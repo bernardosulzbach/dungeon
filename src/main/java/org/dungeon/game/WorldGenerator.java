@@ -66,7 +66,8 @@ class WorldGenerator implements Serializable {
   }
 
   private Location createBridgeLocation() {
-    return new Location(GameData.getLocationPresets().get(new ID("BRIDGE")), world);
+    ID bridgeID = new ID(Engine.RANDOM.nextBoolean() ? "STONE_BRIDGE" : "WOOD_BRIDGE");
+    return new Location(GameData.getLocationPresets().get(bridgeID), world);
   }
 
   public void expand(Point p) {
