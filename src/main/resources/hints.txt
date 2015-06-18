@@ -1,5 +1,4 @@
 HINT: Attacks against critters deal 100% bonus damage.
-HINT: Equipped items are colored purple in your inventory.
 HINT: Every combatant movement is considered to be a battle turn.
 HINT: The command 'achievements' will also show the total number of achievements.
 HINT: There is a 'poem' command that prints a poem to the screen.
