@@ -605,21 +605,24 @@ public class Hero extends Creature {
     if (getInventory().getItemCount() != 0) {
       printItems();
     }
-    if (hasWeapon()) {
-      IO.writeString("You are equipping " + getWeapon().getQualifiedName() + ".");
-    }
   }
 
   /**
    * Prints all items in the Hero's inventory. This function should only be called if the inventory is not empty.
    */
   private void printItems() {
-    ArrayList<String> names = new ArrayList<String>(getInventory().getItemCount());
-    for (Item item : getInventory().getItems()) {
-      names.add(String.format("%s (%s)", item.getQualifiedName(), item.getWeight()));
+    if (getInventory().getItemCount() == 0) {
+      throw new IllegalStateException("inventory item count is 0.");
     }
-    IO.writeString("You are carrying " + Utils.enumerate(names) + ".");
-
+    IO.writeString("You are carrying:");
+    for (Item item : getInventory().getItems()) {
+      String name = String.format("%s (%s)", item.getQualifiedName(), item.getWeight());
+      if (hasWeapon() && getWeapon() == item) {
+        IO.writeString(" [Equipped] " + name);
+      } else {
+        IO.writeString(" " + name);
+      }
+    }
   }
 
   /**
