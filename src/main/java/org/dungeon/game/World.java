@@ -23,6 +23,8 @@ import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.DLogger;
 import org.dungeon.stats.WorldStatistics;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -83,7 +85,15 @@ public class World implements Serializable {
     return locations.containsKey(point);
   }
 
-  public Location getLocation(Point point) {
+  /**
+   * Gets the Location in the specified Point.
+   * If the Location in the Point has not yet been created, the world generator will do it.
+   *
+   * @param point a Point object
+   * @return a Location
+   */
+  @NotNull
+  public Location getLocation(@NotNull Point point) {
     if (!hasLocation(point)) {
       generator.expand(point);
     }

@@ -1,4 +1,5 @@
 ID: STONE_BRIDGE
+SYMBOL: =
 TYPE: Bridge
 NAME: [Stone Bridge]
 BLOB_SIZE: 0
@@ -8,6 +9,7 @@ BLOCKED_ENTRANCES: [[N | S]]
 COLOR: [160 | 160 | 160]
 
 ID: WOOD_BRIDGE
+SYMBOL: =
 TYPE: Bridge
 NAME: [Wood Bridge]
 BLOB_SIZE: 0
@@ -17,6 +19,7 @@ BLOCKED_ENTRANCES: [[N | S]]
 COLOR: [153 | 76 | 0]
 
 ID: CLEARING
+SYMBOL: C
 TYPE: Land
 NAME: [Clearing]
 BLOB_SIZE: 2
@@ -26,6 +29,7 @@ ITEMS: [[CHERRY | 0.6] | [STICK | 0.9]]
 COLOR: [102 | 204 | 0]
 
 ID: DESERT
+SYMBOL: D
 TYPE: Land
 NAME: [Desert]
 BLOB_SIZE: 50
@@ -35,6 +39,7 @@ ITEMS: [[DAGGER | 0.15] | [MACE | 0.1] | [SPEAR | 0.1] | [STAFF | 0.2] | [SWORD 
 COLOR: [255 | 153 | 51]
 
 ID: FOREST
+SYMBOL: F
 TYPE: Land
 NAME: [Forest]
 BLOB_SIZE: 25
@@ -44,6 +49,7 @@ ITEMS: [[AXE | 0.2] | [POCKET_WATCH | 0.03] | [STICK | 0.5] | [SWORD | 0.15] | [
 COLOR: [0 | 153 | 0]
 
 ID: GRAVEYARD
+SYMBOL: G
 TYPE: Land
 NAME: [Graveyard]
 BLOB_SIZE: 1
@@ -53,15 +59,17 @@ ITEMS: [[LONGSWORD | 0.15] | [TOME_OF_BURNING_GROUND | 0.1] | [WRIST_WATCH | 0.0
 COLOR: [192 | 192 | 192]
 
 ID: MEADOW
+SYMBOL: M
 TYPE: Land
 NAME: [Meadow]
-BLOB_SIZE: 5
+BLOB_SIZE: 2
 LIGHT_PERMITTIVITY: 1.0
 SPAWNERS: [[WHITE_TIGER | 1 | 24] | [WOLF | 3 | 12]]
 ITEMS: [[APPLE | 0.7] | [STONE | 0.8] | [WATERMELON | 0.4]]
 COLOR: [0 | 204 | 0]
 
 ID: POND
+SYMBOL: P
 TYPE: Land
 NAME: [Pond]
 BLOB_SIZE: 1
@@ -71,6 +79,7 @@ ITEMS: [[SPEAR | 0.3] | [WATERMELON | 0.8]]
 COLOR: [0 | 204 | 204]
 
 ID: RIVER
+SYMBOL: |
 TYPE: River
 NAME: [River]
 BLOB_SIZE: 0
@@ -79,6 +88,7 @@ BLOCKED_ENTRANCES: [[W | E]]
 COLOR: [51 | 51 | 255]
 
 ID: SAVANNAH
+SYMBOL: S
 TYPE: Land
 NAME: [Savannah]
 BLOB_SIZE: 5
@@ -88,6 +98,7 @@ ITEMS: [[APPLE | 0.8] | [AXE | 0.3]]
 COLOR: [204 | 204 | 0]
 
 ID: SWAMP
+SYMBOL: S
 TYPE: Land
 NAME: [Swamp]
 BLOB_SIZE: 10
@@ -96,9 +107,10 @@ SPAWNERS: [[CROCODILE | 1 | 6] | [FROG | 2 | 2] | [LIZARD | 1 | 4] | [SNAKE | 3 
 ITEMS: [[CLUB | 0.4] | [STICK | 0.9] | [WATERMELON | 0.1]]
 COLOR: [153 | 153 | 0]
 
-ID: WASTELAND
+ID: BARREN
+SYMBOL: B
 TYPE: Land
-NAME: [Wasteland]
+NAME: [Barren]
 BLOB_SIZE: 10
 LIGHT_PERMITTIVITY: 1.0
 SPAWNERS: [[RAT | 6 | 2] | [SNAKE | 3 | 4] | [SPIDER | 2 | 4]]
