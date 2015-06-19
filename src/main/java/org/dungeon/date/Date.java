@@ -35,7 +35,7 @@ import java.io.Serializable;
  * All the public constants made available by this class refer to this date system.
  * Therefore they should not be used to represent or take place into calculations of real world time.
  */
-public class Date implements Serializable {
+public class Date implements Comparable<Date>, Serializable {
 
   private long time; // Supports 1067519911 full years.
 
@@ -164,6 +164,17 @@ public class Date implements Serializable {
 
   public String toTimeString() {
     return String.format("%02d:%02d:%02d", getHour(), getMinute(), getSecond());
+  }
+
+  @Override
+  public int compareTo(Date date) {
+    if (time > date.time) {
+      return 1;
+    } else if (time == date.time) {
+      return 0;
+    } else {
+      return -1;
+    }
   }
 
   /**

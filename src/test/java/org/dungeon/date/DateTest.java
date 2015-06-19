@@ -21,6 +21,7 @@ import static org.dungeon.date.DungeonTimeUnit.DAY;
 import static org.dungeon.date.DungeonTimeUnit.MONTH;
 import static org.dungeon.date.DungeonTimeUnit.YEAR;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -104,6 +105,19 @@ public class DateTest {
       assertEquals(i, date.getYear());
       date = date.plus(1, DungeonTimeUnit.YEAR);
     }
+  }
+
+  @Test
+  public void testCompareTo() throws Exception {
+    Date a = new Date(1, 1, 1);
+    Date b = new Date(1, 1, 1);
+    Date c = new Date(1, 1, 2);
+    assertTrue(a.compareTo(b) == 0);
+    assertTrue(b.compareTo(a) == 0);
+    assertTrue(a.compareTo(c) < 0);
+    assertTrue(b.compareTo(c) < 0);
+    assertTrue(c.compareTo(a) > 0);
+    assertTrue(c.compareTo(b) > 0);
   }
 
 }
