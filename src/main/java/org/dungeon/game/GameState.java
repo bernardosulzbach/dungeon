@@ -43,6 +43,48 @@ public class GameState implements Serializable {
   }
 
   /**
+   * Prints the next hint.
+   */
+  public static void printNextHint() {
+    if (GameData.getHintLibrary().getHintCount() == 0) {
+      IO.writeString("No hints were loaded.");
+    } else {
+      IO.writeString(GameData.getHintLibrary().getNextHint());
+    }
+  }
+
+  /**
+   * Prints a poem based on the issued command.
+   * <p/>
+   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
+   * <p/>
+   * Otherwise, the next poem is based on a behind-the-scenes poem index.
+   *
+   * @param command the issued command.
+   */
+  public static void printPoem(IssuedCommand command) {
+    if (GameData.getPoetryLibrary().getPoemCount() == 0) {
+      IO.writeString("No poems were loaded.");
+    } else {
+      if (command.hasArguments()) {
+        try {
+          // Indexing is zero-based to the implementation, but one-based to the player.
+          int index = Integer.parseInt(command.getFirstArgument()) - 1;
+          if (index >= 0 && index < GameData.getPoetryLibrary().getPoemCount()) {
+            IO.writePoem(GameData.getPoetryLibrary().getPoem(index));
+            return;
+          }
+        } catch (NumberFormatException ignore) {
+          // This exception reproduces the same error message an invalid index does.
+        }
+        IO.writeString("Invalid poem index.");
+      } else {
+        IO.writePoem(GameData.getPoetryLibrary().getNextPoem());
+      }
+    }
+  }
+
+  /**
    * Returns a String with a story about how the character got where he or she currently is.
    */
   public String getPreface() {
@@ -92,48 +134,6 @@ public class GameState implements Serializable {
 
   public void setSaved(boolean saved) {
     this.saved = saved;
-  }
-
-  /**
-   * Prints the next hint.
-   */
-  public void printNextHint() {
-    if (GameData.getHintLibrary().getHintCount() == 0) {
-      IO.writeString("No hints were loaded.");
-    } else {
-      IO.writeString(GameData.getHintLibrary().getNextHint());
-    }
-  }
-
-  /**
-   * Prints a poem based on the issued command.
-   * <p/>
-   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
-   * <p/>
-   * Otherwise, the next poem is based on a behind-the-scenes poem index.
-   *
-   * @param command the issued command.
-   */
-  public void printPoem(IssuedCommand command) {
-    if (GameData.getPoetryLibrary().getPoemCount() == 0) {
-      IO.writeString("No poems were loaded.");
-    } else {
-      if (command.hasArguments()) {
-        try {
-          // Indexing is zero-based to the implementation, but one-based to the player.
-          int index = Integer.parseInt(command.getFirstArgument()) - 1;
-          if (index >= 0 && index < GameData.getPoetryLibrary().getPoemCount()) {
-            IO.writePoem(GameData.getPoetryLibrary().getPoem(index));
-            return;
-          }
-        } catch (NumberFormatException ignore) {
-          // This exception reproduces the same error message an invalid index does.
-        }
-        IO.writeString("Invalid poem index.");
-      } else {
-        IO.writePoem(GameData.getPoetryLibrary().getNextPoem());
-      }
-    }
   }
 
   /**

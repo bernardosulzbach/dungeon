@@ -51,7 +51,7 @@ class WorldGenerator implements Serializable {
    *
    * @return a LocationPreset
    */
-  private LocationPreset getRandomLandLocationPreset() {
+  private static LocationPreset getRandomLandLocationPreset() {
     // After getting something better than random locations, we will have the desired Location ID here.
     List<LocationPreset> locationPresets = new ArrayList<LocationPreset>(GameData.getLocationPresets().values());
     LocationPreset selectedPreset;

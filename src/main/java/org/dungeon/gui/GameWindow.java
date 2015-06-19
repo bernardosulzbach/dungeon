@@ -197,7 +197,7 @@ public class GameWindow extends JFrame {
    * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
    * background coloring of a JTextField.
    */
-  private void setSystemLookAndFeel() {
+  private static void setSystemLookAndFeel() {
     try {
       String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
       if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
@@ -266,7 +266,7 @@ public class GameWindow extends JFrame {
     }
   }
 
-  private void logExecutionExceptionAndExit(ExecutionException fatal) {
+  private static void logExecutionExceptionAndExit(ExecutionException fatal) {
     DLogger.severe(fatal.getCause().toString());
     System.exit(1);
   }

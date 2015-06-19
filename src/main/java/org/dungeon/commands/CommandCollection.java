@@ -133,7 +133,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        Game.getGameState().printNextHint();
+        GameState.printNextHint();
         return null;
       }
     });
@@ -211,7 +211,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("poem", "Prints a poem from the poem library.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        Game.getGameState().printPoem(issuedCommand);
+        GameState.printPoem(issuedCommand);
         return null;
       }
     });

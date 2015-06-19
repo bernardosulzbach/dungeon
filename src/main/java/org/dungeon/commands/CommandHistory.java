@@ -85,7 +85,7 @@ public class CommandHistory implements Serializable {
   /**
    * Cursor inner class of CommandHistory that provides a set of methods for browsing and querying a CommandHistory.
    */
-  public class Cursor implements Serializable {
+  public final class Cursor implements Serializable {
 
     private final CommandHistory history;
     private int index;

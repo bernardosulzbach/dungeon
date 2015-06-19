@@ -27,7 +27,7 @@ import org.dungeon.game.Random;
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
-public class Item extends Entity {
+public final class Item extends Entity {
 
   private final int maxIntegrity;
   private final Date dateOfCreation;

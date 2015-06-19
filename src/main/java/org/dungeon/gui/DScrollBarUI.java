@@ -48,6 +48,16 @@ class DScrollBarUI extends BasicScrollBarUI {
     return jButton;
   }
 
+  /**
+   * @param x         the leftmost X coordinate of the area.
+   * @param areaWidth the width of the area.
+   * @param barWidth  the width of the bar.
+   * @return the leftmost X coordinate of a bar centered in a specified area.
+   */
+  private static int calculateX(int x, int areaWidth, int barWidth) {
+    return x + (areaWidth - barWidth) / 2;
+  }
+
   @Override
   protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
     if (trackBounds.isEmpty() || !c.isEnabled()) {
@@ -80,16 +90,6 @@ class DScrollBarUI extends BasicScrollBarUI {
   @Override
   protected JButton createIncreaseButton(int orientation) {
     return createZeroButton();
-  }
-
-  /**
-   * @param x         the leftmost X coordinate of the area.
-   * @param areaWidth the width of the area.
-   * @param barWidth  the width of the bar.
-   * @return the leftmost X coordinate of a bar centered in a specified area.
-   */
-  private int calculateX(int x, int areaWidth, int barWidth) {
-    return x + (areaWidth - barWidth) / 2;
   }
 
 }

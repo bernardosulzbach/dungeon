@@ -26,7 +26,7 @@ import java.util.Collections;
 /**
  * ShuffledRange class that provides a List of shuffled non-repeating integers from a lower bound up to an upper bound.
  */
-public class ShuffledRange {
+public final class ShuffledRange {
 
   private ArrayList<Integer> integers;
 

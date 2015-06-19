@@ -32,7 +32,7 @@ import java.util.Map.Entry;
 /**
  * The Location class that defines a Location of a World.
  */
-public class Location implements Serializable {
+public final class Location implements Serializable {
 
   private final ID id;
   private final String type;
