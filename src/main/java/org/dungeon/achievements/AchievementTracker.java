@@ -23,18 +23,18 @@ import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
 
 import java.io.Serializable;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * AchievementTracker that tracks the unlocked achievements.
  */
 public class AchievementTracker implements Serializable {
 
-  private final TreeSet<UnlockedAchievement> unlockedAchievements;
-
-  public AchievementTracker() {
-    this.unlockedAchievements = new TreeSet<UnlockedAchievement>(new UnlockedAchievementNameComparator());
-  }
+  private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<UnlockedAchievement>();
 
   /**
    * Returns how many unlocked achievements there are in this AchievementTracker.
@@ -55,7 +55,7 @@ public class AchievementTracker implements Serializable {
   public void unlock(Achievement achievement) {
     Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
-      unlockedAchievements.add(new UnlockedAchievement(achievement.getID(), achievement.getName(), now));
+      unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
       DLogger.warning("Tried to unlock an already unlocked achievement!");
     }
@@ -78,12 +78,18 @@ public class AchievementTracker implements Serializable {
   }
 
   /**
-   * Returns an array with all the unlocked achievements.
+   * Returns a List with all the UnlockedAchievements in this AchievementTracker sorted using the provided Comparator.
    *
-   * @return an array with all the unlocked achievements.
+   * @param comparator a Comparator of UnlockedAchievements, not null
+   * @return a sorted List with all the UnlockedAchievements in this AchievementTracker
    */
-  public UnlockedAchievement[] getUnlockedAchievementArray() {
-    return unlockedAchievements.toArray(new UnlockedAchievement[unlockedAchievements.size()]);
+  public List<UnlockedAchievement> getUnlockedAchievements(Comparator<UnlockedAchievement> comparator) {
+    if (comparator == null) {
+      throw new IllegalArgumentException("comparator is null.");
+    }
+    List<UnlockedAchievement> list = new ArrayList<UnlockedAchievement>(unlockedAchievements);
+    list.sort(comparator);
+    return list;
   }
 
   /**

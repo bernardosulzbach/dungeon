@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.achievements;
+package org.dungeon.achievements.comparators;
+
+import org.dungeon.achievements.UnlockedAchievement;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
-/**
- * A comparator that compares UnlockedAchievements by their name.
- */
-class UnlockedAchievementNameComparator implements Comparator<UnlockedAchievement>, Serializable {
+class NameUnlockedAchievementComparator implements Comparator<UnlockedAchievement>, Serializable {
 
+  @Override
   public int compare(UnlockedAchievement a, UnlockedAchievement b) {
-    return a.name.compareTo(b.name);
+    return a.getName().compareTo(b.getName());
   }
 
 }

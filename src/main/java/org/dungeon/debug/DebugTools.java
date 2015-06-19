@@ -198,17 +198,19 @@ public class DebugTools {
 
   private static void printNotYetUnlockedAchievements() {
     AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
-    int notYetUnlockedCount = GameData.ACHIEVEMENTS.size() - tracker.getUnlockedCount();
-    ArrayList<Achievement> notYetUnlockedAchievements = new ArrayList<Achievement>(notYetUnlockedCount);
+    List<Achievement> achievementList = new ArrayList<Achievement>();
     for (Achievement achievement : GameData.ACHIEVEMENTS.values()) {
       if (!tracker.isUnlocked(achievement)) {
-        notYetUnlockedAchievements.add(achievement);
+        achievementList.add(achievement);
       }
     }
-    if (notYetUnlockedAchievements.isEmpty()) {
+    if (achievementList.isEmpty()) {
       IO.writeString("All achievements have been unlocked.");
     } else {
-      IO.writeAchievementList(notYetUnlockedAchievements);
+      achievementList.sort(null);
+      for (Achievement achievement : achievementList) {
+        IO.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
+      }
     }
   }
 

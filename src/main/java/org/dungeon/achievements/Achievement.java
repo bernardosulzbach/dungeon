@@ -26,7 +26,7 @@ import org.dungeon.util.CounterMap;
 /**
  * Achievement class.
  */
-public class Achievement {
+public class Achievement implements Comparable<Achievement> {
 
   private final ID id;
   private final String name;
@@ -92,6 +92,11 @@ public class Achievement {
    */
   private void printAchievementUnlocked() {
     IO.writeString("You unlocked the achievement " + getName() + " because you " + text + ".");
+  }
+
+  @Override
+  public int compareTo(Achievement achievement) {
+    return name.compareTo(achievement.name);
   }
 
 }

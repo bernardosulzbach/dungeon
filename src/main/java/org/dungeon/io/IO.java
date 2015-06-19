@@ -17,15 +17,12 @@
 
 package org.dungeon.io;
 
-import org.dungeon.achievements.Achievement;
-import org.dungeon.date.Period;
 import org.dungeon.game.Game;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Poem;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
-import java.util.List;
 
 /**
  * IO class that encapsulates all Input/Output operations. This is the only class that should call the writing methods
@@ -98,23 +95,6 @@ public final class IO {
 
   public static void writePoem(Poem poem) {
     writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false, 0);
-  }
-
-  public static void writeAchievementList(List<Achievement> achievementList) {
-    writeAchievementList(achievementList, null);
-  }
-
-  public static void writeAchievementList(List<Achievement> achievementList, List<Period> timeSinceUnlockList) {
-    for (int i = 0; i < achievementList.size(); i++) {
-      Achievement achievement = achievementList.get(i);
-      String achievementName = achievement.getName();
-      if (timeSinceUnlockList != null) {
-        Period timeSinceUnlock = timeSinceUnlockList.get(i);
-        achievementName += " (" + timeSinceUnlock + " ago)";
-      }
-      IO.writeString(achievementName, Color.ORANGE);
-      IO.writeString(" " + achievement.getInfo(), Color.YELLOW);
-    }
   }
 
 }

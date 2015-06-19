@@ -17,6 +17,7 @@
 
 package org.dungeon.commands;
 
+import org.dungeon.achievements.AchievementTrackerWriter;
 import org.dungeon.debug.DebugTools;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
@@ -49,7 +50,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("achievements", "Displays the achievements the character already unlocked.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        Game.getGameState().printUnlockedAchievements();
+        AchievementTrackerWriter.parseCommand(issuedCommand);
         return null;
       }
     });

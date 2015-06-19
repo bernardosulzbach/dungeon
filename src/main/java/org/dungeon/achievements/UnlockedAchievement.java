@@ -28,20 +28,38 @@ import java.io.Serializable;
 public final class UnlockedAchievement implements Serializable {
 
   public final ID id;
-  public final String name;
-  // Date is immutable, therefore it can be public.
-  public final Date date;
+  private final String name;
+  private final String info;
+  private final Date date;
 
   /**
-   * Construct a new UnlockedAchievement.
+   * Constructs a new UnlockedAchievement.
    *
-   * @param name the name of the unlocked achievement.
-   * @param date the date when the achievement was unlocked.
+   * @param achievement the Achievement that was unlocked
+   * @param date        the date when the achievement was unlocked
    */
-  public UnlockedAchievement(ID id, String name, Date date) {
-    this.id = id;
-    this.name = name;
+  public UnlockedAchievement(Achievement achievement, Date date) {
+    this.id = achievement.getID();
+    this.name = achievement.getName();
+    this.info = achievement.getInfo();
     this.date = date;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getInfo() {
+    return info;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  @Override
+  public String toString() {
+    return "Unlocked " + name + " in " + date + ".";
   }
 
 }
