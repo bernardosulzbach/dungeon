@@ -24,6 +24,7 @@ import org.dungeon.io.DLogger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -88,7 +89,7 @@ public class AchievementTracker implements Serializable {
       throw new IllegalArgumentException("comparator is null.");
     }
     List<UnlockedAchievement> list = new ArrayList<UnlockedAchievement>(unlockedAchievements);
-    list.sort(comparator);
+    Collections.sort(list, comparator);
     return list;
   }
 

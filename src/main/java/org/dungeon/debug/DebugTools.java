@@ -50,6 +50,7 @@ import org.dungeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -207,7 +208,7 @@ public class DebugTools {
     if (achievementList.isEmpty()) {
       IO.writeString("All achievements have been unlocked.");
     } else {
-      achievementList.sort(null);
+      Collections.sort(achievementList);
       for (Achievement achievement : achievementList) {
         IO.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
       }
