@@ -19,6 +19,8 @@ package org.dungeon.util;
 
 import org.dungeon.io.DLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -92,8 +94,8 @@ public class Percentage implements Comparable<Percentage>, Serializable {
   }
 
   @Override
-  public int compareTo(Percentage o) {
-    return Math.fuzzyCompare(toDouble(), o.toDouble());
+  public int compareTo(@NotNull Percentage percentage) {
+    return Math.fuzzyCompare(toDouble(), percentage.toDouble());
   }
 
   public boolean biggerThanOrEqualTo(Percentage o) {

@@ -20,6 +20,8 @@ package org.dungeon.entity;
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -71,13 +73,14 @@ public class Weight implements Comparable<Weight>, Serializable {
     return newInstance(this.value * p.toDouble());
   }
 
-  public String toString() {
-    return WEIGHT_FORMAT.format(value);
+  @Override
+  public int compareTo(@NotNull Weight weight) {
+    return Double.compare(value, weight.value);
   }
 
   @Override
-  public int compareTo(Weight o) {
-    return Double.compare(value, o.value);
+  public String toString() {
+    return WEIGHT_FORMAT.format(value);
   }
 
 }

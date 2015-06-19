@@ -26,6 +26,8 @@ import static org.dungeon.date.DungeonTimeUnit.YEAR;
 
 import org.dungeon.io.DLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -167,7 +169,7 @@ public class Date implements Comparable<Date>, Serializable {
   }
 
   @Override
-  public int compareTo(Date date) {
+  public int compareTo(@NotNull Date date) {
     if (time > date.time) {
       return 1;
     } else if (time == date.time) {

@@ -23,6 +23,8 @@ import org.dungeon.io.IO;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Achievement class.
  */
@@ -95,7 +97,7 @@ public class Achievement implements Comparable<Achievement> {
   }
 
   @Override
-  public int compareTo(Achievement achievement) {
+  public int compareTo(@NotNull Achievement achievement) {
     return name.compareTo(achievement.name);
   }
 
