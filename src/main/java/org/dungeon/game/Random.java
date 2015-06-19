@@ -25,7 +25,7 @@ import org.dungeon.util.Percentage;
  */
 public class Random {
 
-  static final java.util.Random RANDOM = new java.util.Random();
+  private static final java.util.Random RANDOM = new java.util.Random();
 
   /**
    * Simulates a random roll.

@@ -25,6 +25,8 @@ import org.dungeon.io.DLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.util.Constants;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -59,6 +61,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -82,6 +85,7 @@ public class GameWindow extends JFrame {
   private JTextField textField;
   private JTextPane textPane;
   private boolean idle;
+  private boolean usingExternalDocument = false;
 
   public GameWindow() {
     initComponents();
@@ -111,6 +115,32 @@ public class GameWindow extends JFrame {
       }
     }
     return font;
+  }
+
+  /**
+   * Try to set the system's look and feel.
+   * <p/>
+   * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
+   * background coloring of a JTextField.
+   */
+  private static void setSystemLookAndFeel() {
+    try {
+      String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+      if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      } else {
+        UIManager.setLookAndFeel(lookAndFeel);
+      }
+    } catch (UnsupportedLookAndFeelException ignored) {
+    } catch (ClassNotFoundException ignored) {
+    } catch (InstantiationException ignored) {
+    } catch (IllegalAccessException ignored) {
+    }
+  }
+
+  private static void logExecutionExceptionAndExit(ExecutionException fatal) {
+    DLogger.severe(fatal.getCause().toString());
+    System.exit(1);
   }
 
   private void initComponents() {
@@ -192,27 +222,6 @@ public class GameWindow extends JFrame {
   }
 
   /**
-   * Try to set the system's look and feel.
-   * <p/>
-   * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
-   * background coloring of a JTextField.
-   */
-  private static void setSystemLookAndFeel() {
-    try {
-      String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-      if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-      } else {
-        UIManager.setLookAndFeel(lookAndFeel);
-      }
-    } catch (UnsupportedLookAndFeelException ignored) {
-    } catch (ClassNotFoundException ignored) {
-    } catch (InstantiationException ignored) {
-    } catch (IllegalAccessException ignored) {
-    }
-  }
-
-  /**
    * Resizes and centers the frame.
    */
   private void resize() {
@@ -264,11 +273,6 @@ public class GameWindow extends JFrame {
       };
       inputRenderer.execute();
     }
-  }
-
-  private static void logExecutionExceptionAndExit(ExecutionException fatal) {
-    DLogger.severe(fatal.getCause().toString());
-    System.exit(1);
   }
 
   /**
@@ -328,6 +332,10 @@ public class GameWindow extends JFrame {
    * @param scrollDown if true, the TextPane will be scrolled down after writing.
    */
   public void writeToTextPane(String string, Color color, boolean scrollDown) {
+    if (usingExternalDocument) {
+      textPane.setDocument(document);
+      usingExternalDocument = false;
+    }
     writeToTextPane(string, color, textPane.getBackground(), scrollDown);
   }
 
@@ -353,6 +361,9 @@ public class GameWindow extends JFrame {
     }
   }
 
+  /**
+   * Clears the TextPane by erasing everything in the local Document.
+   */
   public void clearTextPane() {
     try {
       document.remove(0, document.getLength());
@@ -366,6 +377,16 @@ public class GameWindow extends JFrame {
 
   private void clearTextField() {
     textField.setText(null);
+  }
+
+  /**
+   * Sets the TextPane to temporarily use an external Document that should contain a map.
+   *
+   * @param document a Document object, not null
+   */
+  public void writeMapToTextPane(@NotNull Document document) {
+    textPane.setDocument(document);
+    usingExternalDocument = true;
   }
 
 }

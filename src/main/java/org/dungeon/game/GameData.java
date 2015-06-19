@@ -230,6 +230,7 @@ public final class GameData {
       String type = reader.getValue("TYPE");
       Name name = nameFromArray(reader.getArrayOfValues("NAME"));
       LocationPreset preset = new LocationPreset(id, type, name);
+      preset.setDescription(new LocationDescription(reader.getValue("SYMBOL").charAt(0), reader.readColor()));
       preset.setBlobSize(readIntegerFromResourceReader(reader, "BLOB_SIZE"));
       preset.setLightPermittivity(readDoubleFromResourceReader(reader, "LIGHT_PERMITTIVITY"));
       // Spawners.

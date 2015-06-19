@@ -40,6 +40,8 @@ import org.dungeon.game.LocationPreset;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.io.IO;
+import org.dungeon.map.WorldMap;
+import org.dungeon.map.WorldMapWriter;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
@@ -116,6 +118,13 @@ public class DebugTools {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
         printCurrentLocationInformation();
+        return null;
+      }
+    });
+    commands.add(new Command("map") {
+      @Override
+      public CommandResult execute(IssuedCommand issuedCommand) {
+        WorldMapWriter.writeMap(WorldMap.makeDebugWorldMap());
         return null;
       }
     });

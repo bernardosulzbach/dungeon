@@ -23,13 +23,11 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
-import org.dungeon.game.Point;
-import org.dungeon.game.World;
-import org.dungeon.game.WorldMap;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
-import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.map.WorldMap;
+import org.dungeon.map.WorldMapWriter;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
 import org.dungeon.wiki.Wiki;
@@ -178,11 +176,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("map", "Shows a map of your surroundings.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        World world = Game.getGameState().getWorld();
-        ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-        Point heroPosition = Game.getGameState().getHeroPosition();
-        WorldMap map = new WorldMap(world, explorationStatistics, heroPosition);
-        IO.writeString(map.toString());
+        WorldMapWriter.writeMap(WorldMap.makeWorldMap());
         return null;
       }
     });

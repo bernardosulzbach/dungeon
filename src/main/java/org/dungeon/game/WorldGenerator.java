@@ -33,16 +33,9 @@ class WorldGenerator implements Serializable {
   private final RiverGenerator riverGenerator;
   private final int chunkSide;
 
-  /**
-   * Instantiates a new World generator. This should be called by the constructor of a World object.
-   */
-  public WorldGenerator(World world) {
-    this(world, CHUNK_SIDE);
-  }
-
-  private WorldGenerator(World world, int chunkSide) {
+  WorldGenerator(World world) {
     this.world = world;
-    this.chunkSide = chunkSide;
+    this.chunkSide = WorldGenerator.CHUNK_SIDE;
     riverGenerator = new RiverGenerator(MIN_DIST_RIVER, MAX_DIST_RIVER);
   }
 

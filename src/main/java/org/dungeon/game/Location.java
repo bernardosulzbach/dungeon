@@ -37,6 +37,7 @@ public final class Location implements Serializable {
   private final ID id;
   private final String type;
   private final Name name;
+  private final LocationDescription description;
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
   private final List<Spawner> spawners;
@@ -48,6 +49,7 @@ public final class Location implements Serializable {
     this.id = preset.getID();
     this.type = preset.getType();
     this.name = preset.getName();
+    this.description = preset.getDescription();
     this.world = world;
     this.blockedEntrances = preset.getBlockedEntrances();
     this.lightPermittivity = preset.getLightPermittivity();
@@ -79,6 +81,10 @@ public final class Location implements Serializable {
 
   public Name getName() {
     return name;
+  }
+
+  public LocationDescription getDescription() {
+    return description;
   }
 
   public void refreshSpawners() {

@@ -40,6 +40,7 @@ public final class LocationPreset implements Serializable {
   private final Map<ID, Percentage> items = new HashMap<ID, Percentage>();
   private Percentage lightPermittivity;
   private int blobSize;
+  private LocationDescription description;
 
   LocationPreset(ID id, String type, Name name) {
     this.id = id;
@@ -57,6 +58,14 @@ public final class LocationPreset implements Serializable {
 
   public Name getName() {
     return name;
+  }
+
+  public LocationDescription getDescription() {
+    return description;
+  }
+
+  public void setDescription(LocationDescription description) {
+    this.description = description;
   }
 
   public List<SpawnerPreset> getSpawners() {

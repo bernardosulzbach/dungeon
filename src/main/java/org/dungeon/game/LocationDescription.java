@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,21 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.gui;
+package org.dungeon.game;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
- * Constants shared among the classes in the gui package.
+ * The description of a Location object.
  */
-public final class SharedConstants {
+public class LocationDescription implements Serializable {
 
-  static final Color MARGIN_COLOR = Color.BLACK;
-  static final Color INSIDE_COLOR = new Color(20, 20, 20);
-  static final Color SCROLL_COLOR = Color.LIGHT_GRAY;
+  private final char symbol;
+  private final Color color;
 
-  public static Color getInsideColor() {
-    return INSIDE_COLOR;
+  public LocationDescription(char symbol, Color color) {
+    this.symbol = symbol;
+    this.color = color;
+  }
+
+  public char getSymbol() {
+    return symbol;
+  }
+
+  public Color getColor() {
+    return color;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("Symbol: %c\nRGB: %d %d %d", symbol, color.getRed(), color.getGreen(), color.getBlue());
   }
 
 }
