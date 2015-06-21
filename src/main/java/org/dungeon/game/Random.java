@@ -19,6 +19,10 @@ package org.dungeon.game;
 
 import org.dungeon.util.Percentage;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 /**
  * Random class that encapsulates the single Random object shared by the whole application.
  * The reason for this is that other parts of the code should not be able to call some of Random public methods, such as setSeed.
@@ -65,6 +69,20 @@ public class Random {
    */
   public static int nextInteger(int n) {
     return RANDOM.nextInt(n);
+  }
+
+  /**
+   * Selects a random element from a List.
+   *
+   * @param list a List object, not empty, not null
+   * @param <T>  the type of elements held in the List
+   * @return an element of list or null
+   */
+  public static <T> T select(@NotNull List<T> list) {
+    if (list.isEmpty()) {
+      throw new IllegalArgumentException("list is empty.");
+    }
+    return list.get(nextInteger(list.size()));
   }
 
 }

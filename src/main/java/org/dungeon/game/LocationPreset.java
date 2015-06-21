@@ -33,7 +33,7 @@ import java.util.Set;
 public final class LocationPreset implements Serializable {
 
   private final ID id;
-  private final String type;
+  private final Type type;
   private final Name name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final List<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
@@ -42,7 +42,7 @@ public final class LocationPreset implements Serializable {
   private int blobSize;
   private LocationDescription description;
 
-  LocationPreset(ID id, String type, Name name) {
+  LocationPreset(ID id, Type type, Name name) {
     this.id = id;
     this.type = type;
     this.name = name;
@@ -52,7 +52,7 @@ public final class LocationPreset implements Serializable {
     return id;
   }
 
-  public String getType() {
+  public Type getType() {
     return type;
   }
 
@@ -123,5 +123,7 @@ public final class LocationPreset implements Serializable {
   public void setBlobSize(int blobSize) {
     this.blobSize = blobSize;
   }
+
+  enum Type {RIVER, BRIDGE, LAND}
 
 }

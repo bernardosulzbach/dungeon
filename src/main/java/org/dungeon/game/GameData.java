@@ -58,12 +58,12 @@ public final class GameData {
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private static final DreamLibrary dreamLibrary = new DreamLibrary();
   private static final HintLibrary hintLibrary = new HintLibrary();
+  private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
   private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
-  private static Map<ID, LocationPreset> locationPresets = new HashMap<ID, LocationPreset>();
 
   private GameData() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -227,10 +227,13 @@ public final class GameData {
     ResourceReader reader = new ResourceReader("locations.txt");
     while (reader.readNextElement()) {
       ID id = new ID(reader.getValue("ID"));
-      String type = reader.getValue("TYPE");
+      LocationPreset.Type type = LocationPreset.Type.valueOf(reader.getValue("TYPE"));
       Name name = nameFromArray(reader.getArrayOfValues("NAME"));
       LocationPreset preset = new LocationPreset(id, type, name);
       preset.setDescription(new LocationDescription(reader.getValue("SYMBOL").charAt(0), reader.readColor()));
+      if (reader.hasValue("INFO")) {
+        preset.getDescription().setInfo(reader.getValue("INFO"));
+      }
       preset.setBlobSize(readIntegerFromResourceReader(reader, "BLOB_SIZE"));
       preset.setLightPermittivity(readDoubleFromResourceReader(reader, "LIGHT_PERMITTIVITY"));
       // Spawners.
@@ -261,11 +264,10 @@ public final class GameData {
           }
         }
       }
-      locationPresets.put(preset.getID(), preset);
+      locationPresetStore.addLocationPreset(preset);
     }
     reader.close();
-    locationPresets = Collections.unmodifiableMap(locationPresets);
-    DLogger.info("Loaded " + locationPresets.size() + " location presets.");
+    DLogger.info("Loaded " + locationPresetStore.getSize() + " location presets.");
   }
 
   private static void loadAchievements() {
@@ -473,8 +475,8 @@ public final class GameData {
     return skillDefinitions;
   }
 
-  public static Map<ID, LocationPreset> getLocationPresets() {
-    return locationPresets;
+  public static LocationPresetStore getLocationPresetStore() {
+    return locationPresetStore;
   }
 
 }

@@ -35,7 +35,6 @@ import java.util.Map.Entry;
 public final class Location implements Serializable {
 
   private final ID id;
-  private final String type;
   private final Name name;
   private final LocationDescription description;
   private final BlockedEntrances blockedEntrances;
@@ -47,7 +46,6 @@ public final class Location implements Serializable {
 
   public Location(LocationPreset preset, World world) {
     this.id = preset.getID();
-    this.type = preset.getType();
     this.name = preset.getName();
     this.description = preset.getDescription();
     this.world = world;
@@ -73,10 +71,6 @@ public final class Location implements Serializable {
 
   public ID getID() {
     return id;
-  }
-
-  public String getType() {
-    return type;
   }
 
   public Name getName() {

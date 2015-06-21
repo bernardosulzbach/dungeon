@@ -17,16 +17,19 @@
 
 package org.dungeon.game;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Color;
 import java.io.Serializable;
 
 /**
  * The description of a Location object.
  */
-public class LocationDescription implements Serializable {
+public class LocationDescription implements Examinable, Serializable {
 
   private final char symbol;
   private final Color color;
+  private String info = "You don't discover anything.";
 
   public LocationDescription(char symbol, Color color) {
     this.symbol = symbol;
@@ -39,6 +42,16 @@ public class LocationDescription implements Serializable {
 
   public Color getColor() {
     return color;
+  }
+
+  @NotNull
+  @Override
+  public String getInfo() {
+    return info;
+  }
+
+  public void setInfo(String info) {
+    this.info = info;
   }
 
   @Override

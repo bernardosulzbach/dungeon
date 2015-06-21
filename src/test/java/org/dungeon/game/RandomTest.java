@@ -24,6 +24,10 @@ import org.dungeon.util.Percentage;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class RandomTest {
 
   @Test
@@ -36,6 +40,18 @@ public class RandomTest {
   public void testRollWithPercentages() throws Exception {
     assertFalse(Random.roll(new Percentage(0.0)));
     assertTrue(Random.roll(new Percentage(1.0)));
+  }
+
+  @Test
+  public void testSelect() throws Exception {
+    try {
+      Random.select(Collections.emptyList());
+    } catch (IllegalArgumentException expected) {
+      // Dungeon Code Style does not require a comment on exceptions named expected in tests.
+    }
+    List<Integer> integerList = new ArrayList<Integer>();
+    integerList.add(0);
+    assertTrue(Random.select(integerList).equals(0));
   }
 
 }
