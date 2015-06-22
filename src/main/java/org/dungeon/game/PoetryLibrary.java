@@ -27,8 +27,6 @@ import java.util.ArrayList;
 
 /**
  * A Library of Poems.
- * <p/>
- * Created by Bernardo Sulzbach on 15/12/14.
  */
 public final class PoetryLibrary extends Library {
 

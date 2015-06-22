@@ -23,8 +23,6 @@ import java.io.Serializable;
 
 /**
  * An ExplorationLog entry that stores data relative to one Point.
- * <p/>
- * Created by Bernardo Sulzbach on 03/11/14.
  */
 class ExplorationStatisticsEntry implements Serializable {
 

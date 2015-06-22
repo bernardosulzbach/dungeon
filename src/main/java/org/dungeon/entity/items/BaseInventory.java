@@ -25,9 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The base inventory class.
- * <p/>
- * Created by Bernardo Sulzbach on 15/11/14.
+ * The abstract BaseInventory class all inventories inherit from.
  */
 public abstract class BaseInventory implements Serializable {
 

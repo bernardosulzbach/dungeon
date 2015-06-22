@@ -21,8 +21,6 @@ import java.util.Arrays;
 
 /**
  * Dungeon Dimensions class. A thin wrapper for an array of integers.
- * <p/>
- * Created by Bernardo Sulzbach on 13/12/14.
  */
 public class Dimensions {
 

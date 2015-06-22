@@ -22,9 +22,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.io.DLogger;
 
 /**
- * Inventory class that defines a common general-purpose Item storage and query structure.
- * <p/>
- * Change log Created by Bernardo on 19/09/2014.
+ * The CreatureInventory class.
  */
 public class CreatureInventory extends BaseInventory implements LimitedInventory {
 

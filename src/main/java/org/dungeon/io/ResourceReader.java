@@ -60,8 +60,6 @@ import java.util.Map.Entry;
  * </li>
  * </ol>
  * For more information on resource files, see {@code CONTRIBUTING.md}.
- * <p/>
- * Created by Bernardo Sulzbach on 16/12/14.
  */
 public class ResourceReader implements Closeable {
 

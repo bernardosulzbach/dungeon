@@ -20,9 +20,7 @@ package org.dungeon.entity.items;
 import java.io.Serializable;
 
 /**
- * The food part of some items.
- * <p/>
- * Created by Bernardo on 14/10/2014.
+ * The food component of some items.
  */
 public class FoodComponent implements Serializable {
 
