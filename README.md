@@ -28,7 +28,9 @@ If you have trouble running the game with a supposedly supported version of Java
 
 Running the game
 ----------------
-Download a release or download the source and build it yourself.
+[Download a release](https://github.com/mafagafogigante/dungeon/releases)
+or
+[download the source](https://github.com/mafagafogigante/dungeon/archive/master.zip) and build it yourself.
 
 
 Reporting bugs
