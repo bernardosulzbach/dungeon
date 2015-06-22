@@ -25,7 +25,7 @@ NAME: [Clearing]
 BLOB_SIZE: 2
 LIGHT_PERMITTIVITY: 1.0
 SPAWNERS: [[FOX | 4 | 4] | [FROG | 2 | 2] | [RABBIT | 8 | 1] | [SPIDER | 2 | 4] | [COW | 1 | 20]]
-ITEMS: [[CHERRY | 0.6] | [STICK | 0.9]]
+ITEMS: [[HISTORY_OF_THE_THIRD_ERA | 0.025] | [CHERRY | 0.6] | [STICK | 0.9]]
 COLOR: [102 | 204 | 0]
 
 ID: DESERT

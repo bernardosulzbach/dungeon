@@ -53,6 +53,8 @@ import org.dungeon.util.Percentage;
 import org.dungeon.util.Selectable;
 import org.dungeon.util.Utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,10 +71,8 @@ public class Hero extends Creature {
   // It seems a good idea to let the Hero have one dream every 4 hours.
   private static final long DREAM_DURATION_IN_SECONDS = 4 * HOUR.as(SECOND);
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
-  private static final int SECONDS_TO_LOOK_AT_THE_COVER_OF_A_BOOK = 6;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
   private static final int SECONDS_TO_DESTROY_AN_ITEM = 120;
-  private static final int SECONDS_TO_LEARN_A_SKILL = 60;
   private static final int SECONDS_TO_EAT_AN_ITEM = 30;
   private static final int SECONDS_TO_DROP_AN_ITEM = 2;
   private static final int SECONDS_TO_UNEQUIP = 4;
@@ -699,21 +699,33 @@ public class Hero extends Creature {
       if (book != null) {
         IO.writeString(book.getText());
         IO.writeNewLine();
-        Skill skill = new Skill(GameData.getSkillDefinitions().get(book.getSkillID()));
-        if (getSkillList().hasSkill(skill.getID())) {
-          IO.writeString("You already knew " + skill.getName() + ".");
-          // It takes some time to look to the cover of the book.
-          return SECONDS_TO_LOOK_AT_THE_COVER_OF_A_BOOK;
-        } else {
-          getSkillList().addSkill(skill);
-          IO.writeString("You learned " + skill.getName() + ".");
-          return SECONDS_TO_LEARN_A_SKILL;
+        if (book.isDidactic()) {
+          learnSkill(book);
         }
+        return book.getTimeToRead();
       } else {
         IO.writeString("You can only read books.");
       }
     }
     return 0;
+  }
+
+  /**
+   * Attempts to learn a skill from a BookComponent object. As a precondition, book must be didactic (teach a skill).
+   *
+   * @param book a BookComponent that returns true to isDidactic, not null
+   */
+  private void learnSkill(@NotNull BookComponent book) {
+    if (!book.isDidactic()) {
+      throw new IllegalArgumentException("book should be didactic.");
+    }
+    Skill skill = new Skill(GameData.getSkillDefinitions().get(book.getSkillID()));
+    if (getSkillList().hasSkill(skill.getID())) {
+      IO.writeString("You already knew " + skill.getName() + ".");
+    } else {
+      getSkillList().addSkill(skill);
+      IO.writeString("You learned " + skill.getName() + ".");
+    }
   }
 
   /**

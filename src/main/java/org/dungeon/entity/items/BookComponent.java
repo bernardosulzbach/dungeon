@@ -19,28 +19,42 @@ package org.dungeon.entity.items;
 
 import org.dungeon.game.ID;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
- * BookComponent class.
- * <p/>
- * Created by Bernardo Sulzbach on 09/01/15.
+ * The BookComponent class.
  */
 public class BookComponent implements Serializable {
 
+  private static final int SECONDS_PER_CHARACTER = 1;
   private final ID skillID;
   private final String text;
 
-  public BookComponent(ID skillID, String text) {
-    if (text == null) {
-      throw new AssertionError("Tried to create a BookComponent with null text!");
-    }
+  /**
+   * Creates a new BookComponent from a skill ID and a string of text.
+   *
+   * @param skillID the ID of a skill, nullable
+   * @param text    a string of text, not null
+   */
+  public BookComponent(@Nullable ID skillID, @NotNull String text) {
     this.skillID = skillID;
     this.text = text;
   }
 
   /**
-   * Returns the ID of the Skill this books teaches.
+   * Returns whether or not this book teaches a skill.
+   *
+   * @return true if this book teaches a skill
+   */
+  public boolean isDidactic() {
+    return skillID != null;
+  }
+
+  /**
+   * Returns the ID of the skill this books teaches or null if this book does not teach any skill.
    */
   public ID getSkillID() {
     return skillID;
@@ -51,6 +65,23 @@ public class BookComponent implements Serializable {
    */
   public String getText() {
     return text;
+  }
+
+  /**
+   * Returns how much time the Hero takes to read this book.
+   * This is a positive integer proportional to the length of the text.
+   *
+   * @return a positive integer
+   */
+  public int getTimeToRead() {
+    return getText().length() * SECONDS_PER_CHARACTER;
+  }
+
+  @Override
+  public String toString() {
+    String representation = String.format("This book teaches %s.", isDidactic() ? skillID : "nothing");
+    representation += " " + "Text: " + text;
+    return representation;
   }
 
 }

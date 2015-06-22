@@ -274,6 +274,23 @@ SKILL: REPAIR
 TEXT: The Repair spell allows the caster to channel a burst of magical energy into an item, possibly reassembling\
 broken parts and restoring its integrity.
 
+
+// Miscellaneous books
+
+ID: HISTORY_OF_THE_THIRD_ERA
+TYPE: Book
+NAME: [History of the Third Era]
+TAGS: [WEAPON | BOOK]
+CUR_INTEGRITY: 28
+MAX_INTEGRITY: 28
+VISIBILITY: 65%
+WEIGHT: 0.8
+DAMAGE: 8
+HIT_RATE: 0.65
+INTEGRITY_DECREMENT_ON_HIT: 4
+TEXT: The Third Era is a period of time that lasted 480 years.\
+It starts with the end of the Second Era (the fall of the Empire of Light) and ends with the rebellion of the Red Warlocks.
+
 // Watches
 
 ID: POCKET_WATCH
