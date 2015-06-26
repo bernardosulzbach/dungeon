@@ -226,13 +226,16 @@ public class ResourceReader implements Closeable {
 
   /**
    * Returns a Visibility object corresponding to the value of "VISIBILITY" currently in this ResourceReader.
-   * If the value is not a valid representation of a Percentage or if it is not present, this method returns null.
+   *
+   * @return a Visibility object
+   * @throws IllegalStateException if the current element does not have a VISIBILITY value
    */
   public Visibility readVisibility() {
-    if (hasValue("VISIBILITY") && Percentage.isValidPercentageString(getValue("VISIBILITY"))) {
+    assertExists("VISIBILITY");
+    if (Percentage.isValidPercentageString(getValue("VISIBILITY"))) {
       return new Visibility(Percentage.fromString(getValue("VISIBILITY")));
     } else {
-      return null;
+      throw new IllegalStateException("this resource reader does not have a VISIBILITY value.");
     }
   }
 
@@ -244,12 +247,9 @@ public class ResourceReader implements Closeable {
    */
   @NotNull
   public Color readColor() {
-    if (hasValue("COLOR")) {
-      String[] RGB = getArrayOfValues("COLOR");
-      return new Color(Integer.parseInt(RGB[0]), Integer.parseInt(RGB[1]), Integer.parseInt(RGB[2]));
-    } else {
-      throw new IllegalStateException("current element does not have a COLOR value.");
-    }
+    assertExists("COLOR");
+    String[] RGB = getArrayOfValues("COLOR");
+    return new Color(Integer.parseInt(RGB[0]), Integer.parseInt(RGB[1]), Integer.parseInt(RGB[2]));
   }
 
   /**
@@ -275,11 +275,45 @@ public class ResourceReader implements Closeable {
   }
 
   /**
+   * Reads the character to which the provided key is mapped.
+   *
+   * @param key a String key, not null
+   * @return a character
+   * @throws IllegalStateException if the element does not have a value for this key or
+   *                               if this key is mapped to something other than a single character
+   */
+  public char readCharacter(@NotNull String key) {
+    assertExists(key);
+    if (getValue(key).length() == 1) {
+      return getValue(key).charAt(0);
+    } else {
+      throw new IllegalStateException(key + " is not mapped to a single character.");
+    }
+  }
+
+  /**
+   * Checks that a given key is mapped to a value in the underlying map.
+   * If this is not true, throws an IllegalStateException.
+   *
+   * @param key a String key
+   */
+  private void assertExists(String key) {
+    if (!hasValue(key)) {
+      throw new IllegalStateException("current element does not have a " + key + " value.");
+    }
+  }
+
+  /**
    * Calls the close method of the underlying ResourceParser.
    */
   @Override
   public void close() {
     resourceParser.close();
+  }
+
+  @Override
+  public String toString() {
+    return "ResourceReader reading " + filename + ".";
   }
 
 }

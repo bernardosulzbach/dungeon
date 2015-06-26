@@ -230,7 +230,7 @@ public final class GameData {
       LocationPreset.Type type = LocationPreset.Type.valueOf(reader.getValue("TYPE"));
       Name name = nameFromArray(reader.getArrayOfValues("NAME"));
       LocationPreset preset = new LocationPreset(id, type, name);
-      preset.setDescription(new LocationDescription(reader.getValue("SYMBOL").charAt(0), reader.readColor()));
+      preset.setDescription(new LocationDescription(reader.readCharacter("SYMBOL"), reader.readColor()));
       if (reader.hasValue("INFO")) {
         preset.getDescription().setInfo(reader.getValue("INFO"));
       }
