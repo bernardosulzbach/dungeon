@@ -17,6 +17,8 @@
 
 package org.dungeon.commands;
 
+import org.dungeon.game.Name;
+import org.dungeon.game.QuantificationMode;
 import org.dungeon.io.IO;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Utils;
@@ -29,6 +31,7 @@ import java.util.List;
 final class CommandHelp {
 
   private static final int COMMAND_NAME_COLUMN_WIDTH = 20;
+  private static final Name COMMAND_NAME = Name.newInstance("command");
 
   private CommandHelp() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -79,16 +82,25 @@ final class CommandHelp {
     }
     List<CommandDescription> descriptions = CommandCollection.getDefaultCommandCollection().getCommandDescriptions();
     StringBuilder builder = new StringBuilder();
+    int count = 0;
     for (CommandDescription description : descriptions) {
       if (filter == null || Utils.startsWithIgnoreCase(description.getName(), filter)) {
+        count++;
         builder.append(Utils.padString(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
         builder.append(description.getInfo());
         builder.append('\n');
       }
     }
-    if (builder.length() == 0) {
+    if (count == 0) {
       IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
     } else {
+      if (count > 1) {
+        String quantifiedName = COMMAND_NAME.getQuantifiedName(count, QuantificationMode.NUMBER);
+        builder.append("\nListed ").append(quantifiedName).append(".");
+        if (filter == null) {
+          builder.append("\nYou can filter the output of this command by typing the beginning of the desired command.");
+        }
+      }
       IO.writeString(builder.toString());
     }
   }
