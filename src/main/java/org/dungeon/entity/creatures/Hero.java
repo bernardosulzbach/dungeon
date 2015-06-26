@@ -267,17 +267,16 @@ public class Hero extends Creature {
    */
   public void look(Direction walkedInFrom) {
     Location location = getLocation(); // Avoid multiple calls to the getter.
-    String firstLine;
+    String description;
     if (walkedInFrom != null) {
-      firstLine = "You arrive at " + location.getName() + ".";
+      description = "You arrive at " + location.getName() + ".";
     } else {
-      firstLine = "You are at " + location.getName() + ".";
+      description = "You are at " + location.getName() + ".";
     }
-    firstLine += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
-    IO.writeString(firstLine);
-    IO.writeNewLine();
+    description += " " + location.getDescription().getInfo();
+    description += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
+    IO.writeString(description);
     lookAdjacentLocations(walkedInFrom);
-    IO.writeNewLine();
     lookCreatures();
     lookItems();
   }
@@ -288,6 +287,7 @@ public class Hero extends Creature {
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   private void lookAdjacentLocations(Direction walkedInFrom) {
+    IO.writeNewLine();
     if (!canSeeAdjacentLocations()) {
       IO.writeString("You can't clearly see the surrounding locations.");
       return;
@@ -321,6 +321,7 @@ public class Hero extends Creature {
     List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatures());
     creatures.remove(this);
     creatures = filterByVisibility(creatures);
+    IO.writeNewLine();
     if (creatures.isEmpty()) {
       IO.writeString("You don't see anyone here.");
     } else {
