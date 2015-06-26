@@ -103,7 +103,7 @@ public class Hero extends Creature {
    */
   private void addHealth(int amount) {
     int sum = amount + getCurHealth();
-    if (sum > getMaxHealth()) {
+    if (sum >= getMaxHealth()) {
       setCurHealth(getMaxHealth());
       IO.writeString("You are completely healed.");
     } else {
