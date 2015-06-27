@@ -22,6 +22,7 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.IO;
+import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.stats.Statistics;
 
 import java.io.Serializable;
@@ -88,12 +89,7 @@ public class GameState implements Serializable {
    * Returns a String with a story about how the character got where he or she currently is.
    */
   public String getPreface() {
-    String prefaceFormat = "You wake up at %s. Your head hurts and you can't remember what happened to you.\n"
-        + "You were born in a city called Everdusk and raised by your parents: "
-        + "a man who worked as a trader and a woman who helped him with his business and owned the local watermill. "
-        + "Your instincts tell you to pick up something to hit your enemies with. "
-        + "As you are not physically strong, you don't think you would last very long unarmed.";
-    return String.format(prefaceFormat, hero.getLocation());
+    return String.format(JsonObjectFactory.makeJsonObject("preface.json").get("format").asString(), hero.getLocation());
   }
 
   /**
