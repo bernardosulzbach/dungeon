@@ -14,7 +14,7 @@
     },
     {
       "title": "Command History",
-      "content": "The game stores your last 200 commands (as of 02/15/2015). Pressing TAB while the cursor is on the input field will either do nothing (if the command history is empty), get the last similar command to what is already on the text field (if there is one), or return the last command (if the text field is empty and there is at least one command on the command history)."
+      "content": "The game stores your last 200 commands. Pressing TAB while the cursor is on the input field will either do nothing (if the command history is empty), get the last similar command to what is already on the text field (if there is one), or return the last command (if the text field is empty and there is at least one command on the command history)."
     },
     {
       "title": "Contributors",
