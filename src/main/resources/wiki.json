@@ -1,6 +1,10 @@
 {
   "articles": [
     {
+      "title": "Achievements",
+      "content": "Dungeon has dozens of achievements for you to unlock. All achievements will be unlocked by simple exploration and battling, but some have requirements much harder to satisfy than others. Although there are not any rewards for unlocking achievements - because the lead developer considers that too unrealistic, even for a fantasy world -, they are a nice way to measure your progress in the game.\n\nYou can look up the achievements you have already unlocked with the 'achievements' command. It is also possible to sort the output of this command with 'by name' and 'by date'."
+    },
+    {
       "title": "Bat",
       "content": "Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and sustained flight. They are natural inhabitants of humid and quiet places, such as graveyards. The danger bats present in Dungeon varies according to the locations' luminosity. The darker the place is, more likely the bats are to hit and to critically hit. Engaging bats during daytime out in the open vastly increases the chance of success."
     },
