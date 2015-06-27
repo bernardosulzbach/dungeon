@@ -20,7 +20,6 @@ package org.dungeon.io;
 import org.dungeon.game.Game;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Poem;
-import org.dungeon.util.Utils;
 
 import java.awt.Color;
 
@@ -53,7 +52,18 @@ public final class IO {
    * @param color  the color of the text.
    */
   public static void writeString(String string, Color color) {
-    writeString(string, color, true, true, 0);
+    writeString(string, color, true);
+  }
+
+  /**
+   * Writes a string of text using a specific color.
+   *
+   * @param string  the string of text to be written.
+   * @param color   the color of the text.
+   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
+   */
+  public static void writeString(String string, Color color, boolean newLine) {
+    writeString(string, color, newLine, true, 0);
   }
 
   /**
@@ -69,8 +79,10 @@ public final class IO {
     if (color == null) {
       DLogger.warning("Passed null as a Color to writeString.");
     }
-    String processedString = newLine ? Utils.clearEnd(string) + '\n' : Utils.clearEnd(string);
-    Game.getGameWindow().writeToTextPane(processedString, color, scrollDown);
+    if (newLine) {
+      string += '\n';
+    }
+    Game.getGameWindow().writeToTextPane(string, color, scrollDown);
     if (wait > 0) {
       Sleeper.sleep(wait);
     }
