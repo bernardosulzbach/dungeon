@@ -433,10 +433,9 @@ public final class GameData {
       try {
         set.add(Enum.valueOf(enumClass, tag));
       } catch (IllegalArgumentException fatal) {
-        String message = "Invalid tag '" + tag + "' found!";
-        DLogger.warning(message);
-        // Guarantees that bugged resource files are not going to make it to a release.
-        throw new Error(message, fatal);
+        // Guarantee that bugged resource files are not going to make it to a release.
+        String message = "invalid tag '" + tag + "' found.";
+        throw new InvalidTagException(message, fatal);
       }
     }
     return set;
@@ -477,6 +476,14 @@ public final class GameData {
 
   public static LocationPresetStore getLocationPresetStore() {
     return locationPresetStore;
+  }
+
+  public static class InvalidTagException extends IllegalArgumentException {
+
+    public InvalidTagException(String message, Throwable cause) {
+      super(message, cause);
+    }
+
   }
 
 }
