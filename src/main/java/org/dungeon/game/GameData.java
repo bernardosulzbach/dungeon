@@ -31,6 +31,7 @@ import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.DLogger;
+import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.stats.CauseOfDeath;
@@ -460,10 +461,7 @@ public final class GameData {
     if (tutorial != null) { // Should only be called once.
       throw new AssertionError();
     }
-    ResourceReader reader = new ResourceReader("tutorial.txt");
-    reader.readNextElement();
-    tutorial = reader.getValue("TUTORIAL");
-    reader.close();
+    tutorial = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
   }
 
   public static Map<ID, ItemBlueprint> getItemBlueprints() {
