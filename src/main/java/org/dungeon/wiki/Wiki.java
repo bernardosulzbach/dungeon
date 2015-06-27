@@ -19,9 +19,12 @@ package org.dungeon.wiki;
 
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.IO;
-import org.dungeon.io.ResourceReader;
+import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Utils;
+
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +38,10 @@ public abstract class Wiki {
 
   private static void initialize() {
     articleList = new ArrayList<Article>();
-    ResourceReader reader = new ResourceReader("wiki.txt");
-    while (reader.readNextElement()) {
-      articleList.add(new Article(reader.getValue("ARTICLE"), reader.getValue("CONTENT")));
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("wiki.json");
+    for (JsonValue article : jsonObject.get("articles").asArray()) {
+      JsonObject articleObject = article.asObject();
+      articleList.add(new Article(articleObject.get("title").asString(), articleObject.get("content").asString()));
     }
   }
 
