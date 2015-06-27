@@ -65,7 +65,7 @@ COLOR: [255 | 153 | 51]
 
 ID: FOREST
 SYMBOL: F
-INFO: This is a piece of land where tall trees grow and animal life seems abundant. It is hard to see much further due to the tree density. The canopy blocks a good portion of the sunlight.
+INFO: This is a piece of land where tall trees grow and animal life seems abundant. It is hard to see much further due to the tree density. The canopy is the only thing you see when you look up.
 TYPE: LAND
 NAME: [Forest]
 BLOB_SIZE: 25
