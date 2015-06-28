@@ -17,13 +17,12 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.entity.creatures.Hero;
 import org.dungeon.game.ID;
-import org.dungeon.io.IO;
-import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 /**
  * Achievement class.
@@ -44,16 +43,14 @@ public class Achievement implements Comparable<Achievement> {
    * @param info the String displayed when the "Achievements" command is used
    * @param text the String used to explain why the character unlocked the achievement
    */
-  public Achievement(String id, String name, String info, String text, int minimumBattleCount, int longestBattleLength,
-      CounterMap<ID> killsByCreatureID, CounterMap<String> killsByCreatureType,
-      CounterMap<CauseOfDeath> killsByCauseOfDeath,
-      CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations, CounterMap<ID> maximumNumberOfVisits) {
+  public Achievement(String id, String name, String info, String text,
+      Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<ID> killsByLocationID,
+      CounterMap<ID> visitedLocations, CounterMap<ID> maximumNumberOfVisits) {
     this.id = new ID(id);
     this.name = name;
     this.info = info;
     this.text = text;
-    battle = new BattleComponent(minimumBattleCount, longestBattleLength, killsByCreatureID, killsByCreatureType,
-        killsByCauseOfDeath);
+    battle = new BattleComponent(battleRequirements);
     exploration = new ExplorationComponent(killsByLocationID, visitedLocations, maximumNumberOfVisits);
   }
 
@@ -69,36 +66,27 @@ public class Achievement implements Comparable<Achievement> {
     return info;
   }
 
+  public String getText() {
+    return text;
+  }
+
   /**
    * Evaluates if the statistics fulfill this Achievement's conditions.
    *
    * @return true if the Achievement is fulfilled, false otherwise.
    */
-  private boolean isFulfilled() {
+  boolean isFulfilled() {
     return battle.isFulfilled() && exploration.isFulfilled();
-  }
-
-  /**
-   * Updates the state of the Achievement.
-   */
-  public final void update(Hero hero) {
-    if (!hero.getAchievementTracker().isUnlocked(this) && isFulfilled()) {
-      // All the requirements OK, unlock the achievement.
-      printAchievementUnlocked();
-      hero.getAchievementTracker().unlock(this);
-    }
-  }
-
-  /**
-   * Outputs an achievement unlocked message with some information about the unlocked achievement.
-   */
-  private void printAchievementUnlocked() {
-    IO.writeString("You unlocked the achievement " + getName() + " because you " + text + ".");
   }
 
   @Override
   public int compareTo(@NotNull Achievement achievement) {
     return name.compareTo(achievement.name);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("Achievement{id=%s, name='%s', info='%s', text='%s'}", id, name, info, text);
   }
 
 }

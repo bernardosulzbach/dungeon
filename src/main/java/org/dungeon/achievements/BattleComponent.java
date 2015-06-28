@@ -18,41 +18,34 @@
 package org.dungeon.achievements;
 
 import org.dungeon.game.Game;
-import org.dungeon.game.ID;
 import org.dungeon.stats.BattleStatistics;
-import org.dungeon.stats.CauseOfDeath;
-import org.dungeon.util.CounterMap;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 /**
  * The battle component of the achievements.
  */
 final class BattleComponent {
 
-  private final int minimumBattleCount;
-  private final int longestBattleLength;
-  private final CounterMap<ID> killsByCreatureID;
-  private final CounterMap<String> killsByCreatureType;
-  private final CounterMap<CauseOfDeath> killsByCauseOfDeath;
+  private final Collection<BattleStatisticsRequirement> requirements;
 
-  BattleComponent(int minimumBattleCount, int longestBattleLength, CounterMap<ID> killsByCreatureID,
-      CounterMap<String> killsByCreatureType, CounterMap<CauseOfDeath> killsByCauseOfDeath) {
-    this.minimumBattleCount = minimumBattleCount;
-    this.longestBattleLength = longestBattleLength;
-    this.killsByCreatureID = killsByCreatureID;
-    this.killsByCreatureType = killsByCreatureType;
-    this.killsByCauseOfDeath = killsByCauseOfDeath;
+  BattleComponent(@NotNull Collection<BattleStatisticsRequirement> requirements) {
+    this.requirements = requirements;
   }
 
   /**
    * Checks if this component of the Achievement is fulfilled or not.
    */
   public boolean isFulfilled() {
-    BattleStatistics statistics = Game.getGameState().getStatistics().getBattleStatistics();
-    return statistics.getBattleCount() >= minimumBattleCount
-        && statistics.getLongestBattleLength() >= longestBattleLength
-        && (killsByCreatureID == null || statistics.getKillsByCreatureID().fulfills(killsByCreatureID))
-        && (killsByCreatureType == null || statistics.getKillsByCreatureType().fulfills(killsByCreatureType))
-        && (killsByCauseOfDeath == null || statistics.getKillsByCauseOfDeath().fulfills(killsByCauseOfDeath));
+    BattleStatistics battleStatistics = Game.getGameState().getStatistics().getBattleStatistics();
+    for (BattleStatisticsRequirement requirement : requirements) {
+      if (!battleStatistics.satisfies(requirement)) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

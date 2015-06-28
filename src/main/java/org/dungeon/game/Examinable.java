@@ -19,7 +19,7 @@ package org.dungeon.game;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface Examinable {
+interface Examinable {
 
   /**
    * Retrieves the information available about something.

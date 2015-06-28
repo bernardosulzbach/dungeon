@@ -22,6 +22,8 @@ import static org.dungeon.date.DungeonTimeUnit.SECOND;
 
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
+import org.dungeon.achievements.BattleStatisticsQuery;
+import org.dungeon.achievements.BattleStatisticsRequirement;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.AttackAlgorithmID;
 import org.dungeon.entity.creatures.Creature;
@@ -38,6 +40,10 @@ import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.StopWatch;
+
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonObject.Member;
+import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -273,50 +279,71 @@ public final class GameData {
 
   private static void loadAchievements() {
     ACHIEVEMENTS = new HashMap<ID, Achievement>();
-    ResourceReader reader = new ResourceReader("achievements.txt");
-    while (reader.readNextElement()) {
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
+    for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
+      JsonObject achievementObject = achievementValue.asObject();
       AchievementBuilder builder = new AchievementBuilder();
-      builder.setId(reader.getValue("ID"));
-      builder.setName(reader.getValue("NAME"));
-      builder.setInfo(reader.getValue("INFO"));
-      builder.setText(reader.getValue("TEXT"));
-
-      builder.setMinimumBattleCount(readIntegerFromResourceReader(reader, "MINIMUM_BATTLE_COUNT"));
-      builder.setLongestBattleLength(readIntegerFromResourceReader(reader, "LONGEST_BATTLE_LENGTH"));
-
-      CounterMap<ID> killsByCreatureId = readIDCounterMap(reader, "KILLS_BY_CREATURE_ID");
-      builder.setKillsByCreatureID(killsByCreatureId);
-
-      CounterMap<String> killsByCreatureType = readStringCounterMap(reader, "KILLS_BY_CREATURE_TYPE");
-      builder.setKillsByCreatureType(killsByCreatureType);
-
-      CounterMap<CauseOfDeath> killsByCauseOfDeath = new CounterMap<CauseOfDeath>();
-      if (reader.hasValue("KILLS_BY_CAUSE_OF_DEATH")) {
-        String[] arrayOfCausesOfDeath = reader.getArrayOfValues("KILLS_BY_CAUSE_OF_DEATH");
-        for (String dungeonList : arrayOfCausesOfDeath) {
-          String[] elements = ResourceReader.toArray(dungeonList);
-          TypeOfCauseOfDeath typeOfCauseOfDeath = TypeOfCauseOfDeath.valueOf(elements[0]);
-          ID id = new ID(elements[1]);
-          int amount = Integer.parseInt(elements[2]);
-          killsByCauseOfDeath.incrementCounter(new CauseOfDeath(typeOfCauseOfDeath, id), amount);
+      builder.setID(achievementObject.get("id").asString());
+      builder.setName(achievementObject.get("name").asString());
+      builder.setInfo(achievementObject.get("info").asString());
+      builder.setText(achievementObject.get("text").asString());
+      JsonValue battleRequirements = achievementObject.get("battleRequirements");
+      if (battleRequirements != null) {
+        for (JsonValue requirementValue : battleRequirements.asArray()) {
+          JsonObject requirementObject = requirementValue.asObject();
+          JsonObject queryObject = requirementObject.get("query").asObject();
+          BattleStatisticsQuery query = new BattleStatisticsQuery();
+          JsonValue idValue = queryObject.get("id");
+          if (idValue != null) {
+            query.setID(new ID(idValue.asString()));
+          }
+          JsonValue typeValue = queryObject.get("type");
+          if (typeValue != null) {
+            query.setType(typeValue.asString());
+          }
+          JsonValue causeOfDeathValue = queryObject.get("causeOfDeath");
+          if (causeOfDeathValue != null) {
+            JsonObject causeOfDeathObject = causeOfDeathValue.asObject();
+            TypeOfCauseOfDeath type = TypeOfCauseOfDeath.valueOf(causeOfDeathObject.get("type").asString());
+            ID id = new ID(causeOfDeathObject.get("id").asString());
+            query.setCauseOfDeath(new CauseOfDeath(type, id));
+          }
+          JsonValue partOfDayValue = queryObject.get("partOfDay");
+          if (partOfDayValue != null) {
+            query.setPartOfDay(PartOfDay.valueOf(partOfDayValue.asString()));
+          }
+          int count = requirementObject.get("count").asInt();
+          BattleStatisticsRequirement requirement = new BattleStatisticsRequirement(query, count);
+          builder.addBattleStatisticsRequirement(requirement);
         }
-        builder.setKillsByCauseOfDeath(killsByCauseOfDeath);
       }
-
-      CounterMap<ID> killsByLocationId = readIDCounterMap(reader, "KILLS_BY_LOCATION_ID");
-      builder.setKillsByLocationID(killsByLocationId);
-
-      CounterMap<ID> visitedLocations = readIDCounterMap(reader, "VISITED_LOCATIONS");
-      builder.setVisitedLocations(visitedLocations);
-
-      CounterMap<ID> maximumNumberOfVisits = readIDCounterMap(reader, "MAXIMUM_NUMBER_OF_VISITS");
-      builder.setMaximumNumberOfVisits(maximumNumberOfVisits);
-
+      JsonValue explorationRequirements = achievementObject.get("explorationRequirements");
+      if (explorationRequirements != null) {
+        JsonValue killsByLocationID = explorationRequirements.asObject().get("killsByLocationID");
+        if (killsByLocationID != null) {
+          builder.setKillsByLocationID(IDCounterMapFromJsonObject(killsByLocationID.asObject()));
+        }
+        JsonValue maximumNumberOfVisits = explorationRequirements.asObject().get("maximumNumberOfVisits");
+        if (maximumNumberOfVisits != null) {
+          builder.setMaximumNumberOfVisits(IDCounterMapFromJsonObject(maximumNumberOfVisits.asObject()));
+        }
+        JsonValue visitedLocations = explorationRequirements.asObject().get("visitedLocations");
+        if (visitedLocations != null) {
+          builder.setVisitedLocations(IDCounterMapFromJsonObject(visitedLocations.asObject()));
+        }
+      }
       Achievement achievement = builder.createAchievement();
       ACHIEVEMENTS.put(achievement.getID(), achievement);
     }
-    reader.close();
     DLogger.info("Loaded " + ACHIEVEMENTS.size() + " achievements.");
+  }
+
+  private static CounterMap<ID> IDCounterMapFromJsonObject(JsonObject jsonObject) {
+    CounterMap<ID> counterMap = new CounterMap<ID>();
+    for (Member member : jsonObject) {
+      counterMap.incrementCounter(new ID(member.getName()), member.getValue().asInt());
+    }
+    return counterMap;
   }
 
   /**
@@ -353,54 +380,6 @@ public final class GameData {
       }
     }
     return 0;
-  }
-
-  /**
-   * Reads a CounterMap from a ResourceReader based on the given key.
-   *
-   * @param reader the ResourceReader
-   * @param key    the String key
-   * @return a CounterMap of Strings
-   */
-  private static CounterMap<String> readStringCounterMap(ResourceReader reader, String key) {
-    CounterMap<String> counterMap = new CounterMap<String>();
-    if (reader.hasValue(key)) {
-      try {
-        String[] values = reader.getArrayOfValues(key);
-        for (String dungeonList : values) {
-          String[] parts = ResourceReader.toArray(dungeonList);
-          counterMap.incrementCounter(parts[0].trim(), Integer.parseInt(parts[1].trim()));
-        }
-      } catch (NumberFormatException log) {
-        DLogger.warning("Could not parse the value of " + key + ".");
-      }
-    }
-    return counterMap;
-  }
-
-  /**
-   * Converts a {@code CounterMap<String>} to a {@code CounterMap<ID>}.
-   *
-   * @param stringCounterMap a {@code CounterMap<String>}
-   * @return a CounterMap of IDs
-   */
-  private static CounterMap<ID> toIDCounterMap(CounterMap<String> stringCounterMap) {
-    CounterMap<ID> idCounterMap = new CounterMap<ID>();
-    for (String key : stringCounterMap.keySet()) {
-      idCounterMap.incrementCounter(new ID(key), stringCounterMap.getCounter(key));
-    }
-    return idCounterMap;
-  }
-
-  /**
-   * Reads a CounterMap from a ResourceReader based on the given key.
-   *
-   * @param reader the ResourceReader
-   * @param key    the String key
-   * @return a CounterMap of IDs
-   */
-  private static CounterMap<ID> readIDCounterMap(ResourceReader reader, String key) {
-    return toIDCounterMap(readStringCounterMap(reader, key));
   }
 
   /**

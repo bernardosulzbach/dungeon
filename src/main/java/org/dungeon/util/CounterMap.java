@@ -82,19 +82,9 @@ public class CounterMap<K> implements Serializable {
     }
   }
 
-  /**
-   * Returns a boolean indicating if this CounterMap fulfills another CounterMap, taken as requirements.
-   * <p/>
-   * For a CounterMap to fulfill another, all its counters must be bigger than or equal to the corresponding counters
-   * of the requirements CounterMap.
-   */
-  public boolean fulfills(CounterMap<K> requirements) {
-    for (K key : requirements.keySet()) {
-      if (getCounter(key) < requirements.getCounter(key)) {
-        return false;
-      }
-    }
-    return true;
+  @Override
+  public String toString() {
+    return String.format("CounterMap{map=%s}", map);
   }
 
 }

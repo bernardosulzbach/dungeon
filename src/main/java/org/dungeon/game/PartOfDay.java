@@ -23,6 +23,8 @@ import org.dungeon.date.Period;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.Selectable;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Enumerated type of the parts of the day.
  */
@@ -65,6 +67,7 @@ public enum PartOfDay implements Selectable {
    * @param date a Date object.
    * @return a PartOfDay constant.
    */
+  @NotNull
   public static PartOfDay getCorrespondingConstant(Date date) {
     long hour = date.getHour();
     // MIDNIGHT starts at 23, therefore 0 does not satisfy the comparison and the following statement is necessary.
@@ -79,7 +82,7 @@ public enum PartOfDay implements Selectable {
         return podArray[i];
       }
     }
-    return null;
+    throw new AssertionError(); // Execution should never reach this line.
   }
 
   /**

@@ -21,9 +21,13 @@ import org.dungeon.date.Date;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
+import org.dungeon.io.IO;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -36,6 +40,14 @@ import java.util.Set;
 public class AchievementTracker implements Serializable {
 
   private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<UnlockedAchievement>();
+
+  /**
+   * Outputs an achievement unlocked message with some information about the unlocked achievement.
+   */
+  private static void writeAchievementUnlock(Achievement achievement) {
+    String format = "You unlocked the achievement %s because you %s.";
+    IO.writeString(String.format(format, achievement.getName(), achievement.getText()));
+  }
 
   /**
    * Returns how many unlocked achievements there are in this AchievementTracker.
@@ -53,9 +65,10 @@ public class AchievementTracker implements Serializable {
    *
    * @param achievement the Achievement to be unlocked.
    */
-  public void unlock(Achievement achievement) {
+  private void unlock(Achievement achievement) {
     Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
+      writeAchievementUnlock(achievement);
       unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
       DLogger.warning("Tried to unlock an already unlocked achievement!");
@@ -101,6 +114,26 @@ public class AchievementTracker implements Serializable {
    */
   public boolean isUnlocked(Achievement achievement) {
     return getUnlockedAchievement(achievement) != null;
+  }
+
+  /**
+   * Updates this AchievementTracker by iterating over a collection of achievements and unlocking the ones that are
+   * fulfilled but not yet added to the unlocked list of this tracker.
+   * Before writing the first achievement unlock message, if there is one, a new line is written.
+   *
+   * @param values a Collection of Achievements, not null
+   */
+  public void update(@NotNull Collection<Achievement> values) {
+    boolean wroteNewLine = false;
+    for (Achievement achievement : values) {
+      if (!isUnlocked(achievement) && achievement.isFulfilled()) {
+        if (!wroteNewLine) {
+          IO.writeNewLine();
+          wroteNewLine = true;
+        }
+        unlock(achievement);
+      }
+    }
   }
 
 }

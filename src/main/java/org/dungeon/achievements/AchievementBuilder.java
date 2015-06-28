@@ -18,24 +18,23 @@
 package org.dungeon.achievements;
 
 import org.dungeon.game.ID;
-import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.util.CounterMap;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class AchievementBuilder {
+
+  private final Collection<BattleStatisticsRequirement> requirements = new ArrayList<BattleStatisticsRequirement>();
   private String id;
   private String name;
   private String info;
   private String text;
-  private int minimumBattleCount;
-  private int longestBattleLength;
-  private CounterMap<ID> killsByCreatureID;
-  private CounterMap<String> killsByCreatureType;
-  private CounterMap<CauseOfDeath> killsByCauseOfDeath;
   private CounterMap<ID> killsByLocationID;
   private CounterMap<ID> visitedLocations;
   private CounterMap<ID> maximumNumberOfVisits;
 
-  public void setId(String id) {
+  public void setID(String id) {
     this.id = id;
   }
 
@@ -51,30 +50,8 @@ public class AchievementBuilder {
     this.text = text;
   }
 
-  public void setMinimumBattleCount(int minimumBattleCount) {
-    this.minimumBattleCount = minimumBattleCount;
-  }
-
-  public void setLongestBattleLength(int longestBattleLength) {
-    this.longestBattleLength = longestBattleLength;
-  }
-
-  public void setKillsByCreatureID(CounterMap<ID> killsByCreatureID) {
-    if (killsByCreatureID.isNotEmpty()) {
-      this.killsByCreatureID = killsByCreatureID;
-    }
-  }
-
-  public void setKillsByCreatureType(CounterMap<String> killsByCreatureType) {
-    if (killsByCreatureType.isNotEmpty()) {
-      this.killsByCreatureType = killsByCreatureType;
-    }
-  }
-
-  public void setKillsByCauseOfDeath(CounterMap<CauseOfDeath> killsByCauseOfDeath) {
-    if (killsByCauseOfDeath.isNotEmpty()) {
-      this.killsByCauseOfDeath = killsByCauseOfDeath;
-    }
+  public void addBattleStatisticsRequirement(BattleStatisticsRequirement requirement) {
+    requirements.add(requirement);
   }
 
   public void setKillsByLocationID(CounterMap<ID> killsByLocationID) {
@@ -96,8 +73,8 @@ public class AchievementBuilder {
   }
 
   public Achievement createAchievement() {
-    return new Achievement(id, name, info, text, minimumBattleCount, longestBattleLength, killsByCreatureID,
-        killsByCreatureType, killsByCauseOfDeath, killsByLocationID, visitedLocations, maximumNumberOfVisits);
+    return new Achievement(id, name, info, text, requirements, killsByLocationID, visitedLocations,
+        maximumNumberOfVisits);
   }
 
 }

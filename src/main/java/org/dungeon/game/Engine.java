@@ -17,8 +17,9 @@
 
 package org.dungeon.game;
 
-import org.dungeon.achievements.Achievement;
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.date.Date;
+import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.items.ItemFactory;
@@ -34,6 +35,7 @@ import java.awt.Color;
  */
 public class Engine {
 
+  private static final int BATTLE_TURN_DURATION = 30;
   private static final int WALK_BLOCKED = 2;
   private static final int WALK_SUCCESS = 200;
 
@@ -51,9 +53,7 @@ public class Engine {
    */
   private static void refreshAchievements() {
     Hero hero = Game.getGameState().getHero();
-    for (Achievement achievement : GameData.ACHIEVEMENTS.values()) {
-      achievement.update(hero);
-    }
+    hero.getAchievementTracker().update(GameData.ACHIEVEMENTS.values());
   }
 
   /**
@@ -118,7 +118,7 @@ public class Engine {
    *
    * @param hero the attacker.
    * @param foe  the defender.
-   * @return an integer representing the number of turns the battle had.
+   * @return how many seconds the battle lasted.
    */
   // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.
   public static int battle(Hero hero, Creature foe) {
@@ -151,12 +151,18 @@ public class Engine {
       defeated = hero;
     }
     IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
+    int duration = turns * BATTLE_TURN_DURATION;
     if (hero == survivor) {
-      Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, turns);
+      if (causeOfDeath == null) { // Should never happen. The hit must be a fatal blow for the target to die.
+        throw new AssertionError();
+      }
+      Date date = Game.getGameState().getWorld().getWorldDate().plus(duration, DungeonTimeUnit.SECOND);
+      PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(date);
+      Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
       battleCleanup(survivor, defeated);
     }
-    return turns;
+    return duration;
   }
 
   /**

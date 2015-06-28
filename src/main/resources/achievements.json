@@ -1,0 +1,403 @@
+{
+  "achievements": [
+    {
+      "id": "FIRST_BLOOD",
+      "name": "First Blood",
+      "info": "Kill a creature.",
+      "text": "killed a living creature",
+      "battleRequirements": [
+        {
+          "query": {
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "KILLER",
+      "name": "Killer",
+      "info": "Kill 10 creatures.",
+      "text": "killed ten creatures",
+      "battleRequirements": [
+        {
+          "query": {
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "FOREST_HUNTER",
+      "name": "Forest Hunter",
+      "info": "Kill 10 creatures in forests.",
+      "text": "killed ten creatures in forests",
+      "explorationRequirements": {
+        "killsByLocationID": {
+          "FOREST": 10
+        }
+      }
+    },
+    {
+      "id": "I_MISS_YOU",
+      "name": "I Miss You!",
+      "info": "Visit the same graveyard 10 times.",
+      "text": "visited the same graveyard ten times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {
+          "GRAVEYARD": 10
+        }
+      }
+    },
+    {
+      "id": "TIMBER_BRIDGE_ENTHUSIAST",
+      "name": "Timber Bridge Enthusiast",
+      "info": "Visit the same timber bridge 5 times.",
+      "text": "visited the same timber bridge five times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {
+          "TIMBER_BRIDGE": 10
+        }
+      }
+    },
+    {
+      "id": "STONE_BRIDGE_ENTHUSIAST",
+      "name": "Stone Bridge Enthusiast",
+      "info": "Visit the same stone bridge 5 times.",
+      "text": "visited the same stone bridge five times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {
+          "STONE_BRIDGE": 5
+        }
+      }
+    },
+    {
+      "id": "ARCHAEOLOGIST",
+      "name": "Archaeologist",
+      "info": "Visit 10 different deserts.",
+      "text": "visited ten different deserts",
+      "explorationRequirements": {
+        "visitedLocations": {
+          "DESERT": 10
+        }
+      }
+    },
+    {
+      "id": "REAPER",
+      "name": "Reaper",
+      "info": "Visit 10 distinct graveyards.",
+      "text": "visited ten distinct graveyards",
+      "explorationRequirements": {
+        "visitedLocations": {
+          "GRAVEYARD": 10
+        }
+      }
+    },
+    {
+      "id": "EVIL_BASTARD",
+      "name": "Evil Bastard",
+      "info": "Kill a rabbit.",
+      "text": "killed an innocent rabbit",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "RABBIT"
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "BANE",
+      "name": "Bane",
+      "info": "Kill 6 bats.",
+      "text": "killed six bats",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "BAT"
+          },
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "CAT",
+      "name": "Cat",
+      "info": "Kill 4 rats.",
+      "text": "killed four rats",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "RAT"
+          },
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "STAY_DEAD",
+      "name": "Stay Dead",
+      "info": "Kill 2 zombies.",
+      "text": "killed two zombies",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "ZOMBIE"
+          },
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "ORC_HUNTER",
+      "name": "Orc Hunter",
+      "info": "Kill 3 orcs.",
+      "text": "killed three orcs",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "ORC"
+          },
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "DISSECTION",
+      "name": "Dissection",
+      "info": "Kill 6 frogs.",
+      "text": "killed half a dozen frogs",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "FROG"
+          },
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "FROM_THE_FORBIDDEN_TREE",
+      "name": "From the Forbidden Tree",
+      "info": "Kill a snake with an apple.",
+      "text": "killed a snake with an apple",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "SNAKE",
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "APPLE"
+            }
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "HUNTER",
+      "name": "Hunter",
+      "info": "Kill 10 beasts.",
+      "text": "killed ten beasts",
+      "battleRequirements": [
+        {
+          "query": {
+            "type": "Beast"
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "PROFESSIONAL_COWARD",
+      "name": "Professional Coward",
+      "info": "Kill 10 critters.",
+      "text": "killed ten critters",
+      "battleRequirements": [
+        {
+          "query": {
+            "type": "Critter"
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "PARANOID",
+      "name": "Paranoid",
+      "info": "Kill 25 critters.",
+      "text": "killed twenty-five critters",
+      "battleRequirements": [
+        {
+          "query": {
+            "type": "Critter"
+          },
+          "count": 25
+        }
+      ]
+    },
+    {
+      "id": "DEATH_PUNCH",
+      "name": "Death Punch",
+      "info": "Kill a creature unarmed.",
+      "text": "killed a creature unarmed",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": ""
+            }
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "BOXER",
+      "name": "Boxer",
+      "info": "Kill 10 creatures unarmed.",
+      "text": "killed ten creatures unarmed",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": ""
+            }
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "ON_THE_STICK",
+      "name": "On the Stick!",
+      "info": "Kill 2 creatures with a stick.",
+      "text": "killed two creatures with the stick",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "STICK"
+            }
+          },
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "SWORDSMAN",
+      "name": "Swordsman",
+      "info": "Kill 10 enemies with a sword.",
+      "text": "killed ten enemies with the sword",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "SWORD"
+            }
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "LUMBERJACK",
+      "name": "Lumberjack",
+      "info": "Kill 10 creatures with a axe.",
+      "text": "killed ten creatures with the axe",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "AXE"
+            }
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "STICKS_AND_STONES",
+      "name": "Sticks and Stones",
+      "info": "Kill 5 creatures with a stone and 5 with a stick.",
+      "text": "killed five creatures with a stone and five with a stick",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "STONE"
+            }
+          },
+          "count": 5
+        },
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "STICK"
+            }
+          },
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "WOOD_MASTER",
+      "name": "Wood Master",
+      "info": "Get one kill with a club, one with a staff and one with a stick.",
+      "text": "killed a creature with a club, one with a staff and one with a stick",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "CLUB"
+            }
+          },
+          "count": 1
+        },
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "STAFF"
+            }
+          },
+          "count": 1
+        },
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "STICK"
+            }
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "FIRE_WIZARD",
+      "name": "Fire Wizard",
+      "info": "Kill 4 foes with the Fireball skill.",
+      "text": "killed four foes with the Fireball skill",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "SKILL",
+              "id": "FIREBALL"
+            }
+          },
+          "count": 1
+        }
+      ]
+    }
+  ]
+}
