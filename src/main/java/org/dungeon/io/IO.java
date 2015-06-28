@@ -18,8 +18,8 @@
 package org.dungeon.io;
 
 import org.dungeon.game.Game;
+import org.dungeon.game.Poem;
 import org.dungeon.util.Constants;
-import org.dungeon.util.Poem;
 
 import java.awt.Color;
 
