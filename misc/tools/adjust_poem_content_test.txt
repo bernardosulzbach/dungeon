@@ -1,7 +1,0 @@
-This is the first line
-  second goes here
-    too much whitespace
-      the ending is near
-    death to me is fine
-  what I see in your face
-is nothing but a smear.
