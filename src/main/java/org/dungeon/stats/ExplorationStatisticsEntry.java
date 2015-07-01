@@ -27,15 +27,7 @@ import java.io.Serializable;
 class ExplorationStatisticsEntry implements Serializable {
 
   private final ID locationID;
-
-  /**
-   * How many times the Hero visited this Point.
-   */
   private int visitCount;
-
-  /**
-   * How many times the Hero killed in this Point.
-   */
   private int killCount;
 
   public ExplorationStatisticsEntry(ID locationID) {
@@ -46,6 +38,9 @@ class ExplorationStatisticsEntry implements Serializable {
     return locationID;
   }
 
+  /**
+   * Returns how many times the Hero visited this Point.
+   */
   public int getVisitCount() {
     return visitCount;
   }
@@ -54,12 +49,21 @@ class ExplorationStatisticsEntry implements Serializable {
     this.visitCount++;
   }
 
+  /**
+   * Returns how many times the Hero killed in this Point.
+   */
   public int getKillCount() {
     return killCount;
   }
 
   public void addKill() {
     this.killCount++;
+  }
+
+  @Override
+  public String toString() {
+    String format = "ExplorationStatisticsEntry{locationID=%s, visitCount=%d, killCount=%d}";
+    return String.format(format, locationID, visitCount, killCount);
   }
 
 }
