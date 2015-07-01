@@ -34,7 +34,7 @@ import java.util.Map;
  */
 final class AttackAlgorithms {
 
-  private static final ID UNARMED_ID = new ID("");
+  private static final ID UNARMED_ID = new ID("UNARMED");
   private static final Map<AttackAlgorithmID, AttackAlgorithm> ATTACK_ALGORITHM_MAP =
       new EnumMap<AttackAlgorithmID, AttackAlgorithm>(AttackAlgorithmID.class);
 
@@ -193,7 +193,7 @@ final class AttackAlgorithms {
           } else {
             hitDamage = attacker.getAttack();
             criticalHit = Random.roll(HERO_CRITICAL_CHANCE_UNARMED);
-            causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, UNARMED_ID);
+            causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.UNARMED, UNARMED_ID);
           }
           if (criticalHit) {
             hitDamage *= 2;

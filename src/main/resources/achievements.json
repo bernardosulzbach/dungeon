@@ -245,8 +245,8 @@
         {
           "query": {
             "causeOfDeath": {
-              "type": "WEAPON",
-              "id": ""
+              "type": "UNARMED",
+              "id": "UNARMED"
             }
           },
           "count": 1
@@ -262,8 +262,8 @@
         {
           "query": {
             "causeOfDeath": {
-              "type": "WEAPON",
-              "id": ""
+              "type": "UNARMED",
+              "id": "UNARMED"
             }
           },
           "count": 10

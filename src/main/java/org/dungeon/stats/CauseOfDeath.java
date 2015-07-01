@@ -36,9 +36,6 @@ public class CauseOfDeath implements Serializable {
    * @param id   an ID
    */
   public CauseOfDeath(TypeOfCauseOfDeath type, ID id) {
-    // Why there is not an object pool?
-    // The BattleStatistics CounterMap keeps only one object for each possible CauseOfDeath combination it has.
-    // Each Achievement keeps its own non-persistent CauseOfDeath objects (varying from 0 to 3 as of 14/04/2015).
     this.type = type;
     this.id = id;
   }
