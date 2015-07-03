@@ -61,8 +61,8 @@ public final class Loader {
   private static void sortFileArrayByLastModifiedDate(@NotNull File[] array) {
     Arrays.sort(array, new Comparator<File>() {
       @Override
-      public int compare(File o1, File o2) {
-        return Long.compare(o2.lastModified(), o1.lastModified()); // Newer files on the beginning.
+      public int compare(File a, File b) {
+        return Long.valueOf(b.lastModified()).compareTo(a.lastModified());
       }
     });
   }
