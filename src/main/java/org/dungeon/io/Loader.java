@@ -18,11 +18,16 @@
 package org.dungeon.io;
 
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.date.EarthTimeUnit;
+import org.dungeon.date.TimeStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
 import org.dungeon.util.Table;
+
+import org.jetbrains.annotations.NotNull;
+import org.joda.time.Period;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +36,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -51,12 +58,22 @@ public final class Loader {
     throw new AssertionError();
   }
 
+  private static void sortFileArrayByLastModifiedDate(@NotNull File[] array) {
+    Arrays.sort(array, new Comparator<File>() {
+      @Override
+      public int compare(File o1, File o2) {
+        return Long.compare(o2.lastModified(), o1.lastModified()); // Newer files on the beginning.
+      }
+    });
+  }
+
   /**
    * Pretty-prints all the files in the saves folder.
    */
   public static void printFilesInSavesFolder() {
     File[] files = SAVES_FOLDER.listFiles();
     if (files != null) {
+      sortFileArrayByLastModifiedDate(files);
       if (files.length != 0) {
         Table table = new Table("Name", "Size", "Last modified");
         int fileCount = 0;
@@ -65,7 +82,9 @@ public final class Loader {
           fileCount += 1;
           byteCount += file.length();
           Date lastModified = new Date(file.lastModified());
-          table.insertRow(file.getName(), bytesToHuman(file.length()), LAST_MODIFIED_FORMAT.format(lastModified));
+          String periodString = makePeriodString(lastModified.getTime(), System.currentTimeMillis());
+          String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
+          table.insertRow(file.getName(), bytesToHuman(file.length()), lastModifiedString);
         }
         if (fileCount > 1) {
           table.insertSeparator();
@@ -78,6 +97,18 @@ public final class Loader {
     } else {
       IO.writeString("Saves folder does not exist.");
     }
+  }
+
+  private static String makePeriodString(long start, long end) {
+    Period period = new Period(start, end);
+    TimeStringBuilder builder = new TimeStringBuilder();
+    builder.set(EarthTimeUnit.YEAR, period.getYears());
+    builder.set(EarthTimeUnit.MONTH, period.getMonths());
+    builder.set(EarthTimeUnit.DAY, period.getDays());
+    builder.set(EarthTimeUnit.HOUR, period.getHours());
+    builder.set(EarthTimeUnit.MINUTE, period.getMinutes());
+    builder.set(EarthTimeUnit.SECOND, period.getSeconds());
+    return builder.toString(2) + " ago";
   }
 
   /**

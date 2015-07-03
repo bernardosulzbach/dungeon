@@ -191,8 +191,8 @@ public final class Utils {
       if (!complete || matches == tokens.length) {
         double matchesOverTitleWords = matches / (double) titleWords.length;
         double matchesOverSearchArgs = matches / (double) tokens.length;
-        double similarity = Math.mean(matchesOverTitleWords, matchesOverSearchArgs);
-        int comparisonResult = Math.fuzzyCompare(similarity, maximumSimilarity);
+        double similarity = DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
+        int comparisonResult = DungeonMath.fuzzyCompare(similarity, maximumSimilarity);
         if (comparisonResult > 0) {
           maximumSimilarity = similarity;
           listOfMatches.clear();

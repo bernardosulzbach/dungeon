@@ -23,7 +23,7 @@ import org.dungeon.game.Random;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
-import org.dungeon.util.Math;
+import org.dungeon.util.DungeonMath;
 import org.dungeon.util.Percentage;
 
 import java.util.EnumMap;
@@ -41,13 +41,13 @@ final class AttackAlgorithms {
   static {
 
     final double BAT_CRITICAL_MAXIMUM_LUMINOSITY = 0.5;
-    final double BAT_HIT_RATE_MAX_LUMINOSITY = 0.9;
-    final double BAT_HIT_RATE_MIN_LUMINOSITY = 0.1;
+    final double BAT_MAX_HIT_RATE = 0.9;
+    final double BAT_MIN_HIT_RATE = 0.1;
     registerAttackAlgorithm(AttackAlgorithmID.BAT, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Percentage luminosity = attacker.getLocation().getLuminosity();
-        double hitRate = Math.weightedAverage(BAT_HIT_RATE_MIN_LUMINOSITY, BAT_HIT_RATE_MAX_LUMINOSITY, luminosity);
+        double hitRate = DungeonMath.weightedAverage(BAT_MIN_HIT_RATE, BAT_MAX_HIT_RATE, luminosity);
         if (Random.roll(hitRate)) {
           int hitDamage = attacker.getAttack();
           boolean criticalHit = luminosity.toDouble() <= BAT_CRITICAL_MAXIMUM_LUMINOSITY;
@@ -95,15 +95,15 @@ final class AttackAlgorithms {
     });
 
     final double ORC_UNARMED_HIT_RATE = 0.95;
-    final double ORC_MIN_CRITICAL_CHANCE = 0.1;
-    final double ORC_MAX_CRITICAL_CHANCE = 0.5;
+    final double ORC_MIN_CRIT_CHANCE = 0.1;
+    final double ORC_MAX_CRIT_CHANCE = 0.5;
     registerAttackAlgorithm(AttackAlgorithmID.ORC, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Item weapon = attacker.getWeapon();
         int hitDamage;
         Percentage healthiness = new Percentage(attacker.getCurHealth() / (double) attacker.getMaxHealth());
-        double criticalChance = Math.weightedAverage(ORC_MIN_CRITICAL_CHANCE, ORC_MAX_CRITICAL_CHANCE, healthiness);
+        double criticalChance = DungeonMath.weightedAverage(ORC_MIN_CRIT_CHANCE, ORC_MAX_CRIT_CHANCE, healthiness);
         boolean criticalHit = Random.roll(criticalChance);
         if (weapon != null && !weapon.isBroken()) {
           if (weapon.rollForHit()) {

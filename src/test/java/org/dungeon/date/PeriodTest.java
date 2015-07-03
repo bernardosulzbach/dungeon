@@ -58,7 +58,7 @@ public class PeriodTest {
     end = end.plus(1, DungeonTimeUnit.MONTH);
     Assert.assertEquals("2 years and 1 month", new Period(start, end).toString());
     end = end.plus(1, DungeonTimeUnit.DAY);
-    Assert.assertEquals("2 years, 1 month and 1 day", new Period(start, end).toString());
+    Assert.assertEquals("2 years, 1 month, and 1 day", new Period(start, end).toString());
   }
 
 }

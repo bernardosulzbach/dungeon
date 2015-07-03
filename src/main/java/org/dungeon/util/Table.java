@@ -21,7 +21,6 @@ import org.dungeon.io.DLogger;
 import org.dungeon.io.IO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Table class that provides table functionality for printing in-game tables.
@@ -134,9 +133,7 @@ public class Table {
     }
 
     int columnCount = columns.size();
-    // Subtract columnCount to account for separators.
-    // Add one because we do not add a separator at the end.
-    int columnWidth = (Constants.COLS - columnCount + 1) / columnCount;
+    int[] columnWidths = calculateColumnWidths();
 
     int rowCount = columns.get(0).rows.size();
 
@@ -147,23 +144,23 @@ public class Table {
     for (int i = 0; i < columnCount; i++) {
       currentRow[i] = columns.get(i).header;
     }
-    appendRow(builder, columnWidth, currentRow);
+    appendRow(builder, columnWidths, currentRow);
 
     // A horizontal separator.
-    appendHorizontalSeparator(builder, columnWidth, columnCount);
+    appendHorizontalSeparator(builder, columnWidths, columnCount);
 
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
       if (separators != null) {
         for (int remaining = separators.getCounter(rowIndex); remaining > 0; remaining--) {
-          appendHorizontalSeparator(builder, columnWidth, columnCount);
+          appendHorizontalSeparator(builder, columnWidths, columnCount);
         }
       }
       if (rowIndex != rowCount) {
         for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
           currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
         }
-        appendRow(builder, columnWidth, currentRow);
+        appendRow(builder, columnWidths, currentRow);
       }
     }
 
@@ -171,16 +168,29 @@ public class Table {
     IO.writeString(builder.toString());
   }
 
+  private int[] calculateColumnWidths() {
+    int[] widths = new int[columns.size()];
+    for (int i = 0; i < widths.length; i++) {
+      widths[i] = columns.get(i).widestValue;
+    }
+    // Subtract the number of columns to account for separators. Add one because there is not a separator at the end.
+    int availableColumns = Constants.COLS - columns.size() + 1;
+    int difference = availableColumns - DungeonMath.sum(widths);
+    DungeonMath.distribute(difference, widths);
+    return widths;
+  }
+
   /**
    * Appends a row to a StringBuilder.
    *
-   * @param stringBuilder the StringBuilder object.
-   * @param columnWidth   the width of the columns of the table.
-   * @param values        the values of the row.
+   * @param stringBuilder the StringBuilder object
+   * @param columnWidths  the widths of the columns of the table
+   * @param values        the values of the row
    */
-  private void appendRow(StringBuilder stringBuilder, int columnWidth, String... values) {
+  private void appendRow(StringBuilder stringBuilder, int[] columnWidths, String... values) {
     String currentValue;
     for (int i = 0; i < values.length; i++) {
+      int columnWidth = columnWidths[i];
       currentValue = values[i];
       if (currentValue.length() > columnWidth) {
         stringBuilder.append(currentValue.substring(0, columnWidth - 3)).append("...");
@@ -202,13 +212,14 @@ public class Table {
    * Append a horizontal separator made up of dashes to a StringBuilder.
    *
    * @param stringBuilder the StringBuilder object.
-   * @param columnWidth   the width of the columns of the table.
+   * @param columnWidths  the width of the columns of the table.
    */
-  private void appendHorizontalSeparator(StringBuilder stringBuilder, int columnWidth, int columnCount) {
-    String pseudoValue = makeRepeatedCharacterString(columnWidth, HORIZONTAL_BAR);
+  private void appendHorizontalSeparator(StringBuilder stringBuilder, int[] columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
-    Arrays.fill(pseudoRow, pseudoValue);
-    appendRow(stringBuilder, columnWidth, pseudoRow);
+    for (int i = 0; i < columnWidths.length; i++) {
+      pseudoRow[i] = makeRepeatedCharacterString(columnWidths[i], HORIZONTAL_BAR);
+    }
+    appendRow(stringBuilder, columnWidths, pseudoRow);
   }
 
   private class Column {

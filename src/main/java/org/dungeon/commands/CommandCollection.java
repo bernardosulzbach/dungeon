@@ -28,6 +28,7 @@ import org.dungeon.io.IO;
 import org.dungeon.io.Loader;
 import org.dungeon.map.WorldMap;
 import org.dungeon.map.WorldMapWriter;
+import org.dungeon.util.DungeonMath;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
 import org.dungeon.wiki.Wiki;
@@ -110,7 +111,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("fibonacci", "Displays the specified term of the Fibonacci's sequence.") {
       @Override
       public CommandResult execute(IssuedCommand issuedCommand) {
-        org.dungeon.util.Math.parseFibonacci(issuedCommand);
+        DungeonMath.parseFibonacci(issuedCommand);
         return null;
       }
     });

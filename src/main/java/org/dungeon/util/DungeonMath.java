@@ -20,18 +20,20 @@ package org.dungeon.util;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.IO;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigInteger;
 
 /**
  * A collection of mathematical utility methods.
  */
-public final class Math {
+public final class DungeonMath {
 
   private static final int SECOND_IN_NANOSECONDS = 1000000000;
   private static final double DEFAULT_DOUBLE_TOLERANCE = 1e-8;
   private static final String TIMEOUT = "TIMEOUT";
 
-  private Math() { // Ensure that this class cannot be instantiated.
+  private DungeonMath() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
   }
 
@@ -169,6 +171,64 @@ public final class Math {
       charactersOnThisLine++;
     }
     return builder.toString();
+  }
+
+  /**
+   * Safely casts a long into an integer.
+   *
+   * @param l the long that will be converted, should be in the range [Integer.MIN_VALUE, Integer.MAX_VALUE]
+   * @return an integer equal to the provided long
+   * @throws IllegalArgumentException if the long does not fit into an integer
+   */
+  public static int safeCastLongToInteger(long l) {
+    if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+      throw new IllegalArgumentException(l + " does not fit into an integer.");
+    } else {
+      return (int) l;
+    }
+  }
+
+  /**
+   * Returns the sum of an array of integers.
+   *
+   * @param integers the array of integers, not null
+   * @return the sum
+   */
+  public static int sum(@NotNull int[] integers) {
+    int total = 0;
+    for (int integer : integers) {
+      total += integer;
+    }
+    return total;
+  }
+
+  /**
+   * Distributes a value among buckets.
+   * For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8 over {5, 10} gives {1, 6}.
+   * If the division of value by the size of buckets is not exact, the first buckets are going to get more modified.
+   * For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10, 15} gives {2, 7, 13}.
+   * <p/>
+   * The time complexity of this implementation is O(n) on the size of buckets.
+   *
+   * @param value   the total to be distributed
+   * @param buckets the buckets, not empty, not null
+   */
+  public static void distribute(int value, @NotNull int[] buckets) {
+    if (buckets.length == 0) {
+      throw new IllegalArgumentException("buckets must have at least one element.");
+    }
+    int commonModification = value / buckets.length;
+    value %= buckets.length;
+    for (int i = 0; i < buckets.length; i++) {
+      buckets[i] += commonModification;
+      if (value > 0) {
+        buckets[i]++;
+        value--;
+      } else if (value < 0) {
+        buckets[i]--;
+        value++;
+      }
+    }
   }
 
 }
