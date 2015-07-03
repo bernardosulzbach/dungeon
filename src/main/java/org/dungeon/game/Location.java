@@ -63,7 +63,7 @@ public final class Location implements Serializable {
         if (item != null) {
           this.addItem(item);
         } else {
-          DLogger.warning("ItemBlueprint not found: " + entry.getKey().toString());
+          DLogger.severe("ItemBlueprint not found: " + entry.getKey().toString());
         }
       }
     }
