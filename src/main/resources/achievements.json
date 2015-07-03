@@ -55,7 +55,7 @@
       "text": "visited the same timber bridge five times",
       "explorationRequirements": {
         "maximumNumberOfVisits": {
-          "TIMBER_BRIDGE": 10
+          "TIMBER_BRIDGE": 5
         }
       }
     },
@@ -395,7 +395,7 @@
               "id": "FIREBALL"
             }
           },
-          "count": 1
+          "count": 4
         }
       ]
     }
