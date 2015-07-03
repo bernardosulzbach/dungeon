@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.dungeon.util.Percentage;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class RandomTest {
   public void testSelect() throws Exception {
     try {
       Random.select(Collections.emptyList());
+      Assert.fail("expected an exception.");
     } catch (IllegalArgumentException expected) {
       // Dungeon Code Style does not require a comment on exceptions named expected in tests.
     }
