@@ -35,6 +35,7 @@ public final class Item extends Entity {
   private final Date dateOfCreation;
   private final long decompositionPeriod;
   private final TagSet<Tag> tagSet;
+  private final LightSource lightSource;
   private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
@@ -42,7 +43,6 @@ public final class Item extends Entity {
   private BookComponent bookComponent;
   /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
   private BaseInventory inventory;
-  private LightSource lightSource;
 
   public Item(ItemBlueprint bp, Date date) {
     super(bp);
