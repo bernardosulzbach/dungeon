@@ -69,7 +69,8 @@ public final class BattleRecord implements Serializable {
 
     BattleRecord that = (BattleRecord) o;
 
-    return id.equals(that.id) && type.equals(that.type) && causeOfDeath.equals(that.causeOfDeath);
+    return id.equals(that.id) && type.equals(that.type) && causeOfDeath.equals(that.causeOfDeath) &&
+        partOfDay.equals(that.partOfDay);
   }
 
   @Override
@@ -77,13 +78,14 @@ public final class BattleRecord implements Serializable {
     int result = id.hashCode();
     result = 31 * result + type.hashCode();
     result = 31 * result + causeOfDeath.hashCode();
+    result = 31 * result + partOfDay.hashCode();
     return result;
   }
 
   @Override
   public String toString() {
-    String format = "BattleEntry{id=%s, type='%s', causeOfDeath=%s}";
-    return String.format(format, id, type, causeOfDeath);
+    String format = "BattleEntry{id=%s, type='%s', causeOfDeath=%s, partOfDay=%s}";
+    return String.format(format, id, type, causeOfDeath, partOfDay);
   }
 
 }

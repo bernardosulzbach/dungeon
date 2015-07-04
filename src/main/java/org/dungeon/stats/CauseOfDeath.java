@@ -19,6 +19,8 @@ package org.dungeon.stats;
 
 import org.dungeon.game.ID;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -35,7 +37,7 @@ public class CauseOfDeath implements Serializable {
    * @param type a TypeOfCauseOfDeath
    * @param id   an ID
    */
-  public CauseOfDeath(TypeOfCauseOfDeath type, ID id) {
+  public CauseOfDeath(@NotNull TypeOfCauseOfDeath type, @NotNull ID id) {
     this.type = type;
     this.id = id;
   }
@@ -51,17 +53,13 @@ public class CauseOfDeath implements Serializable {
 
     CauseOfDeath that = (CauseOfDeath) o;
 
-    if (id != null ? !id.equals(that.id) : that.id != null) {
-      return false;
-    }
-    return type == that.type;
-
+    return id.equals(that.id) && type == that.type;
   }
 
   @Override
   public int hashCode() {
-    int result = type != null ? type.hashCode() : 0;
-    result = 31 * result + (id != null ? id.hashCode() : 0);
+    int result = type.hashCode();
+    result = 31 * result + id.hashCode();
     return result;
   }
 
