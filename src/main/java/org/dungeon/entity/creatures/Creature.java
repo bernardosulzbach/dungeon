@@ -18,6 +18,8 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.Entity;
+import org.dungeon.entity.LightSource;
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.items.CreatureInventory;
 import org.dungeon.entity.items.Item;
@@ -41,6 +43,7 @@ public class Creature extends Entity {
   private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
   private final CreatureInventory inventory;
+  private final LightSource lightSource;
   private int curHealth;
   private Item weapon;
   private Location location;
@@ -53,6 +56,7 @@ public class Creature extends Entity {
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithmID = preset.getAttackAlgorithmID();
     inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
+    lightSource = new LightSource(preset.getLuminosity());
   }
 
   SkillList getSkillList() {
@@ -85,6 +89,11 @@ public class Creature extends Entity {
 
   public CreatureInventory getInventory() {
     return inventory;
+  }
+
+  @Override
+  public Luminosity getLuminosity() {
+    return lightSource.getLuminosity();
   }
 
   public Item getWeapon() {

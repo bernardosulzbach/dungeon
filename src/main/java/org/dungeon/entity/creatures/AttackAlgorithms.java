@@ -46,7 +46,7 @@ final class AttackAlgorithms {
     registerAttackAlgorithm(AttackAlgorithmID.BAT, new AttackAlgorithm() {
       @Override
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
-        Percentage luminosity = attacker.getLocation().getLuminosity();
+        Percentage luminosity = attacker.getLocation().getLuminosity().toPercentage();
         double hitRate = DungeonMath.weightedAverage(BAT_MIN_HIT_RATE, BAT_MAX_HIT_RATE, luminosity);
         if (Random.roll(hitRate)) {
           int hitDamage = attacker.getAttack();

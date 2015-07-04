@@ -29,10 +29,10 @@ import java.io.Serializable;
  */
 public abstract class Entity implements Selectable, Serializable {
 
+  private final ID id;
   private final String type;
   private final Name name;
   private final Weight weight;
-  private final ID id;
   private final Visibility visibility;
 
   protected Entity(Preset preset) {
@@ -63,5 +63,7 @@ public abstract class Entity implements Selectable, Serializable {
   public Visibility getVisibility() {
     return visibility;
   }
+
+  public abstract Luminosity getLuminosity();
 
 }

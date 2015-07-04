@@ -25,6 +25,7 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
+import org.dungeon.entity.Visibility;
 import org.dungeon.entity.items.BaseInventory;
 import org.dungeon.entity.items.BookComponent;
 import org.dungeon.entity.items.CreatureInventory.SimulationResult;
@@ -81,7 +82,7 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
   private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
-  private static final Percentage LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS = new Percentage(0.4);
+  private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
   private static final int HEAL_TEN_PERCENT = 3600;
   private static final int MILK_NUTRITION = 12;
   private final AchievementTracker achievementTracker = new AchievementTracker();
@@ -203,7 +204,7 @@ public class Hero extends Creature {
   }
 
   private boolean canSeeAdjacentLocations() {
-    return getLocation().getLuminosity().biggerThanOrEqualTo(LUMINOSITY_TO_SEE_ADJACENT_LOCATIONS);
+    return ADJACENT_LOCATIONS_VISIBILITY.visibleUnder(getLocation().getLuminosity());
   }
 
   private <T extends Entity> List<T> filterByVisibility(List<T> list) {

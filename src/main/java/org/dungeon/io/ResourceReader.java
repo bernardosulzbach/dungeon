@@ -17,6 +17,7 @@
 
 package org.dungeon.io;
 
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.Visibility;
 import org.dungeon.util.Percentage;
 
@@ -236,6 +237,15 @@ public class ResourceReader implements Closeable {
       return new Visibility(Percentage.fromString(getValue("VISIBILITY")));
     } else {
       throw new IllegalStateException("this resource reader does not have a VISIBILITY value.");
+    }
+  }
+
+  public Luminosity readLuminosity() {
+    assertExists("LUMINOSITY");
+    if (Percentage.isValidPercentageString(getValue("LUMINOSITY"))) {
+      return new Luminosity(Percentage.fromString(getValue("LUMINOSITY")));
+    } else {
+      throw new IllegalStateException("this resource reader does not have a LUMINOSITY value.");
     }
   }
 

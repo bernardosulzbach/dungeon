@@ -17,6 +17,7 @@
 
 package org.dungeon.entity.items;
 
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.Preset;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Visibility;
@@ -42,6 +43,7 @@ public final class ItemBlueprint implements Preset {
   private Weight weight;
   private Visibility visibility;
   private ID skill;
+  private Luminosity luminosity = Luminosity.ZERO;
 
   public void setPutrefactionPeriod(long putrefactionPeriod) {
     this.putrefactionPeriod = putrefactionPeriod;
@@ -147,6 +149,14 @@ public final class ItemBlueprint implements Preset {
 
   public void setSkill(String skill) {
     this.skill = new ID(skill);
+  }
+
+  public Luminosity getLuminosity() {
+    return luminosity;
+  }
+
+  public void setLuminosity(Luminosity luminosity) {
+    this.luminosity = luminosity;
   }
 
 }

@@ -260,7 +260,7 @@ public class DebugTools {
     } else {
       sb.append("No items.\n");
     }
-    sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity()).append('\n');
+    sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity().toPercentage()).append('\n');
     sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
     sb.append(Utils.padString("Blocked Entrances:", WIDTH)).append(location.getBlockedEntrances()).append('\n');
     IO.writeString(sb.toString());

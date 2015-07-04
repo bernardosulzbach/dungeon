@@ -20,6 +20,7 @@ package org.dungeon.game;
 import org.dungeon.date.Date;
 import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.date.Period;
+import org.dungeon.entity.Luminosity;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.Selectable;
 
@@ -44,7 +45,7 @@ public enum PartOfDay implements Selectable {
 
   // How bright is the sun at this part of the day?
   // Should be bigger than or equal to 0 and smaller than or equal to 1.
-  private final Percentage luminosity;
+  private final Luminosity luminosity;
 
   private int startingHour;
 
@@ -57,7 +58,7 @@ public enum PartOfDay implements Selectable {
    */
   PartOfDay(String name, double luminosity, int startingHour) {
     this.name = Name.newInstance(name);
-    this.luminosity = new Percentage(luminosity);
+    this.luminosity = new Luminosity(new Percentage(luminosity));
     setStartingHour(startingHour);
   }
 
@@ -97,7 +98,7 @@ public enum PartOfDay implements Selectable {
     return (int) new Period(cur, day).getSeconds();
   }
 
-  public Percentage getLuminosity() {
+  public Luminosity getLuminosity() {
     return luminosity;
   }
 

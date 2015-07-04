@@ -17,6 +17,7 @@
 
 package org.dungeon.entity.creatures;
 
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.Preset;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Visibility;
@@ -43,6 +44,7 @@ public final class CreaturePreset implements Preset {
   private AttackAlgorithmID attackAlgorithmID;
   private List<ID> items = new ArrayList<ID>();
   private Visibility visibility;
+  private Luminosity luminosity = Luminosity.ZERO;
   private ID weaponID;
   private int inventoryItemLimit;
   private double inventoryWeightLimit;
@@ -144,12 +146,20 @@ public final class CreaturePreset implements Preset {
     this.items = items;
   }
 
-  public org.dungeon.entity.Visibility getVisibility() {
+  public Visibility getVisibility() {
     return visibility;
   }
 
   public void setVisibility(Visibility visibility) {
     this.visibility = visibility;
+  }
+
+  public Luminosity getLuminosity() {
+    return luminosity;
+  }
+
+  public void setLuminosity(Luminosity luminosity) {
+    this.luminosity = luminosity;
   }
 
   public ID getWeaponID() {

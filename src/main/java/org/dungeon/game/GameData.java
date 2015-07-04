@@ -188,6 +188,9 @@ public final class GameData {
       preset.setInventoryItemLimit(readIntegerFromResourceReader(reader, "INVENTORY_ITEM_LIMIT"));
       preset.setInventoryWeightLimit(readDoubleFromResourceReader(reader, "INVENTORY_WEIGHT_LIMIT"));
       preset.setVisibility(reader.readVisibility());
+      if (reader.hasValue("LUMINOSITY")) {
+        preset.setLuminosity(reader.readLuminosity());
+      }
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
       preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
@@ -221,6 +224,7 @@ public final class GameData {
     corpse.setMaxIntegrity(integrity);
     corpse.setCurIntegrity(integrity);
     corpse.setVisibility(preset.getVisibility());
+    corpse.setLuminosity(preset.getLuminosity());
     corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
     corpse.setDamage(CORPSE_DAMAGE);
@@ -430,10 +434,8 @@ public final class GameData {
   }
 
   private static void loadLicense() {
-    ResourceReader reader = new ResourceReader("license.txt");
-    reader.readNextElement();
-    LICENSE = reader.getValue("LICENSE");
-    reader.close();
+    JsonObject license = JsonObjectFactory.makeJsonObject("license.json");
+    LICENSE = license.get("license").asString();
   }
 
   private static void loadTutorial() {

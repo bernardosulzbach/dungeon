@@ -20,6 +20,8 @@ package org.dungeon.entity.items;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
+import org.dungeon.entity.LightSource;
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Game;
@@ -40,6 +42,7 @@ public final class Item extends Entity {
   private BookComponent bookComponent;
   /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
   private BaseInventory inventory;
+  private LightSource lightSource;
 
   public Item(ItemBlueprint bp, Date date) {
     super(bp);
@@ -51,6 +54,8 @@ public final class Item extends Entity {
 
     maxIntegrity = bp.maxIntegrity;
     curIntegrity = bp.curIntegrity;
+
+    lightSource = new LightSource(bp.getLuminosity());
 
     if (hasTag(Tag.WEAPON)) {
       weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
@@ -205,6 +210,11 @@ public final class Item extends Entity {
 
   public long getDecompositionPeriod() {
     return decompositionPeriod;
+  }
+
+  @Override
+  public Luminosity getLuminosity() {
+    return lightSource.getLuminosity();
   }
 
   @Override

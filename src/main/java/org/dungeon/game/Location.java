@@ -17,6 +17,8 @@
 
 package org.dungeon.game;
 
+import org.dungeon.entity.Entity;
+import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
@@ -92,11 +94,15 @@ public final class Location implements Serializable {
   }
 
   /**
-   * Returns the luminosity of the Location. This value depends on the World luminosity and the Location's specific
-   * light permittivity.
+   * Returns the luminosity of the Location.
+   * This value depends on the World luminosity, on the Location's specific light permittivity and on the luminosity of
+   * the Entities in this location.
    */
-  public Percentage getLuminosity() {
-    return getLightPermittivity().multiply(getWorld().getPartOfDay().getLuminosity());
+  public Luminosity getLuminosity() {
+    // Light permittivity is only applied to the luminosity that comes from the sky.
+    Percentage fromEntities = Luminosity.resultantLuminosity(getEntities()).toPercentage();
+    Percentage fromTheWorld = getLightPermittivity().multiply(getWorld().getPartOfDay().getLuminosity().toPercentage());
+    return new Luminosity(new Percentage(Math.min(fromEntities.toDouble() + fromTheWorld.toDouble(), 1.0)));
   }
 
   public List<Creature> getCreatures() {
@@ -105,6 +111,13 @@ public final class Location implements Serializable {
 
   public LocationInventory getInventory() {
     return items;
+  }
+
+  private List<Entity> getEntities() {
+    List<Entity> entities = new ArrayList<Entity>();
+    entities.addAll(getCreatures());
+    entities.addAll(getItemList());
+    return entities;
   }
 
   public List<Item> getItemList() {

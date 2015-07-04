@@ -17,38 +17,26 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.util.Percentage;
-
 import java.io.Serializable;
 
 /**
- * A simple wrapper for a Percentage object that represents how visible an Entity is.
+ * A source of Luminosity.
  */
-public class Visibility implements Serializable {
+public class LightSource implements Serializable {
 
-  private final Percentage value;
+  private final Luminosity luminosity;
 
-  public Visibility(Percentage value) {
-    this.value = value;
+  public LightSource(Luminosity luminosity) {
+    this.luminosity = luminosity;
   }
 
-  /**
-   * Evaluates if an Entity with this Visibility should be visible under the specified luminosity.
-   *
-   * @param luminosity a Percentage, not null
-   * @return true if an Entity with this Visibility is visible, false otherwise
-   */
-  public boolean visibleUnder(Luminosity luminosity) {
-    return Double.compare(luminosity.toPercentage().toDouble(), 1 - value.toDouble()) >= 0;
-  }
-
-  public Percentage toPercentage() {
-    return value;
+  public Luminosity getLuminosity() {
+    return luminosity;
   }
 
   @Override
   public String toString() {
-    return "Visibility of " + value;
+    return "LightSource of luminosity of " + luminosity.toPercentage();
   }
 
 }
