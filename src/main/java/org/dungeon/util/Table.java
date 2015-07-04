@@ -66,6 +66,48 @@ public class Table {
   }
 
   /**
+   * Appends a row to a StringBuilder.
+   *
+   * @param stringBuilder the StringBuilder object
+   * @param columnWidths  the widths of the columns of the table
+   * @param values        the values of the row
+   */
+  private static void appendRow(StringBuilder stringBuilder, int[] columnWidths, String... values) {
+    String currentValue;
+    for (int i = 0; i < values.length; i++) {
+      int columnWidth = columnWidths[i];
+      currentValue = values[i];
+      if (currentValue.length() > columnWidth) {
+        stringBuilder.append(currentValue.substring(0, columnWidth - 3)).append("...");
+      } else {
+        stringBuilder.append(currentValue);
+        int extraSpaces = columnWidth - currentValue.length();
+        for (int j = 0; j < extraSpaces; j++) {
+          stringBuilder.append(" ");
+        }
+      }
+      if (i < values.length - 1) {
+        stringBuilder.append(VERTICAL_BAR);
+      }
+    }
+    stringBuilder.append('\n');
+  }
+
+  /**
+   * Append a horizontal separator made up of dashes to a StringBuilder.
+   *
+   * @param stringBuilder the StringBuilder object.
+   * @param columnWidths  the width of the columns of the table.
+   */
+  private static void appendHorizontalSeparator(StringBuilder stringBuilder, int[] columnWidths, int columnCount) {
+    String[] pseudoRow = new String[columnCount];
+    for (int i = 0; i < columnWidths.length; i++) {
+      pseudoRow[i] = makeRepeatedCharacterString(columnWidths[i], HORIZONTAL_BAR);
+    }
+    appendRow(stringBuilder, columnWidths, pseudoRow);
+  }
+
+  /**
    * Inserts a row of values in the end of the table. If not enough values are supplied, the remaining columns are
    * filled with empty strings.
    *
@@ -178,48 +220,6 @@ public class Table {
     int difference = availableColumns - DungeonMath.sum(widths);
     DungeonMath.distribute(difference, widths);
     return widths;
-  }
-
-  /**
-   * Appends a row to a StringBuilder.
-   *
-   * @param stringBuilder the StringBuilder object
-   * @param columnWidths  the widths of the columns of the table
-   * @param values        the values of the row
-   */
-  private void appendRow(StringBuilder stringBuilder, int[] columnWidths, String... values) {
-    String currentValue;
-    for (int i = 0; i < values.length; i++) {
-      int columnWidth = columnWidths[i];
-      currentValue = values[i];
-      if (currentValue.length() > columnWidth) {
-        stringBuilder.append(currentValue.substring(0, columnWidth - 3)).append("...");
-      } else {
-        stringBuilder.append(currentValue);
-        int extraSpaces = columnWidth - currentValue.length();
-        for (int j = 0; j < extraSpaces; j++) {
-          stringBuilder.append(" ");
-        }
-      }
-      if (i < values.length - 1) {
-        stringBuilder.append(VERTICAL_BAR);
-      }
-    }
-    stringBuilder.append('\n');
-  }
-
-  /**
-   * Append a horizontal separator made up of dashes to a StringBuilder.
-   *
-   * @param stringBuilder the StringBuilder object.
-   * @param columnWidths  the width of the columns of the table.
-   */
-  private void appendHorizontalSeparator(StringBuilder stringBuilder, int[] columnWidths, int columnCount) {
-    String[] pseudoRow = new String[columnCount];
-    for (int i = 0; i < columnWidths.length; i++) {
-      pseudoRow[i] = makeRepeatedCharacterString(columnWidths[i], HORIZONTAL_BAR);
-    }
-    appendRow(stringBuilder, columnWidths, pseudoRow);
   }
 
   private class Column {
