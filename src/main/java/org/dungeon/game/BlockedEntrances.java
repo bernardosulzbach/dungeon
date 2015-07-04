@@ -58,7 +58,11 @@ public class BlockedEntrances implements Serializable {
 
   @Override
   public String toString() {
-    return Utils.enumerate(Arrays.asList(setOfBlockedEntrances.toArray()));
+    if (setOfBlockedEntrances.isEmpty()) {
+      return "None";
+    } else {
+      return Utils.enumerate(Arrays.asList(setOfBlockedEntrances.toArray()));
+    }
   }
 
 }
