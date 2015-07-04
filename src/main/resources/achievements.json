@@ -4,11 +4,10 @@
       "id": "FIRST_BLOOD",
       "name": "First Blood",
       "info": "Kill a creature.",
-      "text": "killed a living creature",
+      "text": "killed a creature",
       "battleRequirements": [
         {
-          "query": {
-          },
+          "query": {},
           "count": 1
         }
       ]
@@ -20,77 +19,10 @@
       "text": "killed ten creatures",
       "battleRequirements": [
         {
-          "query": {
-          },
+          "query": {},
           "count": 10
         }
       ]
-    },
-    {
-      "id": "FOREST_HUNTER",
-      "name": "Forest Hunter",
-      "info": "Kill 10 creatures in forests.",
-      "text": "killed ten creatures in forests",
-      "explorationRequirements": {
-        "killsByLocationID": {
-          "FOREST": 10
-        }
-      }
-    },
-    {
-      "id": "I_MISS_YOU",
-      "name": "I Miss You!",
-      "info": "Visit the same graveyard 10 times.",
-      "text": "visited the same graveyard ten times",
-      "explorationRequirements": {
-        "maximumNumberOfVisits": {
-          "GRAVEYARD": 10
-        }
-      }
-    },
-    {
-      "id": "TIMBER_BRIDGE_ENTHUSIAST",
-      "name": "Timber Bridge Enthusiast",
-      "info": "Visit the same timber bridge 5 times.",
-      "text": "visited the same timber bridge five times",
-      "explorationRequirements": {
-        "maximumNumberOfVisits": {
-          "TIMBER_BRIDGE": 5
-        }
-      }
-    },
-    {
-      "id": "STONE_BRIDGE_ENTHUSIAST",
-      "name": "Stone Bridge Enthusiast",
-      "info": "Visit the same stone bridge 5 times.",
-      "text": "visited the same stone bridge five times",
-      "explorationRequirements": {
-        "maximumNumberOfVisits": {
-          "STONE_BRIDGE": 5
-        }
-      }
-    },
-    {
-      "id": "ARCHAEOLOGIST",
-      "name": "Archaeologist",
-      "info": "Visit 10 different deserts.",
-      "text": "visited ten different deserts",
-      "explorationRequirements": {
-        "visitedLocations": {
-          "DESERT": 10
-        }
-      }
-    },
-    {
-      "id": "REAPER",
-      "name": "Reaper",
-      "info": "Visit 10 distinct graveyards.",
-      "text": "visited ten distinct graveyards",
-      "explorationRequirements": {
-        "visitedLocations": {
-          "GRAVEYARD": 10
-        }
-      }
     },
     {
       "id": "EVIL_BASTARD",
@@ -99,23 +31,19 @@
       "text": "killed an innocent rabbit",
       "battleRequirements": [
         {
-          "query": {
-            "id": "RABBIT"
-          },
+          "query": {"id": "RABBIT"},
           "count": 1
         }
       ]
     },
     {
-      "id": "BANE",
-      "name": "Bane",
+      "id": "BAT_YOU_ARE_IMPRESSED",
+      "name": "Bat You are Impressed",
       "info": "Kill 6 bats.",
       "text": "killed six bats",
       "battleRequirements": [
         {
-          "query": {
-            "id": "BAT"
-          },
+          "query": {"id": "BAT"},
           "count": 6
         }
       ]
@@ -127,9 +55,7 @@
       "text": "killed four rats",
       "battleRequirements": [
         {
-          "query": {
-            "id": "RAT"
-          },
+          "query": {"id": "RAT"},
           "count": 4
         }
       ]
@@ -141,9 +67,7 @@
       "text": "killed two zombies",
       "battleRequirements": [
         {
-          "query": {
-            "id": "ZOMBIE"
-          },
+          "query": {"id": "ZOMBIE"},
           "count": 2
         }
       ]
@@ -155,9 +79,7 @@
       "text": "killed three orcs",
       "battleRequirements": [
         {
-          "query": {
-            "id": "ORC"
-          },
+          "query": {"id": "ORC"},
           "count": 3
         }
       ]
@@ -169,10 +91,56 @@
       "text": "killed half a dozen frogs",
       "battleRequirements": [
         {
-          "query": {
-            "id": "FROG"
-          },
+          "query": {"id": "FROG"},
           "count": 6
+        }
+      ]
+    },
+    {
+      "id": "SHINE_ON_YOU_CRAZY_UNDEAD",
+      "name": "Shine On You Crazy Undead",
+      "info": "Kill a Radiant Ghoul.",
+      "text": "killed a Radiant Ghoul",
+      "battleRequirements": [
+        {
+          "query": {"id": "RADIANT_GHOUL"},
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "HUNTER",
+      "name": "Hunter",
+      "info": "Kill 10 beasts.",
+      "text": "killed ten beasts",
+      "battleRequirements": [
+        {
+          "query": {"type": "Beast"},
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "PROFESSIONAL_COWARD",
+      "name": "Professional Coward",
+      "info": "Kill 10 critters.",
+      "text": "killed ten critters",
+      "battleRequirements": [
+        {
+          "query": {"type": "Critter"},
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "PARANOID",
+      "name": "Paranoid",
+      "info": "Kill 25 critters.",
+      "text": "killed twenty-five critters",
+      "battleRequirements": [
+        {
+          "query": {"type": "Critter"},
+          "count": 25
         }
       ]
     },
@@ -191,48 +159,6 @@
             }
           },
           "count": 1
-        }
-      ]
-    },
-    {
-      "id": "HUNTER",
-      "name": "Hunter",
-      "info": "Kill 10 beasts.",
-      "text": "killed ten beasts",
-      "battleRequirements": [
-        {
-          "query": {
-            "type": "Beast"
-          },
-          "count": 10
-        }
-      ]
-    },
-    {
-      "id": "PROFESSIONAL_COWARD",
-      "name": "Professional Coward",
-      "info": "Kill 10 critters.",
-      "text": "killed ten critters",
-      "battleRequirements": [
-        {
-          "query": {
-            "type": "Critter"
-          },
-          "count": 10
-        }
-      ]
-    },
-    {
-      "id": "PARANOID",
-      "name": "Paranoid",
-      "info": "Kill 25 critters.",
-      "text": "killed twenty-five critters",
-      "battleRequirements": [
-        {
-          "query": {
-            "type": "Critter"
-          },
-          "count": 25
         }
       ]
     },
@@ -307,7 +233,7 @@
     {
       "id": "LUMBERJACK",
       "name": "Lumberjack",
-      "info": "Kill 10 creatures with a axe.",
+      "info": "Kill 10 creatures with an axe.",
       "text": "killed ten creatures with the axe",
       "battleRequirements": [
         {
@@ -398,6 +324,178 @@
           "count": 4
         }
       ]
+    },
+    {
+      "id": "LIKE_MOTHS_TO_FLAME",
+      "name": "Like Moths To Flame",
+      "info": "Kill 10 creatures with the Fireball skill.",
+      "text": "killed ten creatures with the Fireball skill",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "SKILL",
+              "id": "FIREBALL"
+            }
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "NIGHT_HUNT",
+      "name": "Night Hunt",
+      "info": "Kill 1 creature during the night.",
+      "text": "killed a creature during the night",
+      "battleRequirements": [
+        {
+          "query": {"partOfDay": "NIGHT"},
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "MIDNIGHT_HUNTER",
+      "name": "Midnight Hunter",
+      "info": "Kill 10 creatures at midnight.",
+      "text": "killed ten creatures at midnight",
+      "battleRequirements": [
+        {
+          "query": {"partOfDay": "MIDNIGHT"},
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "FRESH_LUNCH",
+      "name": "Fresh Lunch",
+      "info": "Kill 2 beasts at noon.",
+      "text": "killed two beasts at noon",
+      "battleRequirements": [
+        {
+          "query": {
+            "type": "Beast",
+            "partOfDay": "NOON"
+          },
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "SUNSET_MADNESS",
+      "name": "Sunset Madness",
+      "info": "Kill 15 creatures at dusk.",
+      "text": "killed fifteen creatures at dusk",
+      "battleRequirements": [
+        {
+          "query": {"partOfDay": "DUSK"},
+          "count": 15
+        }
+      ]
+    },
+    {
+      "id": "MORNING_BUSINESSES",
+      "name": "Morning Businesses",
+      "info": "Kill 20 creatures in the morning.",
+      "text": "killed twenty creatures in the morning",
+      "battleRequirements": [
+        {
+          "query": {"partOfDay": "MORNING"},
+          "count": 20
+        }
+      ]
+    },
+    {
+      "id": "TWENTY_FOUR_HOURS",
+      "name": "Twenty Four Hours",
+      "info": "Kill a creature at every part of the day.",
+      "text": "killed a creature at every part of the day",
+      "battleRequirements": [
+        {
+          "query": {"partOfDay": "NIGHT"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "DAWN"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "MORNING"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "NOON"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "AFTERNOON"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "DUSK"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "EVENING"},
+          "count": 1
+        },
+        {
+          "query": {"partOfDay": "MIDNIGHT"},
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "FOREST_HUNTER",
+      "name": "Forest Hunter",
+      "info": "Kill 10 creatures in forests.",
+      "text": "killed ten creatures in forests",
+      "explorationRequirements": {
+        "killsByLocationID": {"FOREST": 10}
+      }
+    },
+    {
+      "id": "I_MISS_YOU",
+      "name": "I Miss You!",
+      "info": "Visit the same graveyard 10 times.",
+      "text": "visited the same graveyard ten times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {"GRAVEYARD": 10}
+      }
+    },
+    {
+      "id": "TIMBER_BRIDGE_ENTHUSIAST",
+      "name": "Timber Bridge Enthusiast",
+      "info": "Visit the same timber bridge 5 times.",
+      "text": "visited the same timber bridge five times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {"TIMBER_BRIDGE": 5}
+      }
+    },
+    {
+      "id": "STONE_BRIDGE_ENTHUSIAST",
+      "name": "Stone Bridge Enthusiast",
+      "info": "Visit the same stone bridge 5 times.",
+      "text": "visited the same stone bridge five times",
+      "explorationRequirements": {
+        "maximumNumberOfVisits": {"STONE_BRIDGE": 5}
+      }
+    },
+    {
+      "id": "ARCHAEOLOGIST",
+      "name": "Archaeologist",
+      "info": "Visit 10 different deserts.",
+      "text": "visited ten different deserts",
+      "explorationRequirements": {
+        "visitedLocations": {"DESERT": 10}
+      }
+    },
+    {
+      "id": "REAPER",
+      "name": "Reaper",
+      "info": "Visit 10 distinct graveyards.",
+      "text": "visited ten distinct graveyards",
+      "explorationRequirements": {"visitedLocations": {"GRAVEYARD": 10}}
     }
   ]
 }
