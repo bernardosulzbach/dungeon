@@ -47,7 +47,6 @@ import org.dungeon.io.Sleeper;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
-import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
@@ -187,34 +186,8 @@ public class Hero extends Creature {
    * visibility of the specified Entity.
    */
   private boolean canSee(Entity entity) {
-    return entity.getVisibility().visibleUnder(getLocation().getLuminosity());
-  }
-
-  /**
-   * Checks if the Hero is able to see any Creature other than himself or herself at the current Location.
-   *
-   * @return true if the Hero is able to see any Creature other than himself or herself at the current Location
-   */
-  private boolean canSeeACreature() {
-    for (Creature creature : getLocation().getCreatures()) {
-      if (creature != this && canSee(creature)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Convenience method that avoids code duplication.
-   * Returns whether the Hero can see a Creature, writing a warning if he or she can't.
-   */
-  private boolean canSeeACreatureWarnIfNot() {
-    if (canSeeACreature()) {
-      return true;
-    } else {
-      IO.writeString("You do not see a possible target.");
-      return false;
-    }
+    // The Hero is always able to find himself.
+    return entity == this || entity.getVisibility().visibleUnder(getLocation().getLuminosity());
   }
 
   /**
@@ -245,19 +218,6 @@ public class Hero extends Creature {
 
   private <T extends Entity> Matches<T> filterByVisibility(Matches<T> matches) {
     return Matches.fromCollection(filterByVisibility(matches.toList()));
-  }
-
-  /**
-   * Filters a List of Creatures, returning all that have a specified Tag.
-   */
-  private List<Creature> filterByTag(List<Creature> list, Creature.Tag tag) {
-    List<Creature> visible = new ArrayList<Creature>();
-    for (Creature candidate : list) {
-      if (candidate.hasTag(tag)) {
-        visible.add(candidate);
-      }
-    }
-    return visible;
   }
 
   /**
@@ -325,7 +285,7 @@ public class Hero extends Creature {
     if (creatures.isEmpty()) {
       IO.writeString("You don't see anyone here.");
     } else {
-      IO.writeString("Here you can see " + enumerateEntities(creatures) + ".");
+      IO.writeString("Here you can see " + HeroUtils.enumerateEntities(creatures) + ".");
     }
   }
 
@@ -337,23 +297,8 @@ public class Hero extends Creature {
     items = filterByVisibility(items);
     if (!items.isEmpty()) {
       IO.writeNewLine();
-      IO.writeString("On the ground you see " + enumerateEntities(items) + ".");
+      IO.writeString("On the ground you see " + HeroUtils.enumerateEntities(items) + ".");
     }
-  }
-
-  /**
-   * Returns a String representation of the enumeration of all the Entities in a given List.
-   */
-  private String enumerateEntities(final List<? extends Entity> listOfEntities) {
-    CounterMap<Name> nameOccurrences = new CounterMap<Name>();
-    for (Entity entity : listOfEntities) {
-      nameOccurrences.incrementCounter(entity.getName());
-    }
-    ArrayList<String> quantifiedNames = new ArrayList<String>();
-    for (Name name : nameOccurrences.keySet()) {
-      quantifiedNames.add(name.getQuantifiedName(nameOccurrences.getCounter(name)));
-    }
-    return Utils.enumerate(quantifiedNames);
   }
 
   private Item selectInventoryItem(IssuedCommand issuedCommand) {
@@ -395,8 +340,8 @@ public class Hero extends Creature {
     } else {
       visibleItems = inventory.getItems();
     }
-    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleItems)) {
-      return findItem(visibleItems, issuedCommand.getArguments());
+    if (issuedCommand.hasArguments() || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleItems)) {
+      return HeroUtils.findItem(visibleItems, issuedCommand.getArguments());
     } else {
       IO.writeString("You must specify an item.");
       return null;
@@ -404,34 +349,15 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to find an item by its name in a specified Inventory.
+   * Issues this Hero to attack a target.
    *
-   * @return an Item object if there is a match. null otherwise.
-   */
-  private Item findItem(List<Item> items, String[] tokens) {
-    Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
-    if (matches.size() == 0) {
-      IO.writeString("Item not found.");
-    } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
-      return matches.getMatch(0);
-    } else {
-      Messenger.printAmbiguousSelectionMessage();
-    }
-    return null;
-  }
-
-  /**
-   * The method that lets the hero attack a target.
-   *
-   * @param issuedCommand the command entered by the player.
-   * @return an integer representing how many seconds the battle lasted.
+   * @param issuedCommand the command issued by the player
+   * @return an integer representing how many seconds the battle lasted
    */
   public int attackTarget(IssuedCommand issuedCommand) {
-    if (canSeeACreatureWarnIfNot()) {
-      Creature target = selectTarget(issuedCommand);
-      if (target != null) {
-        return Engine.battle(this, target);
-      }
+    Creature target = selectTarget(issuedCommand);
+    if (target != null) {
+      return Engine.battle(this, target);
     }
     return 0;
   }
@@ -439,12 +365,12 @@ public class Hero extends Creature {
   /**
    * Attempts to select a target from the current location using the player input.
    *
-   * @param issuedCommand the command entered by the player.
-   * @return a target Creature or {@code null}.
+   * @param issuedCommand the command entered by the player
+   * @return a target Creature or {@code null}
    */
   private Creature selectTarget(IssuedCommand issuedCommand) {
     List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
-    if (issuedCommand.hasArguments() || checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
+    if (issuedCommand.hasArguments() || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
       return findCreature(issuedCommand.getArguments());
     } else {
       IO.writeString("You must specify a target.");
@@ -483,39 +409,6 @@ public class Hero extends Creature {
       Messenger.printAmbiguousSelectionMessage();
     }
     return null;
-  }
-
-  /**
-   * Returns whether all Entities in a Collection have the same name or not.
-   *
-   * @param entities a {@code Collection} of Entities
-   * @return a boolean indicating if all Entities in the collection have the same name
-   */
-  private boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities) {
-    return checkIfAllEntitiesHaveTheSameName(entities, null);
-  }
-
-  /**
-   * Returns whether all Entities in a Collection have the same name or not.
-   *
-   * @param entities a {@code Collection} of Entities
-   * @param ignored  an Entity to be ignored, should be {@code null} if no Entity is to be ignored
-   * @return a boolean indicating if all Entities in the collection have the same name
-   */
-  private boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities, Entity ignored) {
-    Name lastSeenName = null;
-    for (Entity entity : entities) {
-      if (ignored == null || entity != ignored) {
-        if (lastSeenName == null) {
-          lastSeenName = entity.getName();
-        } else {
-          if (!entity.getName().equals(lastSeenName)) { // Got an Entity with a different name.
-            return false;
-          }
-        }
-      }
-    }
-    return true;
   }
 
   /**
@@ -663,27 +556,25 @@ public class Hero extends Creature {
    * @return how many seconds this action took
    */
   public int parseMilk(IssuedCommand issuedCommand) {
-    if (canSeeACreatureWarnIfNot()) {
-      if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
-        Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
-        if (selectedCreature != null) {
-          if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
-            return milk(selectedCreature);
-          } else {
-            IO.writeString("This creature is not milkable.");
-          }
-        }
-      } else { // Filter milkable creatures.
-        List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
-        List<Creature> milkableCreatures = filterByTag(visibleCreatures, Tag.MILKABLE);
-        if (milkableCreatures.isEmpty()) {
-          IO.writeString("You can't find a milkable creature.");
+    if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
+      Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
+      if (selectedCreature != null) {
+        if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
+          return milk(selectedCreature);
         } else {
-          if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
-            return milk(milkableCreatures.get(0));
-          } else {
-            IO.writeString("You need to be more specific.");
-          }
+          IO.writeString("This creature is not milkable.");
+        }
+      }
+    } else { // Filter milkable creatures.
+      List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
+      List<Creature> milkableCreatures = HeroUtils.filterByTag(visibleCreatures, Tag.MILKABLE);
+      if (milkableCreatures.isEmpty()) {
+        IO.writeString("You can't find a milkable creature.");
+      } else {
+        if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
+          return milk(milkableCreatures.get(0));
+        } else {
+          IO.writeString("You need to be more specific.");
         }
       }
     }
