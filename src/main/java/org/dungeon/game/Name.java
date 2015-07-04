@@ -19,6 +19,8 @@ package org.dungeon.game;
 
 import org.dungeon.io.DLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -32,10 +34,10 @@ public final class Name implements Serializable {
   /**
    * Constructs a name based on the specified forms.
    *
-   * @param singular the singular form
-   * @param plural   the plural form
+   * @param singular the singular form, not null
+   * @param plural   the plural form, not null
    */
-  private Name(String singular, String plural) {
+  private Name(@NotNull String singular, @NotNull String plural) {
     this.singular = singular;
     this.plural = plural;
   }
@@ -43,10 +45,10 @@ public final class Name implements Serializable {
   /**
    * Creates a new Name from a singular form.
    *
-   * @param singular the singular form
+   * @param singular the singular form, not null
    * @return a Name constructed using the provided singular form and this form concatenated with an 's'
    */
-  public static Name newInstance(String singular) {
+  public static Name newInstance(@NotNull String singular) {
     return newInstance(singular, singular + 's');
   }
 
@@ -134,20 +136,13 @@ public final class Name implements Serializable {
 
     Name name = (Name) o;
 
-    if (singular != null ? !singular.equals(name.singular) : name.singular != null) {
-      return false;
-    }
-    if (plural != null ? !plural.equals(name.plural) : name.plural != null) {
-      return false;
-    }
-
-    return true;
+    return singular.equals(name.singular) && plural.equals(name.plural);
   }
 
   @Override
   public int hashCode() {
-    int result = singular != null ? singular.hashCode() : 0;
-    result = 31 * result + (plural != null ? plural.hashCode() : 0);
+    int result = singular.hashCode();
+    result = 31 * result + plural.hashCode();
     return result;
   }
 
