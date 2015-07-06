@@ -24,6 +24,7 @@ import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.achievements.BattleStatisticsQuery;
 import org.dungeon.achievements.BattleStatisticsRequirement;
+import org.dungeon.date.DungeonTimeParser;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.AttackAlgorithmID;
 import org.dungeon.entity.creatures.Creature;
@@ -143,11 +144,15 @@ public final class GameData {
         blueprint.setText(reader.getValue("TEXT"));
       }
       if (reader.hasValue("DECOMPOSITION_PERIOD")) {
-        blueprint.setPutrefactionPeriod(readIntegerFromResourceReader(reader, "DECOMPOSITION_PERIOD"));
+        long seconds = DungeonTimeParser.parsePeriod(reader.getValue("DECOMPOSITION_PERIOD")).getSeconds();
+        blueprint.setPutrefactionPeriod(seconds);
       }
       blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
       blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
       blueprint.setVisibility(reader.readVisibility());
+      if (reader.hasValue("LUMINOSITY")) {
+        blueprint.setLuminosity(reader.readLuminosity());
+      }
       blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
       blueprint.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
