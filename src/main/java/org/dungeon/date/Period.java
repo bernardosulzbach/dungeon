@@ -19,6 +19,8 @@ package org.dungeon.date;
 
 import org.dungeon.util.DungeonMath;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -26,6 +28,9 @@ import java.io.Serializable;
  */
 public class Period implements Serializable {
 
+  /**
+   * The duration, in milliseconds.
+   */
   private final long difference;
 
   /**
@@ -34,12 +39,40 @@ public class Period implements Serializable {
    * @param start the start of the period.
    * @param end   the end of the period.
    */
-  public Period(Date start, Date end) {
+  public Period(@NotNull Date start, @NotNull Date end) {
     difference = end.getTime() - start.getTime();
+  }
+
+  /**
+   * Constructs a period from the specified duration, in milliseconds.
+   *
+   * @param duration the duration, in milliseconds
+   */
+  Period(long duration) {
+    difference = duration;
   }
 
   public long getSeconds() {
     return difference / 1000;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Period period = (Period) o;
+
+    return difference == period.difference;
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) (difference ^ (difference >>> 32));
   }
 
   @Override
