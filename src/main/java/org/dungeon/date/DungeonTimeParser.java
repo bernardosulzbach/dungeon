@@ -45,6 +45,9 @@ public final class DungeonTimeParser {
   @NotNull
   public static Period parsePeriod(@NotNull String string) {
     List<String> tokens = cleanAndTokenize(string);
+    if (tokens.size() < 2) {
+      throw new IllegalArgumentException("string should provide at least one multiplier-unit pair.");
+    }
     long milliseconds = 0;
     // Alternatively get a multiplier and a unit.
     Long multiplier = null;

@@ -25,6 +25,7 @@ import static org.dungeon.date.DungeonTimeUnit.SECOND;
 import static org.dungeon.date.DungeonTimeUnit.YEAR;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DungeonTimeParserTest {
@@ -53,6 +54,42 @@ public class DungeonTimeParserTest {
     long duration = 2 * YEAR.milliseconds + 5 * MONTH.milliseconds + 8 * DAY.milliseconds + 20 * HOUR.milliseconds;
     Period javadocExample = new Period(duration);
     assertTrue(DungeonTimeParser.parsePeriod("2 years, 5 months, 8 days, and 20 hours").equals(javadocExample));
+    // Exception tests.
+    try {
+      DungeonTimeParser.parsePeriod("");
+      Assert.fail();
+    } catch (IllegalArgumentException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("1");
+      Assert.fail();
+    } catch (IllegalArgumentException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("second");
+      Assert.fail();
+    } catch (IllegalArgumentException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("and second");
+      Assert.fail();
+    } catch (IllegalArgumentException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("-1 seconds");
+      Assert.fail();
+    } catch (DungeonTimeParser.InvalidMultiplierException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("0 seconds");
+      Assert.fail();
+    } catch (DungeonTimeParser.InvalidMultiplierException expected) {
+    }
+    try {
+      DungeonTimeParser.parsePeriod("1 foo");
+      Assert.fail();
+    } catch (DungeonTimeParser.InvalidUnitException expected) {
+    }
   }
 
 }
