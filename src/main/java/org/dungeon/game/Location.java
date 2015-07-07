@@ -177,6 +177,17 @@ public final class Location implements Serializable {
     return blockedEntrances.isBlocked(direction);
   }
 
+  /**
+   * Refreshes all the items in this location's inventory and all the items in the inventories of the creatures in this
+   * location.
+   */
+  public void refreshItems() {
+    getInventory().refreshItems();
+    for (Creature creature : creatures) {
+      creature.getInventory().refreshItems();
+    }
+  }
+
   @Override
   public String toString() {
     return name.getSingular();

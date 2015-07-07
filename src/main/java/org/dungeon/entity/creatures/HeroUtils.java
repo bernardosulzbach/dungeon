@@ -113,4 +113,12 @@ final class HeroUtils {
     return checkIfAllEntitiesHaveTheSameName(entities, null);
   }
 
+  static void writeNoLongerInInventoryMessage(Item item) {
+    IO.writeString(item.getQualifiedName() + " is no longer in the inventory.");
+  }
+
+  public static void writeNoLongerInLocationMessage(Item item) {
+    IO.writeString(item.getQualifiedName() + " is no longer in this location.");
+  }
+
 }

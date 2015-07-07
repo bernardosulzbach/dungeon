@@ -19,7 +19,6 @@ package org.dungeon.game;
 
 import org.dungeon.commands.Command;
 import org.dungeon.commands.CommandCollection;
-import org.dungeon.commands.CommandResult;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.DLogger;
@@ -31,7 +30,6 @@ public class Game {
 
   private static GameWindow gameWindow;
   private static GameState gameState;
-  private static CommandResult lastCommandResult;
 
   public static void main(String[] args) {
     GameData.loadGameData();
@@ -72,7 +70,7 @@ public class Game {
   /**
    * Sets a new GameState to the static field.
    * Can be used to nullify the GameState, something that should be done while another GameState is being created.
-   * If the provided GameState is not null, this setter also invokes Hero.look() and Engine.refresh().
+   * If the provided GameState is not null, this setter also invokes Hero.look().
    *
    * @param state another GameState object, or null
    */
@@ -82,7 +80,6 @@ public class Game {
       DLogger.info("Set the GameState field in Game to null.");
     } else {
       DLogger.info("Set the GameState field in Game to a GameState.");
-      Engine.refresh();
       IO.writeNewLine(); // Improves readability.
       gameState.getHero().look(null);
     }
@@ -101,18 +98,7 @@ public class Game {
       IO.writeString("You died.");
       setGameState(loadAGameStateOrCreateANewOne());
     } else {
-      // Advance the campaign's world date.
-      if (lastCommandResult != null) {
-        if (lastCommandResult.getDuration() > 0) {
-          gameState.getWorld().rollDate(lastCommandResult.getDuration());
-        }
-        // If the last turn changed the GameState, set the game as not saved.
-        if (lastCommandResult.evaluateIfGameStateChanged()) {
-          gameState.setSaved(false);
-        }
-      }
-      // Refresh the campaign state.
-      Engine.refresh();
+      Engine.endTurn();
     }
   }
 
@@ -127,7 +113,7 @@ public class Game {
     gameState.getStatistics().addCommand(issuedCommand);
     Command command = CommandCollection.getDefaultCommandCollection().getCommand(issuedCommand);
     if (command != null) {
-      lastCommandResult = command.execute(issuedCommand);
+      command.execute(issuedCommand);
     } else {
       Messenger.printInvalidCommandMessage(issuedCommand.getFirstToken());
     }

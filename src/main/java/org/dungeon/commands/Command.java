@@ -17,6 +17,9 @@
 
 package org.dungeon.commands;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Command abstract class that defines a type for command objects.
  * <p/>
@@ -31,7 +34,7 @@ public abstract class Command {
    *
    * @param name a String for name, not null, lowercase
    */
-  public Command(String name) {
+  public Command(@NotNull String name) {
     this(name, null);
   }
 
@@ -41,7 +44,7 @@ public abstract class Command {
    * @param name a String for name, not null, lowercase
    * @param info a String for info, nullable
    */
-  public Command(String name, String info) {
+  public Command(@NotNull String name, @Nullable String info) {
     description = new CommandDescription(name, info);
   }
 
@@ -72,12 +75,9 @@ public abstract class Command {
   }
 
   /**
-   * Executes this Command, given an IssuedCommand object. Returns a CommandResult object or null.
-   * If the duration of the execution is zero and if the game state is not changed, this method may return null.
-   *
-   * @return a CommandResult object or null
+   * Executes this Command, given an IssuedCommand object.
    */
-  public abstract CommandResult execute(IssuedCommand issuedCommand);
+  public abstract void execute(@NotNull IssuedCommand issuedCommand);
 
   @Override
   public String toString() {

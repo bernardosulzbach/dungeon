@@ -18,8 +18,6 @@
 package org.dungeon.game;
 
 import org.dungeon.commands.IssuedCommand;
-import org.dungeon.date.Date;
-import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.items.ItemFactory;
@@ -31,21 +29,94 @@ import org.dungeon.util.Constants;
 import java.awt.Color;
 
 /**
- * Engine class that contains most static methods that need to be called to alter a GameState object.
+ * Engine class that contains most static methods that need to be called to alter the loaded GameState.
  */
-public class Engine {
+public final class Engine {
 
   private static final int BATTLE_TURN_DURATION = 30;
   private static final int WALK_BLOCKED = 2;
   private static final int WALK_SUCCESS = 200;
 
+  private Engine() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
+
   /**
-   * Refreshes the game, should be called after every turn.
+   * Refreshes the game.
+   * This method should be called whenever the state of the game is changed and the engine should be updated.
+   * If time passed, use {@link org.dungeon.game.Engine#rollDateAndRefresh(int)}.
    */
   public static void refresh() {
-    refreshAchievements();
+    effectivelyUpdate(0);
+  }
+
+  /**
+   * Rolls the world date forward and refreshes the game.
+   * This method should be called whenever the state of the game is changed and the engine should be updated.
+   * If no time passed, use {@link org.dungeon.game.Engine#refresh()}.
+   *
+   * @param seconds how many seconds to roll the date forward, a positive integer
+   */
+  public static void rollDateAndRefresh(int seconds) {
+    if (seconds <= 0) {
+      throw new IllegalArgumentException("seconds should be positive.");
+    }
+    effectivelyUpdate(seconds);
+  }
+
+  /**
+   * Effectively updates the game. Rolls time forward before silently refreshing the game.
+   *
+   * @param seconds how many seconds to roll the date forward, nonnegative
+   */
+  private static void effectivelyUpdate(int seconds) {
+    if (seconds < 0) {
+      throw new IllegalArgumentException("seconds should be nonnegative.");
+    }
+    if (seconds > 0) {
+      Game.getGameState().getWorld().rollDate(seconds);
+    }
+    silentRefresh();
+    notifyGameStateModification();
+  }
+
+  /**
+   * Sets the status of the GameState to unsaved.
+   */
+  private static void notifyGameStateModification() {
+    Game.getGameState().setSaved(false);
+  }
+
+  /**
+   * Silently refreshes the game. Does not produce any visible textual output.
+   */
+  private static void silentRefresh() {
     refreshSpawners();
     refreshItems();
+  }
+
+  /**
+   * Ends the turn, refreshing the game state and checking if any achievements were unlocked.
+   */
+  public static void endTurn() {
+    silentRefresh();
+    refreshAchievements();
+  }
+
+  /**
+   * Refreshes all relevant Spawners in the world, currently, that is the spawner of the location the Hero is at.
+   */
+  private static void refreshSpawners() {
+    Game.getGameState().getHeroLocation().refreshSpawners();
+  }
+
+  /**
+   * Refreshes all the items in the location the Hero is in.
+   * This includes all the items in the location's inventory and all the items in the inventories of the creatures in
+   * this location.
+   */
+  private static void refreshItems() {
+    Game.getGameState().getHeroLocation().refreshItems();
   }
 
   /**
@@ -57,88 +128,70 @@ public class Engine {
   }
 
   /**
-   * Refreshes all relevant Spawners in the world, currently, that is the spawner of the location the Hero is at.
-   */
-  private static void refreshSpawners() {
-    Game.getGameState().getHeroLocation().refreshSpawners();
-  }
-
-  private static void refreshItems() {
-    Game.getGameState().getHeroLocation().getInventory().refreshItems();
-    Game.getGameState().getHero().getInventory().refreshItems();
-  }
-
-  /**
-   * Parses an array of words to move the hero to another location.
+   * Parses an issued command to move the player.
    *
    * @param issuedCommand the command entered by the player.
-   * @return how many seconds the player walk took.
    */
-  public static int parseHeroWalk(IssuedCommand issuedCommand) {
+  public static void parseHeroWalk(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
       for (Direction dir : Direction.values()) {
         if (dir.equalsIgnoreCase(issuedCommand.getFirstArgument())) {
-          return heroWalk(dir);
+          heroWalk(dir);
+          return;
         }
       }
       IO.writeString(Constants.INVALID_INPUT);
     } else {
       IO.writeString("To where?", Color.ORANGE);
     }
-    // The user did not walk.
-    return 0;
   }
 
   /**
    * Attempts to move the hero character in a given direction.
-   *
-   * @return the number of seconds the player walk took as an integer.
    */
-  private static int heroWalk(Direction dir) {
+  private static void heroWalk(Direction dir) {
     GameState gameState = Game.getGameState();
     World world = gameState.getWorld();
     Point point = gameState.getHeroPosition();
     Hero hero = gameState.getHero();
     Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
     if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
+      rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
       IO.writeString("You cannot go " + dir + ".");
-      return WALK_BLOCKED;
+    } else {
+      Location destination = gameState.getWorld().moveHero(dir);
+      rollDateAndRefresh(WALK_SUCCESS); // Time spend walking.
+      hero.setLocation(destination);
+      refresh(); // Hero arrived in a new location, refresh the game.
+      hero.look(dir.invert());
+      ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
+      explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
     }
-    Location destination = gameState.getWorld().moveHero(dir);
-    refreshSpawners(); // Update the spawners of the location the Hero moved to.
-    hero.setLocation(destination);
-    hero.look(dir.invert());
-    ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
-    explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
-    return WALK_SUCCESS;
   }
 
   /**
-   * Simulates a battle between two Creatures and returns the number of turns the battle had.
+   * Simulates a battle between the hero and a creature.
    *
-   * @param hero the attacker.
-   * @param foe  the defender.
-   * @return how many seconds the battle lasted.
+   * @param hero the attacker
+   * @param foe  the defender
    */
   // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.
-  public static int battle(Hero hero, Creature foe) {
+  public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
       IO.writeString("You cannot attempt suicide.");
-      return 0;
     }
     CauseOfDeath causeOfDeath = null;
     // A counter variable that register how many turns the battle had.
-    int turns = 0;
     while (hero.isAlive() && foe.isAlive()) {
       causeOfDeath = hero.hit(foe);
       hero.getSkillRotation().refresh();
       foe.getSkillRotation().refresh();
-      turns++;
+      Engine.rollDateAndRefresh(BATTLE_TURN_DURATION);
       if (foe.isAlive()) {
         foe.hit(hero);
         hero.getSkillRotation().refresh();
         foe.getSkillRotation().refresh();
-        turns++;
+        Engine.rollDateAndRefresh(BATTLE_TURN_DURATION);
       }
     }
     Creature survivor;
@@ -151,18 +204,15 @@ public class Engine {
       defeated = hero;
     }
     IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
-    int duration = turns * BATTLE_TURN_DURATION;
     if (hero == survivor) {
       if (causeOfDeath == null) { // Should never happen. The hit must be a fatal blow for the target to die.
         throw new AssertionError();
       }
-      Date date = Game.getGameState().getWorld().getWorldDate().plus(duration, DungeonTimeUnit.SECOND);
-      PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(date);
+      PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
       battleCleanup(survivor, defeated);
     }
-    return duration;
   }
 
   /**

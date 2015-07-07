@@ -178,8 +178,10 @@ public class Creature extends Entity {
    * @param item the Item to be dropped
    */
   void dropItem(Item item) {
-    getInventory().removeItem(item);
-    getLocation().addItem(item);
+    if (getInventory().hasItem(item)) {
+      getInventory().removeItem(item);
+      getLocation().addItem(item);
+    }
   }
 
   /**

@@ -48,6 +48,7 @@ import org.dungeon.io.Sleeper;
 import org.dungeon.skill.Skill;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
+import org.dungeon.util.DungeonMath;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
@@ -55,6 +56,7 @@ import org.dungeon.util.Selectable;
 import org.dungeon.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class Hero extends Creature {
 
   // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
   // It seems a good idea to let the Hero have one dream every 4 hours.
-  private static final long DREAM_DURATION_IN_SECONDS = 4 * HOUR.as(SECOND);
+  private static final int DREAM_DURATION_IN_SECONDS = 4 * DungeonMath.safeCastLongToInteger(HOUR.as(SECOND));
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
   private static final int SECONDS_TO_DESTROY_AN_ITEM = 120;
@@ -81,9 +83,11 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_MILK_A_CREATURE = 45;
   private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
   private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
+  private static final int SECONDS_TO_CAST_REPAIR_ON_ITEM = 10;
+  private static final double MAXIMUM_HEALTH_THROUGH_REST = 0.6;
   private static final String ROTATION_SKILL_SEPARATOR = ">";
   private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
-  private static final int HEAL_TEN_PERCENT = 3600;
+  private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
@@ -121,20 +125,16 @@ public class Hero extends Creature {
   /**
    * Rest until the creature is healed to 60% of its health points.
    * <p/>
-   *
-   * @return the number of seconds the hero rested.
    */
-  public int rest() {
-    final double healthFractionThroughRest = 0.6;
-    if (getCurHealth() >= (int) (healthFractionThroughRest * getMaxHealth())) {
+  public void rest() {
+    if (getCurHealth() >= (int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth())) {
       IO.writeString("You are already rested.");
-      return 0;
     } else {
-      double fractionHealed = healthFractionThroughRest - (double) getCurHealth() / (double) getMaxHealth();
+      double fractionHealed = MAXIMUM_HEALTH_THROUGH_REST - (double) getCurHealth() / (double) getMaxHealth();
+      Engine.rollDateAndRefresh((int) (SECONDS_TO_REGENERATE_FULL_HEALTH * fractionHealed));
       IO.writeString("Resting...");
-      setCurHealth((int) (healthFractionThroughRest * getMaxHealth()));
+      setCurHealth((int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth()));
       IO.writeString("You feel rested.");
-      return (int) (HEAL_TEN_PERCENT * fractionHealed * 10);
     }
   }
 
@@ -142,11 +142,9 @@ public class Hero extends Creature {
    * Sleep until the sun rises.
    * <p/>
    * Depending on how much the Hero will sleep, this method may print a few dreams.
-   *
-   * @return the number of seconds the hero slept.
    */
-  public int sleep() {
-    int seconds = 0;
+  public void sleep() {
+    int seconds;
     World world = getLocation().getWorld();
     PartOfDay pod = world.getPartOfDay();
     if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
@@ -154,32 +152,23 @@ public class Hero extends Creature {
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
       // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
       seconds += Random.nextInteger(15 * 60 + 1);
-      int healing = getMaxHealth() * seconds / HEAL_TEN_PERCENT / 10;
-      if (!isCompletelyHealed()) {
-        int health = getCurHealth() + healing;
-        if (health < getMaxHealth()) {
-          setCurHealth(health);
-        } else {
-          setCurHealth(getMaxHealth());
-        }
-      }
-      // Make a copy of seconds as it must be returned unaltered so that the Engine rolls time forwards correctly.
-      int remainingSeconds = seconds;
-      while (remainingSeconds > 0) {
-        if (remainingSeconds > DREAM_DURATION_IN_SECONDS) {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * DREAM_DURATION_IN_SECONDS / HOUR.as(SECOND));
+      while (seconds > 0) {
+        final int cycleDuration = Math.min(DREAM_DURATION_IN_SECONDS, seconds);
+        Engine.rollDateAndRefresh(cycleDuration);
+        Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
+        if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
           IO.writeString(GameData.getDreamLibrary().getNextDream());
-          remainingSeconds -= DREAM_DURATION_IN_SECONDS;
-        } else {
-          Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * remainingSeconds / HOUR.as(SECOND));
-          break;
+        }
+        seconds -= cycleDuration;
+        if (!isCompletelyHealed()) {
+          int healing = getMaxHealth() * cycleDuration / SECONDS_TO_REGENERATE_FULL_HEALTH;
+          setCurHealth(Math.min(getCurHealth() + healing, getMaxHealth()));
         }
       }
       IO.writeString("You wake up.");
     } else {
       IO.writeString("You can only sleep at night.");
     }
-    return seconds;
   }
 
   /**
@@ -353,14 +342,12 @@ public class Hero extends Creature {
    * Issues this Hero to attack a target.
    *
    * @param issuedCommand the command issued by the player
-   * @return an integer representing how many seconds the battle lasted
    */
-  public int attackTarget(IssuedCommand issuedCommand) {
+  public void attackTarget(IssuedCommand issuedCommand) {
     Creature target = selectTarget(issuedCommand);
     if (target != null) {
-      return Engine.battle(this, target);
+      Engine.battle(this, target);
     }
-    return 0;
   }
 
   /**
@@ -415,7 +402,7 @@ public class Hero extends Creature {
   /**
    * Attempts to pick an Item and add it to the inventory.
    */
-  public int pickItem(IssuedCommand issuedCommand) {
+  public void pickItem(IssuedCommand issuedCommand) {
     if (canSeeAnItem()) {
       Item selectedItem = selectLocationItem(issuedCommand);
       if (selectedItem != null) {
@@ -425,19 +412,24 @@ public class Hero extends Creature {
         } else if (result == SimulationResult.WEIGHT_LIMIT) {
           IO.writeString("You can't carry more weight.");
         } else if (result == SimulationResult.SUCCESSFUL) {
-          getLocation().removeItem(selectedItem);
-          addItem(selectedItem);
-          return SECONDS_TO_PICK_UP_AN_ITEM;
+          Engine.rollDateAndRefresh(SECONDS_TO_PICK_UP_AN_ITEM);
+          if (getLocation().getInventory().hasItem(selectedItem)) {
+            getLocation().removeItem(selectedItem);
+            addItem(selectedItem);
+          } else {
+            HeroUtils.writeNoLongerInLocationMessage(selectedItem);
+          }
         }
       }
     } else {
       IO.writeString("You do not see any item you could pick up.");
     }
-    return 0;
   }
 
   /**
    * Adds an Item object to the inventory. As a precondition, simulateItemAddition(Item) should return SUCCESSFUL.
+   * <p/>
+   * Writes a message about this to the screen.
    *
    * @param item the Item to be added, not null
    */
@@ -453,34 +445,34 @@ public class Hero extends Creature {
   /**
    * Tries to equip an item from the inventory.
    */
-  public int parseEquip(IssuedCommand issuedCommand) {
+  public void parseEquip(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.WEAPON)) {
         equipWeapon(selectedItem);
-        return SECONDS_TO_EQUIP;
       } else {
         IO.writeString("You cannot equip that.");
       }
     }
-    return 0;
   }
 
   /**
    * Attempts to drop an item from the hero's inventory.
    */
-  public int dropItem(IssuedCommand issuedCommand) {
+  public void dropItem(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
-      int totalTime = SECONDS_TO_DROP_AN_ITEM;
       if (selectedItem == getWeapon()) {
-        totalTime += unequipWeapon();
+        unsetWeapon(); // Just unset the weapon, it does not need to be moved to the inventory before being dropped.
       }
-      dropItem(selectedItem);
+      // Take the time to drop the item.
+      Engine.rollDateAndRefresh(SECONDS_TO_DROP_AN_ITEM);
+      if (getInventory().hasItem(selectedItem)) { // The item may have disappeared while dropping.
+        dropItem(selectedItem); // Just drop it if has not disappeared.
+      }
+      // The character "dropped" the item even if it disappeared while doing it, so write about it.
       IO.writeString(String.format("Dropped %s.", selectedItem.getQualifiedName()));
-      return totalTime;
     }
-    return 0;
   }
 
   public void printInventory() {
@@ -522,46 +514,48 @@ public class Hero extends Creature {
   /**
    * Attempts to eat an item from the ground.
    */
-  public int eatItem(IssuedCommand issuedCommand) {
+  public void eatItem(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.FOOD)) {
-        FoodComponent food = selectedItem.getFoodComponent();
-        double remainingBites = selectedItem.getCurIntegrity() / (double) food.getIntegrityDecrementOnEat();
-        int healthIncrement;
-        if (remainingBites >= 1.0) {
-          healthIncrement = food.getNutrition();
+        Engine.rollDateAndRefresh(SECONDS_TO_EAT_AN_ITEM);
+        if (getInventory().hasItem(selectedItem)) {
+          FoodComponent food = selectedItem.getFoodComponent();
+          double remainingBites = selectedItem.getCurIntegrity() / (double) food.getIntegrityDecrementOnEat();
+          int healthIncrement;
+          if (remainingBites >= 1.0) {
+            healthIncrement = food.getNutrition();
+          } else {
+            // The healing may vary from 0 up to (nutrition - 1) if there is not enough for a bite.
+            healthIncrement = (int) (food.getNutrition() * remainingBites);
+          }
+          selectedItem.decrementIntegrityByEat();
+          if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
+            IO.writeString("You ate " + selectedItem.getName() + ".");
+          } else {
+            IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
+          }
+          addHealth(healthIncrement);
         } else {
-          // The healing may vary from 0 up to (nutrition - 1) if there is not enough for a bite.
-          healthIncrement = (int) (food.getNutrition() * remainingBites);
+          HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
-        selectedItem.decrementIntegrityByEat();
-        if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
-          IO.writeString("You ate " + selectedItem.getName() + ".");
-        } else {
-          IO.writeString("You ate a bit of " + selectedItem.getName() + ".");
-        }
-        addHealth(healthIncrement);
-        return SECONDS_TO_EAT_AN_ITEM;
       } else {
         IO.writeString("You can only eat food.");
       }
     }
-    return 0;
   }
 
   /**
    * The method that enables a Hero to drink milk from a Creature.
    *
    * @param issuedCommand the command entered by the player
-   * @return how many seconds this action took
    */
-  public int parseMilk(IssuedCommand issuedCommand) {
+  public void parseMilk(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
       Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
       if (selectedCreature != null) {
         if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
-          return milk(selectedCreature);
+          milk(selectedCreature);
         } else {
           IO.writeString("This creature is not milkable.");
         }
@@ -573,37 +567,39 @@ public class Hero extends Creature {
         IO.writeString("You can't find a milkable creature.");
       } else {
         if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
-          return milk(milkableCreatures.get(0));
+          milk(milkableCreatures.get(0));
         } else {
           IO.writeString("You need to be more specific.");
         }
       }
     }
-    return 0;
   }
 
-  private int milk(Creature creature) {
+  private void milk(Creature creature) {
+    Engine.rollDateAndRefresh(SECONDS_TO_MILK_A_CREATURE);
     IO.writeString("You drink milk directly from " + creature.getName().getSingular() + ".");
     addHealth(MILK_NUTRITION);
-    return SECONDS_TO_MILK_A_CREATURE;
   }
 
-  public int readItem(IssuedCommand issuedCommand) {
+  public void readItem(IssuedCommand issuedCommand) {
     Item selectedItem = selectInventoryItem(issuedCommand);
     if (selectedItem != null) {
       BookComponent book = selectedItem.getBookComponent();
       if (book != null) {
-        IO.writeString(book.getText());
-        IO.writeNewLine();
-        if (book.isDidactic()) {
-          learnSkill(book);
+        Engine.rollDateAndRefresh(book.getTimeToRead());
+        if (getInventory().hasItem(selectedItem)) { // Just in case if a readable item eventually decomposes.
+          IO.writeString(book.getText());
+          IO.writeNewLine();
+          if (book.isDidactic()) {
+            learnSkill(book);
+          }
+        } else {
+          HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
-        return book.getTimeToRead();
       } else {
         IO.writeString("You can only read books.");
       }
     }
-    return 0;
   }
 
   /**
@@ -627,23 +623,22 @@ public class Hero extends Creature {
   /**
    * Tries to destroy an item from the current location.
    */
-  public int destroyItem(IssuedCommand issuedCommand) {
+  public void destroyItem(IssuedCommand issuedCommand) {
     Item target = selectLocationItem(issuedCommand);
     if (target != null) {
-      if (target.hasTag(Item.Tag.REPAIRABLE)) {
-        if (target.isBroken()) {
-          IO.writeString(target.getName() + " is already crashed.");
-        } else {
-          target.setCurIntegrity(0);
-          IO.writeString(getName() + " crashed " + target.getName() + ".");
-        }
+      if (target.isBroken()) {
+        IO.writeString(target.getName() + " is already crashed.");
       } else {
-        getLocation().removeItem(target);
-        IO.writeString(getName() + " destroyed " + target.getName() + ".");
+        Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
+        if (getLocation().getInventory().hasItem(target)) {
+          target.setCurIntegrity(0);
+          String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
+          IO.writeString(getName() + " " + verb + " " + target.getName() + ".");
+        } else {
+          HeroUtils.writeNoLongerInLocationMessage(target);
+        }
       }
-      return SECONDS_TO_DESTROY_AN_ITEM;
     }
-    return 0;
   }
 
   private void equipWeapon(Item weapon) {
@@ -655,19 +650,26 @@ public class Hero extends Creature {
         unequipWeapon();
       }
     }
-    setWeapon(weapon);
-    IO.writeString(getName() + " equipped " + weapon.getName() + ".");
+    Engine.rollDateAndRefresh(SECONDS_TO_EQUIP);
+    if (getInventory().hasItem(weapon)) {
+      setWeapon(weapon);
+      IO.writeString(getName() + " equipped " + weapon.getQualifiedName() + ".");
+    } else {
+      HeroUtils.writeNoLongerInInventoryMessage(weapon);
+    }
   }
 
-  public int unequipWeapon() {
+  public void unequipWeapon() {
     if (hasWeapon()) {
-      IO.writeString(getName() + " unequipped " + getWeapon().getName() + ".");
+      Engine.rollDateAndRefresh(SECONDS_TO_UNEQUIP);
+    }
+    if (hasWeapon()) { // The weapon may have disappeared.
+      Item equippedWeapon = getWeapon();
       unsetWeapon();
-      return SECONDS_TO_UNEQUIP;
+      IO.writeString(getName() + " unequipped " + equippedWeapon.getName() + ".");
     } else {
       IO.writeString("You are not equipping a weapon.");
     }
-    return 0;
   }
 
   /**
@@ -700,14 +702,17 @@ public class Hero extends Creature {
 
   /**
    * Makes the Hero read the current date and time as well as he can.
-   *
-   * @return how many seconds the action took
    */
-  public int printDateAndTime() {
-    ItemIntegerPair pair = getBestClock();
-    Item clock = pair.getItem();
+  public void readTime() {
+    Item clock = getBestClock();
     if (clock != null) {
       IO.writeString(clock.getClockComponent().getTimeString());
+      // Assume that the hero takes the same time to read the clock and to put it back where it was.
+      if (getWeapon() == clock) {
+        Engine.rollDateAndRefresh(SECONDS_TO_READ_EQUIPPED_CLOCK);
+      } else {
+        Engine.rollDateAndRefresh(SECONDS_TO_READ_UNEQUIPPED_CLOCK);
+      }
     }
     World world = getLocation().getWorld();
     Date worldDate = getLocation().getWorld().getWorldDate();
@@ -716,16 +721,16 @@ public class Hero extends Creature {
       IO.writeString("Today is your birthday.");
     }
     IO.writeString("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
-    return pair.getInteger();
   }
 
   /**
    * Gets the easiest-to-access unbroken clock of the Hero. If the Hero has no unbroken clock, the easiest-to-access
    * broken clock. Lastly, if the Hero does not have a clock at all, null is returned.
    *
-   * @return an ItemIntegerPair object with the clock Item (or null) and how many seconds the search took in game time
+   * @return an Item object of the clock Item (or null)
    */
-  private ItemIntegerPair getBestClock() {
+  @Nullable
+  private Item getBestClock() {
     Item clock = null;
     if (hasWeapon() && getWeapon().hasTag(Item.Tag.CLOCK)) {
       if (!getWeapon().isBroken()) {
@@ -765,7 +770,8 @@ public class Hero extends Creature {
     } else {
       timeSpent = SECONDS_TO_READ_UNEQUIPPED_CLOCK;
     }
-    return new ItemIntegerPair(clock, timeSpent);
+    Engine.rollDateAndRefresh(timeSpent);
+    return clock;
   }
 
   /**
@@ -838,17 +844,20 @@ public class Hero extends Creature {
         getSkillRotation().printSkillRotation();
       }
     }
-
   }
 
-  public int castRepairOnEquippedItem() {
+  public void castRepairOnEquippedItem() {
     ID repairID = new ID("REPAIR");
     if (getSkillList().hasSkill(repairID)) {
       if (hasWeapon()) {
         if (getWeapon().hasTag(Item.Tag.REPAIRABLE)) {
-          getWeapon().incrementIntegrity(GameData.getSkillDefinitions().get(repairID).repair);
-          IO.writeString("You casted Repair on " + getWeapon().getName() + ".");
-          return 10; // Ten seconds to cast.
+          Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR_ON_ITEM); // Ten seconds to cast. Time passes before casting.
+          if (hasWeapon()) { // If the item did not disappear.
+            getWeapon().incrementIntegrity(GameData.getSkillDefinitions().get(repairID).repair);
+            IO.writeString("You casted Repair on " + getWeapon().getName() + ".");
+          } else {
+            IO.writeString("Your weapon disappeared before you finished casting.");
+          }
         } else {
           IO.writeString("The equipped item is not repairable.");
         }
@@ -858,7 +867,6 @@ public class Hero extends Creature {
     } else {
       IO.writeString("You don't know how to cast Repair.");
     }
-    return 0;
   }
 
 }
