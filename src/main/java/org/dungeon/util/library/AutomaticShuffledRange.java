@@ -15,7 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.util;
+package org.dungeon.util.library;
+
+import org.dungeon.util.ShuffledRange;
 
 /**
  * An automated ShuffledRange.
@@ -24,7 +26,7 @@ package org.dungeon.util;
  * When the end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on
  * the {@code ShuffledRange}.
  */
-public class AutomaticShuffledRange {
+class AutomaticShuffledRange {
 
   private final ShuffledRange shuffledRange;
   private int index;
@@ -34,18 +36,8 @@ public class AutomaticShuffledRange {
    *
    * @param end the higher bound (exclusive)
    */
-  public AutomaticShuffledRange(int end) {
-    this(0, end);
-  }
-
-  /**
-   * Constructs a new {@code AutomaticShuffledRange} given a lower bound and an upper bound.
-   *
-   * @param start the lower bound (inclusive)
-   * @param end   the higher bound (exclusive)
-   */
-  public AutomaticShuffledRange(int start, int end) {
-    shuffledRange = new ShuffledRange(start, end);
+  AutomaticShuffledRange(int end) {
+    shuffledRange = new ShuffledRange(0, end);
   }
 
   /**

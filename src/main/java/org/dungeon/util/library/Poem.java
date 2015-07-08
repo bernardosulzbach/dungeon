@@ -15,18 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.util.library;
 
 /**
  * Poem class that defines a poem storage data structure.
  */
-public class Poem {
+public final class Poem {
 
   private final String title;
   private final String author;
   private final String content;
 
-  public Poem(String title, String author, String content) {
+  Poem(String title, String author, String content) {
     this.title = title;
     this.author = author;
     this.content = content;

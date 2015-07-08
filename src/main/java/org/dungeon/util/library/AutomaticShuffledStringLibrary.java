@@ -19,7 +19,6 @@ package org.dungeon.util.library;
 
 import org.dungeon.io.DLogger;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.util.AutomaticShuffledRange;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
