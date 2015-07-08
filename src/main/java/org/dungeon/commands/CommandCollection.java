@@ -31,6 +31,7 @@ import org.dungeon.map.WorldMapWriter;
 import org.dungeon.util.DungeonMath;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
+import org.dungeon.util.library.Libraries;
 import org.dungeon.wiki.Wiki;
 
 import org.jetbrains.annotations.NotNull;
@@ -123,7 +124,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        GameState.printNextHint();
+        IO.writeString(Libraries.getHintLibrary().next());
       }
     });
     addCommandToDefault(new Command("items", "Lists the items in the character's inventory.") {

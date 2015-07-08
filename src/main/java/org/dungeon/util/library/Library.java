@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.util.library;
 
 import org.dungeon.io.DLogger;
 import org.dungeon.util.StopWatch;

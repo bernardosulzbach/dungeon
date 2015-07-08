@@ -63,9 +63,6 @@ public final class GameData {
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
   private static final double CORPSE_HIT_RATE = 0.5;
-  private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
-  private static final DreamLibrary dreamLibrary = new DreamLibrary();
-  private static final HintLibrary hintLibrary = new HintLibrary();
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
@@ -75,18 +72,6 @@ public final class GameData {
 
   private GameData() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
-  }
-
-  public static PoetryLibrary getPoetryLibrary() {
-    return poetryLibrary;
-  }
-
-  public static DreamLibrary getDreamLibrary() {
-    return dreamLibrary;
-  }
-
-  public static HintLibrary getHintLibrary() {
-    return hintLibrary;
   }
 
   public static String getTutorial() {

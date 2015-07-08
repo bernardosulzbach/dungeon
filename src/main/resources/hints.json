@@ -1,0 +1,10 @@
+{
+  "strings": [
+    "Attacks against critters deal 100% bonus damage.",
+    "Every combatant movement is considered to be a battle turn.",
+    "The command 'achievements' will also show the total number of achievements.",
+    "There is a 'poem' command that prints a poem to the screen.",
+    "Use the 'wiki' command to browse the in-game wiki and to better understand the world of Dungeon.",
+    "You can filter the output of the 'commands' command by typing the beginning of the command."
+  ]
+}

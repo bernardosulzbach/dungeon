@@ -1,5 +1,0 @@
-HINT: Attacks against critters deal 100% bonus damage.
-HINT: Every combatant movement is considered to be a battle turn.
-HINT: The command 'achievements' will also show the total number of achievements.
-HINT: There is a 'poem' command that prints a poem to the screen.
-HINT: Use the 'wiki' command to browse the in-game wiki and to better understand the world of Dungeon.

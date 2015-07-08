@@ -30,6 +30,15 @@ public class AutomaticShuffledRange {
   private int index;
 
   /**
+   * Constructs a new {@code AutomaticShuffledRange} of lower bound 0 given an upper bound.
+   *
+   * @param end the higher bound (exclusive)
+   */
+  public AutomaticShuffledRange(int end) {
+    this(0, end);
+  }
+
+  /**
    * Constructs a new {@code AutomaticShuffledRange} given a lower bound and an upper bound.
    *
    * @param start the lower bound (inclusive)

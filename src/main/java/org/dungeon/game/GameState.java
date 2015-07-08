@@ -24,6 +24,7 @@ import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.IO;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.stats.Statistics;
+import org.dungeon.util.library.Libraries;
 
 import java.io.Serializable;
 
@@ -44,17 +45,6 @@ public class GameState implements Serializable {
   }
 
   /**
-   * Prints the next hint.
-   */
-  public static void printNextHint() {
-    if (GameData.getHintLibrary().getHintCount() == 0) {
-      IO.writeString("No hints were loaded.");
-    } else {
-      IO.writeString(GameData.getHintLibrary().getNextHint());
-    }
-  }
-
-  /**
    * Prints a poem based on the issued command.
    * <p/>
    * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
@@ -64,15 +54,15 @@ public class GameState implements Serializable {
    * @param command the issued command.
    */
   public static void printPoem(IssuedCommand command) {
-    if (GameData.getPoetryLibrary().getPoemCount() == 0) {
+    if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
       IO.writeString("No poems were loaded.");
     } else {
       if (command.hasArguments()) {
         try {
           // Indexing is zero-based to the implementation, but one-based to the player.
           int index = Integer.parseInt(command.getFirstArgument()) - 1;
-          if (index >= 0 && index < GameData.getPoetryLibrary().getPoemCount()) {
-            IO.writePoem(GameData.getPoetryLibrary().getPoem(index));
+          if (index >= 0 && index < Libraries.getPoetryLibrary().getPoemCount()) {
+            IO.writePoem(Libraries.getPoetryLibrary().getPoem(index));
             return;
           }
         } catch (NumberFormatException ignore) {
@@ -80,7 +70,7 @@ public class GameState implements Serializable {
         }
         IO.writeString("Invalid poem index.");
       } else {
-        IO.writePoem(GameData.getPoetryLibrary().getNextPoem());
+        IO.writePoem(Libraries.getPoetryLibrary().getNextPoem());
       }
     }
   }

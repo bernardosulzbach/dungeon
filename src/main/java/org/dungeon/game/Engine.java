@@ -147,7 +147,10 @@ public final class Engine {
   }
 
   /**
-   * Attempts to move the hero character in a given direction.
+   * Attempts to move the hero in a given direction.
+   * <p/>
+   * If the hero moves, this method refreshes both locations at the latest date.
+   * If the hero does not move, this method refreshes the location where the hero is.
    */
   private static void heroWalk(Direction dir) {
     GameState gameState = Game.getGameState();

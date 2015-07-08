@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.util.library;
 
+import org.dungeon.game.Poem;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.AutomaticShuffledRange;
@@ -73,7 +74,7 @@ public final class PoetryLibrary extends Library {
       poems.add(new Poem(title, author, content));
     }
     poems.trimToSize();
-    automaticShuffledRange = new AutomaticShuffledRange(0, poems.size());
+    automaticShuffledRange = new AutomaticShuffledRange(poems.size());
     DLogger.info("Loaded " + poems.size() + " poems.");
   }
 

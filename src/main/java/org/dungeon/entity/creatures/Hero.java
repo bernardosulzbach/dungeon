@@ -54,6 +54,7 @@ import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.Selectable;
 import org.dungeon.util.Utils;
+import org.dungeon.util.library.Libraries;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -161,7 +162,7 @@ public class Hero extends Creature {
         Engine.rollDateAndRefresh(cycleDuration);
         Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
         if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
-          IO.writeString(GameData.getDreamLibrary().getNextDream());
+          IO.writeString(Libraries.getDreamLibrary().next());
         }
         seconds -= cycleDuration;
         if (!isCompletelyHealed()) {
