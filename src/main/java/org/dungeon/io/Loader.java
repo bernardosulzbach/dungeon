@@ -28,13 +28,13 @@ import org.dungeon.util.Table;
 
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.Period;
+import org.nustaq.serialization.FSTObjectInput;
+import org.nustaq.serialization.FSTObjectOutput;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -273,10 +273,10 @@ public final class Loader {
   private static GameState loadFile(File file) {
     StopWatch stopWatch = new StopWatch();
     FileInputStream fileInStream;
-    ObjectInputStream objectInStream;
+    FSTObjectInput objectInStream;
     try {
       fileInStream = new FileInputStream(file);
-      objectInStream = new ObjectInputStream(fileInStream);
+      objectInStream = new FSTObjectInput(fileInStream);
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
@@ -300,7 +300,7 @@ public final class Loader {
     StopWatch stopWatch = new StopWatch();
     File file = createFileFromName(name);
     FileOutputStream fileOutStream;
-    ObjectOutputStream objectOutStream;
+    FSTObjectOutput objectOutStream;
     try {
       if (!SAVES_FOLDER.exists()) {
         if (!SAVES_FOLDER.mkdir()) {
@@ -309,7 +309,7 @@ public final class Loader {
         }
       }
       fileOutStream = new FileOutputStream(file);
-      objectOutStream = new ObjectOutputStream(fileOutStream);
+      objectOutStream = new FSTObjectOutput(fileOutStream);
       objectOutStream.writeObject(state);
       objectOutStream.close();
       state.setSaved(true);
