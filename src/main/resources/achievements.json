@@ -109,6 +109,18 @@
       ]
     },
     {
+      "id": "FEATHER_COLLECTOR",
+      "name": "Feather Collector",
+      "info": "Kill a Harpy.",
+      "text": "killed a Harpy",
+      "battleRequirements": [
+        {
+          "query": {"id": "HARPY"},
+          "count": 1
+        }
+      ]
+    },
+    {
       "id": "HUNTER",
       "name": "Hunter",
       "info": "Kill 10 beasts.",
