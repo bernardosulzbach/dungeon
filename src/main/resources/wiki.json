@@ -29,6 +29,10 @@
       "content": "Corpses weight as much as the creature and will eventually decompose. The integrity of a corpse is directly proportional to the health of the creature when it was uninjured."
     },
     {
+      "title": "Decomposition",
+      "content": "Some items decompose over time. The time it takes for an item to decompose (disappear from the game) depends on the characteristics of the item. An item may vanish from your hand during combat or from your inventory while you are exploring, so if those cherries you were so sure to have collected are no longer in your inventory, do not report a bug. Eat you cherries sooner instead."
+    },
+    {
       "title": "Eating",
       "content": "As of 0.0.7, eating only heals you until you are uninjured (better than resting, as good as sleeping). There are no bonuses for eating regularly neither do the character ever feels hungry."
     },
