@@ -176,11 +176,14 @@ public class Creature extends Entity {
    * Effectively drops an item.
    *
    * @param item the Item to be dropped
+   * @throws IllegalStateException if the item is not in the creature's inventory
    */
   void dropItem(Item item) {
     if (getInventory().hasItem(item)) {
       getInventory().removeItem(item);
       getLocation().addItem(item);
+    } else {
+      throw new IllegalStateException("item should be in the creature's inventory.");
     }
   }
 
@@ -189,8 +192,7 @@ public class Creature extends Entity {
    */
   public void dropEverything() {
     for (Item item : new ArrayList<Item>(getInventory().getItems())) {
-      getInventory().removeItem(item);
-      getLocation().addItem(item);
+      dropItem(item);
     }
   }
 
