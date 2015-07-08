@@ -123,15 +123,19 @@ public class Hero extends Creature {
   }
 
   /**
-   * Rest until the creature is healed to 60% of its health points.
-   * <p/>
+   * Rests until the hero is considered to be rested.
    */
   public void rest() {
-    if (getCurHealth() >= (int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth())) {
+    int maximumHealthFromRest = (int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth());
+    if (getCurHealth() >= maximumHealthFromRest) {
       IO.writeString("You are already rested.");
     } else {
-      double fractionHealed = MAXIMUM_HEALTH_THROUGH_REST - (double) getCurHealth() / (double) getMaxHealth();
-      Engine.rollDateAndRefresh((int) (SECONDS_TO_REGENERATE_FULL_HEALTH * fractionHealed));
+      int healthRecovered = maximumHealthFromRest - getCurHealth(); // A positive integer.
+      // The fraction SECONDS_TO_REGENERATE_FULL_HEALTH / getMaxHealth() may be smaller than 1.
+      // Therefore, the following expression may evaluate to 0 if we do not use Math.max to secure the call to
+      // Engine.rollDateAndRefresh.
+      int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getMaxHealth());
+      Engine.rollDateAndRefresh(timeResting);
       IO.writeString("Resting...");
       setCurHealth((int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth()));
       IO.writeString("You feel rested.");
