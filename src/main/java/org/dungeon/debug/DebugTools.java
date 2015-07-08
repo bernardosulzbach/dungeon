@@ -221,7 +221,7 @@ public class DebugTools {
    * Prints a lot of information about the Location the Hero is in.
    */
   private static void printCurrentLocationInformation() {
-    final int WIDTH = 20;  // The width of the row's "tag".
+    final int WIDTH = 40;  // The width of the row's "tag".
     GameState gameState = Game.getGameState();
     Point heroPosition = gameState.getHeroPosition();
     Location location = gameState.getWorld().getLocation(heroPosition);
