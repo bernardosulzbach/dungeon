@@ -708,11 +708,7 @@ public class Hero extends Creature {
     if (clock != null) {
       IO.writeString(clock.getClockComponent().getTimeString());
       // Assume that the hero takes the same time to read the clock and to put it back where it was.
-      if (getWeapon() == clock) {
-        Engine.rollDateAndRefresh(SECONDS_TO_READ_EQUIPPED_CLOCK);
-      } else {
-        Engine.rollDateAndRefresh(SECONDS_TO_READ_UNEQUIPPED_CLOCK);
-      }
+      Engine.rollDateAndRefresh(getTimeToReadFromClock(clock));
     }
     World world = getLocation().getWorld();
     Date worldDate = getLocation().getWorld().getWorldDate();
@@ -762,16 +758,14 @@ public class Hero extends Creature {
         clock = brokenClock;
       }
     }
-    int timeSpent;
-    if (clock == null) {
-      timeSpent = 0;
-    } else if (clock == getWeapon()) {
-      timeSpent = SECONDS_TO_READ_EQUIPPED_CLOCK;
-    } else {
-      timeSpent = SECONDS_TO_READ_UNEQUIPPED_CLOCK;
+    if (clock != null) {
+      Engine.rollDateAndRefresh(getTimeToReadFromClock(clock));
     }
-    Engine.rollDateAndRefresh(timeSpent);
     return clock;
+  }
+
+  private int getTimeToReadFromClock(@NotNull Item clock) {
+    return clock == getWeapon() ? SECONDS_TO_READ_EQUIPPED_CLOCK : SECONDS_TO_READ_UNEQUIPPED_CLOCK;
   }
 
   /**
