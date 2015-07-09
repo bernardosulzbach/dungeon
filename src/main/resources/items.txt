@@ -323,7 +323,7 @@ TEXT: The Repair spell allows the caster to channel a burst of magical energy in
 broken parts and restoring its integrity.
 
 
-// Miscellaneous books
+// Miscellaneous books and pages
 
 ID: HISTORY_OF_THE_THIRD_ERA
 TYPE: Book
@@ -338,6 +338,27 @@ HIT_RATE: 0.65
 INTEGRITY_DECREMENT_ON_HIT: 4
 TEXT: The Third Era is a period of time that lasted 480 years.\
 It starts with the end of the Second Era (the fall of the Empire of Light) and ends with the rebellion of the Red Warlocks.
+
+ID: PAGE_FROM_VÖLUND_LOKE_FREY_S_DIARY
+TYPE: Book
+NAME: [Page From Völund Loke Frey's Diary | Pages From Völund Loke Frey's Diary]
+TAGS: [WEAPON | BOOK]
+CUR_INTEGRITY: 4
+MAX_INTEGRITY: 4
+VISIBILITY: 55%
+WEIGHT: 0.02
+DAMAGE: 1
+HIT_RATE: 0.2
+INTEGRITY_DECREMENT_ON_HIT: 4
+TEXT: My Diary – Völund Loke Frey – Page 22\\
+\\
+210-5-2: I finally feel compelled to respond to the offense Birgmar made! And I will not be gentle.\\
+\\
+210-5-3: Things did not go according to the plan. Birgmar was not alone, that bastard Orc was hosting this "Orc Reunion" thing and I was really surprised that after kicking in the door and screaming "You are gonna die, scum!" I had not one but twelve Orcs staring at me. I outrun them but cannot go back home as they know where I live. My wife is probably dead now.\\
+\\
+210-5-4: Went back to my old place and found my wife's body nailed to the rooftop of our shack. I will find another woman later on, I've got bigger problems now. In the wooden door they wrote a threat: "We are coming for you."\\
+\\
+210-5-5: I woke in the middle of the night as I heard the breaking of dry wood branches in the ground below me, looked down and saw two Orcs. I then drew two arrows from my quiver, nocked them on the string of my longbow, silently drew the string back, and released with perfect timing. Silently and efficiently I killed both Orcs. I don't know if I will last much longer if they are all coming after me.
 
 // Watches
 
