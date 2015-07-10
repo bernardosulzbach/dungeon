@@ -792,47 +792,52 @@ public class Hero extends Creature {
    */
   public void editRotation(IssuedCommand issuedCommand) {
     if (issuedCommand.hasArguments()) {
-      List<String[]> skillNames = new ArrayList<String[]>();
-      List<String> currentSkillName = new ArrayList<String>();
-      for (String argument : issuedCommand.getArguments()) {
-        if (ROTATION_SKILL_SEPARATOR.equals(argument)) {
-          if (!currentSkillName.isEmpty()) {
-            String[] stringArray = new String[currentSkillName.size()];
-            currentSkillName.toArray(stringArray);
-            skillNames.add(stringArray);
-            currentSkillName.clear();
-          }
-        } else {
-          currentSkillName.add(argument);
-        }
-      }
-      if (!currentSkillName.isEmpty()) {
-        String[] stringArray = new String[currentSkillName.size()];
-        currentSkillName.toArray(stringArray);
-        skillNames.add(stringArray);
-        currentSkillName.clear();
-      }
-      if (skillNames.isEmpty()) {
-        IO.writeString("Provide skills arguments separated by '" + ROTATION_SKILL_SEPARATOR + "'.");
-      } else {
+      if (issuedCommand.firstArgumentEquals("!")) {
         getSkillRotation().resetRotation();
-        ArrayList<Selectable> skillsList = new ArrayList<Selectable>(getSkillList().toListOfSelectable());
-        for (String[] skillName : skillNames) {
-          Matches<Selectable> result = Utils.findBestCompleteMatches(skillsList, skillName);
-          if (result.size() == 0) {
-            IO.writeString(Utils.stringArrayToString(skillName, " ") + " did not match any skill!");
+        IO.writeString("The skill rotation has been reset.");
+      } else {
+        List<String[]> skillNames = new ArrayList<String[]>();
+        List<String> currentSkillName = new ArrayList<String>();
+        for (String argument : issuedCommand.getArguments()) {
+          if (ROTATION_SKILL_SEPARATOR.equals(argument)) {
+            if (!currentSkillName.isEmpty()) {
+              String[] stringArray = new String[currentSkillName.size()];
+              currentSkillName.toArray(stringArray);
+              skillNames.add(stringArray);
+              currentSkillName.clear();
+            }
           } else {
-            if (result.getDifferentNames() == 1) {
-              getSkillRotation().addSkill((Skill) result.getMatch(0));
+            currentSkillName.add(argument);
+          }
+        }
+        if (!currentSkillName.isEmpty()) {
+          String[] stringArray = new String[currentSkillName.size()];
+          currentSkillName.toArray(stringArray);
+          skillNames.add(stringArray);
+          currentSkillName.clear();
+        }
+        if (skillNames.isEmpty()) {
+          IO.writeString("Provide skills arguments separated by '" + ROTATION_SKILL_SEPARATOR + "'.");
+        } else {
+          getSkillRotation().resetRotation();
+          ArrayList<Selectable> skillsList = new ArrayList<Selectable>(getSkillList().toListOfSelectable());
+          for (String[] skillName : skillNames) {
+            Matches<Selectable> result = Utils.findBestCompleteMatches(skillsList, skillName);
+            if (result.size() == 0) {
+              IO.writeString(Utils.stringArrayToString(skillName, " ") + " did not match any skill!");
             } else {
-              IO.writeString(Utils.stringArrayToString(skillName, " ") + " matched multiple skills!");
+              if (result.getDifferentNames() == 1) {
+                getSkillRotation().addSkill((Skill) result.getMatch(0));
+              } else {
+                IO.writeString(Utils.stringArrayToString(skillName, " ") + " matched multiple skills!");
+              }
             }
           }
-        }
-        if (getSkillRotation().isEmpty()) {
-          IO.writeString("Failed to create a new skill rotation.");
-        } else {
-          IO.writeString("Created new skill rotation.");
+          if (getSkillRotation().isEmpty()) {
+            IO.writeString("Failed to create a new skill rotation.");
+          } else {
+            IO.writeString("Created new skill rotation.");
+          }
         }
       }
     } else {
