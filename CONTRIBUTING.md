@@ -22,7 +22,7 @@ Readability, simplicity and performance (*in this order*) are our main goals.
 Code Style
 ----------
 Our code style is a slightly modified version of Google Java Style called [Dungeon Java Style]
-(http://htmlpreview.github.io/?https://github.com/mafagafogigante/dungeon/blob/master/misc/style/dungeon_java_style.html).
+(http://mafagafogigante.github.io/dungeon/style.html).
 
 There is a Code Style exported from IDEA 14.0.2 in the ``misc`` directory. IDEA 14.1.2 works fine with it.
 Download it and import it into the IDE to get proper Code Reformatting.
