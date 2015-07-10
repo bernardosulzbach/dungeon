@@ -34,9 +34,9 @@ public class World implements Serializable {
 
   private final HashMap<Point, Location> locations;
 
-  private final Date worldCreationDate;
   private final WorldStatistics worldStatistics;
-  private Date worldDate;
+  private final Date worldCreationDate = new Date(1, 1, 1);
+  private Date worldDate = new Date(455, 6, 2, 6, 10, 0);
 
   /**
    * Creates a new World.
@@ -45,8 +45,6 @@ public class World implements Serializable {
    */
   public World(WorldStatistics statistics) {
     worldStatistics = statistics;
-    worldDate = new Date(455, 6, 2, 6, 10, 0);
-    worldCreationDate = worldDate.minus(6, DungeonTimeUnit.HOUR);
     locations = new HashMap<Point, Location>();
     generator = new WorldGenerator(this);
   }

@@ -48,6 +48,16 @@ public class Date implements Comparable<Date>, Serializable {
     time = millis;
   }
 
+  /**
+   * Constructs a date from the provided parameters.
+   *
+   * @param year   the year, positive
+   * @param month  the month, positive, smaller than or equal to the number of months in a year
+   * @param day    the day, positive, smaller than or equal to the number of days in a month
+   * @param hour   the hour, nonnegative, smaller than the number of hours in a day
+   * @param minute the minute, nonnegative, smaller than the number of minutes in an hour
+   * @param second the second, nonnegative, smaller than the number of seconds in a minute
+   */
   public Date(long year, long month, long day, long hour, long minute, long second) {
     this(year, month, day);
     if (hour < 0) {
@@ -77,6 +87,13 @@ public class Date implements Comparable<Date>, Serializable {
     time += hour * HOUR.milliseconds + minute * MINUTE.milliseconds + second * SECOND.milliseconds;
   }
 
+  /**
+   * Constructs a date from the provided parameters.
+   *
+   * @param year  the year, positive
+   * @param month the month, positive, smaller than or equal to the number of months in a year
+   * @param day   the day, positive, smaller than or equal to the number of days in a month
+   */
   public Date(long year, long month, long day) {
     if (year <= 0) {
       DLogger.warning("Tried to construct Date with nonpositive year!");
