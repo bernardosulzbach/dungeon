@@ -94,4 +94,9 @@ class ExpandableIntegerSet implements Serializable {
     return set.contains(a);
   }
 
+  @Override
+  public String toString() {
+    return "ExpandableIntegerSet currently of " + set;
+  }
+
 }

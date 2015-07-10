@@ -30,20 +30,36 @@ class River implements Serializable {
    * Make a river.
    *
    * @param minimumDistanceBetweenBridges the minimum distance between bridges, positive
-   * @param maximumDistanceBetweenBridges the maximum distance between bridges, bigger than minimumDistanceBetweenBridges
+   * @param maximumDistanceBetweenBridges the maximum distance between bridges,
+   *                                      bigger than minimumDistanceBetweenBridges
    */
   River(int minimumDistanceBetweenBridges, int maximumDistanceBetweenBridges) {
     bridges = new ExpandableIntegerSet(minimumDistanceBetweenBridges, maximumDistanceBetweenBridges);
   }
 
-  // Expand the set of bridges towards a value of y until there is a bridge at y or after y.
+  /**
+   * Expand the set of bridges towards a value of y until there is a bridge at y or after y.
+   *
+   * @param y the y coordinate
+   */
   private void expand(int y) {
     bridges.expand(y);
   }
 
+  /**
+   * Evaluates if a given value of y corresponds to a bridge.
+   *
+   * @param y the y coordinate
+   * @return true if there should be a bridge in this y coordinate
+   */
   boolean isBridge(int y) {
     expand(y);
     return bridges.contains(y);
+  }
+
+  @Override
+  public String toString() {
+    return "River with bridges in " + bridges;
   }
 
 }
