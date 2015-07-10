@@ -20,6 +20,7 @@ package org.dungeon.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NavigableSet;
 import java.util.TreeSet;
 
 /**
@@ -27,26 +28,24 @@ import java.util.TreeSet;
  */
 class ExpandableIntegerSet implements Serializable {
 
-  // DBI stands for distance between integers.
-  private final int MIN_DBI;
-  // The difference between the minimum DBI and maximum DBI.
-  private final int DIFF;
+  private final int MINIMUM_DIFFERENCE;
+  private final int DIFFERENCE_BETWEEN_MIN_AND_MAX;
 
-  // A sorted set of integers.
-  private final TreeSet<Integer> set = new TreeSet<Integer>();
+  private final NavigableSet<Integer> set = new TreeSet<Integer>();
 
   /**
    * Make a new ExpandableIntegerSet.
    *
-   * @param MIN_DBI the minimum distance between integers. Must be positive.
-   * @param MAX_DBI the maximum distance between integers. Must be bigger than {@code MIN_DBI}.
+   * @param minimumDifference the minimum difference between integers, positive
+   * @param maximumDifference the maximum difference between integers, bigger than {@code minimumDifference}
    */
-  public ExpandableIntegerSet(int MIN_DBI, int MAX_DBI) {
-    if (MIN_DBI > 0 && MAX_DBI > MIN_DBI) {
-      this.MIN_DBI = MIN_DBI;
-      this.DIFF = MAX_DBI - MIN_DBI;
+  public ExpandableIntegerSet(int minimumDifference, int maximumDifference) {
+    if (minimumDifference > 0 && maximumDifference > minimumDifference) {
+      this.MINIMUM_DIFFERENCE = minimumDifference;
+      this.DIFFERENCE_BETWEEN_MIN_AND_MAX = maximumDifference - minimumDifference;
     } else {
-      throw new IllegalArgumentException("illegal values for MIN_DBI or MAX_DBI");
+      String message = "illegal values for minimumDifference or maximumDifference";
+      throw new IllegalArgumentException(message);
     }
     initialize();
   }
@@ -58,7 +57,7 @@ class ExpandableIntegerSet implements Serializable {
     if (set.size() != 0) {
       throw new IllegalStateException("set already has an element.");
     } else {
-      set.add(Random.nextInteger(MIN_DBI));
+      set.add(Random.nextInteger(MINIMUM_DIFFERENCE));
     }
   }
 
@@ -74,13 +73,13 @@ class ExpandableIntegerSet implements Serializable {
     ArrayList<Integer> integerList = new ArrayList<Integer>();
     int integer = set.last();
     while (a >= integer) {
-      integer += MIN_DBI + Random.nextInteger(DIFF);
+      integer += MINIMUM_DIFFERENCE + Random.nextInteger(DIFFERENCE_BETWEEN_MIN_AND_MAX);
       integerList.add(integer);
       set.add(integer);
     }
     integer = set.first();
     while (a <= integer) {
-      integer -= MIN_DBI + Random.nextInteger(DIFF);
+      integer -= MINIMUM_DIFFERENCE + Random.nextInteger(DIFFERENCE_BETWEEN_MIN_AND_MAX);
       integerList.add(integer);
       set.add(integer);
     }
