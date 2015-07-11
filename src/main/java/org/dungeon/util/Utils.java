@@ -188,7 +188,7 @@ public final class Utils {
     for (T candidate : collection) {
       String[] titleWords = split(candidate.getName().getSingular());
       int matches = countMatches(tokens, titleWords);
-      if (!complete || matches == tokens.length) {
+      if (!complete || matches >= tokens.length) {
         double matchesOverTitleWords = matches / (double) titleWords.length;
         double matchesOverSearchArgs = matches / (double) tokens.length;
         double similarity = DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
