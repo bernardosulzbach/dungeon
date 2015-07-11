@@ -175,6 +175,44 @@
       ]
     },
     {
+      "id": "THE_BIGGER_THE_DEADLIER",
+      "name": "The Bigger the Deadlier",
+      "info": "Kill a lizard, a snake, and a green iguana with Crocodile Beefs.",
+      "text": "killed a lizard, a snake, and a green iguana with Crocodile Beefs",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "LIZARD",
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "CROCODILE_BEEF"
+            }
+          },
+          "count": 1
+        },
+        {
+          "query": {
+            "id": "SNAKE",
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "CROCODILE_BEEF"
+            }
+          },
+          "count": 1
+        },
+        {
+          "query": {
+            "id": "GREEN_IGUANA",
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "CROCODILE_BEEF"
+            }
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
       "id": "DEATH_PUNCH",
       "name": "Death Punch",
       "info": "Kill a creature unarmed.",
