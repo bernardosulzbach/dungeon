@@ -15,22 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.game;
+package org.dungeon.entity.creatures;
 
-import org.dungeon.entity.creatures.CreaturePreset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.dungeon.entity.TagSet;
+import org.dungeon.entity.creatures.Creature.Tag;
 import org.dungeon.entity.items.ItemBlueprint;
+import org.dungeon.game.ID;
+import org.dungeon.game.Name;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class GameDataTest extends TestCase {
+public class CorpsePresetFactoryTest {
 
+  @Test
   public void testMakeCorpseBlueprint() throws Exception {
     CreaturePreset preset = new CreaturePreset();
     preset.setID(new ID("TESTER"));
     preset.setType("Tester");
     preset.setName(Name.newInstance("Tester"));
     preset.setHealth(50);
-    ItemBlueprint blueprint = GameData.makeCorpseBlueprint(preset);
+    TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
+    tagSet.addTag(Creature.Tag.CORPSE);
+    preset.setTagSet(tagSet);
+    ItemBlueprint blueprint = CorpsePresetFactory.makeCorpseBlueprint(preset);
     assertEquals(new ID("TESTER_CORPSE"), blueprint.getID());
     assertEquals("CORPSE", blueprint.getType());
     assertEquals(Name.newInstance("Tester Corpse"), blueprint.getName());
@@ -39,7 +49,7 @@ public class GameDataTest extends TestCase {
     assertTrue(blueprint.getIntegrityDecrementOnHit() > 0);
     // Extreme cases.
     preset.setHealth(1);
-    blueprint = GameData.makeCorpseBlueprint(preset);
+    blueprint = CorpsePresetFactory.makeCorpseBlueprint(preset);
     assertTrue(blueprint.getMaxIntegrity() > 0);
     assertTrue(blueprint.getCurIntegrity() > 0);
   }

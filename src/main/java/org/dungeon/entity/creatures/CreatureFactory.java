@@ -18,21 +18,146 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.date.Date;
+import org.dungeon.entity.Luminosity;
+import org.dungeon.entity.NameFactory;
+import org.dungeon.entity.TagSet;
+import org.dungeon.entity.Visibility;
+import org.dungeon.entity.Weight;
 import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.Item;
+import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
 import org.dungeon.io.DLogger;
+import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.Constants;
+import org.dungeon.util.Percentage;
 
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public abstract class CreatureFactory {
+/**
+ * The factory of creatures.
+ */
+public final class CreatureFactory {
 
   private static Map<ID, CreaturePreset> creaturePresetMap;
 
-  public static void setCreaturePresetMap(Map<ID, CreaturePreset> creaturePresetMap) {
+  private CreatureFactory() {
+    throw new AssertionError();
+  }
+
+  /**
+   * Loads all creature presets from the resource files. Also makes the ItemBlueprints used by the corpses.
+   */
+  public static void loadCreaturePresets(Map<ID, ItemBlueprint> itemBlueprintMap) {
+    Map<ID, CreaturePreset> creaturePresetMap = new HashMap<ID, CreaturePreset>();
+    JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
+    for (JsonValue value : object.get("creatures").asArray()) {
+      JsonObject presetObject = value.asObject();
+      CreaturePreset preset = new CreaturePreset();
+      preset.setID(new ID(presetObject.get("id").asString()));
+      preset.setType(presetObject.get("type").asString());
+      preset.setName(NameFactory.fromJsonObject(presetObject.get("name").asObject()));
+      if (presetObject.get("tags") != null) {
+        preset.setTagSet(TagSet.fromJsonObject(presetObject.get("tags").asArray(), Creature.Tag.class));
+      } else {
+        preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
+      }
+      preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", 0));
+      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryItemLimit", 0.0));
+      preset.setItems(getInventory(presetObject));
+      setLuminosityIfPresent(preset, presetObject);
+      setVisibility(preset, presetObject);
+      preset.setWeight(Weight.newInstance(presetObject.get("weight").asDouble()));
+      preset.setHealth(presetObject.get("health").asInt());
+      preset.setAttack(presetObject.get("attack").asInt());
+      setWeaponIfPreset(preset, presetObject);
+      preset.setAttackAlgorithmID(AttackAlgorithmID.valueOf(presetObject.get("attackAlgorithmID").asString()));
+      creaturePresetMap.put(preset.getID(), preset);
+      if (preset.hasTag(Creature.Tag.CORPSE)) {
+        ItemBlueprint corpse = CorpsePresetFactory.makeCorpseBlueprint(preset);
+        itemBlueprintMap.put(corpse.getID(), corpse);
+      }
+    }
+    setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
+    DLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
+  }
+
+  /**
+   * Attempts to read a string from the provided JSON object, returning null if the string is not present or if the
+   * value is not a string.
+   *
+   * @param jsonObject a JsonObject, not null
+   * @param name       a String, not null
+   * @return a String or null
+   */
+  @Nullable
+  private static String getStringFromJsonObject(@NotNull JsonObject jsonObject, @NotNull String name) {
+    JsonValue value = jsonObject.get(name);
+    if (value == null || !value.isString()) {
+      return null;
+    } else {
+      return value.asString();
+    }
+  }
+
+  @Nullable
+  private static Percentage getPercentageFromJsonObject(@NotNull JsonObject jsonObject, @NotNull String name) {
+    String percentageString = getStringFromJsonObject(jsonObject, name);
+    if (percentageString != null) {
+      if (Percentage.isValidPercentageString(percentageString)) {
+        return Percentage.fromString(percentageString);
+      } else {
+        throw new IllegalStateException("JSON contains invalid percentage string: " + percentageString + ".");
+      }
+    }
+    return null;
+  }
+
+  private static List<ID> getInventory(JsonObject object) {
+    if (object.get("inventory") == null) {
+      return Collections.emptyList();
+    } else {
+      List<ID> list = new ArrayList<ID>();
+      for (JsonValue value : object.get("inventory").asArray()) {
+        list.add(new ID(value.asString()));
+      }
+      return list;
+    }
+  }
+
+  private static void setVisibility(CreaturePreset preset, JsonObject presetObject) {
+    Percentage visibilityPercentage = getPercentageFromJsonObject(presetObject, "visibility");
+    if (visibilityPercentage != null) {
+      preset.setVisibility(new Visibility(visibilityPercentage));
+    }
+  }
+
+  private static void setLuminosityIfPresent(CreaturePreset preset, JsonObject presetObject) {
+    Percentage luminosityPercentage = getPercentageFromJsonObject(presetObject, "luminosity");
+    if (luminosityPercentage != null) {
+      preset.setLuminosity(new Luminosity(luminosityPercentage));
+    }
+  }
+
+  private static void setWeaponIfPreset(CreaturePreset preset, JsonObject presetObject) {
+    String weapon = getStringFromJsonObject(presetObject, "weapon");
+    if (weapon != null) {
+      preset.setWeaponID(new ID(weapon));
+    }
+  }
+
+  private static void setCreaturePresetMap(Map<ID, CreaturePreset> creaturePresetMap) {
     if (CreatureFactory.creaturePresetMap == null) {
       CreatureFactory.creaturePresetMap = creaturePresetMap;
     } else {

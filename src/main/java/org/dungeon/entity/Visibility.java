@@ -19,6 +19,8 @@ package org.dungeon.entity;
 
 import org.dungeon.util.Percentage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -28,7 +30,7 @@ public class Visibility implements Serializable {
 
   private final Percentage value;
 
-  public Visibility(Percentage value) {
+  public Visibility(@NotNull Percentage value) {
     this.value = value;
   }
 

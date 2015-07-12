@@ -1,0 +1,448 @@
+{
+  "creatures": [
+    {
+      "id": "HERO",
+      "type": "Hero",
+      "name": {
+        "singular": "Seth"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 12,
+      "inventoryWeightLimit": 10,
+      "inventory": [
+        "POTATO"
+      ],
+      "visibility": "70%",
+      "weight": 80,
+      "health": 50,
+      "attack": 4,
+      "attackAlgorithmID": "HERO"
+    },
+    {
+      "id": "DUMMY",
+      "type": "Dummy",
+      "name": {
+        "singular": "Dummy",
+        "plural": "Dummies"
+      },
+      "inventoryItemLimit": 3,
+      "inventoryWeightLimit": 80,
+      "inventory": [
+        "STICK",
+        "STICK",
+        "WOOD_LOG"
+      ],
+      "visibility": "70%",
+      "weight": 50,
+      "health": 200,
+      "attack": 0,
+      "attackAlgorithmID": "DUMMY"
+    },
+    {
+      "id": "BAT",
+      "type": "Beast",
+      "name": {
+        "singular": "Bat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1.35,
+      "health": 12,
+      "attack": 5,
+      "attackAlgorithmID": "BAT"
+    },
+    {
+      "id": "BEAR",
+      "type": "Beast",
+      "name": {
+        "singular": "Bear"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 315,
+      "health": 30,
+      "attack": 15,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "BOAR",
+      "type": "Beast",
+      "name": {
+        "singular": "Boar"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 90,
+      "health": 16,
+      "attack": 9,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "COW",
+      "type": "Beast",
+      "name": {
+        "singular": "Cow"
+      },
+      "tags": [
+        "MILKABLE",
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1000,
+      "health": 55,
+      "attack": 4,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "CROCODILE",
+      "type": "Beast",
+      "name": {
+        "singular": "Crocodile"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 400,
+      "health": 26,
+      "attack": 17,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "FOX",
+      "type": "Beast",
+      "name": {
+        "singular": "Fox",
+        "plural": "Foxes"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 2,
+      "inventoryWeightLimit": 2,
+      "inventory": [
+        "FOX_BEEF",
+        "FOX_BEEF"
+      ],
+      "visibility": "70%",
+      "weight": 9,
+      "health": 13,
+      "attack": 7,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "FRUIT_BAT",
+      "type": "Beast",
+      "name": {
+        "singular": "Fruit Bat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1.35,
+      "health": 28,
+      "attack": 4,
+      "attackAlgorithmID": "BAT"
+    },
+    {
+      "id": "GREEN_IGUANA",
+      "type": "Critter",
+      "name": {
+        "singular": "Green Iguana"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 4,
+      "health": 18,
+      "attack": 0,
+      "attackAlgorithmID": "CRITTER"
+    },
+    {
+      "id": "LIZARD",
+      "type": "Beast",
+      "name": {
+        "singular": "Lizard"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 0.5,
+      "health": 22,
+      "attack": 8,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "ORC",
+      "type": "Beast",
+      "name": {
+        "singular": "Orc"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 4,
+      "inventoryWeightLimit": 10,
+      "inventory": [
+        "ORC_SWORD"
+      ],
+      "visibility": "70%",
+      "weight": 100,
+      "health": 35,
+      "attack": 10,
+      "attackAlgorithmID": "ORC",
+      "weapon": "ORC_SWORD"
+    },
+    {
+      "id": "RAT",
+      "type": "Beast",
+      "name": {
+        "singular": "Rat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 1,
+      "inventoryWeightLimit": 0.2,
+      "inventory": [
+        "RAT_BEEF"
+      ],
+      "visibility": "70%",
+      "weight": 0.35,
+      "health": 14,
+      "attack": 7,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "SNAKE",
+      "type": "Beast",
+      "name": {
+        "singular": "Snake"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1,
+      "health": 23,
+      "attack": 9,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "SPIDER",
+      "type": "Beast",
+      "name": {
+        "singular": "Spider"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1,
+      "health": 20,
+      "attack": 8,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "WOLF",
+      "type": "Beast",
+      "name": {
+        "singular": "Wolf",
+        "plural": "Wolves"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 50,
+      "health": 30,
+      "attack": 11,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "WHITE_TIGER",
+      "type": "Beast",
+      "name": {
+        "singular": "White Tiger"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 300,
+      "health": 20,
+      "attack": 16,
+      "attackAlgorithmID": "BEAST"
+    },
+    {
+      "id": "FROG",
+      "type": "Critter",
+      "name": {
+        "singular": "Frog"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 0.65,
+      "health": 10,
+      "attack": 0,
+      "attackAlgorithmID": "CRITTER"
+    },
+    {
+      "id": "RABBIT",
+      "type": "Critter",
+      "name": {
+        "singular": "Rabbit"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "70%",
+      "weight": 1.45,
+      "health": 10,
+      "attack": 0,
+      "attackAlgorithmID": "CRITTER"
+    },
+    {
+      "id": "SKELETON",
+      "type": "Undead",
+      "name": {
+        "singular": "Skeleton"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 2,
+      "inventoryWeightLimit": 4,
+      "inventory": [
+        "SWORD"
+      ],
+      "visibility": "65%",
+      "visibility": "70%",
+      "weight": 12,
+      "health": 30,
+      "attack": 10,
+      "attackAlgorithmID": "UNDEAD",
+      "weapon": "SWORD"
+    },
+    {
+      "id": "ZOMBIE",
+      "type": "Undead",
+      "name": {
+        "singular": "Zombie"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 4,
+      "inventoryWeightLimit": 8,
+      "inventory": [
+        "CLUB"
+      ],
+      "visibility": "70%",
+      "visibility": "70%",
+      "weight": 60,
+      "health": 28,
+      "attack": 8,
+      "attackAlgorithmID": "UNDEAD",
+      "weapon": "CLUB"
+    },
+    {
+      "id": "RADIANT_GHOUL",
+      "type": "Undead",
+      "name": {
+        "singular": "Radiant Ghoul"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 0,
+      "inventoryWeightLimit": 0,
+      "inventory": [],
+      "visibility": "80%",
+      "luminosity": "20%",
+      "visibility": "70%",
+      "weight": 55,
+      "health": 20,
+      "attack": 8,
+      "attackAlgorithmID": "UNDEAD"
+    },
+    {
+      "id": "HARPY",
+      "type": "Demon",
+      "name": {
+        "singular": "Harpy",
+        "plural": "Harpies"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "inventoryItemLimit": 1,
+      "inventoryWeightLimit": 0.2,
+      "inventory": [
+        "HARPY_FEATHER"
+      ],
+      "visibility": "75%",
+      "luminosity": "2%",
+      "visibility": "70%",
+      "weight": 60,
+      "health": 25,
+      "attack": 12,
+      "attackAlgorithmID": "BEAST"
+    }
+  ]
+}

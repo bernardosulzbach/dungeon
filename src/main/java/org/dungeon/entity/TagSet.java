@@ -19,6 +19,10 @@ package org.dungeon.entity;
 
 import org.dungeon.io.DLogger;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonValue;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Set;
@@ -57,6 +61,26 @@ public class TagSet<E extends Enum<E>> implements Serializable {
   }
 
   /**
+   * Creates a TagSet from a JSON array.
+   *
+   * @param enumClass the Class of the enum, not null
+   * @param array     the a JsonArray object, not null
+   * @param <E>       an Enum type
+   * @return a TagSet
+   */
+  public static <E extends Enum<E>> TagSet<E> fromJsonObject(@NotNull JsonArray array, @NotNull Class<E> enumClass) {
+    TagSet<E> tagSet = makeEmptyTagSet(enumClass);
+    for (JsonValue value : array) {
+      try {
+        tagSet.addTag(Enum.valueOf(enumClass, value.asString()));
+      } catch (IllegalArgumentException fatal) {
+        throw new InvalidTagException("invalid tag '" + value.asString() + "' found.", fatal);
+      }
+    }
+    return tagSet;
+  }
+
+  /**
    * Checks if this TagSet has a specified Tag.
    *
    * @param tag the Tag object
@@ -72,6 +96,12 @@ public class TagSet<E extends Enum<E>> implements Serializable {
   public void addTag(E tag) {
     if (!set.add(tag)) {
       DLogger.warning("Tried to add a Tag that was already in the TagSet!");
+    }
+  }
+
+  public static class InvalidTagException extends IllegalArgumentException {
+    public InvalidTagException(String message, Throwable cause) {
+      super(message, cause);
     }
   }
 

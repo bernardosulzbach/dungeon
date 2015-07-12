@@ -17,22 +17,15 @@
 
 package org.dungeon.game;
 
-import static org.dungeon.date.DungeonTimeUnit.DAY;
-import static org.dungeon.date.DungeonTimeUnit.SECOND;
-
 import org.dungeon.achievements.Achievement;
 import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.achievements.BattleStatisticsQuery;
 import org.dungeon.achievements.BattleStatisticsRequirement;
 import org.dungeon.date.DungeonTimeParser;
 import org.dungeon.entity.Weight;
-import org.dungeon.entity.creatures.AttackAlgorithmID;
-import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.CreatureFactory;
-import org.dungeon.entity.creatures.CreaturePreset;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemBlueprint;
-import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
@@ -46,11 +39,9 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
 import com.eclipsesource.json.JsonValue;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,10 +50,6 @@ import java.util.Set;
  */
 public final class GameData {
 
-  private static final int CORPSE_DAMAGE = 2;
-  private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
-  private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
-  private static final double CORPSE_HIT_RATE = 0.5;
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
@@ -85,7 +72,8 @@ public final class GameData {
     StopWatch stopWatch = new StopWatch();
     DLogger.info("Started loading the game data.");
     loadItemBlueprints();
-    loadCreaturePresets();
+    CreatureFactory.loadCreaturePresets(itemBlueprints);
+    GameData.itemBlueprints = Collections.unmodifiableMap(GameData.itemBlueprints);
     createSkills();
     loadLocationPresets();
     loadAchievements();
@@ -155,73 +143,6 @@ public final class GameData {
     }
     reader.close();
     DLogger.info("Loaded " + itemBlueprints.size() + " item blueprints.");
-  }
-
-  /**
-   * Loads all creature presets from the resource files. Also makes the ItemBlueprints used by the corpses.
-   * <p/>
-   * This is the method that makes the itemBlueprints field unmodifiable.
-   */
-  private static void loadCreaturePresets() {
-    Map<ID, CreaturePreset> creaturePresetMap = new HashMap<ID, CreaturePreset>();
-    ResourceReader reader = new ResourceReader("creatures.txt");
-    while (reader.readNextElement()) {
-      CreaturePreset preset = new CreaturePreset();
-      preset.setID(new ID(reader.getValue("ID")));
-      preset.setType(reader.getValue("TYPE"));
-      preset.setName(nameFromArray(reader.getArrayOfValues("NAME")));
-      if (reader.hasValue("TAGS")) {
-        for (Creature.Tag tag : tagSetFromArray(Creature.Tag.class, reader.getArrayOfValues("TAGS"))) {
-          preset.addTag(tag);
-        }
-      }
-      preset.setInventoryItemLimit(readIntegerFromResourceReader(reader, "INVENTORY_ITEM_LIMIT"));
-      preset.setInventoryWeightLimit(readDoubleFromResourceReader(reader, "INVENTORY_WEIGHT_LIMIT"));
-      preset.setVisibility(reader.readVisibility());
-      if (reader.hasValue("LUMINOSITY")) {
-        preset.setLuminosity(reader.readLuminosity());
-      }
-      preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
-      preset.setHealth(readIntegerFromResourceReader(reader, "HEALTH"));
-      preset.setAttack(readIntegerFromResourceReader(reader, "ATTACK"));
-      preset.setAttackAlgorithmID(AttackAlgorithmID.valueOf(reader.getValue("ATTACK_ALGORITHM_ID")));
-      if (reader.hasValue("ITEMS")) {
-        preset.setItems(readIDList(reader, "ITEMS"));
-      }
-      if (reader.hasValue("WEAPON")) {
-        preset.setWeaponID(new ID(reader.getValue("WEAPON")));
-      }
-      creaturePresetMap.put(preset.getID(), preset);
-      if (preset.hasTag(Creature.Tag.CORPSE)) {
-        ItemBlueprint corpse = makeCorpseBlueprint(preset);
-        itemBlueprints.put(corpse.getID(), corpse);
-      }
-    }
-    reader.close();
-    itemBlueprints = Collections.unmodifiableMap(itemBlueprints);
-    CreatureFactory.setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
-    DLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
-  }
-
-  public static ItemBlueprint makeCorpseBlueprint(CreaturePreset preset) {
-    ItemBlueprint corpse = new ItemBlueprint();
-    corpse.setID(ItemFactory.makeCorpseIDFromCreatureID(preset.getID()));
-    corpse.setType("CORPSE");
-    corpse.setName(Name.newCorpseName(preset.getName()));
-    corpse.setWeight(preset.getWeight());
-    corpse.setPutrefactionPeriod(CORPSE_PUTREFACTION_PERIOD);
-    int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.
-    corpse.setMaxIntegrity(integrity);
-    corpse.setCurIntegrity(integrity);
-    corpse.setVisibility(preset.getVisibility());
-    corpse.setLuminosity(preset.getLuminosity());
-    corpse.setHitRate(CORPSE_HIT_RATE);
-    corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
-    corpse.setDamage(CORPSE_DAMAGE);
-    corpse.addTag(Item.Tag.WEAPON);
-    corpse.addTag(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
-    corpse.addTag(Item.Tag.DECOMPOSES);
-    return corpse;
   }
 
   private static void loadLocationPresets() {
@@ -413,14 +334,6 @@ public final class GameData {
       }
     }
     return set;
-  }
-
-  private static List<ID> readIDList(ResourceReader reader, String key) {
-    List<ID> list = new ArrayList<ID>();
-    for (String id : reader.getArrayOfValues(key)) {
-      list.add(new ID(id));
-    }
-    return list;
   }
 
   private static void loadLicense() {

@@ -34,7 +34,7 @@ import java.util.List;
  */
 public final class CreaturePreset implements Preset {
 
-  private final TagSet<Creature.Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
+  private TagSet<Creature.Tag> tagSet;
   private ID id;
   private String type;
   private Name name;
@@ -72,12 +72,12 @@ public final class CreaturePreset implements Preset {
     return tagSet;
   }
 
-  public boolean hasTag(Creature.Tag tag) {
-    return tagSet.hasTag(tag);
+  public void setTagSet(TagSet<Creature.Tag> tagSet) {
+    this.tagSet = tagSet;
   }
 
-  public void addTag(Creature.Tag tag) {
-    tagSet.addTag(tag);
+  public boolean hasTag(Creature.Tag tag) {
+    return tagSet.hasTag(tag);
   }
 
   public ID getID() {
