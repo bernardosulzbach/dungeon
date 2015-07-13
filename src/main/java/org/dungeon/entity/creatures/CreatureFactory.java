@@ -19,7 +19,6 @@ package org.dungeon.entity.creatures;
 
 import org.dungeon.date.Date;
 import org.dungeon.entity.Luminosity;
-import org.dungeon.entity.NameFactory;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
@@ -29,6 +28,7 @@ import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
+import org.dungeon.game.NameFactory;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.Constants;

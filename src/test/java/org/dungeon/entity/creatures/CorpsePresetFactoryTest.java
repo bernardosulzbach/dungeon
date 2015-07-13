@@ -20,11 +20,11 @@ package org.dungeon.entity.creatures;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.dungeon.game.NameFactory;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.creatures.Creature.Tag;
 import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.game.ID;
-import org.dungeon.game.Name;
 
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class CorpsePresetFactoryTest {
     CreaturePreset preset = new CreaturePreset();
     preset.setID(new ID("TESTER"));
     preset.setType("Tester");
-    preset.setName(Name.newInstance("Tester"));
+    preset.setName(NameFactory.newInstance("Tester"));
     preset.setHealth(50);
     TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
     tagSet.addTag(Creature.Tag.CORPSE);
@@ -43,7 +43,7 @@ public class CorpsePresetFactoryTest {
     ItemBlueprint blueprint = CorpsePresetFactory.makeCorpseBlueprint(preset);
     assertEquals(new ID("TESTER_CORPSE"), blueprint.getID());
     assertEquals("CORPSE", blueprint.getType());
-    assertEquals(Name.newInstance("Tester Corpse"), blueprint.getName());
+    assertEquals(NameFactory.newInstance("Tester Corpse"), blueprint.getName());
     assertTrue(blueprint.getMaxIntegrity() > 0);
     assertTrue(blueprint.getCurIntegrity() > 0);
     assertTrue(blueprint.getIntegrityDecrementOnHit() > 0);

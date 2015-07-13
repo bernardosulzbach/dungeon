@@ -18,6 +18,7 @@
 package org.dungeon.commands;
 
 import org.dungeon.game.Name;
+import org.dungeon.game.NameFactory;
 import org.dungeon.game.QuantificationMode;
 import org.dungeon.io.IO;
 import org.dungeon.util.Messenger;
@@ -31,7 +32,7 @@ import java.util.List;
 final class CommandHelp {
 
   private static final int COMMAND_NAME_COLUMN_WIDTH = 20;
-  private static final Name COMMAND_NAME = Name.newInstance("command");
+  private static final Name COMMAND_NAME = NameFactory.newInstance("command");
 
   private CommandHelp() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();

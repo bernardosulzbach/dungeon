@@ -57,7 +57,7 @@ public enum PartOfDay implements Selectable {
    * @param startingHour the starting hour, a nonnegative integer smaller than 24
    */
   PartOfDay(String name, double luminosity, int startingHour) {
-    this.name = Name.newInstance(name);
+    this.name = NameFactory.newInstance(name);
     this.luminosity = new Luminosity(new Percentage(luminosity));
     setStartingHour(startingHour);
   }

@@ -38,6 +38,7 @@ import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
+import org.dungeon.game.NameFactory;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.game.QuantificationMode;
@@ -481,7 +482,7 @@ public class Hero extends Creature {
   }
 
   public void printInventory() {
-    Name item = Name.newInstance("item");
+    Name item = NameFactory.newInstance("item");
     String firstLine;
     if (getInventory().getItemCount() == 0) {
       firstLine = "Your inventory is empty.";

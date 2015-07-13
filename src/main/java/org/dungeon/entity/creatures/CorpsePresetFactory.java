@@ -23,7 +23,7 @@ import static org.dungeon.date.DungeonTimeUnit.SECOND;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
-import org.dungeon.game.Name;
+import org.dungeon.game.NameFactory;
 
 /**
  * A factory of corpse presets.
@@ -49,7 +49,7 @@ public final class CorpsePresetFactory {
     ItemBlueprint corpse = new ItemBlueprint();
     corpse.setID(ItemFactory.makeCorpseIDFromCreatureID(preset.getID()));
     corpse.setType("CORPSE");
-    corpse.setName(Name.newCorpseName(preset.getName()));
+    corpse.setName(NameFactory.newCorpseName(preset.getName()));
     corpse.setWeight(preset.getWeight());
     corpse.setPutrefactionPeriod(CORPSE_PUTREFACTION_PERIOD);
     int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.

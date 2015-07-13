@@ -18,6 +18,7 @@
 package org.dungeon.wiki;
 
 import org.dungeon.game.Name;
+import org.dungeon.game.NameFactory;
 import org.dungeon.util.Selectable;
 
 /**
@@ -29,7 +30,7 @@ final class Article implements Selectable {
   private final String content;
 
   public Article(String title, String content) {
-    this.title = Name.newInstance(title);
+    this.title = NameFactory.newInstance(title);
     this.content = content;
   }
 

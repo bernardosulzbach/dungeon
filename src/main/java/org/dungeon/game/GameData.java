@@ -305,12 +305,12 @@ public final class GameData {
    */
   private static Name nameFromArray(String[] strings) {
     if (strings.length == 1) {
-      return Name.newInstance(strings[0]);
+      return NameFactory.newInstance(strings[0]);
     } else if (strings.length > 1) {
-      return Name.newInstance(strings[0], strings[1]);
+      return NameFactory.newInstance(strings[0], strings[1]);
     } else {
       DLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
-      return Name.newInstance("ERROR");
+      return NameFactory.newInstance("ERROR");
     }
   }
 

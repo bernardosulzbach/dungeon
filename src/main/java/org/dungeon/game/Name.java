@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 /**
- * Name Final class that stores a singular and a pluralized name for an Entity.
+ * Name immutable class that stores the singular and plural forms of a name.
  */
 public final class Name implements Serializable {
 
@@ -33,44 +33,14 @@ public final class Name implements Serializable {
 
   /**
    * Constructs a name based on the specified forms.
+   * Names should be created through NameFactory and not through this constructor.
    *
    * @param singular the singular form, not null
    * @param plural   the plural form, not null
    */
-  private Name(@NotNull String singular, @NotNull String plural) {
+  Name(@NotNull String singular, @NotNull String plural) {
     this.singular = singular;
     this.plural = plural;
-  }
-
-  /**
-   * Creates a new Name from a singular form.
-   *
-   * @param singular the singular form, not null
-   * @return a Name constructed using the provided singular form and this form concatenated with an 's'
-   */
-  public static Name newInstance(@NotNull String singular) {
-    return newInstance(singular, singular + 's');
-  }
-
-  /**
-   * Creates a new Name from a singular and a plural form.
-   *
-   * @param singular the singular form
-   * @param plural   the plural form
-   * @return a Name constructed using the provided singular and plural forms
-   */
-  public static Name newInstance(String singular, String plural) {
-    return new Name(singular, plural);
-  }
-
-  /**
-   * Creates the Name the corpse Item of a creature whose name is provided should have.
-   *
-   * @param creatureName the Name of the creature
-   * @return a Name object
-   */
-  public static Name newCorpseName(Name creatureName) {
-    return newInstance(creatureName.getSingular() + " Corpse");
   }
 
   /**
@@ -81,9 +51,8 @@ public final class Name implements Serializable {
   }
 
   /**
-   * Returns a String representing a quantified name.
-   * <p/>
-   * {@code e.g.: "Two Bears", "8 Tigers", "One Elephant"}
+   * Returns a string representing a quantified name using words for quantifiers.
+   * e.g.: {@code "One Sword", "Two Bears", "Three Elephants", "A few Cows"}
    *
    * @param quantity the quantity, must be positive
    * @return a String
@@ -93,9 +62,7 @@ public final class Name implements Serializable {
   }
 
   /**
-   * Returns a String representing a quantified name.
-   * <p/>
-   * {@code e.g.: "Two Bears", "8 Tigers", "One Elephant"}
+   * Returns a string representing a quantified name using the specified quantification mode.
    *
    * @param quantity the quantity, must be positive
    * @param mode     a QuantificationMode constant
