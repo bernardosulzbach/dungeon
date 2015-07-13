@@ -69,7 +69,7 @@ public final class CreatureFactory {
       preset.setType(presetObject.get("type").asString());
       preset.setName(NameFactory.fromJsonObject(presetObject.get("name").asObject()));
       if (presetObject.get("tags") != null) {
-        preset.setTagSet(TagSet.fromJsonObject(presetObject.get("tags").asArray(), Creature.Tag.class));
+        preset.setTagSet(TagSet.fromJsonArray(presetObject.get("tags").asArray(), Creature.Tag.class));
       } else {
         preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
       }

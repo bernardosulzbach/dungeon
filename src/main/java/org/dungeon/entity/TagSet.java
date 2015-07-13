@@ -64,11 +64,11 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * Creates a TagSet from a JSON array.
    *
    * @param enumClass the Class of the enum, not null
-   * @param array     the a JsonArray object, not null
+   * @param array     a JsonArray object, not null
    * @param <E>       an Enum type
    * @return a TagSet
    */
-  public static <E extends Enum<E>> TagSet<E> fromJsonObject(@NotNull JsonArray array, @NotNull Class<E> enumClass) {
+  public static <E extends Enum<E>> TagSet<E> fromJsonArray(@NotNull JsonArray array, @NotNull Class<E> enumClass) {
     TagSet<E> tagSet = makeEmptyTagSet(enumClass);
     for (JsonValue value : array) {
       try {
