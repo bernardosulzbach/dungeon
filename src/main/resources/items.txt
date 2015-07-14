@@ -339,9 +339,9 @@ INTEGRITY_DECREMENT_ON_HIT: 4
 TEXT: The Third Era is a period of time that lasted 480 years.\
 It starts with the end of the Second Era (the fall of the Empire of Light) and ends with the rebellion of the Red Warlocks.
 
-ID: PAGE_FROM_VÖLUND_LOKE_FREY_S_DIARY
+ID: PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY
 TYPE: Book
-NAME: [Page From Völund Loke Frey's Diary | Pages From Völund Loke Frey's Diary]
+NAME: [Page From Volund Loke Frey's Diary | Pages From Volund Loke Frey's Diary]
 TAGS: [WEAPON | BOOK]
 CUR_INTEGRITY: 4
 MAX_INTEGRITY: 4
@@ -350,7 +350,7 @@ WEIGHT: 0.02
 DAMAGE: 1
 HIT_RATE: 0.2
 INTEGRITY_DECREMENT_ON_HIT: 4
-TEXT: My Diary – Völund Loke Frey – Page 22\\
+TEXT: My Diary – Volund Loke Frey – Page 22\\
 \\
 210-5-2: I finally feel compelled to respond to the offense Birgmar made! And I will not be gentle.\\
 \\
