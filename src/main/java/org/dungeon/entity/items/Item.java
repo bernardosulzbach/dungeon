@@ -20,23 +20,21 @@ package org.dungeon.entity.items;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
+import org.dungeon.entity.Integrity;
 import org.dungeon.entity.LightSource;
 import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Game;
 import org.dungeon.game.Random;
-import org.dungeon.io.DLogger;
-import org.dungeon.util.Percentage;
 
 public final class Item extends Entity {
 
-  private final int maxIntegrity;
+  private final Integrity integrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;
   private final TagSet<Tag> tagSet;
   private final LightSource lightSource;
-  private int curIntegrity;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
   private ClockComponent clockComponent;
@@ -52,8 +50,7 @@ public final class Item extends Entity {
 
     decompositionPeriod = bp.putrefactionPeriod;
 
-    maxIntegrity = bp.maxIntegrity;
-    curIntegrity = bp.curIntegrity;
+    integrity = Integrity.makeIntegrity(bp.maxIntegrity, bp.curIntegrity, this);
 
     lightSource = new LightSource(bp.getLuminosity());
 
@@ -75,8 +72,7 @@ public final class Item extends Entity {
   public Weight getWeight() {
     Weight weight = super.getWeight();
     if (hasTag(Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY)) {
-      Percentage integrityPercentage = new Percentage(curIntegrity / (double) maxIntegrity);
-      return weight.multiply(integrityPercentage);
+      return weight.multiply(integrity.toPercentage());
     } else {
       return weight;
     }
@@ -101,44 +97,6 @@ public final class Item extends Entity {
     }
   }
 
-  private int getMaxIntegrity() {
-    return maxIntegrity;
-  }
-
-  public int getCurIntegrity() {
-    return curIntegrity;
-  }
-
-  /**
-   * Sets the current integrity attribute of this Item to the specified value.
-   * If the supplied value is bigger than the maximum integrity, this maximum allowed value is used.
-   * Similarly, if the provided value is smaller than zero, zero is used.
-   *
-   * @param curIntegrity the wanted new integrity for the item
-   */
-  public void setCurIntegrity(int curIntegrity) {
-    if (curIntegrity <= 0) {
-      setIntegrityToZero();
-    } else {
-      this.curIntegrity = Math.min(curIntegrity, maxIntegrity);
-    }
-  }
-
-  /**
-   * This method should be used to set the integrity to zero because it also manages item breaking.
-   */
-  private void setIntegrityToZero() {
-    this.curIntegrity = 0;
-    if (!hasTag(Tag.REPAIRABLE)) {
-      inventory.removeItem(this);
-      return; // The Item object will disappear from the game, don't worry about its state.
-    }
-    if (hasTag(Tag.CLOCK)) {
-      // A clock just broke! Update its last time record.
-      clockComponent.setLastTime(Game.getGameState().getWorld().getWorldDate());
-    }
-  }
-
   public boolean hasTag(Tag tag) {
     return tagSet.hasTag(tag);
   }
@@ -159,40 +117,45 @@ public final class Item extends Entity {
     return bookComponent;
   }
 
+  public BaseInventory getInventory() {
+    return inventory;
+  }
+
   public void setInventory(BaseInventory inventory) {
     this.inventory = inventory;
   }
 
-  public boolean isBroken() {
-    return getCurIntegrity() == 0;
+  private int getMaxIntegrity() {
+    return integrity.getMaximum();
   }
 
-  public void incrementIntegrity(int integrityIncrement) {
-    setCurIntegrity(getCurIntegrity() + integrityIncrement);
-  }
-
-  public void decrementIntegrityByHit() {
-    decrementIntegrity(weaponComponent.getIntegrityDecrementOnHit());
-  }
-
-  public void decrementIntegrityByEat() {
-    decrementIntegrity(foodComponent.getIntegrityDecrementOnEat());
+  public int getCurIntegrity() {
+    return integrity.getCurrent();
   }
 
   /**
-   * The method that should ultimately be called to decrement the integrity of an item.
+   * Returns whether or not this item is broken.
    *
-   * @param decrement how much to decrement, must be positive
+   * @return true if the current integrity is zero
    */
-  private void decrementIntegrity(int decrement) {
-    if (decrement <= 0) {
-      DLogger.warning("Got nonpositive integrity decrement value for a " + getName() + "!");
-      throw new IllegalArgumentException("Integrity decrement must be positive!");
-    }
-    if (isBroken()) {
-      DLogger.warning("Attempted to decrement the integrity of an already broken " + getName() + "!");
-    }
-    setCurIntegrity(getCurIntegrity() - decrement);
+  public boolean isBroken() {
+    return integrity.isBroken();
+  }
+
+  public void incrementIntegrity(int integrityIncrement) {
+    integrity.incrementBy(integrityIncrement);
+  }
+
+  public void decrementIntegrityByHit() {
+    integrity.decrementBy(weaponComponent.getIntegrityDecrementOnHit());
+  }
+
+  public void decrementIntegrityByEat() {
+    integrity.decrementBy(foodComponent.getIntegrityDecrementOnEat());
+  }
+
+  public void decrementIntegrityToZero() {
+    integrity.decrementBy(integrity.getCurrent());
   }
 
   /**

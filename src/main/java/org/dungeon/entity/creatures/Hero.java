@@ -637,7 +637,7 @@ public class Hero extends Creature {
       } else {
         Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
         if (getLocation().getInventory().hasItem(target)) {
-          target.setCurIntegrity(0);
+          target.decrementIntegrityToZero();
           String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
           IO.writeString(getName() + " " + verb + " " + target.getName() + ".");
         } else {
