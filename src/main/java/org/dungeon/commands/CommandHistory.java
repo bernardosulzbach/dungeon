@@ -20,6 +20,8 @@ package org.dungeon.commands;
 import org.dungeon.util.CircularList;
 import org.dungeon.util.Utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -27,9 +29,7 @@ import java.io.Serializable;
  */
 public class CommandHistory implements Serializable {
 
-  // 200 Strings of 8 characters would cost around 1640 bytes (a bit more than 1.6 kB).
-  // Besides the obvious cost of memory, having too many Strings in the history would also slow down the TAB search.
-  private static final int HISTORY_MAXIMUM_SIZE = 200;
+  private static final int HISTORY_MAXIMUM_SIZE = 200; // Enough. Small so it doesn't slow down 'TAB' search.
   private final CircularList<String> commands;
   private transient Cursor cursor;
 
@@ -39,7 +39,7 @@ public class CommandHistory implements Serializable {
   }
 
   /**
-   * @return a CommandHistory.Cursor to provide access to the stored commands.
+   * Returns a CommandHistory.Cursor to provide access to the stored commands.
    */
   public Cursor getCursor() {
     if (cursor == null) {
@@ -49,14 +49,14 @@ public class CommandHistory implements Serializable {
   }
 
   /**
-   * @return the number of commands in this CommandHistory.
+   * Returns the number of commands in this CommandHistory.
    */
   private int size() {
     return commands.size();
   }
 
   /**
-   * @return true if this CommandHistory contains no commands.
+   * Returns true if this CommandHistory contains no commands.
    */
   private boolean isEmpty() {
     return commands.isEmpty();
@@ -71,7 +71,7 @@ public class CommandHistory implements Serializable {
   }
 
   /**
-   * @return a String representation of the last similar command or {@code null} if no similar command was found.
+   * Returns a String representation of the last similar command or null if no similar command was found.
    */
   public String getLastSimilarCommand(String command) {
     for (int i = commands.size() - 1; i >= 0; i--) {
@@ -96,9 +96,12 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * @return the selected command or {@code null} if the CommandHistory does not have any commands or the
-     * cursor is at the end of the CommandHistory.
+     * Returns the selected command or null if the CommandHistory does not have any commands or if the cursor is at the
+     * end of the CommandHistory.
+     *
+     * @return the selected command
      */
+    @Nullable
     public String getSelectedCommand() {
       if (!history.isEmpty() && index < history.size()) {
         return history.commands.get(index);
@@ -108,9 +111,9 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Move the cursor up one command. If the cursor is at the beginning of the history, it does not move.
+     * Move the cursor up one command if it is not at the beginning of the history.
      *
-     * @return the cursor.
+     * @return the cursor
      */
     public Cursor moveUp() {
       if (index != 0) {
@@ -120,9 +123,9 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Move the cursor down one command. If the cursor is at one past the end of the history, it does not move.
+     * Move the cursor down one command if it is not at the end of the history.
      *
-     * @return the cursor.
+     * @return the cursor
      */
     public Cursor moveDown() {
       if (index < history.size()) {
@@ -132,12 +135,11 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Sets the cursor to one past the last command of the CommandHistory. Retrieving the selected entry after
-     * calling this method will return {@code null}.
+     * Sets the cursor to one past the last command of the CommandHistory.
+     * The selected command after a call to this method is granted to be null.
      */
-    public Cursor moveToEnd() {
+    public void moveToEnd() {
       index = history.size();
-      return this;
     }
 
   }
