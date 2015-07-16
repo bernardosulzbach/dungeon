@@ -104,16 +104,14 @@ public final class Engine {
   }
 
   /**
-   * Refreshes all relevant Spawners in the world, currently, that is the spawner of the location the Hero is at.
+   * Refreshes all relevant Spawners in the world, currently, that is the spawners of the location the Hero is at.
    */
   private static void refreshSpawners() {
     Game.getGameState().getHeroLocation().refreshSpawners();
   }
 
   /**
-   * Refreshes all the items in the location the Hero is in.
-   * This includes all the items in the location's inventory and all the items in the inventories of the creatures in
-   * this location.
+   * Refreshes all the items in the location the Hero is at.
    */
   private static void refreshItems() {
     Game.getGameState().getHeroLocation().refreshItems();
@@ -123,8 +121,7 @@ public final class Engine {
    * Iterates over all achievements in GameData, trying to unlock yet to be unlocked achievements.
    */
   private static void refreshAchievements() {
-    Hero hero = Game.getGameState().getHero();
-    hero.getAchievementTracker().update(GameData.ACHIEVEMENTS.values());
+    Game.getGameState().getHero().getAchievementTracker().update(GameData.ACHIEVEMENTS.values());
   }
 
   /**
@@ -163,7 +160,7 @@ public final class Engine {
       IO.writeString("You cannot go " + dir + ".");
     } else {
       Location destination = gameState.getWorld().moveHero(dir);
-      rollDateAndRefresh(WALK_SUCCESS); // Time spend walking.
+      rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
       hero.setLocation(destination);
       refresh(); // Hero arrived in a new location, refresh the game.
       hero.look(dir.invert());
