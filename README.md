@@ -3,7 +3,7 @@ Dungeon
 Text-based open-world RPG made with Java.
 
 ![Build status](https://travis-ci.org/mafagafogigante/dungeon.svg?branch=master)
-![Version](https://img.shields.io/badge/version-v0.0.7.10.7-orange.svg)
+![Version](https://img.shields.io/badge/version-v0.0.8-orange.svg)
 ![License](https://img.shields.io/badge/license-GPLv3-blue.svg)
 
 Screenshots
