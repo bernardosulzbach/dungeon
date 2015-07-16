@@ -93,7 +93,7 @@ public final class Item extends Entity {
 
   public String getQualifiedName() {
     String singularName = getName().getSingular();
-    if (getCurIntegrity() == getMaxIntegrity()) {
+    if (getIntegrity().getCurrent() == getIntegrity().getMaximum()) {
       return singularName;
     } else {
       return getIntegrityString() + " " + singularName;
@@ -102,6 +102,10 @@ public final class Item extends Entity {
 
   public boolean hasTag(Tag tag) {
     return tagSet.hasTag(tag);
+  }
+
+  public ItemIntegrity getIntegrity() {
+    return integrity;
   }
 
   public WeaponComponent getWeaponComponent() {
@@ -126,14 +130,6 @@ public final class Item extends Entity {
 
   public void setInventory(BaseInventory inventory) {
     this.inventory = inventory;
-  }
-
-  private int getMaxIntegrity() {
-    return integrity.getMaximum();
-  }
-
-  public int getCurIntegrity() {
-    return integrity.getCurrent();
   }
 
   /**
@@ -170,8 +166,11 @@ public final class Item extends Entity {
     return Random.roll(weaponComponent.getHitRate());
   }
 
+  /**
+   * Returns a string representation of the integrity state of this item.
+   */
   private String getIntegrityString() {
-    return IntegrityState.getIntegrityState(getCurIntegrity(), getMaxIntegrity()).toString();
+    return IntegrityState.getIntegrityState(getIntegrity().getCurrent(), getIntegrity().getMaximum()).toString();
   }
 
   public long getDecompositionPeriod() {

@@ -527,7 +527,7 @@ public class Hero extends Creature {
         Engine.rollDateAndRefresh(SECONDS_TO_EAT_AN_ITEM);
         if (getInventory().hasItem(selectedItem)) {
           FoodComponent food = selectedItem.getFoodComponent();
-          double remainingBites = selectedItem.getCurIntegrity() / (double) food.getIntegrityDecrementOnEat();
+          double remainingBites = selectedItem.getIntegrity().getCurrent() / (double) food.getIntegrityDecrementOnEat();
           int healthIncrement;
           if (remainingBites >= 1.0) {
             healthIncrement = food.getNutrition();
