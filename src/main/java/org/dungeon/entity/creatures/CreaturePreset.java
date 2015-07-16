@@ -62,8 +62,8 @@ public final class CreaturePreset implements Preset {
     if (value >= minimum) {
       return value;
     } else {
-      String s = String.format("Attempted to set %d to %s in CreaturePreset. Using %d.", value, attributeName, minimum);
-      DLogger.warning(s);
+      String format = "Attempted to set %d to %s in CreaturePreset. Using %d.";
+      DLogger.warning(String.format(format, value, attributeName, minimum));
       return minimum;
     }
   }
