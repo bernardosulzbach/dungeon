@@ -20,7 +20,7 @@ package org.dungeon.entity.items;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
-import org.dungeon.entity.Integrity;
+import org.dungeon.entity.ItemIntegrity;
 import org.dungeon.entity.LightSource;
 import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;
@@ -30,7 +30,7 @@ import org.dungeon.game.Random;
 
 public final class Item extends Entity {
 
-  private final Integrity integrity;
+  private final ItemIntegrity integrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;
   private final TagSet<Tag> tagSet;
@@ -42,29 +42,32 @@ public final class Item extends Entity {
   /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
   private BaseInventory inventory;
 
-  public Item(ItemBlueprint bp, Date date) {
-    super(bp);
+  public Item(ItemPreset preset, Date date) {
+    super(preset);
 
-    tagSet = TagSet.copyTagSet(bp.tagSet);
+    tagSet = TagSet.copyTagSet(preset.getTagSet());
     dateOfCreation = date;
 
-    decompositionPeriod = bp.putrefactionPeriod;
+    decompositionPeriod = preset.getPutrefactionPeriod();
 
-    integrity = Integrity.makeIntegrity(bp.maxIntegrity, bp.curIntegrity, this);
+    integrity = ItemIntegrity.makeItemIntegrity(preset.getIntegrity(), this);
 
-    lightSource = new LightSource(bp.getLuminosity());
+    lightSource = new LightSource(preset.getLuminosity());
 
     if (hasTag(Tag.WEAPON)) {
-      weaponComponent = new WeaponComponent(bp.damage, bp.hitRate, bp.integrityDecrementOnHit);
+      int damage = preset.getDamage();
+      double hitRate = preset.getHitRate();
+      int integrityDecrementOnHit = preset.getIntegrityDecrementOnHit();
+      weaponComponent = new WeaponComponent(damage, hitRate, integrityDecrementOnHit);
     }
     if (hasTag(Tag.FOOD)) {
-      foodComponent = new FoodComponent(bp.nutrition, bp.integrityDecrementOnEat);
+      foodComponent = new FoodComponent(preset.getNutrition(), preset.getIntegrityDecrementOnEat());
     }
     if (hasTag(Tag.CLOCK)) {
       clockComponent = new ClockComponent(this);
     }
     if (hasTag(Tag.BOOK)) {
-      bookComponent = new BookComponent(bp.getSkill(), bp.text);
+      bookComponent = new BookComponent(preset.getSkill(), preset.getText());
     }
   }
 

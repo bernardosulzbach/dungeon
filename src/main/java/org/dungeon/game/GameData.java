@@ -22,10 +22,11 @@ import org.dungeon.achievements.AchievementBuilder;
 import org.dungeon.achievements.BattleStatisticsQuery;
 import org.dungeon.achievements.BattleStatisticsRequirement;
 import org.dungeon.date.DungeonTimeParser;
+import org.dungeon.entity.Integrity;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.Item;
-import org.dungeon.entity.items.ItemBlueprint;
+import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.io.DLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
@@ -54,7 +55,7 @@ public final class GameData {
   public static HashMap<ID, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
-  private static Map<ID, ItemBlueprint> itemBlueprints = new HashMap<ID, ItemBlueprint>();
+  private static Map<ID, ItemPreset> itemPresets = new HashMap<ID, ItemPreset>();
   private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
 
   private GameData() { // Ensure that this class cannot be instantiated.
@@ -71,9 +72,9 @@ public final class GameData {
   static void loadGameData() {
     StopWatch stopWatch = new StopWatch();
     DLogger.info("Started loading the game data.");
-    loadItemBlueprints();
-    CreatureFactory.loadCreaturePresets(itemBlueprints);
-    GameData.itemBlueprints = Collections.unmodifiableMap(GameData.itemBlueprints);
+    loadItemPresets();
+    CreatureFactory.loadCreaturePresets(itemPresets);
+    GameData.itemPresets = Collections.unmodifiableMap(GameData.itemPresets);
     createSkills();
     loadLocationPresets();
     loadAchievements();
@@ -101,48 +102,49 @@ public final class GameData {
   }
 
   /**
-   * Loads all ItemBlueprints to a HashMap.
+   * Loads all item presets that are not programmatically generated.
    */
-  private static void loadItemBlueprints() {
+  private static void loadItemPresets() {
     ResourceReader reader = new ResourceReader("items.txt");
     while (reader.readNextElement()) {
-      ItemBlueprint blueprint = new ItemBlueprint();
-      blueprint.setID(new ID(reader.getValue("ID")));
-      blueprint.setType(reader.getValue("TYPE"));
-      blueprint.setName(nameFromArray(reader.getArrayOfValues("NAME")));
+      ItemPreset preset = new ItemPreset();
+      preset.setID(new ID(reader.getValue("ID")));
+      preset.setType(reader.getValue("TYPE"));
+      preset.setName(nameFromArray(reader.getArrayOfValues("NAME")));
       for (Item.Tag tag : tagSetFromArray(Item.Tag.class, reader.getArrayOfValues("TAGS"))) {
-        blueprint.addTag(tag);
+        preset.addTag(tag);
       }
-      if (blueprint.hasTag(Item.Tag.BOOK)) {
-        blueprint.setText(reader.getValue("TEXT"));
+      if (preset.hasTag(Item.Tag.BOOK)) {
+        preset.setText(reader.getValue("TEXT"));
       }
       if (reader.hasValue("DECOMPOSITION_PERIOD")) {
         long seconds = DungeonTimeParser.parsePeriod(reader.getValue("DECOMPOSITION_PERIOD")).getSeconds();
-        blueprint.setPutrefactionPeriod(seconds);
+        preset.setPutrefactionPeriod(seconds);
       }
-      blueprint.setCurIntegrity(readIntegerFromResourceReader(reader, "CUR_INTEGRITY"));
-      blueprint.setMaxIntegrity(readIntegerFromResourceReader(reader, "MAX_INTEGRITY"));
-      blueprint.setVisibility(reader.readVisibility());
+      int curIntegrity = readIntegerFromResourceReader(reader, "CUR_INTEGRITY");
+      int maxIntegrity = readIntegerFromResourceReader(reader, "MAX_INTEGRITY");
+      preset.setIntegrity(new Integrity(curIntegrity, maxIntegrity));
+      preset.setVisibility(reader.readVisibility());
       if (reader.hasValue("LUMINOSITY")) {
-        blueprint.setLuminosity(reader.readLuminosity());
+        preset.setLuminosity(reader.readLuminosity());
       }
-      blueprint.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
-      blueprint.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
-      blueprint.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
-      blueprint.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
+      preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
+      preset.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
+      preset.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
+      preset.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
       if (reader.hasValue("NUTRITION")) {
-        blueprint.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
+        preset.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
       }
       if (reader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
-        blueprint.setIntegrityDecrementOnEat(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_EAT"));
+        preset.setIntegrityDecrementOnEat(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_EAT"));
       }
       if (reader.hasValue("SKILL")) {
-        blueprint.setSkill(reader.getValue("SKILL"));
+        preset.setSkill(reader.getValue("SKILL"));
       }
-      itemBlueprints.put(blueprint.getID(), blueprint);
+      itemPresets.put(preset.getID(), preset);
     }
     reader.close();
-    DLogger.info("Loaded " + itemBlueprints.size() + " item blueprints.");
+    DLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
 
   private static void loadLocationPresets() {
@@ -348,8 +350,8 @@ public final class GameData {
     tutorial = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
   }
 
-  public static Map<ID, ItemBlueprint> getItemBlueprints() {
-    return itemBlueprints;
+  public static Map<ID, ItemPreset> getItemPresets() {
+    return itemPresets;
   }
 
   public static Map<ID, SkillDefinition> getSkillDefinitions() {

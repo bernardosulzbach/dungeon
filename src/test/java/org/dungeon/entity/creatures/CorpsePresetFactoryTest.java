@@ -20,38 +20,38 @@ package org.dungeon.entity.creatures;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.dungeon.game.NameFactory;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.creatures.Creature.Tag;
-import org.dungeon.entity.items.ItemBlueprint;
+import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.ID;
+import org.dungeon.game.NameFactory;
 
 import org.junit.Test;
 
 public class CorpsePresetFactoryTest {
 
   @Test
-  public void testMakeCorpseBlueprint() throws Exception {
-    CreaturePreset preset = new CreaturePreset();
-    preset.setID(new ID("TESTER"));
-    preset.setType("Tester");
-    preset.setName(NameFactory.newInstance("Tester"));
-    preset.setHealth(50);
+  public void testMakeCorpsePreset() throws Exception {
+    CreaturePreset creaturePreset = new CreaturePreset();
+    creaturePreset.setID(new ID("TESTER"));
+    creaturePreset.setType("Tester");
+    creaturePreset.setName(NameFactory.newInstance("Tester"));
+    creaturePreset.setHealth(50);
     TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
     tagSet.addTag(Creature.Tag.CORPSE);
-    preset.setTagSet(tagSet);
-    ItemBlueprint blueprint = CorpsePresetFactory.makeCorpseBlueprint(preset);
-    assertEquals(new ID("TESTER_CORPSE"), blueprint.getID());
-    assertEquals("CORPSE", blueprint.getType());
-    assertEquals(NameFactory.newInstance("Tester Corpse"), blueprint.getName());
-    assertTrue(blueprint.getMaxIntegrity() > 0);
-    assertTrue(blueprint.getCurIntegrity() > 0);
-    assertTrue(blueprint.getIntegrityDecrementOnHit() > 0);
+    creaturePreset.setTagSet(tagSet);
+    ItemPreset corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
+    assertEquals(new ID("TESTER_CORPSE"), corpsePreset.getID());
+    assertEquals("CORPSE", corpsePreset.getType());
+    assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
+    assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
+    assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
     // Extreme cases.
-    preset.setHealth(1);
-    blueprint = CorpsePresetFactory.makeCorpseBlueprint(preset);
-    assertTrue(blueprint.getMaxIntegrity() > 0);
-    assertTrue(blueprint.getCurIntegrity() > 0);
+    creaturePreset.setHealth(1);
+    corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
+    assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
   }
 
 }

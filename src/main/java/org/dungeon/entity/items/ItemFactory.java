@@ -22,15 +22,24 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.game.GameData;
 import org.dungeon.game.ID;
 
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Provides methods to create different items for the game.
+ */
 public abstract class ItemFactory {
 
   /**
-   * Attempts to create an item from the ItemBlueprint specified by an ID. Returns null if no blueprint was found.
+   * Attempts to create an item from the ItemPreset specified by an ID with the provided creation date.
+   *
+   * @param id   the ID of the preset, not null
+   * @param date the creation date of the item, not null
+   * @return an Item with the specified creation date or null if the preset could not be found
    */
-  public static Item makeItem(ID id, Date date) {
-    ItemBlueprint blueprint = GameData.getItemBlueprints().get(id);
-    if (blueprint != null) {
-      return new Item(blueprint, date);
+  public static Item makeItem(@NotNull ID id, @NotNull Date date) {
+    ItemPreset itemPreset = GameData.getItemPresets().get(id);
+    if (itemPreset != null) {
+      return new Item(itemPreset, date);
     } else {
       return null;
     }

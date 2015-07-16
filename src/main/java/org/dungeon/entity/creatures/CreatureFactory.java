@@ -24,8 +24,8 @@ import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.Item;
-import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
+import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.Game;
 import org.dungeon.game.ID;
 import org.dungeon.game.NameFactory;
@@ -57,9 +57,9 @@ public final class CreatureFactory {
   }
 
   /**
-   * Loads all creature presets from the resource files. Also makes the ItemBlueprints used by the corpses.
+   * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
    */
-  public static void loadCreaturePresets(Map<ID, ItemBlueprint> itemBlueprintMap) {
+  public static void loadCreaturePresets(Map<ID, ItemPreset> itemPresetMap) {
     Map<ID, CreaturePreset> creaturePresetMap = new HashMap<ID, CreaturePreset>();
     JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
     for (JsonValue value : object.get("creatures").asArray()) {
@@ -85,8 +85,8 @@ public final class CreatureFactory {
       preset.setAttackAlgorithmID(AttackAlgorithmID.valueOf(presetObject.get("attackAlgorithmID").asString()));
       creaturePresetMap.put(preset.getID(), preset);
       if (preset.hasTag(Creature.Tag.CORPSE)) {
-        ItemBlueprint corpse = CorpsePresetFactory.makeCorpseBlueprint(preset);
-        itemBlueprintMap.put(corpse.getID(), corpse);
+        ItemPreset corpse = CorpsePresetFactory.makeCorpsePreset(preset);
+        itemPresetMap.put(corpse.getID(), corpse);
       }
     }
     setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));

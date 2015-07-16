@@ -17,24 +17,23 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.entity.items.BreakageHandler;
-import org.dungeon.entity.items.Item;
-import org.dungeon.util.Percentage;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 /**
- * The integrity of an entity.
+ * Two integer values with no reference to any entity.
  */
 public class Integrity implements Serializable {
 
   private final int maximum;
-  private final Item item;
   private int current;
 
-  private Integrity(int maximum, int current, @NotNull Item item) {
+  /**
+   * Constructs a new Integrity object with the specified maximum and current integrities.
+   *
+   * @param maximum the maximum integrity, positive
+   * @param current the current integrity, nonnegative, smaller than or equal to maximum
+   */
+  public Integrity(int maximum, int current) {
     if (maximum < 1) {
       throw new IllegalArgumentException("maximum should be positive.");
     }
@@ -46,19 +45,14 @@ public class Integrity implements Serializable {
     }
     this.maximum = maximum;
     this.current = current;
-    this.item = item;
   }
 
   /**
-   * Makes a new Integrity object with the specified maximum and current integrities.
-   *
-   * @param maximum the maximum integrity, positive
-   * @param current the current integrity, nonnegative, smaller than or equal to maximum
-   * @param item    the Item which this integrity refers to, not null
-   * @return an Integrity object
+   * Copy constructor.
    */
-  public static Integrity makeIntegrity(int maximum, int current, @NotNull Item item) {
-    return new Integrity(maximum, current, item);
+  public Integrity(Integrity integrity) {
+    maximum = integrity.maximum;
+    current = integrity.current;
   }
 
   public int getMaximum() {
@@ -67,19 +61,6 @@ public class Integrity implements Serializable {
 
   public int getCurrent() {
     return current;
-  }
-
-  /**
-   * Returns whether or not this Integrity represents the integrity of a broken entity.
-   *
-   * @return true if the current integrity is zero
-   */
-  public boolean isBroken() {
-    return getCurrent() == 0;
-  }
-
-  public Percentage toPercentage() {
-    return new Percentage(getCurrent() / (double) getMaximum());
   }
 
   /**
@@ -98,9 +79,6 @@ public class Integrity implements Serializable {
    */
   public void decrementBy(int amount) {
     current = Math.max(current - amount, 0);
-    if (isBroken()) {
-      BreakageHandler.handleBreakage(item);
-    }
   }
 
   @Override

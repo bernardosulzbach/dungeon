@@ -20,15 +20,16 @@ package org.dungeon.entity.creatures;
 import static org.dungeon.date.DungeonTimeUnit.DAY;
 import static org.dungeon.date.DungeonTimeUnit.SECOND;
 
+import org.dungeon.entity.Integrity;
 import org.dungeon.entity.items.Item;
-import org.dungeon.entity.items.ItemBlueprint;
 import org.dungeon.entity.items.ItemFactory;
+import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.NameFactory;
 
 /**
  * A factory of corpse presets.
  */
-public final class CorpsePresetFactory {
+final class CorpsePresetFactory {
 
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
@@ -42,19 +43,18 @@ public final class CorpsePresetFactory {
   /**
    * Makes a corpse preset from a creature preset.
    */
-  public static ItemBlueprint makeCorpseBlueprint(CreaturePreset preset) {
+  public static ItemPreset makeCorpsePreset(CreaturePreset preset) {
     if (!preset.hasTag(Creature.Tag.CORPSE)) {
       throw new IllegalArgumentException("preset does not have the CORPSE tag.");
     }
-    ItemBlueprint corpse = new ItemBlueprint();
+    ItemPreset corpse = new ItemPreset();
     corpse.setID(ItemFactory.makeCorpseIDFromCreatureID(preset.getID()));
     corpse.setType("CORPSE");
     corpse.setName(NameFactory.newCorpseName(preset.getName()));
     corpse.setWeight(preset.getWeight());
     corpse.setPutrefactionPeriod(CORPSE_PUTREFACTION_PERIOD);
     int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.
-    corpse.setMaxIntegrity(integrity);
-    corpse.setCurIntegrity(integrity);
+    corpse.setIntegrity(new Integrity(integrity, integrity));
     corpse.setVisibility(preset.getVisibility());
     corpse.setLuminosity(preset.getLuminosity());
     corpse.setHitRate(CORPSE_HIT_RATE);
