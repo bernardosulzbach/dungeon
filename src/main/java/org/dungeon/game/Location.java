@@ -26,6 +26,8 @@ import org.dungeon.entity.items.LocationInventory;
 import org.dungeon.io.DLogger;
 import org.dungeon.util.Percentage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,15 @@ public final class Location implements Serializable {
   private final Percentage lightPermittivity;
   private final World world;
 
-  public Location(LocationPreset preset, World world) {
+  /**
+   * Constructs a new location for the specified world based on the provided preset.
+   *
+   * The creation date of the items in this location is the world date at the time this location was created.
+   *
+   * @param preset the LocationPreset object
+   * @param world  the World object
+   */
+  public Location(@NotNull LocationPreset preset, @NotNull World world) {
     this.id = preset.getID();
     this.name = preset.getName();
     this.description = preset.getDescription();
