@@ -26,8 +26,6 @@ import java.text.SimpleDateFormat;
  */
 public class Constants {
 
-  public static final int COLS = 100;
-
   // DateFormats for time and date printing.
   public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");

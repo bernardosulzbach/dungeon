@@ -22,7 +22,6 @@ import org.dungeon.game.Point;
 import org.dungeon.game.World;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.stats.ExplorationStatistics;
-import org.dungeon.util.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +39,7 @@ public class WorldMap {
    */
   private WorldMap() {
     Point center = Game.getGameState().getHeroPosition();
-    int cols = Constants.COLS;
+    int cols = GameWindow.COLS;
     int rows = GameWindow.ROWS - 1;
     limits = new IterationLimits(center, cols, rows);
     matrix = new WorldMapSymbol[rows][cols]; // Add 1 to account for newlines.

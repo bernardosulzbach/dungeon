@@ -72,6 +72,7 @@ public class GameWindow extends JFrame {
    * Returns how many text rows are shown in the Window.
    */
   public static final int ROWS = 30;
+  public static final int COLS = 100;
   private static final int FONT_SIZE = 15;
   private static final Font FONT = getMonospacedFont();
   private static final String WINDOW_TITLE = "Dungeon";
@@ -237,7 +238,7 @@ public class GameWindow extends JFrame {
    */
   private Dimension calculateTextPaneSize() {
     FontMetrics fontMetrics = getFontMetrics(FONT);
-    int width = fontMetrics.charWidth(' ') * (Constants.COLS + 1); // columns + magic constant
+    int width = fontMetrics.charWidth(' ') * (COLS + 1); // columns + magic constant
     int height = fontMetrics.getHeight() * ROWS;
     return new Dimension(width, height);
   }

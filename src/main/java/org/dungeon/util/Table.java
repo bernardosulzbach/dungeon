@@ -17,6 +17,7 @@
 
 package org.dungeon.util;
 
+import org.dungeon.gui.GameWindow;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Writer;
 
@@ -182,7 +183,7 @@ public class Table {
 
     int rowCount = columns.get(0).rows.size();
 
-    StringBuilder builder = new StringBuilder(Constants.COLS * rowCount + 16);
+    StringBuilder builder = new StringBuilder(GameWindow.COLS * rowCount + 16);
     String[] currentRow = new String[columnCount];
 
     // Insert headers
@@ -219,7 +220,7 @@ public class Table {
       widths[i] = columns.get(i).widestValue;
     }
     // Subtract the number of columns to account for separators. Add one because there is not a separator at the end.
-    int availableColumns = Constants.COLS - columns.size() + 1;
+    int availableColumns = GameWindow.COLS - columns.size() + 1;
     int difference = availableColumns - DungeonMath.sum(widths);
     DungeonMath.distribute(difference, widths);
     return widths;

@@ -18,6 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.gui.GameWindow;
 import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
@@ -158,13 +159,13 @@ public final class DungeonMath {
    * @return a String with no lines longer than the column count defined in org.dungeon.util.Constants
    */
   private static String insertBreaksAtTheColumnLimit(String string) {
-    if (string.length() <= Constants.COLS) {
+    if (string.length() <= GameWindow.COLS) {
       return string;
     }
     StringBuilder builder = new StringBuilder();
     int charactersOnThisLine = 0;
     for (char character : string.toCharArray()) {
-      if (charactersOnThisLine == Constants.COLS) {
+      if (charactersOnThisLine == GameWindow.COLS) {
         builder.insert(builder.length() - 1, "\\\n");
         charactersOnThisLine = 1; // The last number "fell" to the newest line after the insertion.
       }
