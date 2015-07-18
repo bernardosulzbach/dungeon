@@ -3,7 +3,7 @@
 *.jar
 
 # Except exported IDEA settings.
-!misc/idea/*.jar
+!idea/settings.jar
 
 # IDEA
 .idea/
