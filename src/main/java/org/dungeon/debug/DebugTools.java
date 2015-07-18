@@ -161,7 +161,7 @@ public class DebugTools {
     commands.add(new Command("time") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        printTime();
+        Writer.writeString(Game.getGameState().getWorld().getWorldDate().toString());
       }
     });
     commands.add(new Command("wait") {
@@ -337,10 +337,6 @@ public class DebugTools {
     } else {
       Messenger.printMissingArgumentsMessage();
     }
-  }
-
-  private static void printTime() {
-    Writer.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
   }
 
 }
