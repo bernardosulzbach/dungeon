@@ -37,15 +37,15 @@ public class Table {
 
   /**
    * A List of Integers representing which rows should be preceded by horizontal separators.
-   * <p/>
-   * Repeated integers make multiple horizontal separators.
+   *
+   * <p>Repeated integers make multiple horizontal separators.
    */
   private CounterMap<Integer> separators;
 
   /**
    * Constructs a Table using the provided Strings as column headers.
    *
-   * @param headers the columns' headers.
+   * @param headers the headers
    */
   public Table(String... headers) {
     columns = new ArrayList<Column>(headers.length);
@@ -69,8 +69,8 @@ public class Table {
    * Appends a row to a StringBuilder.
    *
    * @param stringBuilder the StringBuilder object
-   * @param columnWidths  the widths of the columns of the table
-   * @param values        the values of the row
+   * @param columnWidths the widths of the columns of the table
+   * @param values the values of the row
    */
   private static void appendRow(StringBuilder stringBuilder, int[] columnWidths, String... values) {
     String currentValue;
@@ -96,8 +96,8 @@ public class Table {
   /**
    * Append a horizontal separator made up of dashes to a StringBuilder.
    *
-   * @param stringBuilder the StringBuilder object.
-   * @param columnWidths  the width of the columns of the table.
+   * @param stringBuilder the StringBuilder object
+   * @param columnWidths the width of the columns of the table
    */
   private static void appendHorizontalSeparator(StringBuilder stringBuilder, int[] columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
@@ -108,10 +108,13 @@ public class Table {
   }
 
   /**
-   * Inserts a row of values in the end of the table. If not enough values are supplied, the remaining columns are
-   * filled with empty strings.
+   * Inserts a row of values at the end of the table.
    *
-   * @param values the values to be inserted.
+   * <p>If not enough values are supplied, the remaining columns are filled with the empty string.
+   *
+   * <p>If too many values are supplied, a warning is logged and the table is left unchanged.
+   *
+   * @param values the values to be inserted
    */
   public void insertRow(String... values) {
     int columnCount = columns.size();
@@ -141,8 +144,8 @@ public class Table {
   /**
    * Tests if the table has a specific value.
    *
-   * @param value the value.
-   * @return true if the table contains the value, false otherwise.
+   * @param value the value
+   * @return true if the table contains the value, false otherwise
    */
   public boolean contains(String value) {
     for (Column column : columns) {

@@ -41,6 +41,7 @@ public class TableTest {
 
   @Test
   public void testInsertRow() throws Exception {
+    assertTrue(table.getDimensions().equals(new Dimensions(100, 3)));
     Random random = new Random();
     // Insert 200 rows in the table.
     for (int i = 0; i < 100; i++) {
@@ -52,6 +53,7 @@ public class TableTest {
       // Test if nulls are handled properly.
       table.insertRow(null, null, null);
     }
+    assertTrue(table.getDimensions().equals(new Dimensions(300, 3)));
   }
 
   @Test
