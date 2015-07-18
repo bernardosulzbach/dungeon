@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.PartOfDay;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,12 +29,12 @@ import java.io.Serializable;
  */
 public final class BattleRecord implements Serializable {
 
-  private final ID id;
+  private final Id id;
   private final String type;
   private final CauseOfDeath causeOfDeath;
   private final PartOfDay partOfDay;
 
-  public BattleRecord(@NotNull ID id, @NotNull String type, @NotNull CauseOfDeath causeOfDeath,
+  public BattleRecord(@NotNull Id id, @NotNull String type, @NotNull CauseOfDeath causeOfDeath,
       @NotNull PartOfDay partOfDay) {
     this.id = id;
     this.type = type;
@@ -42,7 +42,7 @@ public final class BattleRecord implements Serializable {
     this.partOfDay = partOfDay;
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 

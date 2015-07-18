@@ -17,7 +17,7 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.util.CounterMap;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class Achievement implements Comparable<Achievement> {
 
-  private final ID id;
+  private final Id id;
   private final String name;
   private final String info;
   private final String text;
@@ -44,17 +44,17 @@ public class Achievement implements Comparable<Achievement> {
    * @param text the String used to explain why the character unlocked the achievement
    */
   public Achievement(String id, String name, String info, String text,
-      Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<ID> killsByLocationID,
-      CounterMap<ID> visitedLocations, CounterMap<ID> maximumNumberOfVisits) {
-    this.id = new ID(id);
+      Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<Id> killsByLocationId,
+      CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits) {
+    this.id = new Id(id);
     this.name = name;
     this.info = info;
     this.text = text;
     battle = new BattleComponent(battleRequirements);
-    exploration = new ExplorationComponent(killsByLocationID, visitedLocations, maximumNumberOfVisits);
+    exploration = new ExplorationComponent(killsByLocationId, visitedLocations, maximumNumberOfVisits);
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 

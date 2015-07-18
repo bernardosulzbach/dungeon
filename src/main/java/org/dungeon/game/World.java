@@ -20,7 +20,7 @@ package org.dungeon.game;
 import org.dungeon.date.Date;
 import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.entity.creatures.Hero;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.stats.WorldStatistics;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +41,7 @@ public class World implements Serializable {
   /**
    * Creates a new World.
    *
-   * @param statistics a WorldStatistics object on which this World will record its status.
+   * @param statistics a WorldStatistics object on which this World will record its status
    */
   public World(WorldStatistics statistics) {
     worldStatistics = statistics;
@@ -65,8 +65,8 @@ public class World implements Serializable {
   /**
    * Moves the hero from a location to another.
    *
-   * @param dir the Direction in which the hero should be moved.
-   * @return the Location the hero arrives to.
+   * @param dir the Direction in which the hero should be moved
+   * @return the Location the hero arrives to
    */
   public Location moveHero(Direction dir) {
     Hero hero = Game.getGameState().getHero();
@@ -84,8 +84,8 @@ public class World implements Serializable {
   }
 
   /**
-   * Gets the Location in the specified Point.
-   * If the Location in the Point has not yet been created, the world generator will do it.
+   * Gets the Location in the specified Point. If the Location in the Point has not yet been created, the world
+   * generator will do it.
    *
    * @param point a Point object
    * @return a Location
@@ -110,7 +110,7 @@ public class World implements Serializable {
    */
   public void rollDate(int seconds) {
     if (seconds <= 0) {
-      DLogger.warning("Cannot roll the World's Date back!");
+      DungeonLogger.warning("Cannot roll the World's Date back!");
     } else {
       worldDate = worldDate.plus(seconds, DungeonTimeUnit.SECOND);
     }

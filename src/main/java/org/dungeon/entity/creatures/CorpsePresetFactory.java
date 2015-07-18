@@ -48,7 +48,7 @@ final class CorpsePresetFactory {
       throw new IllegalArgumentException("preset does not have the CORPSE tag.");
     }
     ItemPreset corpse = new ItemPreset();
-    corpse.setID(ItemFactory.makeCorpseIDFromCreatureID(preset.getID()));
+    corpse.setId(ItemFactory.makeCorpseIDFromCreatureId(preset.getId()));
     corpse.setType("CORPSE");
     corpse.setName(NameFactory.newCorpseName(preset.getName()));
     corpse.setWeight(preset.getWeight());

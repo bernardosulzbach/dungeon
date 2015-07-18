@@ -17,7 +17,7 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 import org.dungeon.game.NameFactory;
 
@@ -25,23 +25,23 @@ import java.io.Serializable;
 
 /**
  * SkillDefinition class that is what the name says: the definition of a Skill.
- * <p/>
- * Skills should be created based on already existing SkillDefinitions.
- * <p/>
- * A Skill differs from a SkillDefinition as it has Creature-specific data. For instance, all Fireballs share the same
- * definition, but each Creature's SkillList should have a specific Skill object for the Fireball, such that its
+ *
+ * <p></p>Skills should be created based on already existing SkillDefinitions.
+ *
+ * <p>A Skill differs from a SkillDefinition as it has Creature-specific data. For instance, all Fireballs share the
+ * same definition, but each Creature's SkillList should have a specific Skill object for the Fireball, such that its
  * remaining cool down is not shared among different Creatures.
  */
 public final class SkillDefinition implements Serializable {
 
-  public final ID id;
+  public final Id id;
   public final Name name;
   public final int damage;
   public final int repair;
   public final int coolDown;
 
   public SkillDefinition(String id, String name, int damage, int repair, int coolDown) {
-    this.id = new ID(id);
+    this.id = new Id(id);
     this.name = NameFactory.newInstance(name);
     this.damage = damage;
     this.repair = repair;

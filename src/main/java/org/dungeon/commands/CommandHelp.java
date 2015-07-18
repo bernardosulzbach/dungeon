@@ -20,7 +20,7 @@ package org.dungeon.commands;
 import org.dungeon.game.Name;
 import org.dungeon.game.NameFactory;
 import org.dungeon.game.QuantificationMode;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Utils;
 
@@ -62,9 +62,9 @@ final class CommandHelp {
         }
       }
       if (selectedCommand == null) {
-        IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
+        Writer.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
       } else {
-        IO.writeString(selectedCommand.toString());
+        Writer.writeString(selectedCommand.toString());
       }
     } else {
       Messenger.printMissingArgumentsMessage();
@@ -93,7 +93,7 @@ final class CommandHelp {
       }
     }
     if (count == 0) {
-      IO.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
+      Writer.writeString(noCommandStartsWith(issuedCommand.getFirstArgument()));
     } else {
       if (count > 1) {
         String quantifiedName = COMMAND_NAME.getQuantifiedName(count, QuantificationMode.NUMBER);
@@ -102,7 +102,7 @@ final class CommandHelp {
           builder.append("\nYou can filter the output of this command by typing the beginning of the desired command.");
         }
       }
-      IO.writeString(builder.toString());
+      Writer.writeString(builder.toString());
     }
   }
 

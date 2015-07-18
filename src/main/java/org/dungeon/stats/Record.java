@@ -37,8 +37,8 @@ class Record implements Serializable {
   }
 
   /**
-   * Updates the Record by presenting it a new value.
-   * If it is better than the current value, or if there is not an established record, it becomes the new record.
+   * Updates the Record by presenting it a new value. If it is better than the current value, or if there is not an
+   * established record, it becomes the new record.
    *
    * @param value a numeric value
    */

@@ -24,10 +24,6 @@ import org.junit.Test;
 
 /**
  * Enumerated type of the parts of the day.
- * <p/>
- * Created by Bernardo Sulzbach on 24/09/2014.
- * <p/>
- * Updated by Bernardo Sulzbach on 21/11/2014: added startingHour.
  */
 public class PartOfDayTest {
 

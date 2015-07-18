@@ -23,9 +23,9 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
-import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
+import org.dungeon.io.Writer;
 import org.dungeon.map.WorldMap;
 import org.dungeon.map.WorldMapWriter;
 import org.dungeon.util.DungeonMath;
@@ -124,7 +124,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        IO.writeString(Libraries.getHintLibrary().next());
+        Writer.writeString(Libraries.getHintLibrary().next());
       }
     });
     addCommandToDefault(new Command("items", "Lists the items in the character's inventory.") {
@@ -266,7 +266,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("tutorial", "Displays the tutorial.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        IO.writeString(GameData.getTutorial());
+        Writer.writeString(GameData.getTutorial());
       }
     });
     addCommandToDefault(new Command("unequip", "Unequips the currently equipped item.") {
@@ -328,7 +328,7 @@ public final class CommandCollection {
    */
   public Command getCommand(IssuedCommand issuedCommand) {
     if (issuedCommand == null) {
-      DLogger.warning("Passed null IssuedCommand to CommandCollection.getCommand()!");
+      DungeonLogger.warning("Passed null IssuedCommand to CommandCollection.getCommand()!");
     } else {
       for (Command command : commands) {
         if (command.getDescription().getName().equalsIgnoreCase(issuedCommand.getFirstToken())) {
@@ -346,9 +346,9 @@ public final class CommandCollection {
    */
   private void addCommand(Command command) {
     if (command == null) {
-      DLogger.warning("Passed null to CommandCollection.addCommand()!");
+      DungeonLogger.warning("Passed null to CommandCollection.addCommand()!");
     } else if (commands.contains(command)) {
-      DLogger.warning("Attempted to add the same Command to a CommandCollection twice!");
+      DungeonLogger.warning("Attempted to add the same Command to a CommandCollection twice!");
     } else {
       commands.add(command);
       commandDescriptions.add(command.getDescription());

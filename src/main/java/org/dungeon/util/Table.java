@@ -17,8 +17,8 @@
 
 package org.dungeon.util;
 
-import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
+import org.dungeon.io.DungeonLogger;
+import org.dungeon.io.Writer;
 
 import java.util.ArrayList;
 
@@ -127,7 +127,7 @@ public class Table {
         }
       }
     } else {
-      DLogger.warning("Tried to insert more values than columns!");
+      DungeonLogger.warning("Tried to insert more values than columns!");
     }
   }
 
@@ -173,7 +173,7 @@ public class Table {
    */
   public void print() {
     if (columns.size() == 0) {
-      DLogger.warning("Tried to print an empty Table.");
+      DungeonLogger.warning("Tried to print an empty Table.");
       return;
     }
 
@@ -210,7 +210,7 @@ public class Table {
     }
 
     // Dump to the window.
-    IO.writeString(builder.toString());
+    Writer.writeString(builder.toString());
   }
 
   private int[] calculateColumnWidths() {

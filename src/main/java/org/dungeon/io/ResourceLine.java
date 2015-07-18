@@ -40,7 +40,7 @@ final class ResourceLine {
    */
   public ResourceLine(String line) {
     if (line == null) {
-      DLogger.warning("Tried to create a ResourceLine with a null String.");
+      DungeonLogger.warning("Tried to create a ResourceLine with a null String.");
       this.text = null;
       valid = false;
     } else {
@@ -93,12 +93,12 @@ final class ResourceLine {
     return valid && text.startsWith(COMMENT_ESCAPE);
   }
 
-  @Override
   /**
    * Returns a line of text without the line break character (if there is one) and without any trailing whitespaces.
    *
    * If this ResourceLine is a comment, {@code null} is returned.
    */
+  @Override
   public String toString() {
     if (isComment()) {
       return null;

@@ -52,8 +52,8 @@ public enum PartOfDay implements Selectable {
   /**
    * Creates a new PartOfDay.
    *
-   * @param name         the name of this PartOfDay
-   * @param luminosity   the luminosity of this PartOfDay, a double between 0 and 1
+   * @param name the name of this PartOfDay
+   * @param luminosity the luminosity of this PartOfDay, a double between 0 and 1
    * @param startingHour the starting hour, a nonnegative integer smaller than 24
    */
   PartOfDay(String name, double luminosity, int startingHour) {

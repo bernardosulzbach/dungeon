@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,10 +37,10 @@ public class Percentage implements Comparable<Percentage>, Serializable {
   public Percentage(double percentage) {
     if (DungeonMath.fuzzyCompare(percentage, ZERO) < 0) {
       value = ZERO;
-      DLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ZERO + " instead.");
+      DungeonLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ZERO + " instead.");
     } else if (DungeonMath.fuzzyCompare(percentage, ONE) > 0) {
       value = ONE;
-      DLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ONE + " instead.");
+      DungeonLogger.warning("Tried to use " + percentage + " as a percentage. Used " + ONE + " instead.");
     } else {
       value = percentage;
     }
@@ -48,8 +48,8 @@ public class Percentage implements Comparable<Percentage>, Serializable {
 
   /**
    * Creates a Percentage object from a String representation of a Percentage.
-   * <p/>
-   * Percentage.isValidPercentageString(String) should return true to the provided String.
+   *
+   * <p>Percentage.isValidPercentageString(String) should return true to the provided String.
    *
    * @param percentage the String representation of a valid percentage
    * @return a Percentage object

@@ -19,9 +19,9 @@ package org.dungeon.skill;
 
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Constants;
 import org.dungeon.util.Selectable;
 
@@ -43,9 +43,9 @@ public class Skill implements Selectable, Serializable {
   /**
    * Prints a message about the inflicted damage due to a casted Skill.
    *
-   * @param skill  the Skill casted.
-   * @param caster the Creature that performed the attack.
-   * @param target the target of the attack.
+   * @param skill the Skill casted
+   * @param caster the Creature that performed the attack
+   * @param target the target of the attack
    */
   private static void printSkillCast(Skill skill, Creature caster, Creature target) {
     StringBuilder builder = new StringBuilder();
@@ -54,10 +54,10 @@ public class Skill implements Selectable, Serializable {
       builder.append(" and inflicted ").append(skill.getDamage()).append(" damage points to ").append(target.getName());
     }
     builder.append(".");
-    IO.writeBattleString(builder.toString(), caster.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+    Writer.writeBattleString(builder.toString(), caster.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }
 
-  public ID getID() {
+  public Id getId() {
     return definition.id;
   }
 
@@ -87,7 +87,7 @@ public class Skill implements Selectable, Serializable {
     Item casterWeapon = caster.getWeapon();
     if (casterWeapon != null && casterWeapon.hasTag(Item.Tag.REPAIRABLE) && getRepair() > 0) {
       casterWeapon.incrementIntegrity(getRepair());
-      IO.writeString(casterWeapon.getName() + " was repaired.");
+      Writer.writeString(casterWeapon.getName() + " was repaired.");
     }
     startCoolDown();
   }
@@ -101,8 +101,8 @@ public class Skill implements Selectable, Serializable {
 
   /**
    * Refreshes the remaining cool down of this Skill.
-   * <p/>
-   * This method should be invoked after each turn.
+   *
+   * <p>This method should be invoked after each turn.
    */
   void refresh() {
     if (remainingCoolDown > 0) {
@@ -112,8 +112,8 @@ public class Skill implements Selectable, Serializable {
 
   /**
    * Resets the remaining cool down of this Skill.
-   * <p/>
-   * This method should be invoked after the battle ends.
+   *
+   * <p>This method should be invoked after the battle ends.
    */
   void reset() {
     remainingCoolDown = 0;

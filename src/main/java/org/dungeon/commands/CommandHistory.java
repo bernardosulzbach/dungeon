@@ -135,8 +135,8 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Sets the cursor to one past the last command of the CommandHistory.
-     * The selected command after a call to this method is granted to be null.
+     * Sets the cursor to one past the last command of the CommandHistory. The selected command after a call to this
+     * method is granted to be null.
      */
     public void moveToEnd() {
       index = history.size();

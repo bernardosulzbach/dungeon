@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 /**
  * Dungeon logger class.
  */
-public final class DLogger {
+public final class DungeonLogger {
 
   private static final String LOG_FILE_PATH = "logs/";
   private static final String LOG_FILE_NAME = "log.txt";
@@ -39,7 +39,7 @@ public final class DLogger {
     try {
       logger = Logger.getLogger("org.dungeon");
       Handler handler = new FileHandler(getLogFilePath(), true);
-      handler.setFormatter(new DFormatter());
+      handler.setFormatter(new LoggerDateFormatter());
       logger.setUseParentHandlers(false);
       logger.addHandler(handler);
       logger.setLevel(Level.ALL);
@@ -48,13 +48,12 @@ public final class DLogger {
     }
   }
 
-  private DLogger() { // Ensure that this class cannot be instantiated.
+  private DungeonLogger() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
   }
 
   /**
-   * Logs an info message.
-   * If the logger could not be initialized, the message will be unceremoniously discarded.
+   * Logs an info message. If the logger could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
@@ -65,8 +64,7 @@ public final class DLogger {
   }
 
   /**
-   * Logs a warning message.
-   * If the logger could not be initialized, the message will be unceremoniously discarded.
+   * Logs a warning message. If the logger could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
@@ -78,12 +76,12 @@ public final class DLogger {
 
   /**
    * Logs a WARNING message with filename and line number.
-   * <p/>
-   * The message is produced by the following String concatenation
-   * <p/>
-   * {@code "Line " + lineNumber + " of " + filename + messageEnd}
    *
-   * @param filename   the name of the file
+   * <p> The message is produced by the following String concatenation
+   *
+   * <p> {@code "Line " + lineNumber + " of " + filename + messageEnd}
+   *
+   * @param filename the name of the file
    * @param lineNumber the number of the line that caused the warning
    * @param messageEnd how the message should end
    */
@@ -92,9 +90,8 @@ public final class DLogger {
   }
 
   /**
-   * Logs a severe message.
-   * Only errors that cause fatal application termination are considered to be severe.
-   * If the logger could not be initialized, the message will be unceremoniously discarded.
+   * Logs a severe message. Only errors that cause fatal application termination are considered to be severe. If the
+   * logger could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */

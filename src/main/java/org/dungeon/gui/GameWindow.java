@@ -21,7 +21,7 @@ import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.util.Constants;
 
@@ -103,9 +103,9 @@ public class GameWindow extends JFrame {
     try {
       font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
     } catch (FontFormatException bad) {
-      DLogger.warning("threw FontFormatException during font creation.");
+      DungeonLogger.warning("threw FontFormatException during font creation.");
     } catch (IOException bad) {
-      DLogger.warning("threw IOException during font creation.");
+      DungeonLogger.warning("threw IOException during font creation.");
     } finally {
       if (fontStream != null) {
         try {
@@ -119,8 +119,8 @@ public class GameWindow extends JFrame {
 
   /**
    * Try to set the system's look and feel.
-   * <p/>
-   * If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
+   *
+   * <p>If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
    * background coloring of a JTextField.
    */
   private static void setSystemLookAndFeel() {
@@ -139,7 +139,7 @@ public class GameWindow extends JFrame {
   }
 
   private static void logExecutionExceptionAndExit(ExecutionException fatal) {
-    DLogger.severe(fatal.getCause().toString());
+    DungeonLogger.severe(fatal.getCause().toString());
     System.exit(1);
   }
 
@@ -161,7 +161,7 @@ public class GameWindow extends JFrame {
     scrollPane.setViewportView(textPane);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.setBorder(BorderFactory.createEmptyBorder());
-    scrollPane.getVerticalScrollBar().setUI(new DScrollBarUI());
+    scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
 
     textField.setBackground(SharedConstants.INSIDE_COLOR);
     textField.setForeground(Constants.FORE_COLOR_NORMAL);
@@ -327,9 +327,9 @@ public class GameWindow extends JFrame {
   /**
    * Adds a string with a specific foreground color to the text pane.
    *
-   * @param string     the string to be written.
-   * @param color      the Color of the foreground text.
-   * @param scrollDown if true, the TextPane will be scrolled down after writing.
+   * @param string the string to be written
+   * @param color the Color of the foreground text
+   * @param scrollDown if true, the TextPane will be scrolled down after writing
    */
   public void writeToTextPane(String string, Color color, boolean scrollDown) {
     if (usingExternalDocument) {
@@ -342,10 +342,10 @@ public class GameWindow extends JFrame {
   /**
    * Adds a string with a specific foreground and background color to the text pane.
    *
-   * @param string     the string to be written.
-   * @param fore       the Color of the foreground text.
-   * @param back       the Color of the background text.
-   * @param scrollDown if true, the TextPane will be scrolled down after writing.
+   * @param string the string to be written
+   * @param fore the Color of the foreground text
+   * @param back the Color of the background text
+   * @param scrollDown if true, the TextPane will be scrolled down after writing
    */
   private void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
     StyleConstants.setForeground(attributeSet, fore);

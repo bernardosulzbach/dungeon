@@ -20,7 +20,7 @@ package org.dungeon.entity.items;
 import org.dungeon.date.Date;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.game.GameData;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,11 +32,11 @@ public abstract class ItemFactory {
   /**
    * Attempts to create an item from the ItemPreset specified by an ID with the provided creation date.
    *
-   * @param id   the ID of the preset, not null
+   * @param id the ID of the preset, not null
    * @param date the creation date of the item, not null
    * @return an Item with the specified creation date or null if the preset could not be found
    */
-  public static Item makeItem(@NotNull ID id, @NotNull Date date) {
+  public static Item makeItem(@NotNull Id id, @NotNull Date date) {
     ItemPreset itemPreset = GameData.getItemPresets().get(id);
     if (itemPreset != null) {
       return new Item(itemPreset, date);
@@ -49,21 +49,21 @@ public abstract class ItemFactory {
    * Makes a corpse from the provided Creature. The creation Date of the corpse should be the Date of death.
    *
    * @param creature the Creature object
-   * @param date     the Date when the Creature died
+   * @param date the Date when the Creature died
    * @return an Item that represents the corpse of the Creature
    */
   public static Item makeCorpse(Creature creature, Date date) {
     if (!creature.hasTag(Creature.Tag.CORPSE)) {
       throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
     }
-    return makeItem(makeCorpseIDFromCreatureID(creature.getID()), date);
+    return makeItem(makeCorpseIDFromCreatureId(creature.getId()), date);
   }
 
   /**
    * Given a Creature ID, this method returns the corresponding corpse's ID.
    */
-  public static ID makeCorpseIDFromCreatureID(ID id) {
-    return new ID(id + "_CORPSE");
+  public static Id makeCorpseIDFromCreatureId(Id id) {
+    return new Id(id + "_CORPSE");
   }
 
 }

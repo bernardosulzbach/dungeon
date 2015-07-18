@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,11 +32,11 @@ public final class Name implements Serializable {
   private final String plural;
 
   /**
-   * Constructs a name based on the specified forms.
-   * Names should be created through NameFactory and not through this constructor.
+   * Constructs a name based on the specified forms. Names should be created through NameFactory and not through this
+   * constructor.
    *
    * @param singular the singular form, not null
-   * @param plural   the plural form, not null
+   * @param plural the plural form, not null
    */
   Name(@NotNull String singular, @NotNull String plural) {
     this.singular = singular;
@@ -51,8 +51,8 @@ public final class Name implements Serializable {
   }
 
   /**
-   * Returns a string representing a quantified name using words for quantifiers.
-   * e.g.: {@code "One Sword", "Two Bears", "Three Elephants", "A few Cows"}
+   * Returns a string representing a quantified name using words for quantifiers. e.g.: {@code "One Sword", "Two Bears",
+   * "Three Elephants", "A few Cows"}
    *
    * @param quantity the quantity, must be positive
    * @return a String
@@ -65,13 +65,13 @@ public final class Name implements Serializable {
    * Returns a string representing a quantified name using the specified quantification mode.
    *
    * @param quantity the quantity, must be positive
-   * @param mode     a QuantificationMode constant
+   * @param mode a QuantificationMode constant
    * @return a String
    */
   public String getQuantifiedName(int quantity, QuantificationMode mode) {
     String name;
     if (quantity < 0) {
-      DLogger.warning("Called getQuantifiedName with nonpositive quantity.");
+      DungeonLogger.warning("Called getQuantifiedName with nonpositive quantity.");
       throw new AssertionError("Negative quantity passed to getQuantifiedName()!");
     } else if (quantity == 1) {
       name = singular;

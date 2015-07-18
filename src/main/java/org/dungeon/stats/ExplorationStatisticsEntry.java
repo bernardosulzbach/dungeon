@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 
 import java.io.Serializable;
 
@@ -26,16 +26,16 @@ import java.io.Serializable;
  */
 class ExplorationStatisticsEntry implements Serializable {
 
-  private final ID locationID;
+  private final Id locationId;
   private int visitCount;
   private int killCount;
 
-  public ExplorationStatisticsEntry(ID locationID) {
-    this.locationID = locationID;
+  public ExplorationStatisticsEntry(Id locationId) {
+    this.locationId = locationId;
   }
 
-  public ID getLocationID() {
-    return locationID;
+  public Id getLocationId() {
+    return locationId;
   }
 
   /**
@@ -62,8 +62,8 @@ class ExplorationStatisticsEntry implements Serializable {
 
   @Override
   public String toString() {
-    String format = "ExplorationStatisticsEntry{locationID=%s, visitCount=%d, killCount=%d}";
-    return String.format(format, locationID, visitCount, killCount);
+    String format = "ExplorationStatisticsEntry{locationId=%s, visitCount=%d, killCount=%d}";
+    return String.format(format, locationId, visitCount, killCount);
   }
 
 }

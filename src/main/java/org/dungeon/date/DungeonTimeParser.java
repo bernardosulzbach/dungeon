@@ -33,11 +33,11 @@ public final class DungeonTimeParser {
 
   /**
    * Parses a period string.
-   * <p/>
-   * Such string should only contain pairs of positive numerical multipliers and time units separated by spaces,
+   *
+   * <p>Such string should only contain pairs of positive numerical multipliers and time units separated by spaces,
    * "and", and commas.
-   * <p/>
-   * For example: "2 years, 5 months, 8 days, and 20 hours".
+   *
+   * <p>For example: "2 years, 5 months, 8 days, and 20 hours".
    *
    * @param string a period string, not null
    * @return a Period, not null

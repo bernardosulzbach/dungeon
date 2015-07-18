@@ -37,7 +37,7 @@ public class Period implements Serializable {
    * Constructs a period from a specified start date to an end date.
    *
    * @param start the start of the period.
-   * @param end   the end of the period.
+   * @param end the end of the period.
    */
   public Period(@NotNull Date start, @NotNull Date end) {
     difference = end.getTime() - start.getTime();

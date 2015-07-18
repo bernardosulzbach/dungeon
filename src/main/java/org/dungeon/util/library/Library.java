@@ -17,7 +17,7 @@
 
 package org.dungeon.util.library;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.StopWatch;
 
 /**
@@ -37,26 +37,26 @@ abstract class Library {
 
   /**
    * The method that should be invoked to call the load() method.
-   * <p/>
-   * This method uses a StopWatch to record how long did the load() invocation took and logs it.
-   * <p/>
-   * If this method is called after data has been loaded, a warning is logged.
+   *
+   * <p>This method uses a StopWatch to record how long did the load() invocation took and logs it.
+   *
+   * <p>If this method is called after data has been loaded, a warning is logged.
    */
   final void initialize() {
     if (uninitialized) {
       StopWatch stopWatch = new StopWatch();
       load();
-      DLogger.info("Loading took " + stopWatch.toString() + ".");
+      DungeonLogger.info("Loading took " + stopWatch.toString() + ".");
       uninitialized = false;
     } else {
-      DLogger.warning("Tried to initialize an already initialized Library class.");
+      DungeonLogger.warning("Tried to initialize an already initialized Library class.");
     }
   }
 
   /**
    * Loads the data from secondary storage.
-   * <p/>
-   * This method is invoked by the initialize method.
+   *
+   * <p>This method is invoked by the initialize method.
    */
   abstract void load();
 

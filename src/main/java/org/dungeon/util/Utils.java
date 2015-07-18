@@ -18,7 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.game.GameData;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,8 +34,8 @@ public final class Utils {
   }
 
   /**
-   * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is
-   * bigger than the desired length, the same string is returned.
+   * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is bigger
+   * than the desired length, the same string is returned.
    */
   public static String padString(String original, int desiredLength) {
     int requiredSpaces = desiredLength - original.length();
@@ -73,7 +73,7 @@ public final class Utils {
    * Joins a sequence of strings with a specified delimiter string.
    *
    * @param delimiter the delimiter string.
-   * @param elements  the sequence of strings to be joined.
+   * @param elements the sequence of strings to be joined.
    * @return a single String.
    */
   public static String join(String delimiter, String... elements) {
@@ -93,13 +93,13 @@ public final class Utils {
    * Prints the game's license.
    */
   public static void printLicense() {
-    IO.writeString(GameData.LICENSE);
+    Writer.writeString(GameData.LICENSE);
   }
 
   /**
    * Converts an array of Strings into a single String object, separating Strings with the specified separator.
    *
-   * @param strings   the Strings.
+   * @param strings the Strings.
    * @param separator a String to be inserted between Strings of the array.
    * @return a single String.
    */
@@ -120,8 +120,8 @@ public final class Utils {
 
   /**
    * Enumerates the elements of a List in a human-readable way.
-   * <p/>
-   * This method calls {@code toString()} on each object, so the result depends on what that method returns.
+   *
+   * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.
    *
    * @param list the List of Objects.
    * @return a String.
@@ -147,8 +147,8 @@ public final class Utils {
    * Finds the best matches to the provided tokens among the {@code Selectable}s of a specified {@code Collection}.
    *
    * @param collection a {@code Collection} of {@code Selectable} objects
-   * @param tokens     the search Strings
-   * @param <T>        a type T that extends {@code Selectable}
+   * @param tokens the search Strings
+   * @param <T> a type T that extends {@code Selectable}
    * @return a {@code Matches} object with zero or more elements of type T
    */
   public static <T extends Selectable> Matches<T> findBestMatches(Collection<T> collection, String... tokens) {
@@ -156,15 +156,15 @@ public final class Utils {
   }
 
   /**
-   * Finds the best complete matches to the provided tokens among the {@code Selectable}s of a specified
-   * {@code Collection}. A match is considered complete if it has a word for each provided token.
-   * <p/>
-   * This is the method that should be used to select objects of the class {@code Entity}, as, for instance,
-   * {@code "Fruit Bat"} should never match a {@code "Bat"}.
+   * Finds the best complete matches to the provided tokens among the {@code Selectable}s of a specified {@code
+   * Collection}. A match is considered complete if it has a word for each provided token.
+   *
+   * <p>This is the method that should be used to select objects of the class {@code Entity}, as, for instance, {@code
+   * "Fruit Bat"} should never match a {@code "Bat"}.
    *
    * @param collection a {@code Collection} of {@code Selectable} objects
-   * @param tokens     the search Strings
-   * @param <T>        a type T that extends {@code Selectable}
+   * @param tokens the search Strings
+   * @param <T> a type T that extends {@code Selectable}
    * @return a {@code Matches} object with zero or more elements of type T
    */
   public static <T extends Selectable> Matches<T> findBestCompleteMatches(Collection<T> collection, String... tokens) {
@@ -175,9 +175,9 @@ public final class Utils {
    * Finds matches of {@code Selectable}s based on a given {@code Collection} of objects and an array of search tokens.
    *
    * @param collection a {@code Collection} of {@code Selectable} objects
-   * @param complete   if true, only elements that match all tokens are returned
-   * @param tokens     the search Strings
-   * @param <T>        a type T that extends {@code Selectable}
+   * @param complete if true, only elements that match all tokens are returned
+   * @param tokens the search Strings
+   * @param <T> a type T that extends {@code Selectable}
    * @return a {@code Matches} object with zero or more elements of type T
    */
   private static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,

@@ -17,7 +17,7 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 
 /**
@@ -25,7 +25,7 @@ import org.dungeon.game.Name;
  */
 public interface Preset {
 
-  ID getID();
+  Id getId();
 
   String getType();
 

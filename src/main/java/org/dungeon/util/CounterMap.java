@@ -48,8 +48,8 @@ public class CounterMap<K> implements Serializable {
 
   /**
    * Increments the count of a given key in the CounterMap by 1.
-   * <p/>
-   * If the key does not exist, it will be created an assigned a value of 1.
+   *
+   * <p>If the key does not exist, it will be created an assigned a value of 1.
    */
   public void incrementCounter(K key) {
     incrementCounter(key, 1);
@@ -57,8 +57,8 @@ public class CounterMap<K> implements Serializable {
 
   /**
    * Increments the count of a given key in the CounterMap by a given amount.
-   * <p/>
-   * If the key does not exist, it will be created an assigned the added value.
+   *
+   * <p>If the key does not exist, it will be created an assigned the added value.
    */
   public void incrementCounter(K key, Integer amount) {
     Integer counter = map.get(key);

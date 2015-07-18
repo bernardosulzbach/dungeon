@@ -17,7 +17,7 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 import org.dungeon.util.Selectable;
 
@@ -29,21 +29,21 @@ import java.io.Serializable;
  */
 public abstract class Entity implements Selectable, Serializable {
 
-  private final ID id;
+  private final Id id;
   private final String type;
   private final Name name;
   private final Weight weight;
   private final Visibility visibility;
 
   protected Entity(Preset preset) {
-    this.id = preset.getID();
+    this.id = preset.getId();
     this.type = preset.getType();
     this.name = preset.getName();
     this.weight = preset.getWeight();
     this.visibility = preset.getVisibility();
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 

@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,15 +29,15 @@ import java.io.Serializable;
 public class CauseOfDeath implements Serializable {
 
   private final TypeOfCauseOfDeath type;
-  private final ID id;
+  private final Id id;
 
   /**
    * Gets a CauseOfDeath with the specified TypeOfCauseOfDeath and ID.
    *
    * @param type a TypeOfCauseOfDeath
-   * @param id   an ID
+   * @param id an ID
    */
-  public CauseOfDeath(@NotNull TypeOfCauseOfDeath type, @NotNull ID id) {
+  public CauseOfDeath(@NotNull TypeOfCauseOfDeath type, @NotNull Id id) {
     this.type = type;
     this.id = id;
   }

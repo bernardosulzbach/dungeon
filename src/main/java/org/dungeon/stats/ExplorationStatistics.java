@@ -17,7 +17,7 @@
 
 package org.dungeon.stats;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Point;
 
 import java.io.Serializable;
@@ -35,33 +35,33 @@ public class ExplorationStatistics implements Serializable {
   }
 
   /**
-   * Creates an ExplorationStatisticsEntry for a Point if one does not exist yet.
-   * Should be called whenever the Hero sees a Point, as the current criteria for "seen" locations on the in-game map is
-   * having an Entry in the ExplorationStatistics.
+   * Creates an ExplorationStatisticsEntry for a Point if one does not exist yet. Should be called whenever the Hero
+   * sees a Point, as the current criteria for "seen" locations on the in-game map is having an Entry in the
+   * ExplorationStatistics.
    *
-   * @param point      the Point object
-   * @param locationID the ID of the Location at the specified Point
+   * @param point the Point object
+   * @param locationId the ID of the Location at the specified Point
    */
-  public void createEntryIfNotExists(Point point, ID locationID) {
+  public void createEntryIfNotExists(Point point, Id locationId) {
     if (!hasBeenSeen(point)) {
-      entries.put(point, new ExplorationStatisticsEntry(locationID));
+      entries.put(point, new ExplorationStatisticsEntry(locationId));
     }
   }
 
   /**
    * Records a visit to a specified Point.
    *
-   * @param point the visited Point.
+   * @param point the visited Point
    */
-  public void addVisit(Point point, ID locationID) {
-    createEntryIfNotExists(point, locationID);
+  public void addVisit(Point point, Id locationId) {
+    createEntryIfNotExists(point, locationId);
     entries.get(point).addVisit();
   }
 
   /**
    * Records a kill in a specified Point.
    *
-   * @param point the Point where the Hero just killed something.
+   * @param point the Point where the Hero just killed something
    */
   public void addKill(Point point) {
     // Don't call createEntryIfNotExists as the player needs to visit a Point before killing anything in it.
@@ -81,13 +81,13 @@ public class ExplorationStatistics implements Serializable {
   /**
    * Returns how many Locations with the specified ID the Hero visited.
    *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
+   * @param locationId the ID of the Locations
+   * @return a nonnegative integer
    */
-  public int getVisitedLocations(ID locationID) {
+  public int getVisitedLocations(Id locationId) {
     int count = 0;
     for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID) && entry.getVisitCount() > 0) {
+      if (entry.getLocationId().equals(locationId) && entry.getVisitCount() > 0) {
         count++;
       }
     }
@@ -97,13 +97,13 @@ public class ExplorationStatistics implements Serializable {
   /**
    * Returns how many Creatures the Hero killed in Locations with a specified ID.
    *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
+   * @param locationId the ID of the Locations
+   * @return a nonnegative integer
    */
-  public int getKillCount(ID locationID) {
+  public int getKillCount(Id locationId) {
     int count = 0;
     for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID)) {
+      if (entry.getLocationId().equals(locationId)) {
         count += entry.getKillCount();
       }
     }
@@ -113,13 +113,13 @@ public class ExplorationStatistics implements Serializable {
   /**
    * Returns the maximum number of visits for any Location with a specified ID so far.
    *
-   * @param locationID the ID of the Locations.
-   * @return a nonnegative integer.
+   * @param locationId the ID of the Locations
+   * @return a nonnegative integer
    */
-  public int getMaximumNumberOfVisits(ID locationID) {
+  public int getMaximumNumberOfVisits(Id locationId) {
     int maximumVisitsToLocationWithThisID = 0;
     for (ExplorationStatisticsEntry entry : entries.values()) {
-      if (entry.getLocationID().equals(locationID)) {
+      if (entry.getLocationId().equals(locationId)) {
         if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
           maximumVisitsToLocationWithThisID = entry.getVisitCount();
         }

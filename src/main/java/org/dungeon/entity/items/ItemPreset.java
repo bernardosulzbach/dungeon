@@ -23,7 +23,7 @@ import org.dungeon.entity.Preset;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 
 /**
@@ -32,7 +32,7 @@ import org.dungeon.game.Name;
 public final class ItemPreset implements Preset {
 
   private final TagSet<Item.Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
-  private ID id;
+  private Id id;
   private String type;
   private Name name;
   private Integrity integrity;
@@ -44,7 +44,7 @@ public final class ItemPreset implements Preset {
   private Weight weight;
   private Visibility visibility;
   private Luminosity luminosity = Luminosity.ZERO;
-  private ID skill;
+  private Id skill;
   private String text;
   private long putrefactionPeriod;
 
@@ -60,11 +60,11 @@ public final class ItemPreset implements Preset {
     getTagSet().addTag(tag);
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 
-  public void setID(ID id) {
+  public void setId(Id id) {
     this.id = id;
   }
 
@@ -158,12 +158,12 @@ public final class ItemPreset implements Preset {
     this.luminosity = luminosity;
   }
 
-  public ID getSkill() {
+  public Id getSkill() {
     return skill;
   }
 
   public void setSkill(String skill) {
-    this.skill = new ID(skill);
+    this.skill = new Id(skill);
   }
 
   public String getText() {

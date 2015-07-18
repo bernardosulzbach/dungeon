@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 /**
  * Numeral enumerated type.
@@ -34,7 +34,7 @@ public enum Numeral {
 
   public static Numeral getCorrespondingNumeral(int integer) {
     if (integer < 1) {
-      DLogger.warning("Tried to get nonpositive numeral!");
+      DungeonLogger.warning("Tried to get nonpositive numeral!");
       return null;
     } else if (integer >= values().length) {
       return values()[values().length - 1];

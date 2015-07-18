@@ -20,7 +20,7 @@ package org.dungeon.entity.creatures;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Name;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
@@ -39,7 +39,7 @@ final class HeroUtils {
    * Returns whether all Entities in a Collection have the same name or not.
    *
    * @param entities a {@code Collection} of Entities
-   * @param ignored  an Entity to be ignored, should be {@code null} if no Entity is to be ignored
+   * @param ignored an Entity to be ignored, should be {@code null} if no Entity is to be ignored
    * @return a boolean indicating if all Entities in the collection have the same name
    */
   static boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities, Entity ignored) {
@@ -66,7 +66,7 @@ final class HeroUtils {
   static Item findItem(List<Item> items, String[] tokens) {
     Matches<Item> matches = org.dungeon.util.Utils.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
-      IO.writeString("Item not found.");
+      Writer.writeString("Item not found.");
     } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
       return matches.getMatch(0);
     } else {
@@ -114,11 +114,11 @@ final class HeroUtils {
   }
 
   static void writeNoLongerInInventoryMessage(Item item) {
-    IO.writeString(item.getQualifiedName() + " is no longer in the inventory.");
+    Writer.writeString(item.getQualifiedName() + " is no longer in the inventory.");
   }
 
   public static void writeNoLongerInLocationMessage(Item item) {
-    IO.writeString(item.getQualifiedName() + " is no longer in this location.");
+    Writer.writeString(item.getQualifiedName() + " is no longer in this location.");
   }
 
 }

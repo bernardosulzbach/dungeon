@@ -92,10 +92,10 @@ public final class Loader {
         }
         table.print();
       } else {
-        IO.writeString("Saves folder is empty.");
+        Writer.writeString("Saves folder is empty.");
       }
     } else {
-      IO.writeString("Saves folder does not exist.");
+      Writer.writeString("Saves folder does not exist.");
     }
   }
 
@@ -168,17 +168,17 @@ public final class Loader {
    */
   public static GameState newGame() {
     GameState gameState = new GameState();
-    IO.writeString("Created a new game.");
-    IO.writeNewLine();
-    IO.writeString(gameState.getPreface());
+    Writer.writeString("Created a new game.");
+    Writer.writeNewLine();
+    Writer.writeString(gameState.getPreface());
     Game.getGameWindow().requestFocusOnTextField();
     return gameState;
   }
 
   /**
    * Loads the default save file if it exists. If it does not exist, this returns another existing save. Lastly, if the
-   * saves folder is empty or does not exist, the method returns {@code null}.
-   * Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code null}.
+   * saves folder is empty or does not exist, the method returns {@code null}. Note that if the user does not confirm
+   * the operation in the dialog that pops up, this method return {@code null}.
    */
   public static GameState loadGame() {
     if (checkForDefaultSave()) {
@@ -203,7 +203,7 @@ public final class Loader {
    */
   public static GameState loadGame(IssuedCommand issuedCommand) {
     if (issuedCommand == null) {
-      DLogger.warning("Passed null to Loader.loadGame(IssuedCommand)!");
+      DungeonLogger.warning("Passed null to Loader.loadGame(IssuedCommand)!");
       return null;
     }
     if (issuedCommand.hasArguments()) {
@@ -214,7 +214,7 @@ public final class Loader {
       if (isSaveFile(save)) {
         return loadFile(save);
       } else {
-        IO.writeString(save.getName() + " does not exist or is not a file.");
+        Writer.writeString(save.getName() + " does not exist or is not a file.");
         return null;
       }
     } else {
@@ -231,8 +231,8 @@ public final class Loader {
 
   /**
    * Saves the specified GameState, using the default save file or the one defined in the IssuedCommand.
-   * <p/>
-   * Only asks for confirmation if there already is a save file with the name.
+   *
+   * <p>Only asks for confirmation if there already is a save file with the name.
    */
   public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
     String saveName = DEFAULT_SAVE_NAME;
@@ -281,11 +281,11 @@ public final class Loader {
       objectInStream.close();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
       String sizeString = bytesToHuman(file.length());
-      DLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
-      IO.writeString(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
+      DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
+      Writer.writeString(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
       return loadedGameState;
     } catch (Exception bad) {
-      IO.writeString("Could not load the saved game.");
+      Writer.writeString("Could not load the saved game.");
       return null;
     }
   }
@@ -294,7 +294,7 @@ public final class Loader {
    * Serializes the specified {@code GameState} state to a file.
    *
    * @param state a GameState
-   * @param name  the name of the file
+   * @param name the name of the file
    */
   private static void saveFile(GameState state, String name) {
     StopWatch stopWatch = new StopWatch();
@@ -314,10 +314,10 @@ public final class Loader {
       objectOutStream.close();
       state.setSaved(true);
       String sizeString = bytesToHuman(file.length());
-      DLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
-      IO.writeString(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
+      DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
+      Writer.writeString(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
     } catch (IOException bad) {
-      IO.writeString("Could not save the game.");
+      Writer.writeString("Could not save the game.");
     }
   }
 

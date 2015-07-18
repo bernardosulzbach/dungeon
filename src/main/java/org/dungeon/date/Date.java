@@ -24,7 +24,7 @@ import static org.dungeon.date.DungeonTimeUnit.MONTH;
 import static org.dungeon.date.DungeonTimeUnit.SECOND;
 import static org.dungeon.date.DungeonTimeUnit.YEAR;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,10 +32,10 @@ import java.io.Serializable;
 
 /**
  * Dungeon Date class. Stores an immutable time stamp.
- * <p/>
- * Dungeon's date system has years of 10 months, months of 10 days and days of 24 hours of 60 minutes of 60 seconds.
- * All the public constants made available by this class refer to this date system.
- * Therefore they should not be used to represent or take place into calculations of real world time.
+ *
+ * <p>Dungeon's date system has years of 10 months, months of 10 days and days of 24 hours of 60 minutes of 60 seconds.
+ * All the public constants made available by this class refer to this date system. Therefore they should not be used to
+ * represent or take place into calculations of real world time.
  */
 public class Date implements Comparable<Date>, Serializable {
 
@@ -51,36 +51,36 @@ public class Date implements Comparable<Date>, Serializable {
   /**
    * Constructs a date from the provided parameters.
    *
-   * @param year   the year, positive
-   * @param month  the month, positive, smaller than or equal to the number of months in a year
-   * @param day    the day, positive, smaller than or equal to the number of days in a month
-   * @param hour   the hour, nonnegative, smaller than the number of hours in a day
+   * @param year the year, positive
+   * @param month the month, positive, smaller than or equal to the number of months in a year
+   * @param day the day, positive, smaller than or equal to the number of days in a month
+   * @param hour the hour, nonnegative, smaller than the number of hours in a day
    * @param minute the minute, nonnegative, smaller than the number of minutes in an hour
    * @param second the second, nonnegative, smaller than the number of seconds in a minute
    */
   public Date(long year, long month, long day, long hour, long minute, long second) {
     this(year, month, day);
     if (hour < 0) {
-      DLogger.warning("Tried to construct Date with negative hour!");
+      DungeonLogger.warning("Tried to construct Date with negative hour!");
       hour = 0;
     } else if (hour >= DAY.as(HOUR)) {
-      DLogger.warning("Tried to construct Date with nonexistent hour.");
+      DungeonLogger.warning("Tried to construct Date with nonexistent hour.");
       // First hour of the next day. Even if the code supplied this, log a warning as this is likely a bug.
       hour = DAY.as(HOUR);
     }
     if (minute < 0) {
-      DLogger.warning("Tried to construct Date with negative minute!");
+      DungeonLogger.warning("Tried to construct Date with negative minute!");
       minute = 0;
     } else if (minute >= HOUR.as(MINUTE)) {
-      DLogger.warning("Tried to construct Date with nonexistent minute.");
+      DungeonLogger.warning("Tried to construct Date with nonexistent minute.");
       // First minute of the next hour. Even if the code supplied this, log a warning as this is likely a bug.
       minute = HOUR.as(MINUTE);
     }
     if (second < 0) {
-      DLogger.warning("Tried to construct Date with negative second!");
+      DungeonLogger.warning("Tried to construct Date with negative second!");
       second = 0;
     } else if (second >= MINUTE.as(SECOND)) {
-      DLogger.warning("Tried to construct Date with nonexistent second.");
+      DungeonLogger.warning("Tried to construct Date with nonexistent second.");
       // First second of the next minute. Even if the code supplied this, log a warning as this is likely a bug.
       second = MINUTE.as(SECOND);
     }
@@ -90,27 +90,27 @@ public class Date implements Comparable<Date>, Serializable {
   /**
    * Constructs a date from the provided parameters.
    *
-   * @param year  the year, positive
+   * @param year the year, positive
    * @param month the month, positive, smaller than or equal to the number of months in a year
-   * @param day   the day, positive, smaller than or equal to the number of days in a month
+   * @param day the day, positive, smaller than or equal to the number of days in a month
    */
   public Date(long year, long month, long day) {
     if (year <= 0) {
-      DLogger.warning("Tried to construct Date with nonpositive year!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive year!");
       year = 1;
     }
     if (month <= 0) {
-      DLogger.warning("Tried to construct Date with nonpositive month!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive month!");
       month = 1;
     } else if (month > YEAR.as(MONTH)) {
-      DLogger.warning("Tried to construct Date with nonexistent month.");
+      DungeonLogger.warning("Tried to construct Date with nonexistent month.");
       month = YEAR.as(MONTH);
     }
     if (day <= 0) {
-      DLogger.warning("Tried to construct Date with nonpositive day!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive day!");
       day = 1;
     } else if (day > MONTH.as(DAY)) {
-      DLogger.warning("Tried to construct Date with nonexistent day.");
+      DungeonLogger.warning("Tried to construct Date with nonexistent day.");
       day = MONTH.as(DAY);
     }
     time = YEAR.milliseconds * (year - 1) + MONTH.milliseconds * (month - 1) + DAY.milliseconds * (day - 1);
@@ -148,7 +148,7 @@ public class Date implements Comparable<Date>, Serializable {
    * Returns a new Date object corresponding to this Date plus the specified amount of time.
    *
    * @param amount a positive integer
-   * @param unit   a DungeonTimeUnit value, not null
+   * @param unit a DungeonTimeUnit value, not null
    * @return a new Date object
    * @throws IllegalArgumentException if amount is not positive or if unit is null
    */
@@ -166,7 +166,7 @@ public class Date implements Comparable<Date>, Serializable {
    * Returns a new Date object corresponding to this Date minus the specified amount of time.
    *
    * @param amount a positive integer
-   * @param unit   a DungeonTimeUnit value, not null
+   * @param unit a DungeonTimeUnit value, not null
    * @return a new Date object
    * @throws IllegalArgumentException if amount is not positive or if unit is null
    */

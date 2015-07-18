@@ -31,14 +31,14 @@ import java.util.Set;
  */
 public class LocationPresetStore {
 
-  private final Map<ID, LocationPreset> idLocationPresetMap = new HashMap<ID, LocationPreset>();
+  private final Map<Id, LocationPreset> idLocationPresetMap = new HashMap<Id, LocationPreset>();
   private final Map<Type, List<LocationPreset>> typeLocationPresetMap = new HashMap<Type, List<LocationPreset>>();
 
   LocationPresetStore() {
   }
 
   public void addLocationPreset(LocationPreset preset) {
-    idLocationPresetMap.put(preset.getID(), preset);
+    idLocationPresetMap.put(preset.getId(), preset);
     if (!typeLocationPresetMap.containsKey(preset.getType())) {
       typeLocationPresetMap.put(preset.getType(), new ArrayList<LocationPreset>());
     }

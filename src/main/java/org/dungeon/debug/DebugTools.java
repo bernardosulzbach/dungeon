@@ -34,12 +34,12 @@ import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Location;
 import org.dungeon.game.LocationPreset;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.map.WorldMap;
 import org.dungeon.map.WorldMapWriter;
 import org.dungeon.stats.CauseOfDeath;
@@ -81,7 +81,7 @@ public class DebugTools {
           return;
         }
       }
-      IO.writeString("Command not recognized.");
+      Writer.writeString("Command not recognized.");
     } else {
       Messenger.printMissingArgumentsMessage();
     }
@@ -89,8 +89,8 @@ public class DebugTools {
 
   /**
    * Creates all debugging Commands.
-   * <p/>
-   * This method also sets {@code uninitialized} to false.
+   *
+   * <p>This method also sets {@code uninitialized} to false.
    */
   private static void initialize() {
     commands.add(new Command("achievements") {
@@ -155,7 +155,7 @@ public class DebugTools {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
         Engine.rollDateAndRefresh((int) DAY.as(SECOND));
-        IO.writeString("A day has passed.");
+        Writer.writeString("A day has passed.");
       }
     });
     commands.add(new Command("time") {
@@ -182,7 +182,7 @@ public class DebugTools {
       }
       table.print();
     } else {
-      IO.writeString("You haven't killed anything yet. Go kill something!");
+      Writer.writeString("You haven't killed anything yet. Go kill something!");
     }
   }
 
@@ -195,11 +195,11 @@ public class DebugTools {
       }
     }
     if (achievementList.isEmpty()) {
-      IO.writeString("All achievements have been unlocked.");
+      Writer.writeString("All achievements have been unlocked.");
     } else {
       Collections.sort(achievementList);
       for (Achievement achievement : achievementList) {
-        IO.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
+        Writer.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
       }
     }
   }
@@ -209,9 +209,9 @@ public class DebugTools {
     Table table = new Table("Name", "Kills", "Visited so far", "Maximum number of visits");
     for (LocationPreset preset : GameData.getLocationPresetStore().getAllPresets()) {
       String name = preset.getName().getSingular();
-      String kills = String.valueOf(explorationStatistics.getKillCount(preset.getID()));
-      String VisitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getID()));
-      String maximumNumberOfVisits = String.valueOf(explorationStatistics.getMaximumNumberOfVisits(preset.getID()));
+      String kills = String.valueOf(explorationStatistics.getKillCount(preset.getId()));
+      String VisitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getId()));
+      String maximumNumberOfVisits = String.valueOf(explorationStatistics.getMaximumNumberOfVisits(preset.getId()));
       table.insertRow(name, kills, VisitedSoFar, maximumNumberOfVisits);
     }
     table.print();
@@ -244,28 +244,28 @@ public class DebugTools {
     sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity().toPercentage()).append('\n');
     sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
     sb.append(Utils.padString("Blocked Entrances:", WIDTH)).append(location.getBlockedEntrances()).append('\n');
-    IO.writeString(sb.toString());
+    Writer.writeString(sb.toString());
   }
 
   /**
    * Attempts to give an Item to the Hero.
    *
-   * @param itemID the ID of the Item, as provided by the player
+   * @param itemId the Id of the Item, as provided by the player
    */
-  private static void give(String itemID) {
+  private static void give(String itemId) {
     Date date = Game.getGameState().getWorld().getWorldDate();
-    Item item = ItemFactory.makeItem(new ID(itemID.toUpperCase()), date);
+    Item item = ItemFactory.makeItem(new Id(itemId.toUpperCase()), date);
     if (item != null) {
-      IO.writeString("Item successfully created.");
+      Writer.writeString("Item successfully created.");
       if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
         Game.getGameState().getHero().addItem(item);
       } else {
         Game.getGameState().getHeroLocation().addItem(item);
-        IO.writeString("Item could not be added to your inventory. It was added to the current location instead.");
+        Writer.writeString("Item could not be added to your inventory. It was added to the current location instead.");
       }
       Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
     } else {
-      IO.writeString("Item could not be created.");
+      Writer.writeString("Item could not be created.");
     }
   }
 
@@ -275,7 +275,7 @@ public class DebugTools {
     for (Command command : commands) {
       builder.append("\n ").append(command.getDescription().getName());
     }
-    IO.writeString(builder.toString());
+    Writer.writeString(builder.toString());
   }
 
   /**
@@ -284,14 +284,14 @@ public class DebugTools {
   private static void spawn(IssuedCommand issuedCommand) {
     if (issuedCommand.getTokenCount() >= 3) {
       for (int i = 1; i < issuedCommand.getArguments().length; i++) {
-        ID givenID = new ID(issuedCommand.getArguments()[i].toUpperCase());
-        Creature clone = CreatureFactory.makeCreature(givenID);
+        Id givenId = new Id(issuedCommand.getArguments()[i].toUpperCase());
+        Creature clone = CreatureFactory.makeCreature(givenId);
         if (clone != null) {
           Game.getGameState().getHeroLocation().addCreature(clone);
-          IO.writeString("Spawned a " + clone.getName() + ".");
+          Writer.writeString("Spawned a " + clone.getName() + ".");
           Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
         } else {
-          IO.writeString(givenID + " does not match any known creature.");
+          Writer.writeString(givenId + " does not match any known creature.");
         }
       }
     } else {
@@ -301,9 +301,9 @@ public class DebugTools {
 
   private static void printIsSaved() {
     if (Game.getGameState().isSaved()) {
-      IO.writeString("The game is saved.");
+      Writer.writeString("The game is saved.");
     } else {
-      IO.writeString("This game state is not saved.");
+      Writer.writeString("This game state is not saved.");
     }
   }
 
@@ -329,9 +329,9 @@ public class DebugTools {
       if (gotSeconds) {
         if (seconds > 0) {
           Engine.rollDateAndRefresh(seconds);
-          IO.writeString("Waited for " + seconds + " seconds.");
+          Writer.writeString("Waited for " + seconds + " seconds.");
         } else {
-          IO.writeString("The amount of seconds should be positive!");
+          Writer.writeString("The amount of seconds should be positive!");
         }
       }
     } else {
@@ -340,7 +340,7 @@ public class DebugTools {
   }
 
   private static void printTime() {
-    IO.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
+    Writer.writeString(Game.getGameState().getWorld().getWorldDate().toTimeString());
   }
 
 }

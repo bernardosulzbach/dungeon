@@ -24,15 +24,15 @@ import org.dungeon.util.library.Poem;
 import java.awt.Color;
 
 /**
- * IO class that encapsulates all Input/Output operations. This is the only class that should call the writing methods
- * of the game window.
+ * Writer class that encapsulates all Input/Output operations. This is the only class that should call the writing
+ * methods of the game window.
  */
-public final class IO {
+public final class Writer {
 
   // How many milliseconds the game 'lags' after writing a string of battle output.
   private static final int WRITE_BATTLE_STRING_WAIT = 300;
 
-  private IO() { // Ensure that this class cannot be instantiated.
+  private Writer() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
   }
 
@@ -49,7 +49,7 @@ public final class IO {
    * Writes a string of text using a specific color.
    *
    * @param string the string of text to be written.
-   * @param color  the color of the text.
+   * @param color the color of the text.
    */
   public static void writeString(String string, Color color) {
     writeString(string, color, true);
@@ -58,8 +58,8 @@ public final class IO {
   /**
    * Writes a string of text using a specific color.
    *
-   * @param string  the string of text to be written.
-   * @param color   the color of the text.
+   * @param string the string of text to be written.
+   * @param color the color of the text.
    * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
    */
   public static void writeString(String string, Color color, boolean newLine) {
@@ -69,15 +69,15 @@ public final class IO {
   /**
    * Writes a string of text using a specific color and waiting for a given amount of milliseconds.
    *
-   * @param string     the string of text to be written.
-   * @param color      the color of the text.
-   * @param newLine    if true, a newline will be added to the end of the string after its end is cleared.
+   * @param string the string of text to be written.
+   * @param color the color of the text.
+   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
    * @param scrollDown if true, the TextPane will be scrolled down after writing.
-   * @param wait       how many milliseconds the application should sleep after writing the string.
+   * @param wait how many milliseconds the application should sleep after writing the string.
    */
   private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, int wait) {
     if (color == null) {
-      DLogger.warning("Passed null as a Color to writeString.");
+      DungeonLogger.warning("Passed null as a Color to writeString.");
     }
     if (newLine) {
       string += '\n';
@@ -92,7 +92,7 @@ public final class IO {
    * Writes a string of text using a specific color and waits for the default battle wait interval.
    *
    * @param string the string of text to be written.
-   * @param color  the color of the text.
+   * @param color the color of the text.
    */
   public static void writeBattleString(String string, Color color) {
     writeString(string, color, true, true, WRITE_BATTLE_STRING_WAIT);

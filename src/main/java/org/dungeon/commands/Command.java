@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Command abstract class that defines a type for command objects.
- * <p/>
- * Make anonymous classes from this one to define commands.
+ *
+ * <p>Make anonymous classes from this one to define commands.
  */
 public abstract class Command {
 
@@ -54,8 +54,8 @@ public abstract class Command {
 
   /**
    * Indicates whether a Command is "equal to" this one.
-   * <p/>
-   * Two Commands are considered to be equal when their names are equal.
+   *
+   * <p>Two Commands are considered to be equal when their names are equal.
    */
   @Override
   public boolean equals(Object o) {

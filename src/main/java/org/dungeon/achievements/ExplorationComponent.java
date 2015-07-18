@@ -18,7 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.game.Game;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
 
@@ -30,21 +30,21 @@ final class ExplorationComponent {
   /**
    * Stores how many kills in Locations with a specified ID the Hero must have.
    */
-  private final CounterMap<ID> killsByLocationID;
+  private final CounterMap<Id> killsByLocationId;
 
   /**
    * Stores how many distinct Locations with a specified ID the Hero must visit.
    */
-  private final CounterMap<ID> visitedLocations;
+  private final CounterMap<Id> visitedLocations;
 
   /**
    * Stores how many times the Hero must visit the same Location with a specified ID.
    */
-  private final CounterMap<ID> maximumNumberOfVisits;
+  private final CounterMap<Id> maximumNumberOfVisits;
 
-  ExplorationComponent(CounterMap<ID> killsByLocationID, CounterMap<ID> visitedLocations,
-      CounterMap<ID> maximumNumberOfVisits) {
-    this.killsByLocationID = killsByLocationID;
+  ExplorationComponent(CounterMap<Id> killsByLocationId, CounterMap<Id> visitedLocations,
+      CounterMap<Id> maximumNumberOfVisits) {
+    this.killsByLocationId = killsByLocationId;
     this.visitedLocations = visitedLocations;
     this.maximumNumberOfVisits = maximumNumberOfVisits;
   }
@@ -54,23 +54,23 @@ final class ExplorationComponent {
    */
   public boolean isFulfilled() {
     ExplorationStatistics statistics = Game.getGameState().getStatistics().getExplorationStatistics();
-    if (killsByLocationID != null) {
-      for (ID locationID : killsByLocationID.keySet()) {
-        if (statistics.getKillCount(locationID) < killsByLocationID.getCounter(locationID)) {
+    if (killsByLocationId != null) {
+      for (Id locationId : killsByLocationId.keySet()) {
+        if (statistics.getKillCount(locationId) < killsByLocationId.getCounter(locationId)) {
           return false;
         }
       }
     }
     if (visitedLocations != null) {
-      for (ID locationID : visitedLocations.keySet()) {
-        if (statistics.getVisitedLocations(locationID) < visitedLocations.getCounter(locationID)) {
+      for (Id locationId : visitedLocations.keySet()) {
+        if (statistics.getVisitedLocations(locationId) < visitedLocations.getCounter(locationId)) {
           return false;
         }
       }
     }
     if (maximumNumberOfVisits != null) {
-      for (ID locationID : maximumNumberOfVisits.keySet()) {
-        if (statistics.getMaximumNumberOfVisits(locationID) < maximumNumberOfVisits.getCounter(locationID)) {
+      for (Id locationId : maximumNumberOfVisits.keySet()) {
+        if (statistics.getMaximumNumberOfVisits(locationId) < maximumNumberOfVisits.getCounter(locationId)) {
           return false;
         }
       }

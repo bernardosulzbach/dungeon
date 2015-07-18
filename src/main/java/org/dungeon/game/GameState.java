@@ -21,8 +21,8 @@ import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.creatures.Hero;
-import org.dungeon.io.IO;
 import org.dungeon.io.JsonObjectFactory;
+import org.dungeon.io.Writer;
 import org.dungeon.stats.Statistics;
 import org.dungeon.util.library.Libraries;
 
@@ -46,31 +46,31 @@ public class GameState implements Serializable {
 
   /**
    * Prints a poem based on the issued command.
-   * <p/>
-   * If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
-   * <p/>
-   * Otherwise, the next poem is based on a behind-the-scenes poem index.
+   *
+   * <p>If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
+   *
+   * <p>Otherwise, the next poem is based on a behind-the-scenes poem index.
    *
    * @param command the issued command.
    */
   public static void printPoem(IssuedCommand command) {
     if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
-      IO.writeString("No poems were loaded.");
+      Writer.writeString("No poems were loaded.");
     } else {
       if (command.hasArguments()) {
         try {
           // Indexing is zero-based to the implementation, but one-based to the player.
           int index = Integer.parseInt(command.getFirstArgument()) - 1;
           if (index >= 0 && index < Libraries.getPoetryLibrary().getPoemCount()) {
-            IO.writePoem(Libraries.getPoetryLibrary().getPoem(index));
+            Writer.writePoem(Libraries.getPoetryLibrary().getPoem(index));
             return;
           }
         } catch (NumberFormatException ignore) {
           // This exception reproduces the same error message an invalid index does.
         }
-        IO.writeString("Invalid poem index.");
+        Writer.writeString("Invalid poem index.");
       } else {
-        IO.writePoem(Libraries.getPoetryLibrary().getNextPoem());
+        Writer.writePoem(Libraries.getPoetryLibrary().getNextPoem());
       }
     }
   }
@@ -89,7 +89,7 @@ public class GameState implements Serializable {
     hero = CreatureFactory.makeHero(world.getWorldDate());
     heroPosition = new Point(0, 0);
     world.getLocation(heroPosition).addCreature(hero);
-    getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getID());
+    getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getId());
   }
 
   public CommandHistory getCommandHistory() {

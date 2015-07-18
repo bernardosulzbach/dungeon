@@ -76,8 +76,8 @@ public class ItemIntegrity implements Serializable {
   }
 
   /**
-   * Decrements the current integrity by the specified amount.
-   * If the Item ends up broken, it is passed to BreakageHandler.
+   * Decrements the current integrity by the specified amount. If the Item ends up broken, it is passed to
+   * BreakageHandler.
    *
    * @param amount a nonnegative integer
    */

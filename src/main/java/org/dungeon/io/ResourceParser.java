@@ -63,15 +63,15 @@ class ResourceParser implements Closeable {
         }
         line = new ResourceLine(text);
       } catch (IOException e) {
-        DLogger.warning(e.getMessage());
+        DungeonLogger.warning(e.getMessage());
       }
     } while (!line.isValid() || line.isComment());
   }
 
   /**
    * Read a String of text formatted according to the Dungeon convention.
-   * <p/>
-   * Returns {@code null} if the end of the file has been reached.
+   *
+   * <p>Returns {@code null} if the end of the file has been reached.
    */
   public String readString() {
     readLine();
@@ -102,7 +102,7 @@ class ResourceParser implements Closeable {
     try {
       reader.close();
     } catch (IOException e) {
-      DLogger.warning(e.getMessage());
+      DungeonLogger.warning(e.getMessage());
     }
   }
 

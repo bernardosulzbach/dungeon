@@ -17,7 +17,7 @@
 
 package org.dungeon.util.library;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 
 import com.eclipsesource.json.JsonObject;
@@ -36,9 +36,9 @@ public final class PoetryLibrary extends Library {
 
   /**
    * Returns how many poems the library has.
-   * <p/>
-   * This should be the first method called in this Library, as it triggers its initialization if it has not happened
-   * yet.
+   *
+   * <p>This should be the first method called in this Library, as it triggers its initialization if it has not
+   * happened yet.
    */
   public int getPoemCount() {
     if (isUninitialized()) {
@@ -73,7 +73,7 @@ public final class PoetryLibrary extends Library {
     }
     poems.trimToSize();
     automaticShuffledRange = new AutomaticShuffledRange(poems.size());
-    DLogger.info("Loaded " + poems.size() + " poems.");
+    DungeonLogger.info("Loaded " + poems.size() + " poems.");
   }
 
 }

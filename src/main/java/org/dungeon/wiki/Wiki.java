@@ -18,8 +18,8 @@
 package org.dungeon.wiki;
 
 import org.dungeon.commands.IssuedCommand;
-import org.dungeon.io.IO;
 import org.dungeon.io.JsonObjectFactory;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Utils;
 
@@ -57,9 +57,9 @@ public abstract class Wiki {
     if (issuedCommand.hasArguments()) {
       Matches<Article> matches = Utils.findBestMatches(articleList, issuedCommand.getArguments());
       if (matches.size() == 0) {
-        IO.writeString("No matches were found.");
+        Writer.writeString("No matches were found.");
       } else if (matches.size() == 1) {
-        IO.writeString(matches.getMatch(0).toString());
+        Writer.writeString(matches.getMatch(0).toString());
       } else {
         StringBuilder builder = new StringBuilder();
         builder.append("The following articles match your query:\n");
@@ -67,7 +67,7 @@ public abstract class Wiki {
           builder.append(toArticleListingEntry(matches.getMatch(i))).append("\n");
         }
         builder.append("Be more specific.");
-        IO.writeString(builder.toString());
+        Writer.writeString(builder.toString());
       }
     } else {
       writeArticleList();
@@ -83,7 +83,7 @@ public abstract class Wiki {
     for (Article article : articleList) {
       builder.append(toArticleListingEntry(article)).append("\n");
     }
-    IO.writeString(builder.toString());
+    Writer.writeString(builder.toString());
   }
 
   private static String toArticleListingEntry(Article article) {

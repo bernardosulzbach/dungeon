@@ -32,23 +32,23 @@ import java.util.Set;
  */
 public final class LocationPreset implements Serializable {
 
-  private final ID id;
+  private final Id id;
   private final Type type;
   private final Name name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final List<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
-  private final Map<ID, Percentage> items = new HashMap<ID, Percentage>();
+  private final Map<Id, Percentage> items = new HashMap<Id, Percentage>();
   private Percentage lightPermittivity;
   private int blobSize;
   private LocationDescription description;
 
-  LocationPreset(ID id, Type type, Name name) {
+  LocationPreset(Id id, Type type, Name name) {
     this.id = id;
     this.type = type;
     this.name = name;
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 
@@ -81,18 +81,18 @@ public final class LocationPreset implements Serializable {
     this.spawners.add(preset);
   }
 
-  public Set<Entry<ID, Percentage>> getItems() {
+  public Set<Entry<Id, Percentage>> getItems() {
     return items.entrySet();
   }
 
   /**
    * Adds an Item to this Location based on an ItemFrequencyPair.
    *
-   * @param id         the ID string of the item
+   * @param id the ID string of the item
    * @param likelihood the likelihood of the item appearing
    */
   public void addItem(String id, Double likelihood) {
-    items.put(new ID(id), new Percentage(likelihood));
+    items.put(new Id(id), new Percentage(likelihood));
   }
 
   public BlockedEntrances getBlockedEntrances() {

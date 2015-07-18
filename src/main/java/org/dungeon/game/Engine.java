@@ -21,7 +21,7 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.items.ItemFactory;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
@@ -42,18 +42,16 @@ public final class Engine {
   }
 
   /**
-   * Refreshes the game.
-   * This method should be called whenever the state of the game is changed and the engine should be updated.
-   * If time passed, use {@link org.dungeon.game.Engine#rollDateAndRefresh(int)}.
+   * Refreshes the game. This method should be called whenever the state of the game is changed and the engine should be
+   * updated. If time passed, use {@link org.dungeon.game.Engine#rollDateAndRefresh(int)}.
    */
   public static void refresh() {
     effectivelyUpdate(0);
   }
 
   /**
-   * Rolls the world date forward and refreshes the game.
-   * This method should be called whenever the state of the game is changed and the engine should be updated.
-   * If no time passed, use {@link org.dungeon.game.Engine#refresh()}.
+   * Rolls the world date forward and refreshes the game. This method should be called whenever the state of the game is
+   * changed and the engine should be updated. If no time passed, use {@link org.dungeon.game.Engine#refresh()}.
    *
    * @param seconds how many seconds to roll the date forward, a positive integer
    */
@@ -137,17 +135,17 @@ public final class Engine {
           return;
         }
       }
-      IO.writeString(Constants.INVALID_INPUT);
+      Writer.writeString(Constants.INVALID_INPUT);
     } else {
-      IO.writeString("To where?", Color.ORANGE);
+      Writer.writeString("To where?", Color.ORANGE);
     }
   }
 
   /**
    * Attempts to move the hero in a given direction.
-   * <p/>
-   * If the hero moves, this method refreshes both locations at the latest date.
-   * If the hero does not move, this method refreshes the location where the hero is.
+   *
+   * <p>If the hero moves, this method refreshes both locations at the latest date. If the hero does not move, this
+   * method refreshes the location where the hero is.
    */
   private static void heroWalk(Direction dir) {
     GameState gameState = Game.getGameState();
@@ -157,7 +155,7 @@ public final class Engine {
     Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
     if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
       rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
-      IO.writeString("You cannot go " + dir + ".");
+      Writer.writeString("You cannot go " + dir + ".");
     } else {
       Location destination = gameState.getWorld().moveHero(dir);
       rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
@@ -165,7 +163,7 @@ public final class Engine {
       refresh(); // Hero arrived in a new location, refresh the game.
       hero.look(dir.invert());
       ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
-      explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getID());
+      explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getId());
     }
   }
 
@@ -173,12 +171,12 @@ public final class Engine {
    * Simulates a battle between the hero and a creature.
    *
    * @param hero the attacker
-   * @param foe  the defender
+   * @param foe the defender
    */
   // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      IO.writeString("You cannot attempt suicide.");
+      Writer.writeString("You cannot attempt suicide.");
     }
     CauseOfDeath causeOfDeath = null;
     // A counter variable that register how many turns the battle had.
@@ -203,7 +201,7 @@ public final class Engine {
       survivor = foe;
       defeated = hero;
     }
-    IO.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
+    Writer.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
     if (hero == survivor) {
       if (causeOfDeath == null) { // Should never happen. The hit must be a fatal blow for the target to die.
         throw new AssertionError();

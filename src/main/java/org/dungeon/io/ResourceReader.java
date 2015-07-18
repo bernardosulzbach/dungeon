@@ -34,33 +34,18 @@ import java.util.Map.Entry;
 
 /**
  * ResourceReader class that eases the parsing of resource files.
- * <p/>
- * <b>Usage</b>
- * <ol>
- * <li>
- * Construct an object of this class by calling the constructor with the name of a resource file.
- * </li>
- * <li>
- * Call {@code readNextElement()} to parse the next element from the file. If an element was successfully read,
- * {@code readNextElement()} returns {@code true}, otherwise it returns {@code false}.
- * If this is the first time {@code readNextElement()} is called, a String holding the first key of the first element
- * will be stored in this {@code ResourceReader}. The first element is considered finished when the parser finds a line
- * with this same key.
- * If this is not the first time {@code readNextElement()} is called, the stored String is used to determine when the
- * next element is complete.
- * </li>
- * <li>
- * Call {@code hasValue(String)} to check if the last read element has a given property.
- * </li>
- * <li>
- * Based on the result of step 3, either ignore this property or read it using {@code getValue(String)}.
- * Note that {@code getValue()} returns a {@code String}, which you may need to to convert to whatever type you need.
- * </li>
- * <li>
- * Close the {@code ResourceReader} after reading all the elements you need by calling {@code close()}.
- * </li>
- * </ol>
- * For more information on resource files, see {@code CONTRIBUTING.md}.
+ *
+ * <p> <b>Usage</b> <ol> <li> Construct an object of this class by calling the constructor with the name of a resource
+ * file. </li> <li> Call {@code readNextElement()} to parse the next element from the file. If an element was
+ * successfully read, {@code readNextElement()} returns {@code true}, otherwise it returns {@code false}. If this is the
+ * first time {@code readNextElement()} is called, a String holding the first key of the first element will be stored in
+ * this {@code ResourceReader}. The first element is considered finished when the parser finds a line with this same
+ * key. If this is not the first time {@code readNextElement()} is called, the stored String is used to determine when
+ * the next element is complete. </li> <li> Call {@code hasValue(String)} to check if the last read element has a given
+ * property. </li> <li> Based on the result of step 3, either ignore this property or read it using {@code
+ * getValue(String)}. Note that {@code getValue()} returns a {@code String}, which you may need to to convert to
+ * whatever type you need. </li> <li> Close the {@code ResourceReader} after reading all the elements you need by
+ * calling {@code close()}. </li> </ol> For more information on resource files, see {@code CONTRIBUTING.md}.
  */
 public class ResourceReader implements Closeable {
 
@@ -81,8 +66,8 @@ public class ResourceReader implements Closeable {
 
   /**
    * Converts a String of data to an array of separate Strings.
-   * <p/>
-   * "[ First Item | Second Item ]" becomes {"First Item", "Second Item"}.
+   *
+   * <p> "[ First Item | Second Item ]" becomes {"First Item", "Second Item"}.
    */
   public static String[] toArray(String data) {
     if (data.startsWith("[") && data.endsWith("]")) {
@@ -198,9 +183,8 @@ public class ResourceReader implements Closeable {
 
   /**
    * Returns the first String to which the specified key is mapped, or {@code null} if this {@code ResourceReader}
-   * contains no mapping for the key.
-   * If the array of Strings to which the key is mapped has more than one String, logs a warning about it.
-   * {@code getArrayOfValues} should be used instead.
+   * contains no mapping for the key. If the array of Strings to which the key is mapped has more than one String, logs
+   * a warning about it. {@code getArrayOfValues} should be used instead.
    *
    * @param key the key whose associated value is to be returned
    * @return the first String to which to key is mapped.
@@ -209,7 +193,7 @@ public class ResourceReader implements Closeable {
   public String getValue(String key) {
     String[] value = map.get(key);
     if (value.length > 1) {
-      DLogger.warning("Used getValue with a nontrivial array.");
+      DungeonLogger.warning("Used getValue with a nontrivial array.");
     }
     return value[0];
   }
@@ -267,21 +251,21 @@ public class ResourceReader implements Closeable {
    */
   private void logRepeatedValue() {
     String message = " repeats a value of its element (first occurrence was used)!";
-    DLogger.warning(filename, resourceParser.getLineNumber(), message);
+    DungeonLogger.warning(filename, resourceParser.getLineNumber(), message);
   }
 
   /**
    * Logs a warning with the filename and the line number where a resource String without a colon was found.
    */
   private void logMissingColon() {
-    DLogger.warning(filename, resourceParser.getLineNumber(), " does not have a colon!");
+    DungeonLogger.warning(filename, resourceParser.getLineNumber(), " does not have a colon!");
   }
 
   /**
    * Logs a warning that a line has a colon but nothing after it.
    */
   private void logMissingValue() {
-    DLogger.warning(filename, resourceParser.getLineNumber(), " does not have a value!");
+    DungeonLogger.warning(filename, resourceParser.getLineNumber(), " does not have a value!");
   }
 
   /**
@@ -289,8 +273,8 @@ public class ResourceReader implements Closeable {
    *
    * @param key a String key, not null
    * @return a character
-   * @throws IllegalStateException if the element does not have a value for this key or
-   *                               if this key is mapped to something other than a single character
+   * @throws IllegalStateException if the element does not have a value for this key or if this key is mapped to
+   * something other than a single character
    */
   public char readCharacter(@NotNull String key) {
     assertExists(key);
@@ -302,8 +286,8 @@ public class ResourceReader implements Closeable {
   }
 
   /**
-   * Checks that a given key is mapped to a value in the underlying map.
-   * If this is not true, throws an IllegalStateException.
+   * Checks that a given key is mapped to a value in the underlying map. If this is not true, throws an
+   * IllegalStateException.
    *
    * @param key a String key
    */

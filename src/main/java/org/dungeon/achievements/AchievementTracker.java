@@ -19,9 +19,9 @@ package org.dungeon.achievements;
 
 import org.dungeon.date.Date;
 import org.dungeon.game.Game;
-import org.dungeon.game.ID;
-import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
+import org.dungeon.game.Id;
+import org.dungeon.io.DungeonLogger;
+import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,13 +46,13 @@ public class AchievementTracker implements Serializable {
    */
   private static void writeAchievementUnlock(Achievement achievement) {
     String format = "You unlocked the achievement %s because you %s.";
-    IO.writeString(String.format(format, achievement.getName(), achievement.getText()));
+    Writer.writeString(String.format(format, achievement.getName(), achievement.getText()));
   }
 
   /**
    * Returns how many unlocked achievements there are in this AchievementTracker.
    *
-   * @return how many unlocked achievements there are in this AchievementTracker.
+   * @return how many unlocked achievements there are in this AchievementTracker
    */
   public int getUnlockedCount() {
     return unlockedAchievements.size();
@@ -60,8 +60,8 @@ public class AchievementTracker implements Serializable {
 
   /**
    * Unlock a specific Achievement.
-   * <p/>
-   * If there already is an UnlockedAchievement with the same ID, a warning will be logged.
+   *
+   * <p>If there already is an UnlockedAchievement with the same ID, a warning will be logged.
    *
    * @param achievement the Achievement to be unlocked.
    */
@@ -71,7 +71,7 @@ public class AchievementTracker implements Serializable {
       writeAchievementUnlock(achievement);
       unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
-      DLogger.warning("Tried to unlock an already unlocked achievement!");
+      DungeonLogger.warning("Tried to unlock an already unlocked achievement!");
     }
   }
 
@@ -82,7 +82,7 @@ public class AchievementTracker implements Serializable {
    * @return the UnlockedAchievement that corresponds to this Achievement.
    */
   private UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
-    ID id = achievement.getID();
+    Id id = achievement.getId();
     for (UnlockedAchievement ua : unlockedAchievements) {
       if (ua.id.equals(id)) {
         return ua;
@@ -118,8 +118,8 @@ public class AchievementTracker implements Serializable {
 
   /**
    * Updates this AchievementTracker by iterating over a collection of achievements and unlocking the ones that are
-   * fulfilled but not yet added to the unlocked list of this tracker.
-   * Before writing the first achievement unlock message, if there is one, a new line is written.
+   * fulfilled but not yet added to the unlocked list of this tracker. Before writing the first achievement unlock
+   * message, if there is one, a new line is written.
    *
    * @param values a Collection of Achievements, not null
    */
@@ -128,7 +128,7 @@ public class AchievementTracker implements Serializable {
     for (Achievement achievement : values) {
       if (!isUnlocked(achievement) && achievement.isFulfilled()) {
         if (!wroteNewLine) {
-          IO.writeNewLine();
+          Writer.writeNewLine();
           wroteNewLine = true;
         }
         unlock(achievement);

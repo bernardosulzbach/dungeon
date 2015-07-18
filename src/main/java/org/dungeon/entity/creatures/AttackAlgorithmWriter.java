@@ -19,7 +19,7 @@ package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Random;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;
@@ -27,18 +27,18 @@ import java.awt.Color;
 /**
  * This class is uninstantiable and provides utility IO methods for AttackAlgorithm implementations.
  */
-class AttackAlgorithmIO {
+class AttackAlgorithmWriter {
 
   /**
    * Prints a message about the inflicted damage based on the parameters.
    *
-   * @param attacker           the Creature that performed the attack
-   * @param hitDamage          the damage inflicted by the attacker
-   * @param defender           the target of the attack
-   * @param criticalHit        a boolean indicating if the attack was a critical hit or not
+   * @param attacker the Creature that performed the attack
+   * @param hitDamage the damage inflicted by the attacker
+   * @param defender the target of the attack
+   * @param criticalHit a boolean indicating if the attack was a critical hit or not
    * @param healthStateChanged a boolean indicating if the HealthState of the defender changed or not
    */
-  static void printInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
+  static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
       boolean healthStateChanged) {
     String s = String.format("%s inflicted %d damage points to %s", attacker.getName(), hitDamage, defender.getName());
     s += criticalHit ? " with a critical hit." : ".";
@@ -46,7 +46,7 @@ class AttackAlgorithmIO {
       HealthState currentHealthState = HealthState.getHealthState(defender.getCurHealth(), defender.getMaxHealth());
       s += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
     }
-    IO.writeBattleString(s, attacker.getID().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+    Writer.writeBattleString(s, attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
   }
 
   /**
@@ -54,8 +54,8 @@ class AttackAlgorithmIO {
    *
    * @param attacker the attacker creature
    */
-  static void printMiss(Creature attacker) {
-    IO.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
+  static void writeMiss(Creature attacker) {
+    Writer.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
   }
 
   /**
@@ -63,20 +63,20 @@ class AttackAlgorithmIO {
    *
    * @param weapon the weapon that broke
    */
-  static void printWeaponBreak(Item weapon) {
-    IO.writeString(weapon.getName() + " broke!", Color.RED);
+  static void writeWeaponBreak(Item weapon) {
+    Writer.writeString(weapon.getName() + " broke!", Color.RED);
   }
 
   public static void writeCritterAttackMessage(Creature attacker) {
     if (Random.nextBoolean()) {
-      IO.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
+      Writer.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
     } else {
-      IO.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
+      Writer.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
     }
   }
 
   public static void writeDummyAttackMessage(Creature attacker) {
-    IO.writeBattleString(attacker.getName() + " stands still.", Color.YELLOW);
+    Writer.writeBattleString(attacker.getName() + " stands still.", Color.YELLOW);
   }
 
 }

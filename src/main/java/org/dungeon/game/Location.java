@@ -23,7 +23,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.entity.items.LocationInventory;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +38,7 @@ import java.util.Map.Entry;
  */
 public final class Location implements Serializable {
 
-  private final ID id;
+  private final Id id;
   private final Name name;
   private final LocationDescription description;
   private final BlockedEntrances blockedEntrances;
@@ -54,10 +54,10 @@ public final class Location implements Serializable {
    * The creation date of the items in this location is the world date at the time this location was created.
    *
    * @param preset the LocationPreset object
-   * @param world  the World object
+   * @param world the World object
    */
   public Location(@NotNull LocationPreset preset, @NotNull World world) {
-    this.id = preset.getID();
+    this.id = preset.getId();
     this.name = preset.getName();
     this.description = preset.getDescription();
     this.world = world;
@@ -69,19 +69,19 @@ public final class Location implements Serializable {
       spawners.add(new Spawner(spawner, this));
     }
     this.items = new LocationInventory();
-    for (Entry<ID, Percentage> entry : preset.getItems()) {
+    for (Entry<Id, Percentage> entry : preset.getItems()) {
       if (Random.roll(entry.getValue())) {
         Item item = ItemFactory.makeItem(entry.getKey(), world.getWorldDate());
         if (item != null) {
           this.addItem(item);
         } else {
-          DLogger.severe("ItemPreset not found: " + entry.getKey().toString());
+          DungeonLogger.severe("ItemPreset not found: " + entry.getKey().toString());
         }
       }
     }
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 
@@ -104,9 +104,8 @@ public final class Location implements Serializable {
   }
 
   /**
-   * Returns the luminosity of the Location.
-   * This value depends on the World luminosity, on the Location's specific light permittivity and on the luminosity of
-   * the Entities in this location.
+   * Returns the luminosity of the Location. This value depends on the World luminosity, on the Location's specific
+   * light permittivity and on the luminosity of the Entities in this location.
    */
   public Luminosity getLuminosity() {
     // Light permittivity is only applied to the luminosity that comes from the sky.
@@ -138,10 +137,10 @@ public final class Location implements Serializable {
     return creatures.size();
   }
 
-  public int getCreatureCount(ID id) {
+  public int getCreatureCount(Id id) {
     int count = 0;
     for (Creature creature : creatures) {
-      if (creature.getID().equals(id)) {
+      if (creature.getId().equals(id)) {
         count++;
       }
     }
@@ -149,8 +148,8 @@ public final class Location implements Serializable {
   }
 
   /**
-   * Adds a Creature to this Location's Creature Collection.
-   * Also sets the location attribute of the specified Creature to this Location.
+   * Adds a Creature to this Location's Creature Collection. Also sets the location attribute of the specified Creature
+   * to this Location.
    *
    * @param creature a Creature object
    */

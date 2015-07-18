@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.Utils;
 
 import java.io.Serializable;
@@ -46,7 +46,7 @@ public class BlockedEntrances implements Serializable {
 
   public void block(Direction direction) {
     if (isBlocked(direction)) {
-      DLogger.warning("Tried to block an already blocked direction!");
+      DungeonLogger.warning("Tried to block an already blocked direction!");
     } else {
       setOfBlockedEntrances.add(direction);
     }

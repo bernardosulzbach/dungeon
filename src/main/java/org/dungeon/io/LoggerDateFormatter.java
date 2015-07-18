@@ -24,7 +24,7 @@ import java.util.logging.LogRecord;
 /**
  * The Formatter used by the Logger to pretty format dates.
  */
-class DFormatter extends Formatter {
+class LoggerDateFormatter extends Formatter {
 
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
 

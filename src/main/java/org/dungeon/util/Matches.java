@@ -84,12 +84,12 @@ public class Matches<T extends Selectable> {
   }
 
   /**
-   * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects
-   * with identical names, this method will return 1.
-   * <p/>
-   * This method will calculate how many different names are in the list of matches or use the last calculated value,
-   * if the matches list did not change since the last calculation. Therefore, after adding all matches and calling
-   * this method once, subsequent method calls should be substantially faster.
+   * Returns how many different names the matches have. For instance, if the matches consist of two Entity objects with
+   * identical names, this method will return 1.
+   *
+   * <p>This method will calculate how many different names are in the list of matches or use the last calculated value,
+   * if the matches list did not change since the last calculation. Therefore, after adding all matches and calling this
+   * method once, subsequent method calls should be substantially faster.
    */
   public int getDifferentNames() {
     if (!differentNamesUpToDate) {

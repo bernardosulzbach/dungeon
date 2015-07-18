@@ -22,9 +22,9 @@ import org.dungeon.entity.Preset;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.Name;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,26 +35,26 @@ import java.util.List;
 public final class CreaturePreset implements Preset {
 
   private TagSet<Creature.Tag> tagSet;
-  private ID id;
+  private Id id;
   private String type;
   private Name name;
   private Weight weight;
   private int health;
   private int attack;
-  private AttackAlgorithmID attackAlgorithmID;
-  private List<ID> items = new ArrayList<ID>();
+  private AttackAlgorithmId attackAlgorithmId;
+  private List<Id> items = new ArrayList<Id>();
   private Visibility visibility;
   private Luminosity luminosity = Luminosity.ZERO;
-  private ID weaponID;
+  private Id weaponId;
   private int inventoryItemLimit;
   private double inventoryWeightLimit;
 
   /**
-   * Ensures that an integer value is greater than or equal to a provided minimum.
-   * If it is not, returns the minimum and logs a warning.
+   * Ensures that an integer value is greater than or equal to a provided minimum. If it is not, returns the minimum and
+   * logs a warning.
    *
-   * @param value         the original value
-   * @param minimum       the minimum acceptable value
+   * @param value the original value
+   * @param minimum the minimum acceptable value
    * @param attributeName the name of the attribute this value represents (used for logging)
    * @return an integer i such that i >= minimum
    */
@@ -63,7 +63,7 @@ public final class CreaturePreset implements Preset {
       return value;
     } else {
       String format = "Attempted to set %d to %s in CreaturePreset. Using %d.";
-      DLogger.warning(String.format(format, value, attributeName, minimum));
+      DungeonLogger.warning(String.format(format, value, attributeName, minimum));
       return minimum;
     }
   }
@@ -80,11 +80,11 @@ public final class CreaturePreset implements Preset {
     return tagSet.hasTag(tag);
   }
 
-  public ID getID() {
+  public Id getId() {
     return id;
   }
 
-  public void setID(ID id) {
+  public void setId(Id id) {
     this.id = id;
   }
 
@@ -130,19 +130,19 @@ public final class CreaturePreset implements Preset {
     this.attack = attack;
   }
 
-  public AttackAlgorithmID getAttackAlgorithmID() {
-    return attackAlgorithmID;
+  public AttackAlgorithmId getAttackAlgorithmId() {
+    return attackAlgorithmId;
   }
 
-  public void setAttackAlgorithmID(AttackAlgorithmID attackAlgorithmID) {
-    this.attackAlgorithmID = attackAlgorithmID;
+  public void setAttackAlgorithmId(AttackAlgorithmId attackAlgorithmId) {
+    this.attackAlgorithmId = attackAlgorithmId;
   }
 
-  public List<ID> getItems() {
+  public List<Id> getItems() {
     return items;
   }
 
-  public void setItems(List<ID> items) {
+  public void setItems(List<Id> items) {
     this.items = items;
   }
 
@@ -162,12 +162,12 @@ public final class CreaturePreset implements Preset {
     this.luminosity = luminosity;
   }
 
-  public ID getWeaponID() {
-    return weaponID;
+  public Id getWeaponId() {
+    return weaponId;
   }
 
-  public void setWeaponID(ID weaponID) {
-    this.weaponID = weaponID;
+  public void setWeaponId(Id weaponId) {
+    this.weaponId = weaponId;
   }
 
   public int getInventoryItemLimit() {

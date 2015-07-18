@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 
 import java.util.Date;
 
@@ -32,11 +32,11 @@ public final class SystemInfo {
    */
   public static void printSystemInfo() {
     Date currentDate = new Date();
-    IO.writeString("Time: " + Constants.TIME_FORMAT.format(currentDate));
-    IO.writeString("Date: " + Constants.DATE_FORMAT.format(currentDate));
-    IO.writeString("User: " + System.getProperty("user.name"));
-    IO.writeString(getJavaVersionString());
-    IO.writeString(getOSVersionString());
+    Writer.writeString("Time: " + Constants.TIME_FORMAT.format(currentDate));
+    Writer.writeString("Date: " + Constants.DATE_FORMAT.format(currentDate));
+    Writer.writeString("User: " + System.getProperty("user.name"));
+    Writer.writeString(getJavaVersionString());
+    Writer.writeString(getOSVersionString());
   }
 
   private static String getJavaVersionString() {

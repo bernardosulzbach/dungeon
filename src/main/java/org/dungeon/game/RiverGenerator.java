@@ -38,12 +38,11 @@ final class RiverGenerator implements Serializable {
   }
 
   /**
-   * Expand the river set to ensure that all points whose x coordinate is in the range
-   * {@code [point.x - chunkSide, point.x + chunkSide]} will either correspond to a river or to a location that
-   * anticipates a river.
+   * Expand the river set to ensure that all points whose x coordinate is in the range {@code [point.x - chunkSide,
+   * point.x + chunkSide]} will either correspond to a river or to a location that anticipates a river.
    *
-   * @param point     the point from which the expansion starts.
-   * @param chunkSide the current chunk side.
+   * @param point the point from which the expansion starts
+   * @param chunkSide the current chunk side
    */
   void expand(Point point, int chunkSide) {
     for (int river : lines.expand(point.getX() - chunkSide)) {
@@ -59,7 +58,7 @@ final class RiverGenerator implements Serializable {
   }
 
   /**
-   * @return if in a point there should be a river.
+   * Returns if in this point there should be a river.
    */
   boolean isRiver(Point point) {
     River river = rivers.get(point.getX());
@@ -67,7 +66,7 @@ final class RiverGenerator implements Serializable {
   }
 
   /**
-   * @return if in a point there should be a bridge.
+   * Returns if in this point there should be a bridge.
    */
   boolean isBridge(Point point) {
     River river = rivers.get(point.getX());

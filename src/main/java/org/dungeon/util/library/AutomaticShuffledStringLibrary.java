@@ -17,7 +17,7 @@
 
 package org.dungeon.util.library;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 
 import com.eclipsesource.json.JsonObject;
@@ -58,7 +58,7 @@ public class AutomaticShuffledStringLibrary extends Library {
       throw new IllegalStateException("no strings were loaded.");
     }
     automaticShuffledRange = new AutomaticShuffledRange(strings.size());
-    DLogger.info("Loaded " + strings.size() + " strings from " + filename + ".");
+    DungeonLogger.info("Loaded " + strings.size() + " strings from " + filename + ".");
   }
 
 }

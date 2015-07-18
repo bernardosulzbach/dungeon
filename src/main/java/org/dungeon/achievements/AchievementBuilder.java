@@ -17,7 +17,7 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.util.CounterMap;
 
 import java.util.ArrayList;
@@ -30,11 +30,11 @@ public class AchievementBuilder {
   private String name;
   private String info;
   private String text;
-  private CounterMap<ID> killsByLocationID;
-  private CounterMap<ID> visitedLocations;
-  private CounterMap<ID> maximumNumberOfVisits;
+  private CounterMap<Id> killsByLocationId;
+  private CounterMap<Id> visitedLocations;
+  private CounterMap<Id> maximumNumberOfVisits;
 
-  public void setID(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -54,26 +54,26 @@ public class AchievementBuilder {
     requirements.add(requirement);
   }
 
-  public void setKillsByLocationID(CounterMap<ID> killsByLocationID) {
-    if (killsByLocationID.isNotEmpty()) {
-      this.killsByLocationID = killsByLocationID;
+  public void setKillsByLocationId(CounterMap<Id> killsByLocationId) {
+    if (killsByLocationId.isNotEmpty()) {
+      this.killsByLocationId = killsByLocationId;
     }
   }
 
-  public void setVisitedLocations(CounterMap<ID> visitedLocations) {
+  public void setVisitedLocations(CounterMap<Id> visitedLocations) {
     if (visitedLocations.isNotEmpty()) {
       this.visitedLocations = visitedLocations;
     }
   }
 
-  public void setMaximumNumberOfVisits(CounterMap<ID> maximumNumberOfVisits) {
+  public void setMaximumNumberOfVisits(CounterMap<Id> maximumNumberOfVisits) {
     if (maximumNumberOfVisits.isNotEmpty()) {
       this.maximumNumberOfVisits = maximumNumberOfVisits;
     }
   }
 
   public Achievement createAchievement() {
-    return new Achievement(id, name, info, text, requirements, killsByLocationID, visitedLocations,
+    return new Achievement(id, name, info, text, requirements, killsByLocationId, visitedLocations,
         maximumNumberOfVisits);
   }
 

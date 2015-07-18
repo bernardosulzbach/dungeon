@@ -17,7 +17,7 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +47,7 @@ public class Weight implements Comparable<Weight>, Serializable {
 
   public static Weight newInstance(double value) {
     if (value < 0) {
-      DLogger.warning("Tried to create Weight from negative double.");
+      DungeonLogger.warning("Tried to create Weight from negative double.");
       return ZERO;
     }
     return new Weight(value);

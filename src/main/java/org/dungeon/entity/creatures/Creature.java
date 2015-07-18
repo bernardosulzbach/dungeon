@@ -24,7 +24,7 @@ import org.dungeon.entity.TagSet;
 import org.dungeon.entity.items.CreatureInventory;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Location;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
@@ -38,7 +38,7 @@ public class Creature extends Entity {
 
   private final int maxHealth;
   private final int attack;
-  private final AttackAlgorithmID attackAlgorithmID;
+  private final AttackAlgorithmId attackAlgorithmId;
   private final SkillList skillList = new SkillList();
   private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
@@ -54,7 +54,7 @@ public class Creature extends Entity {
     curHealth = preset.getHealth();
     attack = preset.getAttack();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
-    attackAlgorithmID = preset.getAttackAlgorithmID();
+    attackAlgorithmId = preset.getAttackAlgorithmId();
     inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
     lightSource = new LightSource(preset.getLuminosity());
   }
@@ -111,10 +111,10 @@ public class Creature extends Entity {
       if (weapon.hasTag(Item.Tag.WEAPON)) {
         this.weapon = weapon;
       } else {
-        DLogger.warning(String.format("Tried to equip %s (no WEAPON tag) on %s!", weapon.getName(), getName()));
+        DungeonLogger.warning(String.format("Tried to equip %s (no WEAPON tag) on %s!", weapon.getName(), getName()));
       }
     } else {
-      DLogger.warning("Tried to equip an Item that is not in the inventory of " + getName() + "!");
+      DungeonLogger.warning("Tried to equip an Item that is not in the inventory of " + getName() + "!");
     }
   }
 
@@ -196,8 +196,8 @@ public class Creature extends Entity {
     }
   }
 
-  public AttackAlgorithmID getAttackAlgorithmID() {
-    return attackAlgorithmID;
+  public AttackAlgorithmId getAttackAlgorithmId() {
+    return attackAlgorithmId;
   }
 
   @Override

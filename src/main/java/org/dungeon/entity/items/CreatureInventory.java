@@ -19,7 +19,7 @@ package org.dungeon.entity.items;
 
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.Creature;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 /**
  * The CreatureInventory class.
@@ -55,8 +55,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
   }
 
   /**
-   * Attempts to add an Item to this Inventory.
-   * As a precondition, simulateItemAddition should return SUCCESSFUL.
+   * Attempts to add an Item to this Inventory. As a precondition, simulateItemAddition should return SUCCESSFUL.
    *
    * @param item the Item to be added, not null
    */
@@ -64,7 +63,8 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     if (simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
       items.add(item);
       item.setInventory(this);
-      DLogger.inventoryManagement(String.format("Added %s to the inventory of %s.", item.getQualifiedName(), owner));
+      DungeonLogger
+          .inventoryManagement(String.format("Added %s to the inventory of %s.", item.getQualifiedName(), owner));
     } else {
       throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
     }
@@ -78,7 +78,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
    */
   public SimulationResult simulateItemAddition(Item item) {
     if (hasItem(item)) { // Check that the new item is not already in the inventory.
-      DLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
+      DungeonLogger.warning("Tried to add an item to a CreatureInventory that already has it.");
       return SimulationResult.ALREADY_IN_THE_INVENTORY;
     }
     if (isFull()) {
@@ -109,7 +109,8 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     }
     items.remove(item);
     item.setInventory(null);
-    DLogger.inventoryManagement(String.format("Removed %s from the inventory of %s.", item.getQualifiedName(), owner));
+    String format = "Removed %s from the inventory of %s.";
+    DungeonLogger.inventoryManagement(String.format(format, item.getQualifiedName(), owner));
   }
 
   public enum SimulationResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}

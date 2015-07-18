@@ -17,7 +17,7 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,8 +63,7 @@ public class SkillRotation implements Serializable {
         do {
           indexOfSelectedSkill = (indexOfSelectedSkill + 1) % skillList.size();
           selectedSkill = skillList.get(indexOfSelectedSkill);
-        }
-        while (!selectedSkill.isReady());
+        } while (!selectedSkill.isReady());
       }
     }
 
@@ -82,8 +81,8 @@ public class SkillRotation implements Serializable {
 
   /**
    * Restarts the rotation by resetting the remaining cool down of all Skills setting the index to the first Skill.
-   * <p/>
-   * This method should be invoked after the battle ends.
+   *
+   * <p>This method should be invoked after the battle ends.
    */
   public void restartRotation() {
     indexOfNextSkill = 0;
@@ -94,8 +93,8 @@ public class SkillRotation implements Serializable {
 
   /**
    * Refreshes the remaining cool down of all Skills in this SkillRotation.
-   * <p/>
-   * This method should be invoked after each turn.
+   *
+   * <p>This method should be invoked after each turn.
    */
   public void refresh() {
     ArrayList<Skill> alreadyRefreshedSkills = new ArrayList<Skill>(skillList.size());
@@ -124,7 +123,7 @@ public class SkillRotation implements Serializable {
     for (Skill skill : skillList) {
       builder.append("> ").append(skill.getName()).append("\n");
     }
-    IO.writeString(builder.toString());
+    Writer.writeString(builder.toString());
   }
 
   /**

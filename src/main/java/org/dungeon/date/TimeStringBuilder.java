@@ -28,8 +28,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * A builder of time strings.
- * A time string is a human-readable textual representation of a period, e.g.: 2 years and 6 months.
+ * A builder of time strings. A time string is a human-readable textual representation of a period, e.g.: 2 years and 6
+ * months.
  */
 public class TimeStringBuilder {
 
@@ -44,8 +44,8 @@ public class TimeStringBuilder {
   }
 
   /**
-   * Produces a String using only the specified most significant non-zero fields.
-   * If there is nothing to build the String with, "Less than a second" is returned.
+   * Produces a String using only the specified most significant non-zero fields. If there is nothing to build the
+   * String with, "Less than a second" is returned.
    *
    * @param fields how many fields to use
    * @return a time string

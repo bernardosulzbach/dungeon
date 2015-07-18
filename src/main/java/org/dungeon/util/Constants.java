@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 
 import java.awt.Color;
 import java.text.DateFormat;
@@ -39,6 +39,6 @@ public class Constants {
   public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
 
   // IDs
-  public static final ID HERO_ID = new ID("HERO");
+  public static final Id HERO_ID = new Id("HERO");
 
 }

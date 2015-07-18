@@ -25,10 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-/**
- * Dungeon's custom ScrollBarUI that is a subclass of BasicScrollBarUI.
- */
-class DScrollBarUI extends BasicScrollBarUI {
+class DungeonScrollBarUI extends BasicScrollBarUI {
 
   private static final Dimension zeroDimension = new Dimension(0, 0);
 
@@ -38,7 +35,7 @@ class DScrollBarUI extends BasicScrollBarUI {
   /**
    * This is a temporary solution to remove the buttons from BasicScrollBarUI.
    *
-   * @return a JButton with all sizes set to zero.
+   * @return a JButton with all sizes set to zero
    */
   private static JButton createZeroButton() {
     JButton jButton = new JButton();
@@ -49,10 +46,12 @@ class DScrollBarUI extends BasicScrollBarUI {
   }
 
   /**
-   * @param x         the leftmost X coordinate of the area.
-   * @param areaWidth the width of the area.
-   * @param barWidth  the width of the bar.
-   * @return the leftmost X coordinate of a bar centered in a specified area.
+   * Calculates the leftmost X coordinate of a bar centered in the specified area.
+   *
+   * @param x the leftmost X coordinate of the area
+   * @param areaWidth the width of the area
+   * @param barWidth the width of the bar
+   * @return the leftmost X coordinate of a bar centered in a specified area
    */
   private static int calculateX(int x, int areaWidth, int barWidth) {
     return x + (areaWidth - barWidth) / 2;

@@ -21,10 +21,10 @@ import org.dungeon.util.ShuffledRange;
 
 /**
  * An automated ShuffledRange.
- * <p/>
- * Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}.
- * When the end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on
- * the {@code ShuffledRange}.
+ *
+ * <p>Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}. When the
+ * end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on the
+ * {@code ShuffledRange}.
  */
 class AutomaticShuffledRange {
 
@@ -42,8 +42,6 @@ class AutomaticShuffledRange {
 
   /**
    * Returns the next integer in the {@code ShuffledRange}.
-   *
-   * @return the next integer in the {@code ShuffledRange}
    */
   public int getNext() {
     int value = shuffledRange.get(index);

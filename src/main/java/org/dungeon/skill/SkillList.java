@@ -17,9 +17,9 @@
 
 package org.dungeon.skill;
 
-import org.dungeon.game.ID;
-import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
+import org.dungeon.game.Id;
+import org.dungeon.io.DungeonLogger;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Selectable;
 
 import java.io.Serializable;
@@ -39,8 +39,8 @@ public class SkillList implements Serializable {
    * @param skill the Skill to be added.
    */
   public void addSkill(Skill skill) {
-    if (hasSkill(skill.getID())) {
-      DLogger.warning("Tried to add an already present Skill to a SkillList!");
+    if (hasSkill(skill.getId())) {
+      DungeonLogger.warning("Tried to add an already present Skill to a SkillList!");
     } else {
       skillList.add(skill);
     }
@@ -49,12 +49,12 @@ public class SkillList implements Serializable {
   /**
    * Checks if this SkillList has a Skill with a specified ID.
    *
-   * @param skillID the ID.
+   * @param skillId the ID.
    * @return a boolean.
    */
-  public boolean hasSkill(ID skillID) {
+  public boolean hasSkill(Id skillId) {
     for (Skill skill : skillList) {
-      if (skillID.equals(skill.getID())) {
+      if (skillId.equals(skill.getId())) {
         return true;
       }
     }
@@ -73,7 +73,7 @@ public class SkillList implements Serializable {
    */
   public void printSkillList() {
     for (Skill skill : skillList) {
-      IO.writeString(skill.getName().getSingular());
+      Writer.writeString(skill.getName().getSingular());
     }
   }
 

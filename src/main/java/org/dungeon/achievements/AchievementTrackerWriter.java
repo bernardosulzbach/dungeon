@@ -23,7 +23,7 @@ import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameData;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 
 import java.awt.Color;
 import java.util.Comparator;
@@ -50,9 +50,9 @@ public class AchievementTrackerWriter {
   }
 
   /**
-   * Parses an IssuedCommand trying to identify the specified ordering for the achievements.
-   * If nothing is specified, the default comparator is returned.
-   * If an ordering specification is invalid ("by" followed by an unrecognized ordering), this method returns null.
+   * Parses an IssuedCommand trying to identify the specified ordering for the achievements. If nothing is specified,
+   * the default comparator is returned. If an ordering specification is invalid ("by" followed by an unrecognized
+   * ordering), this method returns null.
    *
    * @param issuedCommand an IssuedCommand, not null
    * @return a Comparator of UnlockedAchievements, or null
@@ -76,7 +76,7 @@ public class AchievementTrackerWriter {
   /**
    * Writes an AchievementTracker UnlockedAchievements to the screen after sorting it with the specified Comparator.
    *
-   * @param tracker    the AchievementTracker, not null
+   * @param tracker the AchievementTracker, not null
    * @param comparator the Comparator, not null
    */
   private static void writeAchievementTracker(AchievementTracker tracker, Comparator<UnlockedAchievement> comparator) {
@@ -84,19 +84,19 @@ public class AchievementTrackerWriter {
     Date now = Game.getGameState().getWorld().getWorldDate();
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
       Period sinceUnlock = new Period(unlockedAchievement.getDate(), now);
-      IO.writeString(String.format("%s (%s ago)", unlockedAchievement.getName(), sinceUnlock), Color.ORANGE);
-      IO.writeString(" " + unlockedAchievement.getInfo(), Color.YELLOW);
+      Writer.writeString(String.format("%s (%s ago)", unlockedAchievement.getName(), sinceUnlock), Color.ORANGE);
+      Writer.writeString(" " + unlockedAchievement.getInfo(), Color.YELLOW);
     }
-    IO.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
+    Writer.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
   }
 
   /**
    * Writes a listing of valid UnlockedAchievement orderings to the screen.
    */
   private static void writeValidOrderings() {
-    IO.writeString("Valid orderings:");
+    Writer.writeString("Valid orderings:");
     for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
-      IO.writeString(" " + comparatorName);
+      Writer.writeString(" " + comparatorName);
     }
   }
 

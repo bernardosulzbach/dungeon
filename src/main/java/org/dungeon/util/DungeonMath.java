@@ -18,7 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.commands.IssuedCommand;
-import org.dungeon.io.IO;
+import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,8 +40,8 @@ public final class DungeonMath {
   /**
    * Evaluates the weighted average of two values.
    *
-   * @param a             the first value
-   * @param b             the second value
+   * @param a the first value
+   * @param b the second value
    * @param bContribution how much the second value contributes to the average
    * @return the weighted average between the two values
    */
@@ -99,9 +99,9 @@ public final class DungeonMath {
         }
         String result = fibonacci(n);
         if (result.equals(TIMEOUT)) {
-          IO.writeString("Calculation exceeded the time limit.");
+          Writer.writeString("Calculation exceeded the time limit.");
         } else {
-          IO.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
+          Writer.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
         }
       }
     } else {
@@ -135,14 +135,15 @@ public final class DungeonMath {
 
   /**
    * Makes a pretty String representation of a function evaluation.
-   * <p/>
-   * Example: {@code functionName(argument) = result}
-   * <p/>
-   * If the String exceeds the maximum number of columns, a backslash is used to break lines.
+   *
+   * <p>Example: {@code functionName(argument) = result}
+   *
+   *
+   * <p>If the String exceeds the maximum number of columns, a backslash is used to break lines.
    *
    * @param functionName the name of the function
-   * @param argument     the argument passed to the function
-   * @param result       the result of the evaluation
+   * @param argument the argument passed to the function
+   * @param result the result of the evaluation
    * @return a String longer than the three provided Strings combined
    */
   private static String functionEvaluationString(String functionName, String argument, String result) {
@@ -203,14 +204,14 @@ public final class DungeonMath {
   }
 
   /**
-   * Distributes a value among buckets.
-   * For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8 over {5, 10} gives {1, 6}.
-   * If the division of value by the size of buckets is not exact, the first buckets are going to get more modified.
-   * For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10, 15} gives {2, 7, 13}.
-   * <p/>
-   * The time complexity of this implementation is O(n) on the size of buckets.
+   * Distributes a value among buckets. For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8
+   * over {5, 10} gives {1, 6}. If the division of value by the size of buckets is not exact, the first buckets are
+   * going to get more modified. For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10,
+   * 15} gives {2, 7, 13}.
    *
-   * @param value   the total to be distributed
+   * <p>The time complexity of this implementation is O(n) on the size of buckets.
+   *
+   * @param value the total to be distributed
    * @param buckets the buckets, not empty, not null
    */
   public static void distribute(int value, @NotNull int[] buckets) {

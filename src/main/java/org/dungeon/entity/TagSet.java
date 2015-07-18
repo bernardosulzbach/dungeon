@@ -17,7 +17,7 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
@@ -42,7 +42,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * Returns an empty TagSet.
    *
    * @param enumClass the Class of the Enum type
-   * @param <E>       an Enum type
+   * @param <E> an Enum type
    * @return a new TagSet
    */
   public static <E extends Enum<E>> TagSet<E> makeEmptyTagSet(Class<E> enumClass) {
@@ -53,7 +53,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * Returns a copy of the specified TagSet such that Tags can be added without affecting the original TagSet.
    *
    * @param tagSet the original TagSet
-   * @param <E>    an Enum type
+   * @param <E> an Enum type
    * @return a new TagSet
    */
   public static <E extends Enum<E>> TagSet<E> copyTagSet(TagSet<E> tagSet) {
@@ -64,8 +64,8 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * Creates a TagSet from a JSON array.
    *
    * @param enumClass the Class of the enum, not null
-   * @param array     a JsonArray object, not null
-   * @param <E>       an Enum type
+   * @param array a JsonArray object, not null
+   * @param <E> an Enum type
    * @return a TagSet
    */
   public static <E extends Enum<E>> TagSet<E> fromJsonArray(@NotNull JsonArray array, @NotNull Class<E> enumClass) {
@@ -95,7 +95,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    */
   public void addTag(E tag) {
     if (!set.add(tag)) {
-      DLogger.warning("Tried to add a Tag that was already in the TagSet!");
+      DungeonLogger.warning("Tried to add a Tag that was already in the TagSet!");
     }
   }
 

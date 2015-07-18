@@ -27,7 +27,7 @@ import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemPreset;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.skill.SkillDefinition;
@@ -52,11 +52,11 @@ import java.util.Set;
 public final class GameData {
 
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
-  public static HashMap<ID, Achievement> ACHIEVEMENTS;
+  public static HashMap<Id, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
-  private static Map<ID, ItemPreset> itemPresets = new HashMap<ID, ItemPreset>();
-  private static Map<ID, SkillDefinition> skillDefinitions = new HashMap<ID, SkillDefinition>();
+  private static Map<Id, ItemPreset> itemPresets = new HashMap<Id, ItemPreset>();
+  private static Map<Id, SkillDefinition> skillDefinitions = new HashMap<Id, SkillDefinition>();
 
   private GameData() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -71,7 +71,7 @@ public final class GameData {
 
   static void loadGameData() {
     StopWatch stopWatch = new StopWatch();
-    DLogger.info("Started loading the game data.");
+    DungeonLogger.info("Started loading the game data.");
     loadItemPresets();
     CreatureFactory.loadCreaturePresets(itemPresets);
     GameData.itemPresets = Collections.unmodifiableMap(GameData.itemPresets);
@@ -79,7 +79,7 @@ public final class GameData {
     loadLocationPresets();
     loadAchievements();
     loadLicense();
-    DLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
+    DungeonLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
   }
 
   /**
@@ -108,7 +108,7 @@ public final class GameData {
     ResourceReader reader = new ResourceReader("items.txt");
     while (reader.readNextElement()) {
       ItemPreset preset = new ItemPreset();
-      preset.setID(new ID(reader.getValue("ID")));
+      preset.setId(new Id(reader.getValue("ID")));
       preset.setType(reader.getValue("TYPE"));
       preset.setName(nameFromArray(reader.getArrayOfValues("NAME")));
       for (Item.Tag tag : tagSetFromArray(Item.Tag.class, reader.getArrayOfValues("TAGS"))) {
@@ -141,16 +141,16 @@ public final class GameData {
       if (reader.hasValue("SKILL")) {
         preset.setSkill(reader.getValue("SKILL"));
       }
-      itemPresets.put(preset.getID(), preset);
+      itemPresets.put(preset.getId(), preset);
     }
     reader.close();
-    DLogger.info("Loaded " + itemPresets.size() + " item presets.");
+    DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
 
   private static void loadLocationPresets() {
     ResourceReader reader = new ResourceReader("locations.txt");
     while (reader.readNextElement()) {
-      ID id = new ID(reader.getValue("ID"));
+      Id id = new Id(reader.getValue("ID"));
       LocationPreset.Type type = LocationPreset.Type.valueOf(reader.getValue("TYPE"));
       Name name = nameFromArray(reader.getArrayOfValues("NAME"));
       LocationPreset preset = new LocationPreset(id, type, name);
@@ -191,16 +191,16 @@ public final class GameData {
       locationPresetStore.addLocationPreset(preset);
     }
     reader.close();
-    DLogger.info("Loaded " + locationPresetStore.getSize() + " location presets.");
+    DungeonLogger.info("Loaded " + locationPresetStore.getSize() + " location presets.");
   }
 
   private static void loadAchievements() {
-    ACHIEVEMENTS = new HashMap<ID, Achievement>();
+    ACHIEVEMENTS = new HashMap<Id, Achievement>();
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
     for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
       JsonObject achievementObject = achievementValue.asObject();
       AchievementBuilder builder = new AchievementBuilder();
-      builder.setID(achievementObject.get("id").asString());
+      builder.setId(achievementObject.get("id").asString());
       builder.setName(achievementObject.get("name").asString());
       builder.setInfo(achievementObject.get("info").asString());
       builder.setText(achievementObject.get("text").asString());
@@ -212,7 +212,7 @@ public final class GameData {
           BattleStatisticsQuery query = new BattleStatisticsQuery();
           JsonValue idValue = queryObject.get("id");
           if (idValue != null) {
-            query.setID(new ID(idValue.asString()));
+            query.setId(new Id(idValue.asString()));
           }
           JsonValue typeValue = queryObject.get("type");
           if (typeValue != null) {
@@ -222,7 +222,7 @@ public final class GameData {
           if (causeOfDeathValue != null) {
             JsonObject causeOfDeathObject = causeOfDeathValue.asObject();
             TypeOfCauseOfDeath type = TypeOfCauseOfDeath.valueOf(causeOfDeathObject.get("type").asString());
-            ID id = new ID(causeOfDeathObject.get("id").asString());
+            Id id = new Id(causeOfDeathObject.get("id").asString());
             query.setCauseOfDeath(new CauseOfDeath(type, id));
           }
           JsonValue partOfDayValue = queryObject.get("partOfDay");
@@ -238,27 +238,27 @@ public final class GameData {
       if (explorationRequirements != null) {
         JsonValue killsByLocationID = explorationRequirements.asObject().get("killsByLocationID");
         if (killsByLocationID != null) {
-          builder.setKillsByLocationID(IDCounterMapFromJsonObject(killsByLocationID.asObject()));
+          builder.setKillsByLocationId(IdCounterMapFromJsonObject(killsByLocationID.asObject()));
         }
         JsonValue maximumNumberOfVisits = explorationRequirements.asObject().get("maximumNumberOfVisits");
         if (maximumNumberOfVisits != null) {
-          builder.setMaximumNumberOfVisits(IDCounterMapFromJsonObject(maximumNumberOfVisits.asObject()));
+          builder.setMaximumNumberOfVisits(IdCounterMapFromJsonObject(maximumNumberOfVisits.asObject()));
         }
         JsonValue visitedLocations = explorationRequirements.asObject().get("visitedLocations");
         if (visitedLocations != null) {
-          builder.setVisitedLocations(IDCounterMapFromJsonObject(visitedLocations.asObject()));
+          builder.setVisitedLocations(IdCounterMapFromJsonObject(visitedLocations.asObject()));
         }
       }
       Achievement achievement = builder.createAchievement();
-      ACHIEVEMENTS.put(achievement.getID(), achievement);
+      ACHIEVEMENTS.put(achievement.getId(), achievement);
     }
-    DLogger.info("Loaded " + ACHIEVEMENTS.size() + " achievements.");
+    DungeonLogger.info("Loaded " + ACHIEVEMENTS.size() + " achievements.");
   }
 
-  private static CounterMap<ID> IDCounterMapFromJsonObject(JsonObject jsonObject) {
-    CounterMap<ID> counterMap = new CounterMap<ID>();
+  private static CounterMap<Id> IdCounterMapFromJsonObject(JsonObject jsonObject) {
+    CounterMap<Id> counterMap = new CounterMap<Id>();
     for (Member member : jsonObject) {
-      counterMap.incrementCounter(new ID(member.getName()), member.getValue().asInt());
+      counterMap.incrementCounter(new Id(member.getName()), member.getValue().asInt());
     }
     return counterMap;
   }
@@ -267,7 +267,7 @@ public final class GameData {
    * Attempts to read a double from a ResourceReader given a key.
    *
    * @param reader a ResourceReader
-   * @param key    the String key
+   * @param key the String key
    * @return the double, if it could be obtained, or 0
    */
   private static double readDoubleFromResourceReader(ResourceReader reader, String key) {
@@ -275,7 +275,7 @@ public final class GameData {
       try {
         return Double.parseDouble(reader.getValue(key));
       } catch (NumberFormatException log) {
-        DLogger.warning("Could not parse the value of " + key + ".");
+        DungeonLogger.warning("Could not parse the value of " + key + ".");
       }
     }
     return 0.0;
@@ -285,7 +285,7 @@ public final class GameData {
    * Attempts to read an integer from a ResourceReader given a key.
    *
    * @param reader a ResourceReader
-   * @param key    the String key
+   * @param key the String key
    * @return the integer, if it could be obtained, or 0
    */
   private static int readIntegerFromResourceReader(ResourceReader reader, String key) {
@@ -293,7 +293,7 @@ public final class GameData {
       try {
         return Integer.parseInt(reader.getValue(key));
       } catch (NumberFormatException log) {
-        DLogger.warning("Could not parse the value of " + key + ".");
+        DungeonLogger.warning("Could not parse the value of " + key + ".");
       }
     }
     return 0;
@@ -311,7 +311,7 @@ public final class GameData {
     } else if (strings.length > 1) {
       return NameFactory.newInstance(strings[0], strings[1]);
     } else {
-      DLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
+      DungeonLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
       return NameFactory.newInstance("ERROR");
     }
   }
@@ -320,8 +320,8 @@ public final class GameData {
    * Creates a Set of tags from an array of Strings.
    *
    * @param enumClass the Class of the enum
-   * @param strings   the array of Strings
-   * @param <E>       an Enum type
+   * @param strings the array of Strings
+   * @param <E> an Enum type
    * @return a Set of Item.Tag
    */
   private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, String[] strings) {
@@ -350,11 +350,11 @@ public final class GameData {
     tutorial = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
   }
 
-  public static Map<ID, ItemPreset> getItemPresets() {
+  public static Map<Id, ItemPreset> getItemPresets() {
     return itemPresets;
   }
 
-  public static Map<ID, SkillDefinition> getSkillDefinitions() {
+  public static Map<Id, SkillDefinition> getSkillDefinitions() {
     return skillDefinitions;
   }
 

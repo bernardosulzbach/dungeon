@@ -36,12 +36,12 @@ public class BattleStatistics implements Serializable {
   /**
    * Adds the outcome of a battle to the statistics.
    *
-   * @param foe          the defeated Creature, not null
+   * @param foe the defeated Creature, not null
    * @param causeOfDeath the CauseOfDeath, not null
-   * @param partOfDay    the PartOfDay in which the last hit took place, not null
+   * @param partOfDay the PartOfDay in which the last hit took place, not null
    */
   public void addBattle(@NotNull Creature foe, @NotNull CauseOfDeath causeOfDeath, @NotNull PartOfDay partOfDay) {
-    BattleRecord record = new BattleRecord(foe.getID(), foe.getType(), causeOfDeath, partOfDay);
+    BattleRecord record = new BattleRecord(foe.getId(), foe.getType(), causeOfDeath, partOfDay);
     records.incrementCounter(record);
   }
 

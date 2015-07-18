@@ -17,7 +17,7 @@
 
 package org.dungeon.util;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * A StopWatch class used to measure time distance between two or more instants.
- * <p/>
- * The precision of the measurements performed with a StopWatch are dependent on System.nanoTime() precision.
+ *
+ * <p>The precision of the measurements performed with a StopWatch are dependent on System.nanoTime() precision.
  */
 public class StopWatch {
 
@@ -61,14 +61,15 @@ public class StopWatch {
     if (ABBREVIATIONS.containsKey(unit)) {
       return unit.convert(timeDifference, TimeUnit.NANOSECONDS) + " " + ABBREVIATIONS.get(unit);
     } else {
-      DLogger.warning("Passed a TimeUnit that does not have a defined abbreviation to StopWatch.toString(TimeUnit)!");
+      String message = "Passed a TimeUnit that does not have a defined abbreviation to StopWatch.toString(TimeUnit)!";
+      DungeonLogger.warning(message);
       return null;
     }
   }
 
   /**
-   * Returns a String representation of the time difference in milliseconds between this method call and the creation
-   * of this StopWatch. If the TimeUnit.MILLISECOND is not mapped to an abbreviation, null is returned.
+   * Returns a String representation of the time difference in milliseconds between this method call and the creation of
+   * this StopWatch. If the TimeUnit.MILLISECOND is not mapped to an abbreviation, null is returned.
    *
    * @return a String composed of an integer followed by the abbreviation for millisecond or null
    */

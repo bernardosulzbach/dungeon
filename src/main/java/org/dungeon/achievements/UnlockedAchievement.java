@@ -18,7 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.date.Date;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ import java.io.Serializable;
  */
 public final class UnlockedAchievement implements Serializable {
 
-  public final ID id;
+  public final Id id;
   private final String name;
   private final String info;
   private final Date date;
@@ -36,10 +36,10 @@ public final class UnlockedAchievement implements Serializable {
    * Constructs a new UnlockedAchievement.
    *
    * @param achievement the Achievement that was unlocked
-   * @param date        the date when the achievement was unlocked
+   * @param date the date when the achievement was unlocked
    */
   public UnlockedAchievement(Achievement achievement, Date date) {
-    this.id = achievement.getID();
+    this.id = achievement.getId();
     this.name = achievement.getName();
     this.info = achievement.getInfo();
     this.date = date;

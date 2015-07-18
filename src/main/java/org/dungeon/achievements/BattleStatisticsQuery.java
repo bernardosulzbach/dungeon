@@ -17,7 +17,7 @@
 
 package org.dungeon.achievements;
 
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.PartOfDay;
 import org.dungeon.stats.BattleRecord;
 import org.dungeon.stats.CauseOfDeath;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BattleStatisticsQuery {
 
-  private ID id;
+  private Id id;
   private String type;
   private CauseOfDeath causeOfDeath;
   private PartOfDay partOfDay;
@@ -34,7 +34,7 @@ public class BattleStatisticsQuery {
   public BattleStatisticsQuery() {
   }
 
-  public void setID(ID id) {
+  public void setId(Id id) {
     this.id = id;
   }
 
@@ -51,7 +51,7 @@ public class BattleStatisticsQuery {
   }
 
   public boolean matches(@NotNull BattleRecord record) {
-    return (id == null || id.equals(record.getID())) && (type == null || type.equals(record.getType())) &&
+    return (id == null || id.equals(record.getId())) && (type == null || type.equals(record.getType())) &&
         (causeOfDeath == null || causeOfDeath.equals(record.getCauseOfDeath())) &&
         (partOfDay == null || partOfDay.equals(record.getPartOfDay()));
   }

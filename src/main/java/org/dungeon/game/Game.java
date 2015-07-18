@@ -21,9 +21,9 @@ import org.dungeon.commands.Command;
 import org.dungeon.commands.CommandCollection;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.gui.GameWindow;
-import org.dungeon.io.DLogger;
-import org.dungeon.io.IO;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Messenger;
 
 public class Game {
@@ -38,8 +38,8 @@ public class Game {
   }
 
   /**
-   * Loads a saved GameState or creates a new one.
-   * If a new GameState is created and the saves folder is empty, the tutorial is suggested.
+   * Loads a saved GameState or creates a new one. If a new GameState is created and the saves folder is empty, the
+   * tutorial is suggested.
    */
   private static GameState loadAGameStateOrCreateANewOne() {
     GameState gameState = Loader.loadGame();
@@ -55,8 +55,8 @@ public class Game {
   }
 
   private static void suggestTutorial() {
-    IO.writeNewLine();
-    IO.writeString("You may want to issue 'tutorial' to learn the basics.");
+    Writer.writeNewLine();
+    Writer.writeString("You may want to issue 'tutorial' to learn the basics.");
   }
 
   public static GameWindow getGameWindow() {
@@ -68,21 +68,20 @@ public class Game {
   }
 
   /**
-   * Sets a new GameState to the static field.
-   * Can be used to nullify the GameState, something that should be done while another GameState is being created.
-   * If the provided GameState is not null, this setter also invokes Hero.look().
+   * Sets a new GameState to the static field. Can be used to nullify the GameState, something that should be done while
+   * another GameState is being created. If the provided GameState is not null, this setter also invokes Hero.look().
    *
    * @param state another GameState object, or null
    */
   public static void setGameState(GameState state) {
     gameState = state;
     if (state == null) {
-      DLogger.info("Set the GameState field in Game to null.");
+      DungeonLogger.info("Set the GameState field in Game to null.");
     } else {
-      DLogger.info("Set the GameState field in Game to a GameState.");
+      DungeonLogger.info("Set the GameState field in Game to a GameState.");
       // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
       Engine.refresh();
-      IO.writeNewLine(); // Improves readability.
+      Writer.writeNewLine(); // Improves readability.
       gameState.getHero().look(null);
     }
   }
@@ -97,7 +96,7 @@ public class Game {
     getGameWindow().clearTextPane();
     processInput(issuedCommand);
     if (gameState.getHero().isDead()) {
-      IO.writeString("You died.");
+      Writer.writeString("You died.");
       setGameState(loadAGameStateOrCreateANewOne());
     } else {
       Engine.endTurn();
@@ -129,7 +128,7 @@ public class Game {
       if (!gameState.isSaved()) {
         Loader.saveGame(gameState);
       }
-      DLogger.info("Exited with no problems.");
+      DungeonLogger.info("Exited with no problems.");
     }
     System.exit(0);
   }

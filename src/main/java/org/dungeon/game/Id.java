@@ -17,37 +17,37 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import java.io.Serializable;
 
 /**
  * ID class that wraps an identification String.
- * <p/>
- * The wrapped String is guaranteed to only contain valid characters.
- * <p/>
- * Valid characters are: uppercase ASCII letters, digits and underscores.
+ *
+ * <p>The wrapped String is guaranteed to only contain valid characters.
+ *
+ * <p>Valid characters are: uppercase ASCII letters, digits and underscores.
  */
-public final class ID implements Serializable {
+public final class Id implements Serializable {
 
   private final String id;
 
   /**
    * Constructs an ID from a String, fixing all invalid characters and logging a warning if either {@code null} or an
    * invalid String was used as an argument.
-   * <p/>
-   * Valid characters are: uppercase ASCII letters, digits and underscores.
-   * <p/>
-   * Lowercase letters are converted to their uppercase analogous and any other invalid characters are converted to
+   *
+   * <p>Valid characters are: uppercase ASCII letters, digits and underscores.
+   *
+   * <p>Lowercase letters are converted to their uppercase analogous and any other invalid characters are converted to
    * underscores.
-   * <p/>
-   * If {@code null} is provided, a String containing "NULL" will be generated.
+   *
+   * <p>If {@code null} is provided, a String containing "NULL" will be generated.
    *
    * @param id the ID String.
    */
-  public ID(String id) {
+  public Id(String id) {
     if (id == null) {
-      DLogger.warning("Tried to create an ID with null.");
+      DungeonLogger.warning("Tried to create an Id with null.");
       this.id = "NULL";
     } else {
       boolean invalid = false;
@@ -66,7 +66,7 @@ public final class ID implements Serializable {
         }
       }
       if (invalid) {
-        DLogger.warning("Tried to use \"" + id + "\" as an ID.");
+        DungeonLogger.warning("Tried to use \"" + id + "\" as an Id.");
       }
       this.id = new String(idChars);
     }
@@ -81,7 +81,7 @@ public final class ID implements Serializable {
       return false;
     }
 
-    ID oid = (ID) o;
+    Id oid = (Id) o;
 
     return id.equals(oid.id);
 

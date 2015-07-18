@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Random class that encapsulates the single Random object shared by the whole application.
- * The reason for this is that other parts of the code should not be able to call some of Random public methods, such as setSeed.
+ * Random class that encapsulates the single Random object shared by the whole application. The reason for this is that
+ * other parts of the code should not be able to call some of Random public methods, such as setSeed.
  */
 public class Random {
 
@@ -44,8 +44,8 @@ public class Random {
   /**
    * Simulates a random roll.
    *
-   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
-   *               Will be passed to Percentage's constructors in order to guarantee that it is a valid value.
+   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1. Will be passed
+   * to Percentage's constructors in order to guarantee that it is a valid value.
    * @return a boolean indicating if the roll was successful or not.
    */
   public static boolean roll(double chance) {
@@ -75,7 +75,7 @@ public class Random {
    * Selects a random element from a List.
    *
    * @param list a List object, not empty, not null
-   * @param <T>  the type of elements held in the List
+   * @param <T> the type of elements held in the List
    * @return an element of list or null
    */
   public static <T> T select(@NotNull List<T> list) {

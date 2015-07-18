@@ -17,15 +17,15 @@
 
 package org.dungeon.commands;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.Utils;
 
 import java.util.Arrays;
 
 /**
  * IssuedCommand class that wraps a String entered by the user and provides powerful query methods.
- * <p/>
- * An IssuedCommand is made up of at least one token (word) and is not case-sensitive.
+ *
+ * <p>An IssuedCommand is made up of at least one token (word) and is not case-sensitive.
  */
 public final class IssuedCommand {
 
@@ -49,7 +49,7 @@ public final class IssuedCommand {
   }
 
   /**
-   * @return true if there are at least two tokens, false otherwise.
+   * Returns true if there are at least two tokens.
    */
   public boolean hasArguments() {
     return tokens.length > 1;
@@ -69,13 +69,13 @@ public final class IssuedCommand {
     if (hasArguments()) {
       return tokens[1].equalsIgnoreCase(string);
     } else {
-      DLogger.warning("Called firstArgumentEquals on an IssuedCommand that does not have arguments.");
+      DungeonLogger.warning("Called firstArgumentEquals on an IssuedCommand that does not have arguments.");
       return false;
     }
   }
 
   /**
-   * @return an array with all tokens but the first.
+   * Returns an array with all tokens but the first.
    */
   public String[] getArguments() {
     return Arrays.copyOfRange(tokens, 1, tokens.length);

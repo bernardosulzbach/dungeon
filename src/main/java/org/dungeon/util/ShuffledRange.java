@@ -18,7 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.game.Random;
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,16 +32,16 @@ public final class ShuffledRange {
 
   /**
    * Constructs a new {@code ShuffledRange} given a lower bound and an upper bound.
-   * <p/>
-   * This constructor populates a {@code List} with the integers {@code {start, start + 1, ..., end - 1}} and calls
+   *
+   * <p>This constructor populates a {@code List} with the integers {@code {start, start + 1, ..., end - 1}} and calls
    * {@code shuffle}.
    *
    * @param start the lower bound (inclusive)
-   * @param end   the higher bound (exclusive)
+   * @param end the higher bound (exclusive)
    */
   public ShuffledRange(int start, int end) {
     if (start >= end) {
-      DLogger.warning("Tried to create a ShuffledRange of negative or zero length.");
+      DungeonLogger.warning("Tried to create a ShuffledRange of negative or zero length.");
     } else {
       integers = new ArrayList<Integer>(end - start);
       for (int i = start; i < end; i++) {
@@ -72,8 +72,9 @@ public final class ShuffledRange {
 
   /**
    * Shuffles the underlying List.
-   * <p/>
-   * If the List has more than one element, ensures that the next first integer is not the integer currently at the end.
+   *
+   * <p>If the List has more than one element, ensures that the next first integer is not the integer currently at the
+   * end.
    */
   public void shuffle() {
     int lastIntegerBeforeShuffling = integers.get(integers.size() - 1);

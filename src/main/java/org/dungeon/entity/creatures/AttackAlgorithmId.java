@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * A valid ID for an AttackAlgorithm.
  */
-public enum AttackAlgorithmID implements Serializable {
+public enum AttackAlgorithmId implements Serializable {
 
   BAT, BEAST, CRITTER, DUMMY, ORC, UNDEAD, HERO
 

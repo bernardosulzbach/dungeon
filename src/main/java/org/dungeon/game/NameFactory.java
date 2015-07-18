@@ -17,7 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DLogger;
+import org.dungeon.io.DungeonLogger;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -46,7 +46,7 @@ public final class NameFactory {
    * Creates a new Name from a singular and a plural form.
    *
    * @param singular the singular form
-   * @param plural   the plural form
+   * @param plural the plural form
    * @return a Name constructed using the provided singular and plural forms
    */
   public static Name newInstance(String singular, String plural) {
@@ -65,17 +65,20 @@ public final class NameFactory {
 
   /**
    * Attempts to generate a Name object from a JSON object.
+   *
    * <p>The JSON object should have the form:
    * <pre>
    *   {"singular": "singularForm",
    *    "plural": "pluralForm"}}
    * </pre>
+   *
+   *
    * <p>If the plural form is obtained by appending 's' to the singular form, the plural form should be omitted.
    * Becoming simply:
    * <pre>
    *   {"singular": "singularForm"}
    * </pre>
-   * This rule exists because it helps remove unnecessary information from developers reading the resource files.
+   * This rule helps remove unnecessary information from developers reading the resource files.
    *
    * @param jsonObject a JsonObject, not null, as specified in the Javadoc
    * @return a Name object
@@ -99,7 +102,7 @@ public final class NameFactory {
 
   private static void warnIfPluralIsUnnecessary(@NotNull String singular, @NotNull String plural) {
     if ((singular + 's').equals(plural)) {
-      DLogger.warning("Unnecessary JSON property: " + plural + " can be rendered from " + singular + ".");
+      DungeonLogger.warning("Unnecessary JSON property: " + plural + " can be rendered from " + singular + ".");
     }
   }
 

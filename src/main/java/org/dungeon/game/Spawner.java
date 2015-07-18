@@ -27,7 +27,7 @@ import java.io.Serializable;
  */
 class Spawner implements Serializable {
 
-  private final ID id;
+  private final Id id;
   private final int populationLimit;
   private final int spawnDelay;
   private final Location location;
@@ -44,8 +44,8 @@ class Spawner implements Serializable {
 
   /**
    * Refresh the spawner, spawning all creatures that should have spawned since the last spawn.
-   * <p/>
-   * Only spawners in locations whose creatures are visible to the player should be refreshed.
+   *
+   * <p>Only spawners in locations whose creatures are visible to the player should be refreshed.
    */
   public void refresh() {
     long worldTime = getWorldTime();
@@ -61,23 +61,34 @@ class Spawner implements Serializable {
    * end of the population limit.
    */
   public void notifyKill(Creature creature) {
-    if (id.equals(creature.getID()) && location.getCreatureCount(id) == populationLimit) {
+    if (id.equals(creature.getId()) && location.getCreatureCount(id) == populationLimit) {
       lastChange = getWorldTime();
     }
   }
 
   /**
-   * @return the time, in milliseconds, of the World of the Location that this Spawner is in.
+   * Returns the time, in milliseconds, of the World of the Location that this Spawner is in.
    */
   private long getWorldTime() {
     return location.getWorld().getWorldDate().getTime();
   }
 
   /**
-   * @return the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
+   * Returns the time, in milliseconds, of the creation of the World of the Location that this Spawner is in.
    */
   private long getWorldCreationTime() {
     return location.getWorld().getWorldCreationDate().getTime();
+  }
+
+  @Override
+  public String toString() {
+    return "Spawner{" +
+        "id=" + id +
+        ", populationLimit=" + populationLimit +
+        ", spawnDelay=" + spawnDelay +
+        ", location=" + location +
+        ", lastChange=" + lastChange +
+        '}';
   }
 
 }

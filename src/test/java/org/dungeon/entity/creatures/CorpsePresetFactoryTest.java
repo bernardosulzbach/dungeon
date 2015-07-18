@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.creatures.Creature.Tag;
 import org.dungeon.entity.items.ItemPreset;
-import org.dungeon.game.ID;
+import org.dungeon.game.Id;
 import org.dungeon.game.NameFactory;
 
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class CorpsePresetFactoryTest {
   @Test
   public void testMakeCorpsePreset() throws Exception {
     CreaturePreset creaturePreset = new CreaturePreset();
-    creaturePreset.setID(new ID("TESTER"));
+    creaturePreset.setId(new Id("TESTER"));
     creaturePreset.setType("Tester");
     creaturePreset.setName(NameFactory.newInstance("Tester"));
     creaturePreset.setHealth(50);
@@ -41,7 +41,7 @@ public class CorpsePresetFactoryTest {
     tagSet.addTag(Creature.Tag.CORPSE);
     creaturePreset.setTagSet(tagSet);
     ItemPreset corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
-    assertEquals(new ID("TESTER_CORPSE"), corpsePreset.getID());
+    assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
     assertEquals("CORPSE", corpsePreset.getType());
     assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
     assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
