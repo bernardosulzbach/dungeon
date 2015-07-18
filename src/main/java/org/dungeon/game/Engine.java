@@ -24,7 +24,6 @@ import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.Writer;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
-import org.dungeon.util.Constants;
 
 import java.awt.Color;
 
@@ -135,7 +134,7 @@ public final class Engine {
           return;
         }
       }
-      Writer.writeString(Constants.INVALID_INPUT);
+      Writer.writeString("Invalid input.");
     } else {
       Writer.writeString("To where?", Color.ORANGE);
     }

@@ -28,9 +28,6 @@ public class Constants {
 
   public static final int COLS = 100;
 
-  // The string used to alert the player about invalid input.
-  public static final String INVALID_INPUT = "Invalid input.";
-
   // DateFormats for time and date printing.
   public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
   public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
