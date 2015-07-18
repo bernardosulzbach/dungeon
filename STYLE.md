@@ -398,10 +398,8 @@ Each paragraph but the first has `<p>` immediately before the first word, with n
 
 ## At-clauses
 
-Any of the standard "at-clauses" that are used appear in the order `@param`, `@return`, `@throws`,
-and these types never appear with an empty description.
-When an at-clause doesn't fit on a single line,
-continuation lines are indented four spaces from the position of the `@`.
+Any of the standard "at-clauses" that are used appear in the order `@param`, `@return`, `@throws`, and these types never
+appear with an empty description.
 
 ## The summary fragment
 
