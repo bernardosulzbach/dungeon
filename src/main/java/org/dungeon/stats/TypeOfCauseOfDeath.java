@@ -17,12 +17,10 @@
 
 package org.dungeon.stats;
 
-import java.io.Serializable;
-
 /**
  * TypeOfCauseOfDeath enumerated type that defines the possible types of causes of death.
  */
-public enum TypeOfCauseOfDeath implements Serializable {
+public enum TypeOfCauseOfDeath {
 
   UNARMED("Unarmed"), WEAPON("Weapon"), SKILL("Skill");
 

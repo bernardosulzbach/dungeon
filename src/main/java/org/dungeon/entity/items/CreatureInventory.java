@@ -63,8 +63,8 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     if (simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
       items.add(item);
       item.setInventory(this);
-      DungeonLogger
-          .inventoryManagement(String.format("Added %s to the inventory of %s.", item.getQualifiedName(), owner));
+      String format = "Added %s to the inventory of %s.";
+      DungeonLogger.inventoryManagement(String.format(format, item.getQualifiedName(), owner));
     } else {
       throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
     }

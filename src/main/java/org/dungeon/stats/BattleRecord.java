@@ -70,7 +70,7 @@ public final class BattleRecord implements Serializable {
     BattleRecord that = (BattleRecord) o;
 
     return id.equals(that.id) && type.equals(that.type) && causeOfDeath.equals(that.causeOfDeath) &&
-        partOfDay.equals(that.partOfDay);
+        partOfDay == that.partOfDay;
   }
 
   @Override

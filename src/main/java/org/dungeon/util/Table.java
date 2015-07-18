@@ -172,7 +172,7 @@ public class Table {
    * Prints the table to the game window.
    */
   public void print() {
-    if (columns.size() == 0) {
+    if (columns.isEmpty()) {
       DungeonLogger.warning("Tried to print an empty Table.");
       return;
     }

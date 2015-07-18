@@ -54,7 +54,7 @@ class ExpandableIntegerSet implements Serializable {
    * Generate the first integer of the set. This method should not be invoked twice.
    */
   private void initialize() {
-    if (set.size() != 0) {
+    if (!set.isEmpty()) {
       throw new IllegalStateException("set already has an element.");
     } else {
       set.add(Random.nextInteger(MINIMUM_DIFFERENCE));
@@ -67,7 +67,7 @@ class ExpandableIntegerSet implements Serializable {
    * @return a list with all new integers.
    */
   List<Integer> expand(int a) {
-    if (set.size() == 0) {
+    if (set.isEmpty()) {
       throw new IllegalStateException("the set is empty.");
     }
     ArrayList<Integer> integerList = new ArrayList<Integer>();

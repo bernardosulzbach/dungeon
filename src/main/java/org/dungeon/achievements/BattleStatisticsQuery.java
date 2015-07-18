@@ -53,7 +53,7 @@ public class BattleStatisticsQuery {
   public boolean matches(@NotNull BattleRecord record) {
     return (id == null || id.equals(record.getId())) && (type == null || type.equals(record.getType())) &&
         (causeOfDeath == null || causeOfDeath.equals(record.getCauseOfDeath())) &&
-        (partOfDay == null || partOfDay.equals(record.getPartOfDay()));
+        (partOfDay == null || partOfDay == record.getPartOfDay());
   }
 
   @Override

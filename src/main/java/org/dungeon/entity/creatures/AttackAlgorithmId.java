@@ -17,12 +17,10 @@
 
 package org.dungeon.entity.creatures;
 
-import java.io.Serializable;
-
 /**
  * A valid ID for an AttackAlgorithm.
  */
-public enum AttackAlgorithmId implements Serializable {
+public enum AttackAlgorithmId {
 
   BAT, BEAST, CRITTER, DUMMY, ORC, UNDEAD, HERO
 

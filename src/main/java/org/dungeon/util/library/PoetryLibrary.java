@@ -37,8 +37,8 @@ public final class PoetryLibrary extends Library {
   /**
    * Returns how many poems the library has.
    *
-   * <p>This should be the first method called in this Library, as it triggers its initialization if it has not
-   * happened yet.
+   * <p>This should be the first method called in this Library, as it triggers its initialization if it has not happened
+   * yet.
    */
   public int getPoemCount() {
     if (isUninitialized()) {
