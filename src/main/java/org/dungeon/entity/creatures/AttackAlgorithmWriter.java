@@ -18,9 +18,10 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.items.Item;
+import org.dungeon.game.Game;
+import org.dungeon.game.Id;
 import org.dungeon.game.Random;
 import org.dungeon.io.Writer;
-import org.dungeon.util.Constants;
 
 import java.awt.Color;
 
@@ -46,7 +47,8 @@ class AttackAlgorithmWriter {
       HealthState currentHealthState = HealthState.getHealthState(defender.getCurHealth(), defender.getMaxHealth());
       s += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
     }
-    Writer.writeBattleString(s, attacker.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+    Id heroId = Game.getGameState().getHero().getId();
+    Writer.writeBattleString(s, attacker.getId().equals(heroId) ? Color.GREEN : Color.RED);
   }
 
   /**

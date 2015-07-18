@@ -23,11 +23,8 @@ import org.dungeon.game.Id;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Writer;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -117,15 +114,14 @@ public class AchievementTracker implements Serializable {
   }
 
   /**
-   * Updates this AchievementTracker by iterating over a collection of achievements and unlocking the ones that are
-   * fulfilled but not yet added to the unlocked list of this tracker. Before writing the first achievement unlock
-   * message, if there is one, a new line is written.
+   * Updates this AchievementTracker by iterating over the achievements and unlocking the ones that are fulfilled but
+   * not yet added to the unlocked list of this tracker.
    *
-   * @param values a Collection of Achievements, not null
+   * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
-  public void update(@NotNull Collection<Achievement> values) {
+  public void update() {
     boolean wroteNewLine = false;
-    for (Achievement achievement : values) {
+    for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!isUnlocked(achievement) && achievement.isFulfilled()) {
         if (!wroteNewLine) {
           Writer.writeNewLine();

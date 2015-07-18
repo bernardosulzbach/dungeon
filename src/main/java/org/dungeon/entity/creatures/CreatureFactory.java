@@ -31,7 +31,6 @@ import org.dungeon.game.Id;
 import org.dungeon.game.NameFactory;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.util.Constants;
 import org.dungeon.util.Percentage;
 
 import com.eclipsesource.json.JsonObject;
@@ -189,7 +188,7 @@ public final class CreatureFactory {
    * @return the Hero object
    */
   public static Hero makeHero(Date date) {
-    Hero hero = new Hero(creaturePresetMap.get(Constants.HERO_ID));
+    Hero hero = new Hero(creaturePresetMap.get(new Id("HERO")));
     giveItems(hero, date);
     return hero;
   }

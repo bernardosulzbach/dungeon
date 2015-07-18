@@ -17,10 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.achievements.Achievement;
-import org.dungeon.achievements.AchievementBuilder;
-import org.dungeon.achievements.BattleStatisticsQuery;
-import org.dungeon.achievements.BattleStatisticsRequirement;
+import org.dungeon.achievements.AchievementStore;
 import org.dungeon.date.DungeonTimeParser;
 import org.dungeon.entity.Integrity;
 import org.dungeon.entity.Weight;
@@ -31,14 +28,9 @@ import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.skill.SkillDefinition;
-import org.dungeon.stats.CauseOfDeath;
-import org.dungeon.stats.TypeOfCauseOfDeath;
-import org.dungeon.util.CounterMap;
 import org.dungeon.util.StopWatch;
 
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonObject.Member;
-import com.eclipsesource.json.JsonValue;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -52,7 +44,6 @@ import java.util.Set;
 public final class GameData {
 
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
-  public static HashMap<Id, Achievement> ACHIEVEMENTS;
   public static String LICENSE;
   private static String tutorial = null;
   private static Map<Id, ItemPreset> itemPresets = new HashMap<Id, ItemPreset>();
@@ -77,7 +68,7 @@ public final class GameData {
     GameData.itemPresets = Collections.unmodifiableMap(GameData.itemPresets);
     createSkills();
     loadLocationPresets();
-    loadAchievements();
+    AchievementStore.initialize();
     loadLicense();
     DungeonLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
   }
@@ -164,19 +155,19 @@ public final class GameData {
       if (reader.hasValue("SPAWNERS")) {
         for (String dungeonList : reader.getArrayOfValues("SPAWNERS")) {
           String[] spawner = ResourceReader.toArray(dungeonList);
-          String spawnerID = spawner[0];
+          String spawnerId = spawner[0];
           int population = Integer.parseInt(spawner[1]);
           int delay = Integer.parseInt(spawner[2]);
-          preset.addSpawner(new SpawnerPreset(spawnerID, population, delay));
+          preset.addSpawner(new SpawnerPreset(spawnerId, population, delay));
         }
       }
       // Items.
       if (reader.hasValue("ITEMS")) {
         for (String dungeonList : reader.getArrayOfValues("ITEMS")) {
           String[] item = ResourceReader.toArray(dungeonList);
-          String itemID = item[0];
+          String itemId = item[0];
           double frequency = Double.parseDouble(item[1]);
-          preset.addItem(itemID, frequency);
+          preset.addItem(itemId, frequency);
         }
       }
       // Blocked Entrances.
@@ -192,75 +183,6 @@ public final class GameData {
     }
     reader.close();
     DungeonLogger.info("Loaded " + locationPresetStore.getSize() + " location presets.");
-  }
-
-  private static void loadAchievements() {
-    ACHIEVEMENTS = new HashMap<Id, Achievement>();
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
-    for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
-      JsonObject achievementObject = achievementValue.asObject();
-      AchievementBuilder builder = new AchievementBuilder();
-      builder.setId(achievementObject.get("id").asString());
-      builder.setName(achievementObject.get("name").asString());
-      builder.setInfo(achievementObject.get("info").asString());
-      builder.setText(achievementObject.get("text").asString());
-      JsonValue battleRequirements = achievementObject.get("battleRequirements");
-      if (battleRequirements != null) {
-        for (JsonValue requirementValue : battleRequirements.asArray()) {
-          JsonObject requirementObject = requirementValue.asObject();
-          JsonObject queryObject = requirementObject.get("query").asObject();
-          BattleStatisticsQuery query = new BattleStatisticsQuery();
-          JsonValue idValue = queryObject.get("id");
-          if (idValue != null) {
-            query.setId(new Id(idValue.asString()));
-          }
-          JsonValue typeValue = queryObject.get("type");
-          if (typeValue != null) {
-            query.setType(typeValue.asString());
-          }
-          JsonValue causeOfDeathValue = queryObject.get("causeOfDeath");
-          if (causeOfDeathValue != null) {
-            JsonObject causeOfDeathObject = causeOfDeathValue.asObject();
-            TypeOfCauseOfDeath type = TypeOfCauseOfDeath.valueOf(causeOfDeathObject.get("type").asString());
-            Id id = new Id(causeOfDeathObject.get("id").asString());
-            query.setCauseOfDeath(new CauseOfDeath(type, id));
-          }
-          JsonValue partOfDayValue = queryObject.get("partOfDay");
-          if (partOfDayValue != null) {
-            query.setPartOfDay(PartOfDay.valueOf(partOfDayValue.asString()));
-          }
-          int count = requirementObject.get("count").asInt();
-          BattleStatisticsRequirement requirement = new BattleStatisticsRequirement(query, count);
-          builder.addBattleStatisticsRequirement(requirement);
-        }
-      }
-      JsonValue explorationRequirements = achievementObject.get("explorationRequirements");
-      if (explorationRequirements != null) {
-        JsonValue killsByLocationID = explorationRequirements.asObject().get("killsByLocationID");
-        if (killsByLocationID != null) {
-          builder.setKillsByLocationId(IdCounterMapFromJsonObject(killsByLocationID.asObject()));
-        }
-        JsonValue maximumNumberOfVisits = explorationRequirements.asObject().get("maximumNumberOfVisits");
-        if (maximumNumberOfVisits != null) {
-          builder.setMaximumNumberOfVisits(IdCounterMapFromJsonObject(maximumNumberOfVisits.asObject()));
-        }
-        JsonValue visitedLocations = explorationRequirements.asObject().get("visitedLocations");
-        if (visitedLocations != null) {
-          builder.setVisitedLocations(IdCounterMapFromJsonObject(visitedLocations.asObject()));
-        }
-      }
-      Achievement achievement = builder.createAchievement();
-      ACHIEVEMENTS.put(achievement.getId(), achievement);
-    }
-    DungeonLogger.info("Loaded " + ACHIEVEMENTS.size() + " achievements.");
-  }
-
-  private static CounterMap<Id> IdCounterMapFromJsonObject(JsonObject jsonObject) {
-    CounterMap<Id> counterMap = new CounterMap<Id>();
-    for (Member member : jsonObject) {
-      counterMap.incrementCounter(new Id(member.getName()), member.getValue().asInt());
-    }
-    return counterMap;
   }
 
   /**

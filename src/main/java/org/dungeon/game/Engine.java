@@ -119,7 +119,7 @@ public final class Engine {
    * Iterates over all achievements in GameData, trying to unlock yet to be unlocked achievements.
    */
   private static void refreshAchievements() {
-    Game.getGameState().getHero().getAchievementTracker().update(GameData.ACHIEVEMENTS.values());
+    Game.getGameState().getHero().getAchievementTracker().update();
   }
 
   /**

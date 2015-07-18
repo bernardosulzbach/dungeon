@@ -23,7 +23,7 @@ import org.dungeon.util.CounterMap;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AchievementBuilder {
+class AchievementBuilder {
 
   private final Collection<BattleStatisticsRequirement> requirements = new ArrayList<BattleStatisticsRequirement>();
   private String id;

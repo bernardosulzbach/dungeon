@@ -21,6 +21,7 @@ import static org.dungeon.date.DungeonTimeUnit.DAY;
 import static org.dungeon.date.DungeonTimeUnit.SECOND;
 
 import org.dungeon.achievements.Achievement;
+import org.dungeon.achievements.AchievementStore;
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.commands.Command;
 import org.dungeon.commands.IssuedCommand;
@@ -189,7 +190,7 @@ public class DebugTools {
   private static void printNotYetUnlockedAchievements() {
     AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
     List<Achievement> achievementList = new ArrayList<Achievement>();
-    for (Achievement achievement : GameData.ACHIEVEMENTS.values()) {
+    for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!tracker.isUnlocked(achievement)) {
         achievementList.add(achievement);
       }

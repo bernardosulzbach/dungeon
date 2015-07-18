@@ -79,9 +79,9 @@ public class ExplorationStatistics implements Serializable {
   }
 
   /**
-   * Returns how many Locations with the specified ID the Hero visited.
+   * Returns how many Locations with the specified Id the Hero visited.
    *
-   * @param locationId the ID of the Locations
+   * @param locationId the Id of the Locations
    * @return a nonnegative integer
    */
   public int getVisitedLocations(Id locationId) {
@@ -117,15 +117,15 @@ public class ExplorationStatistics implements Serializable {
    * @return a nonnegative integer
    */
   public int getMaximumNumberOfVisits(Id locationId) {
-    int maximumVisitsToLocationWithThisID = 0;
+    int maximumVisitsToLocationWithThisId = 0;
     for (ExplorationStatisticsEntry entry : entries.values()) {
       if (entry.getLocationId().equals(locationId)) {
-        if (entry.getVisitCount() > maximumVisitsToLocationWithThisID) {
-          maximumVisitsToLocationWithThisID = entry.getVisitCount();
+        if (entry.getVisitCount() > maximumVisitsToLocationWithThisId) {
+          maximumVisitsToLocationWithThisId = entry.getVisitCount();
         }
       }
     }
-    return maximumVisitsToLocationWithThisID;
+    return maximumVisitsToLocationWithThisId;
   }
 
 }

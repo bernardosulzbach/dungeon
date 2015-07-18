@@ -19,10 +19,10 @@ package org.dungeon.skill;
 
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
+import org.dungeon.game.Game;
 import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 import org.dungeon.io.Writer;
-import org.dungeon.util.Constants;
 import org.dungeon.util.Selectable;
 
 import java.awt.Color;
@@ -54,7 +54,8 @@ public class Skill implements Selectable, Serializable {
       builder.append(" and inflicted ").append(skill.getDamage()).append(" damage points to ").append(target.getName());
     }
     builder.append(".");
-    Writer.writeBattleString(builder.toString(), caster.getId().equals(Constants.HERO_ID) ? Color.GREEN : Color.RED);
+    Id heroId = Game.getGameState().getHero().getId();
+    Writer.writeBattleString(builder.toString(), caster.getId().equals(heroId) ? Color.GREEN : Color.RED);
   }
 
   public Id getId() {

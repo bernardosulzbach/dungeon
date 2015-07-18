@@ -22,7 +22,6 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.game.Game;
-import org.dungeon.game.GameData;
 import org.dungeon.io.Writer;
 
 import java.awt.Color;
@@ -87,7 +86,8 @@ public class AchievementTrackerWriter {
       Writer.writeString(String.format("%s (%s ago)", unlockedAchievement.getName(), sinceUnlock), Color.ORANGE);
       Writer.writeString(" " + unlockedAchievement.getInfo(), Color.YELLOW);
     }
-    Writer.writeString("Progress: " + tracker.getUnlockedCount() + "/" + GameData.ACHIEVEMENTS.size(), Color.CYAN);
+    int total = AchievementStore.getAchievements().size();
+    Writer.writeString(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total), Color.CYAN);
   }
 
   /**

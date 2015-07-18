@@ -56,13 +56,13 @@ public abstract class ItemFactory {
     if (!creature.hasTag(Creature.Tag.CORPSE)) {
       throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
     }
-    return makeItem(makeCorpseIDFromCreatureId(creature.getId()), date);
+    return makeItem(makeCorpseIdFromCreatureId(creature.getId()), date);
   }
 
   /**
    * Given a Creature ID, this method returns the corresponding corpse's ID.
    */
-  public static Id makeCorpseIDFromCreatureId(Id id) {
+  public static Id makeCorpseIdFromCreatureId(Id id) {
     return new Id(id + "_CORPSE");
   }
 
