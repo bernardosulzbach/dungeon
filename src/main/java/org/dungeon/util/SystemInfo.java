@@ -19,9 +19,13 @@ package org.dungeon.util;
 
 import org.dungeon.io.Writer;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class SystemInfo {
+
+  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
   private SystemInfo() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -32,8 +36,8 @@ public final class SystemInfo {
    */
   public static void printSystemInfo() {
     Date currentDate = new Date();
-    Writer.writeString("Time: " + Constants.TIME_FORMAT.format(currentDate));
-    Writer.writeString("Date: " + Constants.DATE_FORMAT.format(currentDate));
+    Writer.writeString("Time: " + TIME_FORMAT.format(currentDate));
+    Writer.writeString("Date: " + DATE_FORMAT.format(currentDate));
     Writer.writeString("User: " + System.getProperty("user.name"));
     Writer.writeString(getJavaVersionString());
     Writer.writeString(getOSVersionString());

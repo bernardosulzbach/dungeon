@@ -18,17 +18,12 @@
 package org.dungeon.util;
 
 import java.awt.Color;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * Constants class is a general-purpose constant storing class.
  */
 public class Constants {
 
-  // DateFormats for time and date printing.
-  public static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
-  public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
   public static final Color FORE_COLOR_NORMAL = Color.LIGHT_GRAY;
 
 }
