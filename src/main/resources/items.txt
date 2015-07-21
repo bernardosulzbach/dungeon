@@ -336,8 +336,7 @@ WEIGHT: 0.8
 DAMAGE: 8
 HIT_RATE: 0.65
 INTEGRITY_DECREMENT_ON_HIT: 4
-TEXT: The Third Era is a period of time that lasted 480 years.\
-It starts with the end of the Second Era (the fall of the Empire of Light) and ends with the rebellion of the Red Warlocks.
+TEXT: The Third Era is a period of time that lasted 440 years. It starts with the end of the Second Era - the fall of the Empire of Light - and ends with the rebellion of the Red Warlocks.
 
 ID: CORVUS_EDGE
 TYPE: Book

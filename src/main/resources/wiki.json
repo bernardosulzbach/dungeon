@@ -37,8 +37,16 @@
       "content": "Eating heals you until you are uninjured, which is better than resting for health recovery as resting will only heal the character until he or she is no longer badly injured."
     },
     {
+      "title": "Eras",
+      "content": "The First Era starts with the development of writing by the Commons and ends in the year 1050 with the murder of The God of Spellcasting by a group of wizards self-entitled The Red Warlocks.\n\nThe Second Era starts in the year 1050 and ends in the year 1600. The Empire of Light, an empire founded by the most influential Commons to protects the majority of the Common race from The Red Warlocks is founded in 1052. In the year 1425, the Common-Orc Peace Treatise is signed and the two biggest races of Darrowmere stop fighting each other. This Era ends with the fall of The Empire of Light.\n\nThe Third Era encompasses 440 years. It starts in the year 1600 with the Fall of The Empire of Light and ends in the year 2040 with the undertaking of The Red Warlocks to dominate the world.\n\nThe Fourth Era is the present time. Most live in deadly fear of The Red Warlocks, that now rule Darrowmere and kill innocent creatures mercilessly."
+    },
+    {
       "title": "Fruit Bat",
       "content": "Fruit bats are not always large: the smallest species is just six centimeters long. The largest attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests. Their sense of smell is excellent. In contrast to other bats, fruit bats do not use echolocation (with one exception, the Egyptian fruit bat, which uses high-pitched tongue clicks to navigate in caves)."
+    },
+    {
+      "title": "Gods",
+      "content": "Darrowmere's Pantheon is made up of five asexual polymorphic gods whose names have been long forgotten. According to the legends, the gods may be summoned only by the vocalization of their names.\n\nTwo of these gods are more powerful and important to Darrowmere than the others, these are The God of Creation and The God of Destruction. The other gods are The God of Spellcasting, The God of Alchemy, and The God of Enchanting."
     },
     {
       "title": "Green Iguana",
@@ -63,6 +71,10 @@
     {
       "title": "Parts of Day",
       "content": "The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from 7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00."
+    },
+    {
+      "title": "Races",
+      "content": "There are four races in Darrowmere: Common, Light Elf, Dark Elf, and Orc."
     },
     {
       "title": "Skills",
