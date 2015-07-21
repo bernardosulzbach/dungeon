@@ -46,9 +46,9 @@ public abstract class Wiki {
   }
 
   /**
-   * Searches the wiki and prints the matching contents to the screen.
+   * Searches the wiki and prints the matching contents to the screen. This method triggers the wiki initialization.
    *
-   * @param issuedCommand an IssuedCommand
+   * @param issuedCommand an IssuedCommand object
    */
   public static void search(IssuedCommand issuedCommand) {
     if (articleList == null) {
