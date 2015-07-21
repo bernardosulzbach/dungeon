@@ -34,7 +34,7 @@
     },
     {
       "title": "Eating",
-      "content": "As of 0.0.7, eating only heals you until you are uninjured (better than resting, as good as sleeping). There are no bonuses for eating regularly neither do the character ever feels hungry."
+      "content": "Eating heals you until you are uninjured, which is better than resting for health recovery as resting will only heal the character until he or she is no longer badly injured."
     },
     {
       "title": "Fruit Bat",
