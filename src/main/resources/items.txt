@@ -339,6 +339,23 @@ INTEGRITY_DECREMENT_ON_HIT: 4
 TEXT: The Third Era is a period of time that lasted 480 years.\
 It starts with the end of the Second Era (the fall of the Empire of Light) and ends with the rebellion of the Red Warlocks.
 
+ID: CORVUS_EDGE
+TYPE: Book
+NAME: [Corvus Edge]
+TAGS: [WEAPON | BOOK]
+CUR_INTEGRITY: 28
+MAX_INTEGRITY: 28
+VISIBILITY: 65%
+WEIGHT: 0.8
+DAMAGE: 8
+HIT_RATE: 0.65
+INTEGRITY_DECREMENT_ON_HIT: 4
+TEXT: [A crow standing over a blue sphere. In the middle of this sphere is a mortar and pestle.]\\
+\\
+According to the legend, The God of Alchemy banishes from Darrowmere any living creature that dares to use potions to obtain powers that are exclusive to gods.\\
+\\
+This limit is known as Corvus Edge and has only been reached once, in the year 1435 by the Grand Alchemist Natolemy, which created a potion that stopped his natural aging process. Unceremoniously, The God of Alchemy himself assumed his animal form, flew into Natolemy's home at night and ate both of his eyeballs during his sleep. Natolemy never woke up and was buried right next to the trail where he used to harvest alchemy ingredients.
+
 ID: PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY
 TYPE: Book
 NAME: [Page From Volund Loke Frey's Diary | Pages From Volund Loke Frey's Diary]
