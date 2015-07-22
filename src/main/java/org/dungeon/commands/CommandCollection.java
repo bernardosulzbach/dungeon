@@ -32,7 +32,7 @@ import org.dungeon.util.DungeonMath;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Utils;
 import org.dungeon.util.library.Libraries;
-import org.dungeon.wiki.Wiki;
+import org.dungeon.wiki.WikiSearcher;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -278,7 +278,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("wiki", "Searches the wiki for an article.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        Wiki.search(issuedCommand);
+        WikiSearcher.search(issuedCommand);
       }
     });
   }

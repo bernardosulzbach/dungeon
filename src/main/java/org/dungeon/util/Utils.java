@@ -20,8 +20,11 @@ package org.dungeon.util;
 import org.dungeon.game.GameData;
 import org.dungeon.io.Writer;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -119,21 +122,22 @@ public final class Utils {
   }
 
   /**
-   * Enumerates the elements of a List in a human-readable way.
+   * Enumerates the elements of a Collection in a human-readable way.
    *
    * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.
    *
-   * @param list the List of Objects.
-   * @return a String.
+   * @param collection a Collection
+   * @return a String
    */
-  public static String enumerate(final List<?> list) {
+  public static String enumerate(@NotNull final Collection<?> collection) {
     StringBuilder stringBuilder = new StringBuilder();
-    for (int i = 0; i < list.size(); i++) {
-      stringBuilder.append(list.get(i).toString());
-      if (i < list.size() - 2) {
+    Iterator<?> iterator = collection.iterator();
+    for (int i = 0; i < collection.size(); i++) {
+      stringBuilder.append(iterator.next().toString());
+      if (i < collection.size() - 2) {
         stringBuilder.append(", ");
-      } else if (i == list.size() - 2) {
-        if (list.size() >= 3) {
+      } else if (i == collection.size() - 2) {
+        if (collection.size() >= 3) {
           // A serial comma (only used when we have three or more items).
           stringBuilder.append(",");
         }

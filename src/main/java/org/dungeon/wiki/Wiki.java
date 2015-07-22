@@ -17,77 +17,93 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.commands.IssuedCommand;
+import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.io.Writer;
-import org.dungeon.util.Matches;
-import org.dungeon.util.Utils;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
- * The Wiki class. Loads the contents of the wiki.txt file and manages wiki articles.
+ * Uninstantiable Wiki class that loads the Wiki when it is required.
  */
-public abstract class Wiki {
+final class Wiki {
 
   private static List<Article> articleList;
 
+  private Wiki() {
+    throw new AssertionError();
+  }
+
+  /**
+   * Initializes the Wiki. Build a map with all the See Also references until all the articles have been loaded, so it
+   * is possible to check that these references are valid.
+   */
   private static void initialize() {
+    // The field cannot be initialized in the field declaration as a comparison to null is used to determine whether or
+    // not it has already been initialized.
     articleList = new ArrayList<Article>();
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("wiki.json");
-    for (JsonValue article : jsonObject.get("articles").asArray()) {
-      JsonObject articleObject = article.asObject();
-      articleList.add(new Article(articleObject.get("title").asString(), articleObject.get("content").asString()));
+    Map<Article, Collection<String>> seeAlsoMap = new HashMap<Article, Collection<String>>();
+    JsonObject wikiJsonObject = JsonObjectFactory.makeJsonObject("wiki.json");
+    for (JsonValue jsonValue : wikiJsonObject.get("articles").asArray()) {
+      JsonObject jsonObject = jsonValue.asObject();
+      Article article = new Article(jsonObject.get("title").asString(), jsonObject.get("content").asString());
+      if (jsonObject.get("seeAlso") != null) {
+        seeAlsoMap.put(article, new ArrayList<String>());
+        for (JsonValue referenceJsonValue : jsonObject.get("seeAlso").asArray()) {
+          seeAlsoMap.get(article).add(referenceJsonValue.asString());
+        }
+      }
+      articleList.add(article);
+    }
+    // Validate the references and add them.
+    addReferences(seeAlsoMap);
+  }
+
+  private static void addReferences(Map<Article, Collection<String>> seeAlsoMap) {
+    // To speed up, make a set with all the valid article names.
+    Set<String> validReferences = new HashSet<String>();
+    for (Article article : articleList) {
+      validReferences.add(article.getName().getSingular());
+    }
+    for (Entry<Article, Collection<String>> entry : seeAlsoMap.entrySet()) {
+      for (String reference : entry.getValue()) {
+        if (validReferences.contains(reference)) {
+          if (entry.getKey().hasReference(reference)) {
+            String format = "Found repeated reference (%s) in %s.";
+            DungeonLogger.warning(String.format(format, reference, entry.getKey().getName().getSingular()));
+          } else {
+            entry.getKey().addReference(reference);
+          }
+        } else {
+          DungeonLogger.warning("Got invalid wiki reference: " + reference + ".");
+        }
+      }
     }
   }
 
   /**
-   * Searches the wiki and prints the matching contents to the screen. This method triggers the wiki initialization.
-   *
-   * @param issuedCommand an IssuedCommand object
+   * Returns an unmodifiable view of the collection of articles.
    */
-  public static void search(IssuedCommand issuedCommand) {
+  static Collection<Article> getArticles() {
     if (articleList == null) {
       initialize();
     }
-    if (issuedCommand.hasArguments()) {
-      Matches<Article> matches = Utils.findBestMatches(articleList, issuedCommand.getArguments());
-      if (matches.size() == 0) {
-        Writer.writeString("No matches were found.");
-      } else if (matches.size() == 1) {
-        Writer.writeString(matches.getMatch(0).toString());
-      } else {
-        StringBuilder builder = new StringBuilder();
-        builder.append("The following articles match your query:\n");
-        for (int i = 0; i < matches.size(); i++) {
-          builder.append(toArticleListingEntry(matches.getMatch(i))).append("\n");
-        }
-        builder.append("Be more specific.");
-        Writer.writeString(builder.toString());
-      }
-    } else {
-      writeArticleList();
-    }
+    return Collections.unmodifiableCollection(articleList);
   }
 
-  /**
-   * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
-   */
-  private static void writeArticleList() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("The wiki has the following ").append(articleList.size()).append(" articles:\n");
-    for (Article article : articleList) {
-      builder.append(toArticleListingEntry(article)).append("\n");
-    }
-    Writer.writeString(builder.toString());
-  }
-
-  private static String toArticleListingEntry(Article article) {
-    return "  " + article.getName();
+  @Override
+  public String toString() {
+    return "Wiki{articleList=" + articleList + '}';
   }
 
 }
