@@ -77,9 +77,9 @@ public final class DungeonLogger {
   /**
    * Logs a WARNING message with filename and line number.
    *
-   * <p> The message is produced by the following String concatenation
+   * <p>The message is produced by the following String concatenation
    *
-   * <p> {@code "Line " + lineNumber + " of " + filename + messageEnd}
+   * <p>{@code "Line " + lineNumber + " of " + filename + messageEnd}
    *
    * @param filename the name of the file
    * @param lineNumber the number of the line that caused the warning

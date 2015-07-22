@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * CircularList class that provides a list with a maximum capacity.
  *
- * <p> After the specified maximum capacity is reached, when a new element is added, the oldest element on the list is
+ * <p>After the specified maximum capacity is reached, when a new element is added, the oldest element on the list is
  * removed.
  */
 public final class CircularList<T> implements Serializable {
