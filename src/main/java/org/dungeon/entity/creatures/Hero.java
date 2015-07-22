@@ -860,7 +860,7 @@ public class Hero extends Creature {
         if (getWeapon().hasTag(Item.Tag.REPAIRABLE)) {
           Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR_ON_ITEM); // Ten seconds to cast. Time passes before casting.
           if (hasWeapon()) { // If the item did not disappear.
-            getWeapon().incrementIntegrity(GameData.getSkillDefinitions().get(repairId).repair);
+            getWeapon().getIntegrity().incrementBy(GameData.getSkillDefinitions().get(repairId).repair);
             Writer.writeString("You casted Repair on " + getWeapon().getName() + ".");
           } else {
             Writer.writeString("Your weapon disappeared before you finished casting.");

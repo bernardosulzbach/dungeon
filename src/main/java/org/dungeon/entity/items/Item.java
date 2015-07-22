@@ -141,10 +141,6 @@ public final class Item extends Entity {
     return integrity.isBroken();
   }
 
-  public void incrementIntegrity(int integrityIncrement) {
-    integrity.incrementBy(integrityIncrement);
-  }
-
   public void decrementIntegrityByHit() {
     integrity.decrementBy(weaponComponent.getIntegrityDecrementOnHit());
   }

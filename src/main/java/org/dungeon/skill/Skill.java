@@ -87,7 +87,7 @@ public class Skill implements Selectable, Serializable {
     printSkillCast(this, caster, target);
     Item casterWeapon = caster.getWeapon();
     if (casterWeapon != null && casterWeapon.hasTag(Item.Tag.REPAIRABLE) && getRepair() > 0) {
-      casterWeapon.incrementIntegrity(getRepair());
+      casterWeapon.getIntegrity().incrementBy(getRepair());
       Writer.writeString(casterWeapon.getName() + " was repaired.");
     }
     startCoolDown();
