@@ -73,7 +73,7 @@ public final class CreatureFactory {
         preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
       }
       preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", 0));
-      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryItemLimit", 0.0));
+      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", 0.0));
       preset.setItems(getInventory(presetObject));
       setLuminosityIfPresent(preset, presetObject);
       setVisibility(preset, presetObject);

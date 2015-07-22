@@ -28,7 +28,7 @@
         "plural": "Dummies"
       },
       "inventoryItemLimit": 3,
-      "inventoryWeightLimit": 80,
+      "inventoryWeightLimit": 71.4,
       "inventory": [
         "STICK",
         "STICK",
