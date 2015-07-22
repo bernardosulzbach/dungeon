@@ -177,14 +177,15 @@ final class AttackAlgorithms {
           causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.SKILL, skill.getId());
         } else {
           Item weapon = attacker.getWeapon();
-          boolean criticalHit;
           int hitDamage;
-          // Check that there is a weapon and that it is not broken.
-          if (weapon != null && !weapon.isBroken()) {
+          boolean criticalHit;
+          boolean mustWriteBreakMessage = false;
+          if (weapon != null && !weapon.isBroken()) { // Check that there is a weapon and that it is not broken.
             if (weapon.rollForHit()) {
               hitDamage = weapon.getWeaponComponent().getDamage() + attacker.getAttack();
               criticalHit = Random.roll(HERO_CRITICAL_CHANCE);
               weapon.decrementIntegrityByHit();
+              mustWriteBreakMessage = weapon.isBroken();
               causeOfDeath = new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, weapon.getId());
             } else {
               AttackAlgorithmWriter.writeMiss(attacker);
@@ -200,7 +201,7 @@ final class AttackAlgorithms {
           }
           boolean healthStateChanged = defender.takeDamage(hitDamage);
           AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
-          if (weapon != null && weapon.isBroken()) {
+          if (mustWriteBreakMessage) {
             AttackAlgorithmWriter.writeWeaponBreak(weapon);
           }
         }
