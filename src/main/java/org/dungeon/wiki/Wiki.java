@@ -78,9 +78,11 @@ final class Wiki {
     for (Entry<Article, Collection<String>> entry : seeAlsoMap.entrySet()) {
       for (String reference : entry.getValue()) {
         if (validReferences.contains(reference)) {
+          String articleName = entry.getKey().getName().getSingular();
           if (entry.getKey().hasReference(reference)) {
-            String format = "Found repeated reference (%s) in %s.";
-            DungeonLogger.warning(String.format(format, reference, entry.getKey().getName().getSingular()));
+            DungeonLogger.warning(String.format("Found repeated reference (%s) in %s.", reference, articleName));
+          } else if (articleName.equals(reference)) {
+            DungeonLogger.warning(String.format("Found reference to self in %s.", articleName));
           } else {
             entry.getKey().addReference(reference);
           }
