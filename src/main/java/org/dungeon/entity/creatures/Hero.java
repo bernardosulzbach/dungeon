@@ -96,7 +96,7 @@ public class Hero extends Creature {
 
   Hero(CreaturePreset preset) {
     super(preset);
-    dateOfBirth = new Date(432, 6, 4, 8, 30, 0);
+    dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
   }
 
   public AchievementTracker getAchievementTracker() {

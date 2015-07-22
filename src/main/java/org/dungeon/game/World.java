@@ -36,7 +36,7 @@ public class World implements Serializable {
 
   private final WorldStatistics worldStatistics;
   private final Date worldCreationDate = new Date(1, 1, 1);
-  private Date worldDate = new Date(455, 6, 2, 6, 10, 0);
+  private Date worldDate = new Date(2055, 6, 2, 6, 10, 0);
 
   /**
    * Creates a new World.
