@@ -2,19 +2,25 @@
   "articles": [
     {
       "title": "Achievements",
-      "content": "Dungeon has dozens of achievements for you to unlock. All achievements will be unlocked by simple exploration and battling, but some have requirements much harder to satisfy than others. Although there are not any rewards for unlocking achievements - because the lead developer considers that too unrealistic, even for a fantasy world -, they are a nice way to measure your progress in the game.\n\nYou can look up the achievements you have already unlocked with the 'achievements' command. It is also possible to sort the output of this command with 'by name' and 'by date'."
+      "content": "Dungeon has dozens of achievements for you to unlock. All achievements can be unlocked through simple exploration and battling, but some have requirements much harder to satisfy than others. There are not any rewards for unlocking achievements, they are just a way to measure your progress in the game.\n\nYou can look up the achievements you have already unlocked with the 'achievements' command. It is also possible to sort the output of this command with 'by name' and 'by date'."
     },
     {
       "title": "Bat",
-      "content": "Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and sustained flight. They are natural inhabitants of humid and quiet places, such as graveyards. The danger bats present in Dungeon varies according to the locations' luminosity. The darker the place is, more likely the bats are to hit and to critically hit. Engaging bats during daytime out in the open vastly increases the chance of success."
+      "content": "Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and sustained flight. They are natural inhabitants of humid and quiet places, such as graveyards. The danger bats present in Dungeon varies according to the location's luminosity. The darker the place is, more likely the bats are to hit and to critically hit. Engaging bats during daytime out in the open vastly increases your chance of success.",
+      "seeAlso": [
+        "Fruit Bat"
+      ]
     },
     {
       "title": "Calendar",
-      "content": "The World of Dungeon has years of 10 months, months of 10 days and days of 24 hours. Each hour lasts 60 minutes of 60 seconds."
+      "content": "The World of Dungeon has years of 10 months, months of 10 days and days of 24 hours. Each hour lasts 60 minutes of 60 seconds.",
+      "seeAlso": [
+        "Eras"
+      ]
     },
     {
       "title": "Combat",
-      "content": "Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies. The character will either use the next available skill in the rotation or attack with the equipped weapon."
+      "content": "Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies."
     },
     {
       "title": "Command History",
@@ -34,7 +40,10 @@
     },
     {
       "title": "Eating",
-      "content": "Eating heals you until you are uninjured, which is better than resting for health recovery as resting will only heal the character until he or she is no longer badly injured."
+      "content": "Eating heals the character up to uninjured, which is better than resting for health recovery as resting will only heal the character until he or she is no longer badly injured.",
+      "seeAlso": [
+        "Sleeping"
+      ]
     },
     {
       "title": "Eras",
@@ -42,7 +51,10 @@
     },
     {
       "title": "Fruit Bat",
-      "content": "Fruit bats are not always large: the smallest species is just six centimeters long. The largest attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests. Their sense of smell is excellent. In contrast to other bats, fruit bats do not use echolocation (with one exception, the Egyptian fruit bat, which uses high-pitched tongue clicks to navigate in caves)."
+      "content": "Fruit bats are usually larger than normal bats. The largests attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests. Their sense of smell is excellent. In contrast to other bats, fruit bats do not use echolocation.",
+      "seeAlso": [
+        "Bat"
+      ]
     },
     {
       "title": "Gods",
@@ -54,7 +66,7 @@
     },
     {
       "title": "Keyboard Shortcuts",
-      "content": "There is a single implemented keyboard shortcut now, it is CTRL + S and it saves the game."
+      "content": "The single implemented keyboard shortcut now is CTRL + S and it saves the game."
     },
     {
       "title": "License",
@@ -66,11 +78,17 @@
     },
     {
       "title": "Luminosity",
-      "content": "Currently, time and the current location of the character are the only factors responsible by the change of luminosity through the day.\nLuminosity is the product of the light permittivity (translucency) of the location and the luminosity provided by the sun or moon. When it is too dark, the character will not be able to see."
+      "content": "The luminosity near the character is determined by three factors: the part of day, the characteristics of the location in which the character is, and the luminosity emmited by the surrounding entities.\n\nThe darker it gets, the less the character will be able to see.",
+      "seeAlso": [
+        "Parts of Day"
+      ]
     },
     {
       "title": "Parts of Day",
-      "content": "The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from 7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00."
+      "content": "The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from 7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00.",
+      "seeAlso": [
+        "Luminosity"
+      ]
     },
     {
       "title": "Races",
@@ -78,19 +96,28 @@
     },
     {
       "title": "Skills",
-      "content": "The character may learn skills through tomes scattered throughout the world. In order to use these skills, the character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory. After reading the tome and learning the skill, 'rotation' is used to set up the skill rotation, which will be used automatically when in combat."
+      "content": "The character may learn skills through tomes scattered throughout the world. In order to use these skills, the character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory. After reading the tome and learning the skill, 'rotation' is used to set up the skill rotation, which will be used automatically when in combat.",
+      "seeAlso": [
+        "Tomes"
+      ]
     },
     {
       "title": "Sleeping",
-      "content": "The character can sleep when it is dark, waking up when it is dawn. During the sleep, the character may dream."
+      "content": "The character can sleep when it is dark, waking up when it is dawn. During the sleep, the character may dream.\n\nSleeping is also heals the character.",
+      "seeAlso": [
+        "Eating"
+      ]
     },
     {
       "title": "Time",
-      "content": "Time passes after every turn. How much each turn lasts, however, depends on what the character did. Watches are used to keep precise track of time. Looking the time (using a watch) costs a little time, though. The character needs about four seconds to see what time it is in an equipped watch and around ten seconds to look up the time in a clock placed on his or hers backpack. A broken watch usually displays the time it broke. If the character is equipping a broken watch but has a working one in his or hers backpack, any attempt to look up the time will result in the character picking up the watch in his or hers backpack."
+      "content": "Time passes after every turn. How much each turn lasts, however, depends on what the character did.\n\nWatches are used to keep precise track of time. Looking the time (using a watch) costs a little time, though. The character needs about four seconds to see what time it is in an equipped watch and around ten seconds to look up the time in a clock placed on his or hers backpack.\n\nA broken watch usually displays the time it broke.\n\nIf the character is equipping a broken watch but has a working one in his or hers backpack, any attempt to look up the time will result in the character picking up the watch in his or hers backpack."
     },
     {
       "title": "Tomes",
-      "content": "Tomes are books that can teach a skill for the player character."
+      "content": "Tomes are books that can teach a skill for the player character.",
+      "seeAlso": [
+        "Skills"
+      ]
     }
   ]
 }
