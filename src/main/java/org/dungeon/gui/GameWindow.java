@@ -85,14 +85,15 @@ public class GameWindow extends JFrame {
   private final StyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
-  private boolean idle;
+
+  private boolean acceptingNextCommand;
   private boolean usingExternalDocument = false;
 
   public GameWindow() {
     initComponents();
     document = textPane.getStyledDocument();
     setVisible(true);
-    setIdle(true);
+    acceptingNextCommand = true;
   }
 
   /**
@@ -207,7 +208,7 @@ public class GameWindow extends JFrame {
     Action save = new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if (idle) {
+        if (acceptingNextCommand) {
           clearTextPane();
           Loader.saveGame(Game.getGameState());
         }
@@ -247,46 +248,34 @@ public class GameWindow extends JFrame {
    * The method that gets called when the player presses ENTER.
    */
   private void textFieldActionPerformed() {
-    final String text = getTrimmedTextFieldText();
-    if (!text.isEmpty()) {
-      clearTextField();
-      setIdle(false);
-      SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
-        @Override
-        protected Void doInBackground() {
-          Game.renderTurn(new IssuedCommand(text));
-          return null;
-        }
-
-        @Override
-        protected void done() {
-          // This method is invoked on the EDT after doInBackground finishes.
-          // Only by calling get() we can get any exceptions that might have been thrown during doInBackground().
-          // The default behaviour is to log the exception and exit the game with code 1.
-          try {
-            get();
-          } catch (InterruptedException ignore) {
-          } catch (ExecutionException fatal) {
-            logExecutionExceptionAndExit(fatal);
+    if (acceptingNextCommand) {
+      final String text = getTrimmedTextFieldText();
+      if (!text.isEmpty()) {
+        clearTextField();
+        acceptingNextCommand = false;
+        SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
+          @Override
+          protected Void doInBackground() {
+            Game.renderTurn(new IssuedCommand(text));
+            return null;
           }
-          setIdle(true);
-        }
-      };
-      inputRenderer.execute();
-    }
-  }
 
-  /**
-   * Sets the idle state variable of this GameWindow. The player can only enter input or save the game when the window
-   * is idle.
-   *
-   * @param idle the new idle state for this window.
-   */
-  private void setIdle(boolean idle) {
-    this.idle = idle;
-    textField.setEnabled(idle);
-    if (textField.isEnabled()) {
-      textField.requestFocusInWindow();
+          @Override
+          protected void done() {
+            // This method is invoked on the EDT after doInBackground finishes.
+            // Only by calling get() we can get any exceptions that might have been thrown during doInBackground().
+            // The default behaviour is to log the exception and exit the game with code 1.
+            try {
+              get();
+            } catch (InterruptedException ignore) {
+            } catch (ExecutionException fatal) {
+              logExecutionExceptionAndExit(fatal);
+            }
+            acceptingNextCommand = true;
+          }
+        };
+        inputRenderer.execute();
+      }
     }
   }
 
@@ -296,21 +285,19 @@ public class GameWindow extends JFrame {
    * @param e the KeyEvent.
    */
   private void textFieldKeyPressed(KeyEvent e) {
-    if (idle) {
-      GameState gameState = Game.getGameState();
-      if (gameState != null) {
-        CommandHistory commandHistory = gameState.getCommandHistory();
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-          textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-          textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
-        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-          // Using the empty String to get the last similar command will always retrieve the last command.
-          // Therefore, there is no need to check if there is something in the text field.
-          String lastSimilarCommand = commandHistory.getLastSimilarCommand(getTrimmedTextFieldText());
-          if (lastSimilarCommand != null) {
-            textField.setText(lastSimilarCommand);
-          }
+    GameState gameState = Game.getGameState();
+    if (gameState != null) {
+      CommandHistory commandHistory = gameState.getCommandHistory();
+      if (e.getKeyCode() == KeyEvent.VK_UP) {
+        textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
+      } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+        textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
+      } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+        // Using the empty String to get the last similar command will always retrieve the last command.
+        // Therefore, there is no need to check if there is something in the text field.
+        String lastSimilarCommand = commandHistory.getLastSimilarCommand(getTrimmedTextFieldText());
+        if (lastSimilarCommand != null) {
+          textField.setText(lastSimilarCommand);
         }
       }
     }
