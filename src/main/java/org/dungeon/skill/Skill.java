@@ -83,7 +83,7 @@ public class Skill implements Selectable, Serializable {
   }
 
   public void cast(Creature caster, Creature target) {
-    target.takeDamage(getDamage());
+    target.getHealth().decrementBy(getDamage());
     printSkillCast(this, caster, target);
     Item casterWeapon = caster.getWeapon();
     if (casterWeapon != null && casterWeapon.hasTag(Item.Tag.REPAIRABLE) && getRepair() > 0) {

@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Uninstantiable class that handles item breakage via a handleBreakage(Item) method.
  */
-public final class BreakageHandler {
+final class BreakageHandler {
 
   private BreakageHandler() {
   }

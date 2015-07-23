@@ -20,7 +20,6 @@ package org.dungeon.game;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
-import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.Writer;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
@@ -179,12 +178,12 @@ public final class Engine {
     }
     CauseOfDeath causeOfDeath = null;
     // A counter variable that register how many turns the battle had.
-    while (hero.isAlive() && foe.isAlive()) {
+    while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
       causeOfDeath = hero.hit(foe);
       hero.getSkillRotation().refresh();
       foe.getSkillRotation().refresh();
       Engine.rollDateAndRefresh(BATTLE_TURN_DURATION);
-      if (foe.isAlive()) {
+      if (foe.getHealth().isAlive()) {
         foe.hit(hero);
         hero.getSkillRotation().refresh();
         foe.getSkillRotation().refresh();
@@ -193,7 +192,7 @@ public final class Engine {
     }
     Creature survivor;
     Creature defeated;
-    if (hero.isAlive()) {
+    if (hero.getHealth().isAlive()) {
       survivor = hero;
       defeated = foe;
     } else {
@@ -208,24 +207,16 @@ public final class Engine {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
-      battleCleanup(survivor, defeated);
+      battleCleanup(survivor);
     }
   }
 
   /**
-   * Battle cleanup routine. This method removes the defeated Creature, drops all its Items onto the floor, makes and
-   * adds its corpse Item to the Location and resets the SkillRotation of the survivor.
+   * Battle cleanup routine. This method restarts the SkillRotation of the survivor.
    *
-   * @param survivor the Creature that is still alive.
-   * @param defeated the Creature that was killed.
+   * @param survivor the Creature that is still alive
    */
-  private static void battleCleanup(Creature survivor, Creature defeated) {
-    Location defeatedLocation = defeated.getLocation();
-    defeatedLocation.removeCreature(defeated);
-    if (defeated.hasTag(Creature.Tag.CORPSE)) {
-      defeatedLocation.addItem(ItemFactory.makeCorpse(defeated, defeatedLocation.getWorld().getWorldDate()));
-    }
-    defeated.dropEverything();
+  private static void battleCleanup(Creature survivor) {
     survivor.getSkillRotation().restartRotation();
   }
 

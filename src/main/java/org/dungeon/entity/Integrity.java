@@ -17,6 +17,8 @@
 
 package org.dungeon.entity;
 
+import org.dungeon.util.Percentage;
+
 import java.io.Serializable;
 
 /**
@@ -61,6 +63,18 @@ public class Integrity implements Serializable {
 
   public int getCurrent() {
     return current;
+  }
+
+  public boolean isMaximum() {
+    return getCurrent() == getMaximum();
+  }
+
+  public boolean isZero() {
+    return getCurrent() == 0;
+  }
+
+  public Percentage toPercentage() {
+    return new Percentage(getCurrent() / (double) getMaximum());
   }
 
   /**

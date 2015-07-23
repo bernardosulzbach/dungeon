@@ -36,7 +36,6 @@ import java.util.ArrayList;
  */
 public class Creature extends Entity {
 
-  private final int maxHealth;
   private final int attack;
   private final AttackAlgorithmId attackAlgorithmId;
   private final SkillList skillList = new SkillList();
@@ -44,14 +43,13 @@ public class Creature extends Entity {
   private final TagSet<Tag> tagSet;
   private final CreatureInventory inventory;
   private final LightSource lightSource;
-  private int curHealth;
+  private final CreatureHealth health;
   private Item weapon;
   private Location location;
 
   public Creature(CreaturePreset preset) {
     super(preset);
-    maxHealth = preset.getHealth();
-    curHealth = preset.getHealth();
+    health = CreatureHealth.makeCreatureIntegrity(preset.getHealth(), this);
     attack = preset.getAttack();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithmId = preset.getAttackAlgorithmId();
@@ -71,16 +69,8 @@ public class Creature extends Entity {
     return tagSet.hasTag(tag);
   }
 
-  int getMaxHealth() {
-    return maxHealth;
-  }
-
-  int getCurHealth() {
-    return curHealth;
-  }
-
-  void setCurHealth(int curHealth) {
-    this.curHealth = curHealth;
+  public CreatureHealth getHealth() {
+    return health;
   }
 
   public int getAttack() {
@@ -141,31 +131,6 @@ public class Creature extends Entity {
    */
   public CauseOfDeath hit(Creature target) {
     return AttackAlgorithms.renderAttack(this, target);
-  }
-
-  /**
-   * Makes the Creature take a given amount of damage and returns whether its HealthState changed.
-   *
-   * @param damage the amount of damage the Creature should take
-   * @return true if the Creature's HealthState changed
-   */
-  public boolean takeDamage(int damage) {
-    HealthState initialHealthState = HealthState.getHealthState(getCurHealth(), getMaxHealth());
-    if (damage > getCurHealth()) {
-      setCurHealth(0);
-    } else {
-      setCurHealth(getCurHealth() - damage);
-    }
-    HealthState finalHealthState = HealthState.getHealthState(getCurHealth(), getMaxHealth());
-    return finalHealthState != initialHealthState;
-  }
-
-  public boolean isAlive() {
-    return getCurHealth() > 0;
-  }
-
-  public boolean isDead() {
-    return !isAlive();
   }
 
   boolean hasWeapon() {

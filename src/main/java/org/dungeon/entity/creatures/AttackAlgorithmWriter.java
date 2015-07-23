@@ -41,14 +41,15 @@ class AttackAlgorithmWriter {
    */
   static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
       boolean healthStateChanged) {
-    String s = String.format("%s inflicted %d damage points to %s", attacker.getName(), hitDamage, defender.getName());
-    s += criticalHit ? " with a critical hit." : ".";
+    String format = "%s inflicted %d damage points to %s";
+    String battleString = String.format(format, attacker.getName(), hitDamage, defender.getName());
+    battleString += criticalHit ? " with a critical hit." : ".";
     if (healthStateChanged) {
-      HealthState currentHealthState = HealthState.getHealthState(defender.getCurHealth(), defender.getMaxHealth());
-      s += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
+      HealthState currentHealthState = defender.getHealth().getHealthState();
+      battleString += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
     }
     Id heroId = Game.getGameState().getHero().getId();
-    Writer.writeBattleString(s, attacker.getId().equals(heroId) ? Color.GREEN : Color.RED);
+    Writer.writeBattleString(battleString, attacker.getId().equals(heroId) ? Color.GREEN : Color.RED);
   }
 
   /**

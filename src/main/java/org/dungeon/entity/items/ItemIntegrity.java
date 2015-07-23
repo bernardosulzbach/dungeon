@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.entity;
+package org.dungeon.entity.items;
 
-import org.dungeon.entity.items.BreakageHandler;
-import org.dungeon.entity.items.Item;
+import org.dungeon.entity.Integrity;
 import org.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,11 +58,11 @@ public class ItemIntegrity implements Serializable {
    * @return true if the current integrity is zero
    */
   public boolean isBroken() {
-    return getCurrent() == 0;
+    return integrity.isZero();
   }
 
   public Percentage toPercentage() {
-    return new Percentage(getCurrent() / (double) getMaximum());
+    return integrity.toPercentage();
   }
 
   /**

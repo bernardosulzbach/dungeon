@@ -95,7 +95,7 @@ public class Game {
     // Clears the text pane.
     getGameWindow().clearTextPane();
     processInput(issuedCommand);
-    if (gameState.getHero().isDead()) {
+    if (gameState.getHero().getHealth().isDead()) {
       Writer.writeString("You died.");
       setGameState(loadAGameStateOrCreateANewOne());
     } else {

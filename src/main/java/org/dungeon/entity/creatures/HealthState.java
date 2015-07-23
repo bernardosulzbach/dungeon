@@ -35,11 +35,6 @@ public enum HealthState {
     this.stringRepresentation = stringRepresentation;
   }
 
-  public static HealthState getHealthState(int curHealth, int maxHealth) {
-    double fraction = curHealth / (double) maxHealth;
-    return values()[(int) ((values().length - 1) * (1 - fraction))];
-  }
-
   @Override
   public String toString() {
     return stringRepresentation;

@@ -20,7 +20,6 @@ package org.dungeon.entity.items;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
-import org.dungeon.entity.ItemIntegrity;
 import org.dungeon.entity.LightSource;
 import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;

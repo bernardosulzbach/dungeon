@@ -108,38 +108,28 @@ public class Hero extends Creature {
    * completely healed, a messaging about this is written.
    */
   private void addHealth(int amount) {
-    int sum = amount + getCurHealth();
-    if (sum >= getMaxHealth()) {
-      setCurHealth(getMaxHealth());
+    getHealth().incrementBy(amount);
+    if (getHealth().isFull()) {
       Writer.writeString("You are completely healed.");
-    } else {
-      setCurHealth(sum);
     }
-  }
-
-  /**
-   * Checks if the Hero is completely healed.
-   */
-  private boolean isCompletelyHealed() {
-    return getMaxHealth() == getCurHealth();
   }
 
   /**
    * Rests until the hero is considered to be rested.
    */
   public void rest() {
-    int maximumHealthFromRest = (int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth());
-    if (getCurHealth() >= maximumHealthFromRest) {
+    int maximumHealthFromRest = (int) (MAXIMUM_HEALTH_THROUGH_REST * getHealth().getMaximum());
+    if (getHealth().getCurrent() >= maximumHealthFromRest) {
       Writer.writeString("You are already rested.");
     } else {
-      int healthRecovered = maximumHealthFromRest - getCurHealth(); // A positive integer.
-      // The fraction SECONDS_TO_REGENERATE_FULL_HEALTH / getMaxHealth() may be smaller than 1.
+      int healthRecovered = maximumHealthFromRest - getHealth().getCurrent(); // A positive integer.
+      // The fraction SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum() may be smaller than 1.
       // Therefore, the following expression may evaluate to 0 if we do not use Math.max to secure the call to
       // Engine.rollDateAndRefresh.
-      int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getMaxHealth());
+      int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum());
       Engine.rollDateAndRefresh(timeResting);
       Writer.writeString("Resting...");
-      setCurHealth((int) (MAXIMUM_HEALTH_THROUGH_REST * getMaxHealth()));
+      getHealth().incrementBy(healthRecovered);
       Writer.writeString("You feel rested.");
     }
   }
@@ -166,9 +156,9 @@ public class Hero extends Creature {
           Writer.writeString(Libraries.getDreamLibrary().next());
         }
         seconds -= cycleDuration;
-        if (!isCompletelyHealed()) {
-          int healing = getMaxHealth() * cycleDuration / SECONDS_TO_REGENERATE_FULL_HEALTH;
-          setCurHealth(Math.min(getCurHealth() + healing, getMaxHealth()));
+        if (!getHealth().isFull()) {
+          int healing = getHealth().getMaximum() * cycleDuration / SECONDS_TO_REGENERATE_FULL_HEALTH;
+          getHealth().incrementBy(healing);
         }
       }
       Writer.writeString("You wake up.");
@@ -687,7 +677,7 @@ public class Hero extends Creature {
     StringBuilder builder = new StringBuilder();
     builder.append(getName()).append("\n");
     builder.append("You are ");
-    builder.append(HealthState.getHealthState(getCurHealth(), getMaxHealth()).toString().toLowerCase()).append(".\n");
+    builder.append(getHealth().getHealthState().toString().toLowerCase()).append(".\n");
     builder.append("Your base attack is ").append(String.valueOf(getAttack())).append(".\n");
     if (hasWeapon()) {
       String format = "You are currently equipping %s, whose base damage is %d. This makes your total damage %d.\n";

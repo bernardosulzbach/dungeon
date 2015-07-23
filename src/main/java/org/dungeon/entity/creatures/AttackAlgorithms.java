@@ -54,7 +54,9 @@ final class AttackAlgorithms {
           if (criticalHit) {
             hitDamage *= 2;
           }
-          boolean healthStateChanged = defender.takeDamage(hitDamage);
+          HealthState oldHealthState = defender.getHealth().getHealthState();
+          defender.getHealth().decrementBy(hitDamage);
+          boolean healthStateChanged = defender.getHealth().getHealthState() != oldHealthState;
           AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
         } else {
           AttackAlgorithmWriter.writeMiss(attacker);
@@ -69,7 +71,9 @@ final class AttackAlgorithms {
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         if (Random.roll(BEAST_HIT_RATE)) {
           int hitDamage = attacker.getAttack();
-          boolean healthStateChanged = defender.takeDamage(hitDamage);
+          HealthState oldHealthState = defender.getHealth().getHealthState();
+          defender.getHealth().decrementBy(hitDamage);
+          boolean healthStateChanged = defender.getHealth().getHealthState() != oldHealthState;
           AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
         } else {
           AttackAlgorithmWriter.writeMiss(attacker);
@@ -102,7 +106,7 @@ final class AttackAlgorithms {
       public CauseOfDeath renderAttack(Creature attacker, Creature defender) {
         Item weapon = attacker.getWeapon();
         int hitDamage;
-        Percentage healthiness = new Percentage(attacker.getCurHealth() / (double) attacker.getMaxHealth());
+        Percentage healthiness = attacker.getHealth().toPercentage();
         double criticalChance = DungeonMath.weightedAverage(ORC_MIN_CRIT_CHANCE, ORC_MAX_CRIT_CHANCE, healthiness);
         boolean criticalHit = Random.roll(criticalChance);
         if (weapon != null && !weapon.isBroken()) {
@@ -124,7 +128,9 @@ final class AttackAlgorithms {
         if (criticalHit) {
           hitDamage *= 2;
         }
-        boolean healthStateChanged = defender.takeDamage(hitDamage);
+        HealthState oldHealthState = defender.getHealth().getHealthState();
+        defender.getHealth().decrementBy(hitDamage);
+        boolean healthStateChanged = defender.getHealth().getHealthState() != oldHealthState;
         AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
         if (weapon != null && weapon.isBroken()) {
           AttackAlgorithmWriter.writeWeaponBreak(weapon);
@@ -156,7 +162,9 @@ final class AttackAlgorithms {
             return null;
           }
         }
-        boolean healthStateChanged = defender.takeDamage(hitDamage);
+        HealthState oldHealthState = defender.getHealth().getHealthState();
+        defender.getHealth().decrementBy(hitDamage);
+        boolean healthStateChanged = defender.getHealth().getHealthState() != oldHealthState;
         AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, false, healthStateChanged);
         if (weapon != null && weapon.isBroken()) {
           AttackAlgorithmWriter.writeWeaponBreak(weapon);
@@ -199,7 +207,9 @@ final class AttackAlgorithms {
           if (criticalHit) {
             hitDamage *= 2;
           }
-          boolean healthStateChanged = defender.takeDamage(hitDamage);
+          HealthState oldHealthState = defender.getHealth().getHealthState();
+          defender.getHealth().decrementBy(hitDamage);
+          boolean healthStateChanged = defender.getHealth().getHealthState() != oldHealthState;
           AttackAlgorithmWriter.writeInflictedDamage(attacker, hitDamage, defender, criticalHit, healthStateChanged);
           if (mustWriteBreakMessage) {
             AttackAlgorithmWriter.writeWeaponBreak(weapon);
