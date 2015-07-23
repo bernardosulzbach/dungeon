@@ -17,59 +17,56 @@
 
 package org.dungeon.game;
 
-import org.dungeon.io.DungeonLogger;
-
 import java.io.Serializable;
 
 /**
- * ID class that wraps an identification String.
+ * Id class that wraps an identification String.
  *
  * <p>The wrapped String is guaranteed to only contain valid characters.
  *
- * <p>Valid characters are: uppercase ASCII letters, digits and underscores.
+ * <p>Valid characters are: uppercase ASCII letters, digits, and the underscore.
  */
 public final class Id implements Serializable {
 
   private final String id;
 
   /**
-   * Constructs an ID from a String, fixing all invalid characters and logging a warning if either {@code null} or an
-   * invalid String was used as an argument.
+   * Constructs an Id from a String.
    *
-   * <p>Valid characters are: uppercase ASCII letters, digits and underscores.
+   * <p>Valid characters are: uppercase ASCII letters, digits, and the underscore.
    *
-   * <p>Lowercase letters are converted to their uppercase analogous and any other invalid characters are converted to
-   * underscores.
-   *
-   * <p>If {@code null} is provided, a String containing "NULL" will be generated.
-   *
-   * @param id the ID String.
+   * @param id the Id String
    */
   public Id(String id) {
     if (id == null) {
-      DungeonLogger.warning("Tried to create an Id with null.");
-      this.id = "NULL";
+      throw new IllegalArgumentException("tried to create an Id with null.");
+    } else if (id.isEmpty()) {
+      throw new IllegalArgumentException("tried to create an Id with the empty string.");
     } else {
-      boolean invalid = false;
-      char[] idChars = id.toCharArray();
-      char currentChar;
-      for (int i = 0; i < idChars.length; i++) {
-        currentChar = idChars[i];
-        if (Character.isLetter(currentChar)) {
-          if (Character.isLowerCase(idChars[i])) {
-            invalid = true;
-            idChars[i] = Character.toUpperCase(currentChar);
-          }
-        } else if (!(Character.isDigit(currentChar) || idChars[i] == '_')) {
-          invalid = true;
-          idChars[i] = '_';
+      for (char character : id.toCharArray()) {
+        if (isInvalidCharacter(character)) {
+          throw new IllegalArgumentException("got invalid Id string: " + id);
         }
       }
-      if (invalid) {
-        DungeonLogger.warning("Tried to use \"" + id + "\" as an Id.");
-      }
-      this.id = new String(idChars);
+      this.id = id;
     }
+  }
+
+  /**
+   * Check if the specified character is an invalid Id character.
+   *
+   * <p>Valid characters are: uppercase ASCII letters, digits, and the underscore.
+   *
+   * @param character a candidate character
+   * @return true if the character cannot be used in an Id string, false otherwise
+   */
+  private static boolean isInvalidCharacter(char character) {
+    if (Character.isLetter(character)) {
+      if (Character.isUpperCase(character)) {
+        return false;
+      }
+    }
+    return !Character.isDigit(character) && character != '_';
   }
 
   @Override
