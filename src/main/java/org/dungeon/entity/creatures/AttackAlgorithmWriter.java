@@ -20,7 +20,6 @@ package org.dungeon.entity.creatures;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
-import org.dungeon.game.Random;
 import org.dungeon.io.Writer;
 
 import java.awt.Color;
@@ -28,32 +27,32 @@ import java.awt.Color;
 /**
  * This class is uninstantiable and provides utility IO methods for AttackAlgorithm implementations.
  */
-class AttackAlgorithmWriter {
+final class AttackAlgorithmWriter {
+
+  private AttackAlgorithmWriter() { // Ensure that this class cannot be instantiated.
+    throw new AssertionError();
+  }
 
   /**
-   * Prints a message about the inflicted damage based on the parameters.
+   * Writes a message about the inflicted damage based on the parameters.
    *
    * @param attacker the Creature that performed the attack
    * @param hitDamage the damage inflicted by the attacker
    * @param defender the target of the attack
    * @param criticalHit a boolean indicating if the attack was a critical hit or not
-   * @param healthStateChanged a boolean indicating if the HealthState of the defender changed or not
    */
-  static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit,
-      boolean healthStateChanged) {
+  static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
     String format = "%s inflicted %d damage points to %s";
     String battleString = String.format(format, attacker.getName(), hitDamage, defender.getName());
     battleString += criticalHit ? " with a critical hit." : ".";
-    if (healthStateChanged) {
-      HealthState currentHealthState = defender.getHealth().getHealthState();
-      battleString += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
-    }
+    HealthState currentHealthState = defender.getHealth().getHealthState();
+    battleString += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
     Id heroId = Game.getGameState().getHero().getId();
     Writer.writeBattleString(battleString, attacker.getId().equals(heroId) ? Color.GREEN : Color.RED);
   }
 
   /**
-   * Prints a miss message.
+   * Writes a miss message.
    *
    * @param attacker the attacker creature
    */
@@ -62,24 +61,15 @@ class AttackAlgorithmWriter {
   }
 
   /**
-   * Prints that a weapon broke.
+   * Writes a weapon breakage message.
    *
-   * @param weapon the weapon that broke
+   * @param weapon the weapon that broke, should be broken
    */
   static void writeWeaponBreak(Item weapon) {
-    Writer.writeString(weapon.getName() + " broke!", Color.RED);
-  }
-
-  public static void writeCritterAttackMessage(Creature attacker) {
-    if (Random.nextBoolean()) {
-      Writer.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
-    } else {
-      Writer.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
+    if (!weapon.isBroken()) {
+      throw new IllegalArgumentException("weapon is not broken.");
     }
-  }
-
-  public static void writeDummyAttackMessage(Creature attacker) {
-    Writer.writeBattleString(attacker.getName() + " stands still.", Color.YELLOW);
+    Writer.writeString(weapon.getName() + " broke!", Color.RED);
   }
 
 }

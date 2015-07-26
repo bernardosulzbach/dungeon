@@ -28,11 +28,12 @@ import java.io.Serializable;
  */
 public class CauseOfDeath implements Serializable {
 
+  private final static CauseOfDeath UNARMED = new CauseOfDeath(TypeOfCauseOfDeath.UNARMED, new Id("UNARMED"));
   private final TypeOfCauseOfDeath type;
   private final Id id;
 
   /**
-   * Gets a CauseOfDeath with the specified TypeOfCauseOfDeath and ID.
+   * Constructs a CauseOfDeath with the specified TypeOfCauseOfDeath and ID.
    *
    * @param type a TypeOfCauseOfDeath
    * @param id an ID
@@ -40,6 +41,13 @@ public class CauseOfDeath implements Serializable {
   public CauseOfDeath(@NotNull TypeOfCauseOfDeath type, @NotNull Id id) {
     this.type = type;
     this.id = id;
+  }
+
+  /**
+   * Convenience method that returns a CauseOfDeath that represents an unarmed kill.
+   */
+  public static CauseOfDeath getUnarmedCauseOfDeath() {
+    return UNARMED;
   }
 
   @Override

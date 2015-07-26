@@ -21,7 +21,6 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.Writer;
-import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 
 import java.awt.Color;
@@ -171,53 +170,31 @@ public final class Engine {
    * @param hero the attacker
    * @param foe the defender
    */
-  // Whenever wanting to allow foes to start battle, allow for a boolean parameter that indicates if the foe starts.
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
       Writer.writeString("You cannot attempt suicide.");
+      return;
     }
-    CauseOfDeath causeOfDeath = null;
-    // A counter variable that register how many turns the battle had.
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
-      causeOfDeath = hero.hit(foe);
-      hero.getSkillRotation().refresh();
-      foe.getSkillRotation().refresh();
+      hero.hit(foe);
       Engine.rollDateAndRefresh(BATTLE_TURN_DURATION);
-      if (foe.getHealth().isAlive()) {
+      // No contract specifies that calling hit on the Hero will not kill it, so check both creatures again.
+      // Additionally, rolling the date forward may kill the hero in the future.
+      if (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
         foe.hit(hero);
-        hero.getSkillRotation().refresh();
-        foe.getSkillRotation().refresh();
         Engine.rollDateAndRefresh(BATTLE_TURN_DURATION);
       }
     }
-    Creature survivor;
-    Creature defeated;
-    if (hero.getHealth().isAlive()) {
-      survivor = hero;
-      defeated = foe;
-    } else {
-      survivor = foe;
-      defeated = hero;
-    }
+    Creature survivor = hero.getHealth().isAlive() ? hero : foe;
+    Creature defeated = (survivor == hero) ? foe : hero;
+    // Imagine if a third factor (such as hunger) could kill one of the creatures.
+    // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
     Writer.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
     if (hero == survivor) {
-      if (causeOfDeath == null) { // Should never happen. The hit must be a fatal blow for the target to die.
-        throw new AssertionError();
-      }
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
-      Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, causeOfDeath, partOfDay);
+      Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, defeated.getCauseOfDeath(), partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
-      battleCleanup(survivor);
     }
-  }
-
-  /**
-   * Battle cleanup routine. This method restarts the SkillRotation of the survivor.
-   *
-   * @param survivor the Creature that is still alive
-   */
-  private static void battleCleanup(Creature survivor) {
-    survivor.getSkillRotation().restartRotation();
   }
 
 }

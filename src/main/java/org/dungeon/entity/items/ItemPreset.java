@@ -25,6 +25,7 @@ import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Id;
 import org.dungeon.game.Name;
+import org.dungeon.util.Percentage;
 
 /**
  * Stores the information about an item that the factory may need to create it.
@@ -37,7 +38,7 @@ public final class ItemPreset implements Preset {
   private Name name;
   private Integrity integrity;
   private int damage;
-  private double hitRate;
+  private Percentage hitRate;
   private int integrityDecrementOnHit;
   private int nutrition;
   private int integrityDecrementOnEat;
@@ -100,11 +101,11 @@ public final class ItemPreset implements Preset {
     this.damage = damage;
   }
 
-  public double getHitRate() {
+  public Percentage getHitRate() {
     return hitRate;
   }
 
-  public void setHitRate(double hitRate) {
+  public void setHitRate(Percentage hitRate) {
     this.hitRate = hitRate;
   }
 

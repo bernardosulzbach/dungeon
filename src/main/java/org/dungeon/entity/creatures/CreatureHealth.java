@@ -85,8 +85,7 @@ public class CreatureHealth implements Serializable {
   }
 
   /**
-   * Decrements the current health by the specified amount. If the Creature ends up dead, it is passed to
-   * DeathHandler.
+   * Decrements the current health by the specified amount. If the Creature ends up dead, it is passed to DeathHandler.
    *
    * @param amount a nonnegative integer
    */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,25 @@
 
 package org.dungeon.entity.creatures;
 
+import org.dungeon.game.Random;
+import org.dungeon.io.Writer;
+
 import org.jetbrains.annotations.NotNull;
 
-/**
- * An interface that defines a single renderAttack method that is invoked when a creature attacks another.
- */
-public interface AttackAlgorithm {
+import java.awt.Color;
 
-  /**
-   * Renders an attack of the attacker on the defender.
-   *
-   * <p>If any creature dies due to the invocation of this method, it will have its causeOfDeath field set.
-   *
-   * @param attacker the attacker
-   * @param defender the defender
-   */
-  void renderAttack(@NotNull Creature attacker, @NotNull Creature defender);
+/**
+ * An implementation of AttackAlgorithm that just writes to the screen.
+ */
+public class CritterAttackAlgorithm implements AttackAlgorithm {
+
+  @Override
+  public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
+    if (Random.nextBoolean()) {
+      Writer.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
+    } else {
+      Writer.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
+    }
+  }
 
 }

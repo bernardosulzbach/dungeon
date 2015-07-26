@@ -17,6 +17,8 @@
 
 package org.dungeon.entity.items;
 
+import org.dungeon.util.Percentage;
+
 import java.io.Serializable;
 
 /**
@@ -25,10 +27,10 @@ import java.io.Serializable;
 public class WeaponComponent implements Serializable {
 
   private final int damage;
-  private final double hitRate;
+  private final Percentage hitRate;
   private final int integrityDecrementOnHit;
 
-  public WeaponComponent(int damage, double hitRate, int integrityDecrementOnHit) {
+  public WeaponComponent(int damage, Percentage hitRate, int integrityDecrementOnHit) {
     this.damage = damage;
     this.hitRate = hitRate;
     this.integrityDecrementOnHit = integrityDecrementOnHit;
@@ -38,7 +40,7 @@ public class WeaponComponent implements Serializable {
     return damage;
   }
 
-  public double getHitRate() {
+  public Percentage getHitRate() {
     return hitRate;
   }
 

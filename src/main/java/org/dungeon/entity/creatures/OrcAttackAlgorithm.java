@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,25 @@
 
 package org.dungeon.entity.creatures;
 
+import org.dungeon.util.DungeonMath;
+import org.dungeon.util.Percentage;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An interface that defines a single renderAttack method that is invoked when a creature attacks another.
+ * An implementation of AttackAlgorithm that takes into account the increased brutality of Orcs when endangered.
+ *
+ * <p>The critical chance increases as the creature gets closer to dying.
  */
-public interface AttackAlgorithm {
+class OrcAttackAlgorithm extends SimpleAttackAlgorithm {
 
-  /**
-   * Renders an attack of the attacker on the defender.
-   *
-   * <p>If any creature dies due to the invocation of this method, it will have its causeOfDeath field set.
-   *
-   * @param attacker the attacker
-   * @param defender the defender
-   */
-  void renderAttack(@NotNull Creature attacker, @NotNull Creature defender);
+  private static final double MIN_CRITICAL_CHANCE = 0.1;
+  private static final double MAX_CRITICAL_CHANCE = 0.5;
+
+  @Override
+  Percentage getCriticalChance(@NotNull Creature creature) {
+    Percentage healthiness = creature.getHealth().toPercentage();
+    return new Percentage(DungeonMath.weightedAverage(MAX_CRITICAL_CHANCE, MIN_CRITICAL_CHANCE, healthiness));
+  }
 
 }

@@ -29,6 +29,8 @@ import org.dungeon.skill.SkillList;
 import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 /**
@@ -46,6 +48,11 @@ public class Creature extends Entity {
   private final CreatureHealth health;
   private Item weapon;
   private Location location;
+
+  /**
+   * What caused the death of this creature. If getHealth().isAlive() evaluates to true, this should be null.
+   */
+  private CauseOfDeath causeOfDeath;
 
   public Creature(CreaturePreset preset) {
     super(preset);
@@ -124,13 +131,12 @@ public class Creature extends Entity {
   }
 
   /**
-   * Hits the specified target Creature. Returns what would be the CauseOfDeath if the target died for this attack.
+   * Hits the specified target Creature.
    *
    * @param target the target
-   * @return the possible CauseOfDeath
    */
-  public CauseOfDeath hit(Creature target) {
-    return AttackAlgorithms.renderAttack(this, target);
+  public void hit(Creature target) {
+    AttackAlgorithms.renderAttack(this, target);
   }
 
   boolean hasWeapon() {
@@ -163,6 +169,27 @@ public class Creature extends Entity {
 
   public AttackAlgorithmId getAttackAlgorithmId() {
     return attackAlgorithmId;
+  }
+
+  /**
+   * Retrieves what caused the death of this creature. If getHealth().isAlive() evaluates to true, this method returns
+   * null.
+   */
+  public CauseOfDeath getCauseOfDeath() {
+    return causeOfDeath;
+  }
+
+  /**
+   * Sets what caused the death of this creature. Should be called only once and after the creature is dead.
+   */
+  public void setCauseOfDeath(@NotNull CauseOfDeath causeOfDeath) {
+    if (this.causeOfDeath != null) {
+      throw new IllegalStateException("creature already has a CauseOfDeath.");
+    } else if (getHealth().isAlive()) {
+      throw new IllegalStateException("creature is still alive.");
+    } else {
+      this.causeOfDeath = causeOfDeath;
+    }
   }
 
   @Override

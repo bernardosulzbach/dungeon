@@ -25,7 +25,7 @@ import org.dungeon.entity.Luminosity;
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Game;
-import org.dungeon.game.Random;
+import org.dungeon.util.Percentage;
 
 public final class Item extends Entity {
 
@@ -55,7 +55,7 @@ public final class Item extends Entity {
 
     if (hasTag(Tag.WEAPON)) {
       int damage = preset.getDamage();
-      double hitRate = preset.getHitRate();
+      Percentage hitRate = preset.getHitRate();
       int integrityDecrementOnHit = preset.getIntegrityDecrementOnHit();
       weaponComponent = new WeaponComponent(damage, hitRate, integrityDecrementOnHit);
     }
@@ -150,15 +150,6 @@ public final class Item extends Entity {
 
   public void decrementIntegrityToZero() {
     integrity.decrementBy(integrity.getCurrent());
-  }
-
-  /**
-   * Rolls for a hit.
-   *
-   * @return true if the next attack should hit, false otherwise
-   */
-  public boolean rollForHit() {
-    return Random.roll(weaponComponent.getHitRate());
   }
 
   /**

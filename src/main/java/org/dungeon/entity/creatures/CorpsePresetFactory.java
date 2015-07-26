@@ -25,6 +25,7 @@ import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.NameFactory;
+import org.dungeon.util.Percentage;
 
 /**
  * A factory of corpse presets.
@@ -34,7 +35,7 @@ final class CorpsePresetFactory {
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
-  private static final double CORPSE_HIT_RATE = 0.5;
+  private static final Percentage CORPSE_HIT_RATE = new Percentage(0.5);
 
   private CorpsePresetFactory() {
     throw new AssertionError();

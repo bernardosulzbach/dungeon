@@ -28,6 +28,7 @@ import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.io.ResourceReader;
 import org.dungeon.skill.SkillDefinition;
+import org.dungeon.util.Percentage;
 import org.dungeon.util.StopWatch;
 
 import com.eclipsesource.json.JsonObject;
@@ -121,7 +122,7 @@ public final class GameData {
       }
       preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
       preset.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
-      preset.setHitRate(readDoubleFromResourceReader(reader, "HIT_RATE"));
+      preset.setHitRate(new Percentage(readDoubleFromResourceReader(reader, "HIT_RATE")));
       preset.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
       if (reader.hasValue("NUTRITION")) {
         preset.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
