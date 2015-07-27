@@ -8,7 +8,7 @@ Text-based open-world RPG made with Java.
 
 Screenshots
 -----------
-Check out some screenshots of the game at its [webpage](http://mafagafogigante.github.io/dungeon/).
+[See the gallery](http://mafagafogigante.github.io/dungeon/screenshots/).
 
 
 System requirements¹
