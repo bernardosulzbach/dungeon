@@ -107,7 +107,7 @@
         <dependency>
             <groupId>com.eclipsesource.minimal-json</groupId>
             <artifactId>minimal-json</artifactId>
-            <version>0.9.2</version>
+            <version>0.9.4</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>

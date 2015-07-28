@@ -17,6 +17,7 @@
 
 package org.dungeon.io;
 
+import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,7 +43,7 @@ public class JsonObjectFactory {
     }
     Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename));
     try {
-      return JsonObject.readFrom(reader);
+      return Json.parse(reader).asObject();
     } catch (IOException fatal) {
       throw new RuntimeException(fatal);
     }
