@@ -82,7 +82,7 @@ TYPE: LAND
 NAME: [Young Forest]
 BLOB_SIZE: 20
 LIGHT_PERMITTIVITY: 0.85
-SPAWNERS: [[FROG | 2 | 2] | [FRUIT_BAT | 2 | 2] | [RABBIT | 8 | 1] | [WHITE_TIGER | 1 | 24] | [LIZARD | 2 | 6] | [BOAR | 2 | 10] | [FOX | 3 | 6]]
+SPAWNERS: [[FROG | 2 | 2] | [FRUIT_BAT | 2 | 2] | [RABBIT | 8 | 1] | [WHITE_TIGER | 1 | 24] | [BOAR | 2 | 10] | [FOX | 3 | 6]]
 ITEMS: [[AXE | 0.05] | [WRIST_WATCH | 0.05] | [STICK | 0.4] | [CHERRY | 0.1] | [TOME_OF_FIREBALL | 0.1] | [BANANA | 0.5]]
 COLOR: [0 | 127 | 0]
 
@@ -115,7 +115,7 @@ TYPE: LAND
 NAME: [Pond]
 BLOB_SIZE: 1
 LIGHT_PERMITTIVITY: 0.95
-SPAWNERS: [[CROCODILE | 1 | 6] | [FROG | 2 | 2] | [GREEN_IGUANA | 2 | 32] | [LIZARD | 1 | 4]]
+SPAWNERS: [[CROCODILE | 1 | 6] | [FROG | 2 | 2] | [GREEN_IGUANA | 2 | 32]]
 ITEMS: [[SPEAR | 0.3] | [WATERMELON | 0.8]]
 COLOR: [0 | 204 | 204]
 
@@ -126,7 +126,7 @@ TYPE: LAND
 NAME: [Savannah]
 BLOB_SIZE: 5
 LIGHT_PERMITTIVITY: 0.95
-SPAWNERS: [[BOAR | 3 | 8] | [SNAKE | 3 | 4] | [WHITE_TIGER | 1 | 24]]
+SPAWNERS: [[BOAR | 3 | 8] | [SNAKE | 3 | 4] | [WHITE_TIGER | 1 | 24] | [KOMODO_DRAGON | 1 | 12]]
 ITEMS: [[APPLE | 0.8] | [AXE | 0.3]]
 COLOR: [204 | 204 | 0]
 
@@ -137,7 +137,7 @@ TYPE: LAND
 NAME: [Swamp]
 BLOB_SIZE: 10
 LIGHT_PERMITTIVITY: 0.8
-SPAWNERS: [[CROCODILE | 1 | 6] | [FROG | 2 | 2] | [LIZARD | 1 | 4] | [SNAKE | 3 | 4]]
+SPAWNERS: [[CROCODILE | 1 | 6] | [FROG | 2 | 2] | [SNAKE | 3 | 4]]
 ITEMS: [[CLUB | 0.4] | [STICK | 0.9] | [WATERMELON | 0.1]]
 COLOR: [153 | 153 | 0]
 
@@ -148,6 +148,6 @@ TYPE: LAND
 NAME: [Barren]
 BLOB_SIZE: 10
 LIGHT_PERMITTIVITY: 1.0
-SPAWNERS: [[RAT | 6 | 2] | [SNAKE | 3 | 4] | [SPIDER | 2 | 4]]
+SPAWNERS: [[RAT | 6 | 2] | [SNAKE | 3 | 4] | [SPIDER | 2 | 4] | [KOMODO_DRAGON | 1 | 12]]
 ITEMS: [[STICK | 0.15] | [STONE | 0.3] | [TOME_OF_REPAIR | 0.05]]
 COLOR: [225 | 225 | 0]

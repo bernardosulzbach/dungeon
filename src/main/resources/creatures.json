@@ -190,10 +190,10 @@
       "attackAlgorithmID": "CRITTER"
     },
     {
-      "id": "LIZARD",
+      "id": "KOMODO_DRAGON",
       "type": "Beast",
       "name": {
-        "singular": "Lizard"
+        "singular": "Komodo Dragon"
       },
       "tags": [
         "CORPSE"
@@ -202,9 +202,9 @@
       "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
-      "weight": 0.5,
-      "health": 22,
-      "attack": 8,
+      "weight": 70,
+      "health": 24,
+      "attack": 10,
       "attackAlgorithmID": "BEAST"
     },
     {
