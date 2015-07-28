@@ -2,28 +2,9 @@ Dungeon
 =======
 Text-based open-world RPG made with Java.
 
-![Build status](https://travis-ci.org/mafagafogigante/dungeon.svg?branch=master)
-![Version](https://img.shields.io/badge/version-v0.0.9.1-orange.svg)
-![License](https://img.shields.io/badge/license-GPLv3-blue.svg)
-
 Screenshots
 -----------
 [See the gallery](http://mafagafogigante.github.io/dungeon/screenshots/).
-
-
-System requirements¹
--------------------
-|Spec|Required                                   |
-|----|-------------------------------------------|
-|Java|Updated Java SE 6 or newer.                |
-|CPU²|Pentium 2 266 MHz or faster.               |
-|RAM |128 MB for JRE.                            |
-|HD  |127 MB for JRE, Java Update, JAR and saves.|
-
-If you have trouble running the game with a supposedly supported version of Java, tell me.
-
-¹ Based on Oracle's Java 7 System Requirements.  
-² A faster CPU is recommended.
 
 
 Running the game
