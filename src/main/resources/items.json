@@ -1,0 +1,685 @@
+{
+  "items": [
+    {
+      "id": "APPLE",
+      "type": "Food",
+      "name": {
+        "singular": "Apple"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 12,
+        "maximum": 12
+      },
+      "weight": 0.25,
+      "visibility": "60.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 6
+    },
+    {
+      "id": "BANANA",
+      "type": "Food",
+      "name": {
+        "singular": "Banana"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 16,
+        "maximum": 16
+      },
+      "weight": 0.15,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 3,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 7,
+      "integrityDecrementOnEat": 8
+    },
+    {
+      "id": "CHERRY",
+      "type": "Food",
+      "name": {
+        "singular": "Cherry",
+        "plural": "Cherries"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.008,
+      "visibility": "50.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 4,
+      "integrityDecrementOnEat": 4
+    },
+    {
+      "id": "PINEAPPLE",
+      "type": "Food",
+      "name": {
+        "singular": "Pineapple"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 21,
+        "maximum": 21
+      },
+      "weight": 1.3,
+      "visibility": "65.00%",
+      "decompositionPeriod": "4 days",
+      "damage": 9,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 3,
+      "nutrition": 9,
+      "integrityDecrementOnEat": 7
+    },
+    {
+      "id": "POTATO",
+      "type": "Food",
+      "name": {
+        "singular": "Potato"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.175,
+      "visibility": "55.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 4,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "STRAWBERRY",
+      "type": "Food",
+      "name": {
+        "singular": "Strawberry",
+        "plural": "Strawberries"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 5,
+        "maximum": 5
+      },
+      "weight": 0.01,
+      "visibility": "50.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 3,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 5,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "WATERMELON",
+      "type": "Food",
+      "name": {
+        "singular": "Watermelon"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 40,
+        "maximum": 40
+      },
+      "weight": 9,
+      "visibility": "70.00%",
+      "decompositionPeriod": "6 days",
+      "damage": 8,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 8,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "FOX_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Fox Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 1,
+      "visibility": "60.00%",
+      "decompositionPeriod": "1 day",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 6,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "RAT_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Rat Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "55.00%",
+      "decompositionPeriod": "1 day",
+      "damage": 2,
+      "hitRate": "30.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 2,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "AXE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Axe"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 85,
+        "maximum": 85
+      },
+      "weight": 2,
+      "visibility": "70.00%",
+      "damage": 18,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "CLUB",
+      "type": "Weapon",
+      "name": {
+        "singular": "Club"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 90,
+        "maximum": 90
+      },
+      "weight": 1.1,
+      "visibility": "65.00%",
+      "damage": 11,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "DAGGER",
+      "type": "Weapon",
+      "name": {
+        "singular": "Dagger",
+        "plural": "Daggers"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.4,
+      "visibility": "65.00%",
+      "damage": 12,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "LONGSWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Longsword",
+        "plural": "Longswords"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 100,
+        "maximum": 100
+      },
+      "weight": 1.6,
+      "visibility": "75.00%",
+      "damage": 20,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "MACE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Mace",
+        "plural": "Maces"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 90,
+        "maximum": 90
+      },
+      "weight": 6,
+      "visibility": "70.00%",
+      "damage": 16,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "ORC_SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Orc Sword",
+        "plural": "Orc Swords"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 60,
+        "maximum": 60
+      },
+      "weight": 1.1,
+      "visibility": "65.00%",
+      "damage": 14,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "SPEAR",
+      "type": "Weapon",
+      "name": {
+        "singular": "Spear",
+        "plural": "Spears"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 70,
+        "maximum": 70
+      },
+      "weight": 1.8,
+      "visibility": "70.00%",
+      "damage": 10,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STAFF",
+      "type": "Weapon",
+      "name": {
+        "singular": "Staff",
+        "plural": "Staffs"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 75,
+        "maximum": 75
+      },
+      "weight": 3,
+      "visibility": "60.00%",
+      "damage": 14,
+      "hitRate": "75.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STICK",
+      "type": "Weapon",
+      "name": {
+        "singular": "Stick",
+        "plural": "Sticks"
+      },
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 0.7,
+      "visibility": "55.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 6,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STONE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Stone",
+        "plural": "Stones"
+      },
+      "tags": [
+        "WEAPON"
+      ],
+      "integrity": {
+        "current": 200,
+        "maximum": 200
+      },
+      "weight": 0.4,
+      "visibility": "60.00%",
+      "damage": 8,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Sword",
+        "plural": "Swords"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 1.2,
+      "visibility": "65.00%",
+      "damage": 16,
+      "hitRate": "95.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "TOME_OF_BURNING_GROUND",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Burning Ground",
+        "plural": "Tomes of Burning Ground"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Burning Ground spell sets the ground the target is standing on ablaze, damaging its constitution.",
+      "skill": "BURNING_GROUND"
+    },
+    {
+      "id": "TOME_OF_FIREBALL",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Fireball",
+        "plural": "Tomes of Fireball"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Fireball is a classic and powerful spell. The caster creates a sphere of fire from concentrated magical energy and throws it at its target.",
+      "skill": "FIREBALL"
+    },
+    {
+      "id": "TOME_OF_REPAIR",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Repair",
+        "plural": "Tomes of Repair"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Repair spell allows the caster to channel a burst of magical energy into an item, possibly reassembling broken parts and restoring its integrity.",
+      "skill": "REPAIR"
+    },
+    {
+      "id": "HISTORY_OF_THE_THIRD_ERA",
+      "type": "Book",
+      "name": {
+        "singular": "History of the Third Era",
+        "plural": "History of the Third Eras"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 28,
+        "maximum": 28
+      },
+      "weight": 0.8,
+      "visibility": "65.00%",
+      "damage": 8,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Third Era is a period of time that lasted 440 years. It starts with the end of the Second Era - the fall of the Empire of Light - and ends with the rebellion of the Red Warlocks."
+    },
+    {
+      "id": "CORVUS_EDGE",
+      "type": "Book",
+      "name": {
+        "singular": "Corvus Edge",
+        "plural": "Corvus Edges"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 28,
+        "maximum": 28
+      },
+      "weight": 0.8,
+      "visibility": "65.00%",
+      "damage": 8,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "[A crow standing over a blue sphere. In the middle of this sphere is a mortar and pestle.]\n\nAccording to the legend, The God of Alchemy banishes from Darrowmere any living creature that dares to use potions to obtain powers that are exclusive to gods.\n\nThis limit is known as Corvus Edge and has only been reached once, in the year 1435 by the Grand Alchemist Natolemy, which created a potion that stopped his natural aging process. Unceremoniously, The God of Alchemy himself assumed his animal form, flew into Natolemy's home at night and ate both of his eyeballs during his sleep. Natolemy never woke up and was buried right next to the trail where he used to harvest alchemy ingredients."
+    },
+    {
+      "id": "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY",
+      "type": "Book",
+      "name": {
+        "singular": "Page From Volund Loke Frey's Diary",
+        "plural": "Pages From Volund Loke Frey's Diary"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.02,
+      "visibility": "55.00%",
+      "damage": 1,
+      "hitRate": "20.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "My Diary - Volund Loke Frey - Page 22\n\n210-5-2: I finally feel compelled to respond to the offense Birgmar made! And I will not be gentle.\n\n210-5-3: Things did not go according to the plan. Birgmar was not alone, that bastard Orc was hosting this \"Orc Reunion\" thing and I was really surprised that after kicking in the door and screaming \"You are gonna die, scum!\" I had not one but twelve Orcs staring at me. I outran them but cannot go back home as they know where I live. My wife is probably dead now.\n\n210-5-4: Went back to my old place and found my wife's body nailed to the rooftop of our shack. I will find another woman later on, I've got bigger problems now. In the wooden door they wrote a threat: \"We are coming for you.\"\n\n210-5-5: I woke in the middle of the night as I heard the breaking of dry wood branches in the ground below me, looked down and saw two Orcs. I then drew two arrows from my quiver, nocked them on the string of my longbow, silently drew the string back, and released with perfect timing. Silently and efficiently I killed both Orcs. I don't know if I will last much longer if they are all coming after me."
+    },
+    {
+      "id": "POCKET_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Pocket Watch",
+        "plural": "Pocket Watches"
+      },
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 16,
+        "maximum": 16
+      },
+      "weight": 0.14,
+      "visibility": "70.00%",
+      "damage": 8,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 8
+    },
+    {
+      "id": "WRIST_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Wrist Watch",
+        "plural": "Wrist Watches"
+      },
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.08,
+      "visibility": "70.00%",
+      "damage": 6,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 10
+    },
+    {
+      "id": "WOOD_LOG",
+      "type": "Misc",
+      "name": {
+        "singular": "Wood Log",
+        "plural": "Wood Logs"
+      },
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 50,
+        "maximum": 50
+      },
+      "weight": 70,
+      "visibility": "80.00%",
+      "decompositionPeriod": "2 months",
+      "damage": 10,
+      "hitRate": "10.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "HARPY_FEATHER",
+      "type": "Misc",
+      "name": {
+        "singular": "Harpy Feather",
+        "plural": "Harpy Feathers"
+      },
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 8,
+        "maximum": 8
+      },
+      "weight": 0.2,
+      "visibility": "75.00%",
+      "luminosity": "1.00%",
+      "decompositionPeriod": "1 year",
+      "damage": 1,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 2
+    }
+  ]
+}

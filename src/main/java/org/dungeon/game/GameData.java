@@ -20,6 +20,8 @@ package org.dungeon.game;
 import org.dungeon.achievements.AchievementStore;
 import org.dungeon.date.DungeonTimeParser;
 import org.dungeon.entity.Integrity;
+import org.dungeon.entity.Luminosity;
+import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.Item;
@@ -31,7 +33,9 @@ import org.dungeon.skill.SkillDefinition;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.StopWatch;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -97,45 +101,44 @@ public final class GameData {
    * Loads all item presets that are not programmatically generated.
    */
   private static void loadItemPresets() {
-    ResourceReader reader = new ResourceReader("items.txt");
-    while (reader.readNextElement()) {
+    JsonObject objects = JsonObjectFactory.makeJsonObject("items.json");
+    for (JsonValue value : objects.get("items").asArray()) {
+      JsonObject itemObject = value.asObject();
       ItemPreset preset = new ItemPreset();
-      preset.setId(new Id(reader.getValue("ID")));
-      preset.setType(reader.getValue("TYPE"));
-      preset.setName(nameFromArray(reader.getArrayOfValues("NAME")));
-      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, reader.getArrayOfValues("TAGS"))) {
+      preset.setId(new Id(itemObject.get("id").asString()));
+      preset.setType(itemObject.get("type").asString());
+      preset.setName(nameFromJsonObject(itemObject.get("name").asObject()));
+      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
         preset.addTag(tag);
       }
-      if (preset.hasTag(Item.Tag.BOOK)) {
-        preset.setText(reader.getValue("TEXT"));
-      }
-      if (reader.hasValue("DECOMPOSITION_PERIOD")) {
-        long seconds = DungeonTimeParser.parsePeriod(reader.getValue("DECOMPOSITION_PERIOD")).getSeconds();
+      if (itemObject.get("decompositionPeriod") != null) {
+        long seconds = DungeonTimeParser.parsePeriod(itemObject.get("decompositionPeriod").asString()).getSeconds();
         preset.setPutrefactionPeriod(seconds);
       }
-      int curIntegrity = readIntegerFromResourceReader(reader, "CUR_INTEGRITY");
-      int maxIntegrity = readIntegerFromResourceReader(reader, "MAX_INTEGRITY");
-      preset.setIntegrity(new Integrity(curIntegrity, maxIntegrity));
-      preset.setVisibility(reader.readVisibility());
-      if (reader.hasValue("LUMINOSITY")) {
-        preset.setLuminosity(reader.readLuminosity());
+      JsonObject integrity = itemObject.get("integrity").asObject();
+      preset.setIntegrity(new Integrity(integrity.get("current").asInt(), integrity.get("maximum").asInt()));
+      preset.setVisibility(new Visibility(Percentage.fromString(itemObject.get("visibility").asString())));
+      if (itemObject.get("luminosity") != null) {
+        preset.setLuminosity(new Luminosity(Percentage.fromString(itemObject.get("luminosity").asString())));
       }
-      preset.setWeight(Weight.newInstance(readDoubleFromResourceReader(reader, "WEIGHT")));
-      preset.setDamage(readIntegerFromResourceReader(reader, "DAMAGE"));
-      preset.setHitRate(new Percentage(readDoubleFromResourceReader(reader, "HIT_RATE")));
-      preset.setIntegrityDecrementOnHit(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_HIT"));
-      if (reader.hasValue("NUTRITION")) {
-        preset.setNutrition(readIntegerFromResourceReader(reader, "NUTRITION"));
+      preset.setWeight(Weight.newInstance(itemObject.get("weight").asDouble()));
+      preset.setDamage(itemObject.get("damage").asInt());
+      preset.setHitRate(Percentage.fromString(itemObject.get("hitRate").asString()));
+      preset.setIntegrityDecrementOnHit(itemObject.get("integrityDecrementOnHit").asInt());
+      if (itemObject.get("nutrition") != null) {
+        preset.setNutrition(itemObject.get("nutrition").asInt());
       }
-      if (reader.hasValue("INTEGRITY_DECREMENT_ON_EAT")) {
-        preset.setIntegrityDecrementOnEat(readIntegerFromResourceReader(reader, "INTEGRITY_DECREMENT_ON_EAT"));
+      if (itemObject.get("integrityDecrementOnEat") != null) {
+        preset.setIntegrityDecrementOnEat(itemObject.get("integrityDecrementOnEat").asInt());
       }
-      if (reader.hasValue("SKILL")) {
-        preset.setSkill(reader.getValue("SKILL"));
+      if (preset.hasTag(Item.Tag.BOOK)) {
+        preset.setText(itemObject.get("text").asString());
+      }
+      if (itemObject.get("skill") != null) {
+        preset.setSkill(itemObject.get("skill").asString());
       }
       itemPresets.put(preset.getId(), preset);
     }
-    reader.close();
     DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
 
@@ -225,6 +228,20 @@ public final class GameData {
   /**
    * Convenience method that creates a Name from an array of Strings.
    *
+   * @param object a JSON object of the form {"singular": "..."} or {"singular": "...", "plural": "..."}.
+   * @return a Name
+   */
+  private static Name nameFromJsonObject(JsonObject object) {
+    if (object.get("plural") == null) {
+      return NameFactory.newInstance(object.get("singular").asString());
+    } else {
+      return NameFactory.newInstance(object.get("singular").asString(), object.get("plural").asString());
+    }
+  }
+
+  /**
+   * Convenience method that creates a Name from an array of Strings.
+   *
    * @param strings the array of Strings
    * @return a Name
    */
@@ -243,13 +260,14 @@ public final class GameData {
    * Creates a Set of tags from an array of Strings.
    *
    * @param enumClass the Class of the enum
-   * @param strings the array of Strings
+   * @param array a JSON array of strings
    * @param <E> an Enum type
    * @return a Set of Item.Tag
    */
-  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, String[] strings) {
+  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
     Set<E> set = EnumSet.noneOf(enumClass);
-    for (String tag : strings) {
+    for (JsonValue value : array) {
+      String tag = value.asString();
       try {
         set.add(Enum.valueOf(enumClass, tag));
       } catch (IllegalArgumentException fatal) {
