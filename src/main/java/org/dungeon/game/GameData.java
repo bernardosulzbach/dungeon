@@ -28,7 +28,6 @@ import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.io.ResourceReader;
 import org.dungeon.skill.SkillDefinition;
 import org.dungeon.util.Percentage;
 import org.dungeon.util.StopWatch;
@@ -37,6 +36,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -143,86 +143,47 @@ public final class GameData {
   }
 
   private static void loadLocationPresets() {
-    ResourceReader reader = new ResourceReader("locations.txt");
-    while (reader.readNextElement()) {
-      Id id = new Id(reader.getValue("ID"));
-      LocationPreset.Type type = LocationPreset.Type.valueOf(reader.getValue("TYPE"));
-      Name name = nameFromArray(reader.getArrayOfValues("NAME"));
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("locations.json");
+    for (JsonValue jsonValue : jsonObject.get("locations").asArray()) {
+      JsonObject presetObject = jsonValue.asObject();
+      Id id = new Id(presetObject.get("id").asString());
+      LocationPreset.Type type = LocationPreset.Type.valueOf(presetObject.get("type").asString());
+      Name name = nameFromJsonObject(presetObject.get("name").asObject());
       LocationPreset preset = new LocationPreset(id, type, name);
-      preset.setDescription(new LocationDescription(reader.readCharacter("SYMBOL"), reader.readColor()));
-      if (reader.hasValue("INFO")) {
-        preset.getDescription().setInfo(reader.getValue("INFO"));
-      }
-      preset.setBlobSize(readIntegerFromResourceReader(reader, "BLOB_SIZE"));
-      preset.setLightPermittivity(readDoubleFromResourceReader(reader, "LIGHT_PERMITTIVITY"));
-      // Spawners.
-      if (reader.hasValue("SPAWNERS")) {
-        for (String dungeonList : reader.getArrayOfValues("SPAWNERS")) {
-          String[] spawner = ResourceReader.toArray(dungeonList);
-          String spawnerId = spawner[0];
-          int population = Integer.parseInt(spawner[1]);
-          int delay = Integer.parseInt(spawner[2]);
+      char symbol = presetObject.get("symbol").asString().charAt(0);
+      preset.setDescription(new LocationDescription(symbol, colorFromJsonArray(presetObject.get("color").asArray())));
+      preset.getDescription().setInfo(presetObject.get("info").asString());
+      preset.setBlobSize(presetObject.get("blobSize").asInt());
+      preset.setLightPermittivity(presetObject.get("lightPermittivity").asDouble());
+      if (presetObject.get("spawners") != null) {
+        for (JsonValue spawnerValue : presetObject.get("spawners").asArray()) {
+          JsonObject spawner = spawnerValue.asObject();
+          String spawnerId = spawner.get("id").asString();
+          int population = spawner.get("population").asInt();
+          int delay = spawner.get("delay").asInt();
           preset.addSpawner(new SpawnerPreset(spawnerId, population, delay));
         }
       }
-      // Items.
-      if (reader.hasValue("ITEMS")) {
-        for (String dungeonList : reader.getArrayOfValues("ITEMS")) {
-          String[] item = ResourceReader.toArray(dungeonList);
-          String itemId = item[0];
-          double frequency = Double.parseDouble(item[1]);
-          preset.addItem(itemId, frequency);
+      if (presetObject.get("items") != null) {
+        for (JsonValue itemValue : presetObject.get("items").asArray()) {
+          JsonObject item = itemValue.asObject();
+          String itemId = item.get("id").asString();
+          double probability = item.get("probability").asDouble();
+          preset.addItem(itemId, probability);
         }
       }
-      // Blocked Entrances.
-      if (reader.hasValue("BLOCKED_ENTRANCES")) {
-        for (String dungeonList : reader.getArrayOfValues("BLOCKED_ENTRANCES")) {
-          String[] entrances = ResourceReader.toArray(dungeonList);
-          for (String entrance : entrances) {
-            preset.block(Direction.fromAbbreviation(entrance));
-          }
+      if (presetObject.get("blockedEntrances") != null) {
+        for (JsonValue abbreviation : presetObject.get("blockedEntrances").asArray()) {
+          preset.block(Direction.fromAbbreviation(abbreviation.asString()));
         }
       }
       locationPresetStore.addLocationPreset(preset);
     }
-    reader.close();
     DungeonLogger.info("Loaded " + locationPresetStore.getSize() + " location presets.");
   }
 
-  /**
-   * Attempts to read a double from a ResourceReader given a key.
-   *
-   * @param reader a ResourceReader
-   * @param key the String key
-   * @return the double, if it could be obtained, or 0
-   */
-  private static double readDoubleFromResourceReader(ResourceReader reader, String key) {
-    if (reader.hasValue(key)) {
-      try {
-        return Double.parseDouble(reader.getValue(key));
-      } catch (NumberFormatException log) {
-        DungeonLogger.warning("Could not parse the value of " + key + ".");
-      }
-    }
-    return 0.0;
-  }
-
-  /**
-   * Attempts to read an integer from a ResourceReader given a key.
-   *
-   * @param reader a ResourceReader
-   * @param key the String key
-   * @return the integer, if it could be obtained, or 0
-   */
-  private static int readIntegerFromResourceReader(ResourceReader reader, String key) {
-    if (reader.hasValue(key)) {
-      try {
-        return Integer.parseInt(reader.getValue(key));
-      } catch (NumberFormatException log) {
-        DungeonLogger.warning("Could not parse the value of " + key + ".");
-      }
-    }
-    return 0;
+  private static Color colorFromJsonArray(JsonArray color) {
+    return new Color(color.get(0).asInt(), color.get(1).asInt(), color.get(2).asInt());
   }
 
   /**
@@ -236,23 +197,6 @@ public final class GameData {
       return NameFactory.newInstance(object.get("singular").asString());
     } else {
       return NameFactory.newInstance(object.get("singular").asString(), object.get("plural").asString());
-    }
-  }
-
-  /**
-   * Convenience method that creates a Name from an array of Strings.
-   *
-   * @param strings the array of Strings
-   * @return a Name
-   */
-  private static Name nameFromArray(String[] strings) {
-    if (strings.length == 1) {
-      return NameFactory.newInstance(strings[0]);
-    } else if (strings.length > 1) {
-      return NameFactory.newInstance(strings[0], strings[1]);
-    } else {
-      DungeonLogger.warning("Empty array used to create a Name! Using \"ERROR\".");
-      return NameFactory.newInstance("ERROR");
     }
   }
 

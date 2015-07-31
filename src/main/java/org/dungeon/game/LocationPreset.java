@@ -89,10 +89,10 @@ public final class LocationPreset implements Serializable {
    * Adds an Item to this Location based on an ItemFrequencyPair.
    *
    * @param id the ID string of the item
-   * @param likelihood the likelihood of the item appearing
+   * @param probability the probability of the item appearing
    */
-  public void addItem(String id, Double likelihood) {
-    items.put(new Id(id), new Percentage(likelihood));
+  public void addItem(String id, Double probability) {
+    items.put(new Id(id), new Percentage(probability));
   }
 
   public BlockedEntrances getBlockedEntrances() {
