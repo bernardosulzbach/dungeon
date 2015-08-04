@@ -39,7 +39,7 @@ public final class DungeonStringBuilder {
    * <p>Should only be accessed through the getter (except for addBuilderContentToList).
    */
   private final List<ColoredString> coloredStringList = new ArrayList<ColoredString>();
-  private StringBuilder builder = new StringBuilder();
+  private final StringBuilder builder = new StringBuilder();
   private Color currentColor = Constants.FORE_COLOR_NORMAL;
 
   /**
