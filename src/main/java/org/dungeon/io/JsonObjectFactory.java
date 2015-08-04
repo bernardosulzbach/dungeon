@@ -41,6 +41,7 @@ public class JsonObjectFactory {
     if (!filename.endsWith(JSON_EXTENSION)) {
       throw new IllegalFilenameExtensionException("filename must end with " + JSON_EXTENSION + ".");
     }
+    // Using a BufferedReader here does not improve performance as the library is already buffered.
     Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename));
     try {
       return Json.parse(reader).asObject();
