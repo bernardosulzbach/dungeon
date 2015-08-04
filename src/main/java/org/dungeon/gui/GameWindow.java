@@ -164,6 +164,7 @@ public class GameWindow extends JFrame {
     scrollPane.setViewportView(textPane);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.setBorder(BorderFactory.createEmptyBorder());
+    scrollPane.getVerticalScrollBar().setBackground(SharedConstants.INSIDE_COLOR);
     scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
 
     textField.setBackground(SharedConstants.INSIDE_COLOR);

@@ -27,10 +27,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 class DungeonScrollBarUI extends BasicScrollBarUI {
 
-  private static final Dimension zeroDimension = new Dimension(0, 0);
-
-  private static final int TRACK_W = 4;
-  private static final int THUMB_W = TRACK_W * 2;
+  private static final Dimension ZERO_DIMENSION = new Dimension(0, 0);
+  private static final int THUMB_MARGIN = 4;
+  private static final int THUMB_WIDTH = 4;
 
   /**
    * This is a temporary solution to remove the buttons from BasicScrollBarUI.
@@ -39,37 +38,14 @@ class DungeonScrollBarUI extends BasicScrollBarUI {
    */
   private static JButton createZeroButton() {
     JButton jButton = new JButton();
-    jButton.setPreferredSize(zeroDimension);
-    jButton.setMinimumSize(zeroDimension);
-    jButton.setMaximumSize(zeroDimension);
+    jButton.setPreferredSize(ZERO_DIMENSION);
+    jButton.setMinimumSize(ZERO_DIMENSION);
+    jButton.setMaximumSize(ZERO_DIMENSION);
     return jButton;
-  }
-
-  /**
-   * Calculates the leftmost X coordinate of a bar centered in the specified area.
-   *
-   * @param x the leftmost X coordinate of the area
-   * @param areaWidth the width of the area
-   * @param barWidth the width of the bar
-   * @return the leftmost X coordinate of a bar centered in a specified area
-   */
-  private static int calculateX(int x, int areaWidth, int barWidth) {
-    return x + (areaWidth - barWidth) / 2;
   }
 
   @Override
   protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
-    if (trackBounds.isEmpty() || !c.isEnabled()) {
-      return;
-    }
-    // Fill the bar with the color of the text pane.
-    g.setColor(SharedConstants.INSIDE_COLOR);
-    g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
-    // Fill the track with a darker color.
-    g.setColor(SharedConstants.SCROLL_COLOR);
-    int y = trackBounds.y + TRACK_W;
-    int height = trackBounds.height - TRACK_W * 2;
-    g.fillRect(calculateX(trackBounds.x, trackBounds.width, TRACK_W), y, TRACK_W, height);
   }
 
   @Override
@@ -78,7 +54,10 @@ class DungeonScrollBarUI extends BasicScrollBarUI {
       return;
     }
     g.setColor(SharedConstants.MARGIN_COLOR);
-    g.fillRect(calculateX(thumbBounds.x, thumbBounds.width, THUMB_W), thumbBounds.y, THUMB_W, thumbBounds.height);
+    int x = thumbBounds.width - THUMB_WIDTH - THUMB_MARGIN;
+    int y = thumbBounds.y + THUMB_MARGIN;
+    int height = thumbBounds.height - THUMB_MARGIN * 2;
+    g.fillRect(x, y, THUMB_WIDTH, height);
   }
 
   @Override
