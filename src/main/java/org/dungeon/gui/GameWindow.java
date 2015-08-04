@@ -19,6 +19,8 @@ package org.dungeon.gui;
 
 import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.game.ColoredString;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.io.DungeonLogger;
@@ -56,12 +58,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -87,7 +89,6 @@ public class GameWindow extends JFrame {
   private JTextPane textPane;
 
   private boolean acceptingNextCommand;
-  private boolean usingExternalDocument = false;
 
   public GameWindow() {
     initComponents();
@@ -313,40 +314,41 @@ public class GameWindow extends JFrame {
   }
 
   /**
-   * Adds a string with a specific foreground color to the text pane.
+   * Schedules the writing of the contents of a DungeonStringBuilder with the provided specifications on the Event
+   * Dispatch Thread. This method can be called on any thread.
    *
-   * @param string the string to be written
-   * @param color the Color of the foreground text
-   * @param scrollDown if true, the TextPane will be scrolled down after writing
+   * @param builder a DungeonStringBuilder object, not empty
+   * @param specifications a TextPaneWritingSpecifications object
    */
-  public void writeToTextPane(String string, Color color, boolean scrollDown) {
-    if (usingExternalDocument) {
-      textPane.setDocument(document);
-      usingExternalDocument = false;
+  public void scheduleWriteToTextPane(@NotNull final DungeonStringBuilder builder,
+      @NotNull final TextPaneWritingSpecifications specifications) {
+    if (builder.toColoredStringList().isEmpty()) {
+      throw new IllegalArgumentException("builder is empty.");
     }
-    writeToTextPane(string, color, textPane.getBackground(), scrollDown);
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        writeToTextPane(builder, specifications);
+      }
+    });
   }
 
   /**
-   * Adds a string with a specific foreground and background color to the text pane.
+   * Effectively updates the text pane. Should only be invoked on the Event Dispatch Thread.
    *
-   * @param string the string to be written
-   * @param fore the Color of the foreground text
-   * @param back the Color of the background text
-   * @param scrollDown if true, the TextPane will be scrolled down after writing
+   * @param builder a DungeonStringBuilder object, not empty
+   * @param specifications a TextPaneWritingSpecifications object
    */
-  private void writeToTextPane(String string, Color fore, Color back, boolean scrollDown) {
-    StyleConstants.setForeground(attributeSet, fore);
-    StyleConstants.setBackground(attributeSet, back);
-    try {
-      document.insertString(document.getLength(), string, attributeSet);
-      if (scrollDown) {
-        textPane.setCaretPosition(document.getLength());
-      } else {
-        textPane.setCaretPosition(0);
+  private void writeToTextPane(DungeonStringBuilder builder, TextPaneWritingSpecifications specifications) {
+    for (ColoredString coloredString : builder.toColoredStringList()) {
+      StyleConstants.setForeground(attributeSet, coloredString.getColor());
+      try {
+        document.insertString(document.getLength(), coloredString.getString(), attributeSet);
+      } catch (BadLocationException warn) {
+        DungeonLogger.warning("insertString resulted in a BadLocationException.");
       }
-    } catch (BadLocationException ignored) {
     }
+    textPane.setCaretPosition(specifications.shouldScrollDown() ? document.getLength() : 0);
   }
 
   /**
@@ -365,16 +367,6 @@ public class GameWindow extends JFrame {
 
   private void clearTextField() {
     textField.setText(null);
-  }
-
-  /**
-   * Sets the TextPane to temporarily use an external Document that should contain a map.
-   *
-   * @param document a Document object, not null
-   */
-  public void writeMapToTextPane(@NotNull Document document) {
-    textPane.setDocument(document);
-    usingExternalDocument = true;
   }
 
 }

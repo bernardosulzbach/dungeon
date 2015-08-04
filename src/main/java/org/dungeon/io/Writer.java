@@ -17,7 +17,9 @@
 
 package org.dungeon.io;
 
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
+import org.dungeon.gui.TextPaneWritingSpecifications;
 import org.dungeon.util.Constants;
 import org.dungeon.util.library.Poem;
 
@@ -78,11 +80,16 @@ public final class Writer {
   private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, int wait) {
     if (color == null) {
       DungeonLogger.warning("Passed null as a Color to writeString.");
+      color = Constants.FORE_COLOR_NORMAL;
     }
     if (newLine) {
       string += '\n';
     }
-    Game.getGameWindow().writeToTextPane(string, color, scrollDown);
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    builder.setColor(color);
+    builder.append(string);
+    TextPaneWritingSpecifications specifications = new TextPaneWritingSpecifications(scrollDown);
+    write(builder, specifications);
     if (wait > 0) {
       Sleeper.sleep(wait);
     }
@@ -107,6 +114,25 @@ public final class Writer {
 
   public static void writePoem(Poem poem) {
     writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false, 0);
+  }
+
+  /**
+   * The preferred way to write text to the text pane of the window.
+   *
+   * @param builder a DungeonStringBuilder object, not empty
+   */
+  public static void write(DungeonStringBuilder builder) {
+    write(builder, new TextPaneWritingSpecifications(true));
+  }
+
+  /**
+   * The preferred way to write text to the text pane of the window.
+   *
+   * @param builder a DungeonStringBuilder object, not empty
+   * @param specifications a TextPaneWritingSpecifications object
+   */
+  public static void write(DungeonStringBuilder builder, TextPaneWritingSpecifications specifications) {
+    Game.getGameWindow().scheduleWriteToTextPane(builder, specifications);
   }
 
 }

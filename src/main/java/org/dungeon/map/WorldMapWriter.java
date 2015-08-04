@@ -17,17 +17,10 @@
 
 package org.dungeon.map;
 
-import org.dungeon.game.Game;
-import org.dungeon.gui.SharedConstants;
+import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Document;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 
 public final class WorldMapWriter {
 
@@ -36,30 +29,24 @@ public final class WorldMapWriter {
   }
 
   /**
-   * Write a WorldMap to the screen. This erases all the content currently on the screen.
+   * Writes a WorldMap to the screen. This erases all the content currently on the screen.
    *
    * @param map a WorldMap, not null
    */
   public static void writeMap(@NotNull WorldMap map) {
-    Document document = new DefaultStyledDocument();
-    SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-    StyleConstants.setBackground(attributeSet, SharedConstants.getInsideColor());
-    for (WorldMapSymbol[] line : map.getSymbolMatrix()) {
-      for (WorldMapSymbol symbol : line) {
-        StyleConstants.setForeground(attributeSet, symbol.getColor());
-        appendToDocument(document, symbol.getCharacterAsString(), attributeSet);
+    DungeonStringBuilder dungeonStringBuilder = new DungeonStringBuilder();
+    WorldMapSymbol[][] worldMapSymbolMatrix = map.getSymbolMatrix();
+    for (int i = 0; i < worldMapSymbolMatrix.length; i++) {
+      for (WorldMapSymbol symbol : worldMapSymbolMatrix[i]) {
+        // OK as setColor verifies if the color change is necessary (does not replace a color by itself).
+        dungeonStringBuilder.setColor(symbol.getColor());
+        dungeonStringBuilder.append(symbol.getCharacterAsString());
       }
-      appendToDocument(document, "\n", attributeSet);
+      if (i < worldMapSymbolMatrix.length - 1) {
+        dungeonStringBuilder.append("\n");
+      }
     }
-    Game.getGameWindow().writeMapToTextPane(document);
-  }
-
-  private static void appendToDocument(Document document, String string, AttributeSet attributeSet) {
-    try {
-      document.insertString(document.getLength(), string, attributeSet);
-    } catch (BadLocationException fatal) { // Shouldn't happen.
-      throw new RuntimeException(fatal); // Kill the game.
-    }
+    Writer.write(dungeonStringBuilder);
   }
 
 }

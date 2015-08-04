@@ -21,6 +21,7 @@ import org.dungeon.achievements.comparators.UnlockedAchievementComparators;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.io.Writer;
 
@@ -81,13 +82,18 @@ public class AchievementTrackerWriter {
   private static void writeAchievementTracker(AchievementTracker tracker, Comparator<UnlockedAchievement> comparator) {
     List<UnlockedAchievement> unlockedAchievements = tracker.getUnlockedAchievements(comparator);
     Date now = Game.getGameState().getWorld().getWorldDate();
+    DungeonStringBuilder dungeonStringBuilder = new DungeonStringBuilder();
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
       Period sinceUnlock = new Period(unlockedAchievement.getDate(), now);
-      Writer.writeString(String.format("%s (%s ago)", unlockedAchievement.getName(), sinceUnlock), Color.ORANGE);
-      Writer.writeString(" " + unlockedAchievement.getInfo(), Color.YELLOW);
+      dungeonStringBuilder.setColor(Color.ORANGE);
+      dungeonStringBuilder.append(String.format("%s (%s ago)\n", unlockedAchievement.getName(), sinceUnlock));
+      dungeonStringBuilder.setColor(Color.YELLOW);
+      dungeonStringBuilder.append(String.format(" %s\n", unlockedAchievement.getInfo()));
     }
     int total = AchievementStore.getAchievements().size();
-    Writer.writeString(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total), Color.CYAN);
+    dungeonStringBuilder.setColor(Color.CYAN);
+    dungeonStringBuilder.append(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total));
+    Writer.write(dungeonStringBuilder);
   }
 
   /**
