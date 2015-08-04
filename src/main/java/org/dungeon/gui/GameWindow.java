@@ -355,14 +355,24 @@ public class GameWindow extends JFrame {
    * Clears the TextPane by erasing everything in the local Document.
    */
   public void clearTextPane() {
-    try {
-      document.remove(0, document.getLength());
-    } catch (BadLocationException ignored) {
-    }
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          document.remove(0, document.getLength());
+        } catch (BadLocationException ignored) { // Never happens.
+        }
+      }
+    });
   }
 
   public void requestFocusOnTextField() {
-    textField.requestFocusInWindow();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        textField.requestFocusInWindow();
+      }
+    });
   }
 
   private void clearTextField() {

@@ -26,6 +26,10 @@ import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
 import org.dungeon.util.Messenger;
 
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.SwingUtilities;
+
 public class Game {
 
   private static GameWindow gameWindow;
@@ -33,7 +37,20 @@ public class Game {
 
   public static void main(String[] args) {
     GameData.loadGameData();
-    gameWindow = new GameWindow();
+    try {
+      SwingUtilities.invokeAndWait(new Runnable() {
+        @Override
+        public void run() {
+          gameWindow = new GameWindow();
+        }
+      });
+    } catch (InterruptedException fatal) {
+      DungeonLogger.severe(fatal.getMessage());
+      System.exit(1);
+    } catch (InvocationTargetException fatal) {
+      DungeonLogger.severe(fatal.getMessage());
+      System.exit(1);
+    }
     setGameState(loadAGameStateOrCreateANewOne());
   }
 
