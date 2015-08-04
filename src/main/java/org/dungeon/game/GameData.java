@@ -18,18 +18,11 @@
 package org.dungeon.game;
 
 import org.dungeon.achievements.AchievementStore;
-import org.dungeon.date.DungeonTimeParser;
-import org.dungeon.entity.Integrity;
-import org.dungeon.entity.Luminosity;
-import org.dungeon.entity.Visibility;
-import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.CreatureFactory;
-import org.dungeon.entity.items.Item;
-import org.dungeon.entity.items.ItemPreset;
+import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.skill.SkillDefinition;
-import org.dungeon.util.Percentage;
 import org.dungeon.util.StopWatch;
 
 import com.eclipsesource.json.JsonArray;
@@ -38,10 +31,8 @@ import com.eclipsesource.json.JsonValue;
 
 import java.awt.Color;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -51,7 +42,6 @@ public final class GameData {
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
   public static String LICENSE;
   private static String tutorial = null;
-  private static Map<Id, ItemPreset> itemPresets = new HashMap<Id, ItemPreset>();
   private static Map<Id, SkillDefinition> skillDefinitions = new HashMap<Id, SkillDefinition>();
 
   private GameData() { // Ensure that this class cannot be instantiated.
@@ -65,17 +55,27 @@ public final class GameData {
     return tutorial;
   }
 
+  /**
+   * Triggers essential game data loading.
+   */
   static void loadGameData() {
     StopWatch stopWatch = new StopWatch();
     DungeonLogger.info("Started loading the game data.");
-    loadItemPresets();
-    CreatureFactory.loadCreaturePresets(itemPresets);
-    GameData.itemPresets = Collections.unmodifiableMap(GameData.itemPresets);
+    effectivelyLoadGameData();
+    DungeonLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
+  }
+
+  /**
+   * Effectively loads the game data.
+   */
+  private static void effectivelyLoadGameData() {
+    ItemFactory.loadItemPresets();
+    CreatureFactory.loadCreaturePresetsAndMakeCorpsePresets();
+    ItemFactory.blockNewItemPresets(); // Must happen after CreatureFactory makes the corpse presets.
     createSkills();
     loadLocationPresets();
     AchievementStore.initialize();
     loadLicense();
-    DungeonLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
   }
 
   /**
@@ -97,58 +97,13 @@ public final class GameData {
     skillDefinitions = Collections.unmodifiableMap(skillDefinitions);
   }
 
-  /**
-   * Loads all item presets that are not programmatically generated.
-   */
-  private static void loadItemPresets() {
-    JsonObject objects = JsonObjectFactory.makeJsonObject("items.json");
-    for (JsonValue value : objects.get("items").asArray()) {
-      JsonObject itemObject = value.asObject();
-      ItemPreset preset = new ItemPreset();
-      preset.setId(new Id(itemObject.get("id").asString()));
-      preset.setType(itemObject.get("type").asString());
-      preset.setName(nameFromJsonObject(itemObject.get("name").asObject()));
-      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
-        preset.addTag(tag);
-      }
-      if (itemObject.get("decompositionPeriod") != null) {
-        long seconds = DungeonTimeParser.parsePeriod(itemObject.get("decompositionPeriod").asString()).getSeconds();
-        preset.setPutrefactionPeriod(seconds);
-      }
-      JsonObject integrity = itemObject.get("integrity").asObject();
-      preset.setIntegrity(new Integrity(integrity.get("current").asInt(), integrity.get("maximum").asInt()));
-      preset.setVisibility(new Visibility(Percentage.fromString(itemObject.get("visibility").asString())));
-      if (itemObject.get("luminosity") != null) {
-        preset.setLuminosity(new Luminosity(Percentage.fromString(itemObject.get("luminosity").asString())));
-      }
-      preset.setWeight(Weight.newInstance(itemObject.get("weight").asDouble()));
-      preset.setDamage(itemObject.get("damage").asInt());
-      preset.setHitRate(Percentage.fromString(itemObject.get("hitRate").asString()));
-      preset.setIntegrityDecrementOnHit(itemObject.get("integrityDecrementOnHit").asInt());
-      if (itemObject.get("nutrition") != null) {
-        preset.setNutrition(itemObject.get("nutrition").asInt());
-      }
-      if (itemObject.get("integrityDecrementOnEat") != null) {
-        preset.setIntegrityDecrementOnEat(itemObject.get("integrityDecrementOnEat").asInt());
-      }
-      if (preset.hasTag(Item.Tag.BOOK)) {
-        preset.setText(itemObject.get("text").asString());
-      }
-      if (itemObject.get("skill") != null) {
-        preset.setSkill(itemObject.get("skill").asString());
-      }
-      itemPresets.put(preset.getId(), preset);
-    }
-    DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
-  }
-
   private static void loadLocationPresets() {
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject("locations.json");
     for (JsonValue jsonValue : jsonObject.get("locations").asArray()) {
       JsonObject presetObject = jsonValue.asObject();
       Id id = new Id(presetObject.get("id").asString());
       LocationPreset.Type type = LocationPreset.Type.valueOf(presetObject.get("type").asString());
-      Name name = nameFromJsonObject(presetObject.get("name").asObject());
+      Name name = NameFactory.nameFromJsonObject(presetObject.get("name").asObject());
       LocationPreset preset = new LocationPreset(id, type, name);
       char symbol = presetObject.get("symbol").asString().charAt(0);
       preset.setDescription(new LocationDescription(symbol, colorFromJsonArray(presetObject.get("color").asArray())));
@@ -186,43 +141,6 @@ public final class GameData {
     return new Color(color.get(0).asInt(), color.get(1).asInt(), color.get(2).asInt());
   }
 
-  /**
-   * Convenience method that creates a Name from an array of Strings.
-   *
-   * @param object a JSON object of the form {"singular": "..."} or {"singular": "...", "plural": "..."}.
-   * @return a Name
-   */
-  private static Name nameFromJsonObject(JsonObject object) {
-    if (object.get("plural") == null) {
-      return NameFactory.newInstance(object.get("singular").asString());
-    } else {
-      return NameFactory.newInstance(object.get("singular").asString(), object.get("plural").asString());
-    }
-  }
-
-  /**
-   * Creates a Set of tags from an array of Strings.
-   *
-   * @param enumClass the Class of the enum
-   * @param array a JSON array of strings
-   * @param <E> an Enum type
-   * @return a Set of Item.Tag
-   */
-  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
-    Set<E> set = EnumSet.noneOf(enumClass);
-    for (JsonValue value : array) {
-      String tag = value.asString();
-      try {
-        set.add(Enum.valueOf(enumClass, tag));
-      } catch (IllegalArgumentException fatal) {
-        // Guarantee that bugged resource files are not going to make it to a release.
-        String message = "invalid tag '" + tag + "' found.";
-        throw new InvalidTagException(message, fatal);
-      }
-    }
-    return set;
-  }
-
   private static void loadLicense() {
     JsonObject license = JsonObjectFactory.makeJsonObject("license.json");
     LICENSE = license.get("license").asString();
@@ -233,10 +151,6 @@ public final class GameData {
       throw new AssertionError();
     }
     tutorial = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
-  }
-
-  public static Map<Id, ItemPreset> getItemPresets() {
-    return itemPresets;
   }
 
   public static Map<Id, SkillDefinition> getSkillDefinitions() {

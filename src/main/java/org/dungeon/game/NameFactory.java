@@ -49,8 +49,22 @@ public final class NameFactory {
    * @param plural the plural form
    * @return a Name constructed using the provided singular and plural forms
    */
-  public static Name newInstance(String singular, String plural) {
+  private static Name newInstance(String singular, String plural) {
     return new Name(singular, plural);
+  }
+
+  /**
+   * Convenience method that creates a Name from an array of Strings.
+   *
+   * @param object a JSON object of the form {"singular": "..."} or {"singular": "...", "plural": "..."}.
+   * @return a Name
+   */
+  public static Name nameFromJsonObject(JsonObject object) {
+    if (object.get("plural") == null) {
+      return newInstance(object.get("singular").asString());
+    } else {
+      return newInstance(object.get("singular").asString(), object.get("plural").asString());
+    }
   }
 
   /**

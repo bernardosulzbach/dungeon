@@ -58,7 +58,7 @@ public final class CreatureFactory {
   /**
    * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
    */
-  public static void loadCreaturePresets(Map<Id, ItemPreset> itemPresetMap) {
+  public static void loadCreaturePresetsAndMakeCorpsePresets() {
     Map<Id, CreaturePreset> creaturePresetMap = new HashMap<Id, CreaturePreset>();
     JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
     for (JsonValue value : object.get("creatures").asArray()) {
@@ -85,7 +85,7 @@ public final class CreatureFactory {
       creaturePresetMap.put(preset.getId(), preset);
       if (preset.hasTag(Creature.Tag.CORPSE)) {
         ItemPreset corpse = CorpsePresetFactory.makeCorpsePreset(preset);
-        itemPresetMap.put(corpse.getId(), corpse);
+        ItemFactory.addItemPreset(corpse);
       }
     }
     setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
