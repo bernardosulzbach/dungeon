@@ -17,10 +17,16 @@
 
 package org.dungeon.util.library;
 
+import org.dungeon.game.ColoredString;
+import org.dungeon.game.Writable;
+
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Poem class that defines a poem storage data structure.
  */
-public final class Poem {
+public final class Poem implements Writable {
 
   private final String title;
   private final String author;
@@ -30,6 +36,10 @@ public final class Poem {
     this.title = title;
     this.author = author;
     this.content = content;
+  }
+
+  public List<ColoredString> toColoredStringList() {
+    return Collections.singletonList(new ColoredString(toString()));
   }
 
   @Override

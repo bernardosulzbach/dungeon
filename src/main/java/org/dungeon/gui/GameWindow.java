@@ -20,9 +20,9 @@ package org.dungeon.gui;
 import org.dungeon.commands.CommandHistory;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.ColoredString;
-import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
+import org.dungeon.game.Writable;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.util.Constants;
@@ -315,21 +315,21 @@ public class GameWindow extends JFrame {
   }
 
   /**
-   * Schedules the writing of the contents of a DungeonStringBuilder with the provided specifications on the Event
-   * Dispatch Thread. This method can be called on any thread.
+   * Schedules the writing of the contents of a Writable with the provided specifications on the Event Dispatch Thread.
+   * This method can be called on any thread.
    *
-   * @param builder a DungeonStringBuilder object, not empty
+   * @param writable a Writable object, not empty
    * @param specifications a TextPaneWritingSpecifications object
    */
-  public void scheduleWriteToTextPane(@NotNull final DungeonStringBuilder builder,
+  public void scheduleWriteToTextPane(@NotNull final Writable writable,
       @NotNull final TextPaneWritingSpecifications specifications) {
-    if (builder.toColoredStringList().isEmpty()) {
-      throw new IllegalArgumentException("builder is empty.");
+    if (writable.toColoredStringList().isEmpty()) {
+      throw new IllegalArgumentException("writable is empty.");
     }
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        writeToTextPane(builder, specifications);
+        writeToTextPane(writable, specifications);
       }
     });
   }
@@ -337,11 +337,11 @@ public class GameWindow extends JFrame {
   /**
    * Effectively updates the text pane. Should only be invoked on the Event Dispatch Thread.
    *
-   * @param builder a DungeonStringBuilder object, not empty
+   * @param writable a Writable object, not empty
    * @param specifications a TextPaneWritingSpecifications object
    */
-  private void writeToTextPane(DungeonStringBuilder builder, TextPaneWritingSpecifications specifications) {
-    for (ColoredString coloredString : builder.toColoredStringList()) {
+  private void writeToTextPane(Writable writable, TextPaneWritingSpecifications specifications) {
+    for (ColoredString coloredString : writable.toColoredStringList()) {
       StyleConstants.setForeground(attributeSet, coloredString.getColor());
       try {
         document.insertString(document.getLength(), coloredString.getString(), attributeSet);

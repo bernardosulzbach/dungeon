@@ -25,6 +25,7 @@ import org.dungeon.game.GameData;
 import org.dungeon.game.GameState;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
+import org.dungeon.io.PoemWriter;
 import org.dungeon.io.Writer;
 import org.dungeon.map.WorldMap;
 import org.dungeon.map.WorldMapWriter;
@@ -188,7 +189,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("poem", "Prints a poem from the poem library.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        GameState.printPoem(issuedCommand);
+        PoemWriter.parsePoemCommand(issuedCommand);
       }
     });
     addCommandToDefault(new Command("read", "Reads the specified item.") {

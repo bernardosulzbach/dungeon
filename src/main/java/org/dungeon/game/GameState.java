@@ -18,13 +18,10 @@
 package org.dungeon.game;
 
 import org.dungeon.commands.CommandHistory;
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.io.Writer;
 import org.dungeon.stats.Statistics;
-import org.dungeon.util.library.Libraries;
 
 import java.io.Serializable;
 
@@ -42,37 +39,6 @@ public class GameState implements Serializable {
     commandHistory = new CommandHistory();
     world = new World(statistics.getWorldStatistics());
     createHeroAndStartingLocation();
-  }
-
-  /**
-   * Prints a poem based on the issued command.
-   *
-   * <p>If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
-   *
-   * <p>Otherwise, the next poem is based on a behind-the-scenes poem index.
-   *
-   * @param command the issued command.
-   */
-  public static void printPoem(IssuedCommand command) {
-    if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
-      Writer.writeString("No poems were loaded.");
-    } else {
-      if (command.hasArguments()) {
-        try {
-          // Indexing is zero-based to the implementation, but one-based to the player.
-          int index = Integer.parseInt(command.getFirstArgument()) - 1;
-          if (index >= 0 && index < Libraries.getPoetryLibrary().getPoemCount()) {
-            Writer.writePoem(Libraries.getPoetryLibrary().getPoem(index));
-            return;
-          }
-        } catch (NumberFormatException ignore) {
-          // This exception reproduces the same error message an invalid index does.
-        }
-        Writer.writeString("Invalid poem index.");
-      } else {
-        Writer.writePoem(Libraries.getPoetryLibrary().getNextPoem());
-      }
-    }
   }
 
   /**

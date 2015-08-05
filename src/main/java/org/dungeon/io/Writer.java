@@ -19,9 +19,9 @@ package org.dungeon.io;
 
 import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
+import org.dungeon.game.Writable;
 import org.dungeon.gui.TextPaneWritingSpecifications;
 import org.dungeon.util.Constants;
-import org.dungeon.util.library.Poem;
 
 import java.awt.Color;
 
@@ -112,27 +112,23 @@ public final class Writer {
     writeString("");
   }
 
-  public static void writePoem(Poem poem) {
-    writeString(poem.toString(), Constants.FORE_COLOR_NORMAL, false, false, 0);
-  }
-
   /**
    * The preferred way to write text to the text pane of the window.
    *
-   * @param builder a DungeonStringBuilder object, not empty
+   * @param writable a Writable object, not empty
    */
-  public static void write(DungeonStringBuilder builder) {
-    write(builder, new TextPaneWritingSpecifications(true));
+  public static void write(Writable writable) {
+    write(writable, new TextPaneWritingSpecifications(true));
   }
 
   /**
    * The preferred way to write text to the text pane of the window.
    *
-   * @param builder a DungeonStringBuilder object, not empty
+   * @param writable a Writable object, not empty
    * @param specifications a TextPaneWritingSpecifications object
    */
-  public static void write(DungeonStringBuilder builder, TextPaneWritingSpecifications specifications) {
-    Game.getGameWindow().scheduleWriteToTextPane(builder, specifications);
+  public static void write(Writable writable, TextPaneWritingSpecifications specifications) {
+    Game.getGameWindow().scheduleWriteToTextPane(writable, specifications);
   }
 
 }

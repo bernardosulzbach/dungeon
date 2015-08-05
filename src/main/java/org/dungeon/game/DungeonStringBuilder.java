@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <p>By calling setColor and append multiple times it is possible to generate long, multicolored strings.
  */
-public final class DungeonStringBuilder {
+public final class DungeonStringBuilder implements Writable {
 
   /**
    * A list of ColoredStrings. No string from this list is empty. Adjacent strings may have the same color.
