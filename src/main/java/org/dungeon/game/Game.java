@@ -25,6 +25,7 @@ import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
 import org.dungeon.util.Messenger;
+import org.dungeon.util.StopWatch;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -36,7 +37,9 @@ public class Game {
   private static GameState gameState;
 
   public static void main(String[] args) {
+    final StopWatch stopWatch = new StopWatch();
     GameData.loadGameData();
+    DungeonLogger.info("Finished loading game data. Took " + stopWatch.toString() + ".");
     try {
       SwingUtilities.invokeAndWait(new Runnable() {
         @Override
@@ -51,6 +54,7 @@ public class Game {
       DungeonLogger.severe(fatal.getMessage());
       System.exit(1);
     }
+    DungeonLogger.info("Finished making the window. Took " + stopWatch.toString() + ".");
     setGameState(loadAGameStateOrCreateANewOne());
   }
 
