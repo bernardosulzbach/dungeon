@@ -15,24 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.stats;
+package org.dungeon.util;
 
-/**
- * TypeOfCauseOfDeath enumerated type that defines the possible types of causes of death.
- */
-public enum TypeOfCauseOfDeath {
+public class ArrayUtils {
 
-  UNARMED("Unarmed"), WEAPON("Weapon"), SPELL("Spell");
-
-  private final String stringRepresentation;
-
-  TypeOfCauseOfDeath(String stringRepresentation) {
-    this.stringRepresentation = stringRepresentation;
-  }
-
-  @Override
-  public String toString() {
-    return stringRepresentation;
+  /**
+   * Finds the first occurrence of a value in an array. Returns the length of the array if the element could not be
+   * found.
+   */
+  public static <T> int findFirstOccurrence(T[] array, T element) {
+    int index = 0;
+    for (T token : array) {
+      if (token.equals(element)) {
+        return index;
+      }
+      index++;
+    }
+    return index;
   }
 
 }

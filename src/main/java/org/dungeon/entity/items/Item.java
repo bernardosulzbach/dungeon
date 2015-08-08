@@ -66,7 +66,7 @@ public final class Item extends Entity {
       clockComponent = new ClockComponent(this);
     }
     if (hasTag(Tag.BOOK)) {
-      bookComponent = new BookComponent(preset.getSkill(), preset.getText());
+      bookComponent = new BookComponent(preset.getSpellId(), preset.getText());
     }
   }
 

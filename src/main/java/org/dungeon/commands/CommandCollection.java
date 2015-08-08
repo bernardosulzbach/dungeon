@@ -62,6 +62,12 @@ public final class CommandCollection {
         Game.getGameState().getHero().printAge();
       }
     });
+    addCommandToDefault(new Command("cast", "Casts a spell.") {
+      @Override
+      public void execute(@NotNull IssuedCommand issuedCommand) {
+        Game.getGameState().getHero().getSpellcaster().parseCast(issuedCommand);
+      }
+    });
     addCommandToDefault(new Command("commands", "Displays a list of valid commands.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
@@ -198,22 +204,10 @@ public final class CommandCollection {
         Game.getGameState().getHero().readItem(issuedCommand);
       }
     });
-    addCommandToDefault(new Command("repair", "Attempts to cast Repair on the equipped item.") {
-      @Override
-      public void execute(@NotNull IssuedCommand issuedCommand) {
-        Game.getGameState().getHero().castRepairOnEquippedItem();
-      }
-    });
     addCommandToDefault(new Command("rest", "Rests until healing about three fifths of the character's health.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
         Game.getGameState().getHero().rest();
-      }
-    });
-    addCommandToDefault(new Command("rotation", "Displays the current skill rotation or sets up a new one.") {
-      @Override
-      public void execute(@NotNull IssuedCommand issuedCommand) {
-        Game.getGameState().getHero().editRotation(issuedCommand);
       }
     });
     addCommandToDefault(new Command("save", "Saves the game.") {
@@ -228,16 +222,16 @@ public final class CommandCollection {
         Loader.printFilesInSavesFolder();
       }
     });
-    addCommandToDefault(new Command("skills", "Displays a list with all skills known by the character.") {
-      @Override
-      public void execute(@NotNull IssuedCommand issuedCommand) {
-        Game.getGameState().getHero().printSkills();
-      }
-    });
     addCommandToDefault(new Command("sleep", "Sleeps until the sun rises. The character may dream during it.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
         Game.getGameState().getHero().sleep();
+      }
+    });
+    addCommandToDefault(new Command("spells", "Lists all the spells known by the character.") {
+      @Override
+      public void execute(@NotNull IssuedCommand issuedCommand) {
+        Game.getGameState().getHero().writeSpellList();
       }
     });
     addCommandToDefault(new Command("statistics", "Displays all available game statistics.") {

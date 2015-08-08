@@ -45,7 +45,7 @@ public final class ItemPreset implements Preset {
   private Weight weight;
   private Visibility visibility;
   private Luminosity luminosity = Luminosity.ZERO;
-  private Id skill;
+  private Id spellId;
   private String text;
   private long putrefactionPeriod;
 
@@ -159,12 +159,12 @@ public final class ItemPreset implements Preset {
     this.luminosity = luminosity;
   }
 
-  public Id getSkill() {
-    return skill;
+  public Id getSpellId() {
+    return spellId;
   }
 
-  public void setSkill(String skill) {
-    this.skill = new Id(skill);
+  public void setSpellId(String spellIdString) {
+    this.spellId = new Id(spellIdString);
   }
 
   public String getText() {
@@ -200,7 +200,7 @@ public final class ItemPreset implements Preset {
         ", text='" + text + '\'' +
         ", weight=" + weight +
         ", visibility=" + visibility +
-        ", skill=" + skill +
+        ", spellId=" + spellId +
         ", luminosity=" + luminosity +
         '}';
   }

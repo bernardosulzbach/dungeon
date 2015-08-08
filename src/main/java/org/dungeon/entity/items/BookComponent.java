@@ -30,34 +30,34 @@ import java.io.Serializable;
 public class BookComponent implements Serializable {
 
   private static final int SECONDS_PER_CHARACTER = 1;
-  private final Id skillId;
+  private final Id spellId;
   private final String text;
 
   /**
-   * Creates a new BookComponent from a skill ID and a string of text.
+   * Creates a new BookComponent from a spell Id and a string of text.
    *
-   * @param skillId the ID of a skill, nullable
+   * @param spellId the Id of a spell, nullable
    * @param text a string of text, not null
    */
-  public BookComponent(@Nullable Id skillId, @NotNull String text) {
-    this.skillId = skillId;
+  public BookComponent(@Nullable Id spellId, @NotNull String text) {
+    this.spellId = spellId;
     this.text = text;
   }
 
   /**
-   * Returns whether or not this book teaches a skill.
+   * Returns whether or not this book teaches a spell.
    *
-   * @return true if this book teaches a skill
+   * @return true if this book teaches a spell
    */
   public boolean isDidactic() {
-    return skillId != null;
+    return spellId != null;
   }
 
   /**
-   * Returns the ID of the skill this books teaches or null if this book does not teach any skill.
+   * Returns the Id of the spell this books teaches or null if this book does not teach any spell.
    */
-  public Id getSkillId() {
-    return skillId;
+  public Id getSpellId() {
+    return spellId;
   }
 
   /**
@@ -79,7 +79,7 @@ public class BookComponent implements Serializable {
 
   @Override
   public String toString() {
-    String representation = String.format("This book teaches %s.", isDidactic() ? skillId : "nothing");
+    String representation = String.format("This book teaches %s.", isDidactic() ? spellId : "nothing");
     representation += " " + "Text: " + text;
     return representation;
   }

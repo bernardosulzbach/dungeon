@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.skill;
+package org.dungeon.spells;
 
 import org.dungeon.game.Id;
 import org.dungeon.game.Name;
@@ -24,28 +24,44 @@ import org.dungeon.game.NameFactory;
 import java.io.Serializable;
 
 /**
- * SkillDefinition class that is what the name says: the definition of a Skill.
+ * SpellDefinition class that contains immutable data that may be shared by multiple Spell objects.
  *
- * <p></p>Skills should be created based on already existing SkillDefinitions.
- *
- * <p>A Skill differs from a SkillDefinition as it has Creature-specific data. For instance, all Fireballs share the
- * same definition, but each Creature's SkillList should have a specific Skill object for the Fireball, such that its
- * remaining cool down is not shared among different Creatures.
+ * Equality is tested based on the Id field.
  */
-public final class SkillDefinition implements Serializable {
+final class SpellDefinition implements Serializable {
 
   public final Id id;
+  // Use a name because in the future we may want to write stuff like "you casted 10 fireballs so far."
   public final Name name;
-  public final int damage;
-  public final int repair;
-  public final int coolDown;
 
-  public SkillDefinition(String id, String name, int damage, int repair, int coolDown) {
+  public SpellDefinition(String id, String name) {
     this.id = new Id(id);
     this.name = NameFactory.newInstance(name);
-    this.damage = damage;
-    this.repair = repair;
-    this.coolDown = coolDown;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    SpellDefinition that = (SpellDefinition) o;
+    return id.equals(that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return "SpellDefinition{" +
+        "id=" + id +
+        ", name=" + name +
+        '}';
   }
 
 }

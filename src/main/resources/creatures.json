@@ -369,6 +369,7 @@
       "inventoryItemLimit": 2,
       "inventoryWeightLimit": 4,
       "inventory": [
+        "BONE",
         "SWORD"
       ],
       "visibility": "65%",

@@ -122,6 +122,9 @@ public final class Location implements Serializable {
     return items;
   }
 
+  /**
+   * Returns a list with all the entities in the current location.
+   */
   private List<Entity> getEntities() {
     List<Entity> entities = new ArrayList<Entity>();
     entities.addAll(getCreatures());

@@ -31,7 +31,9 @@
       "text": "killed an innocent rabbit",
       "battleRequirements": [
         {
-          "query": {"id": "RABBIT"},
+          "query": {
+            "id": "RABBIT"
+          },
           "count": 1
         }
       ]
@@ -43,7 +45,9 @@
       "text": "killed six bats",
       "battleRequirements": [
         {
-          "query": {"id": "BAT"},
+          "query": {
+            "id": "BAT"
+          },
           "count": 6
         }
       ]
@@ -55,7 +59,9 @@
       "text": "killed four rats",
       "battleRequirements": [
         {
-          "query": {"id": "RAT"},
+          "query": {
+            "id": "RAT"
+          },
           "count": 4
         }
       ]
@@ -67,7 +73,9 @@
       "text": "killed two zombies",
       "battleRequirements": [
         {
-          "query": {"id": "ZOMBIE"},
+          "query": {
+            "id": "ZOMBIE"
+          },
           "count": 2
         }
       ]
@@ -79,7 +87,9 @@
       "text": "killed three orcs",
       "battleRequirements": [
         {
-          "query": {"id": "ORC"},
+          "query": {
+            "id": "ORC"
+          },
           "count": 3
         }
       ]
@@ -91,7 +101,9 @@
       "text": "killed half a dozen frogs",
       "battleRequirements": [
         {
-          "query": {"id": "FROG"},
+          "query": {
+            "id": "FROG"
+          },
           "count": 6
         }
       ]
@@ -103,7 +115,9 @@
       "text": "killed a Radiant Ghoul",
       "battleRequirements": [
         {
-          "query": {"id": "RADIANT_GHOUL"},
+          "query": {
+            "id": "RADIANT_GHOUL"
+          },
           "count": 1
         }
       ]
@@ -115,7 +129,9 @@
       "text": "killed a Harpy",
       "battleRequirements": [
         {
-          "query": {"id": "HARPY"},
+          "query": {
+            "id": "HARPY"
+          },
           "count": 1
         }
       ]
@@ -127,7 +143,9 @@
       "text": "killed ten beasts",
       "battleRequirements": [
         {
-          "query": {"type": "Beast"},
+          "query": {
+            "type": "Beast"
+          },
           "count": 10
         }
       ]
@@ -139,7 +157,9 @@
       "text": "killed ten critters",
       "battleRequirements": [
         {
-          "query": {"type": "Critter"},
+          "query": {
+            "type": "Critter"
+          },
           "count": 10
         }
       ]
@@ -151,7 +171,9 @@
       "text": "killed twenty-five critters",
       "battleRequirements": [
         {
-          "query": {"type": "Critter"},
+          "query": {
+            "type": "Critter"
+          },
           "count": 25
         }
       ]
@@ -361,13 +383,13 @@
     {
       "id": "FIRE_WIZARD",
       "name": "Fire Wizard",
-      "info": "Kill 4 foes with the Fireball skill.",
-      "text": "killed four foes with the Fireball skill",
+      "info": "Kill 4 foes with the Fireball spell.",
+      "text": "killed four foes with the Fireball spell",
       "battleRequirements": [
         {
           "query": {
             "causeOfDeath": {
-              "type": "SKILL",
+              "type": "SPELL",
               "id": "FIREBALL"
             }
           },
@@ -378,13 +400,13 @@
     {
       "id": "LIKE_MOTHS_TO_FLAME",
       "name": "Like Moths To Flame",
-      "info": "Kill 10 creatures with the Fireball skill.",
-      "text": "killed ten creatures with the Fireball skill",
+      "info": "Kill 10 creatures with the Fireball spell.",
+      "text": "killed ten creatures with the Fireball spell",
       "battleRequirements": [
         {
           "query": {
             "causeOfDeath": {
-              "type": "SKILL",
+              "type": "SPELL",
               "id": "FIREBALL"
             }
           },
@@ -399,7 +421,9 @@
       "text": "killed a creature during the night",
       "battleRequirements": [
         {
-          "query": {"partOfDay": "NIGHT"},
+          "query": {
+            "partOfDay": "NIGHT"
+          },
           "count": 1
         }
       ]
@@ -411,7 +435,9 @@
       "text": "killed ten creatures at midnight",
       "battleRequirements": [
         {
-          "query": {"partOfDay": "MIDNIGHT"},
+          "query": {
+            "partOfDay": "MIDNIGHT"
+          },
           "count": 10
         }
       ]
@@ -438,7 +464,9 @@
       "text": "killed fifteen creatures at dusk",
       "battleRequirements": [
         {
-          "query": {"partOfDay": "DUSK"},
+          "query": {
+            "partOfDay": "DUSK"
+          },
           "count": 15
         }
       ]
@@ -450,7 +478,9 @@
       "text": "killed twenty creatures in the morning",
       "battleRequirements": [
         {
-          "query": {"partOfDay": "MORNING"},
+          "query": {
+            "partOfDay": "MORNING"
+          },
           "count": 20
         }
       ]
@@ -462,35 +492,51 @@
       "text": "killed a creature at every part of the day",
       "battleRequirements": [
         {
-          "query": {"partOfDay": "NIGHT"},
+          "query": {
+            "partOfDay": "NIGHT"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "DAWN"},
+          "query": {
+            "partOfDay": "DAWN"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "MORNING"},
+          "query": {
+            "partOfDay": "MORNING"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "NOON"},
+          "query": {
+            "partOfDay": "NOON"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "AFTERNOON"},
+          "query": {
+            "partOfDay": "AFTERNOON"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "DUSK"},
+          "query": {
+            "partOfDay": "DUSK"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "EVENING"},
+          "query": {
+            "partOfDay": "EVENING"
+          },
           "count": 1
         },
         {
-          "query": {"partOfDay": "MIDNIGHT"},
+          "query": {
+            "partOfDay": "MIDNIGHT"
+          },
           "count": 1
         }
       ]
@@ -501,7 +547,9 @@
       "info": "Kill 10 creatures in forests.",
       "text": "killed ten creatures in forests",
       "explorationRequirements": {
-        "killsByLocationID": {"FOREST": 10}
+        "killsByLocationID": {
+          "FOREST": 10
+        }
       }
     },
     {
@@ -510,7 +558,9 @@
       "info": "Visit the same graveyard 10 times.",
       "text": "visited the same graveyard ten times",
       "explorationRequirements": {
-        "maximumNumberOfVisits": {"GRAVEYARD": 10}
+        "maximumNumberOfVisits": {
+          "GRAVEYARD": 10
+        }
       }
     },
     {
@@ -519,7 +569,9 @@
       "info": "Visit the same timber bridge 5 times.",
       "text": "visited the same timber bridge five times",
       "explorationRequirements": {
-        "maximumNumberOfVisits": {"TIMBER_BRIDGE": 5}
+        "maximumNumberOfVisits": {
+          "TIMBER_BRIDGE": 5
+        }
       }
     },
     {
@@ -528,7 +580,9 @@
       "info": "Visit the same stone bridge 5 times.",
       "text": "visited the same stone bridge five times",
       "explorationRequirements": {
-        "maximumNumberOfVisits": {"STONE_BRIDGE": 5}
+        "maximumNumberOfVisits": {
+          "STONE_BRIDGE": 5
+        }
       }
     },
     {
@@ -537,7 +591,9 @@
       "info": "Visit 10 different deserts.",
       "text": "visited ten different deserts",
       "explorationRequirements": {
-        "visitedLocations": {"DESERT": 10}
+        "visitedLocations": {
+          "DESERT": 10
+        }
       }
     },
     {
@@ -545,7 +601,11 @@
       "name": "Reaper",
       "info": "Visit 10 distinct graveyards.",
       "text": "visited ten distinct graveyards",
-      "explorationRequirements": {"visitedLocations": {"GRAVEYARD": 10}}
+      "explorationRequirements": {
+        "visitedLocations": {
+          "GRAVEYARD": 10
+        }
+      }
     }
   ]
 }

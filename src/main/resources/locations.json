@@ -3,7 +3,9 @@
     {
       "id": "STONE_BRIDGE",
       "type": "BRIDGE",
-      "name": {"singular": "Stone Bridge"},
+      "name": {
+        "singular": "Stone Bridge"
+      },
       "color": [
         160,
         160,
@@ -15,7 +17,7 @@
       "lightPermittivity": 1,
       "items": [
         {
-          "id": "TOME_OF_FIREBALL",
+          "id": "TOME_OF_HEAL",
           "probability": 0.15
         }
       ],
@@ -27,7 +29,9 @@
     {
       "id": "TIMBER_BRIDGE",
       "type": "BRIDGE",
-      "name": {"singular": "Timber Bridge"},
+      "name": {
+        "singular": "Timber Bridge"
+      },
       "color": [
         153,
         76,
@@ -46,7 +50,7 @@
       ],
       "items": [
         {
-          "id": "TOME_OF_BURNING_GROUND",
+          "id": "TOME_OF_UNVEIL",
           "probability": 0.15
         },
         {
@@ -66,7 +70,9 @@
     {
       "id": "LOG_BRIDGE",
       "type": "BRIDGE",
-      "name": {"singular": "Log Bridge"},
+      "name": {
+        "singular": "Log Bridge"
+      },
       "color": [
         153,
         76,
@@ -102,7 +108,9 @@
     {
       "id": "RIVER",
       "type": "RIVER",
-      "name": {"singular": "River"},
+      "name": {
+        "singular": "River"
+      },
       "color": [
         51,
         51,
@@ -120,7 +128,9 @@
     {
       "id": "CLEARING",
       "type": "LAND",
-      "name": {"singular": "Clearing"},
+      "name": {
+        "singular": "Clearing"
+      },
       "color": [
         102,
         204,
@@ -179,7 +189,9 @@
     {
       "id": "DESERT",
       "type": "LAND",
-      "name": {"singular": "Desert"},
+      "name": {
+        "singular": "Desert"
+      },
       "color": [
         255,
         153,
@@ -231,13 +243,19 @@
         {
           "id": "SWORD",
           "probability": 0.25
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
         }
       ]
     },
     {
       "id": "FOREST",
       "type": "LAND",
-      "name": {"singular": "Forest"},
+      "name": {
+        "singular": "Forest"
+      },
       "color": [
         0,
         153,
@@ -292,7 +310,7 @@
           "probability": 0.15
         },
         {
-          "id": "TOME_OF_FIREBALL",
+          "id": "TOME_OF_HEAL",
           "probability": 0.1
         }
       ]
@@ -300,7 +318,9 @@
     {
       "id": "YOUNG_FOREST",
       "type": "LAND",
-      "name": {"singular": "Young Forest"},
+      "name": {
+        "singular": "Young Forest"
+      },
       "color": [
         0,
         127,
@@ -360,8 +380,8 @@
           "probability": 0.1
         },
         {
-          "id": "TOME_OF_FIREBALL",
-          "probability": 0.1
+          "id": "TOME_OF_VEIL_OF_DARKNESS",
+          "probability": 0.05
         },
         {
           "id": "BANANA",
@@ -372,7 +392,9 @@
     {
       "id": "GRAVEYARD",
       "type": "LAND",
-      "name": {"singular": "Graveyard"},
+      "name": {
+        "singular": "Graveyard"
+      },
       "color": [
         192,
         192,
@@ -415,7 +437,7 @@
           "probability": 0.15
         },
         {
-          "id": "TOME_OF_BURNING_GROUND",
+          "id": "TOME_OF_PERCEIVE",
           "probability": 0.1
         },
         {
@@ -427,7 +449,9 @@
     {
       "id": "MEADOW",
       "type": "LAND",
-      "name": {"singular": "Meadow"},
+      "name": {
+        "singular": "Meadow"
+      },
       "color": [
         0,
         204,
@@ -467,7 +491,9 @@
     {
       "id": "POND",
       "type": "LAND",
-      "name": {"singular": "Pond"},
+      "name": {
+        "singular": "Pond"
+      },
       "color": [
         0,
         204,
@@ -508,7 +534,9 @@
     {
       "id": "SAVANNAH",
       "type": "LAND",
-      "name": {"singular": "Savannah"},
+      "name": {
+        "singular": "Savannah"
+      },
       "color": [
         204,
         204,
@@ -554,7 +582,9 @@
     {
       "id": "SWAMP",
       "type": "LAND",
-      "name": {"singular": "Swamp"},
+      "name": {
+        "singular": "Swamp"
+      },
       "color": [
         153,
         153,
@@ -599,7 +629,9 @@
     {
       "id": "BARREN",
       "type": "LAND",
-      "name": {"singular": "Barren"},
+      "name": {
+        "singular": "Barren"
+      },
       "color": [
         225,
         225,

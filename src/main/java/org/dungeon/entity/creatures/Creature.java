@@ -25,8 +25,6 @@ import org.dungeon.entity.items.CreatureInventory;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Location;
 import org.dungeon.io.DungeonLogger;
-import org.dungeon.skill.SkillList;
-import org.dungeon.skill.SkillRotation;
 import org.dungeon.stats.CauseOfDeath;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,8 +38,6 @@ public class Creature extends Entity {
 
   private final int attack;
   private final AttackAlgorithmId attackAlgorithmId;
-  private final SkillList skillList = new SkillList();
-  private final SkillRotation skillRotation = new SkillRotation();
   private final TagSet<Tag> tagSet;
   private final CreatureInventory inventory;
   private final LightSource lightSource;
@@ -64,14 +60,6 @@ public class Creature extends Entity {
     lightSource = new LightSource(preset.getLuminosity());
   }
 
-  SkillList getSkillList() {
-    return skillList;
-  }
-
-  public SkillRotation getSkillRotation() {
-    return skillRotation;
-  }
-
   public boolean hasTag(Tag tag) {
     return tagSet.hasTag(tag);
   }
@@ -91,6 +79,10 @@ public class Creature extends Entity {
   @Override
   public Luminosity getLuminosity() {
     return lightSource.getLuminosity();
+  }
+
+  public LightSource getLightSource() {
+    return lightSource;
   }
 
   public Item getWeapon() {

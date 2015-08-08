@@ -32,10 +32,9 @@ import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.FoodComponent;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Direction;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
-import org.dungeon.game.GameData;
-import org.dungeon.game.Id;
 import org.dungeon.game.Location;
 import org.dungeon.game.Name;
 import org.dungeon.game.NameFactory;
@@ -46,14 +45,14 @@ import org.dungeon.game.Random;
 import org.dungeon.game.World;
 import org.dungeon.io.Sleeper;
 import org.dungeon.io.Writer;
-import org.dungeon.skill.Skill;
+import org.dungeon.spells.Spell;
+import org.dungeon.spells.SpellData;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Constants;
 import org.dungeon.util.DungeonMath;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.Percentage;
-import org.dungeon.util.Selectable;
 import org.dungeon.util.Utils;
 import org.dungeon.util.library.Libraries;
 
@@ -85,18 +84,36 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_MILK_A_CREATURE = 45;
   private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
   private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
-  private static final int SECONDS_TO_CAST_REPAIR_ON_ITEM = 10;
   private static final double MAXIMUM_HEALTH_THROUGH_REST = 0.6;
-  private static final String ROTATION_SKILL_SEPARATOR = ">";
   private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
   private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
+  private final Spellcaster spellcaster = new HeroSpellcaster(this);
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
 
   Hero(CreaturePreset preset) {
     super(preset);
     dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
+  }
+
+  public static void writeCreatureSight(List<Creature> creatures) {
+    if (creatures.isEmpty()) {
+      Writer.writeString("You don't see anyone here.");
+    } else {
+      Writer.writeString("Here you can see " + Utils.enumerateEntities(creatures) + ".");
+    }
+  }
+
+  public static void writeItemSight(List<Item> items) {
+    if (!items.isEmpty()) {
+      Writer.writeNewLine();
+      Writer.writeString("On the ground you see " + Utils.enumerateEntities(items) + ".");
+    }
+  }
+
+  public Spellcaster getSpellcaster() {
+    return spellcaster;
   }
 
   public AchievementTracker getAchievementTracker() {
@@ -269,11 +286,7 @@ public class Hero extends Creature {
     creatures.remove(this);
     creatures = filterByVisibility(creatures);
     Writer.writeNewLine();
-    if (creatures.isEmpty()) {
-      Writer.writeString("You don't see anyone here.");
-    } else {
-      Writer.writeString("Here you can see " + HeroUtils.enumerateEntities(creatures) + ".");
-    }
+    writeCreatureSight(creatures);
   }
 
   /**
@@ -282,10 +295,7 @@ public class Hero extends Creature {
   private void lookItems() {
     List<Item> items = getLocation().getItemList();
     items = filterByVisibility(items);
-    if (!items.isEmpty()) {
-      Writer.writeNewLine();
-      Writer.writeString("On the ground you see " + HeroUtils.enumerateEntities(items) + ".");
-    }
+    writeItemSight(items);
   }
 
   private Item selectInventoryItem(IssuedCommand issuedCommand) {
@@ -381,7 +391,7 @@ public class Hero extends Creature {
    * @param tokens an array of string tokens.
    * @return a Creature or null.
    */
-  private Creature findCreature(String[] tokens) {
+  public Creature findCreature(String[] tokens) {
     Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
     result = filterByVisibility(result);
     if (result.size() == 0) {
@@ -589,7 +599,7 @@ public class Hero extends Creature {
           Writer.writeString(book.getText());
           Writer.writeNewLine();
           if (book.isDidactic()) {
-            learnSkill(book);
+            learnSpell(book);
           }
         } else {
           HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
@@ -601,20 +611,20 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to learn a skill from a BookComponent object. As a precondition, book must be didactic (teach a skill).
+   * Attempts to learn a spell from a BookComponent object. As a precondition, book must be didactic (teach a spell).
    *
    * @param book a BookComponent that returns true to isDidactic, not null
    */
-  private void learnSkill(@NotNull BookComponent book) {
+  private void learnSpell(@NotNull BookComponent book) {
     if (!book.isDidactic()) {
       throw new IllegalArgumentException("book should be didactic.");
     }
-    Skill skill = new Skill(GameData.getSkillDefinitions().get(book.getSkillId()));
-    if (getSkillList().hasSkill(skill.getId())) {
-      Writer.writeString("You already knew " + skill.getName() + ".");
+    Spell spell = SpellData.getSpellMap().get(book.getSpellId());
+    if (getSpellcaster().knowsSpell(spell)) {
+      Writer.writeString("You already knew " + spell.getName().getSingular() + ".");
     } else {
-      getSkillList().addSkill(skill);
-      Writer.writeString("You learned " + skill.getName() + ".");
+      getSpellcaster().learnSpell(spell);
+      Writer.writeString("You learned " + spell.getName().getSingular() + ".");
     }
   }
 
@@ -767,103 +777,18 @@ public class Hero extends Creature {
   }
 
   /**
-   * Prints all the Skills that the Hero knows.
+   * Writes a list with all the Spells that the Hero knows.
    */
-  public void printSkills() {
-    if (getSkillList().getSize() == 0) {
-      Writer.writeString("You have not learned any skills yet.");
+  public void writeSpellList() {
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    if (getSpellcaster().getSpellList().isEmpty()) {
+      builder.append("You have not learned any spells yet.");
     } else {
-      Writer.writeString("You know the following skills:");
-      getSkillList().printSkillList();
+      builder.append("You know ");
+      builder.append(Utils.enumerate(getSpellcaster().getSpellList()));
+      builder.append(".");
     }
-  }
-
-  /**
-   * Based on the arguments of the last issued command, makes a new SkillRotation for the Hero.
-   *
-   * @param issuedCommand the last command issued by the player.
-   */
-  public void editRotation(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      if (issuedCommand.firstArgumentEquals("!")) {
-        getSkillRotation().resetRotation();
-        Writer.writeString("The skill rotation has been reset.");
-      } else {
-        List<String[]> skillNames = new ArrayList<String[]>();
-        List<String> currentSkillName = new ArrayList<String>();
-        for (String argument : issuedCommand.getArguments()) {
-          if (ROTATION_SKILL_SEPARATOR.equals(argument)) {
-            if (!currentSkillName.isEmpty()) {
-              String[] stringArray = new String[currentSkillName.size()];
-              currentSkillName.toArray(stringArray);
-              skillNames.add(stringArray);
-              currentSkillName.clear();
-            }
-          } else {
-            currentSkillName.add(argument);
-          }
-        }
-        if (!currentSkillName.isEmpty()) {
-          String[] stringArray = new String[currentSkillName.size()];
-          currentSkillName.toArray(stringArray);
-          skillNames.add(stringArray);
-          currentSkillName.clear();
-        }
-        if (skillNames.isEmpty()) {
-          Writer.writeString("Provide skills arguments separated by '" + ROTATION_SKILL_SEPARATOR + "'.");
-        } else {
-          getSkillRotation().resetRotation();
-          ArrayList<Selectable> skillsList = new ArrayList<Selectable>(getSkillList().toListOfSelectable());
-          for (String[] skillName : skillNames) {
-            Matches<Selectable> result = Utils.findBestCompleteMatches(skillsList, skillName);
-            if (result.size() == 0) {
-              Writer.writeString(Utils.stringArrayToString(skillName, " ") + " did not match any skill!");
-            } else {
-              if (result.getDifferentNames() == 1) {
-                getSkillRotation().addSkill((Skill) result.getMatch(0));
-              } else {
-                Writer.writeString(Utils.stringArrayToString(skillName, " ") + " matched multiple skills!");
-              }
-            }
-          }
-          if (getSkillRotation().isEmpty()) {
-            Writer.writeString("Failed to create a new skill rotation.");
-          } else {
-            Writer.writeString("Created new skill rotation.");
-          }
-        }
-      }
-    } else {
-      if (getSkillRotation().isEmpty()) {
-        Writer.writeString("You don't have a skill rotation.");
-      } else {
-        Writer.writeString("This is your current skill rotation:");
-        getSkillRotation().printSkillRotation();
-      }
-    }
-  }
-
-  public void castRepairOnEquippedItem() {
-    Id repairId = new Id("REPAIR");
-    if (getSkillList().hasSkill(repairId)) {
-      if (hasWeapon()) {
-        if (getWeapon().hasTag(Item.Tag.REPAIRABLE)) {
-          Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR_ON_ITEM); // Ten seconds to cast. Time passes before casting.
-          if (hasWeapon()) { // If the item did not disappear.
-            getWeapon().getIntegrity().incrementBy(GameData.getSkillDefinitions().get(repairId).repair);
-            Writer.writeString("You casted Repair on " + getWeapon().getName() + ".");
-          } else {
-            Writer.writeString("Your weapon disappeared before you finished casting.");
-          }
-        } else {
-          Writer.writeString("The equipped item is not repairable.");
-        }
-      } else {
-        Writer.writeString("You are not equipping anything.");
-      }
-    } else {
-      Writer.writeString("You don't know how to cast Repair.");
-    }
+    Writer.write(builder);
   }
 
 }

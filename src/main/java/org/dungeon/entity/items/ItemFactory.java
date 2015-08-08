@@ -113,8 +113,8 @@ public abstract class ItemFactory {
       if (preset.hasTag(Item.Tag.BOOK)) {
         preset.setText(itemObject.get("text").asString());
       }
-      if (itemObject.get("skill") != null) {
-        preset.setSkill(itemObject.get("skill").asString());
+      if (itemObject.get("spell") != null) {
+        preset.setSpellId(itemObject.get("spell").asString());
       }
       addItemPreset(preset);
     }

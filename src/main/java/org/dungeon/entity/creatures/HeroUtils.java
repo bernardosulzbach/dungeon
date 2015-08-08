@@ -21,7 +21,6 @@ import org.dungeon.entity.Entity;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Name;
 import org.dungeon.io.Writer;
-import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-final class HeroUtils {
+public final class HeroUtils {
 
   private HeroUtils() {
     throw new AssertionError();
@@ -63,7 +62,7 @@ final class HeroUtils {
    *
    * @return an Item object if there is a match. null otherwise.
    */
-  static Item findItem(List<Item> items, String[] tokens) {
+  public static Item findItem(List<Item> items, String[] tokens) {
     Matches<Item> matches = org.dungeon.util.Utils.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
       Writer.writeString("Item not found.");
@@ -86,21 +85,6 @@ final class HeroUtils {
       }
     }
     return visible;
-  }
-
-  /**
-   * Returns a String representation of the enumeration of all the Entities in a given List.
-   */
-  static String enumerateEntities(final List<? extends Entity> listOfEntities) {
-    CounterMap<Name> nameOccurrences = new CounterMap<Name>();
-    for (Entity entity : listOfEntities) {
-      nameOccurrences.incrementCounter(entity.getName());
-    }
-    ArrayList<String> quantifiedNames = new ArrayList<String>();
-    for (Name name : nameOccurrences.keySet()) {
-      quantifiedNames.add(name.getQuantifiedName(nameOccurrences.getCounter(name)));
-    }
-    return org.dungeon.util.Utils.enumerate(quantifiedNames);
   }
 
   /**

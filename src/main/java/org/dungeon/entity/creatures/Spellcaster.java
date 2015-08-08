@@ -15,24 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.stats;
+package org.dungeon.entity.creatures;
+
+import org.dungeon.commands.IssuedCommand;
+import org.dungeon.spells.Spell;
+
+import java.util.List;
 
 /**
- * TypeOfCauseOfDeath enumerated type that defines the possible types of causes of death.
+ * An interface that defines a few common things a spellcaster should be able to do.
  */
-public enum TypeOfCauseOfDeath {
+public interface Spellcaster {
 
-  UNARMED("Unarmed"), WEAPON("Weapon"), SPELL("Spell");
+  List<Spell> getSpellList();
 
-  private final String stringRepresentation;
+  boolean knowsSpell(Spell spell);
 
-  TypeOfCauseOfDeath(String stringRepresentation) {
-    this.stringRepresentation = stringRepresentation;
-  }
+  void learnSpell(Spell spell);
 
-  @Override
-  public String toString() {
-    return stringRepresentation;
-  }
+  void parseCast(IssuedCommand issuedCommand);
 
 }

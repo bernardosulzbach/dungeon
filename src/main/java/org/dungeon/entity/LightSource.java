@@ -25,18 +25,37 @@ import java.io.Serializable;
 public class LightSource implements Serializable {
 
   private final Luminosity luminosity;
+  private boolean enabled = true;
 
   public LightSource(Luminosity luminosity) {
     this.luminosity = luminosity;
   }
 
+  /**
+   * Enables this source until disable is called.
+   */
+  public void enable() {
+    this.enabled = true;
+  }
+
+  /**
+   * Disables this source until enable is called.
+   */
+  public void disable() {
+    this.enabled = false;
+  }
+
   public Luminosity getLuminosity() {
-    return luminosity;
+    if (enabled) {
+      return luminosity;
+    } else {
+      return Luminosity.ZERO;
+    }
   }
 
   @Override
   public String toString() {
-    return "LightSource of luminosity of " + luminosity.toPercentage();
+    return (enabled ? "Enabled" : "Disabled") + " LightSource of luminosity of " + luminosity.toPercentage();
   }
 
 }

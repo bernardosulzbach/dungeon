@@ -448,34 +448,33 @@
       "integrityDecrementOnHit": 1
     },
     {
-      "id": "TOME_OF_BURNING_GROUND",
-      "type": "Book",
+      "id": "BONE",
+      "type": "Weapon",
       "name": {
-        "singular": "Tome of Burning Ground",
-        "plural": "Tomes of Burning Ground"
+        "singular": "Bone"
       },
       "tags": [
         "WEAPON",
-        "BOOK"
+        "REPAIRABLE",
+        "DECOMPOSES"
       ],
       "integrity": {
-        "current": 20,
-        "maximum": 20
+        "current": 60,
+        "maximum": 60
       },
-      "weight": 0.6,
+      "weight": 0.8,
       "visibility": "60.00%",
-      "damage": 6,
-      "hitRate": "70.00%",
-      "integrityDecrementOnHit": 4,
-      "text": "The Burning Ground spell sets the ground the target is standing on ablaze, damaging its constitution.",
-      "skill": "BURNING_GROUND"
+      "decompositionPeriod": "4 months",
+      "damage": 10,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 5
     },
     {
-      "id": "TOME_OF_FIREBALL",
+      "id": "TOME_OF_HEAL",
       "type": "Book",
       "name": {
-        "singular": "Tome of Fireball",
-        "plural": "Tomes of Fireball"
+        "singular": "Tome of Heal",
+        "plural": "Tomes of Heal"
       },
       "tags": [
         "WEAPON",
@@ -490,8 +489,77 @@
       "damage": 6,
       "hitRate": "70.00%",
       "integrityDecrementOnHit": 4,
-      "text": "The Fireball is a classic and powerful spell. The caster creates a sphere of fire from concentrated magical energy and throws it at its target.",
-      "skill": "FIREBALL"
+      "text": "The Heal spell is very useful as it allows the character to restore health very quickly.",
+      "spell": "HEAL"
+    },
+    {
+      "id": "TOME_OF_VEIL_OF_DARKNESS",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Veil of Darkness",
+        "plural": "Tomes of Veil of Darkness"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Veil of Darkness spell summons a magical opaque veil that blocks all luminosity coming from a creature.",
+      "spell": "VEIL_OF_DARKNESS"
+    },
+    {
+      "id": "TOME_OF_UNVEIL",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Unveil",
+        "plural": "Tomes of Unveil"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Unveil spell removes all veils that afflict a creature.",
+      "spell": "UNVEIL"
+    },
+    {
+      "id": "TOME_OF_PERCEIVE",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Perceive",
+        "plural": "Tomes of Perceive"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "Perceive is a classic spell that allows the caster to notice all entities in the vicinity.",
+      "spell": "PERCEIVE"
     },
     {
       "id": "TOME_OF_REPAIR",
@@ -514,7 +582,7 @@
       "hitRate": "70.00%",
       "integrityDecrementOnHit": 4,
       "text": "The Repair spell allows the caster to channel a burst of magical energy into an item, possibly reassembling broken parts and restoring its integrity.",
-      "skill": "REPAIR"
+      "spell": "REPAIR"
     },
     {
       "id": "HISTORY_OF_THE_THIRD_ERA",

@@ -22,17 +22,12 @@ import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
-import org.dungeon.skill.SkillDefinition;
-import org.dungeon.util.StopWatch;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import java.awt.Color;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The class that stores all the game data that is loaded and not serialized.
@@ -42,7 +37,6 @@ public final class GameData {
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
   public static String LICENSE;
   private static String tutorial = null;
-  private static Map<Id, SkillDefinition> skillDefinitions = new HashMap<Id, SkillDefinition>();
 
   private GameData() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -59,10 +53,7 @@ public final class GameData {
    * Triggers essential game data loading.
    */
   static void loadGameData() {
-    StopWatch stopWatch = new StopWatch();
-    DungeonLogger.info("Started loading the game data.");
     effectivelyLoadGameData();
-    DungeonLogger.info("Finished loading the game data. Took " + stopWatch.toString() + ".");
   }
 
   /**
@@ -72,29 +63,9 @@ public final class GameData {
     ItemFactory.loadItemPresets();
     CreatureFactory.loadCreaturePresetsAndMakeCorpsePresets();
     ItemFactory.blockNewItemPresets(); // Must happen after CreatureFactory makes the corpse presets.
-    createSkills();
     loadLocationPresets();
     AchievementStore.initialize();
     loadLicense();
-  }
-
-  /**
-   * Creates all the Skills (hardcoded).
-   */
-  private static void createSkills() {
-    if (!skillDefinitions.isEmpty()) {
-      throw new AssertionError();
-    }
-
-    SkillDefinition fireball = new SkillDefinition("FIREBALL", "Fireball", 10, 0, 6);
-    skillDefinitions.put(fireball.id, fireball);
-
-    SkillDefinition burningGround = new SkillDefinition("BURNING_GROUND", "Burning Ground", 18, 0, 12);
-    skillDefinitions.put(burningGround.id, burningGround);
-
-    SkillDefinition repair = new SkillDefinition("REPAIR", "Repair", 0, 40, 10);
-    skillDefinitions.put(repair.id, repair);
-    skillDefinitions = Collections.unmodifiableMap(skillDefinitions);
   }
 
   private static void loadLocationPresets() {
@@ -151,10 +122,6 @@ public final class GameData {
       throw new AssertionError();
     }
     tutorial = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
-  }
-
-  public static Map<Id, SkillDefinition> getSkillDefinitions() {
-    return skillDefinitions;
   }
 
   public static LocationPresetStore getLocationPresetStore() {

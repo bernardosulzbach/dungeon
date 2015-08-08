@@ -15,24 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.stats;
+package org.dungeon.entity.creatures;
 
-/**
- * TypeOfCauseOfDeath enumerated type that defines the possible types of causes of death.
- */
-public enum TypeOfCauseOfDeath {
+import org.junit.Assert;
+import org.junit.Test;
 
-  UNARMED("Unarmed"), WEAPON("Weapon"), SPELL("Spell");
+public class ParsingUtilsTest {
 
-  private final String stringRepresentation;
-
-  TypeOfCauseOfDeath(String stringRepresentation) {
-    this.stringRepresentation = stringRepresentation;
-  }
-
-  @Override
-  public String toString() {
-    return stringRepresentation;
+  @Test
+  public void testSplitOnOn() throws Exception {
+    String[] emptyArray = {};
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).before);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).after);
   }
 
 }

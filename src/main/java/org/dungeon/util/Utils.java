@@ -17,7 +17,9 @@
 
 package org.dungeon.util;
 
+import org.dungeon.entity.Entity;
 import org.dungeon.game.GameData;
+import org.dungeon.game.Name;
 import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
@@ -100,28 +102,6 @@ public final class Utils {
   }
 
   /**
-   * Converts an array of Strings into a single String object, separating Strings with the specified separator.
-   *
-   * @param strings the Strings.
-   * @param separator a String to be inserted between Strings of the array.
-   * @return a single String.
-   */
-  public static String stringArrayToString(String[] strings, String separator) {
-    if (strings.length == 0) {
-      return "";
-    } else if (strings.length == 1) {
-      return strings[0];
-    } else {
-      StringBuilder builder = new StringBuilder(strings[0]);
-      for (int index = 1; index < strings.length; index++) {
-        builder.append(separator);
-        builder.append(strings[index]);
-      }
-      return builder.toString();
-    }
-  }
-
-  /**
    * Enumerates the elements of a Collection in a human-readable way.
    *
    * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.
@@ -145,6 +125,21 @@ public final class Utils {
       }
     }
     return stringBuilder.toString();
+  }
+
+  /**
+   * Returns a String representation of the enumeration of all the Entities in a given List.
+   */
+  public static String enumerateEntities(final List<? extends Entity> listOfEntities) {
+    CounterMap<Name> nameOccurrences = new CounterMap<Name>();
+    for (Entity entity : listOfEntities) {
+      nameOccurrences.incrementCounter(entity.getName());
+    }
+    ArrayList<String> quantifiedNames = new ArrayList<String>();
+    for (Name name : nameOccurrences.keySet()) {
+      quantifiedNames.add(name.getQuantifiedName(nameOccurrences.getCounter(name)));
+    }
+    return enumerate(quantifiedNames);
   }
 
   /**

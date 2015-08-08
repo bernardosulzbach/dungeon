@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 /**
- * CauseOfDeath class that defines what kind of death happened and the ID of the related Item or Skill.
+ * CauseOfDeath class that defines what kind of death happened and the ID of the related Item or Spell.
  */
 public class CauseOfDeath implements Serializable {
 

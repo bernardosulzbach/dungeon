@@ -52,6 +52,10 @@ public class ItemIntegrity implements Serializable {
     return integrity.getCurrent();
   }
 
+  public boolean isPerfect() {
+    return integrity.isMaximum();
+  }
+
   /**
    * Returns whether or not this ItemIntegrity represents the integrity of a broken item.
    *
