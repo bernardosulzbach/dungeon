@@ -40,13 +40,30 @@ public class Game {
     final StopWatch stopWatch = new StopWatch();
     GameData.loadGameData();
     DungeonLogger.info("Finished loading game data. Took " + stopWatch.toString() + ".");
+    invokeOnEventDispatchThreadAndWait(new Runnable() {
+      @Override
+      public void run() {
+        gameWindow = new GameWindow();
+      }
+    });
+    DungeonLogger.info("Finished making the window. Took " + stopWatch.toString() + ".");
+    setGameState(loadAGameStateOrCreateANewOne());
+    invokeOnEventDispatchThreadAndWait(new Runnable() {
+      @Override
+      public void run() {
+        getGameWindow().startAcceptingCommands();
+        DungeonLogger.info("Signaled the window to start accepting commands.");
+      }
+    });
+  }
+
+  /**
+   * Invokes a runnable on the EDT and waits for it to finish. If an exception is thrown, this method logs it and
+   * finishes the application.
+   */
+  private static void invokeOnEventDispatchThreadAndWait(Runnable runnable) {
     try {
-      SwingUtilities.invokeAndWait(new Runnable() {
-        @Override
-        public void run() {
-          gameWindow = new GameWindow();
-        }
-      });
+      SwingUtilities.invokeAndWait(runnable);
     } catch (InterruptedException fatal) {
       DungeonLogger.severe(fatal.getMessage());
       System.exit(1);
@@ -54,8 +71,6 @@ public class Game {
       DungeonLogger.severe(fatal.getMessage());
       System.exit(1);
     }
-    DungeonLogger.info("Finished making the window. Took " + stopWatch.toString() + ".");
-    setGameState(loadAGameStateOrCreateANewOne());
   }
 
   /**

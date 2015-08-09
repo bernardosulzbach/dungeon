@@ -94,7 +94,6 @@ public class GameWindow extends JFrame {
     initComponents();
     document = textPane.getStyledDocument();
     setVisible(true);
-    acceptingNextCommand = true;
   }
 
   /**
@@ -378,6 +377,17 @@ public class GameWindow extends JFrame {
 
   private void clearTextField() {
     textField.setText(null);
+  }
+
+  /**
+   * Signalizes to this window that it should start accepting commands.
+   *
+   * <p>This must be done after the first GameState is loaded. Other changes of GameState do not need to be protected
+   * this way because the SwingWorker toggles the acceptingNextCommand variable to false and just changes it back to
+   * true after it is finished (and the GameState is loaded).
+   */
+  public void startAcceptingCommands() {
+    acceptingNextCommand = true;
   }
 
 }
