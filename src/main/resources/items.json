@@ -271,8 +271,7 @@
       "id": "DAGGER",
       "type": "Weapon",
       "name": {
-        "singular": "Dagger",
-        "plural": "Daggers"
+        "singular": "Dagger"
       },
       "tags": [
         "WEAPON",
@@ -292,8 +291,7 @@
       "id": "LONGSWORD",
       "type": "Weapon",
       "name": {
-        "singular": "Longsword",
-        "plural": "Longswords"
+        "singular": "Longsword"
       },
       "tags": [
         "WEAPON",
@@ -313,8 +311,7 @@
       "id": "MACE",
       "type": "Weapon",
       "name": {
-        "singular": "Mace",
-        "plural": "Maces"
+        "singular": "Mace"
       },
       "tags": [
         "WEAPON",
@@ -334,8 +331,7 @@
       "id": "ORC_SWORD",
       "type": "Weapon",
       "name": {
-        "singular": "Orc Sword",
-        "plural": "Orc Swords"
+        "singular": "Orc Sword"
       },
       "tags": [
         "WEAPON",
@@ -355,8 +351,7 @@
       "id": "SPEAR",
       "type": "Weapon",
       "name": {
-        "singular": "Spear",
-        "plural": "Spears"
+        "singular": "Spear"
       },
       "tags": [
         "WEAPON",
@@ -376,8 +371,7 @@
       "id": "STAFF",
       "type": "Weapon",
       "name": {
-        "singular": "Staff",
-        "plural": "Staffs"
+        "singular": "Staff"
       },
       "tags": [
         "WEAPON",
@@ -397,8 +391,7 @@
       "id": "STICK",
       "type": "Weapon",
       "name": {
-        "singular": "Stick",
-        "plural": "Sticks"
+        "singular": "Stick"
       },
       "tags": [
         "WEAPON",
@@ -419,8 +412,7 @@
       "id": "STONE",
       "type": "Weapon",
       "name": {
-        "singular": "Stone",
-        "plural": "Stones"
+        "singular": "Stone"
       },
       "tags": [
         "WEAPON"
@@ -439,8 +431,7 @@
       "id": "SWORD",
       "type": "Weapon",
       "name": {
-        "singular": "Sword",
-        "plural": "Swords"
+        "singular": "Sword"
       },
       "tags": [
         "WEAPON",
@@ -529,8 +520,7 @@
       "id": "HISTORY_OF_THE_THIRD_ERA",
       "type": "Book",
       "name": {
-        "singular": "History of the Third Era",
-        "plural": "History of the Third Eras"
+        "singular": "History of the Third Era"
       },
       "tags": [
         "WEAPON",
@@ -551,8 +541,7 @@
       "id": "CORVUS_EDGE",
       "type": "Book",
       "name": {
-        "singular": "Corvus Edge",
-        "plural": "Corvus Edges"
+        "singular": "Corvus Edge"
       },
       "tags": [
         "WEAPON",
@@ -639,8 +628,7 @@
       "id": "WOOD_LOG",
       "type": "Misc",
       "name": {
-        "singular": "Wood Log",
-        "plural": "Wood Logs"
+        "singular": "Wood Log"
       },
       "tags": [
         "WEAPON",
@@ -662,8 +650,7 @@
       "id": "HARPY_FEATHER",
       "type": "Misc",
       "name": {
-        "singular": "Harpy Feather",
-        "plural": "Harpy Feathers"
+        "singular": "Harpy Feather"
       },
       "tags": [
         "WEAPON",

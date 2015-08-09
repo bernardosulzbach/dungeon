@@ -103,7 +103,7 @@ public final class GameData {
       JsonObject presetObject = jsonValue.asObject();
       Id id = new Id(presetObject.get("id").asString());
       LocationPreset.Type type = LocationPreset.Type.valueOf(presetObject.get("type").asString());
-      Name name = NameFactory.nameFromJsonObject(presetObject.get("name").asObject());
+      Name name = NameFactory.fromJsonObject(presetObject.get("name").asObject());
       LocationPreset preset = new LocationPreset(id, type, name);
       char symbol = presetObject.get("symbol").asString().charAt(0);
       preset.setDescription(new LocationDescription(symbol, colorFromJsonArray(presetObject.get("color").asArray())));

@@ -86,7 +86,7 @@ public abstract class ItemFactory {
       ItemPreset preset = new ItemPreset();
       preset.setId(new Id(itemObject.get("id").asString()));
       preset.setType(itemObject.get("type").asString());
-      preset.setName(NameFactory.nameFromJsonObject(itemObject.get("name").asObject()));
+      preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
       for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
         preset.addTag(tag);
       }
