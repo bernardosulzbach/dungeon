@@ -75,7 +75,7 @@ public final class Location implements Serializable {
         if (item != null) {
           this.addItem(item);
         } else {
-          DungeonLogger.severe("ItemPreset not found: " + entry.getKey().toString());
+          DungeonLogger.warning("Item preset not found: " + entry.getKey().toString() + ".");
         }
       }
     }

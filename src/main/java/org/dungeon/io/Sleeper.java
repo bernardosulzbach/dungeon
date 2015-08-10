@@ -36,10 +36,10 @@ public final class Sleeper {
       try {
         Thread.sleep(milliseconds);
       } catch (InterruptedException logged) {
-        DungeonLogger.warning("Sleeper was interrupted!");
+        DungeonLogger.warning("Sleeper was interrupted.");
       }
     } else {
-      DungeonLogger.warning("Tried to sleep a nonpositive amount of milliseconds!");
+      DungeonLogger.warning("Tried to sleep a nonpositive amount of milliseconds.");
     }
   }
 

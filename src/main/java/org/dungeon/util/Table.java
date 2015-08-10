@@ -128,7 +128,7 @@ public class Table {
         }
       }
     } else {
-      DungeonLogger.warning("Tried to insert more values than columns!");
+      DungeonLogger.warning("Tried to insert more values than columns.");
     }
   }
 

@@ -68,7 +68,7 @@ public class AchievementTracker implements Serializable {
       writeAchievementUnlock(achievement);
       unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
-      DungeonLogger.warning("Tried to unlock an already unlocked achievement!");
+      DungeonLogger.warning("Tried to unlock an already unlocked achievement.");
     }
   }
 

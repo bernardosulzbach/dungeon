@@ -33,6 +33,8 @@ import javax.swing.SwingUtilities;
 
 public class Game {
 
+  private static final InstanceInformation instanceInformation = new InstanceInformation();
+
   private static GameWindow gameWindow;
   private static GameState gameState;
 
@@ -65,10 +67,10 @@ public class Game {
     try {
       SwingUtilities.invokeAndWait(runnable);
     } catch (InterruptedException fatal) {
-      DungeonLogger.severe(fatal.getMessage());
+      DungeonLogger.severe(fatal.toString());
       System.exit(1);
     } catch (InvocationTargetException fatal) {
-      DungeonLogger.severe(fatal.getMessage());
+      DungeonLogger.severe(fatal.toString());
       System.exit(1);
     }
   }
@@ -146,6 +148,7 @@ public class Game {
    * @param issuedCommand the last IssuedCommand.
    */
   private static void processInput(IssuedCommand issuedCommand) {
+    instanceInformation.incrementAcceptedCommandCount();
     gameState.getCommandHistory().addCommand(issuedCommand);
     gameState.getStatistics().addCommand(issuedCommand);
     Command command = CommandCollection.getDefaultCommandCollection().getCommand(issuedCommand);
@@ -164,9 +167,15 @@ public class Game {
       if (!gameState.isSaved()) {
         Loader.saveGame(gameState);
       }
-      DungeonLogger.info("Exited with no problems.");
     }
+    logInstanceClosing();
     System.exit(0);
+  }
+
+  private static void logInstanceClosing() {
+    String durationString = instanceInformation.getDurationString();
+    long commandCount = instanceInformation.getAcceptedCommandCount();
+    DungeonLogger.info("Closing instance. Ran for " + durationString + ". Accepted " + commandCount + " commands.");
   }
 
 }

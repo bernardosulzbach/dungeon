@@ -61,7 +61,7 @@ public class StopWatch {
     if (ABBREVIATIONS.containsKey(unit)) {
       return unit.convert(timeDifference, TimeUnit.NANOSECONDS) + " " + ABBREVIATIONS.get(unit);
     } else {
-      String message = "Passed a TimeUnit that does not have a defined abbreviation to StopWatch.toString(TimeUnit)!";
+      String message = "Passed a TimeUnit that does not have a defined abbreviation to StopWatch.toString(TimeUnit).";
       DungeonLogger.warning(message);
       return null;
     }

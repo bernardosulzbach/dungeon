@@ -100,10 +100,10 @@ public class Creature extends Entity {
       if (weapon.hasTag(Item.Tag.WEAPON)) {
         this.weapon = weapon;
       } else {
-        DungeonLogger.warning(String.format("Tried to equip %s (no WEAPON tag) on %s!", weapon.getName(), getName()));
+        DungeonLogger.warning(String.format("Tried to equip %s (no WEAPON tag) on %s.", weapon.getName(), getName()));
       }
     } else {
-      DungeonLogger.warning("Tried to equip an Item that is not in the inventory of " + getName() + "!");
+      DungeonLogger.warning("Tried to equip an Item that is not in the inventory of " + getName() + ".");
     }
   }
 

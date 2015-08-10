@@ -95,7 +95,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    */
   public void addTag(E tag) {
     if (!set.add(tag)) {
-      DungeonLogger.warning("Tried to add a Tag that was already in the TagSet!");
+      DungeonLogger.warning("Tried to add a Tag that was already in the TagSet.");
     }
   }
 

@@ -110,7 +110,7 @@ public class World implements Serializable {
    */
   public void rollDate(int seconds) {
     if (seconds <= 0) {
-      DungeonLogger.warning("Cannot roll the World's Date back!");
+      DungeonLogger.warning("Cannot roll the World's Date back.");
     } else {
       worldDate = worldDate.plus(seconds, DungeonTimeUnit.SECOND);
     }

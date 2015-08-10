@@ -46,7 +46,7 @@ public class BlockedEntrances implements Serializable {
 
   public void block(Direction direction) {
     if (isBlocked(direction)) {
-      DungeonLogger.warning("Tried to block an already blocked direction!");
+      DungeonLogger.warning("Tried to block an already blocked direction.");
     } else {
       setOfBlockedEntrances.add(direction);
     }

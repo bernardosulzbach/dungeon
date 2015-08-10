@@ -61,7 +61,7 @@ public class Date implements Comparable<Date>, Serializable {
   public Date(long year, long month, long day, long hour, long minute, long second) {
     this(year, month, day);
     if (hour < 0) {
-      DungeonLogger.warning("Tried to construct Date with negative hour!");
+      DungeonLogger.warning("Tried to construct Date with negative hour.");
       hour = 0;
     } else if (hour >= DAY.as(HOUR)) {
       DungeonLogger.warning("Tried to construct Date with nonexistent hour.");
@@ -69,7 +69,7 @@ public class Date implements Comparable<Date>, Serializable {
       hour = DAY.as(HOUR);
     }
     if (minute < 0) {
-      DungeonLogger.warning("Tried to construct Date with negative minute!");
+      DungeonLogger.warning("Tried to construct Date with negative minute.");
       minute = 0;
     } else if (minute >= HOUR.as(MINUTE)) {
       DungeonLogger.warning("Tried to construct Date with nonexistent minute.");
@@ -77,7 +77,7 @@ public class Date implements Comparable<Date>, Serializable {
       minute = HOUR.as(MINUTE);
     }
     if (second < 0) {
-      DungeonLogger.warning("Tried to construct Date with negative second!");
+      DungeonLogger.warning("Tried to construct Date with negative second.");
       second = 0;
     } else if (second >= MINUTE.as(SECOND)) {
       DungeonLogger.warning("Tried to construct Date with nonexistent second.");
@@ -96,18 +96,18 @@ public class Date implements Comparable<Date>, Serializable {
    */
   public Date(long year, long month, long day) {
     if (year <= 0) {
-      DungeonLogger.warning("Tried to construct Date with nonpositive year!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive year.");
       year = 1;
     }
     if (month <= 0) {
-      DungeonLogger.warning("Tried to construct Date with nonpositive month!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive month.");
       month = 1;
     } else if (month > YEAR.as(MONTH)) {
       DungeonLogger.warning("Tried to construct Date with nonexistent month.");
       month = YEAR.as(MONTH);
     }
     if (day <= 0) {
-      DungeonLogger.warning("Tried to construct Date with nonpositive day!");
+      DungeonLogger.warning("Tried to construct Date with nonpositive day.");
       day = 1;
     } else if (day > MONTH.as(DAY)) {
       DungeonLogger.warning("Tried to construct Date with nonexistent day.");

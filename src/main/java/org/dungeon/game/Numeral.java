@@ -34,7 +34,7 @@ public enum Numeral {
 
   public static Numeral getCorrespondingNumeral(int integer) {
     if (integer < 1) {
-      DungeonLogger.warning("Tried to get nonpositive numeral!");
+      DungeonLogger.warning("Tried to get nonpositive numeral.");
       return null;
     } else if (integer >= values().length) {
       return values()[values().length - 1];

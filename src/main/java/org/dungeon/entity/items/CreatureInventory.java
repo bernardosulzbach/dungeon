@@ -64,7 +64,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       items.add(item);
       item.setInventory(this);
       String format = "Added %s to the inventory of %s.";
-      DungeonLogger.inventoryManagement(String.format(format, item.getQualifiedName(), owner));
+      DungeonLogger.fine(String.format(format, item.getQualifiedName(), owner));
     } else {
       throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
     }
@@ -110,7 +110,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     items.remove(item);
     item.setInventory(null);
     String format = "Removed %s from the inventory of %s.";
-    DungeonLogger.inventoryManagement(String.format(format, item.getQualifiedName(), owner));
+    DungeonLogger.fine(String.format(format, item.getQualifiedName(), owner));
   }
 
   public enum SimulationResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}

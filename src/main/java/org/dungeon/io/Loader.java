@@ -203,7 +203,7 @@ public final class Loader {
    */
   public static GameState loadGame(IssuedCommand issuedCommand) {
     if (issuedCommand == null) {
-      DungeonLogger.warning("Passed null to Loader.loadGame(IssuedCommand)!");
+      DungeonLogger.warning("Passed null to Loader.loadGame(IssuedCommand).");
       return null;
     }
     if (issuedCommand.hasArguments()) {

@@ -323,7 +323,7 @@ public final class CommandCollection {
    */
   public Command getCommand(IssuedCommand issuedCommand) {
     if (issuedCommand == null) {
-      DungeonLogger.warning("Passed null IssuedCommand to CommandCollection.getCommand()!");
+      DungeonLogger.warning("Passed null IssuedCommand to CommandCollection.getCommand().");
     } else {
       for (Command command : commands) {
         if (command.getDescription().getName().equalsIgnoreCase(issuedCommand.getFirstToken())) {
@@ -341,9 +341,9 @@ public final class CommandCollection {
    */
   private void addCommand(Command command) {
     if (command == null) {
-      DungeonLogger.warning("Passed null to CommandCollection.addCommand()!");
+      DungeonLogger.warning("Passed null to CommandCollection.addCommand().");
     } else if (commands.contains(command)) {
-      DungeonLogger.warning("Attempted to add the same Command to a CommandCollection twice!");
+      DungeonLogger.warning("Attempted to add the same Command to a CommandCollection twice.");
     } else {
       commands.add(command);
       commandDescriptions.add(command.getDescription());

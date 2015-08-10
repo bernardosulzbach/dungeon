@@ -39,7 +39,7 @@ final class DeathHandler {
       defeatedLocation.addItem(ItemFactory.makeCorpse(creature, defeatedLocation.getWorld().getWorldDate()));
     }
     creature.dropEverything();
-    DungeonLogger.info("Disposed of " + creature.getName() + " at " + creature.getLocation() + ".");
+    DungeonLogger.fine("Disposed of " + creature.getName() + " at " + creature.getLocation() + ".");
   }
 
 }

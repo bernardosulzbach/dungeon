@@ -27,24 +27,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Dungeon logger class.
+ * DungeonLogger static class that provides the thread-safe logging methods that should be used throughout the
+ * application.
  */
 public final class DungeonLogger {
 
   private static final String LOG_FILE_PATH = "logs/";
   private static final String LOG_FILE_NAME = "log.txt";
-  private static Logger logger;
+  private static final Logger logger;
 
   static {
-    try {
-      logger = Logger.getLogger("org.dungeon");
-      Handler handler = new FileHandler(getLogFilePath(), true);
+    logger = Logger.getLogger("org.dungeon");
+    logger.setUseParentHandlers(false);
+    logger.setLevel(Level.ALL);
+    try { // Try to add the file handler.
+      Handler handler = new FileHandler(getCompleteLogFilePath(), true);
       handler.setFormatter(new LoggerDateFormatter());
-      logger.setUseParentHandlers(false);
       logger.addHandler(handler);
-      logger.setLevel(Level.ALL);
     } catch (IOException ignored) {
-      // It is not possible to log an exception that prevented us from getting a logger.
     }
   }
 
@@ -53,63 +53,47 @@ public final class DungeonLogger {
   }
 
   /**
-   * Logs an info message. If the logger could not be initialized, the message will be unceremoniously discarded.
+   * Logs a fine message. This should be used for tracing information.
+   *
+   * If the file handler could not be initialized, the message will be unceremoniously discarded.
+   *
+   * @param message the log message
+   */
+  public static void fine(String message) {
+    logger.fine(message);
+  }
+
+  /**
+   * Logs an info message. This should be used for application-related information.
+   *
+   * If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
   public static void info(String message) {
-    if (logger != null) {
-      logger.info(message);
-    }
+    logger.info(message);
   }
 
   /**
-   * Logs a warning message. If the logger could not be initialized, the message will be unceremoniously discarded.
+   * Logs a warning message. This should be used for non-fatal exceptions.
+   *
+   * If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
   public static void warning(String message) {
-    if (logger != null) {
-      logger.warning(message);
-    }
+    logger.warning(message);
   }
 
   /**
-   * Logs a WARNING message with filename and line number.
+   * Logs a severe message. This should be used for unrecoverable errors that cause application termination.
    *
-   * <p>The message is produced by the following String concatenation
-   *
-   * <p>{@code "Line " + lineNumber + " of " + filename + messageEnd}
-   *
-   * @param filename the name of the file
-   * @param lineNumber the number of the line that caused the warning
-   * @param messageEnd how the message should end
-   */
-  public static void warning(String filename, int lineNumber, String messageEnd) {
-    warning("Line " + lineNumber + " of " + filename + messageEnd);
-  }
-
-  /**
-   * Logs a severe message. Only errors that cause fatal application termination are considered to be severe. If the
-   * logger could not be initialized, the message will be unceremoniously discarded.
+   * If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
   public static void severe(String message) {
-    if (logger != null) {
-      logger.severe(message);
-    }
-  }
-
-  /**
-   * Logs an inventory management message.
-   *
-   * @param message the log message
-   */
-  public static void inventoryManagement(String message) {
-    if (logger != null) {
-      logger.fine(message);
-    }
+    logger.severe(message);
   }
 
   /**
@@ -118,7 +102,7 @@ public final class DungeonLogger {
    *
    * @return the file path of a text file to be used by the FileHandler constructor.
    */
-  private static String getLogFilePath() {
+  private static String getCompleteLogFilePath() {
     File logFolder = new File(LOG_FILE_PATH);
     if (!logFolder.exists()) {
       if (!logFolder.mkdir()) {
