@@ -174,8 +174,8 @@ public class Game {
 
   private static void logInstanceClosing() {
     String durationString = instanceInformation.getDurationString();
-    long commandCount = instanceInformation.getAcceptedCommandCount();
-    DungeonLogger.info("Closing instance. Ran for " + durationString + ". Accepted " + commandCount + " commands.");
+    int commandCount = instanceInformation.getAcceptedCommandCount();
+    DungeonLogger.info("Closing instance. Ran for " + durationString + ". Commands parsed: " + commandCount + ".");
   }
 
 }

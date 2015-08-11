@@ -27,7 +27,7 @@ import org.dungeon.util.DungeonMath;
 class InstanceInformation {
 
   private final long startingTimeMillis;
-  private long acceptedCommandCount;
+  private int acceptedCommandCount;
 
   public InstanceInformation() {
     this.startingTimeMillis = System.currentTimeMillis();
@@ -46,7 +46,7 @@ class InstanceInformation {
     return System.currentTimeMillis() - startingTimeMillis;
   }
 
-  public long getAcceptedCommandCount() {
+  public int getAcceptedCommandCount() {
     return acceptedCommandCount;
   }
 
