@@ -27,12 +27,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 public class World implements Serializable {
 
   private final WorldGenerator generator;
 
-  private final HashMap<Point, Location> locations;
+  private final Map<Point, Location> locations;
 
   private final WorldStatistics worldStatistics;
   private final Date worldCreationDate = new Date(1, 1, 1);
