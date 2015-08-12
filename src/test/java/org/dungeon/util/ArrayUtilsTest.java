@@ -17,8 +17,7 @@
 
 package org.dungeon.util;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayUtilsTest {
@@ -27,14 +26,14 @@ public class ArrayUtilsTest {
   public void findFirstOccurrenceShouldReturnTheIndexIfTheElementIsFound() throws Exception {
     String[] tokens = {"a", "b", "c", "d", "e"};
     for (int i = 0; i < tokens.length; i++) {
-      assertEquals(i, ArrayUtils.findFirstOccurrence(tokens, tokens[i]));
+      Assert.assertEquals(i, ArrayUtils.findFirstOccurrence(tokens, tokens[i]));
     }
   }
 
   @Test
   public void findFirstOccurrenceShouldReturnTheLengthIfTheElementIsNotFound() throws Exception {
     String[] tokens = {"a", "b", "c", "d", "e"};
-    assertEquals(tokens.length, ArrayUtils.findFirstOccurrence(tokens, "z"));
+    Assert.assertEquals(tokens.length, ArrayUtils.findFirstOccurrence(tokens, "z"));
   }
 
 }

@@ -17,15 +17,13 @@
 
 package org.dungeon.entity.creatures;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.dungeon.entity.TagSet;
 import org.dungeon.entity.creatures.Creature.Tag;
 import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.Id;
 import org.dungeon.game.NameFactory;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CorpsePresetFactoryTest {
@@ -41,17 +39,17 @@ public class CorpsePresetFactoryTest {
     tagSet.addTag(Creature.Tag.CORPSE);
     creaturePreset.setTagSet(tagSet);
     ItemPreset corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
-    assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
-    assertEquals("CORPSE", corpsePreset.getType());
-    assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
-    assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
-    assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
-    assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
+    Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
+    Assert.assertEquals("CORPSE", corpsePreset.getType());
+    Assert.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
+    Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
+    Assert.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
     // Extreme cases.
     creaturePreset.setHealth(1);
     corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
-    assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
-    assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
+    Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
   }
 
 }

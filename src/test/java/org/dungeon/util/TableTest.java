@@ -17,9 +17,7 @@
 
 package org.dungeon.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +39,7 @@ public class TableTest {
 
   @Test
   public void testInsertRow() throws Exception {
-    assertTrue(table.getDimensions().equals(new Dimensions(100, 3)));
+    Assert.assertTrue(table.getDimensions().equals(new Dimensions(100, 3)));
     Random random = new Random();
     // Insert 200 rows in the table.
     for (int i = 0; i < 100; i++) {
@@ -53,25 +51,25 @@ public class TableTest {
       // Test if nulls are handled properly.
       table.insertRow(null, null, null);
     }
-    assertTrue(table.getDimensions().equals(new Dimensions(300, 3)));
+    Assert.assertTrue(table.getDimensions().equals(new Dimensions(300, 3)));
   }
 
   @Test
   public void testContains() throws Exception {
     // Check for the 100 values inserted by createTable().
     for (int i = 0; i < 100; i++) {
-      assertTrue(table.contains(String.valueOf(i)));
+      Assert.assertTrue(table.contains(String.valueOf(i)));
     }
     // There should be 200 empty Strings, 100 in B and 100 in C.
-    assertTrue(table.contains(""));
+    Assert.assertTrue(table.contains(""));
     // There should not be any null.
-    assertFalse(table.contains(null));
+    Assert.assertFalse(table.contains(null));
   }
 
   @Test
   public void testGetDimensions() throws Exception {
     Dimensions expectedDimensions = new Dimensions(100, 3);
-    assertTrue(table.getDimensions().equals(expectedDimensions));
+    Assert.assertTrue(table.getDimensions().equals(expectedDimensions));
   }
 
 }

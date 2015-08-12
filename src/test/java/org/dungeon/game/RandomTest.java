@@ -17,9 +17,6 @@
 
 package org.dungeon.game;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.dungeon.util.Percentage;
 
 import org.junit.Assert;
@@ -33,14 +30,14 @@ public class RandomTest {
 
   @Test
   public void testRollWithDoubles() throws Exception {
-    assertFalse(Random.roll(0.0));
-    assertTrue(Random.roll(1.0));
+    Assert.assertFalse(Random.roll(0.0));
+    Assert.assertTrue(Random.roll(1.0));
   }
 
   @Test
   public void testRollWithPercentages() throws Exception {
-    assertFalse(Random.roll(new Percentage(0.0)));
-    assertTrue(Random.roll(new Percentage(1.0)));
+    Assert.assertFalse(Random.roll(new Percentage(0.0)));
+    Assert.assertTrue(Random.roll(new Percentage(1.0)));
   }
 
   @Test
@@ -53,7 +50,7 @@ public class RandomTest {
     }
     List<Integer> integerList = new ArrayList<Integer>();
     integerList.add(0);
-    assertTrue(Random.select(integerList).equals(0));
+    Assert.assertTrue(Random.select(integerList).equals(0));
   }
 
 }

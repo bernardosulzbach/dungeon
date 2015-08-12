@@ -17,8 +17,7 @@
 
 package org.dungeon.util;
 
-import static org.junit.Assert.assertArrayEquals;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ParsingUtilsTest {
@@ -26,16 +25,16 @@ public class ParsingUtilsTest {
   @Test
   public void splitOnOnWithEmptyArrayShouldProduceTwoEmptyArrays() throws Exception {
     String[] emptyArray = {};
-    assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).before);
-    assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).after);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).before);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).after);
   }
 
   @Test
   public void splitOnOnWithOnArrayShouldProduceTwoEmptyArrays() throws Exception {
     String[] emptyArray = {};
     String[] onArray = {"on"};
-    assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onArray).before);
-    assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onArray).after);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onArray).before);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onArray).after);
   }
 
   @Test
@@ -43,8 +42,8 @@ public class ParsingUtilsTest {
     String[] emptyArray = {};
     String[] onArray = {"on"};
     String[] onOnArray = {"on", "on"};
-    assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onOnArray).before);
-    assertArrayEquals(onArray, ParsingUtils.splitOnOn(onOnArray).after);
+    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(onOnArray).before);
+    Assert.assertArrayEquals(onArray, ParsingUtils.splitOnOn(onOnArray).after);
   }
 
   @Test
@@ -52,8 +51,8 @@ public class ParsingUtilsTest {
     String[] fooArray = {"foo"};
     String[] barArray = {"bar"};
     String[] onOnArray = {"foo", "on", "bar"};
-    assertArrayEquals(fooArray, ParsingUtils.splitOnOn(onOnArray).before);
-    assertArrayEquals(barArray, ParsingUtils.splitOnOn(onOnArray).after);
+    Assert.assertArrayEquals(fooArray, ParsingUtils.splitOnOn(onOnArray).before);
+    Assert.assertArrayEquals(barArray, ParsingUtils.splitOnOn(onOnArray).after);
   }
 
 }
