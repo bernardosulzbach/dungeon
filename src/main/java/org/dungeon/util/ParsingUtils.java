@@ -15,16 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.entity.creatures;
-
-import org.dungeon.util.ArrayUtils;
+package org.dungeon.util;
 
 import java.util.Arrays;
 
 /**
  * Parsing utilities.
  */
-public class ParsingUtils {
+public final class ParsingUtils {
+
+  private ParsingUtils() {
+    throw new AssertionError();
+  }
 
   /**
    * Splits an array of tokens into two smaller arrays. The first of which will contain all the tokens that appeared
@@ -40,10 +42,14 @@ public class ParsingUtils {
     }
   }
 
-  static class SplitResult {
+  /**
+   * The result of a split operation. Has two arrays - before and after - that contain the tokens before the split and
+   * after the split, respectively.
+   */
+  public static class SplitResult {
 
-    final String[] before;
-    final String[] after;
+    public final String[] before;
+    public final String[] after;
 
     public SplitResult(String[] before, String[] after) {
       this.before = before;

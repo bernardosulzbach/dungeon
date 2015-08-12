@@ -15,18 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.entity.creatures;
+package org.dungeon.util;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-public class ParsingUtilsTest {
+public class ArrayUtilsTest {
 
   @Test
-  public void testSplitOnOn() throws Exception {
-    String[] emptyArray = {};
-    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).before);
-    Assert.assertArrayEquals(emptyArray, ParsingUtils.splitOnOn(emptyArray).after);
+  public void findFirstOccurrenceShouldReturnTheIndexIfTheElementIsFound() throws Exception {
+    String[] tokens = {"a", "b", "c", "d", "e"};
+    for (int i = 0; i < tokens.length; i++) {
+      assertEquals(i, ArrayUtils.findFirstOccurrence(tokens, tokens[i]));
+    }
+  }
+
+  @Test
+  public void findFirstOccurrenceShouldReturnTheLengthIfTheElementIsNotFound() throws Exception {
+    String[] tokens = {"a", "b", "c", "d", "e"};
+    assertEquals(tokens.length, ArrayUtils.findFirstOccurrence(tokens, "z"));
   }
 
 }

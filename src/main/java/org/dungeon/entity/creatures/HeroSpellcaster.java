@@ -22,6 +22,7 @@ import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Writer;
 import org.dungeon.spells.Spell;
 import org.dungeon.util.Matches;
+import org.dungeon.util.ParsingUtils;
 import org.dungeon.util.Utils;
 
 import java.io.Serializable;

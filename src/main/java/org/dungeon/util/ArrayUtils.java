@@ -17,7 +17,14 @@
 
 package org.dungeon.util;
 
-public class ArrayUtils {
+/**
+ * Array utilities.
+ */
+public final class ArrayUtils {
+
+  private ArrayUtils() {
+    throw new AssertionError();
+  }
 
   /**
    * Finds the first occurrence of a value in an array. Returns the length of the array if the element could not be
