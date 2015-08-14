@@ -49,6 +49,9 @@ import java.util.Map;
  */
 public final class CreatureFactory {
 
+  private static final int DEFAULT_INVENTORY_ITEM_LIMIT = 100;
+  private static final double DEFAULT_INVENTORY_WEIGHT_LIMIT = 100.0;
+
   private static Map<Id, CreaturePreset> creaturePresetMap;
 
   private CreatureFactory() {
@@ -72,8 +75,8 @@ public final class CreatureFactory {
       } else {
         preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
       }
-      preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", 0));
-      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", 0.0));
+      preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", DEFAULT_INVENTORY_ITEM_LIMIT));
+      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", DEFAULT_INVENTORY_WEIGHT_LIMIT));
       preset.setItems(getInventory(presetObject));
       setLuminosityIfPresent(preset, presetObject);
       setVisibility(preset, presetObject);

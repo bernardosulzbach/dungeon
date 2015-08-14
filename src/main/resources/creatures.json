@@ -27,8 +27,6 @@
         "singular": "Dummy",
         "plural": "Dummies"
       },
-      "inventoryItemLimit": 3,
-      "inventoryWeightLimit": 71.4,
       "inventory": [
         "STICK",
         "STICK",
@@ -49,8 +47,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1.35,
@@ -67,8 +63,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 315,
@@ -85,8 +79,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 90,
@@ -104,8 +96,6 @@
         "MILKABLE",
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1000,
@@ -122,8 +112,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 400,
@@ -141,8 +129,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 2,
-      "inventoryWeightLimit": 2,
       "inventory": [
         "FOX_BEEF",
         "FOX_BEEF"
@@ -162,8 +148,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1.35,
@@ -180,8 +164,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 4,
@@ -198,8 +180,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 70,
@@ -216,8 +196,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 4,
-      "inventoryWeightLimit": 10,
       "inventory": [
         "ORC_SWORD"
       ],
@@ -237,8 +215,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 1,
-      "inventoryWeightLimit": 0.2,
       "inventory": [
         "RAT_BEEF"
       ],
@@ -257,8 +233,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1,
@@ -275,8 +249,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1,
@@ -294,8 +266,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 50,
@@ -312,8 +282,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 300,
@@ -330,8 +298,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 0.65,
@@ -348,8 +314,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "70%",
       "weight": 1.45,
@@ -366,8 +330,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 2,
-      "inventoryWeightLimit": 4,
       "inventory": [
         "BONE",
         "SWORD"
@@ -389,8 +351,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 4,
-      "inventoryWeightLimit": 8,
       "inventory": [
         "CLUB"
       ],
@@ -411,8 +371,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 0,
-      "inventoryWeightLimit": 0,
       "inventory": [],
       "visibility": "80%",
       "luminosity": "20%",
@@ -432,8 +390,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventoryItemLimit": 1,
-      "inventoryWeightLimit": 0.2,
       "inventory": [
         "HARPY_FEATHER"
       ],
