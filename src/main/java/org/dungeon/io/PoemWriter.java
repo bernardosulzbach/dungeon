@@ -24,6 +24,9 @@ import org.dungeon.util.library.Poem;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The main purpose of this class is to provide a public static parsePoemCommand method that parses poem commands.
+ */
 public final class PoemWriter {
 
   private PoemWriter() {
