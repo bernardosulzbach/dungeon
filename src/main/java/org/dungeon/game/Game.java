@@ -85,7 +85,7 @@ public class Game {
       gameState = Loader.newGame();
       // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
       // So check for any save in the folder.
-      if (!Loader.checkForAnySave()) { // Suggest the tutorial only if no saved game exists.
+      if (!Loader.checkForSave()) { // Suggest the tutorial only if no saved game exists.
         suggestTutorial();
       }
     }

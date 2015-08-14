@@ -122,26 +122,10 @@ public final class Loader {
   }
 
   /**
-   * Check if the default save file exists.
-   */
-  private static boolean checkForDefaultSave() {
-    File defaultSave = createFileFromName(DEFAULT_SAVE_NAME);
-    return isSaveFile(defaultSave);
-  }
-
-  /**
    * Checks if any file in the saves folder ends with the save extension.
    */
-  public static boolean checkForAnySave() {
-    File[] files = SAVES_FOLDER.listFiles();
-    if (files != null) {
-      for (File file : files) {
-        if (isSaveFile(file)) {
-          return true;
-        }
-      }
-    }
-    return false;
+  public static boolean checkForSave() {
+    return SAVES_FOLDER.list(DungeonFilenameFilters.getExtensionFilter()).length != 0;
   }
 
   /**
@@ -176,16 +160,16 @@ public final class Loader {
   }
 
   /**
-   * Loads the default save file if it exists. If it does not exist, this returns another existing save. Lastly, if the
-   * saves folder is empty or does not exist, the method returns {@code null}. Note that if the user does not confirm
-   * the operation in the dialog that pops up, this method return {@code null}.
+   * Loads the newest save file if there is a save file. Otherwise, returns {@code null}.
+   *
+   * Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code null}.
    */
   public static GameState loadGame() {
-    if (checkForDefaultSave()) {
+    if (checkForSave()) {
       if (confirmOperation(LOAD_CONFIRM)) {
         return loadFile(createFileFromName(DEFAULT_SAVE_NAME));
       }
-    } else if (checkForAnySave()) {
+    } else if (checkForSave()) {
       if (confirmOperation(LOAD_CONFIRM)) {
         File[] files = SAVES_FOLDER.listFiles();
         if (files != null) {
