@@ -353,6 +353,8 @@ public class GameWindow extends JFrame {
 
   /**
    * Clears the TextPane by erasing everything in the local Document.
+   *
+   * This schedules the operation to be ran on the EDT, so it is safe to invoke this on any thread.
    */
   public void clearTextPane() {
     SwingUtilities.invokeLater(new Runnable() {
