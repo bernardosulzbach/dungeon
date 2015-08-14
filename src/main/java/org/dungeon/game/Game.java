@@ -29,6 +29,7 @@ import org.dungeon.util.StopWatch;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class Game {
@@ -49,7 +50,7 @@ public class Game {
       }
     });
     DungeonLogger.info("Finished making the window. Took " + stopWatch.toString() + ".");
-    setGameState(loadAGameStateOrCreateANewOne());
+    setGameState(getInitialGameState());
     invokeOnEventDispatchThreadAndWait(new Runnable() {
       @Override
       public void run() {
@@ -76,11 +77,12 @@ public class Game {
   }
 
   /**
-   * Loads a saved GameState or creates a new one. If a new GameState is created and the saves folder is empty, the
-   * tutorial is suggested.
+   * Loads a saved GameState or creates a new one. Should be invoked to get the first GameState of the instance.
+   *
+   * <p>If a new GameState is created and the saves folder is empty, the tutorial is suggested.
    */
-  private static GameState loadAGameStateOrCreateANewOne() {
-    GameState gameState = Loader.loadGame();
+  private static GameState getInitialGameState() {
+    GameState gameState = Loader.loadGame(true);
     if (gameState == null) {
       gameState = Loader.newGame();
       // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
@@ -95,6 +97,20 @@ public class Game {
   private static void suggestTutorial() {
     Writer.writeNewLine();
     Writer.writeString("You may want to issue 'tutorial' to learn the basics.");
+  }
+
+  /**
+   * Gets a GameState object. Should be invoked to get a GameState after the Hero dies.
+   */
+  private static GameState getAfterDeathGameState() {
+    GameState gameState = Loader.loadGame(false);
+    if (gameState != null) {
+      JOptionPane.showMessageDialog(getGameWindow(), "Loaded the most recent saved game.");
+    } else {
+      gameState = Loader.newGame();
+      JOptionPane.showMessageDialog(getGameWindow(), "Could not load a saved game. Created a new game.");
+    }
+    return gameState;
   }
 
   public static GameWindow getGameWindow() {
@@ -112,16 +128,24 @@ public class Game {
    * @param state another GameState object, or null
    */
   public static void setGameState(GameState state) {
-    gameState = state;
-    if (state == null) {
-      DungeonLogger.info("Set the GameState field in Game to null.");
-    } else {
-      DungeonLogger.info("Set the GameState field in Game to a GameState.");
-      // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
-      Engine.refresh();
-      Writer.writeNewLine(); // Improves readability.
-      gameState.getHero().look(null);
+    if (getGameState() != null) {
+      DungeonLogger.warning("Called setGameState without unsetting the old game state.");
     }
+    if (state == null) {
+      throw new IllegalArgumentException("passed null to setGameState.");
+    }
+    gameState = state;
+    DungeonLogger.info("Set the GameState field in Game to a GameState.");
+    // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
+    Engine.refresh();
+    Writer.writeNewLine(); // Improves readability.
+    gameState.getHero().look(null);
+
+  }
+
+  public static void unsetGameState() {
+    DungeonLogger.info("Set the GameState field in Game to null.");
+    gameState = null;
   }
 
   /**
@@ -134,8 +158,10 @@ public class Game {
     getGameWindow().clearTextPane();
     processInput(issuedCommand);
     if (gameState.getHero().getHealth().isDead()) {
+      getGameWindow().clearTextPane();
       Writer.writeString("You died.");
-      setGameState(loadAGameStateOrCreateANewOne());
+      unsetGameState();
+      setGameState(getAfterDeathGameState());
     } else {
       Engine.endTurn();
     }

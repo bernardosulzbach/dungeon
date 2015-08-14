@@ -101,10 +101,13 @@ public final class Loader {
    * Loads the newest save file if there is a save file. Otherwise, returns {@code null}.
    *
    * Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code null}.
+   *
+   * @param requireConfirmation whether or not this method should require confirmation from the user
+   * @return a GameState or null
    */
-  public static GameState loadGame() {
+  public static GameState loadGame(boolean requireConfirmation) {
     if (checkForSave()) {
-      if (confirmOperation(LOAD_CONFIRM)) {
+      if (!requireConfirmation || confirmOperation(LOAD_CONFIRM)) {
         return loadFile(getMostRecentlySavedFile());
       }
     }
@@ -112,12 +115,20 @@ public final class Loader {
   }
 
   /**
-   * Attempts to load the save file indicated by the first argument of the "load" command. If the load command was
-   * issued without arguments, this method delegates save loading to {@code Loader.loadGame()}.
+   * Attempts to load the save file indicated by the first argument of the "load" command.
+   *
+   * If the filename was provided but didn't match any files, a message about this is written.
+   *
+   * If the load command was issued without arguments, this method delegates save loading to {@code
+   * Loader.loadGame(false)}.
+   *
+   * If no save file could be found, a message is written.
+   *
+   * This method guarantees that the if null is returned, something is written to the screen.
    */
-  public static GameState loadGame(IssuedCommand issuedCommand) {
+  public static GameState parseLoadCommand(IssuedCommand issuedCommand) {
     if (issuedCommand == null) {
-      DungeonLogger.warning("Passed null to Loader.loadGame(IssuedCommand).");
+      DungeonLogger.warning("Passed null to Loader.parseLoadCommand(IssuedCommand).");
       return null;
     }
     if (issuedCommand.hasArguments()) {
@@ -132,7 +143,11 @@ public final class Loader {
         return null;
       }
     } else {
-      return loadGame();
+      GameState loadResult = loadGame(false); // Don't ask for confirmation. Typing load is not an easy mistake.
+      if (loadResult == null) {
+        Writer.writeString("No saved game could be found.");
+      }
+      return loadResult;
     }
   }
 
@@ -236,8 +251,8 @@ public final class Loader {
   }
 
   /**
-   * Returns an array of abstract pathnames denoting the files and directories in the saves folder that end with a
-   * valid extension. Returns null if an I/O error occurs.
+   * Returns an array of abstract pathnames denoting the files and directories in the saves folder that end with a valid
+   * extension. Returns null if an I/O error occurs.
    */
   public static File[] getSortedArrayOfSavedFiles() {
     File[] saveFiles = SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter());

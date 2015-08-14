@@ -156,8 +156,9 @@ public final class CommandCollection {
     addCommandToDefault(new Command("load", "Loads a saved game.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        GameState loadedGameState = Loader.loadGame(issuedCommand);
+        GameState loadedGameState = Loader.parseLoadCommand(issuedCommand);
         if (loadedGameState != null) {
+          Game.unsetGameState();
           Game.setGameState(loadedGameState);
         }
       }
@@ -183,7 +184,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("new", "Starts a new game.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        Game.setGameState(null);
+        Game.unsetGameState();
         Game.setGameState(Loader.newGame());
       }
     });
