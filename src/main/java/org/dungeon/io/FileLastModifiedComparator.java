@@ -18,26 +18,26 @@
 package org.dungeon.io;
 
 import java.io.File;
-import java.io.FilenameFilter;
+import java.util.Comparator;
 
 /**
- * This class provides getters for FilenameFilter implementations used by the application for input and output.
+ * A Comparator function that compares the last modification times of Files. This comparator orders files from newest to
+ * oldest, which is, in terms of last modified timestamps, from largest to smallest.
+ *
+ * This is not consistent with equals.
+ *
+ * Serializable is not implemented by design. This Comparator was devised to be used by Arrays.sort and nothing else.
  */
-final class DungeonFilenameFilters {
+class FileLastModifiedComparator implements Comparator<File> {
 
-  private static final FilenameFilter extensionFilter = new FilenameFilter() {
-    @Override
-    public boolean accept(File dir, String name) {
-      return name.endsWith(".dungeon");
-    }
-  };
-
-  private DungeonFilenameFilters() {
-    throw new AssertionError();
+  @Override
+  public int compare(File a, File b) {
+    return Long.valueOf(b.lastModified()).compareTo(a.lastModified());
   }
 
-  public static FilenameFilter getExtensionFilter() {
-    return extensionFilter;
+  @Override
+  public boolean equals(Object obj) {
+    return false;
   }
 
 }

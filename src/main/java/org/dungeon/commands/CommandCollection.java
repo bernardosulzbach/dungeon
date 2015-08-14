@@ -26,6 +26,7 @@ import org.dungeon.game.GameState;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.io.PoemWriter;
+import org.dungeon.io.SavesTableWriter;
 import org.dungeon.io.Writer;
 import org.dungeon.map.WorldMap;
 import org.dungeon.map.WorldMapWriter;
@@ -219,7 +220,7 @@ public final class CommandCollection {
     addCommandToDefault(new Command("saves", "Displays a table with all the save files.") {
       @Override
       public void execute(@NotNull IssuedCommand issuedCommand) {
-        Loader.printFilesInSavesFolder();
+        SavesTableWriter.writeSavesFolderTable();
       }
     });
     addCommandToDefault(new Command("sleep", "Sleeps until the sun rises. The character may dream during it.") {

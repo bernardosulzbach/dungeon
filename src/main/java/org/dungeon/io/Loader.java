@@ -18,16 +18,11 @@
 package org.dungeon.io;
 
 import org.dungeon.commands.IssuedCommand;
-import org.dungeon.date.EarthTimeUnit;
-import org.dungeon.date.TimeStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
-import org.dungeon.util.Table;
 
-import org.jetbrains.annotations.NotNull;
-import org.joda.time.Period;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 
@@ -35,10 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -52,63 +44,9 @@ public final class Loader {
   private static final String DEFAULT_SAVE_NAME = "default" + SAVE_EXTENSION;
   private static final String SAVE_CONFIRM = "Do you want to save the game?";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
-  private static final SimpleDateFormat LAST_MODIFIED_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   private Loader() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
-  }
-
-  private static void sortFileArrayByLastModifiedDate(@NotNull File[] array) {
-    Arrays.sort(array, new Comparator<File>() {
-      @Override
-      public int compare(File a, File b) {
-        return Long.valueOf(b.lastModified()).compareTo(a.lastModified());
-      }
-    });
-  }
-
-  /**
-   * Pretty-prints all the files in the saves folder.
-   */
-  public static void printFilesInSavesFolder() {
-    File[] files = SAVES_FOLDER.listFiles();
-    if (files != null) {
-      sortFileArrayByLastModifiedDate(files);
-      if (files.length != 0) {
-        Table table = new Table("Name", "Size", "Last modified");
-        int fileCount = 0;
-        int byteCount = 0;
-        for (File file : files) {
-          fileCount += 1;
-          byteCount += file.length();
-          Date lastModified = new Date(file.lastModified());
-          String periodString = makePeriodString(lastModified.getTime(), System.currentTimeMillis());
-          String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
-          table.insertRow(file.getName(), bytesToHuman(file.length()), lastModifiedString);
-        }
-        if (fileCount > 1) {
-          table.insertSeparator();
-          table.insertRow("Sum of these " + fileCount + " files", bytesToHuman(byteCount));
-        }
-        table.print();
-      } else {
-        Writer.writeString("Saves folder is empty.");
-      }
-    } else {
-      Writer.writeString("Saves folder does not exist.");
-    }
-  }
-
-  private static String makePeriodString(long start, long end) {
-    Period period = new Period(start, end);
-    TimeStringBuilder builder = new TimeStringBuilder();
-    builder.set(EarthTimeUnit.YEAR, period.getYears());
-    builder.set(EarthTimeUnit.MONTH, period.getMonths());
-    builder.set(EarthTimeUnit.DAY, period.getDays());
-    builder.set(EarthTimeUnit.HOUR, period.getHours());
-    builder.set(EarthTimeUnit.MINUTE, period.getMinutes());
-    builder.set(EarthTimeUnit.SECOND, period.getSeconds());
-    return builder.toString(2) + " ago";
   }
 
   /**
@@ -125,7 +63,7 @@ public final class Loader {
    * Checks if any file in the saves folder ends with the save extension.
    */
   public static boolean checkForSave() {
-    return SAVES_FOLDER.list(DungeonFilenameFilters.getExtensionFilter()).length != 0;
+    return SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter()).length != 0;
   }
 
   /**
@@ -167,15 +105,7 @@ public final class Loader {
   public static GameState loadGame() {
     if (checkForSave()) {
       if (confirmOperation(LOAD_CONFIRM)) {
-        return loadFile(createFileFromName(DEFAULT_SAVE_NAME));
-      }
-    } else if (checkForSave()) {
-      if (confirmOperation(LOAD_CONFIRM)) {
-        File[] files = SAVES_FOLDER.listFiles();
-        if (files != null) {
-          File firstListedFile = files[0];
-          return loadFile(firstListedFile);
-        }
+        return loadFile(getMostRecentlySavedFile());
       }
     }
     return null;
@@ -264,7 +194,7 @@ public final class Loader {
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
-      String sizeString = bytesToHuman(file.length());
+      String sizeString = IOUtils.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
       Writer.writeString(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
       return loadedGameState;
@@ -297,7 +227,7 @@ public final class Loader {
       objectOutStream.writeObject(state);
       objectOutStream.close();
       state.setSaved(true);
-      String sizeString = bytesToHuman(file.length());
+      String sizeString = IOUtils.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
       Writer.writeString(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
     } catch (IOException bad) {
@@ -306,26 +236,24 @@ public final class Loader {
   }
 
   /**
-   * Converts a given number of bytes to a human readable format.
-   *
-   * @return a String
+   * Returns an array of abstract pathnames denoting the files and directories in the saves folder that end with a
+   * valid extension. Returns null if an I/O error occurs.
    */
-  private static String bytesToHuman(long bytes) {
-    if (bytes < 1024) {
-      return bytes + " B";
+  public static File[] getSortedArrayOfSavedFiles() {
+    File[] saveFiles = SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter());
+    if (saveFiles != null) {
+      Arrays.sort(saveFiles, new FileLastModifiedComparator());
     }
-    // 2 ^ 10 (1 kB) has (63 - 10) = 53 leading zeros.
-    // 2 ^ 20 (1 MB) has (63 - 20) = 43 leading zeros.
-    // And so forth.
-    // Bits used to represent the number of bytes = number of bits available - number of leading zeros.
-    int bitsUsed = 63 - Long.numberOfLeadingZeros(bytes);
-    // (1L << (bitsUsed - bitsUsed % 10)) shifts the one (in binary) to the left by a multiple of 10.
-    // This is a fast way to get the power of 1024 by which we must divide the number of bytes.
-    double significand = (double) bytes / (1L << (bitsUsed - bitsUsed % 10));
-    // By dividing the number of bits used by 10, get the prefix that should be used.
-    // Subtract one as Strings are zero indexed.
-    char prefix = "kMGTPE".charAt(bitsUsed / 10 - 1);
-    return String.format("%.1f %sB", significand, prefix);
+    return saveFiles;
+  }
+
+  private static File getMostRecentlySavedFile() {
+    File[] saveFiles = getSortedArrayOfSavedFiles();
+    if (saveFiles.length == 0) {
+      return null;
+    } else {
+      return saveFiles[0];
+    }
   }
 
 }
