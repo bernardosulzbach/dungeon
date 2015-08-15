@@ -34,8 +34,8 @@ class Dropper implements Serializable {
 
   private final Creature creature;
   private final List<Drop> dropList;
+  private final List<Item> droppedItemsList = new ArrayList<Item>();
   private boolean hasAlreadyCalledDropEverything = false;
-  private List<Item> droppedItemsList;
 
   public Dropper(Creature creature, List<Drop> dropList) {
     this.creature = creature;
@@ -44,9 +44,6 @@ class Dropper implements Serializable {
 
   @NotNull
   List<Item> getDroppedItemsList() {
-    if (droppedItemsList == null) {
-      droppedItemsList = new ArrayList<Item>();
-    }
     return droppedItemsList;
   }
 
@@ -72,7 +69,6 @@ class Dropper implements Serializable {
   }
 
   private void dropVariableDrops() {
-    droppedItemsList = new ArrayList<Item>();
     for (Drop drop : dropList) {
       if (drop.rollForDrop()) {
         Item item = ItemFactory.makeItem(drop.getItemId(), creature.getLocation().getWorld().getWorldDate());
