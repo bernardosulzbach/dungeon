@@ -157,7 +157,7 @@ public class Game {
     // Clears the text pane.
     getGameWindow().clearTextPane();
     processInput(issuedCommand);
-    if (gameState.getHero().getHealth().isDead()) {
+    if (getGameState().getHero().getHealth().isDead()) {
       getGameWindow().clearTextPane();
       Writer.writeString("You died.");
       unsetGameState();
@@ -175,8 +175,8 @@ public class Game {
    */
   private static void processInput(IssuedCommand issuedCommand) {
     instanceInformation.incrementAcceptedCommandCount();
-    gameState.getCommandHistory().addCommand(issuedCommand);
-    gameState.getStatistics().addCommand(issuedCommand);
+    getGameState().getCommandHistory().addCommand(issuedCommand);
+    getGameState().getStatistics().addCommand(issuedCommand);
     Command command = CommandCollection.getDefaultCommandCollection().getCommand(issuedCommand);
     if (command != null) {
       command.execute(issuedCommand);
@@ -189,10 +189,8 @@ public class Game {
    * Exits the game, prompting the user if the current state should be saved if it is not already saved.
    */
   public static void exit() {
-    if (gameState != null) {
-      if (!gameState.isSaved()) {
-        Loader.saveGame(gameState);
-      }
+    if (getGameState() != null && !getGameState().isSaved()) {
+      Loader.saveGame(getGameState());
     }
     logInstanceClosing();
     System.exit(0);
