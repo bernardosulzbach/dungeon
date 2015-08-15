@@ -179,6 +179,20 @@
       ]
     },
     {
+      "id": "ASSASSIN",
+      "name": "Assassin",
+      "info": "Kill a Common.",
+      "text": "killed a Common",
+      "battleRequirements": [
+        {
+          "query": {
+            "type": "Common"
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
       "id": "FROM_THE_FORBIDDEN_TREE",
       "name": "From the Forbidden Tree",
       "info": "Kill a snake with an apple.",
