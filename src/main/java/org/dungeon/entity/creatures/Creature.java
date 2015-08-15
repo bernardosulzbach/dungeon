@@ -29,7 +29,7 @@ import org.dungeon.stats.CauseOfDeath;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Creature class.
@@ -42,9 +42,9 @@ public class Creature extends Entity {
   private final CreatureInventory inventory;
   private final LightSource lightSource;
   private final CreatureHealth health;
+  private final Dropper dropper;
   private Item weapon;
   private Location location;
-
   /**
    * What caused the death of this creature. If getHealth().isAlive() evaluates to true, this should be null.
    */
@@ -58,6 +58,7 @@ public class Creature extends Entity {
     attackAlgorithmId = preset.getAttackAlgorithmId();
     inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
     lightSource = new LightSource(preset.getLuminosity());
+    dropper = new Dropper(this, preset.getDropList());
   }
 
   public boolean hasTag(Tag tag) {
@@ -66,6 +67,10 @@ public class Creature extends Entity {
 
   public CreatureHealth getHealth() {
     return health;
+  }
+
+  Dropper getDropper() {
+    return dropper;
   }
 
   public int getAttack() {
@@ -150,15 +155,6 @@ public class Creature extends Entity {
     }
   }
 
-  /**
-   * Iterates though the Creature's inventory, dropping all Items on the ground.
-   */
-  public void dropEverything() {
-    for (Item item : new ArrayList<Item>(getInventory().getItems())) {
-      dropItem(item);
-    }
-  }
-
   public AttackAlgorithmId getAttackAlgorithmId() {
     return attackAlgorithmId;
   }
@@ -182,6 +178,17 @@ public class Creature extends Entity {
     } else {
       this.causeOfDeath = causeOfDeath;
     }
+  }
+
+  /**
+   * Returns a List with all the items this Creature dropped when it died. If this Creature is still alive, returns an
+   * empty list.
+   *
+   * @return a List with the Items this Creature dropped when it died
+   */
+  @NotNull
+  public List<Item> getDroppedItemsList() {
+    return getDropper().getDroppedItemsList();
   }
 
   @Override

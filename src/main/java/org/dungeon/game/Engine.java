@@ -22,6 +22,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.Writer;
 import org.dungeon.stats.ExplorationStatistics;
+import org.dungeon.util.Utils;
 
 import java.awt.Color;
 
@@ -190,10 +191,26 @@ public final class Engine {
     // Imagine if a third factor (such as hunger) could kill one of the creatures.
     // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
     Writer.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
+    writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, defeated.getCauseOfDeath(), partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
+    }
+  }
+
+  /**
+   * Writes a message with what the creature dropped if it dropped something.
+   *
+   * @param source a dead Creature
+   */
+  private static void writeDrops(Creature source) {
+    if (!source.getDroppedItemsList().isEmpty()) {
+      DungeonStringBuilder builder = new DungeonStringBuilder();
+      builder.append(source.getName().getSingular() + " dropped ");
+      builder.append(Utils.enumerateEntities(source.getDroppedItemsList()));
+      builder.append(".");
+      Writer.write(builder);
     }
   }
 

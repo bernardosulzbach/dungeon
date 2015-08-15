@@ -38,7 +38,7 @@ final class DeathHandler {
     if (creature.hasTag(Creature.Tag.CORPSE)) {
       defeatedLocation.addItem(ItemFactory.makeCorpse(creature, defeatedLocation.getWorld().getWorldDate()));
     }
-    creature.dropEverything();
+    creature.getDropper().dropEverything();
     DungeonLogger.fine("Disposed of " + creature.getName() + " at " + creature.getLocation() + ".");
   }
 

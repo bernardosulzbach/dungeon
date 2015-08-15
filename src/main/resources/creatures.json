@@ -18,276 +18,85 @@
       "weight": 80,
       "health": 50,
       "attack": 4,
-      "attackAlgorithmID": "HERO"
+      "attackAlgorithmID": "SIMPLE"
     },
     {
-      "id": "DUMMY",
-      "type": "Dummy",
+      "id": "MERCHANT",
+      "type": "Common",
       "name": {
-        "singular": "Dummy",
-        "plural": "Dummies"
-      },
-      "inventory": [
-        "STICK",
-        "STICK",
-        "WOOD_LOG"
-      ],
-      "visibility": "70%",
-      "weight": 50,
-      "health": 200,
-      "attack": 0,
-      "attackAlgorithmID": "DUMMY"
-    },
-    {
-      "id": "BAT",
-      "type": "Beast",
-      "name": {
-        "singular": "Bat"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 1.35,
-      "health": 12,
-      "attack": 5,
-      "attackAlgorithmID": "BAT"
-    },
-    {
-      "id": "BEAR",
-      "type": "Beast",
-      "name": {
-        "singular": "Bear"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 315,
-      "health": 30,
-      "attack": 15,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "BOAR",
-      "type": "Beast",
-      "name": {
-        "singular": "Boar"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 90,
-      "health": 16,
-      "attack": 9,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "COW",
-      "type": "Beast",
-      "name": {
-        "singular": "Cow"
-      },
-      "tags": [
-        "MILKABLE",
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 1000,
-      "health": 55,
-      "attack": 4,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "CROCODILE",
-      "type": "Beast",
-      "name": {
-        "singular": "Crocodile"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 400,
-      "health": 26,
-      "attack": 17,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "FOX",
-      "type": "Beast",
-      "name": {
-        "singular": "Fox",
-        "plural": "Foxes"
+        "singular": "Merchant"
       },
       "tags": [
         "CORPSE"
       ],
       "inventory": [
-        "FOX_BEEF",
-        "FOX_BEEF"
+        "DAGGER"
+      ],
+      "drops": [
+        ["APPLE", 0.6],
+        ["BANANA", 0.4],
+        ["CHERRY", 0.8],
+        ["CHERRY", 0.8],
+        ["WATERMELON", 0.2],
+        ["TOME_OF_PERCEIVE", 0.1],
+        ["TOME_OF_REPAIR", 0.05]
       ],
       "visibility": "70%",
-      "weight": 9,
-      "health": 13,
-      "attack": 7,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "FRUIT_BAT",
-      "type": "Beast",
-      "name": {
-        "singular": "Fruit Bat"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 1.35,
-      "health": 28,
+      "weight": 80,
+      "health": 50,
       "attack": 4,
-      "attackAlgorithmID": "BEAST"
+      "attackAlgorithmID": "SIMPLE",
+      "weapon": "DAGGER"
     },
     {
-      "id": "GREEN_IGUANA",
-      "type": "Critter",
+      "id": "TRAVELER",
+      "type": "Common",
       "name": {
-        "singular": "Green Iguana"
+        "singular": "Traveler"
       },
       "tags": [
         "CORPSE"
       ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 4,
-      "health": 18,
-      "attack": 0,
-      "attackAlgorithmID": "CRITTER"
-    },
-    {
-      "id": "KOMODO_DRAGON",
-      "type": "Beast",
-      "name": {
-        "singular": "Komodo Dragon"
-      },
-      "tags": [
-        "CORPSE"
+      "items": [
+        "DAGGER"
       ],
-      "inventory": [],
+      "drops": [
+        ["APPLE", 0.8],
+        ["APPLE", 0.4],
+        ["COW_BEEF", 0.25],
+        ["ORC_SWORD", 0.6],
+        ["STRAWBERRY", 0.6],
+        ["TOME_OF_PERCEIVE", 0.05]
+      ],
       "visibility": "70%",
       "weight": 70,
-      "health": 24,
-      "attack": 10,
-      "attackAlgorithmID": "BEAST"
+      "health": 40,
+      "attack": 4,
+      "attackAlgorithmID": "SIMPLE",
+      "weapon": "DAGGER"
     },
     {
-      "id": "ORC",
-      "type": "Beast",
+      "id": "FARMER",
+      "type": "Common",
       "name": {
-        "singular": "Orc"
+        "singular": "Farmer"
       },
       "tags": [
         "CORPSE"
       ],
-      "inventory": [
-        "ORC_SWORD"
+      "drops": [
+        ["POTATO", 1.0],
+        ["POTATO", 0.8],
+        ["POTATO", 0.6],
+        ["POTATO", 0.4],
+        ["STRAWBERRY", 0.6],
+        ["STRAWBERRY", 0.6]
       ],
       "visibility": "70%",
-      "weight": 100,
-      "health": 35,
-      "attack": 10,
-      "attackAlgorithmID": "ORC",
-      "weapon": "ORC_SWORD"
-    },
-    {
-      "id": "RAT",
-      "type": "Beast",
-      "name": {
-        "singular": "Rat"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [
-        "RAT_BEEF"
-      ],
-      "visibility": "70%",
-      "weight": 0.35,
-      "health": 14,
-      "attack": 7,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "SNAKE",
-      "type": "Beast",
-      "name": {
-        "singular": "Snake"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 1,
-      "health": 23,
-      "attack": 9,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "SPIDER",
-      "type": "Beast",
-      "name": {
-        "singular": "Spider"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 1,
-      "health": 20,
-      "attack": 8,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "WOLF",
-      "type": "Beast",
-      "name": {
-        "singular": "Wolf",
-        "plural": "Wolves"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 50,
-      "health": 30,
-      "attack": 11,
-      "attackAlgorithmID": "BEAST"
-    },
-    {
-      "id": "WHITE_TIGER",
-      "type": "Beast",
-      "name": {
-        "singular": "White Tiger"
-      },
-      "tags": [
-        "CORPSE"
-      ],
-      "inventory": [],
-      "visibility": "70%",
-      "weight": 300,
-      "health": 20,
-      "attack": 16,
-      "attackAlgorithmID": "BEAST"
+      "weight": 75,
+      "health": 45,
+      "attack": 5,
+      "attackAlgorithmID": "SIMPLE"
     },
     {
       "id": "FROG",
@@ -298,7 +107,6 @@
       "tags": [
         "CORPSE"
       ],
-      "inventory": [],
       "visibility": "70%",
       "weight": 0.65,
       "health": 10,
@@ -314,7 +122,9 @@
       "tags": [
         "CORPSE"
       ],
-      "inventory": [],
+      "drops": [
+        ["RABBIT_BEEF", 1.0]
+      ],
       "visibility": "70%",
       "weight": 1.45,
       "health": 10,
@@ -322,25 +132,289 @@
       "attackAlgorithmID": "CRITTER"
     },
     {
-      "id": "SKELETON",
-      "type": "Undead",
+      "id": "BAT",
+      "type": "Beast",
       "name": {
-        "singular": "Skeleton"
+        "singular": "Bat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "visibility": "70%",
+      "weight": 1.35,
+      "health": 12,
+      "attack": 5,
+      "attackAlgorithmID": "BAT"
+    },
+    {
+      "id": "BEAR",
+      "type": "Beast",
+      "name": {
+        "singular": "Bear"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["BEAR_BEEF", 1.0],
+        ["BEAR_BEEF", 0.9],
+        ["BEAR_BEEF", 0.8]
+      ],
+      "visibility": "70%",
+      "weight": 315,
+      "health": 30,
+      "attack": 15,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "BOAR",
+      "type": "Beast",
+      "name": {
+        "singular": "Boar"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["BOAR_BEEF", 1.0],
+        ["BOAR_BEEF", 0.8]
+      ],
+      "visibility": "70%",
+      "weight": 90,
+      "health": 16,
+      "attack": 9,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "COW",
+      "type": "Beast",
+      "name": {
+        "singular": "Cow"
+      },
+      "tags": [
+        "MILKABLE",
+        "CORPSE"
+      ],
+      "drops": [
+        ["COW_BEEF", 1.0],
+        ["COW_BEEF", 0.9],
+        ["COW_BEEF", 0.8],
+        ["COW_BEEF", 0.7]
+      ],
+      "visibility": "70%",
+      "weight": 1000,
+      "health": 55,
+      "attack": 4,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "CROCODILE",
+      "type": "Beast",
+      "name": {
+        "singular": "Crocodile"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["CROCODILE_BEEF", 1.0],
+        ["CROCODILE_BEEF", 0.9]
+      ],
+      "visibility": "70%",
+      "weight": 400,
+      "health": 26,
+      "attack": 17,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "FOX",
+      "type": "Beast",
+      "name": {
+        "singular": "Fox",
+        "plural": "Foxes"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["FOX_BEEF", 0.8],
+        ["FOX_BEEF", 0.6]
+      ],
+      "visibility": "70%",
+      "weight": 9,
+      "health": 13,
+      "attack": 7,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "FRUIT_BAT",
+      "type": "Beast",
+      "name": {
+        "singular": "Fruit Bat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["BANANA", 0.8],
+        ["CHERRY", 1.0]
+      ],
+      "visibility": "70%",
+      "weight": 1.35,
+      "health": 28,
+      "attack": 4,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "GREEN_IGUANA",
+      "type": "Critter",
+      "name": {
+        "singular": "Green Iguana"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["IGUANA_BEEF", 1.0]
+      ],
+      "visibility": "70%",
+      "weight": 4,
+      "health": 18,
+      "attack": 0,
+      "attackAlgorithmID": "CRITTER"
+    },
+    {
+      "id": "KOMODO_DRAGON",
+      "type": "Beast",
+      "name": {
+        "singular": "Komodo Dragon"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["KOMODO_DRAGON_BEEF", 1.0],
+        ["KOMODO_DRAGON_BEEF", 0.9]
+      ],
+      "visibility": "70%",
+      "weight": 70,
+      "health": 24,
+      "attack": 10,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "GIANT_RAT",
+      "type": "Beast",
+      "name": {
+        "singular": "Giant Rat"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drop": [
+        ["GIANT_RAT_BEEF", 1.0]
+      ],
+      "visibility": "70%",
+      "weight": 8.5,
+      "health": 14,
+      "attack": 7,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "SNAKE",
+      "type": "Beast",
+      "name": {
+        "singular": "Snake"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "visibility": "70%",
+      "weight": 1,
+      "health": 23,
+      "attack": 9,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "HUGE_SPIDER",
+      "type": "Beast",
+      "name": {
+        "singular": "Huge Spider"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["SPIDER_VENOM_GLAND", 0.2]
+      ],
+      "visibility": "70%",
+      "weight": 10,
+      "health": 20,
+      "attack": 8,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "WOLF",
+      "type": "Beast",
+      "name": {
+        "singular": "Wolf",
+        "plural": "Wolves"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["WOLF_BEEF", 1.0],
+        ["WOLF_BEEF", 0.8]
+      ],
+      "visibility": "70%",
+      "weight": 50,
+      "health": 30,
+      "attack": 11,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "WHITE_TIGER",
+      "type": "Beast",
+      "name": {
+        "singular": "White Tiger"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "drops": [
+        ["TIGER_BEEF", 1.0],
+        ["TIGER_BEEF", 0.8]
+      ],
+      "visibility": "70%",
+      "weight": 300,
+      "health": 20,
+      "attack": 16,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "ORC",
+      "type": "Beast",
+      "name": {
+        "singular": "Orc"
       },
       "tags": [
         "CORPSE"
       ],
       "inventory": [
-        "BONE",
-        "SWORD"
+        "ORC_SWORD"
       ],
-      "visibility": "65%",
+      "drops": [
+        ["AXE", 0.1],
+        ["BONE", 0.5],
+        ["POTATO", 0.2]
+      ],
       "visibility": "70%",
-      "weight": 12,
-      "health": 30,
+      "weight": 100,
+      "health": 35,
       "attack": 10,
-      "attackAlgorithmID": "UNDEAD",
-      "weapon": "SWORD"
+      "attackAlgorithmID": "ORC",
+      "weapon": "ORC_SWORD"
     },
     {
       "id": "ZOMBIE",
@@ -354,13 +428,37 @@
       "inventory": [
         "CLUB"
       ],
-      "visibility": "70%",
+      "drops": [
+        ["BONE", 0.6],
+        ["PINEAPPLE", 0.1]
+      ],
       "visibility": "70%",
       "weight": 60,
       "health": 28,
       "attack": 8,
-      "attackAlgorithmID": "UNDEAD",
+      "attackAlgorithmID": "SIMPLE",
       "weapon": "CLUB"
+    },
+    {
+      "id": "SKELETON",
+      "type": "Undead",
+      "name": {
+        "singular": "Skeleton"
+      },
+      "inventory": [
+        "SWORD"
+      ],
+      "drops": [
+        ["BONE", 1.0],
+        ["BONE", 0.8],
+        ["BONE", 0.6]
+      ],
+      "visibility": "65%",
+      "weight": 12,
+      "health": 30,
+      "attack": 10,
+      "attackAlgorithmID": "SIMPLE",
+      "weapon": "SWORD"
     },
     {
       "id": "RADIANT_GHOUL",
@@ -371,14 +469,15 @@
       "tags": [
         "CORPSE"
       ],
-      "inventory": [],
+      "drops": [
+        ["RADIANT_SKIN", 0.4]
+      ],
       "visibility": "80%",
       "luminosity": "20%",
-      "visibility": "70%",
       "weight": 55,
       "health": 20,
       "attack": 8,
-      "attackAlgorithmID": "UNDEAD"
+      "attackAlgorithmID": "SIMPLE"
     },
     {
       "id": "HARPY",
@@ -390,16 +489,35 @@
       "tags": [
         "CORPSE"
       ],
-      "inventory": [
-        "HARPY_FEATHER"
+      "drops": [
+        ["HARPY_FEATHER", 0.5]
       ],
       "visibility": "75%",
       "luminosity": "2%",
-      "visibility": "70%",
       "weight": 60,
       "health": 25,
       "attack": 12,
-      "attackAlgorithmID": "BEAST"
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
+      "id": "DUMMY",
+      "type": "Dummy",
+      "name": {
+        "singular": "Dummy",
+        "plural": "Dummies"
+      },
+      "drops": [
+        ["STICK", 1.0],
+        ["STICK", 0.8],
+        ["STICK", 0.6],
+        ["STICK", 0.4],
+        ["WOOD_LOG", 1.0]
+      ],
+      "visibility": "70%",
+      "weight": 50,
+      "health": 200,
+      "attack": 0,
+      "attackAlgorithmID": "DUMMY"
     }
   ]
 }

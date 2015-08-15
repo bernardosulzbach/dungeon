@@ -22,6 +22,6 @@ package org.dungeon.entity.creatures;
  */
 public enum AttackAlgorithmId {
 
-  BAT, BEAST, CRITTER, DUMMY, ORC, UNDEAD, HERO
+  BAT, CRITTER, DUMMY, ORC, SIMPLE
 
 }

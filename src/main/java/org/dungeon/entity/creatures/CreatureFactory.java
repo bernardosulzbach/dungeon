@@ -33,6 +33,7 @@ import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.Percentage;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
@@ -78,6 +79,7 @@ public final class CreatureFactory {
       preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", DEFAULT_INVENTORY_ITEM_LIMIT));
       preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", DEFAULT_INVENTORY_WEIGHT_LIMIT));
       preset.setItems(getInventory(presetObject));
+      preset.setDropList(getDrops(presetObject));
       setLuminosityIfPresent(preset, presetObject);
       setVisibility(preset, presetObject);
       preset.setWeight(Weight.newInstance(presetObject.get("weight").asDouble()));
@@ -133,6 +135,19 @@ public final class CreatureFactory {
       List<Id> list = new ArrayList<Id>();
       for (JsonValue value : object.get("inventory").asArray()) {
         list.add(new Id(value.asString()));
+      }
+      return list;
+    }
+  }
+
+  private static List<Drop> getDrops(JsonObject object) {
+    if (object.get("drops") == null) {
+      return Collections.emptyList();
+    } else {
+      List<Drop> list = new ArrayList<Drop>();
+      for (JsonValue value : object.get("drops").asArray()) {
+        JsonArray dropArray = value.asArray();
+        list.add(new Drop(new Id(dropArray.get(0).asString()), new Percentage(dropArray.get(1).asDouble())));
       }
       return list;
     }

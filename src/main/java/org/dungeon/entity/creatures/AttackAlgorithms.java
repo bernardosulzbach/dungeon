@@ -48,12 +48,10 @@ final class AttackAlgorithms {
 
   private static void initialize() {
     registerAttackAlgorithm(AttackAlgorithmId.BAT, new BatAttackAlgorithm());
-    registerAttackAlgorithm(AttackAlgorithmId.BEAST, new SimpleAttackAlgorithm());
     registerAttackAlgorithm(AttackAlgorithmId.CRITTER, new CritterAttackAlgorithm());
     registerAttackAlgorithm(AttackAlgorithmId.DUMMY, new DummyAttackAlgorithm());
-    registerAttackAlgorithm(AttackAlgorithmId.HERO, new SimpleAttackAlgorithm());
     registerAttackAlgorithm(AttackAlgorithmId.ORC, new OrcAttackAlgorithm());
-    registerAttackAlgorithm(AttackAlgorithmId.UNDEAD, new SimpleAttackAlgorithm());
+    registerAttackAlgorithm(AttackAlgorithmId.SIMPLE, new SimpleAttackAlgorithm());
     validateMap();
     uninitialized = false;
   }

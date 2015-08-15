@@ -178,6 +178,180 @@
       "integrityDecrementOnEat": 10
     },
     {
+      "id": "BEAR_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Bear Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "WOLF_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Wolf Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "TIGER_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Tiger Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    }, {
+      "id": "RABBIT_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Rabbit Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.5,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "BOAR_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Boar Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "CROCODILE_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Crocodile Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "COW_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Cow Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
       "id": "FOX_BEEF",
       "type": "Food",
       "name": {
@@ -190,23 +364,23 @@
         "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
       ],
       "integrity": {
-        "current": 20,
-        "maximum": 20
+        "current": 10,
+        "maximum": 10
       },
-      "weight": 1,
+      "weight": 0.5,
       "visibility": "60.00%",
-      "decompositionPeriod": "1 day",
-      "damage": 4,
-      "hitRate": "50.00%",
-      "integrityDecrementOnHit": 4,
-      "nutrition": 6,
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 10,
       "integrityDecrementOnEat": 10
     },
     {
-      "id": "RAT_BEEF",
+      "id": "IGUANA_BEEF",
       "type": "Food",
       "name": {
-        "singular": "Rat Beef"
+        "singular": "Iguana Beef"
       },
       "tags": [
         "WEAPON",
@@ -218,13 +392,63 @@
         "current": 10,
         "maximum": 10
       },
-      "weight": 0.2,
-      "visibility": "55.00%",
-      "decompositionPeriod": "1 day",
+      "weight": 0.5,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
       "damage": 2,
-      "hitRate": "30.00%",
+      "hitRate": "40.00%",
       "integrityDecrementOnHit": 5,
-      "nutrition": 2,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "KOMODO_DRAGON_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Komodo Dragon Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "GIANT_RAT_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Giant Rat Beef"
+      },
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
       "integrityDecrementOnEat": 10
     },
     {
@@ -466,6 +690,27 @@
       "visibility": "60.00%",
       "decompositionPeriod": "4 months",
       "damage": 10,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
+      "id": "SPIDER_VENOM_GLAND",
+      "type": "Weapon",
+      "name": {
+        "singular": "Spider Venom Gland"
+      },
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.4,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
       "hitRate": "90.00%",
       "integrityDecrementOnHit": 5
     },
@@ -713,6 +958,28 @@
       "damage": 10,
       "hitRate": "10.00%",
       "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "RADIANT_SKIN",
+      "type": "Misc",
+      "name": {
+        "singular": "Radiant Skin"
+      },
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.4,
+      "visibility": "80.00%",
+      "luminosity": "4.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 1,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 2
     },
     {
       "id": "HARPY_FEATHER",

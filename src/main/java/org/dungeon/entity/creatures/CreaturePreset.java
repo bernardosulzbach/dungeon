@@ -26,7 +26,6 @@ import org.dungeon.game.Id;
 import org.dungeon.game.Name;
 import org.dungeon.io.DungeonLogger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +41,8 @@ public final class CreaturePreset implements Preset {
   private int health;
   private int attack;
   private AttackAlgorithmId attackAlgorithmId;
-  private List<Id> items = new ArrayList<Id>();
+  private List<Id> items;
+  private List<Drop> dropList;
   private Visibility visibility;
   private Luminosity luminosity = Luminosity.ZERO;
   private Id weaponId;
@@ -144,6 +144,14 @@ public final class CreaturePreset implements Preset {
 
   public void setItems(List<Id> items) {
     this.items = items;
+  }
+
+  public List<Drop> getDropList() {
+    return dropList;
+  }
+
+  public void setDropList(List<Drop> dropList) {
+    this.dropList = dropList;
   }
 
   public Visibility getVisibility() {

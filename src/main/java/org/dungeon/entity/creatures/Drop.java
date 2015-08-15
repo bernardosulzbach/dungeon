@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,39 @@
 
 package org.dungeon.entity.creatures;
 
-import org.jetbrains.annotations.NotNull;
+import org.dungeon.game.Id;
+import org.dungeon.game.Random;
+import org.dungeon.util.Percentage;
+
+import java.io.Serializable;
 
 /**
- * An interface that defines a single renderAttack method that is invoked when a creature attacks another.
+ * This class represents an item drop law.
  */
-interface AttackAlgorithm {
+class Drop implements Serializable {
 
-  /**
-   * Renders an attack of the attacker on the defender.
-   *
-   * <p>If any creature dies due to the invocation of this method, it will have its causeOfDeath field set.
-   *
-   * @param attacker the attacker
-   * @param defender the defender
-   */
-  void renderAttack(@NotNull Creature attacker, @NotNull Creature defender);
+  private final Id itemId;
+  private final Percentage probability;
+
+  public Drop(Id itemId, Percentage probability) {
+    this.itemId = itemId;
+    this.probability = probability;
+  }
+
+  public Id getItemId() {
+    return itemId;
+  }
+
+  public boolean rollForDrop() {
+    return Random.roll(probability);
+  }
+
+  @Override
+  public String toString() {
+    return "Drop{" +
+        "itemId=" + itemId +
+        ", probability=" + probability +
+        '}';
+  }
 
 }

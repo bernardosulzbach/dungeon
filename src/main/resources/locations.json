@@ -86,18 +86,6 @@
         {
           "id": "STICK",
           "probability": 0.3
-        },
-        {
-          "id": "STRAWBERRY",
-          "probability": 0.3
-        },
-        {
-          "id": "STRAWBERRY",
-          "probability": 0.3
-        },
-        {
-          "id": "STRAWBERRY",
-          "probability": 0.3
         }
       ],
       "blockedEntrances": [
@@ -157,7 +145,7 @@
           "delay": 1
         },
         {
-          "id": "SPIDER",
+          "id": "HUGE_SPIDER",
           "population": 2,
           "delay": 4
         },
@@ -165,24 +153,17 @@
           "id": "COW",
           "population": 1,
           "delay": 20
+        },
+        {
+          "id": "FARMER",
+          "population": 2,
+          "delay": 18
         }
       ],
       "items": [
         {
-          "id": "PINEAPPLE",
-          "probability": 0.1
-        },
-        {
           "id": "HISTORY_OF_THE_THIRD_ERA",
           "probability": 0.025
-        },
-        {
-          "id": "CHERRY",
-          "probability": 0.6
-        },
-        {
-          "id": "STICK",
-          "probability": 0.9
         }
       ]
     },
@@ -208,8 +189,8 @@
           "delay": 8
         },
         {
-          "id": "RAT",
-          "population": 6,
+          "id": "GIANT_RAT",
+          "population": 1,
           "delay": 2
         },
         {
@@ -302,10 +283,6 @@
           "probability": 0.03
         },
         {
-          "id": "STICK",
-          "probability": 0.5
-        },
-        {
           "id": "SWORD",
           "probability": 0.15
         },
@@ -360,6 +337,11 @@
           "id": "FOX",
           "population": 3,
           "delay": 6
+        },
+        {
+          "id": "MERCHANT",
+          "population": 1,
+          "delay": 36
         }
       ],
       "items": [
@@ -372,20 +354,8 @@
           "probability": 0.05
         },
         {
-          "id": "STICK",
-          "probability": 0.4
-        },
-        {
-          "id": "CHERRY",
-          "probability": 0.1
-        },
-        {
           "id": "TOME_OF_VEIL_OF_DARKNESS",
           "probability": 0.05
-        },
-        {
-          "id": "BANANA",
-          "probability": 0.5
         }
       ]
     },
@@ -471,20 +441,22 @@
           "id": "WOLF",
           "population": 3,
           "delay": 12
+        },
+        {
+          "id": "FARMER",
+          "population": 1,
+          "delay": 24
+        },
+        {
+          "id": "TRAVELER",
+          "population": 2,
+          "delay": 48
         }
       ],
       "items": [
         {
-          "id": "APPLE",
-          "probability": 0.7
-        },
-        {
           "id": "STONE",
           "probability": 0.8
-        },
-        {
-          "id": "WATERMELON",
-          "probability": 0.4
         }
       ]
     },
@@ -518,16 +490,17 @@
           "id": "GREEN_IGUANA",
           "population": 2,
           "delay": 32
+        },
+        {
+          "id": "MERCHANT",
+          "population": 1,
+          "delay": 36
         }
       ],
       "items": [
         {
           "id": "SPEAR",
           "probability": 0.3
-        },
-        {
-          "id": "WATERMELON",
-          "probability": 0.8
         }
       ]
     },
@@ -570,10 +543,6 @@
       ],
       "items": [
         {
-          "id": "APPLE",
-          "probability": 0.8
-        },
-        {
           "id": "AXE",
           "probability": 0.3
         }
@@ -615,14 +584,6 @@
         {
           "id": "CLUB",
           "probability": 0.4
-        },
-        {
-          "id": "STICK",
-          "probability": 0.9
-        },
-        {
-          "id": "WATERMELON",
-          "probability": 0.1
         }
       ]
     },
@@ -643,8 +604,8 @@
       "lightPermittivity": 1,
       "spawners": [
         {
-          "id": "RAT",
-          "population": 6,
+          "id": "GIANT_RAT",
+          "population": 1,
           "delay": 2
         },
         {
@@ -653,7 +614,7 @@
           "delay": 4
         },
         {
-          "id": "SPIDER",
+          "id": "HUGE_SPIDER",
           "population": 2,
           "delay": 4
         },
@@ -661,13 +622,14 @@
           "id": "KOMODO_DRAGON",
           "population": 1,
           "delay": 12
+        },
+        {
+          "id": "TRAVELER",
+          "population": 2,
+          "delay": 48
         }
       ],
       "items": [
-        {
-          "id": "STICK",
-          "probability": 0.15
-        },
         {
           "id": "STONE",
           "probability": 0.3
