@@ -63,7 +63,8 @@ public final class Loader {
    * Checks if any file in the saves folder ends with the save extension.
    */
   public static boolean checkForSave() {
-    return SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter()).length != 0;
+    File[] sortedArrayOfSavedFiles = getSortedArrayOfSavedFiles();
+    return (sortedArrayOfSavedFiles != null && sortedArrayOfSavedFiles.length != 0);
   }
 
   /**
