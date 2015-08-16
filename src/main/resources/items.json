@@ -701,6 +701,7 @@
       },
       "tags": [
         "WEAPON",
+        "FOOD",
         "DECOMPOSES"
       ],
       "integrity": {
@@ -712,7 +713,9 @@
       "decompositionPeriod": "2 days",
       "damage": 2,
       "hitRate": "90.00%",
-      "integrityDecrementOnHit": 5
+      "integrityDecrementOnHit": 5,
+      "nutrition": -5,
+      "integrityDecrementOnEat": 10
     },
     {
       "id": "TOME_OF_HEAL",
