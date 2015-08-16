@@ -65,6 +65,15 @@ public class Integrity implements Serializable {
     return current;
   }
 
+  /**
+   * Safely sets current to the provided value.
+   *
+   * @param current the new current value, can be more than maximum or less than zero
+   */
+  private void setCurrent(int current) {
+    this.current = Math.max(Math.min(maximum, current), 0);
+  }
+
   public boolean isMaximum() {
     return getCurrent() == getMaximum();
   }
@@ -83,7 +92,7 @@ public class Integrity implements Serializable {
    * @param amount a nonnegative integer
    */
   public void incrementBy(int amount) {
-    current = Math.min(current + amount, maximum);
+    setCurrent(current + amount);
   }
 
   /**
@@ -92,7 +101,7 @@ public class Integrity implements Serializable {
    * @param amount a nonnegative integer
    */
   public void decrementBy(int amount) {
-    current = Math.max(current - amount, 0);
+    setCurrent(current - amount);
   }
 
   @Override
