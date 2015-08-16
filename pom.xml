@@ -67,6 +67,9 @@
                         <manifest>
                             <mainClass>org.dungeon.game.Game</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <SplashScreen-Image>splash.png</SplashScreen-Image>
+                        </manifestEntries>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
