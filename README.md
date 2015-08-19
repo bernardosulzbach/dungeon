@@ -1,5 +1,8 @@
 Dungeon
 =======
+
+[![](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)
+
 Text-based open-world RPG made with Java.
 
 Screenshots
