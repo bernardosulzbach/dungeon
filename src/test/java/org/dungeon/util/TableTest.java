@@ -18,58 +18,58 @@
 package org.dungeon.util;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Random;
 
 public class TableTest {
 
-  private static Table table;
-
-  @Before
-  public void createTable() {
-    // Always create a new table before running a test.
-    table = new Table("A", "B", "C");
-    // Insert 100 integers into A.
-    for (int i = 0; i < 100; i++) {
-      table.insertRow(String.valueOf(i));
-    }
-  }
-
   @Test
-  public void testInsertRow() throws Exception {
-    Assert.assertTrue(table.getDimensions().equals(new Dimensions(100, 3)));
-    Random random = new Random();
-    // Insert 200 rows in the table.
-    for (int i = 0; i < 100; i++) {
-      if (random.nextBoolean()) {
-        table.insertRow(String.valueOf(i), String.valueOf(random.nextInt()));
-      } else {
-        table.insertRow(String.valueOf(i), String.valueOf(random.nextInt()), "");
+  public void insertRowShouldWorkWithTheCorrectAmountOfArguments() throws Exception {
+    Table table = new Table("A", "B");
+    try {
+      for (int i = 0; i < 100; i++) {
+        table.insertRow("1", "2");
       }
-      // Test if nulls are handled properly.
-      table.insertRow(null, null, null);
+    } catch (Exception unexpected) {
+      Assert.fail();
     }
-    Assert.assertTrue(table.getDimensions().equals(new Dimensions(300, 3)));
   }
 
   @Test
-  public void testContains() throws Exception {
-    // Check for the 100 values inserted by createTable().
-    for (int i = 0; i < 100; i++) {
-      Assert.assertTrue(table.contains(String.valueOf(i)));
+  public void constructorShouldThrowAnExceptionIfThereAreNoArguments() throws Exception {
+    try {
+      new Table();
+      Assert.fail("expected an IllegalArgumentException.");
+    } catch (IllegalArgumentException expected) {
     }
-    // There should be 200 empty Strings, 100 in B and 100 in C.
-    Assert.assertTrue(table.contains(""));
-    // There should not be any null.
-    Assert.assertFalse(table.contains(null));
   }
 
   @Test
-  public void testGetDimensions() throws Exception {
-    Dimensions expectedDimensions = new Dimensions(100, 3);
-    Assert.assertTrue(table.getDimensions().equals(expectedDimensions));
+  public void constructorShouldThrowAnExceptionIfThereAreTooManyArguments() throws Exception {
+    try {
+      new Table("A", "B", "C", "D", "E", "F", "G");
+      Assert.fail("expected an IllegalArgumentException.");
+    } catch (IllegalArgumentException expected) {
+    }
+  }
+
+  @Test
+  public void insertRowShouldThrowAnExceptionWithTooFewArguments() throws Exception {
+    Table table = new Table("A", "B");
+    try {
+      table.insertRow("1");
+      Assert.fail("expected an IllegalArgumentException.");
+    } catch (IllegalArgumentException expected) {
+    }
+  }
+
+  @Test
+  public void insertRowShouldThrowAnExceptionWithTooManyArguments() throws Exception {
+    Table table = new Table("A", "B");
+    try {
+      table.insertRow("1", "2", "3");
+      Assert.fail("expected an IllegalArgumentException.");
+    } catch (IllegalArgumentException expected) {
+    }
   }
 
 }

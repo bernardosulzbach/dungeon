@@ -55,9 +55,9 @@ public final class SavesTableWriter {
         }
         if (fileCount > 1) {
           table.insertSeparator();
-          table.insertRow("Sum of these " + fileCount + " files", IOUtils.bytesToHuman((byteCount)));
+          table.insertRow("Sum of these " + fileCount + " files", IOUtils.bytesToHuman((byteCount)), "");
         }
-        table.print();
+        Writer.write(table);
       } else {
         Writer.writeString("Saves folder is empty.");
       }

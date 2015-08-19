@@ -181,7 +181,7 @@ public class DebugTools {
       for (CauseOfDeath causeOfDeath : map.keySet()) {
         table.insertRow(causeOfDeath.toString(), String.valueOf(map.getCounter(causeOfDeath)));
       }
-      table.print();
+      Writer.write(table);
     } else {
       Writer.writeString("You haven't killed anything yet. Go kill something!");
     }
@@ -215,7 +215,7 @@ public class DebugTools {
       String maximumNumberOfVisits = String.valueOf(explorationStatistics.getMaximumNumberOfVisits(preset.getId()));
       table.insertRow(name, kills, VisitedSoFar, maximumNumberOfVisits);
     }
-    table.print();
+    Writer.write(table);
   }
 
   /**

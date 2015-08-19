@@ -204,33 +204,4 @@ public final class DungeonMath {
     return total;
   }
 
-  /**
-   * Distributes a value among buckets. For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8
-   * over {5, 10} gives {1, 6}. If the division of value by the size of buckets is not exact, the first buckets are
-   * going to get more modified. For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10,
-   * 15} gives {2, 7, 13}.
-   *
-   * <p>The time complexity of this implementation is O(n) on the size of buckets.
-   *
-   * @param value the total to be distributed
-   * @param buckets the buckets, not empty, not null
-   */
-  public static void distribute(int value, @NotNull int[] buckets) {
-    if (buckets.length == 0) {
-      throw new IllegalArgumentException("buckets must have at least one element.");
-    }
-    int commonModification = value / buckets.length;
-    value %= buckets.length;
-    for (int i = 0; i < buckets.length; i++) {
-      buckets[i] += commonModification;
-      if (value > 0) {
-        buckets[i]++;
-        value--;
-      } else if (value < 0) {
-        buckets[i]--;
-        value++;
-      }
-    }
-  }
-
 }

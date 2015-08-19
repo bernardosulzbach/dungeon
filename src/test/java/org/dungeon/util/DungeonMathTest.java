@@ -20,8 +20,6 @@ package org.dungeon.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 public class DungeonMathTest {
 
   @Test
@@ -61,47 +59,6 @@ public class DungeonMathTest {
       Assert.fail("expected an IllegalArgumentException.");
     } catch (IllegalArgumentException expected) {
     }
-  }
-
-  @Test
-  public void testDistribute() throws Exception {
-    // Standard tests.
-    int[] emptyArray = new int[0];
-    try {
-      DungeonMath.distribute(100, emptyArray);
-      Assert.fail("expected an IllegalArgumentException.");
-    } catch (IllegalArgumentException expected) {
-    }
-    int[] array = {0, 0};
-    DungeonMath.distribute(100, array);
-    Assert.assertEquals(50, array[0]);
-    Assert.assertEquals(50, array[1]);
-    DungeonMath.distribute(-200, array);
-    Assert.assertEquals(-50, array[0]);
-    Assert.assertEquals(-50, array[1]);
-    DungeonMath.distribute(0, array);
-    Assert.assertEquals(-50, array[0]);
-    Assert.assertEquals(-50, array[1]);
-    DungeonMath.distribute(1, array);
-    Assert.assertEquals(-49, array[0]);
-    Assert.assertEquals(-50, array[1]);
-    // Test the examples given in the Javadoc.
-    int[] first = {2, 3, 4};
-    DungeonMath.distribute(3, first);
-    final int[] firstExpected = {3, 4, 5};
-    Assert.assertTrue(Arrays.equals(firstExpected, first));
-    int[] second = {5, 10};
-    DungeonMath.distribute(-8, second);
-    int[] secondExpected = {1, 6};
-    Assert.assertTrue(Arrays.equals(secondExpected, second));
-    int[] third = {2, 3};
-    DungeonMath.distribute(3, third);
-    final int[] thirdExpected = {4, 4};
-    Assert.assertTrue(Arrays.equals(thirdExpected, third));
-    int[] fourth = {5, 10, 15};
-    DungeonMath.distribute(-8, fourth);
-    int[] fourthExpected = {2, 7, 13};
-    Assert.assertTrue(Arrays.equals(fourthExpected, fourth));
   }
 
 }

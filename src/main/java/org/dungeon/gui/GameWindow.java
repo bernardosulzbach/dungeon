@@ -325,14 +325,11 @@ public class GameWindow extends JFrame {
    * Schedules the writing of the contents of a Writable with the provided specifications on the Event Dispatch Thread.
    * This method can be called on any thread.
    *
-   * @param writable a Writable object, not empty
+   * @param writable a Writable object
    * @param specifications a TextPaneWritingSpecifications object
    */
   public void scheduleWriteToTextPane(@NotNull final Writable writable,
       @NotNull final TextPaneWritingSpecifications specifications) {
-    if (writable.toColoredStringList().isEmpty()) {
-      throw new IllegalArgumentException("writable is empty.");
-    }
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {

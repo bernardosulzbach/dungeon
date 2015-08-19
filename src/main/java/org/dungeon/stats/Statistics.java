@@ -18,6 +18,7 @@
 package org.dungeon.stats;
 
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.io.Writer;
 import org.dungeon.util.Table;
 
 import java.io.Serializable;
@@ -71,7 +72,7 @@ public final class Statistics implements Serializable {
     insertCommandStatistics(statistics);
     statistics.insertSeparator();
     insertWorldStatistics(statistics);
-    statistics.print();
+    Writer.write(statistics);
   }
 
   private void insertCommandStatistics(Table statistics) {

@@ -62,12 +62,9 @@ public final class DungeonStringBuilder implements Writable {
   /**
    * Appends a string to this builder.
    *
-   * @param string a String, not empty
+   * @param string a String object
    */
   public void append(@NotNull String string) {
-    if (string.isEmpty()) {
-      throw new IllegalArgumentException("string cannot be empty.");
-    }
     builder.append(string);
   }
 
