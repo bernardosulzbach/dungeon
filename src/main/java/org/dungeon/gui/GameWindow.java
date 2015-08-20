@@ -281,27 +281,35 @@ public class GameWindow extends JFrame {
   }
 
   /**
-   * Handles a key press in the text field.
+   * Handles a key press in the text field. This method checks for a command history access by the keys UP, DOWN, or TAB
+   * and, if this is the case, processes this query.
    *
    * @param e the KeyEvent.
    */
   private void textFieldKeyPressed(KeyEvent e) {
-    GameState gameState = Game.getGameState();
-    if (gameState != null) {
-      CommandHistory commandHistory = gameState.getCommandHistory();
-      if (e.getKeyCode() == KeyEvent.VK_UP) {
-        textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
-      } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-        textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
-      } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-        // Using the empty String to get the last similar command will always retrieve the last command.
-        // Therefore, there is no need to check if there is something in the text field.
-        String lastSimilarCommand = commandHistory.getLastSimilarCommand(getTrimmedTextFieldText());
-        if (lastSimilarCommand != null) {
-          textField.setText(lastSimilarCommand);
+    int keyCode = e.getKeyCode();
+    if (isUpDownOrTab(keyCode)) { // Check if the event is of interest.
+      GameState gameState = Game.getGameState();
+      if (gameState != null) {
+        CommandHistory commandHistory = gameState.getCommandHistory();
+        if (keyCode == KeyEvent.VK_UP) {
+          textField.setText(commandHistory.getCursor().moveUp().getSelectedCommand());
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+          textField.setText(commandHistory.getCursor().moveDown().getSelectedCommand());
+        } else if (keyCode == KeyEvent.VK_TAB) {
+          // Using the empty String to get the last similar command will always retrieve the last command.
+          // Therefore, there is no need to check if there is something in the text field.
+          String lastSimilarCommand = commandHistory.getLastSimilarCommand(getTrimmedTextFieldText());
+          if (lastSimilarCommand != null) {
+            textField.setText(lastSimilarCommand);
+          }
         }
       }
     }
+  }
+
+  private boolean isUpDownOrTab(int keyCode) {
+    return keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_TAB;
   }
 
   /**
