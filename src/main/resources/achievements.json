@@ -211,6 +211,24 @@
       ]
     },
     {
+      "id": "BONE_ON_BONE",
+      "name": "Bone on Bone",
+      "info": "Kill a skeleton with a bone.",
+      "text": "killed a skeleton with a bone",
+      "battleRequirements": [
+        {
+          "query": {
+            "id": "SKELETON",
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "BONE"
+            }
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
       "id": "THE_BIGGER_THE_DEADLIER",
       "name": "The Bigger the Deadlier",
       "info": "Kill a snake, a green iguana, and a komodo dragon with Crocodile Beefs.",
