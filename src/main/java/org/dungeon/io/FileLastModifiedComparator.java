@@ -35,9 +35,4 @@ class FileLastModifiedComparator implements Comparator<File> {
     return Long.valueOf(b.lastModified()).compareTo(a.lastModified());
   }
 
-  @Override
-  public boolean equals(Object obj) {
-    return false;
-  }
-
 }
