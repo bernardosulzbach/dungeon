@@ -17,7 +17,6 @@
 
 package org.dungeon.util;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.Writer;
 
@@ -84,26 +83,25 @@ public final class DungeonMath {
   /**
    * Parses the "fibonacci" command.
    */
-  public static void parseFibonacci(IssuedCommand issuedCommand) {
-    int n;
-    if (issuedCommand.hasArguments()) {
-      for (String argument : issuedCommand.getArguments()) {
-        try {
-          n = Integer.parseInt(argument);
-        } catch (NumberFormatException warn) {
-          Messenger.printInvalidNumberFormatOrValue();
-          return;
-        }
-        if (n < 1) {
-          Messenger.printInvalidNumberFormatOrValue();
-          return;
-        }
-        String result = fibonacci(n);
-        if (result.equals(TIMEOUT)) {
-          Writer.writeString("Calculation exceeded the time limit.");
-        } else {
-          Writer.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
-        }
+  public static void parseFibonacci(String[] arguments) {
+    if (arguments.length != 0) {
+      int n;
+      String argument = arguments[0];
+      try {
+        n = Integer.parseInt(argument);
+      } catch (NumberFormatException warn) {
+        Messenger.printInvalidNumberFormatOrValue();
+        return;
+      }
+      if (n < 1) {
+        Messenger.printInvalidNumberFormatOrValue();
+        return;
+      }
+      String result = fibonacci(n);
+      if (result.equals(TIMEOUT)) {
+        Writer.writeString("Calculation exceeded the time limit.");
+      } else {
+        Writer.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
       }
     } else {
       Messenger.printMissingArgumentsMessage();

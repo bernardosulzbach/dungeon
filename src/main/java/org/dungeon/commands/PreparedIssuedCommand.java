@@ -15,23 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.entity.creatures;
-
-import org.dungeon.spells.Spell;
-
-import java.util.List;
+package org.dungeon.commands;
 
 /**
- * An interface that defines a few common things a spellcaster should be able to do.
+ * An issued command that is read to be ran.
  */
-public interface Spellcaster {
+public class PreparedIssuedCommand {
 
-  List<Spell> getSpellList();
+  private final Command specifiedCommand;
+  private final String[] arguments;
 
-  boolean knowsSpell(Spell spell);
+  PreparedIssuedCommand(Command specifiedCommand, String[] arguments) {
+    this.specifiedCommand = specifiedCommand;
+    this.arguments = arguments;
+  }
 
-  void learnSpell(Spell spell);
-
-  void parseCast(String[] arguments);
+  /**
+   * Calls this PreparedIssuedCommand to execute its underlying command.
+   */
+  public void execute() {
+    specifiedCommand.execute(arguments);
+  }
 
 }

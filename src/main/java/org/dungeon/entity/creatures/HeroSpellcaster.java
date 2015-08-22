@@ -17,7 +17,6 @@
 
 package org.dungeon.entity.creatures;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Writer;
 import org.dungeon.spells.Spell;
@@ -62,9 +61,9 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
   }
 
   @Override
-  public void parseCast(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      ParsingUtils.SplitResult splitResult = ParsingUtils.splitOnOn(issuedCommand.getArguments());
+  public void parseCast(String[] arguments) {
+    if (arguments.length > 0) {
+      ParsingUtils.SplitResult splitResult = ParsingUtils.splitOnOn(arguments);
       String[] spellMatcher = splitResult.before;
       String[] targetMatcher = splitResult.after;
       Matches<Spell> matches = Utils.findBestCompleteMatches(spellList, spellMatcher);

@@ -17,7 +17,6 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.io.Writer;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Utils;
@@ -34,11 +33,11 @@ public final class WikiSearcher {
   /**
    * Searches the wiki and prints the matching contents to the screen. This method triggers the wiki initialization.
    *
-   * @param issuedCommand an IssuedCommand object
+   * @param arguments an array of arguments that will determine the search
    */
-  public static void search(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
-      Matches<Article> matches = Utils.findBestMatches(Wiki.getArticles(), issuedCommand.getArguments());
+  public static void search(String[] arguments) {
+    if (arguments.length != 0) {
+      Matches<Article> matches = Utils.findBestMatches(Wiki.getArticles(), arguments);
       if (matches.size() == 0) {
         Writer.writeString("No matches were found.");
       } else if (matches.size() == 1) {

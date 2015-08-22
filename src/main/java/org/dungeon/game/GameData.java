@@ -35,7 +35,6 @@ import java.awt.Color;
 public final class GameData {
 
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
-  public static String LICENSE;
   private static String tutorial = null;
 
   private GameData() { // Ensure that this class cannot be instantiated.
@@ -65,7 +64,6 @@ public final class GameData {
     ItemFactory.blockNewItemPresets(); // Must happen after CreatureFactory makes the corpse presets.
     loadLocationPresets();
     AchievementStore.initialize();
-    loadLicense();
   }
 
   private static void loadLocationPresets() {
@@ -110,11 +108,6 @@ public final class GameData {
 
   private static Color colorFromJsonArray(JsonArray color) {
     return new Color(color.get(0).asInt(), color.get(1).asInt(), color.get(2).asInt());
-  }
-
-  private static void loadLicense() {
-    JsonObject license = JsonObjectFactory.makeJsonObject("license.json");
-    LICENSE = license.get("license").asString();
   }
 
   private static void loadTutorial() {

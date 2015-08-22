@@ -23,6 +23,10 @@
       "content": "Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies."
     },
     {
+      "title": "Commands",
+      "content": "Dungeon has multiple command sets, which store different commands. You use a command by specifying the command set (if the command you want is not on the default command set), the command itself, and a list of arguments, if necessary."
+    },
+    {
       "title": "Command History",
       "content": "The game stores your last 200 commands. Pressing TAB while the cursor is on the input field will either do nothing (if the command history is empty), get the last similar command to what is already on the text field (if there is one), or return the last command (if the text field is empty and there is at least one command on the command history)."
     },
@@ -78,7 +82,7 @@
     },
     {
       "title": "License",
-      "content": "The GNU General Public License is the most widely used free software license, which guarantees end users (individuals, organizations, companies) the freedoms to run, study, share, and modify the software. The license was originally written by Richard Stallman of the Free Software Foundation.\nThe founder of this project (Bernardo Sulzbach) believes in the power of free software. Dungeon is released under GNU GPLv3 license because according to his thoughts everyone should be free to run, study, and modify the game as he or she intends. This license also requires that any program which uses code from Dungeon to also be open source."
+      "content": "The GNU General Public License is the most widely used free software license, which guarantees end users (individuals, organizations, companies) the freedoms to run, study, share, and modify the software. The license was originally written by Richard Stallman of the Free Software Foundation.\nThe founder of this project (Bernardo Sulzbach) believes in the power of free software. Dungeon is released under GNU GPLv3 license because according to his thoughts everyone should be free to run, study, and modify the game as he or she intends. This license also requires that any program which uses code from Dungeon to also be open source.\n\nFollows a brief summary of the aforementioned license.\n\nCopyright (C) 2014 Bernardo Sulzbach\n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details."
     },
     {
       "title": "Komodo dragon",

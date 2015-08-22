@@ -17,7 +17,6 @@
 
 package org.dungeon.io;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.util.Messenger;
@@ -127,14 +126,10 @@ public final class Loader {
    *
    * This method guarantees that the if null is returned, something is written to the screen.
    */
-  public static GameState parseLoadCommand(IssuedCommand issuedCommand) {
-    if (issuedCommand == null) {
-      DungeonLogger.warning("Passed null to Loader.parseLoadCommand(IssuedCommand).");
-      return null;
-    }
-    if (issuedCommand.hasArguments()) {
+  public static GameState parseLoadCommand(String[] arguments) {
+    if (arguments.length != 0) {
       // A save name was provided.
-      String argument = issuedCommand.getFirstArgument();
+      String argument = arguments[0];
       argument = ensureSaveEndsWithExtension(argument);
       File save = createFileFromName(argument);
       if (isSaveFile(save)) {
@@ -164,10 +159,10 @@ public final class Loader {
    *
    * <p>Only asks for confirmation if there already is a save file with the name.
    */
-  public static void saveGame(GameState gameState, IssuedCommand issuedCommand) {
+  public static void saveGame(GameState gameState, String[] arguments) {
     String saveName = DEFAULT_SAVE_NAME;
-    if (issuedCommand != null && issuedCommand.hasArguments()) {
-      saveName = issuedCommand.getFirstArgument();
+    if (arguments != null && arguments.length != 0) {
+      saveName = arguments[0];
     }
     if (saveFileDoesNotExist(saveName) || confirmOperation(SAVE_CONFIRM)) {
       saveFile(gameState, saveName);

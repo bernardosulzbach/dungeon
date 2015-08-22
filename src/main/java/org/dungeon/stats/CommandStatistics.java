@@ -37,7 +37,7 @@ final class CommandStatistics implements Serializable {
    */
   public void addCommand(IssuedCommand issuedCommand) {
     commands++;
-    words += issuedCommand.getTokenCount();
+    words += issuedCommand.getTokens().length;
     for (char c : issuedCommand.getStringRepresentation().toCharArray()) {
       if (!Character.isWhitespace(c)) {
         chars++;

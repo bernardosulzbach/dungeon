@@ -15,23 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.entity.creatures;
+package org.dungeon.commands;
 
-import org.dungeon.spells.Spell;
+public class InvalidCommandException extends RuntimeException {
 
-import java.util.List;
+  private final String commandToken;
 
-/**
- * An interface that defines a few common things a spellcaster should be able to do.
- */
-public interface Spellcaster {
+  public InvalidCommandException(String commandToken) {
+    super(commandToken + " is not a command.");
+    this.commandToken = commandToken;
+  }
 
-  List<Spell> getSpellList();
-
-  boolean knowsSpell(Spell spell);
-
-  void learnSpell(Spell spell);
-
-  void parseCast(String[] arguments);
+  public String getCommandToken() {
+    return commandToken;
+  }
 
 }

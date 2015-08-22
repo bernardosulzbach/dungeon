@@ -17,7 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.Writer;
@@ -122,13 +121,11 @@ public final class Engine {
 
   /**
    * Parses an issued command to move the player.
-   *
-   * @param issuedCommand the command entered by the player.
    */
-  public static void parseHeroWalk(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) {
+  public static void parseHeroWalk(String[] arguments) {
+    if (arguments.length != 0) {
       for (Direction dir : Direction.values()) {
-        if (dir.equalsIgnoreCase(issuedCommand.getFirstArgument())) {
+        if (dir.equalsIgnoreCase(arguments[0])) {
           heroWalk(dir);
           return;
         }

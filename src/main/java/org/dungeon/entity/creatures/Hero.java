@@ -21,7 +21,6 @@ import static org.dungeon.date.DungeonTimeUnit.HOUR;
 import static org.dungeon.date.DungeonTimeUnit.SECOND;
 
 import org.dungeon.achievements.AchievementTracker;
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.entity.Entity;
@@ -298,47 +297,47 @@ public class Hero extends Creature {
     writeItemSight(items);
   }
 
-  private Item selectInventoryItem(IssuedCommand issuedCommand) {
+  private Item selectInventoryItem(String[] arguments) {
     if (getInventory().getItemCount() == 0) {
       Writer.writeString("Your inventory is empty.");
       return null;
     } else {
-      return selectItem(issuedCommand, getInventory(), false);
+      return selectItem(arguments, getInventory(), false);
     }
   }
 
   /**
    * Select an item of the current location based on the arguments of a command.
    *
-   * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
+   * @param arguments an array of arguments that will determine the item search
    * @return an Item or {@code null}
    */
-  private Item selectLocationItem(IssuedCommand issuedCommand) {
+  private Item selectLocationItem(String[] arguments) {
     if (filterByVisibility(getLocation().getItemList()).isEmpty()) {
       Writer.writeString("You don't see any items here.");
       return null;
     } else {
-      return selectItem(issuedCommand, getLocation().getInventory(), true);
+      return selectItem(arguments, getLocation().getInventory(), true);
     }
   }
 
   /**
    * Selects an item of the specified {@code BaseInventory} based on the arguments of a command.
    *
-   * @param issuedCommand an IssuedCommand object whose arguments will determine the item search
+   * @param arguments an array of arguments that will determine the item search
    * @param inventory an object of a subclass of {@code BaseInventory}
    * @param checkForVisibility true if only visible items should be selectable
    * @return an Item or {@code null}
    */
-  private Item selectItem(IssuedCommand issuedCommand, BaseInventory inventory, boolean checkForVisibility) {
+  private Item selectItem(String[] arguments, BaseInventory inventory, boolean checkForVisibility) {
     List<Item> visibleItems;
     if (checkForVisibility) {
       visibleItems = filterByVisibility(inventory.getItems());
     } else {
       visibleItems = inventory.getItems();
     }
-    if (issuedCommand.hasArguments() || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleItems)) {
-      return HeroUtils.findItem(visibleItems, issuedCommand.getArguments());
+    if (arguments.length != 0 || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleItems)) {
+      return HeroUtils.findItem(visibleItems, arguments);
     } else {
       Writer.writeString("You must specify an item.");
       return null;
@@ -347,11 +346,9 @@ public class Hero extends Creature {
 
   /**
    * Issues this Hero to attack a target.
-   *
-   * @param issuedCommand the command issued by the player
    */
-  public void attackTarget(IssuedCommand issuedCommand) {
-    Creature target = selectTarget(issuedCommand);
+  public void attackTarget(String[] arguments) {
+    Creature target = selectTarget(arguments);
     if (target != null) {
       Engine.battle(this, target);
     }
@@ -360,13 +357,12 @@ public class Hero extends Creature {
   /**
    * Attempts to select a target from the current location using the player input.
    *
-   * @param issuedCommand the command entered by the player
    * @return a target Creature or {@code null}
    */
-  private Creature selectTarget(IssuedCommand issuedCommand) {
+  private Creature selectTarget(String[] arguments) {
     List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
-    if (issuedCommand.hasArguments() || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
-      return findCreature(issuedCommand.getArguments());
+    if (arguments.length != 0 || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
+      return findCreature(arguments);
     } else {
       Writer.writeString("You must specify a target.");
       return null;
@@ -409,9 +405,9 @@ public class Hero extends Creature {
   /**
    * Attempts to pick an Item and add it to the inventory.
    */
-  public void pickItem(IssuedCommand issuedCommand) {
+  public void pickItem(String[] arguments) {
     if (canSeeAnItem()) {
-      Item selectedItem = selectLocationItem(issuedCommand);
+      Item selectedItem = selectLocationItem(arguments);
       if (selectedItem != null) {
         SimulationResult result = getInventory().simulateItemAddition(selectedItem);
         if (result == SimulationResult.AMOUNT_LIMIT) {
@@ -452,8 +448,8 @@ public class Hero extends Creature {
   /**
    * Tries to equip an item from the inventory.
    */
-  public void parseEquip(IssuedCommand issuedCommand) {
-    Item selectedItem = selectInventoryItem(issuedCommand);
+  public void parseEquip(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.WEAPON)) {
         equipWeapon(selectedItem);
@@ -466,8 +462,8 @@ public class Hero extends Creature {
   /**
    * Attempts to drop an item from the hero's inventory.
    */
-  public void dropItem(IssuedCommand issuedCommand) {
-    Item selectedItem = selectInventoryItem(issuedCommand);
+  public void dropItem(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       if (selectedItem == getWeapon()) {
         unsetWeapon(); // Just unset the weapon, it does not need to be moved to the inventory before being dropped.
@@ -522,8 +518,8 @@ public class Hero extends Creature {
   /**
    * Attempts to eat an item from the ground.
    */
-  public void eatItem(IssuedCommand issuedCommand) {
-    Item selectedItem = selectInventoryItem(issuedCommand);
+  public void eatItem(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.FOOD)) {
         Engine.rollDateAndRefresh(SECONDS_TO_EAT_AN_ITEM);
@@ -555,12 +551,10 @@ public class Hero extends Creature {
 
   /**
    * The method that enables a Hero to drink milk from a Creature.
-   *
-   * @param issuedCommand the command entered by the player
    */
-  public void parseMilk(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments()) { // Specified which creature to milk from.
-      Creature selectedCreature = selectTarget(issuedCommand); // Finds the best match for the specified arguments.
+  public void parseMilk(String[] arguments) {
+    if (arguments.length != 0) { // Specified which creature to milk from.
+      Creature selectedCreature = selectTarget(arguments); // Finds the best match for the specified arguments.
       if (selectedCreature != null) {
         if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
           milk(selectedCreature);
@@ -589,8 +583,8 @@ public class Hero extends Creature {
     addHealth(MILK_NUTRITION);
   }
 
-  public void readItem(IssuedCommand issuedCommand) {
-    Item selectedItem = selectInventoryItem(issuedCommand);
+  public void readItem(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       BookComponent book = selectedItem.getBookComponent();
       if (book != null) {
@@ -631,8 +625,8 @@ public class Hero extends Creature {
   /**
    * Tries to destroy an item from the current location.
    */
-  public void destroyItem(IssuedCommand issuedCommand) {
-    Item target = selectLocationItem(issuedCommand);
+  public void destroyItem(String[] arguments) {
+    Item target = selectLocationItem(arguments);
     if (target != null) {
       if (target.isBroken()) {
         Writer.writeString(target.getName() + " is already crashed.");

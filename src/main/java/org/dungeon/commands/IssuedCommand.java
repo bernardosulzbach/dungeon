@@ -17,14 +17,9 @@
 
 package org.dungeon.commands;
 
-import org.dungeon.io.DungeonLogger;
 import org.dungeon.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * IssuedCommand class that processes a command entered by the player and provides useful query methods.
@@ -34,8 +29,7 @@ import java.util.List;
 public final class IssuedCommand {
 
   private final String stringRepresentation;
-  private final String command;
-  private final List<String> arguments = new ArrayList<String>();
+  private final String[] tokens;
 
   /**
    * Creates a new IssuedCommand from a string.
@@ -43,58 +37,19 @@ public final class IssuedCommand {
    * @param source a string with at least one character that is not whitespace.
    */
   public IssuedCommand(@NotNull String source) {
-    String[] tokens = Utils.split(source);
+    tokens = Utils.split(source);
     if (tokens.length == 0) {
       throw new IllegalArgumentException("invalid source, no tokens obtained.");
     }
-    this.command = tokens[0];
-    this.arguments.addAll(Arrays.asList(tokens).subList(1, tokens.length));
     this.stringRepresentation = Utils.join(" ", tokens);
-  }
-
-  public String getFirstToken() {
-    return command;
-  }
-
-  /**
-   * Returns true if there is one or more arguments.
-   */
-  public boolean hasArguments() {
-    return !arguments.isEmpty();
-  }
-
-  /**
-   * Returns an array with all arguments.
-   */
-  public String[] getArguments() {
-    return arguments.toArray(new String[arguments.size()]);
-  }
-
-  public String getFirstArgument() {
-    return arguments.get(0);
-  }
-
-  /**
-   * Checks if the first argument of this IssuedCommand is case-insensitively equal to a given String.
-   *
-   * @param string the String used for comparison
-   * @return true if the Strings are case-insensitively equal, false otherwise
-   */
-  public boolean firstArgumentEquals(String string) {
-    if (hasArguments()) {
-      return getFirstArgument().equalsIgnoreCase(string);
-    } else {
-      DungeonLogger.warning("Called firstArgumentEquals on an IssuedCommand that does not have arguments.");
-      return false;
-    }
-  }
-
-  public int getTokenCount() {
-    return 1 + arguments.size();
   }
 
   public String getStringRepresentation() {
     return stringRepresentation;
+  }
+
+  public String[] getTokens() {
+    return tokens;
   }
 
   @Override

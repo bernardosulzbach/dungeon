@@ -18,9 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.entity.Entity;
-import org.dungeon.game.GameData;
 import org.dungeon.game.Name;
-import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -92,13 +90,6 @@ public final class Utils {
       sb.append(delimiter).append(elements[i]);
     }
     return sb.toString();
-  }
-
-  /**
-   * Prints the game's license.
-   */
-  public static void printLicense() {
-    Writer.writeString(GameData.LICENSE);
   }
 
   /**

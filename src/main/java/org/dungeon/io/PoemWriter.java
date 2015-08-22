@@ -17,12 +17,9 @@
 
 package org.dungeon.io;
 
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.gui.TextPaneWritingSpecifications;
 import org.dungeon.util.library.Libraries;
 import org.dungeon.util.library.Poem;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The main purpose of this class is to provide a public static parsePoemCommand method that parses poem commands.
@@ -38,18 +35,16 @@ public final class PoemWriter {
    *
    * <p>If the command has arguments, the game attempts to use the first one as the poem's index (one-based).
    *
-   * <p>Otherwise, the next poem is based on a behind-the-scenes poem index.
-   *
-   * @param command the issued command
+   * <p>Otherwise, the next poem is based on a behind-the-scenes poem index. d command
    */
-  public static void parsePoemCommand(@NotNull IssuedCommand command) {
+  public static void parsePoemCommand(String[] arguments) {
     if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
       Writer.writeString("No poems were loaded.");
     } else {
-      if (command.hasArguments()) {
+      if (arguments.length != 0) {
         try {
           // Indexing is zero-based to the implementation, but one-based to the player.
-          int index = Integer.parseInt(command.getFirstArgument()) - 1;
+          int index = Integer.parseInt(arguments[0]) - 1;
           if (index >= 0 && index < Libraries.getPoetryLibrary().getPoemCount()) {
             writePoem(Libraries.getPoetryLibrary().getPoem(index));
             return;

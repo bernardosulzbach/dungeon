@@ -17,9 +17,10 @@
 
 package org.dungeon.game;
 
-import org.dungeon.commands.Command;
-import org.dungeon.commands.CommandCollection;
+import org.dungeon.commands.InvalidCommandException;
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.commands.IssuedCommandProcessor;
+import org.dungeon.commands.PreparedIssuedCommand;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.DungeonLogger;
 import org.dungeon.io.Loader;
@@ -156,14 +157,15 @@ public class Game {
   public static void renderTurn(IssuedCommand issuedCommand) {
     // Clears the text pane.
     getGameWindow().clearTextPane();
-    processInput(issuedCommand);
-    if (getGameState().getHero().getHealth().isDead()) {
-      getGameWindow().clearTextPane();
-      Writer.writeString("You died.");
-      unsetGameState();
-      setGameState(getAfterDeathGameState());
-    } else {
-      Engine.endTurn();
+    if (processInput(issuedCommand)) {
+      if (getGameState().getHero().getHealth().isDead()) {
+        getGameWindow().clearTextPane();
+        Writer.writeString("You died.");
+        unsetGameState();
+        setGameState(getAfterDeathGameState());
+      } else {
+        Engine.endTurn();
+      }
     }
   }
 
@@ -172,17 +174,20 @@ public class Game {
    * this method finds and executes the corresponding Command object or prints a message if there is not such Command.
    *
    * @param issuedCommand the last IssuedCommand.
+   * @return a boolean indicating whether or not thee command successfully executed
    */
-  private static void processInput(IssuedCommand issuedCommand) {
-    instanceInformation.incrementAcceptedCommandCount();
-    getGameState().getCommandHistory().addCommand(issuedCommand);
-    getGameState().getStatistics().addCommand(issuedCommand);
-    Command command = CommandCollection.getDefaultCommandCollection().getCommand(issuedCommand);
-    if (command != null) {
-      command.execute(issuedCommand);
-    } else {
-      Messenger.printInvalidCommandMessage(issuedCommand.getFirstToken());
+  private static boolean processInput(IssuedCommand issuedCommand) {
+    try {
+      PreparedIssuedCommand preparedIssuedCommand = IssuedCommandProcessor.prepareIssuedCommand(issuedCommand);
+      instanceInformation.incrementAcceptedCommandCount();
+      getGameState().getCommandHistory().addCommand(issuedCommand);
+      getGameState().getStatistics().addCommand(issuedCommand);
+      preparedIssuedCommand.execute();
+      return true;
+    } catch (InvalidCommandException e) {
+      Messenger.printInvalidCommandMessage(e.getCommandToken());
     }
+    return false;
   }
 
   /**

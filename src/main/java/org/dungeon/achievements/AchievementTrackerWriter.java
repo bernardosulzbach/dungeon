@@ -18,7 +18,6 @@
 package org.dungeon.achievements;
 
 import org.dungeon.achievements.comparators.UnlockedAchievementComparators;
-import org.dungeon.commands.IssuedCommand;
 import org.dungeon.date.Date;
 import org.dungeon.date.Period;
 import org.dungeon.game.DungeonStringBuilder;
@@ -35,12 +34,10 @@ import java.util.List;
 public class AchievementTrackerWriter {
 
   /**
-   * Parses an IssuedCommand that makes the game write to the screen all achievements the Hero has unlocked so far.
-   *
-   * @param issuedCommand an IssuedCommand, not null
+   * Parses an issued command that makes the game write to the screen all achievements the Hero has unlocked so far.
    */
-  public static void parseCommand(IssuedCommand issuedCommand) {
-    Comparator<UnlockedAchievement> comparator = getComparator(issuedCommand);
+  public static void parseCommand(String[] arguments) {
+    Comparator<UnlockedAchievement> comparator = getComparator(arguments);
     if (comparator != null) {
       AchievementTracker achievementTracker = Game.getGameState().getHero().getAchievementTracker();
       writeAchievementTracker(achievementTracker, comparator);
@@ -54,17 +51,13 @@ public class AchievementTrackerWriter {
    * the default comparator is returned. If an ordering specification is invalid ("by" followed by an unrecognized
    * ordering), this method returns null.
    *
-   * @param issuedCommand an IssuedCommand, not null
    * @return a Comparator of UnlockedAchievements, or null
    */
-  private static Comparator<UnlockedAchievement> getComparator(IssuedCommand issuedCommand) {
-    if (issuedCommand.hasArguments() && issuedCommand.getFirstArgument().equalsIgnoreCase("by")) {
-      if (issuedCommand.getArguments().length > 1) {
-        String secondArgument = issuedCommand.getArguments()[1];
-        for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
-          if (secondArgument.equalsIgnoreCase(comparatorName)) {
-            return UnlockedAchievementComparators.getComparatorMap().get(comparatorName);
-          }
+  private static Comparator<UnlockedAchievement> getComparator(String[] arguments) {
+    if (arguments.length > 0 && arguments[0].equalsIgnoreCase("by")) {
+      for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
+        if (arguments[1].equalsIgnoreCase(comparatorName)) {
+          return UnlockedAchievementComparators.getComparatorMap().get(comparatorName);
         }
       }
       return null;

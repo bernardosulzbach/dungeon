@@ -18,7 +18,6 @@
 package org.dungeon.commands;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Command abstract class that defines a type for command objects.
@@ -30,21 +29,12 @@ public abstract class Command {
   private final CommandDescription description;
 
   /**
-   * Creates a new Command object with the provided name.
-   *
-   * @param name a String for name, not null, lowercase
-   */
-  public Command(@NotNull String name) {
-    this(name, null);
-  }
-
-  /**
    * Creates a new Command object with the provided name and info.
    *
-   * @param name a String for name, not null, lowercase
-   * @param info a String for info, nullable
+   * @param name a String for name, lowercase
+   * @param info a String for info
    */
-  public Command(@NotNull String name, @Nullable String info) {
+  public Command(@NotNull String name, @NotNull String info) {
     description = new CommandDescription(name, info);
   }
 
@@ -77,7 +67,7 @@ public abstract class Command {
   /**
    * Executes this Command, given an IssuedCommand object.
    */
-  public abstract void execute(@NotNull IssuedCommand issuedCommand);
+  public abstract void execute(@NotNull String[] arguments);
 
   @Override
   public String toString() {
