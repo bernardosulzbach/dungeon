@@ -35,7 +35,6 @@ public class CommandHistory implements Serializable {
 
   public CommandHistory() {
     commands = new CircularList<String>(HISTORY_MAXIMUM_SIZE);
-    cursor = new Cursor(this);
   }
 
   /**
@@ -85,7 +84,7 @@ public class CommandHistory implements Serializable {
   /**
    * Cursor inner class of CommandHistory that provides a set of methods for browsing and querying a CommandHistory.
    */
-  public final class Cursor implements Serializable {
+  public static final class Cursor implements Serializable {
 
     private final CommandHistory history;
     private int index;
