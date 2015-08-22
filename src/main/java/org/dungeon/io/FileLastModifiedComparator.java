@@ -18,6 +18,7 @@
 package org.dungeon.io;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -28,7 +29,7 @@ import java.util.Comparator;
  *
  * Serializable is not implemented by design. This Comparator was devised to be used by Arrays.sort and nothing else.
  */
-class FileLastModifiedComparator implements Comparator<File> {
+class FileLastModifiedComparator implements Comparator<File>, Serializable {
 
   @Override
   public int compare(File a, File b) {
