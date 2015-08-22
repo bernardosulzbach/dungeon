@@ -19,7 +19,6 @@ package org.dungeon.game;
 
 import org.dungeon.util.Percentage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,7 @@ import java.util.Set;
 /**
  * The LocationPreset class that serves as a recipe for Locations.
  */
-public final class LocationPreset implements Serializable {
+public final class LocationPreset {
 
   private final Id id;
   private final Type type;
