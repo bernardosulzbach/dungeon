@@ -20,14 +20,12 @@ package org.dungeon.achievements;
 import org.dungeon.game.Id;
 import org.dungeon.util.CounterMap;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 
 /**
  * Achievement class.
  */
-public class Achievement implements Comparable<Achievement> {
+public class Achievement {
 
   private final Id id;
   private final String name;
@@ -77,11 +75,6 @@ public class Achievement implements Comparable<Achievement> {
    */
   boolean isFulfilled() {
     return battle.isFulfilled() && exploration.isFulfilled();
-  }
-
-  @Override
-  public int compareTo(@NotNull Achievement achievement) {
-    return name.compareTo(achievement.name);
   }
 
   @Override

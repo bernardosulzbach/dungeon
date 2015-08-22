@@ -56,6 +56,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -189,17 +190,22 @@ public class DebugTools {
 
   private static void printNotYetUnlockedAchievements() {
     AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
-    List<Achievement> achievementList = new ArrayList<Achievement>();
+    List<Achievement> notYetUnlockedAchievementList = new ArrayList<Achievement>();
     for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!tracker.isUnlocked(achievement)) {
-        achievementList.add(achievement);
+        notYetUnlockedAchievementList.add(achievement);
       }
     }
-    if (achievementList.isEmpty()) {
+    if (notYetUnlockedAchievementList.isEmpty()) {
       Writer.writeString("All achievements have been unlocked.");
     } else {
-      Collections.sort(achievementList);
-      for (Achievement achievement : achievementList) {
+      Collections.sort(notYetUnlockedAchievementList, new Comparator<Achievement>() {
+        @Override
+        public int compare(Achievement o1, Achievement o2) {
+          return o1.getName().compareTo(o2.getName());
+        }
+      });
+      for (Achievement achievement : notYetUnlockedAchievementList) {
         Writer.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
       }
     }
