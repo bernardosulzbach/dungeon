@@ -690,10 +690,13 @@ public class Hero extends Creature {
     builder.append(getHealth().getHealthState().toString().toLowerCase()).append(".\n");
     builder.append("Your base attack is ").append(String.valueOf(getAttack())).append(".\n");
     if (hasWeapon()) {
-      String format = "You are currently equipping %s, whose base damage is %d. This makes your total damage %d.\n";
-      int weaponBaseDamage = getWeapon().getWeaponComponent().getDamage();
-      int totalDamage = getAttack() + weaponBaseDamage;
-      builder.append(String.format(format, getWeapon().getQualifiedName(), weaponBaseDamage, totalDamage));
+      builder.append("You are currently equipping ");
+      builder.append(getWeapon().getQualifiedName());
+      builder.append(", whose base damage is ");
+      builder.append(getWeapon().getWeaponComponent().getDamage());
+      builder.append(". This makes your total damage ");
+      builder.append(getAttack() + getWeapon().getWeaponComponent().getDamage());
+      builder.append(".\n");
     } else {
       builder.append("You are fighting bare-handed.\n");
     }
