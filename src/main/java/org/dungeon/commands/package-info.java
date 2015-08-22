@@ -15,26 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.commands;
-
 /**
- * An issued command that is ready to be executed.
+ * Contains the classes related to the representation and processing of player input.
  */
-public class PreparedIssuedCommand {
 
-  private final Command specifiedCommand;
-  private final String[] arguments;
-
-  PreparedIssuedCommand(Command specifiedCommand, String[] arguments) {
-    this.specifiedCommand = specifiedCommand;
-    this.arguments = arguments;
-  }
-
-  /**
-   * Calls this PreparedIssuedCommand to execute its underlying command.
-   */
-  public void execute() {
-    specifiedCommand.execute(arguments);
-  }
-
-}
+package org.dungeon.commands;
