@@ -56,7 +56,11 @@ public class LocationDescription implements Examinable, Serializable {
 
   @Override
   public String toString() {
-    return String.format("Symbol: %c\nRGB: %d %d %d", symbol, color.getRed(), color.getGreen(), color.getBlue());
+    return "LocationDescription{" +
+        "symbol=" + symbol +
+        ", color=" + color +
+        ", info='" + info + '\'' +
+        '}';
   }
 
 }

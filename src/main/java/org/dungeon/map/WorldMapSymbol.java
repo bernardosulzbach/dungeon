@@ -61,7 +61,10 @@ class WorldMapSymbol {
 
   @Override
   public String toString() {
-    return String.format("Symbol: %s\nRGB: %d %d %d", character, color.getRed(), color.getGreen(), color.getBlue());
+    return "WorldMapSymbol{" +
+        "character='" + character + '\'' +
+        ", color=" + color +
+        '}';
   }
 
 }
