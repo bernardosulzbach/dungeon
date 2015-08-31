@@ -73,26 +73,6 @@ public final class Utils {
   }
 
   /**
-   * Joins a sequence of strings with a specified delimiter string.
-   *
-   * @param delimiter the delimiter string.
-   * @param elements the sequence of strings to be joined.
-   * @return a single String.
-   */
-  public static String join(String delimiter, String... elements) {
-    if (elements.length == 0) {
-      throw new IllegalArgumentException("elements must have at least one element.");
-    }
-    // Assume that the average length is equal to the length of the first element.
-    StringBuilder sb = new StringBuilder(elements.length * (delimiter.length() + elements[0].length()) + 16);
-    sb.append(elements[0]);
-    for (int i = 1; i < elements.length; i++) {
-      sb.append(delimiter).append(elements[i]);
-    }
-    return sb.toString();
-  }
-
-  /**
    * Enumerates the elements of a Collection in a human-readable way.
    *
    * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.

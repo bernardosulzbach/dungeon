@@ -19,6 +19,7 @@ package org.dungeon.commands;
 
 import org.dungeon.util.Utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -41,7 +42,7 @@ public final class IssuedCommand {
     if (tokens.length == 0) {
       throw new IllegalArgumentException("invalid source, no tokens obtained.");
     }
-    this.stringRepresentation = Utils.join(" ", tokens);
+    this.stringRepresentation = StringUtils.join(tokens, ' ');
   }
 
   public String getStringRepresentation() {
