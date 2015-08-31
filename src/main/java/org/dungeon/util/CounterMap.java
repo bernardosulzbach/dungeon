@@ -18,13 +18,20 @@
 package org.dungeon.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Counter class that maps a generic key to an integer and provides methods manipulate this integer.
+ * CounterMap class that maps a generic key to an integer and provides methods manipulate this integer. Implements
+ * Iterable sorted by descending values.
  */
-public class CounterMap<K> implements Serializable {
+public class CounterMap<K> implements Serializable, Iterable<K> {
 
   // The wrapped HashMap.
   private final HashMap<K, Integer> map = new HashMap<K, Integer>();
@@ -85,6 +92,22 @@ public class CounterMap<K> implements Serializable {
   @Override
   public String toString() {
     return String.format("CounterMap{map=%s}", map);
+  }
+
+  @Override
+  public Iterator<K> iterator() {
+    List<Entry<K, Integer>> entryList = new ArrayList<Entry<K, Integer>>(map.entrySet());
+    Collections.sort(entryList, new Comparator<Entry<K, Integer>>() {
+      @Override
+      public int compare(Entry<K, Integer> o1, Entry<K, Integer> o2) {
+        return o2.getValue().compareTo(o1.getValue());
+      }
+    });
+    List<K> sortedKeyList = new ArrayList<K>();
+    for (Entry<K, Integer> entry : entryList) {
+      sortedKeyList.add(entry.getKey());
+    }
+    return sortedKeyList.iterator();
   }
 
 }

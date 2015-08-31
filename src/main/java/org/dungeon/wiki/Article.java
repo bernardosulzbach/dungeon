@@ -65,6 +65,10 @@ final class Article implements Selectable {
     return title;
   }
 
+  public String getContent() {
+    return content;
+  }
+
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();

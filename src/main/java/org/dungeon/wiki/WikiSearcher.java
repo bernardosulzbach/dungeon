@@ -17,9 +17,13 @@
 
 package org.dungeon.wiki;
 
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.io.Writer;
+import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Utils;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Uninstantiable WikiSearcher class used to retrieve articles from the Wiki.
@@ -31,7 +35,7 @@ public final class WikiSearcher {
   }
 
   /**
-   * Searches the wiki and prints the matching contents to the screen. This method triggers the wiki initialization.
+   * Searches the wiki and writes the matching contents to the screen. This method triggers the wiki initialization.
    *
    * @param arguments an array of arguments that will determine the search
    */
@@ -39,17 +43,18 @@ public final class WikiSearcher {
     if (arguments.length != 0) {
       Matches<Article> matches = Utils.findBestMatches(Wiki.getArticles(), arguments);
       if (matches.size() == 0) {
-        Writer.writeString("No matches were found.");
+        deepSearch(arguments);
       } else if (matches.size() == 1) {
         Writer.writeString(matches.getMatch(0).toString());
       } else {
-        StringBuilder builder = new StringBuilder();
-        builder.append("The following articles match your query:\n");
+        DungeonStringBuilder builder = new DungeonStringBuilder();
+        builder.append("The following article titles match your query:\n");
         for (int i = 0; i < matches.size(); i++) {
-          builder.append(toArticleListingEntry(matches.getMatch(i))).append("\n");
+          builder.append(toArticleListingEntry(matches.getMatch(i)));
+          builder.append("\n");
         }
         builder.append("Be more specific.");
-        Writer.writeString(builder.toString());
+        Writer.write(builder);
       }
     } else {
       writeArticleList();
@@ -57,15 +62,47 @@ public final class WikiSearcher {
   }
 
   /**
+   * Searches the wiki by looking at the content of the articles.
+   *
+   * @param arguments an array of arguments that will determine the search
+   */
+  private static void deepSearch(String[] arguments) {
+    CounterMap<Article> counter = new CounterMap<Article>();
+    for (Article article : Wiki.getArticles()) {
+      int matches = 0;
+      for (String argument : arguments) {
+        matches += StringUtils.countMatches(article.getContent().toLowerCase(), argument.toLowerCase());
+      }
+      if (matches != 0) {
+        counter.incrementCounter(article, matches);
+      }
+    }
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    if (counter.isNotEmpty()) {
+      builder.append("The following articles contain text that matches your query:\n");
+      for (Article article : counter) {
+        String matchCount = counter.getCounter(article) + (counter.getCounter(article) > 1 ? " matches" : " match");
+        builder.append(toArticleListingEntry(article) + " (" + matchCount + ")\n");
+      }
+    } else {
+      builder.append("No article matches your query.");
+    }
+    Writer.write(builder);
+  }
+
+  /**
    * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
    */
   private static void writeArticleList() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("The wiki has the following ").append(Wiki.getArticles().size()).append(" articles:\n");
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    builder.append("The wiki has the following ");
+    builder.append(String.valueOf(Wiki.getArticles().size()));
+    builder.append(" articles:\n");
     for (Article article : Wiki.getArticles()) {
-      builder.append(toArticleListingEntry(article)).append("\n");
+      builder.append(toArticleListingEntry(article));
+      builder.append("\n");
     }
-    Writer.writeString(builder.toString());
+    Writer.write(builder);
   }
 
   private static String toArticleListingEntry(Article article) {
