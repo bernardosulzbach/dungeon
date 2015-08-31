@@ -22,9 +22,9 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.commands.IssuedCommandProcessor;
 import org.dungeon.commands.PreparedIssuedCommand;
 import org.dungeon.gui.GameWindow;
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
 
@@ -202,9 +202,20 @@ public class Game {
   }
 
   private static void logInstanceClosing() {
-    String durationString = instanceInformation.getDurationString();
-    int commandCount = instanceInformation.getAcceptedCommandCount();
-    DungeonLogger.info("Closing instance. Ran for " + durationString + ". Commands parsed: " + commandCount + ".");
+    StringBuilder builder = new StringBuilder();
+    builder.append("Closing instance. Ran for ");
+    builder.append(instanceInformation.getDurationString());
+    builder.append(". ");
+    if (instanceInformation.getAcceptedCommandCount() == 0) {
+      builder.append("Parsed no commands.");
+    } else if (instanceInformation.getAcceptedCommandCount() == 1) {
+      builder.append("Parsed one command.");
+    } else {
+      builder.append("Parsed ");
+      builder.append(instanceInformation.getAcceptedCommandCount());
+      builder.append(" commands.");
+    }
+    DungeonLogger.info(builder.toString());
   }
 
 }

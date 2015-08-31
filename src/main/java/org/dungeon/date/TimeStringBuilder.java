@@ -66,7 +66,7 @@ public class TimeStringBuilder {
       }
     }
     if (strings.isEmpty()) {
-      return "Less than a second";
+      return "less than a second";
     } else {
       return Utils.enumerate(strings);
     }

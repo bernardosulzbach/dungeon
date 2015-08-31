@@ -17,10 +17,13 @@
 
 package org.dungeon.util;
 
+import org.dungeon.date.EarthTimeUnit;
+import org.dungeon.date.TimeStringBuilder;
 import org.dungeon.entity.Entity;
 import org.dungeon.game.Name;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.Period;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -190,6 +193,27 @@ public final class Utils {
       }
     }
     return matches;
+  }
+
+  /**
+   * Given a duration in milliseconds, this method returns a human-readable period string with up to two fields.
+   *
+   * @param duration a duration in milliseconds, nonnegative
+   * @return a String
+   */
+  public static String makePeriodString(long duration) {
+    if (duration < 0) {
+      throw new IllegalArgumentException("duration should be nonnegative.");
+    }
+    Period period = new Period(duration);
+    TimeStringBuilder builder = new TimeStringBuilder();
+    builder.set(EarthTimeUnit.YEAR, period.getYears());
+    builder.set(EarthTimeUnit.MONTH, period.getMonths());
+    builder.set(EarthTimeUnit.DAY, period.getDays());
+    builder.set(EarthTimeUnit.HOUR, period.getHours());
+    builder.set(EarthTimeUnit.MINUTE, period.getMinutes());
+    builder.set(EarthTimeUnit.SECOND, period.getSeconds());
+    return builder.toString(2);
   }
 
 }

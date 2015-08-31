@@ -17,9 +17,7 @@
 
 package org.dungeon.game;
 
-import org.dungeon.date.EarthTimeUnit;
-import org.dungeon.date.TimeStringBuilder;
-import org.dungeon.util.DungeonMath;
+import org.dungeon.util.Utils;
 
 /**
  * Information about an instance of the game.
@@ -37,13 +35,7 @@ class InstanceInformation {
    * Returns a string representing the duration of this instance.
    */
   public String getDurationString() {
-    TimeStringBuilder timeStringBuilder = new TimeStringBuilder();
-    timeStringBuilder.set(EarthTimeUnit.SECOND, DungeonMath.safeCastLongToInteger(getDurationInMillis() / 1000));
-    return timeStringBuilder.toString(2); // Use the two most significant non-zero fields.
-  }
-
-  private long getDurationInMillis() {
-    return System.currentTimeMillis() - startingTimeMillis;
+    return Utils.makePeriodString(System.currentTimeMillis() - startingTimeMillis);
   }
 
   public int getAcceptedCommandCount() {

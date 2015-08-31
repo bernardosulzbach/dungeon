@@ -17,11 +17,8 @@
 
 package org.dungeon.io;
 
-import org.dungeon.date.EarthTimeUnit;
-import org.dungeon.date.TimeStringBuilder;
 import org.dungeon.util.Table;
-
-import org.joda.time.Period;
+import org.dungeon.util.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -49,7 +46,7 @@ public final class SavesTableWriter {
           fileCount += 1;
           byteCount += file.length();
           Date lastModified = new Date(file.lastModified());
-          String periodString = makePeriodString(lastModified.getTime(), System.currentTimeMillis());
+          String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
           String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
           table.insertRow(file.getName(), IOUtils.bytesToHuman(file.length()), lastModifiedString);
         }
@@ -64,18 +61,6 @@ public final class SavesTableWriter {
     } else {
       Writer.writeString("Saves folder does not exist.");
     }
-  }
-
-  private static String makePeriodString(long start, long end) {
-    Period period = new Period(start, end);
-    TimeStringBuilder builder = new TimeStringBuilder();
-    builder.set(EarthTimeUnit.YEAR, period.getYears());
-    builder.set(EarthTimeUnit.MONTH, period.getMonths());
-    builder.set(EarthTimeUnit.DAY, period.getDays());
-    builder.set(EarthTimeUnit.HOUR, period.getHours());
-    builder.set(EarthTimeUnit.MINUTE, period.getMinutes());
-    builder.set(EarthTimeUnit.SECOND, period.getSeconds());
-    return builder.toString(2) + " ago";
   }
 
 }
