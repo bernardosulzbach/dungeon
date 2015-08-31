@@ -20,7 +20,7 @@ package org.dungeon.game;
 import org.dungeon.date.Date;
 import org.dungeon.date.DungeonTimeUnit;
 import org.dungeon.entity.creatures.Hero;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.stats.WorldStatistics;
 
 import org.jetbrains.annotations.NotNull;

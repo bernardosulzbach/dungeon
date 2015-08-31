@@ -19,6 +19,7 @@ package org.dungeon.io;
 
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
 

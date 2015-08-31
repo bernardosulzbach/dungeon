@@ -15,34 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.io;
+package org.dungeon.logging;
 
-import org.dungeon.logging.DungeonLogger;
+import java.text.SimpleDateFormat;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
 
 /**
- * Sleeper class that handles Thread sleeping.
+ * The Formatter used by the Logger to pretty format dates.
  */
-public final class Sleeper {
+class DungeonFormatter extends Formatter {
 
-  private Sleeper() {
-    throw new AssertionError();
-  }
+  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
 
-  /**
-   * Sleeps for a specified amount of milliseconds.
-   *
-   * @param milliseconds how many milliseconds should this thread sleep for
-   */
-  public static void sleep(long milliseconds) {
-    if (milliseconds > 0) {
-      try {
-        Thread.sleep(milliseconds);
-      } catch (InterruptedException logged) {
-        DungeonLogger.warning("Sleeper was interrupted.");
-      }
-    } else {
-      DungeonLogger.warning("Tried to sleep a nonpositive amount of milliseconds.");
-    }
+  @Override
+  public String format(LogRecord record) {
+    return DATE_FORMAT.format(record.getMillis()) + " (" + record.getLevel() + ") : " + record.getMessage() + "\n";
   }
 
 }

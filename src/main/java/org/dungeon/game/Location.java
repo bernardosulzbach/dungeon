@@ -23,7 +23,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.items.Item;
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.entity.items.LocationInventory;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;

@@ -21,7 +21,7 @@ import org.dungeon.game.ColoredString;
 import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Writable;
 import org.dungeon.gui.GameWindow;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 

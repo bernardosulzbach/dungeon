@@ -19,7 +19,7 @@ package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.items.ItemFactory;
 import org.dungeon.game.Location;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 

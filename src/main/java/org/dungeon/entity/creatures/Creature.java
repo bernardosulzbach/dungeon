@@ -24,7 +24,7 @@ import org.dungeon.entity.TagSet;
 import org.dungeon.entity.items.CreatureInventory;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Location;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.stats.CauseOfDeath;
 
 import org.jetbrains.annotations.NotNull;

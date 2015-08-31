@@ -20,7 +20,7 @@ package org.dungeon.achievements;
 import org.dungeon.date.Date;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Writer;
 
 import java.io.Serializable;

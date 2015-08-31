@@ -22,7 +22,7 @@ import org.dungeon.commands.IssuedCommand;
 import org.dungeon.commands.IssuedCommandProcessor;
 import org.dungeon.commands.PreparedIssuedCommand;
 import org.dungeon.gui.GameWindow;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
 import org.dungeon.util.Messenger;

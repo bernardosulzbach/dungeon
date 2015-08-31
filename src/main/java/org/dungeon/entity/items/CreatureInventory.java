@@ -19,7 +19,7 @@ package org.dungeon.entity.items;
 
 import org.dungeon.entity.Weight;
 import org.dungeon.entity.creatures.Creature;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 /**
  * The CreatureInventory class.

@@ -24,7 +24,7 @@ import static org.dungeon.date.DungeonTimeUnit.MONTH;
 import static org.dungeon.date.DungeonTimeUnit.SECOND;
 import static org.dungeon.date.DungeonTimeUnit.YEAR;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -17,7 +17,7 @@
 
 package org.dungeon.util.library;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.StopWatch;
 
 /**

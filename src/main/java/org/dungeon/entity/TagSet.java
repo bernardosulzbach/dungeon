@@ -17,7 +17,7 @@
 
 package org.dungeon.entity;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;

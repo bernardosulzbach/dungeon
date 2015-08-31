@@ -19,7 +19,7 @@ package org.dungeon.achievements;
 
 import org.dungeon.game.Id;
 import org.dungeon.game.PartOfDay;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;

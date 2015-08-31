@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.io;
+package org.dungeon.logging;
 
 import org.dungeon.util.Messenger;
 
@@ -34,15 +34,14 @@ public final class DungeonLogger {
 
   private static final String LOG_FILE_PATH = "logs/";
   private static final String LOG_FILE_NAME = "log.txt";
-  private static final Logger logger;
+  private static final Logger logger = Logger.getLogger("org.dungeon");
 
   static {
-    logger = Logger.getLogger("org.dungeon");
     logger.setUseParentHandlers(false);
     logger.setLevel(Level.ALL);
     try { // Try to add the file handler.
       Handler handler = new FileHandler(getCompleteLogFilePath(), true);
-      handler.setFormatter(new LoggerDateFormatter());
+      handler.setFormatter(new DungeonFormatter());
       logger.addHandler(handler);
     } catch (IOException ignored) {
     }

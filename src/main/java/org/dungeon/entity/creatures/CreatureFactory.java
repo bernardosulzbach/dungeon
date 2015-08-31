@@ -29,7 +29,7 @@ import org.dungeon.entity.items.ItemPreset;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
 import org.dungeon.game.NameFactory;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 import org.dungeon.util.Percentage;
 

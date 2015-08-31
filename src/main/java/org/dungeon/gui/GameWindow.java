@@ -23,7 +23,7 @@ import org.dungeon.game.ColoredString;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.game.Writable;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Loader;
 import org.dungeon.util.Constants;
 

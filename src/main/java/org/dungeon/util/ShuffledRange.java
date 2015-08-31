@@ -18,7 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.game.Random;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import java.util.ArrayList;
 import java.util.Collections;

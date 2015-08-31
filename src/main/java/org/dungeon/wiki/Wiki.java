@@ -17,7 +17,7 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
 
 import com.eclipsesource.json.JsonObject;

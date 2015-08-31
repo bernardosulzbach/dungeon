@@ -21,6 +21,7 @@ import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.Writable;
 import org.dungeon.gui.TextPaneWritingSpecifications;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Constants;
 
 import java.awt.Color;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2015 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.io;
-
-import java.text.SimpleDateFormat;
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
-
 /**
- * The Formatter used by the Logger to pretty format dates.
+ * Provides the DungeonLogger class that should be used throughout the application to log events.
  */
-class LoggerDateFormatter extends Formatter {
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
-
-  @Override
-  public String format(LogRecord record) {
-    return DATE_FORMAT.format(record.getMillis()) + " (" + record.getLevel() + ") : " + record.getMessage() + "\n";
-  }
-
-}
+package org.dungeon.logging;

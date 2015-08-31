@@ -17,7 +17,7 @@
 
 package org.dungeon.commands;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Writer;
 import org.dungeon.util.Utils;
 

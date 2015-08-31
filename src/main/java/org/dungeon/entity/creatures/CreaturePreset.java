@@ -24,7 +24,7 @@ import org.dungeon.entity.Visibility;
 import org.dungeon.entity.Weight;
 import org.dungeon.game.Id;
 import org.dungeon.game.Name;
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 import java.util.List;
 

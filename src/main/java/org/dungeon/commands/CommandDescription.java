@@ -17,7 +17,7 @@
 
 package org.dungeon.commands;
 
-import org.dungeon.io.DungeonLogger;
+import org.dungeon.logging.DungeonLogger;
 
 /**
  * Simple wrapper for a name and info of a Command.
