@@ -80,8 +80,8 @@ public class World implements Serializable {
     return heroNewLocation;
   }
 
-  public boolean hasLocation(Point point) {
-    return locations.containsKey(point);
+  boolean doesNotHaveLocationAt(Point point) {
+    return !locations.containsKey(point);
   }
 
   /**
@@ -93,7 +93,7 @@ public class World implements Serializable {
    */
   @NotNull
   public Location getLocation(@NotNull Point point) {
-    if (!hasLocation(point)) {
+    if (doesNotHaveLocationAt(point)) {
       generator.expand(point);
     }
     return locations.get(point);
