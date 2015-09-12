@@ -34,7 +34,6 @@ import org.dungeon.game.GameState;
 import org.dungeon.game.Id;
 import org.dungeon.game.Location;
 import org.dungeon.game.LocationPreset;
-import org.dungeon.game.PartOfDay;
 import org.dungeon.game.Point;
 import org.dungeon.io.Loader;
 import org.dungeon.io.PoemWriter;
@@ -46,7 +45,6 @@ import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.DungeonMath;
-import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
 import org.dungeon.util.SystemInfo;
 import org.dungeon.util.Table;
@@ -57,7 +55,6 @@ import org.dungeon.wiki.WikiSearcher;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -458,35 +455,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("wait", "Makes time pass.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        if (arguments.length != 0) {
-          int seconds = 0;
-          boolean gotSeconds = false;
-          String argument = arguments[0];
-          Matches<PartOfDay> matches = Utils.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), argument);
-          if (matches.size() == 1) {
-            seconds = PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0));
-            gotSeconds = true;
-          } else if (matches.size() > 1) {
-            Messenger.printAmbiguousSelectionMessage();
-          } else {
-            try {
-              seconds = Integer.parseInt(argument);
-              gotSeconds = true;
-            } catch (NumberFormatException warn) {
-              Messenger.printInvalidNumberFormatOrValue();
-            }
-          }
-          if (gotSeconds) {
-            if (seconds > 0) {
-              Engine.rollDateAndRefresh(seconds);
-              Writer.writeString("Waited for " + seconds + " seconds.");
-            } else {
-              Writer.writeString("The amount of seconds should be positive!");
-            }
-          }
-        } else {
-          Messenger.printMissingArgumentsMessage();
-        }
+        DebugWaitParser.parseDebugWait(arguments);
       }
     });
     return commandSet;

@@ -33,6 +33,8 @@ import java.util.List;
  */
 public final class DungeonStringBuilder implements Writable {
 
+  private static final Color DEFAULT_COLOR = Constants.FORE_COLOR_NORMAL;
+
   /**
    * A list of ColoredStrings. No string from this list is empty. Adjacent strings may have the same color.
    *
@@ -40,7 +42,7 @@ public final class DungeonStringBuilder implements Writable {
    */
   private final List<ColoredString> coloredStringList = new ArrayList<ColoredString>();
   private final StringBuilder builder = new StringBuilder();
-  private Color currentColor = Constants.FORE_COLOR_NORMAL;
+  private Color currentColor = DEFAULT_COLOR;
 
   /**
    * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this builder.
@@ -80,6 +82,13 @@ public final class DungeonStringBuilder implements Writable {
       addBuilderContentToList();
       currentColor = color;
     }
+  }
+
+  /**
+   * Resets the color of this builder to the default color.
+   */
+  public void resetColor() {
+    setColor(DEFAULT_COLOR);
   }
 
   @Override
