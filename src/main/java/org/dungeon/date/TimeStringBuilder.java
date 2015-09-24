@@ -22,6 +22,7 @@ import org.dungeon.util.Utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,7 @@ class TimeStringBuilder {
     if (strings.isEmpty()) {
       return "less than a second";
     } else {
+      Collections.reverse(strings);
       return Utils.enumerate(strings);
     }
   }
