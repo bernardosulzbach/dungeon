@@ -32,7 +32,9 @@ import java.awt.Color;
  */
 public final class Writer {
 
-  // How many milliseconds the game 'lags' after writing a string of battle output.
+  /**
+   * For how many milliseconds the game sleeps after writing a string of battle output.
+   */
   private static final int WRITE_BATTLE_STRING_WAIT = 300;
 
   private Writer() { // Ensure that this class cannot be instantiated.
