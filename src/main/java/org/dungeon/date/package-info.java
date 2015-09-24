@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.date;
+/**
+ * Defines all Dungeon in-game date utilities.
+ */
 
-public enum EarthTimeUnit {
-  YEAR, MONTH, DAY, HOUR, MINUTE, SECOND
-}
+package org.dungeon.date;

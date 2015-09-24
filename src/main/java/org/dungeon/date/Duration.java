@@ -91,9 +91,9 @@ public class Duration implements Serializable {
     int months = DungeonMath.safeCastLongToInteger(monthsLong);
     long daysLong = (duration % DungeonTimeUnit.MONTH.milliseconds) / DungeonTimeUnit.DAY.milliseconds;
     int days = DungeonMath.safeCastLongToInteger(daysLong);
-    builder.set(EarthTimeUnit.YEAR, years);
-    builder.set(EarthTimeUnit.MONTH, months);
-    builder.set(EarthTimeUnit.DAY, days);
+    builder.set(DungeonTimeUnit.YEAR, years);
+    builder.set(DungeonTimeUnit.MONTH, months);
+    builder.set(DungeonTimeUnit.DAY, days);
     return builder.toString();
   }
 

@@ -31,15 +31,15 @@ import java.util.Map.Entry;
  * A builder of time strings. A time string is a human-readable textual representation of a period, e.g.: 2 years and 6
  * months.
  */
-public class TimeStringBuilder {
+class TimeStringBuilder {
 
-  private final Map<EarthTimeUnit, NonNegativeInteger> map;
+  private final Map<DungeonTimeUnit, NonNegativeInteger> map;
 
   public TimeStringBuilder() {
-    map = new EnumMap<EarthTimeUnit, NonNegativeInteger>(EarthTimeUnit.class);
+    map = new EnumMap<DungeonTimeUnit, NonNegativeInteger>(DungeonTimeUnit.class);
   }
 
-  public void set(@NotNull EarthTimeUnit unit, @NotNull Integer value) {
+  public void set(@NotNull DungeonTimeUnit unit, @NotNull Integer value) {
     map.put(unit, new NonNegativeInteger(value));
   }
 
@@ -50,10 +50,10 @@ public class TimeStringBuilder {
    * @param fields how many fields to use
    * @return a time string
    */
-  public String toString(final int fields) {
+  private String toString(final int fields) {
     List<String> strings = new ArrayList<String>();
     // Enum maps are maintained in the natural order of their keys (the order of declaration of the enum constants).
-    for (Entry<EarthTimeUnit, NonNegativeInteger> entry : map.entrySet()) {
+    for (Entry<DungeonTimeUnit, NonNegativeInteger> entry : map.entrySet()) {
       if (strings.size() < fields) {
         int value = entry.getValue().toInteger();
         if (value > 0) {
@@ -74,7 +74,7 @@ public class TimeStringBuilder {
 
   @Override
   public String toString() {
-    return toString(EarthTimeUnit.values().length);
+    return toString(DungeonTimeUnit.values().length);
   }
 
 }
