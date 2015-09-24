@@ -24,7 +24,7 @@ import org.dungeon.logging.DungeonLogger;
  */
 public final class Sleeper {
 
-  public static final int MILLISECONDS_IN_MINUTE = 60000;
+  private static final int MILLISECONDS_IN_MINUTE = 60000;
 
   private Sleeper() {
     throw new AssertionError();
