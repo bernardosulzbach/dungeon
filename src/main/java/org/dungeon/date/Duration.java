@@ -24,36 +24,41 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 /**
- * Period class to calculate, store and print in-game date differences.
+ * Represents a nonnegative amount of time.
  */
-public class Period implements Serializable {
+public class Duration implements Serializable {
 
   /**
    * The duration, in milliseconds.
    */
-  private final long difference;
+  private final long duration;
 
   /**
-   * Constructs a period from a specified start date to an end date.
+   * Constructs a Duration from a specified start date to an end date.
    *
-   * @param start the start of the period.
-   * @param end the end of the period.
+   * @param start the starting instance
+   * @param end the ending instance
    */
-  public Period(@NotNull Date start, @NotNull Date end) {
-    difference = end.getTime() - start.getTime();
+  public Duration(@NotNull Date start, @NotNull Date end) {
+    long difference = end.getTime() - start.getTime();
+    if (difference >= 0) {
+      duration = difference;
+    } else {
+      throw new IllegalArgumentException("end is before start.");
+    }
   }
 
   /**
-   * Constructs a period from the specified duration, in milliseconds.
+   * Constructs a Duration from the specified duration, in milliseconds.
    *
    * @param duration the duration, in milliseconds
    */
-  Period(long duration) {
-    difference = duration;
+  Duration(long duration) {
+    this.duration = duration;
   }
 
   public long getSeconds() {
-    return difference / 1000;
+    return duration / 1000;
   }
 
   @Override
@@ -65,26 +70,26 @@ public class Period implements Serializable {
       return false;
     }
 
-    Period period = (Period) o;
+    Duration duration = (Duration) o;
 
-    return difference == period.difference;
+    return this.duration == duration.duration;
   }
 
   @Override
   public int hashCode() {
-    return (int) (difference ^ (difference >>> 32));
+    return (int) (duration ^ (duration >>> 32));
   }
 
   @Override
   public String toString() {
-    if (difference < DungeonTimeUnit.DAY.milliseconds) {
+    if (duration < DungeonTimeUnit.DAY.milliseconds) {
       return "Less than a day";
     }
     TimeStringBuilder builder = new TimeStringBuilder();
-    int years = DungeonMath.safeCastLongToInteger(difference / DungeonTimeUnit.YEAR.milliseconds);
-    long monthsLong = (difference % DungeonTimeUnit.YEAR.milliseconds) / DungeonTimeUnit.MONTH.milliseconds;
+    int years = DungeonMath.safeCastLongToInteger(duration / DungeonTimeUnit.YEAR.milliseconds);
+    long monthsLong = (duration % DungeonTimeUnit.YEAR.milliseconds) / DungeonTimeUnit.MONTH.milliseconds;
     int months = DungeonMath.safeCastLongToInteger(monthsLong);
-    long daysLong = (difference % DungeonTimeUnit.MONTH.milliseconds) / DungeonTimeUnit.DAY.milliseconds;
+    long daysLong = (duration % DungeonTimeUnit.MONTH.milliseconds) / DungeonTimeUnit.DAY.milliseconds;
     int days = DungeonMath.safeCastLongToInteger(daysLong);
     builder.set(EarthTimeUnit.YEAR, years);
     builder.set(EarthTimeUnit.MONTH, months);

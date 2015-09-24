@@ -20,8 +20,8 @@ package org.dungeon.achievements;
 import org.dungeon.date.Date;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Writer;
+import org.dungeon.logging.DungeonLogger;
 
 import java.io.Serializable;
 import java.util.ArrayList;

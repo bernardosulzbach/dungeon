@@ -17,8 +17,8 @@
 
 package org.dungeon.commands;
 
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Writer;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Utils;
 
 import org.jetbrains.annotations.NotNull;

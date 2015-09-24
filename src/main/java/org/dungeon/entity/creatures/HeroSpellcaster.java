@@ -17,8 +17,8 @@
 
 package org.dungeon.entity.creatures;
 
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.Writer;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.spells.Spell;
 import org.dungeon.util.Matches;
 import org.dungeon.util.ParsingUtils;

@@ -18,7 +18,7 @@
 package org.dungeon.commands;
 
 import org.dungeon.date.DungeonTimeParser;
-import org.dungeon.date.Period;
+import org.dungeon.date.Duration;
 import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
@@ -88,8 +88,8 @@ class DebugWaitParser {
       if (syntax == Syntax.FOR) {
         String timeString = StringUtils.join(arguments, " ", 1, arguments.length);
         try {
-          Period period = DungeonTimeParser.parsePeriod(timeString);
-          rollDate(DungeonMath.safeCastLongToInteger(period.getSeconds()));
+          Duration duration = DungeonTimeParser.parsePeriod(timeString);
+          rollDate(DungeonMath.safeCastLongToInteger(duration.getSeconds()));
         } catch (IllegalArgumentException badArgument) {
           Writer.writeString("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
         }

@@ -27,8 +27,8 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.game.GameData.InvalidTagException;
 import org.dungeon.game.Id;
 import org.dungeon.game.NameFactory;
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Percentage;
 
 import com.eclipsesource.json.JsonArray;

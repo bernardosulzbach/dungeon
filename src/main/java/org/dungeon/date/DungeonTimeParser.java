@@ -40,10 +40,10 @@ public final class DungeonTimeParser {
    * <p>For example: "2 years, 5 months, 8 days, and 20 hours".
    *
    * @param string a period string, not null
-   * @return a Period, not null
+   * @return a Duration, not null
    */
   @NotNull
-  public static Period parsePeriod(@NotNull String string) {
+  public static Duration parsePeriod(@NotNull String string) {
     List<String> tokens = cleanAndTokenize(string);
     if (tokens.size() < 2) {
       throw new IllegalArgumentException("string should provide at least one multiplier-unit pair.");
@@ -71,7 +71,7 @@ public final class DungeonTimeParser {
         unit = null;
       }
     }
-    return new Period(milliseconds);
+    return new Duration(milliseconds);
   }
 
   @NotNull

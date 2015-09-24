@@ -19,7 +19,7 @@ package org.dungeon.achievements;
 
 import org.dungeon.achievements.comparators.UnlockedAchievementComparators;
 import org.dungeon.date.Date;
-import org.dungeon.date.Period;
+import org.dungeon.date.Duration;
 import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.io.Writer;
@@ -77,7 +77,7 @@ public class AchievementTrackerWriter {
     Date now = Game.getGameState().getWorld().getWorldDate();
     DungeonStringBuilder dungeonStringBuilder = new DungeonStringBuilder();
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
-      Period sinceUnlock = new Period(unlockedAchievement.getDate(), now);
+      Duration sinceUnlock = new Duration(unlockedAchievement.getDate(), now);
       dungeonStringBuilder.setColor(Color.ORANGE);
       dungeonStringBuilder.append(String.format("%s (%s ago)\n", unlockedAchievement.getName(), sinceUnlock));
       dungeonStringBuilder.setColor(Color.YELLOW);

@@ -19,8 +19,8 @@ package org.dungeon.achievements;
 
 import org.dungeon.game.Id;
 import org.dungeon.game.PartOfDay;
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
+import org.dungeon.logging.DungeonLogger;
 import org.dungeon.stats.CauseOfDeath;
 import org.dungeon.stats.TypeOfCauseOfDeath;
 import org.dungeon.util.CounterMap;

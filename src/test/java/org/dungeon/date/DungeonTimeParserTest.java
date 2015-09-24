@@ -32,26 +32,26 @@ public class DungeonTimeParserTest {
   @Test
   public void testParsePeriod() throws Exception {
     // Basic tests.
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 millisecond").equals(new Period(1)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 milliseconds").equals(new Period(2)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 second").equals(new Period(SECOND.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 seconds").equals(new Period(2 * SECOND.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 minute").equals(new Period(MINUTE.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 minutes").equals(new Period(2 * MINUTE.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 hour").equals(new Period(HOUR.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 hours").equals(new Period(2 * HOUR.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 day").equals(new Period(DAY.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 days").equals(new Period(2 * DAY.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 month").equals(new Period(MONTH.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 months").equals(new Period(2 * MONTH.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 year").equals(new Period(YEAR.milliseconds)));
-    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 years").equals(new Period(2 * YEAR.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 millisecond").equals(new Duration(1)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 milliseconds").equals(new Duration(2)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 second").equals(new Duration(SECOND.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 seconds").equals(new Duration(2 * SECOND.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 minute").equals(new Duration(MINUTE.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 minutes").equals(new Duration(2 * MINUTE.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 hour").equals(new Duration(HOUR.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 hours").equals(new Duration(2 * HOUR.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 day").equals(new Duration(DAY.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 days").equals(new Duration(2 * DAY.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 month").equals(new Duration(MONTH.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 months").equals(new Duration(2 * MONTH.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("1 year").equals(new Duration(YEAR.milliseconds)));
+    Assert.assertTrue(DungeonTimeParser.parsePeriod("2 years").equals(new Duration(2 * YEAR.milliseconds)));
     // Advanced tests.
-    Period twoMinutesAndTenSeconds = new Period(2 * MINUTE.milliseconds + 10 * SECOND.milliseconds);
+    Duration twoMinutesAndTenSeconds = new Duration(2 * MINUTE.milliseconds + 10 * SECOND.milliseconds);
     Assert.assertTrue(DungeonTimeParser.parsePeriod("2 minutes and 10 seconds").equals(twoMinutesAndTenSeconds));
     // Javadoc example.
     long duration = 2 * YEAR.milliseconds + 5 * MONTH.milliseconds + 8 * DAY.milliseconds + 20 * HOUR.milliseconds;
-    Period javadocExample = new Period(duration);
+    Duration javadocExample = new Duration(duration);
     Assert.assertTrue(DungeonTimeParser.parsePeriod("2 years, 5 months, 8 days, and 20 hours").equals(javadocExample));
     // Exception tests.
     try {

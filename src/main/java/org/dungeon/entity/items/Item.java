@@ -18,7 +18,7 @@
 package org.dungeon.entity.items;
 
 import org.dungeon.date.Date;
-import org.dungeon.date.Period;
+import org.dungeon.date.Duration;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.LightSource;
 import org.dungeon.entity.Luminosity;
@@ -86,7 +86,7 @@ public final class Item extends Entity {
    * @return a long representing an amount of seconds
    */
   public long getAge() {
-    Period existence = new Period(dateOfCreation, Game.getGameState().getWorld().getWorldDate());
+    Duration existence = new Duration(dateOfCreation, Game.getGameState().getWorld().getWorldDate());
     return existence.getSeconds();
   }
 

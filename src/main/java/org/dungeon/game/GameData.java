@@ -20,8 +20,8 @@ package org.dungeon.game;
 import org.dungeon.achievements.AchievementStore;
 import org.dungeon.entity.creatures.CreatureFactory;
 import org.dungeon.entity.items.ItemFactory;
-import org.dungeon.logging.DungeonLogger;
 import org.dungeon.io.JsonObjectFactory;
+import org.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;

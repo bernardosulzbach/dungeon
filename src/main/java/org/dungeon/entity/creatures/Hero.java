@@ -22,7 +22,7 @@ import static org.dungeon.date.DungeonTimeUnit.SECOND;
 
 import org.dungeon.achievements.AchievementTracker;
 import org.dungeon.date.Date;
-import org.dungeon.date.Period;
+import org.dungeon.date.Duration;
 import org.dungeon.entity.Entity;
 import org.dungeon.entity.Visibility;
 import org.dungeon.entity.items.BaseInventory;
@@ -701,7 +701,7 @@ public class Hero extends Creature {
    * Prints the Hero's age.
    */
   public void printAge() {
-    String age = new Period(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
+    String age = new Duration(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
     Writer.writeString(String.format("You are %s old.", age), Color.CYAN);
   }
 
