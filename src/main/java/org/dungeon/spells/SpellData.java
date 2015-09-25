@@ -125,6 +125,7 @@ public final class SpellData {
         List<Creature> creatureList = new ArrayList<Creature>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
         DungeonStringBuilder builder = new DungeonStringBuilder();
+        builder.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
         Hero.writeCreatureSight(creatureList, builder);
         Hero.writeItemSight(hero.getLocation().getItemList(), builder);
         Writer.write(builder);
