@@ -99,9 +99,9 @@ public final class DungeonMath {
       }
       String result = fibonacci(n);
       if (result.equals(TIMEOUT)) {
-        Writer.writeString("Calculation exceeded the time limit.");
+        Writer.write("Calculation exceeded the time limit.");
       } else {
-        Writer.writeString(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
+        Writer.write(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
       }
     } else {
       Messenger.printMissingArgumentsMessage();

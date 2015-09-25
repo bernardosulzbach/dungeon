@@ -46,8 +46,8 @@ public final class Writer {
    *
    * @param string the string of text to be written.
    */
-  public static void writeString(String string) {
-    writeString(string, Constants.FORE_COLOR_NORMAL);
+  public static void write(String string) {
+    write(string, Constants.FORE_COLOR_NORMAL);
   }
 
   /**
@@ -56,19 +56,8 @@ public final class Writer {
    * @param string the string of text to be written.
    * @param color the color of the text.
    */
-  public static void writeString(String string, Color color) {
-    writeString(string, color, true);
-  }
-
-  /**
-   * Writes a string of text using a specific color.
-   *
-   * @param string the string of text to be written.
-   * @param color the color of the text.
-   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
-   */
-  public static void writeString(String string, Color color, boolean newLine) {
-    writeString(string, color, newLine, true, 0);
+  public static void write(String string, Color color) {
+    write(string, color, 0);
   }
 
   /**
@@ -76,22 +65,18 @@ public final class Writer {
    *
    * @param string the string of text to be written.
    * @param color the color of the text.
-   * @param newLine if true, a newline will be added to the end of the string after its end is cleared.
-   * @param scrollDown if true, the TextPane will be scrolled down after writing.
    * @param wait how many milliseconds the application should sleep after writing the string.
    */
-  private static void writeString(String string, Color color, boolean newLine, boolean scrollDown, int wait) {
+  private static void write(String string, Color color, int wait) {
     if (color == null) {
-      DungeonLogger.warning("Passed null as a Color to writeString.");
+      DungeonLogger.warning("Passed null as a Color to write.");
       color = Constants.FORE_COLOR_NORMAL;
-    }
-    if (newLine) {
-      string += '\n';
     }
     DungeonStringBuilder builder = new DungeonStringBuilder();
     builder.setColor(color);
     builder.append(string);
-    TextPaneWritingSpecifications specifications = new TextPaneWritingSpecifications(scrollDown);
+    builder.append("\n");
+    TextPaneWritingSpecifications specifications = new TextPaneWritingSpecifications(true);
     write(builder, specifications);
     if (wait > 0) {
       Sleeper.sleep(wait);
@@ -105,14 +90,14 @@ public final class Writer {
    * @param color the color of the text.
    */
   public static void writeBattleString(String string, Color color) {
-    writeString(string, color, true, true, WRITE_BATTLE_STRING_WAIT);
+    write(string, color, WRITE_BATTLE_STRING_WAIT);
   }
 
   /**
    * Writes a line separator, terminating a line or leaving one blank line.
    */
   public static void writeNewLine() {
-    writeString("");
+    write("");
   }
 
   /**

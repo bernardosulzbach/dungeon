@@ -45,7 +45,7 @@ public final class WikiSearcher {
       if (matches.size() == 0) {
         deepSearch(arguments);
       } else if (matches.size() == 1) {
-        Writer.writeString(matches.getMatch(0).toString());
+        Writer.write(matches.getMatch(0).toString());
       } else {
         DungeonStringBuilder builder = new DungeonStringBuilder();
         builder.append("The following article titles match your query:\n");

@@ -34,30 +34,30 @@ public class Messenger {
    * Prints a message reporting the usage of an invalid command.
    */
   public static void printInvalidCommandMessage(String command) {
-    Writer.writeString("'" + command + "' is not a recognized command.", Color.RED);
-    Writer.writeString("See 'commands' for a complete list of commands.", Color.ORANGE);
+    Writer.write("'" + command + "' is not a recognized command.", Color.RED);
+    Writer.write("See 'commands' for a complete list of commands.", Color.ORANGE);
   }
 
   public static void printInvalidNumberFormatOrValue() {
-    Writer.writeString("Invalid number format or value.");
+    Writer.write("Invalid number format or value.");
   }
 
   /**
    * Prints a warning that a command requires arguments.
    */
   public static void printMissingArgumentsMessage() {
-    Writer.writeString("This command requires arguments.");
+    Writer.write("This command requires arguments.");
   }
 
   public static void printAmbiguousSelectionMessage() {
-    Writer.writeString("Provided input is ambiguous.");
+    Writer.write("Provided input is ambiguous.");
   }
 
   /**
    * Prints a warning that a directory creation failed.
    */
   public static void printFailedToCreateDirectoryMessage(String directory) {
-    Writer.writeString("Failed to create the '" + directory + "' directory.");
+    Writer.write("Failed to create the '" + directory + "' directory.");
   }
 
 }

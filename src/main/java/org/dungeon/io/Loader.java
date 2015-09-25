@@ -91,9 +91,9 @@ public final class Loader {
    */
   public static GameState newGame() {
     GameState gameState = new GameState();
-    Writer.writeString("Created a new game.");
+    Writer.write("Created a new game.");
     Writer.writeNewLine();
-    Writer.writeString(gameState.getPreface());
+    Writer.write(gameState.getPreface());
     Game.getGameWindow().requestFocusOnTextField();
     return gameState;
   }
@@ -136,13 +136,13 @@ public final class Loader {
       if (isSaveFile(save)) {
         return loadFile(save);
       } else {
-        Writer.writeString(save.getName() + " does not exist or is not a file.");
+        Writer.write(save.getName() + " does not exist or is not a file.");
         return null;
       }
     } else {
       GameState loadResult = loadGame(false); // Don't ask for confirmation. Typing load is not an easy mistake.
       if (loadResult == null) {
-        Writer.writeString("No saved game could be found.");
+        Writer.write("No saved game could be found.");
       }
       return loadResult;
     }
@@ -208,10 +208,10 @@ public final class Loader {
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
       String sizeString = IOUtils.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
-      Writer.writeString(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
+      Writer.write(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
       return loadedGameState;
     } catch (Exception bad) {
-      Writer.writeString("Could not load the saved game.");
+      Writer.write("Could not load the saved game.");
       return null;
     }
   }
@@ -241,9 +241,9 @@ public final class Loader {
       state.setSaved(true);
       String sizeString = IOUtils.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
-      Writer.writeString(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
+      Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
     } catch (IOException bad) {
-      Writer.writeString("Could not save the game.");
+      Writer.write("Could not save the game.");
     }
   }
 

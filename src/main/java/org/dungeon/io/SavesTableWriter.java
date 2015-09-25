@@ -56,10 +56,10 @@ public final class SavesTableWriter {
         }
         Writer.write(table);
       } else {
-        Writer.writeString("Saves folder is empty.");
+        Writer.write("Saves folder is empty.");
       }
     } else {
-      Writer.writeString("Saves folder does not exist.");
+      Writer.write("Saves folder does not exist.");
     }
   }
 

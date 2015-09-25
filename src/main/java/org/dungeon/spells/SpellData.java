@@ -21,6 +21,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.creatures.HeroUtils;
 import org.dungeon.entity.items.Item;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
@@ -60,16 +61,16 @@ public final class SpellData {
       }
 
       private void writeHealCastOnSelf(Hero hero) {
-        Writer.writeString("You casted " + getName() + " on yourself.");
+        Writer.write("You casted " + getName() + " on yourself.");
         if (hero.getHealth().isFull()) {
-          Writer.writeString("You are completely healed.");
+          Writer.write("You are completely healed.");
         }
       }
 
       private void writeHealCastOnTarget(Creature target) {
-        Writer.writeString("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+        Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
         if (target.getHealth().isFull()) {
-          Writer.writeString(target.getName() + " is completely healed.");
+          Writer.write(target.getName() + " is completely healed.");
         }
       }
     });
@@ -83,7 +84,7 @@ public final class SpellData {
         if (targetMatcher.length == 0) {
           selectedItem = hero.getWeapon();
           if (selectedItem == null) {
-            Writer.writeString("You are not equipping anything.");
+            Writer.write("You are not equipping anything.");
           }
         } else {
           selectedItem = HeroUtils.findItem(hero.getInventory().getItems(), targetMatcher);
@@ -95,20 +96,20 @@ public final class SpellData {
 
       private void effectivelyOperate(Hero hero, Item item) {
         if (!item.hasTag(Item.Tag.REPAIRABLE)) {
-          Writer.writeString(item.getName().getSingular() + " is not repairable.");
+          Writer.write(item.getName().getSingular() + " is not repairable.");
         } else {
           Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR); // Time passes before casting.
           if (!hero.getInventory().hasItem(item)) { // If the item disappeared.
-            Writer.writeString(item.getName().getSingular() + " disappeared before you finished casting.");
+            Writer.write(item.getName().getSingular() + " disappeared before you finished casting.");
           } else {
             boolean wasCompletelyRepaired = item.getIntegrity().isPerfect();
             item.getIntegrity().incrementBy(REPAIR_VALUE);
-            Writer.writeString("You casted " + getName() + " on " + item.getName().getSingular() + ".");
+            Writer.write("You casted " + getName() + " on " + item.getName().getSingular() + ".");
             if (wasCompletelyRepaired) {
-              Writer.writeString(item.getName().getSingular() + " was already completely repaired.");
+              Writer.write(item.getName().getSingular() + " was already completely repaired.");
             } else {
               if (item.getIntegrity().isPerfect()) { // The item became completely repaired.
-                Writer.writeString(item.getName().getSingular() + " is now completely repaired.");
+                Writer.write(item.getName().getSingular() + " is now completely repaired.");
               }
             }
           }
@@ -123,8 +124,10 @@ public final class SpellData {
         Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
         List<Creature> creatureList = new ArrayList<Creature>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
-        Hero.writeCreatureSight(creatureList);
-        Hero.writeItemSight(hero.getLocation().getItemList());
+        DungeonStringBuilder builder = new DungeonStringBuilder();
+        Hero.writeCreatureSight(creatureList, builder);
+        Hero.writeItemSight(hero.getLocation().getItemList(), builder);
+        Writer.write(builder);
       }
     });
     putSpell(new Spell("VEIL_OF_DARKNESS", "Veil Of Darkness") {
@@ -133,13 +136,13 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.writeString("Provide a target.");
+          Writer.write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_VEIL_OF_DARKNESS);
             target.getLightSource().disable();
-            Writer.writeString("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+            Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
         }
       }
@@ -151,13 +154,13 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.writeString("Provide a target.");
+          Writer.write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_UNVEIL);
             target.getLightSource().enable();
-            Writer.writeString("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+            Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
         }
       }

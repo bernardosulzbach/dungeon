@@ -65,7 +65,7 @@ public final class HeroUtils {
   public static Item findItem(List<Item> items, String[] tokens) {
     Matches<Item> matches = org.dungeon.util.Utils.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
-      Writer.writeString("Item not found.");
+      Writer.write("Item not found.");
     } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
       return matches.getMatch(0);
     } else {
@@ -98,11 +98,11 @@ public final class HeroUtils {
   }
 
   static void writeNoLongerInInventoryMessage(Item item) {
-    Writer.writeString(item.getQualifiedName() + " is no longer in the inventory.");
+    Writer.write(item.getQualifiedName() + " is no longer in the inventory.");
   }
 
   public static void writeNoLongerInLocationMessage(Item item) {
-    Writer.writeString(item.getQualifiedName() + " is no longer in this location.");
+    Writer.write(item.getQualifiedName() + " is no longer in this location.");
   }
 
 }

@@ -47,7 +47,6 @@ import org.dungeon.io.Writer;
 import org.dungeon.spells.Spell;
 import org.dungeon.spells.SpellData;
 import org.dungeon.stats.ExplorationStatistics;
-import org.dungeon.util.Constants;
 import org.dungeon.util.DungeonMath;
 import org.dungeon.util.Matches;
 import org.dungeon.util.Messenger;
@@ -96,18 +95,21 @@ public class Hero extends Creature {
     dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
   }
 
-  public static void writeCreatureSight(List<Creature> creatures) {
+  public static void writeCreatureSight(List<Creature> creatures, DungeonStringBuilder builder) {
     if (creatures.isEmpty()) {
-      Writer.writeString("You don't see anyone here.");
+      builder.append("\nYou don't see anyone here.\n");
     } else {
-      Writer.writeString("Here you can see " + Utils.enumerateEntities(creatures) + ".");
+      builder.append("\nHere you can see ");
+      builder.append(Utils.enumerateEntities(creatures));
+      builder.append(".\n");
     }
   }
 
-  public static void writeItemSight(List<Item> items) {
+  public static void writeItemSight(List<Item> items, DungeonStringBuilder builder) {
     if (!items.isEmpty()) {
-      Writer.writeNewLine();
-      Writer.writeString("On the ground you see " + Utils.enumerateEntities(items) + ".");
+      builder.append("\nOn the ground you see ");
+      builder.append(Utils.enumerateEntities(items));
+      builder.append(".");
     }
   }
 
@@ -126,7 +128,7 @@ public class Hero extends Creature {
   private void addHealth(int amount) {
     getHealth().incrementBy(amount);
     if (getHealth().isFull()) {
-      Writer.writeString("You are completely healed.");
+      Writer.write("You are completely healed.");
     }
   }
 
@@ -136,7 +138,7 @@ public class Hero extends Creature {
   public void rest() {
     int maximumHealthFromRest = (int) (MAXIMUM_HEALTH_THROUGH_REST * getHealth().getMaximum());
     if (getHealth().getCurrent() >= maximumHealthFromRest) {
-      Writer.writeString("You are already rested.");
+      Writer.write("You are already rested.");
     } else {
       int healthRecovered = maximumHealthFromRest - getHealth().getCurrent(); // A positive integer.
       // The fraction SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum() may be smaller than 1.
@@ -144,9 +146,9 @@ public class Hero extends Creature {
       // Engine.rollDateAndRefresh.
       int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum());
       Engine.rollDateAndRefresh(timeResting);
-      Writer.writeString("Resting...");
+      Writer.write("Resting...");
       getHealth().incrementBy(healthRecovered);
-      Writer.writeString("You feel rested.");
+      Writer.write("You feel rested.");
     }
   }
 
@@ -160,7 +162,7 @@ public class Hero extends Creature {
     World world = getLocation().getWorld();
     PartOfDay pod = world.getPartOfDay();
     if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
-      Writer.writeString("You fall asleep.");
+      Writer.write("You fall asleep.");
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
       // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
       seconds += Random.nextInteger(15 * 60 + 1);
@@ -169,7 +171,7 @@ public class Hero extends Creature {
         Engine.rollDateAndRefresh(cycleDuration);
         Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
         if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
-          Writer.writeString(Libraries.getDreamLibrary().next());
+          Writer.write(Libraries.getDreamLibrary().next());
         }
         seconds -= cycleDuration;
         if (!getHealth().isFull()) {
@@ -177,9 +179,9 @@ public class Hero extends Creature {
           getHealth().incrementBy(healing);
         }
       }
-      Writer.writeString("You wake up.");
+      Writer.write("You wake up.");
     } else {
-      Writer.writeString("You can only sleep at night.");
+      Writer.write("You can only sleep at night.");
     }
   }
 
@@ -228,16 +230,21 @@ public class Hero extends Creature {
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   public void look(Direction walkedInFrom) {
+    DungeonStringBuilder builder = new DungeonStringBuilder();
     Location location = getLocation(); // Avoid multiple calls to the getter.
-    Writer.writeString(walkedInFrom != null ? "You arrive at " : "You are at ", Constants.FORE_COLOR_NORMAL, false);
-    Writer.writeString(location.getName().getSingular(), location.getDescription().getColor(), false);
-    Writer.writeString(".", Constants.FORE_COLOR_NORMAL, false);
-    String description = " " + location.getDescription().getInfo();
-    description += " " + "It is " + location.getWorld().getPartOfDay().toString().toLowerCase() + ".";
-    Writer.writeString(description);
-    lookAdjacentLocations(walkedInFrom);
-    lookCreatures();
-    lookItems();
+    builder.append(walkedInFrom != null ? "You arrive at " : "You are at ");
+    builder.setColor(location.getDescription().getColor());
+    builder.append(location.getName().getSingular());
+    builder.resetColor();
+    builder.append(". ");
+    builder.append(location.getDescription().getInfo());
+    builder.append(" It is ");
+    builder.append(location.getWorld().getPartOfDay().toString().toLowerCase());
+    builder.append(".\n");
+    lookAdjacentLocations(walkedInFrom, builder);
+    lookCreatures(builder);
+    lookItems(builder);
+    Writer.write(builder);
   }
 
   /**
@@ -246,10 +253,10 @@ public class Hero extends Creature {
    *
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  private void lookAdjacentLocations(Direction walkedInFrom) {
-    Writer.writeNewLine();
+  private void lookAdjacentLocations(Direction walkedInFrom, DungeonStringBuilder builder) {
+    builder.append("\n");
     if (!canSeeAdjacentLocations()) {
-      Writer.writeString("You can't clearly see the surrounding locations.");
+      builder.append("You can't clearly see the surrounding locations.\n");
       return;
     }
     World world = Game.getGameState().getWorld();
@@ -270,36 +277,36 @@ public class Hero extends Creature {
       visibleLocations.get(locationName).add(dir);
     }
     for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-      String text = String.format("To %s you see ", Utils.enumerate(entry.getValue()));
-      Writer.writeString(text, Constants.FORE_COLOR_NORMAL, false);
-      Writer.writeString(String.format("%s", entry.getKey().getString()), entry.getKey().getColor(), false);
-      Writer.writeString(".");
+      builder.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
+      builder.setColor(entry.getKey().getColor());
+      builder.append(String.format("%s", entry.getKey().getString()));
+      builder.resetColor();
+      builder.append(".\n");
     }
   }
 
   /**
    * Prints a human-readable description of what Creatures the Hero sees.
    */
-  private void lookCreatures() {
+  private void lookCreatures(DungeonStringBuilder builder) {
     List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatures());
     creatures.remove(this);
     creatures = filterByVisibility(creatures);
-    Writer.writeNewLine();
-    writeCreatureSight(creatures);
+    writeCreatureSight(creatures, builder);
   }
 
   /**
    * Prints a human-readable description of what the Hero sees on the ground.
    */
-  private void lookItems() {
+  private void lookItems(DungeonStringBuilder builder) {
     List<Item> items = getLocation().getItemList();
     items = filterByVisibility(items);
-    writeItemSight(items);
+    writeItemSight(items, builder);
   }
 
   private Item selectInventoryItem(String[] arguments) {
     if (getInventory().getItemCount() == 0) {
-      Writer.writeString("Your inventory is empty.");
+      Writer.write("Your inventory is empty.");
       return null;
     } else {
       return selectItem(arguments, getInventory(), false);
@@ -314,7 +321,7 @@ public class Hero extends Creature {
    */
   private Item selectLocationItem(String[] arguments) {
     if (filterByVisibility(getLocation().getItemList()).isEmpty()) {
-      Writer.writeString("You don't see any items here.");
+      Writer.write("You don't see any items here.");
       return null;
     } else {
       return selectItem(arguments, getLocation().getInventory(), true);
@@ -339,7 +346,7 @@ public class Hero extends Creature {
     if (arguments.length != 0 || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleItems)) {
       return HeroUtils.findItem(visibleItems, arguments);
     } else {
-      Writer.writeString("You must specify an item.");
+      Writer.write("You must specify an item.");
       return null;
     }
   }
@@ -364,7 +371,7 @@ public class Hero extends Creature {
     if (arguments.length != 0 || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleCreatures, this)) {
       return findCreature(arguments);
     } else {
-      Writer.writeString("You must specify a target.");
+      Writer.write("You must specify a target.");
       return null;
     }
   }
@@ -391,7 +398,7 @@ public class Hero extends Creature {
     Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
     result = filterByVisibility(result);
     if (result.size() == 0) {
-      Writer.writeString("Creature not found.");
+      Writer.write("Creature not found.");
     } else if (result.size() == 1 || result.getDifferentNames() == 1) {
       return result.getMatch(0);
     } else if (result.getDifferentNames() == 2 && result.hasMatchWithName(getName())) {
@@ -411,9 +418,9 @@ public class Hero extends Creature {
       if (selectedItem != null) {
         SimulationResult result = getInventory().simulateItemAddition(selectedItem);
         if (result == SimulationResult.AMOUNT_LIMIT) {
-          Writer.writeString("Your inventory is full.");
+          Writer.write("Your inventory is full.");
         } else if (result == SimulationResult.WEIGHT_LIMIT) {
-          Writer.writeString("You can't carry more weight.");
+          Writer.write("You can't carry more weight.");
         } else if (result == SimulationResult.SUCCESSFUL) {
           Engine.rollDateAndRefresh(SECONDS_TO_PICK_UP_AN_ITEM);
           if (getLocation().getInventory().hasItem(selectedItem)) {
@@ -425,7 +432,7 @@ public class Hero extends Creature {
         }
       }
     } else {
-      Writer.writeString("You do not see any item you could pick up.");
+      Writer.write("You do not see any item you could pick up.");
     }
   }
 
@@ -439,7 +446,7 @@ public class Hero extends Creature {
   public void addItem(Item item) {
     if (getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
       getInventory().addItem(item);
-      Writer.writeString(String.format("Added %s to the inventory.", item.getQualifiedName()));
+      Writer.write(String.format("Added %s to the inventory.", item.getQualifiedName()));
     } else {
       throw new IllegalStateException("simulateItemAddition did not return SUCCESSFUL.");
     }
@@ -454,7 +461,7 @@ public class Hero extends Creature {
       if (selectedItem.hasTag(Item.Tag.WEAPON)) {
         equipWeapon(selectedItem);
       } else {
-        Writer.writeString("You cannot equip that.");
+        Writer.write("You cannot equip that.");
       }
     }
   }
@@ -474,7 +481,7 @@ public class Hero extends Creature {
         dropItem(selectedItem); // Just drop it if has not disappeared.
       }
       // The character "dropped" the item even if it disappeared while doing it, so write about it.
-      Writer.writeString(String.format("Dropped %s.", selectedItem.getQualifiedName()));
+      Writer.write(String.format("Dropped %s.", selectedItem.getQualifiedName()));
     }
   }
 
@@ -487,11 +494,10 @@ public class Hero extends Creature {
       String itemCount = item.getQuantifiedName(getInventory().getItemCount(), QuantificationMode.NUMBER);
       firstLine = "You are carrying " + itemCount + ". Your inventory weights " + getInventory().getWeight() + ".";
     }
-    Writer.writeString(firstLine);
+    Writer.write(firstLine);
     // Local variable to improve readability.
     String itemLimit = item.getQuantifiedName(getInventory().getItemLimit(), QuantificationMode.NUMBER);
-    Writer.writeString(
-        "Your maximum carrying capacity is " + itemLimit + " and " + getInventory().getWeightLimit() + ".");
+    Writer.write("Your maximum carrying capacity is " + itemLimit + " and " + getInventory().getWeightLimit() + ".");
     if (getInventory().getItemCount() != 0) {
       printItems();
     }
@@ -504,13 +510,13 @@ public class Hero extends Creature {
     if (getInventory().getItemCount() == 0) {
       throw new IllegalStateException("inventory item count is 0.");
     }
-    Writer.writeString("You are carrying:");
+    Writer.write("You are carrying:");
     for (Item item : getInventory().getItems()) {
       String name = String.format("%s (%s)", item.getQualifiedName(), item.getWeight());
       if (hasWeapon() && getWeapon() == item) {
-        Writer.writeString(" [Equipped] " + name);
+        Writer.write(" [Equipped] " + name);
       } else {
-        Writer.writeString(" " + name);
+        Writer.write(" " + name);
       }
     }
   }
@@ -535,16 +541,16 @@ public class Hero extends Creature {
           }
           selectedItem.decrementIntegrityByEat();
           if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
-            Writer.writeString("You ate " + selectedItem.getName() + ".");
+            Writer.write("You ate " + selectedItem.getName() + ".");
           } else {
-            Writer.writeString("You ate a bit of " + selectedItem.getName() + ".");
+            Writer.write("You ate a bit of " + selectedItem.getName() + ".");
           }
           addHealth(healthIncrement);
         } else {
           HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
       } else {
-        Writer.writeString("You can only eat food.");
+        Writer.write("You can only eat food.");
       }
     }
   }
@@ -559,19 +565,19 @@ public class Hero extends Creature {
         if (selectedCreature.hasTag(Creature.Tag.MILKABLE)) {
           milk(selectedCreature);
         } else {
-          Writer.writeString("This creature is not milkable.");
+          Writer.write("This creature is not milkable.");
         }
       }
     } else { // Filter milkable creatures.
       List<Creature> visibleCreatures = filterByVisibility(getLocation().getCreatures());
       List<Creature> milkableCreatures = HeroUtils.filterByTag(visibleCreatures, Tag.MILKABLE);
       if (milkableCreatures.isEmpty()) {
-        Writer.writeString("You can't find a milkable creature.");
+        Writer.write("You can't find a milkable creature.");
       } else {
         if (Matches.fromCollection(milkableCreatures).getDifferentNames() == 1) {
           milk(milkableCreatures.get(0));
         } else {
-          Writer.writeString("You need to be more specific.");
+          Writer.write("You need to be more specific.");
         }
       }
     }
@@ -579,7 +585,7 @@ public class Hero extends Creature {
 
   private void milk(Creature creature) {
     Engine.rollDateAndRefresh(SECONDS_TO_MILK_A_CREATURE);
-    Writer.writeString("You drink milk directly from " + creature.getName().getSingular() + ".");
+    Writer.write("You drink milk directly from " + creature.getName().getSingular() + ".");
     addHealth(MILK_NUTRITION);
   }
 
@@ -590,7 +596,7 @@ public class Hero extends Creature {
       if (book != null) {
         Engine.rollDateAndRefresh(book.getTimeToRead());
         if (getInventory().hasItem(selectedItem)) { // Just in case if a readable item eventually decomposes.
-          Writer.writeString(book.getText());
+          Writer.write(book.getText());
           Writer.writeNewLine();
           if (book.isDidactic()) {
             learnSpell(book);
@@ -599,7 +605,7 @@ public class Hero extends Creature {
           HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
       } else {
-        Writer.writeString("You can only read books.");
+        Writer.write("You can only read books.");
       }
     }
   }
@@ -615,10 +621,10 @@ public class Hero extends Creature {
     }
     Spell spell = SpellData.getSpellMap().get(book.getSpellId());
     if (getSpellcaster().knowsSpell(spell)) {
-      Writer.writeString("You already knew " + spell.getName().getSingular() + ".");
+      Writer.write("You already knew " + spell.getName().getSingular() + ".");
     } else {
       getSpellcaster().learnSpell(spell);
-      Writer.writeString("You learned " + spell.getName().getSingular() + ".");
+      Writer.write("You learned " + spell.getName().getSingular() + ".");
     }
   }
 
@@ -629,13 +635,13 @@ public class Hero extends Creature {
     Item target = selectLocationItem(arguments);
     if (target != null) {
       if (target.isBroken()) {
-        Writer.writeString(target.getName() + " is already crashed.");
+        Writer.write(target.getName() + " is already crashed.");
       } else {
         Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
         if (getLocation().getInventory().hasItem(target)) {
           target.decrementIntegrityToZero();
           String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
-          Writer.writeString(getName() + " " + verb + " " + target.getName() + ".");
+          Writer.write(getName() + " " + verb + " " + target.getName() + ".");
         } else {
           HeroUtils.writeNoLongerInLocationMessage(target);
         }
@@ -646,7 +652,7 @@ public class Hero extends Creature {
   private void equipWeapon(Item weapon) {
     if (hasWeapon()) {
       if (getWeapon() == weapon) {
-        Writer.writeString(getName() + " is already equipping " + weapon.getName() + ".");
+        Writer.write(getName() + " is already equipping " + weapon.getName() + ".");
         return;
       } else {
         unequipWeapon();
@@ -655,7 +661,7 @@ public class Hero extends Creature {
     Engine.rollDateAndRefresh(SECONDS_TO_EQUIP);
     if (getInventory().hasItem(weapon)) {
       setWeapon(weapon);
-      Writer.writeString(getName() + " equipped " + weapon.getQualifiedName() + ".");
+      Writer.write(getName() + " equipped " + weapon.getQualifiedName() + ".");
     } else {
       HeroUtils.writeNoLongerInInventoryMessage(weapon);
     }
@@ -668,9 +674,9 @@ public class Hero extends Creature {
     if (hasWeapon()) { // The weapon may have disappeared.
       Item equippedWeapon = getWeapon();
       unsetWeapon();
-      Writer.writeString(getName() + " unequipped " + equippedWeapon.getName() + ".");
+      Writer.write(getName() + " unequipped " + equippedWeapon.getName() + ".");
     } else {
-      Writer.writeString("You are not equipping a weapon.");
+      Writer.write("You are not equipping a weapon.");
     }
   }
 
@@ -694,7 +700,7 @@ public class Hero extends Creature {
     } else {
       builder.append("You are fighting bare-handed.\n");
     }
-    Writer.writeString(builder.toString());
+    Writer.write(builder.toString());
   }
 
   /**
@@ -702,7 +708,7 @@ public class Hero extends Creature {
    */
   public void printAge() {
     String age = new Duration(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
-    Writer.writeString(String.format("You are %s old.", age), Color.CYAN);
+    Writer.write(String.format("You are %s old.", age), Color.CYAN);
   }
 
   /**
@@ -711,17 +717,17 @@ public class Hero extends Creature {
   public void readTime() {
     Item clock = getBestClock();
     if (clock != null) {
-      Writer.writeString(clock.getClockComponent().getTimeString());
+      Writer.write(clock.getClockComponent().getTimeString());
       // Assume that the hero takes the same time to read the clock and to put it back where it was.
       Engine.rollDateAndRefresh(getTimeToReadFromClock(clock));
     }
     World world = getLocation().getWorld();
     Date worldDate = getLocation().getWorld().getWorldDate();
-    Writer.writeString("You think it is " + worldDate.toDateString() + ".");
+    Writer.write("You think it is " + worldDate.toDateString() + ".");
     if (worldDate.getMonth() == dateOfBirth.getMonth() && worldDate.getDay() == dateOfBirth.getDay()) {
-      Writer.writeString("Today is your birthday.");
+      Writer.write("Today is your birthday.");
     }
-    Writer.writeString("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+    Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
   }
 
   /**

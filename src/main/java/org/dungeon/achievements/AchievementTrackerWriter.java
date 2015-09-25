@@ -93,9 +93,9 @@ public class AchievementTrackerWriter {
    * Writes a listing of valid UnlockedAchievement orderings to the screen.
    */
   private static void writeValidOrderings() {
-    Writer.writeString("Valid orderings:");
+    Writer.write("Valid orderings:");
     for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
-      Writer.writeString(" " + comparatorName);
+      Writer.write(" " + comparatorName);
     }
   }
 

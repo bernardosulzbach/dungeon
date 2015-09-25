@@ -43,7 +43,7 @@ public class AchievementTracker implements Serializable {
    */
   private static void writeAchievementUnlock(Achievement achievement) {
     String format = "You unlocked the achievement %s because you %s.";
-    Writer.writeString(String.format(format, achievement.getName(), achievement.getText()));
+    Writer.write(String.format(format, achievement.getName(), achievement.getText()));
   }
 
   /**

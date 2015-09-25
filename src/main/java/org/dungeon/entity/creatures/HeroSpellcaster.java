@@ -68,17 +68,17 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
       String[] targetMatcher = splitResult.after;
       Matches<Spell> matches = Utils.findBestCompleteMatches(spellList, spellMatcher);
       if (matches.size() == 0) {
-        Writer.writeString("That did not match any spell you know.");
+        Writer.write("That did not match any spell you know.");
       }
       if (matches.getDifferentNames() == 1) {
         Spell spell = matches.getMatch(0);
         DungeonLogger.info("Casted " + spell.getName().getSingular() + ".");
         spell.operate(hero, targetMatcher);
       } else if (matches.getDifferentNames() > 1) {
-        Writer.writeString("Provided input is ambiguous in respect to spell.");
+        Writer.write("Provided input is ambiguous in respect to spell.");
       }
     } else {
-      Writer.writeString("Cast what?");
+      Writer.write("Cast what?");
     }
   }
 

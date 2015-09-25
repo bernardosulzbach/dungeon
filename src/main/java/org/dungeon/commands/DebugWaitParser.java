@@ -91,12 +91,12 @@ class DebugWaitParser {
           Duration duration = DungeonTimeParser.parsePeriod(timeString);
           rollDate(DungeonMath.safeCastLongToInteger(duration.getSeconds()));
         } catch (IllegalArgumentException badArgument) {
-          Writer.writeString("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
+          Writer.write("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
         }
       } else if (syntax == Syntax.UNTIL) {
         Matches<PartOfDay> matches = Utils.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), arguments[2]);
         if (matches.size() == 0) {
-          Writer.writeString("That did not match any part of the day.");
+          Writer.write("That did not match any part of the day.");
         } else if (matches.size() == 1) {
           rollDate(PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0)));
         } else {
@@ -108,7 +108,7 @@ class DebugWaitParser {
 
   private static void rollDate(int seconds) {
     Engine.rollDateAndRefresh(seconds);
-    Writer.writeString("Waited for " + seconds + " seconds.");
+    Writer.write("Waited for " + seconds + " seconds.");
   }
 
   private enum Syntax {FOR, UNTIL, INVALID}

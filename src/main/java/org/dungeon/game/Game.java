@@ -97,7 +97,7 @@ public class Game {
 
   private static void suggestTutorial() {
     Writer.writeNewLine();
-    Writer.writeString("You may want to issue 'tutorial' to learn the basics.");
+    Writer.write("You may want to issue 'tutorial' to learn the basics.");
   }
 
   /**
@@ -160,7 +160,7 @@ public class Game {
     if (processInput(issuedCommand)) {
       if (getGameState().getHero().getHealth().isDead()) {
         getGameWindow().clearTextPane();
-        Writer.writeString("You died.");
+        Writer.write("You died.");
         unsetGameState();
         setGameState(getAfterDeathGameState());
       } else {

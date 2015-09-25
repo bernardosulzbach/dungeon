@@ -36,11 +36,11 @@ public final class SystemInfo {
    */
   public static void printSystemInfo() {
     Date currentDate = new Date();
-    Writer.writeString("Time: " + TIME_FORMAT.format(currentDate));
-    Writer.writeString("Date: " + DATE_FORMAT.format(currentDate));
-    Writer.writeString("User: " + System.getProperty("user.name"));
-    Writer.writeString(getJavaVersionString());
-    Writer.writeString(getOSVersionString());
+    Writer.write("Time: " + TIME_FORMAT.format(currentDate));
+    Writer.write("Date: " + DATE_FORMAT.format(currentDate));
+    Writer.write("User: " + System.getProperty("user.name"));
+    Writer.write(getJavaVersionString());
+    Writer.write(getOSVersionString());
   }
 
   private static String getJavaVersionString() {

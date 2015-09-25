@@ -239,7 +239,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("tutorial", "Displays the tutorial.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.writeString(GameData.getTutorial());
+        Writer.write(GameData.getTutorial());
       }
     });
     commandSet.addCommand(new Command("unequip", "Unequips the currently equipped item.") {
@@ -268,7 +268,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.writeString(Libraries.getHintLibrary().next());
+        Writer.write(Libraries.getHintLibrary().next());
       }
     });
     commandSet.addCommand(new Command("poem", "Prints a poem from the poem library.") {
@@ -311,7 +311,7 @@ final class CommandSets {
           }
         }
         if (notYetUnlockedAchievementList.isEmpty()) {
-          Writer.writeString("All achievements have been unlocked.");
+          Writer.write("All achievements have been unlocked.");
         } else {
           Collections.sort(notYetUnlockedAchievementList, new Comparator<Achievement>() {
             @Override
@@ -320,7 +320,7 @@ final class CommandSets {
             }
           });
           for (Achievement achievement : notYetUnlockedAchievementList) {
-            Writer.writeString(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
+            Writer.write(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
           }
         }
       }
@@ -352,7 +352,7 @@ final class CommandSets {
           }
           Writer.write(table);
         } else {
-          Writer.writeString("You haven't killed anything yet. Go kill something!");
+          Writer.write("You haven't killed anything yet. Go kill something!");
         }
       }
     });
@@ -382,7 +382,7 @@ final class CommandSets {
         sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity().toPercentage()).append('\n');
         sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
         sb.append(Utils.padString("Blocked Entrances:", WIDTH)).append(location.getBlockedEntrances()).append('\n');
-        Writer.writeString(sb.toString());
+        Writer.write(sb.toString());
       }
     });
     commandSet.addCommand(new Command("map", "Produces a map as complete as possible.") {
@@ -398,18 +398,17 @@ final class CommandSets {
           Date date = Game.getGameState().getWorld().getWorldDate();
           Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase()), date);
           if (item != null) {
-            Writer.writeString("Item successfully created.");
+            Writer.write("Item successfully created.");
             if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) ==
                 SimulationResult.SUCCESSFUL) {
               Game.getGameState().getHero().addItem(item);
             } else {
               Game.getGameState().getHeroLocation().addItem(item);
-              Writer.writeString(
-                  "Item could not be added to your inventory. It was added to the current location instead.");
+              Writer.write("Item could not be added to your inventory. It was added to the current location instead.");
             }
             Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
           } else {
-            Writer.writeString("Item could not be created.");
+            Writer.write("Item could not be created.");
           }
         } else {
           Messenger.printMissingArgumentsMessage();
@@ -420,9 +419,9 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         if (Game.getGameState().isSaved()) {
-          Writer.writeString("The game is saved.");
+          Writer.write("The game is saved.");
         } else {
-          Writer.writeString("This game state is not saved.");
+          Writer.write("This game state is not saved.");
         }
       }
     });
@@ -435,10 +434,10 @@ final class CommandSets {
             Creature clone = CreatureFactory.makeCreature(givenId);
             if (clone != null) {
               Game.getGameState().getHeroLocation().addCreature(clone);
-              Writer.writeString("Spawned a " + clone.getName() + ".");
+              Writer.write("Spawned a " + clone.getName() + ".");
               Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
             } else {
-              Writer.writeString(givenId + " does not match any known creature.");
+              Writer.write(givenId + " does not match any known creature.");
             }
           }
         } else {
@@ -449,7 +448,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("time", "Writes information about the current time.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.writeString(Game.getGameState().getWorld().getWorldDate().toString());
+        Writer.write(Game.getGameState().getWorld().getWorldDate().toString());
       }
     });
     commandSet.addCommand(new Command("wait", "Makes time pass.") {

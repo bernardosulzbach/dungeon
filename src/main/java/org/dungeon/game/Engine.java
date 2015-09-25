@@ -130,9 +130,9 @@ public final class Engine {
           return;
         }
       }
-      Writer.writeString("Invalid input.");
+      Writer.write("Invalid input.");
     } else {
-      Writer.writeString("To where?", Color.ORANGE);
+      Writer.write("To where?", Color.ORANGE);
     }
   }
 
@@ -150,7 +150,7 @@ public final class Engine {
     Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
     if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
       rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
-      Writer.writeString("You cannot go " + dir + ".");
+      Writer.write("You cannot go " + dir + ".");
     } else {
       Location destination = gameState.getWorld().moveHero(dir);
       rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
@@ -170,7 +170,7 @@ public final class Engine {
    */
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      Writer.writeString("You cannot attempt suicide.");
+      Writer.write("You cannot attempt suicide.");
       return;
     }
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
@@ -187,7 +187,7 @@ public final class Engine {
     Creature defeated = (survivor == hero) ? foe : hero;
     // Imagine if a third factor (such as hunger) could kill one of the creatures.
     // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
-    Writer.writeString(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
+    Writer.write(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
     writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());

@@ -58,7 +58,7 @@ public final class CommandSet {
           }
         }
         if (count == 0 && filter != null) {
-          Writer.writeString("No command starts with '" + filter + "'.");
+          Writer.write("No command starts with '" + filter + "'.");
         } else {
           if (count > 1) {
             builder.append("\nListed ").append(count).append(" commands.");
@@ -66,7 +66,7 @@ public final class CommandSet {
               builder.append("\nYou can filter the output of this command by typing the beginning of a command.");
             }
           }
-          Writer.writeString(builder.toString());
+          Writer.write(builder.toString());
         }
       }
     });

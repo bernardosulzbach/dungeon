@@ -69,7 +69,7 @@ final class AttackAlgorithmWriter {
     if (!weapon.isBroken()) {
       throw new IllegalArgumentException("weapon is not broken.");
     }
-    Writer.writeString(weapon.getName() + " broke!", Color.RED);
+    Writer.write(weapon.getName() + " broke!", Color.RED);
   }
 
 }
