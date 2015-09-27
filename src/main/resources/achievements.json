@@ -318,6 +318,23 @@
       ]
     },
     {
+      "id": "FAIL_TO_MY_FLAIL",
+      "name": "Fail to my Flail",
+      "info": "Kill 10 enemies with a flail.",
+      "text": "killed ten enemies with the flail",
+      "battleRequirements": [
+        {
+          "query": {
+            "causeOfDeath": {
+              "type": "WEAPON",
+              "id": "FLAIL"
+            }
+          },
+          "count": 10
+        }
+      ]
+    },
+    {
       "id": "SWORDSMAN",
       "name": "Swordsman",
       "info": "Kill 10 enemies with a sword.",

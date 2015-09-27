@@ -19,6 +19,10 @@
         {
           "id": "TOME_OF_HEAL",
           "probability": 0.15
+        },
+        {
+          "id": "FLAIL",
+          "probability": 0.2
         }
       ],
       "blockedEntrances": [

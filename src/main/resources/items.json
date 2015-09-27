@@ -512,6 +512,26 @@
       "integrityDecrementOnHit": 1
     },
     {
+      "id": "FLAIL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Flail"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.9,
+      "visibility": "70.00%",
+      "damage": 18,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
       "id": "LONGSWORD",
       "type": "Weapon",
       "name": {
