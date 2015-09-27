@@ -48,46 +48,29 @@ public class WorldMap {
 
   @NotNull
   public static WorldMap makeWorldMap() {
-    WorldMap map = new WorldMap();
     World world = Game.getGameState().getWorld();
     Point heroPosition = Game.getGameState().getHeroPosition();
     ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-
-    for (int curY = map.limits.minY; curY >= map.limits.maxY; curY--) {
-      for (int curX = map.limits.minX; curX <= map.limits.maxX; curX++) {
-        Point currentPosition = new Point(curX, curY);
-        if (currentPosition.equals(heroPosition)) {
-          map.matrix[map.limits.minY - curY][curX - map.limits.minX] = WorldMapSymbol.getHeroSymbol();
-        } else if (explorationStatistics.hasBeenSeen(currentPosition)) {
-          WorldMapSymbol symbol = WorldMapSymbol.makeSymbol(world.getLocation(currentPosition));
-          map.matrix[map.limits.minY - curY][curX - map.limits.minX] = symbol;
-        } else {
-          map.matrix[map.limits.minY - curY][curX - map.limits.minX] = WorldMapSymbol.getNotYetGeneratedSymbol();
-        }
-      }
-    }
-
-    return map;
+    WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition, explorationStatistics);
+    return renderWorldMap(factory);
   }
 
   @NotNull
   public static WorldMap makeDebugWorldMap() {
-    WorldMap map = new WorldMap();
     World world = Game.getGameState().getWorld();
     Point heroPosition = Game.getGameState().getHeroPosition();
+    WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition);
+    return renderWorldMap(factory);
+  }
 
+  private static WorldMap renderWorldMap(WorldMapSymbolFactory symbolFactory) {
+    WorldMap map = new WorldMap();
     for (int curY = map.limits.minY; curY >= map.limits.maxY; curY--) {
       for (int curX = map.limits.minX; curX <= map.limits.maxX; curX++) {
         Point currentPosition = new Point(curX, curY);
-        if (currentPosition.equals(heroPosition)) {
-          map.matrix[map.limits.minY - curY][curX - map.limits.minX] = WorldMapSymbol.getHeroSymbol();
-        } else {
-          WorldMapSymbol symbol = WorldMapSymbol.makeSymbol(world.getLocation(currentPosition));
-          map.matrix[map.limits.minY - curY][curX - map.limits.minX] = symbol;
-        }
+        map.matrix[map.limits.minY - curY][curX - map.limits.minX] = symbolFactory.getSymbol(currentPosition);
       }
     }
-
     return map;
   }
 
