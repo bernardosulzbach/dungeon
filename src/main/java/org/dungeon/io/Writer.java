@@ -21,8 +21,6 @@ import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.Writable;
 import org.dungeon.gui.TextPaneWritingSpecifications;
-import org.dungeon.logging.DungeonLogger;
-import org.dungeon.util.Constants;
 
 import java.awt.Color;
 
@@ -47,7 +45,7 @@ public final class Writer {
    * @param string the string of text to be written.
    */
   public static void write(String string) {
-    write(string, Constants.FORE_COLOR_NORMAL);
+    write(string, null);
   }
 
   /**
@@ -68,12 +66,10 @@ public final class Writer {
    * @param wait how many milliseconds the application should sleep after writing the string.
    */
   private static void write(String string, Color color, int wait) {
-    if (color == null) {
-      DungeonLogger.warning("Passed null as a Color to write.");
-      color = Constants.FORE_COLOR_NORMAL;
-    }
     DungeonStringBuilder builder = new DungeonStringBuilder();
-    builder.setColor(color);
+    if (color != null) {
+      builder.setColor(color);
+    }
     builder.append(string);
     builder.append("\n");
     TextPaneWritingSpecifications specifications = new TextPaneWritingSpecifications(true);
