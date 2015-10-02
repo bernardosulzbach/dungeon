@@ -18,6 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.date.Date;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
@@ -39,11 +40,11 @@ public class AchievementTracker implements Serializable {
   private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<UnlockedAchievement>();
 
   /**
-   * Outputs an achievement unlocked message with some information about the unlocked achievement.
+   * Writes an achievement unlocked message with some information about the unlocked achievement.
    */
-  private static void writeAchievementUnlock(Achievement achievement) {
+  private static void writeAchievementUnlock(Achievement achievement, DungeonStringBuilder builder) {
     String format = "You unlocked the achievement %s because you %s.";
-    Writer.write(String.format(format, achievement.getName(), achievement.getText()));
+    builder.append(String.format(format, achievement.getName(), achievement.getText()));
   }
 
   /**
@@ -62,10 +63,10 @@ public class AchievementTracker implements Serializable {
    *
    * @param achievement the Achievement to be unlocked.
    */
-  private void unlock(Achievement achievement) {
+  private void unlock(Achievement achievement, DungeonStringBuilder builder) {
     Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
-      writeAchievementUnlock(achievement);
+      writeAchievementUnlock(achievement, builder);
       unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
       DungeonLogger.warning("Tried to unlock an already unlocked achievement.");
@@ -120,16 +121,19 @@ public class AchievementTracker implements Serializable {
    * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
   public void update() {
-    boolean wroteNewLine = false;
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
     for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!isUnlocked(achievement) && achievement.isFulfilled()) {
         if (!wroteNewLine) {
-          Writer.writeNewLine();
+          builder.append("\n");
           wroteNewLine = true;
         }
-        unlock(achievement);
+        unlock(achievement, builder);
+        builder.append("\n");
       }
     }
+    Writer.write(builder);
   }
 
 }
