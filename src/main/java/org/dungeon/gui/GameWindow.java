@@ -25,7 +25,6 @@ import org.dungeon.game.GameState;
 import org.dungeon.game.Writable;
 import org.dungeon.io.Loader;
 import org.dungeon.logging.DungeonLogger;
-import org.dungeon.util.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -167,7 +166,7 @@ public class GameWindow extends JFrame {
     scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
 
     textField.setBackground(SharedConstants.INSIDE_COLOR);
-    textField.setForeground(Constants.FORE_COLOR_NORMAL);
+    textField.setForeground(Color.LIGHT_GRAY);
     textField.setCaretColor(Color.WHITE);
     textField.setFont(FONT);
     textField.setFocusTraversalKeysEnabled(false);
