@@ -18,9 +18,9 @@
 package org.dungeon.util.library;
 
 import org.dungeon.game.ColoredString;
+import org.dungeon.game.DungeonStringBuilder;
 import org.dungeon.game.Writable;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +39,9 @@ public final class Poem implements Writable {
   }
 
   public List<ColoredString> toColoredStringList() {
-    return Collections.singletonList(new ColoredString(toString()));
+    DungeonStringBuilder builder = new DungeonStringBuilder();
+    builder.append(toString());
+    return builder.toColoredStringList();
   }
 
   @Override

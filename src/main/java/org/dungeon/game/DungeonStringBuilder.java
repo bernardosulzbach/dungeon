@@ -17,8 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.util.Constants;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -33,7 +31,7 @@ import java.util.List;
  */
 public final class DungeonStringBuilder implements Writable {
 
-  private static final Color DEFAULT_COLOR = Constants.FORE_COLOR_NORMAL;
+  private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
 
   /**
    * A list of ColoredStrings. No string from this list is empty. Adjacent strings may have the same color.

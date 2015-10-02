@@ -17,8 +17,6 @@
 
 package org.dungeon.game;
 
-import org.dungeon.util.Constants;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -30,10 +28,6 @@ public class ColoredString {
 
   private final String string;
   private final Color color;
-
-  public ColoredString(@NotNull String string) {
-    this(string, Constants.FORE_COLOR_NORMAL);
-  }
 
   public ColoredString(@NotNull String string, @NotNull Color color) {
     this.string = string;
