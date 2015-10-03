@@ -18,7 +18,7 @@
 package org.dungeon.achievements;
 
 import org.dungeon.date.Date;
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Game;
 import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
@@ -42,7 +42,7 @@ public class AchievementTracker implements Serializable {
   /**
    * Writes an achievement unlocked message with some information about the unlocked achievement.
    */
-  private static void writeAchievementUnlock(Achievement achievement, DungeonStringBuilder builder) {
+  private static void writeAchievementUnlock(Achievement achievement, DungeonString builder) {
     String format = "You unlocked the achievement %s because you %s.";
     builder.append(String.format(format, achievement.getName(), achievement.getText()));
   }
@@ -63,7 +63,7 @@ public class AchievementTracker implements Serializable {
    *
    * @param achievement the Achievement to be unlocked.
    */
-  private void unlock(Achievement achievement, DungeonStringBuilder builder) {
+  private void unlock(Achievement achievement, DungeonString builder) {
     Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
       writeAchievementUnlock(achievement, builder);
@@ -121,19 +121,19 @@ public class AchievementTracker implements Serializable {
    * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
   public void update() {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
     boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
     for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!isUnlocked(achievement) && achievement.isFulfilled()) {
         if (!wroteNewLine) {
-          builder.append("\n");
+          string.append("\n");
           wroteNewLine = true;
         }
-        unlock(achievement, builder);
-        builder.append("\n");
+        unlock(achievement, string);
+        string.append("\n");
       }
     }
-    Writer.write(builder);
+    Writer.write(string);
   }
 
 }

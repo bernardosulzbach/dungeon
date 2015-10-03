@@ -325,10 +325,10 @@ public class GameWindow extends JFrame {
    * This method can be called on any thread.
    *
    * @param writable a Writable object
-   * @param specifications a TextPaneWritingSpecifications object
+   * @param specifications a WritingSpecifications object
    */
   public void scheduleWriteToTextPane(@NotNull final Writable writable,
-      @NotNull final TextPaneWritingSpecifications specifications) {
+      @NotNull final WritingSpecifications specifications) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
@@ -341,9 +341,9 @@ public class GameWindow extends JFrame {
    * Effectively updates the text pane. Should only be invoked on the Event Dispatch Thread.
    *
    * @param writable a Writable object, not empty
-   * @param specifications a TextPaneWritingSpecifications object
+   * @param specifications a WritingSpecifications object
    */
-  private void writeToTextPane(Writable writable, TextPaneWritingSpecifications specifications) {
+  private void writeToTextPane(Writable writable, WritingSpecifications specifications) {
     for (ColoredString coloredString : writable.toColoredStringList()) {
       StyleConstants.setForeground(attributeSet, coloredString.getColor());
       try {

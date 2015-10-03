@@ -19,7 +19,7 @@ package org.dungeon.commands;
 
 import org.dungeon.date.DungeonTimeParser;
 import org.dungeon.date.Duration;
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.PartOfDay;
@@ -66,18 +66,18 @@ class DebugWaitParser {
   }
 
   private static void writeDebugWaitSyntax() {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
-    builder.append("Usage: wait ");
+    DungeonString string = new DungeonString();
+    string.append("Usage: wait ");
     final Color HIGHLIGHT_COLOR = Color.ORANGE;
-    builder.setColor(HIGHLIGHT_COLOR);
-    builder.append("for");
-    builder.resetColor();
-    builder.append(" [amount of time] or wait ");
-    builder.setColor(HIGHLIGHT_COLOR);
-    builder.append("until next");
-    builder.resetColor();
-    builder.append(" [part of the day].");
-    Writer.write(builder);
+    string.setColor(HIGHLIGHT_COLOR);
+    string.append("for");
+    string.resetColor();
+    string.append(" [amount of time] or wait ");
+    string.setColor(HIGHLIGHT_COLOR);
+    string.append("until next");
+    string.resetColor();
+    string.append(" [part of the day].");
+    Writer.write(string);
   }
 
   static void parseDebugWait(@NotNull String[] arguments) {

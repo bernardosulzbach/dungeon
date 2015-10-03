@@ -203,11 +203,11 @@ public final class Engine {
    */
   private static void writeDrops(Creature source) {
     if (!source.getDroppedItemsList().isEmpty()) {
-      DungeonStringBuilder builder = new DungeonStringBuilder();
-      builder.append(source.getName().getSingular() + " dropped ");
-      builder.append(Utils.enumerateEntities(source.getDroppedItemsList()));
-      builder.append(".");
-      Writer.write(builder);
+      DungeonString string = new DungeonString();
+      string.append(source.getName().getSingular() + " dropped ");
+      string.append(Utils.enumerateEntities(source.getDroppedItemsList()));
+      string.append(".");
+      Writer.write(string);
     }
   }
 

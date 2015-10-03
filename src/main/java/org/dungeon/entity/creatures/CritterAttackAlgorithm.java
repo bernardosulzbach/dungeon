@@ -17,6 +17,7 @@
 
 package org.dungeon.entity.creatures;
 
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Random;
 import org.dungeon.io.Writer;
 
@@ -32,9 +33,9 @@ public class CritterAttackAlgorithm implements AttackAlgorithm {
   @Override
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
     if (Random.nextBoolean()) {
-      Writer.writeBattleString(attacker.getName() + " does nothing.", Color.YELLOW);
+      Writer.writeAndWait(new DungeonString(attacker.getName() + " does nothing.\n", Color.YELLOW));
     } else {
-      Writer.writeBattleString(attacker.getName() + " tries to run away.", Color.YELLOW);
+      Writer.writeAndWait(new DungeonString(attacker.getName() + " tries to run away.\n", Color.YELLOW));
     }
   }
 

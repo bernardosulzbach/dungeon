@@ -18,7 +18,7 @@
 package org.dungeon.util;
 
 import org.dungeon.game.ColoredString;
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Writable;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.logging.DungeonLogger;
@@ -83,13 +83,13 @@ public class Table implements Writable {
   }
 
   /**
-   * Appends a row to a DungeonStringBuilder.
+   * Appends a row to a DungeonString.
    *
-   * @param builder the DungeonStringBuilder object
+   * @param builder the DungeonString object
    * @param widths the widths of the columns of the table
    * @param values the values of the row
    */
-  private static void appendRow(DungeonStringBuilder builder, int[] widths, String... values) {
+  private static void appendRow(DungeonString builder, int[] widths, String... values) {
     for (int i = 0; i < values.length; i++) {
       int columnWidth = widths[i];
       String currentValue = values[i];
@@ -113,12 +113,12 @@ public class Table implements Writable {
   }
 
   /**
-   * Append a horizontal separator made up of dashes to a DungeonStringBuilder.
+   * Append a horizontal separator made up of dashes to a DungeonString.
    *
-   * @param builder the DungeonStringBuilder object
+   * @param builder the DungeonString object
    * @param columnWidths the width of the columns of the table
    */
-  private static void appendHorizontalSeparator(DungeonStringBuilder builder, int[] columnWidths, int columnCount) {
+  private static void appendHorizontalSeparator(DungeonString builder, int[] columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
     for (int i = 0; i < columnWidths.length; i++) {
       pseudoRow[i] = makeRepeatedCharacterString(columnWidths[i], HORIZONTAL_BAR);
@@ -217,7 +217,7 @@ public class Table implements Writable {
 
   @Override
   public List<ColoredString> toColoredStringList() {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
 
     int columnCount = columns.size();
 
@@ -227,8 +227,8 @@ public class Table implements Writable {
       columnWidths = calculateColumnWidths();
     } catch (RuntimeException log) {
       DungeonLogger.warning(log.getMessage());
-      builder.append("Failed to generate a visual representation of the table.");
-      return builder.toColoredStringList();
+      string.append("Failed to generate a visual representation of the table.");
+      return string.toColoredStringList();
     }
 
     int rowCount = columns.get(0).rows.size();
@@ -239,26 +239,26 @@ public class Table implements Writable {
     for (int i = 0; i < columnCount; i++) {
       currentRow[i] = columns.get(i).header;
     }
-    appendRow(builder, columnWidths, currentRow);
+    appendRow(string, columnWidths, currentRow);
 
     // A horizontal separator.
-    appendHorizontalSeparator(builder, columnWidths, columnCount);
+    appendHorizontalSeparator(string, columnWidths, columnCount);
 
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
       if (separators != null) {
         for (int remaining = separators.getCounter(rowIndex); remaining > 0; remaining--) {
-          appendHorizontalSeparator(builder, columnWidths, columnCount);
+          appendHorizontalSeparator(string, columnWidths, columnCount);
         }
       }
       if (rowIndex != rowCount) {
         for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
           currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
         }
-        appendRow(builder, columnWidths, currentRow);
+        appendRow(string, columnWidths, currentRow);
       }
     }
-    return builder.toColoredStringList();
+    return string.toColoredStringList();
   }
 
   private class Column {

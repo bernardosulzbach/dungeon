@@ -17,10 +17,10 @@
 
 package org.dungeon.io;
 
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Game;
 import org.dungeon.game.Writable;
-import org.dungeon.gui.TextPaneWritingSpecifications;
+import org.dungeon.gui.WritingSpecifications;
 
 import java.awt.Color;
 
@@ -33,7 +33,7 @@ public final class Writer {
   /**
    * For how many milliseconds the game sleeps after writing a string of battle output.
    */
-  private static final int WRITE_BATTLE_STRING_WAIT = 300;
+  private static final int DEFAULT_WAIT_INTERVAL = 300;
 
   private Writer() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -42,58 +42,33 @@ public final class Writer {
   /**
    * Writes a string of text using the default output color.
    *
-   * @param string the string of text to be written.
+   * @param text the string of text to be written.
    */
-  public static void write(String string) {
-    write(string, null);
+  public static void write(String text) {
+    write(text, null);
   }
 
   /**
    * Writes a string of text using a specific color.
    *
-   * @param string the string of text to be written.
+   * @param text the string of text to be written.
    * @param color the color of the text.
    */
-  public static void write(String string, Color color) {
-    write(string, color, 0);
-  }
-
-  /**
-   * Writes a string of text using a specific color and waiting for a given amount of milliseconds.
-   *
-   * @param string the string of text to be written.
-   * @param color the color of the text.
-   * @param wait how many milliseconds the application should sleep after writing the string.
-   */
-  private static void write(String string, Color color, int wait) {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+  public static void write(String text, Color color) {
+    DungeonString string = new DungeonString();
     if (color != null) {
-      builder.setColor(color);
+      string.setColor(color);
     }
-    builder.append(string);
-    builder.append("\n");
-    TextPaneWritingSpecifications specifications = new TextPaneWritingSpecifications(true);
-    write(builder, specifications);
-    if (wait > 0) {
-      Sleeper.sleep(wait);
-    }
+    string.append(text);
+    string.append("\n");
+    write(string);
   }
 
   /**
-   * Writes a string of text using a specific color and waits for the default battle wait interval.
-   *
-   * @param string the string of text to be written.
-   * @param color the color of the text.
+   * Writes a Writable and waits for the default waiting interval.
    */
-  public static void writeBattleString(String string, Color color) {
-    write(string, color, WRITE_BATTLE_STRING_WAIT);
-  }
-
-  /**
-   * Writes a line separator, terminating a line or leaving one blank line.
-   */
-  public static void writeNewLine() {
-    write("");
+  public static void writeAndWait(Writable writable) {
+    write(writable, new WritingSpecifications(true, DEFAULT_WAIT_INTERVAL));
   }
 
   /**
@@ -102,17 +77,20 @@ public final class Writer {
    * @param writable a Writable object, not empty
    */
   public static void write(Writable writable) {
-    write(writable, new TextPaneWritingSpecifications(true));
+    write(writable, new WritingSpecifications(true, 0));
   }
 
   /**
    * The preferred way to write text to the text pane of the window.
    *
    * @param writable a Writable object, not empty
-   * @param specifications a TextPaneWritingSpecifications object
+   * @param specifications a WritingSpecifications object
    */
-  public static void write(Writable writable, TextPaneWritingSpecifications specifications) {
+  public static void write(Writable writable, WritingSpecifications specifications) {
     Game.getGameWindow().scheduleWriteToTextPane(writable, specifications);
+    if (specifications.shouldWait()) {
+      Sleeper.sleep(specifications.getWait());
+    }
   }
 
 }

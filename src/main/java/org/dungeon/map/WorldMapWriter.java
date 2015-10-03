@@ -17,7 +17,7 @@
 
 package org.dungeon.map;
 
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,19 +34,19 @@ public final class WorldMapWriter {
    * @param map a WorldMap, not null
    */
   public static void writeMap(@NotNull WorldMap map) {
-    DungeonStringBuilder dungeonStringBuilder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
     WorldMapSymbol[][] worldMapSymbolMatrix = map.getSymbolMatrix();
     for (int i = 0; i < worldMapSymbolMatrix.length; i++) {
       for (WorldMapSymbol symbol : worldMapSymbolMatrix[i]) {
         // OK as setColor verifies if the color change is necessary (does not replace a color by itself).
-        dungeonStringBuilder.setColor(symbol.getColor());
-        dungeonStringBuilder.append(symbol.getCharacterAsString());
+        string.setColor(symbol.getColor());
+        string.append(symbol.getCharacterAsString());
       }
       if (i < worldMapSymbolMatrix.length - 1) {
-        dungeonStringBuilder.append("\n");
+        string.append("\n");
       }
     }
-    Writer.write(dungeonStringBuilder);
+    Writer.write(string);
   }
 
 }

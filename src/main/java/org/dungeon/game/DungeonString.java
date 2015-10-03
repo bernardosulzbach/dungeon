@@ -29,10 +29,9 @@ import java.util.List;
  *
  * <p>By calling setColor and append multiple times it is possible to generate long, multicolored strings.
  */
-public final class DungeonStringBuilder implements Writable {
+public final class DungeonString implements Writable {
 
   private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
-
   /**
    * A list of ColoredStrings. No string from this list is empty. Adjacent strings may have the same color.
    *
@@ -41,6 +40,28 @@ public final class DungeonStringBuilder implements Writable {
   private final List<ColoredString> coloredStringList = new ArrayList<ColoredString>();
   private final StringBuilder builder = new StringBuilder();
   private Color currentColor = DEFAULT_COLOR;
+
+  /**
+   * Constructs an empty DungeonString.
+   */
+  public DungeonString() {
+  }
+
+  /**
+   * Constructs a DungeonString that starts with the specified text.
+   */
+  public DungeonString(String text) {
+    append(text);
+  }
+
+  /**
+   * Constructs a DungeonString that starts with the specified text and color.
+   */
+  public DungeonString(String text, Color color) {
+    setColor(color);
+    append(text);
+    resetColor();
+  }
 
   /**
    * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this builder.
@@ -91,7 +112,7 @@ public final class DungeonStringBuilder implements Writable {
 
   @Override
   public String toString() {
-    return "DungeonStringBuilder{" +
+    return "DungeonString{" +
         "coloredStringList=" + toColoredStringList() +
         ", currentColor=" + currentColor +
         '}';

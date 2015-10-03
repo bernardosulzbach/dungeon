@@ -18,8 +18,8 @@
 package org.dungeon.entity.creatures;
 
 import org.dungeon.entity.items.Item;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Game;
-import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
 
 import java.awt.Color;
@@ -42,13 +42,21 @@ final class AttackAlgorithmWriter {
    * @param criticalHit a boolean indicating if the attack was a critical hit or not
    */
   static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
-    String format = "%s inflicted %d damage points to %s";
-    String battleString = String.format(format, attacker.getName(), hitDamage, defender.getName());
-    battleString += criticalHit ? " with a critical hit." : ".";
-    HealthState currentHealthState = defender.getHealth().getHealthState();
-    battleString += String.format(" It looks %s.", currentHealthState.toString().toLowerCase());
-    Id heroId = Game.getGameState().getHero().getId();
-    Writer.writeBattleString(battleString, attacker.getId().equals(heroId) ? Color.GREEN : Color.RED);
+    DungeonString string = new DungeonString();
+    string.setColor(attacker.getId().equals(Game.getGameState().getHero().getId()) ? Color.GREEN : Color.RED);
+    string.append(attacker.getName().getSingular());
+    string.append(" inflicted ");
+    string.append(String.valueOf(hitDamage));
+    string.append(" damage points to ");
+    string.append(defender.getName().getSingular());
+    if (criticalHit) {
+      string.append(" with a critical hit");
+    }
+    string.append(".");
+    string.append(" It looks ");
+    string.append(defender.getHealth().getHealthState().toString().toLowerCase());
+    string.append(".\n");
+    Writer.writeAndWait(string);
   }
 
   /**
@@ -57,7 +65,7 @@ final class AttackAlgorithmWriter {
    * @param attacker the attacker creature
    */
   static void writeMiss(Creature attacker) {
-    Writer.writeBattleString(attacker.getName() + " missed.", Color.YELLOW);
+    Writer.writeAndWait(new DungeonString(attacker.getName() + " missed.\n", Color.YELLOW));
   }
 
   /**
@@ -69,7 +77,7 @@ final class AttackAlgorithmWriter {
     if (!weapon.isBroken()) {
       throw new IllegalArgumentException("weapon is not broken.");
     }
-    Writer.write(weapon.getName() + " broke!", Color.RED);
+    Writer.write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
   }
 
 }

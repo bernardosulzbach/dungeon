@@ -17,6 +17,7 @@
 
 package org.dungeon.entity.creatures;
 
+import org.dungeon.game.DungeonString;
 import org.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +31,7 @@ public class DummyAttackAlgorithm implements AttackAlgorithm {
 
   @Override
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
-    Writer.writeBattleString(attacker.getName() + " stands still.", Color.YELLOW);
+    Writer.writeAndWait(new DungeonString(attacker.getName() + " stands still.\n", Color.YELLOW));
   }
 
 }

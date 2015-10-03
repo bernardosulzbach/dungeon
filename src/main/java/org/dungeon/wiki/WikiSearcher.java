@@ -17,7 +17,7 @@
 
 package org.dungeon.wiki;
 
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.io.Writer;
 import org.dungeon.util.CounterMap;
 import org.dungeon.util.Matches;
@@ -47,14 +47,14 @@ public final class WikiSearcher {
       } else if (matches.size() == 1) {
         Writer.write(matches.getMatch(0).toString());
       } else {
-        DungeonStringBuilder builder = new DungeonStringBuilder();
-        builder.append("The following article titles match your query:\n");
+        DungeonString string = new DungeonString();
+        string.append("The following article titles match your query:\n");
         for (int i = 0; i < matches.size(); i++) {
-          builder.append(toArticleListingEntry(matches.getMatch(i)));
-          builder.append("\n");
+          string.append(toArticleListingEntry(matches.getMatch(i)));
+          string.append("\n");
         }
-        builder.append("Be more specific.");
-        Writer.write(builder);
+        string.append("Be more specific.");
+        Writer.write(string);
       }
     } else {
       writeArticleList();
@@ -77,32 +77,32 @@ public final class WikiSearcher {
         counter.incrementCounter(article, matches);
       }
     }
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
     if (counter.isNotEmpty()) {
-      builder.append("The following articles contain text that matches your query:\n");
+      string.append("The following articles contain text that matches your query:\n");
       for (Article article : counter) {
         String matchCount = counter.getCounter(article) + (counter.getCounter(article) > 1 ? " matches" : " match");
-        builder.append(toArticleListingEntry(article) + " (" + matchCount + ")\n");
+        string.append(toArticleListingEntry(article) + " (" + matchCount + ")\n");
       }
     } else {
-      builder.append("No article matches your query.");
+      string.append("No article matches your query.");
     }
-    Writer.write(builder);
+    Writer.write(string);
   }
 
   /**
    * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
    */
   private static void writeArticleList() {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
-    builder.append("The wiki has the following ");
-    builder.append(String.valueOf(Wiki.getArticles().size()));
-    builder.append(" articles:\n");
+    DungeonString string = new DungeonString();
+    string.append("The wiki has the following ");
+    string.append(String.valueOf(Wiki.getArticles().size()));
+    string.append(" articles:\n");
     for (Article article : Wiki.getArticles()) {
-      builder.append(toArticleListingEntry(article));
-      builder.append("\n");
+      string.append(toArticleListingEntry(article));
+      string.append("\n");
     }
-    Writer.write(builder);
+    Writer.write(string);
   }
 
   private static String toArticleListingEntry(Article article) {

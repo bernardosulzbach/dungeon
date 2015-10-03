@@ -17,7 +17,7 @@
 
 package org.dungeon.io;
 
-import org.dungeon.gui.TextPaneWritingSpecifications;
+import org.dungeon.gui.WritingSpecifications;
 import org.dungeon.util.library.Libraries;
 import org.dungeon.util.library.Poem;
 
@@ -60,7 +60,7 @@ public final class PoemWriter {
   }
 
   private static void writePoem(Poem poem) {
-    Writer.write(poem, new TextPaneWritingSpecifications(false));
+    Writer.write(poem, new WritingSpecifications(false, 0));
   }
 
 }

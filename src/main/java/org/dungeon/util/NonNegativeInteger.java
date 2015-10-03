@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dungeon.date;
+package org.dungeon.util;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * An Integer between 0 and 2 ^ 31 - 1, inclusive.
  */
-class NonNegativeInteger {
+public class NonNegativeInteger {
 
   private final Integer integer;
 

@@ -17,24 +17,42 @@
 
 package org.dungeon.gui;
 
+import org.dungeon.util.NonNegativeInteger;
+
 /**
  * A series of specifications for a text pane write.
  */
-public class TextPaneWritingSpecifications {
+public class WritingSpecifications {
 
   private final boolean scrollDown;
+  private final NonNegativeInteger wait;
 
-  public TextPaneWritingSpecifications(boolean scrollDown) {
+  /**
+   * Constructs a new WritingSpecifications object.
+   *
+   * @param scrollDown if the pane should scroll down
+   * @param wait how many milliseconds the application should wait before returning, nonnegative
+   */
+  public WritingSpecifications(boolean scrollDown, int wait) {
     this.scrollDown = scrollDown;
+    this.wait = new NonNegativeInteger(wait);
   }
 
   public boolean shouldScrollDown() {
     return scrollDown;
   }
 
+  public boolean shouldWait() {
+    return getWait() != 0;
+  }
+
+  public int getWait() {
+    return wait.toInteger();
+  }
+
   @Override
   public String toString() {
-    return "TextPaneWritingSpecifications{" +
+    return "WritingSpecifications{" +
         "scrollDown=" + scrollDown +
         '}';
   }

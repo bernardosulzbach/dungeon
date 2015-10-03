@@ -96,8 +96,7 @@ public class Game {
   }
 
   private static void suggestTutorial() {
-    Writer.writeNewLine();
-    Writer.write("You may want to issue 'tutorial' to learn the basics.");
+    Writer.write(new DungeonString("\nYou may want to issue 'tutorial' to learn the basics.\n"));
   }
 
   /**
@@ -139,9 +138,8 @@ public class Game {
     DungeonLogger.info("Set the GameState field in Game to a GameState.");
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
     Engine.refresh();
-    Writer.writeNewLine(); // Improves readability.
+    Writer.write(new DungeonString("\n")); // Improves readability.
     gameState.getHero().look(null);
-
   }
 
   public static void unsetGameState() {

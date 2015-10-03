@@ -17,6 +17,7 @@
 
 package org.dungeon.date;
 
+import org.dungeon.util.NonNegativeInteger;
 import org.dungeon.util.Utils;
 
 import org.jetbrains.annotations.NotNull;

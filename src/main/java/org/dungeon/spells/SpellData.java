@@ -21,7 +21,7 @@ import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.entity.creatures.HeroUtils;
 import org.dungeon.entity.items.Item;
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
@@ -124,11 +124,11 @@ public final class SpellData {
         Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
         List<Creature> creatureList = new ArrayList<Creature>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
-        DungeonStringBuilder builder = new DungeonStringBuilder();
-        builder.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
-        Hero.writeCreatureSight(creatureList, builder);
-        Hero.writeItemSight(hero.getLocation().getItemList(), builder);
-        Writer.write(builder);
+        DungeonString string = new DungeonString();
+        string.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
+        Hero.writeCreatureSight(creatureList, string);
+        Hero.writeItemSight(hero.getLocation().getItemList(), string);
+        Writer.write(string);
       }
     });
     putSpell(new Spell("VEIL_OF_DARKNESS", "Veil Of Darkness") {

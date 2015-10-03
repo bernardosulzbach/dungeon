@@ -17,6 +17,7 @@
 
 package org.dungeon.io;
 
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Game;
 import org.dungeon.game.GameState;
 import org.dungeon.logging.DungeonLogger;
@@ -91,9 +92,11 @@ public final class Loader {
    */
   public static GameState newGame() {
     GameState gameState = new GameState();
-    Writer.write("Created a new game.");
-    Writer.writeNewLine();
-    Writer.write(gameState.getPreface());
+    DungeonString string = new DungeonString();
+    string.append("Created a new game.\n\n");
+    string.append(gameState.getPreface());
+    string.append("\n");
+    Writer.write(string);
     Game.getGameWindow().requestFocusOnTextField();
     return gameState;
   }

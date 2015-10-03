@@ -31,7 +31,7 @@ import org.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.dungeon.entity.items.FoodComponent;
 import org.dungeon.entity.items.Item;
 import org.dungeon.game.Direction;
-import org.dungeon.game.DungeonStringBuilder;
+import org.dungeon.game.DungeonString;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Game;
 import org.dungeon.game.Location;
@@ -95,7 +95,7 @@ public class Hero extends Creature {
     dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
   }
 
-  public static void writeCreatureSight(List<Creature> creatures, DungeonStringBuilder builder) {
+  public static void writeCreatureSight(List<Creature> creatures, DungeonString builder) {
     if (creatures.isEmpty()) {
       builder.append("\nYou don't see anyone here.\n");
     } else {
@@ -105,7 +105,7 @@ public class Hero extends Creature {
     }
   }
 
-  public static void writeItemSight(List<Item> items, DungeonStringBuilder builder) {
+  public static void writeItemSight(List<Item> items, DungeonString builder) {
     if (!items.isEmpty()) {
       builder.append("\nOn the ground you see ");
       builder.append(Utils.enumerateEntities(items));
@@ -230,21 +230,21 @@ public class Hero extends Creature {
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   public void look(Direction walkedInFrom) {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
     Location location = getLocation(); // Avoid multiple calls to the getter.
-    builder.append(walkedInFrom != null ? "You arrive at " : "You are at ");
-    builder.setColor(location.getDescription().getColor());
-    builder.append(location.getName().getSingular());
-    builder.resetColor();
-    builder.append(". ");
-    builder.append(location.getDescription().getInfo());
-    builder.append(" It is ");
-    builder.append(location.getWorld().getPartOfDay().toString().toLowerCase());
-    builder.append(".\n");
-    lookAdjacentLocations(walkedInFrom, builder);
-    lookCreatures(builder);
-    lookItems(builder);
-    Writer.write(builder);
+    string.append(walkedInFrom != null ? "You arrive at " : "You are at ");
+    string.setColor(location.getDescription().getColor());
+    string.append(location.getName().getSingular());
+    string.resetColor();
+    string.append(". ");
+    string.append(location.getDescription().getInfo());
+    string.append(" It is ");
+    string.append(location.getWorld().getPartOfDay().toString().toLowerCase());
+    string.append(".\n");
+    lookAdjacentLocations(walkedInFrom, string);
+    lookCreatures(string);
+    lookItems(string);
+    Writer.write(string);
   }
 
   /**
@@ -253,7 +253,7 @@ public class Hero extends Creature {
    *
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  private void lookAdjacentLocations(Direction walkedInFrom, DungeonStringBuilder builder) {
+  private void lookAdjacentLocations(Direction walkedInFrom, DungeonString builder) {
     builder.append("\n");
     if (!canSeeAdjacentLocations()) {
       builder.append("You can't clearly see the surrounding locations.\n");
@@ -288,7 +288,7 @@ public class Hero extends Creature {
   /**
    * Prints a human-readable description of what Creatures the Hero sees.
    */
-  private void lookCreatures(DungeonStringBuilder builder) {
+  private void lookCreatures(DungeonString builder) {
     List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatures());
     creatures.remove(this);
     creatures = filterByVisibility(creatures);
@@ -298,7 +298,7 @@ public class Hero extends Creature {
   /**
    * Prints a human-readable description of what the Hero sees on the ground.
    */
-  private void lookItems(DungeonStringBuilder builder) {
+  private void lookItems(DungeonString builder) {
     List<Item> items = getLocation().getItemList();
     items = filterByVisibility(items);
     writeItemSight(items, builder);
@@ -596,8 +596,9 @@ public class Hero extends Creature {
       if (book != null) {
         Engine.rollDateAndRefresh(book.getTimeToRead());
         if (getInventory().hasItem(selectedItem)) { // Just in case if a readable item eventually decomposes.
-          Writer.write(book.getText());
-          Writer.writeNewLine();
+          DungeonString string = new DungeonString(book.getText());
+          string.append("\n\n");
+          Writer.write(string);
           if (book.isDidactic()) {
             learnSpell(book);
           }
@@ -684,23 +685,27 @@ public class Hero extends Creature {
    * Prints a message with the current status of the Hero.
    */
   public void printAllStatus() {
-    StringBuilder builder = new StringBuilder();
-    builder.append(getName()).append("\n");
+    DungeonString builder = new DungeonString();
+    builder.append(getName().getSingular());
+    builder.append("\n");
     builder.append("You are ");
-    builder.append(getHealth().getHealthState().toString().toLowerCase()).append(".\n");
-    builder.append("Your base attack is ").append(String.valueOf(getAttack())).append(".\n");
+    builder.append(getHealth().getHealthState().toString().toLowerCase());
+    builder.append(".\n");
+    builder.append("Your base attack is ");
+    builder.append(String.valueOf(getAttack()));
+    builder.append(".\n");
     if (hasWeapon()) {
       builder.append("You are currently equipping ");
       builder.append(getWeapon().getQualifiedName());
       builder.append(", whose base damage is ");
-      builder.append(getWeapon().getWeaponComponent().getDamage());
+      builder.append(String.valueOf(getWeapon().getWeaponComponent().getDamage()));
       builder.append(". This makes your total damage ");
-      builder.append(getAttack() + getWeapon().getWeaponComponent().getDamage());
+      builder.append(String.valueOf(getAttack() + getWeapon().getWeaponComponent().getDamage()));
       builder.append(".\n");
     } else {
       builder.append("You are fighting bare-handed.\n");
     }
-    Writer.write(builder.toString());
+    Writer.write(builder);
   }
 
   /**
@@ -708,7 +713,7 @@ public class Hero extends Creature {
    */
   public void printAge() {
     String age = new Duration(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
-    Writer.write(String.format("You are %s old.", age), Color.CYAN);
+    Writer.write(new DungeonString("You are " + age + " old.", Color.CYAN));
   }
 
   /**
@@ -783,15 +788,15 @@ public class Hero extends Creature {
    * Writes a list with all the Spells that the Hero knows.
    */
   public void writeSpellList() {
-    DungeonStringBuilder builder = new DungeonStringBuilder();
+    DungeonString string = new DungeonString();
     if (getSpellcaster().getSpellList().isEmpty()) {
-      builder.append("You have not learned any spells yet.");
+      string.append("You have not learned any spells yet.");
     } else {
-      builder.append("You know ");
-      builder.append(Utils.enumerate(getSpellcaster().getSpellList()));
-      builder.append(".");
+      string.append("You know ");
+      string.append(Utils.enumerate(getSpellcaster().getSpellList()));
+      string.append(".");
     }
-    Writer.write(builder);
+    Writer.write(string);
   }
 
 }
