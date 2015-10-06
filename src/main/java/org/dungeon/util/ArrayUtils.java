@@ -20,7 +20,7 @@ package org.dungeon.util;
 /**
  * Array utilities.
  */
-public final class ArrayUtils {
+final class ArrayUtils {
 
   private ArrayUtils() {
     throw new AssertionError();

@@ -79,7 +79,7 @@ public final class CircularList<T> implements Serializable {
    *
    * @return true if this CircularList is full
    */
-  protected boolean isFull() {
+  boolean isFull() {
     return size() == capacity;
   }
 
