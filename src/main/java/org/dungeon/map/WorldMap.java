@@ -67,7 +67,7 @@ public class WorldMap {
     WorldMap map = new WorldMap();
     for (int curY = map.limits.minY; curY >= map.limits.maxY; curY--) {
       for (int curX = map.limits.minX; curX <= map.limits.maxX; curX++) {
-        Point currentPosition = new Point(curX, curY);
+        Point currentPosition = new Point(curX, curY, 0);
         map.matrix[map.limits.minY - curY][curX - map.limits.minX] = symbolFactory.getSymbol(currentPosition);
       }
     }

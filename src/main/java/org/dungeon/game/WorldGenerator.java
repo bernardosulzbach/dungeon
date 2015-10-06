@@ -69,7 +69,7 @@ class WorldGenerator implements Serializable {
     int yStart = pY < 0 ? chunkSide * (((pY + 1) / chunkSide) - 1) : chunkSide * (pY / chunkSide);
     for (int x = xStart; x < xStart + chunkSide; x++) {
       for (int y = yStart; y < yStart + chunkSide; y++) {
-        currentPoint = new Point(x, y);
+        currentPoint = new Point(x, y, 0);
         if (world.doesNotHaveLocationAt(currentPoint)) {
           if (riverGenerator.isRiver(currentPoint)) {
             world.addLocation(createRandomRiverLocation(), currentPoint);

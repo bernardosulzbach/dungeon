@@ -27,21 +27,21 @@ import java.util.List;
  */
 public enum Direction {
 
-  NORTH("North", "N", 0, 1),
-  EAST("East", "E", 1, 0),
-  SOUTH("South", "S", 0, -1),
-  WEST("West", "W", -1, 0);
+  UP("Up", "U", new Point(0, 0, 1)),
+  NORTH("North", "N", new Point(0, 1, 0)),
+  EAST("East", "E", new Point(1, 0, 0)),
+  DOWN("Down", "D", new Point(0, 0, -1)),
+  SOUTH("South", "S", new Point(0, -1, 0)),
+  WEST("West", "W", new Point(-1, 0, 0));
 
   private final String name;
   private final String abbreviation;
-  private final int x;
-  private final int y;
+  private final Point offset;
 
-  Direction(String name, String abbreviation, int x, int y) {
+  Direction(String name, String abbreviation, Point offset) {
     this.name = name;
     this.abbreviation = abbreviation;
-    this.x = x;
-    this.y = y;
+    this.offset = offset;
   }
 
   /**
@@ -70,16 +70,12 @@ public enum Direction {
     return directions;
   }
 
-  public int getY() {
-    return y;
-  }
-
-  public int getX() {
-    return x;
+  public Point getOffset() {
+    return offset;
   }
 
   /**
-   * @return the opposite direction.
+   * Returns the opposite direction.
    */
   public Direction invert() {
     return values()[(ordinal() + values().length / 2) % values().length];

@@ -26,7 +26,9 @@
         }
       ],
       "blockedEntrances": [
+        "U",
         "N",
+        "D",
         "S"
       ]
     },
@@ -67,7 +69,9 @@
         }
       ],
       "blockedEntrances": [
+        "U",
         "N",
+        "D",
         "S"
       ]
     },
@@ -93,7 +97,9 @@
         }
       ],
       "blockedEntrances": [
+        "U",
         "N",
+        "D",
         "S"
       ]
     },
@@ -113,8 +119,10 @@
       "blobSize": 0,
       "lightPermittivity": 1,
       "blockedEntrances": [
-        "W",
-        "E"
+        "U",
+        "E",
+        "D",
+        "W"
       ]
     },
     {
@@ -132,6 +140,10 @@
       "info": "This is a wide and open grassy land area.",
       "blobSize": 2,
       "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "FOX",
@@ -186,6 +198,10 @@
       "info": "This is an area of very dry land where the living conditions seem to be hostile for most plant and animal life.",
       "blobSize": 50,
       "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "BOAR",
@@ -250,6 +266,10 @@
       "info": "This is a piece of land where tall trees grow and animal life seems abundant. It is hard to see much further due to the tree density. The canopy is the only thing you see when you look up.",
       "blobSize": 25,
       "lightPermittivity": 0.7,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "BEAR",
@@ -311,6 +331,10 @@
       "info": "This is a place where many young trees grow and animal life seems abundant. The canopy is not much above your head.",
       "blobSize": 20,
       "lightPermittivity": 0.85,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "FROG",
@@ -378,6 +402,10 @@
       "info": "This is an eerie place where rows of tombstones stand erect in silence to the left and right, in front and behind, like a sea of the dead. Some of these tombstones are laid on the ground as if something overturned them. They all seem crumbled with the weathering of centuries, and most of them are overgrown and unkempt, for now even their mourners had joined them under the clay soil.",
       "blobSize": 1,
       "lightPermittivity": 0.9,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "RADIANT_GHOUL",
@@ -435,6 +463,10 @@
       "info": "This is a field vegetated by primarily grass. This open, sunny area seems to attract and support flora and fauna that couldn't thrive in other conditions.",
       "blobSize": 2,
       "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "WHITE_TIGER",
@@ -479,6 +511,10 @@
       "info": "This is a reasonably small body of standing water in a depression. The air seems fresher here and some wild creatures seem to enjoy this place.",
       "blobSize": 1,
       "lightPermittivity": 0.95,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "CROCODILE",
@@ -523,6 +559,10 @@
       "info": "This is an area on which the trees are sufficiently widely spaced so that the canopy does not close. The open canopy allows sufficient light to reach the ground to support an unbroken herbaceous layer consisting primarily of grasses. You notice that these trees are more regularly spaced than the trees of a forest.",
       "blobSize": 5,
       "lightPermittivity": 0.95,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "BOAR",
@@ -567,6 +607,10 @@
       "info": "This is an area of low-lying, uncultivated ground where water collects. The murky water you step into is shallow and stagnant.",
       "blobSize": 10,
       "lightPermittivity": 0.8,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "CROCODILE",
@@ -606,6 +650,10 @@
       "info": "This is an area of tundra. Something here hinders the growth of trees and big vegetation, you suspect it is some sort of curse.",
       "blobSize": 10,
       "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
       "spawners": [
         {
           "id": "GIANT_RAT",

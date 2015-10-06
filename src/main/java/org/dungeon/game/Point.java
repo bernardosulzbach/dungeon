@@ -20,21 +20,24 @@ package org.dungeon.game;
 import java.io.Serializable;
 
 /**
- * A point in a 2D plane.
+ * A point in a tridimensional matrix.
  */
 public class Point implements Serializable {
 
   private final int x;
   private final int y;
+  private final int z;
 
-  public Point(int x, int y) {
+  public Point(int x, int y, int z) {
     this.x = x;
     this.y = y;
+    this.z = z;
   }
 
   public Point(Point originalPoint, Direction shift) {
-    this.x = originalPoint.getX() + shift.getX();
-    this.y = originalPoint.getY() + shift.getY();
+    this.x = originalPoint.getX() + shift.getOffset().getX();
+    this.y = originalPoint.getY() + shift.getOffset().getY();
+    this.z = originalPoint.getZ() + shift.getOffset().getZ();
   }
 
   public int getX() {
@@ -43,6 +46,10 @@ public class Point implements Serializable {
 
   public int getY() {
     return y;
+  }
+
+  private int getZ() {
+    return z;
   }
 
   @Override
