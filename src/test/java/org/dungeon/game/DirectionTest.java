@@ -20,10 +20,13 @@ package org.dungeon.game;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public class DirectionTest {
 
   @Test
-  public void testInvert() throws Exception {
+  public void invertShouldCorrectlyInvertTheDirection() throws Exception {
     Assert.assertEquals(Direction.UP, Direction.DOWN.invert());
     Assert.assertEquals(Direction.NORTH, Direction.SOUTH.invert());
     Assert.assertEquals(Direction.EAST, Direction.WEST.invert());
@@ -33,10 +36,29 @@ public class DirectionTest {
   }
 
   @Test
-  public void testDoubleInvert() throws Exception {
+  public void invertTwiceShouldNotModifyTheDirection() throws Exception {
     for (Direction direction : Direction.values()) {
       Assert.assertEquals(direction, direction.invert().invert());
     }
+  }
+
+  @Test
+  public void getAllExceptShouldGetAllDirectionsExceptOne() throws Exception {
+    for (Direction direction : Direction.values()) {
+      Collection<Direction> allExceptDirection = Direction.getAllExcept(direction);
+      Assert.assertFalse(allExceptDirection.contains(direction));
+      for (Direction anotherDirection : Direction.values()) {
+        if (anotherDirection != direction) {
+          Assert.assertTrue(allExceptDirection.contains(anotherDirection));
+        }
+      }
+    }
+  }
+
+  @Test
+  public void getAllExceptShouldGetAllDirectionsWhenTheArgumentIsNull() throws Exception {
+    Collection<Direction> allDirections = Direction.getAllExcept(null);
+    Assert.assertTrue(allDirections.containsAll(Arrays.asList(Direction.values())));
   }
 
 }
