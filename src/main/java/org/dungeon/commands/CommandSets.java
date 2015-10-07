@@ -132,7 +132,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("go", "Makes the character move in the specified direction.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Engine.parseHeroWalk(arguments);
+        Game.getGameState().getHero().walk(arguments);
       }
     });
     commandSet.addCommand(new Command("items", "Lists the items in the character's inventory.") {

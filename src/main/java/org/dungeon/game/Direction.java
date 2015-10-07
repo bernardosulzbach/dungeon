@@ -27,6 +27,8 @@ import java.util.List;
  */
 public enum Direction {
 
+  // This order is of uttermost importance and some methods in this class DEPEND on it.
+  // Do not change without checking all the methods of this enum.
   UP("Up", "U", new Point(0, 0, 1)),
   NORTH("North", "N", new Point(0, 1, 0)),
   EAST("East", "E", new Point(1, 0, 0)),

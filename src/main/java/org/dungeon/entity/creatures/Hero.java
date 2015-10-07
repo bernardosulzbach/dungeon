@@ -86,6 +86,7 @@ public class Hero extends Creature {
   private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
   private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
+  private final Walker walker = new Walker();
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
@@ -263,6 +264,8 @@ public class Hero extends Creature {
     Point pos = Game.getGameState().getHeroPosition();
     HashMap<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
     Collection<Direction> directions = Direction.getAllExcept(walkedInFrom); // Don't print the Location you just left.
+    directions.remove(Direction.UP);
+    directions.remove(Direction.DOWN);
     for (Direction dir : directions) {
       Point adjacentPoint = new Point(pos, dir);
       Location adjacentLocation = world.getLocation(adjacentPoint);
@@ -733,6 +736,15 @@ public class Hero extends Creature {
       Writer.write("Today is your birthday.");
     }
     Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+  }
+
+  /**
+   * Attempts to walk according to the provided arguments.
+   *
+   * @param arguments an array of string arguments
+   */
+  public void walk(String[] arguments) {
+    walker.parseHeroWalk(arguments);
   }
 
   /**

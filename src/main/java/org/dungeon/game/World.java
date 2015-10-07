@@ -19,7 +19,6 @@ package org.dungeon.game;
 
 import org.dungeon.date.Date;
 import org.dungeon.date.DungeonTimeUnit;
-import org.dungeon.entity.creatures.Hero;
 import org.dungeon.logging.DungeonLogger;
 import org.dungeon.stats.WorldStatistics;
 
@@ -61,23 +60,6 @@ public class World implements Serializable {
   public void addLocation(Location locationObject, Point coordinates) {
     locations.put(coordinates, locationObject);
     worldStatistics.addLocation(locationObject.getName().getSingular());
-  }
-
-  /**
-   * Moves the hero from a location to another.
-   *
-   * @param dir the Direction in which the hero should be moved
-   * @return the Location the hero arrives to
-   */
-  public Location moveHero(Direction dir) {
-    Hero hero = Game.getGameState().getHero();
-    Point heroOldPosition = Game.getGameState().getHeroPosition();
-    Point heroNewPosition = new Point(heroOldPosition, dir);
-    Game.getGameState().setHeroPosition(heroNewPosition);
-    locations.get(heroOldPosition).removeCreature(hero);
-    Location heroNewLocation = locations.get(heroNewPosition);
-    heroNewLocation.addCreature(hero);
-    return heroNewLocation;
   }
 
   boolean doesNotHaveLocationAt(Point point) {

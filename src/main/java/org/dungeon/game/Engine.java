@@ -20,7 +20,6 @@ package org.dungeon.game;
 import org.dungeon.entity.creatures.Creature;
 import org.dungeon.entity.creatures.Hero;
 import org.dungeon.io.Writer;
-import org.dungeon.stats.ExplorationStatistics;
 import org.dungeon.util.Utils;
 
 import java.awt.Color;
@@ -31,8 +30,6 @@ import java.awt.Color;
 public final class Engine {
 
   private static final int BATTLE_TURN_DURATION = 30;
-  private static final int WALK_BLOCKED = 2;
-  private static final int WALK_SUCCESS = 200;
 
   private Engine() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
@@ -117,49 +114,6 @@ public final class Engine {
    */
   private static void refreshAchievements() {
     Game.getGameState().getHero().getAchievementTracker().update();
-  }
-
-  /**
-   * Parses an issued command to move the player.
-   */
-  public static void parseHeroWalk(String[] arguments) {
-    if (arguments.length != 0) {
-      for (Direction dir : Direction.values()) {
-        if (dir.equalsIgnoreCase(arguments[0])) {
-          heroWalk(dir);
-          return;
-        }
-      }
-      Writer.write("Invalid input.");
-    } else {
-      Writer.write("To where?", Color.ORANGE);
-    }
-  }
-
-  /**
-   * Attempts to move the hero in a given direction.
-   *
-   * <p>If the hero moves, this method refreshes both locations at the latest date. If the hero does not move, this
-   * method refreshes the location where the hero is.
-   */
-  private static void heroWalk(Direction dir) {
-    GameState gameState = Game.getGameState();
-    World world = gameState.getWorld();
-    Point point = gameState.getHeroPosition();
-    Hero hero = gameState.getHero();
-    Point destinationPoint = new Point(gameState.getHeroPosition(), dir);
-    if (world.getLocation(destinationPoint).isBlocked(dir.invert()) || world.getLocation(point).isBlocked(dir)) {
-      rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
-      Writer.write("You cannot go " + dir + ".");
-    } else {
-      Location destination = gameState.getWorld().moveHero(dir);
-      rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
-      hero.setLocation(destination);
-      refresh(); // Hero arrived in a new location, refresh the game.
-      hero.look(dir.invert());
-      ExplorationStatistics explorationStatistics = gameState.getStatistics().getExplorationStatistics();
-      explorationStatistics.addVisit(destinationPoint, world.getLocation(destinationPoint).getId());
-    }
   }
 
   /**
