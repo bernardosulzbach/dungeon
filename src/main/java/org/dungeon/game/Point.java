@@ -53,27 +53,27 @@ public class Point implements Serializable {
   }
 
   @Override
-  public boolean equals(Object anotherObject) {
-    if (this == anotherObject) {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (anotherObject instanceof Point) {
-      Point anotherPoint = (Point) anotherObject;
-      return this.x == anotherPoint.getX() && this.y == anotherPoint.getY();
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-    return false;
+    Point point = (Point) o;
+    return getX() == point.getX() && getY() == point.getY() && getZ() == point.getZ();
   }
 
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 29 * hash + this.x;
-    hash = 29 * hash + this.y;
-    return hash;
+    int result = getX();
+    result = 31 * result + getY();
+    result = 31 * result + getZ();
+    return result;
   }
 
   @Override
   public String toString() {
-    return String.format("{%d,%d}", getX(), getY());
+    return String.format("{%d, %d, %d}", getX(), getY(), getZ());
   }
 }
