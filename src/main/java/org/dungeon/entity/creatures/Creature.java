@@ -26,6 +26,7 @@ import org.dungeon.entity.items.Item;
 import org.dungeon.game.Location;
 import org.dungeon.logging.DungeonLogger;
 import org.dungeon.stats.CauseOfDeath;
+import org.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,7 +84,13 @@ public class Creature extends Entity {
 
   @Override
   public Luminosity getLuminosity() {
-    return lightSource.getLuminosity();
+    if (hasWeapon()) {
+      double luminosityFromWeapon = getWeapon().getLuminosity().toPercentage().toDouble();
+      double luminosityFromLightSource = lightSource.getLuminosity().toPercentage().toDouble();
+      return new Luminosity(new Percentage(luminosityFromWeapon + luminosityFromLightSource));
+    } else {
+      return lightSource.getLuminosity();
+    }
   }
 
   public LightSource getLightSource() {
