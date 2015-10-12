@@ -542,12 +542,12 @@ public class Hero extends Creature {
         if (getInventory().hasItem(selectedItem)) {
           FoodComponent food = selectedItem.getFoodComponent();
           double remainingBites = selectedItem.getIntegrity().getCurrent() / (double) food.getIntegrityDecrementOnEat();
-          int healthIncrement;
+          int healthChange;
           if (remainingBites >= 1.0) {
-            healthIncrement = food.getNutrition();
+            healthChange = food.getNutrition();
           } else {
-            // The healing may vary from 0 up to (nutrition - 1) if there is not enough for a bite.
-            healthIncrement = (int) (food.getNutrition() * remainingBites);
+            // The absolute value of the healthChange will never be equal to nutrition, only smaller.
+            healthChange = (int) (food.getNutrition() * remainingBites);
           }
           selectedItem.decrementIntegrityByEat();
           if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
@@ -555,7 +555,7 @@ public class Hero extends Creature {
           } else {
             Writer.write("You ate a bit of " + selectedItem.getName() + ".");
           }
-          addHealth(healthIncrement);
+          addHealth(healthChange);
         } else {
           HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
