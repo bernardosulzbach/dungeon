@@ -1,12 +1,11 @@
 Contributing
 ============
-
 This file contains some basic directives for developers interested in contributing to this project.
 
 
 Commits and PRs
 ---------------
-* Feel free to discuss design and implementation details on the issue tracker.
+* Discuss design and implementation details on the issue tracker.
 * Respect the coding standard.
 * Do not use any license other than GNU GPLv3.
 
