@@ -167,6 +167,28 @@
       ]
     },
     {
+      "id": "DUNGEON_STAIRWAY",
+      "type": "DUNGEON_STAIRWAY",
+      "name": {
+        "singular": "Dungeon Stairway"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "S",
+      "info": "A set of stone steps.",
+      "blobSize": 0,
+      "lightPermittivity": 0.2,
+      "blockedEntrances": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
       "id": "DUNGEON_ROOM",
       "type": "DUNGEON_ROOM",
       "name": {
@@ -182,11 +204,48 @@
       "blobSize": 0,
       "lightPermittivity": 0.0,
       "blockedEntrances": [
-        "N",
-        "E",
-        "D",
-        "S",
-        "W"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": 2,
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": 1,
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DUNGEON_CORRIDOR",
+      "type": "DUNGEON_CORRIDOR",
+      "name": {
+        "singular": "Dungeon Corridor"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "=",
+      "info": "A dark corridor with stone walls.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+        "U",
+        "D"
       ],
       "spawners": [
         {

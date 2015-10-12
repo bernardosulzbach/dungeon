@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * A class that is responsible for distributing dungeons.
  */
-public class DungeonDistributor implements Serializable {
+class DungeonDistributor implements Serializable {
 
   private static final Percentage dungeonProbability = Percentage.fromString("2%");
   private static final Set<Point> entrances = new HashSet<Point>();

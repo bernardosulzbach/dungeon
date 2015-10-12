@@ -123,6 +123,6 @@ public final class LocationPreset {
     this.blobSize = blobSize;
   }
 
-  enum Type {RIVER, BRIDGE, DUNGEON_ENTRANCE, DUNGEON_ROOM, LAND}
+  enum Type {RIVER, BRIDGE, DUNGEON_ENTRANCE, DUNGEON_STAIRWAY, DUNGEON_ROOM, DUNGEON_CORRIDOR, LAND}
 
 }
