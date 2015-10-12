@@ -1,6 +1,26 @@
 {
   "items": [
     {
+      "id": "TORCH",
+      "type": "Tool",
+      "name": {
+        "singular": "Torch"
+      },
+      "tags": [
+        "WEAPON"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.35,
+      "visibility": "90.00%",
+      "damage": 3,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 5,
+      "luminosity": "40.00%"
+    },
+    {
       "id": "APPLE",
       "type": "Food",
       "name": {
@@ -251,7 +271,8 @@
       "integrityDecrementOnHit": 5,
       "nutrition": 8,
       "integrityDecrementOnEat": 10
-    }, {
+    },
+    {
       "id": "RABBIT_BEEF",
       "type": "Food",
       "name": {

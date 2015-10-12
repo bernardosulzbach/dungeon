@@ -126,6 +126,92 @@
       ]
     },
     {
+      "id": "DUNGEON_ENTRANCE",
+      "type": "DUNGEON_ENTRANCE",
+      "name": {
+        "singular": "Dungeon Entrance"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "D",
+      "info": "A fairly large passage opens in front of you and leads down for what seems like a dungeon.",
+      "blobSize": 0,
+      "lightPermittivity": 0.9,
+      "blockedEntrances": [
+        "U"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": 2,
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": 1,
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "SWORD",
+          "probability": 0.5
+        },
+        {
+          "id": "HISTORY_OF_THE_THIRD_ERA",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DUNGEON_ROOM",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dark dungeon room with walls made of stone.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+        "N",
+        "E",
+        "D",
+        "S",
+        "W"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": 2,
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": 1,
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
       "id": "CLEARING",
       "type": "LAND",
       "name": {

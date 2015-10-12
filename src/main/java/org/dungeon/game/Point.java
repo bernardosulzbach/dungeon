@@ -48,7 +48,7 @@ public class Point implements Serializable {
     return y;
   }
 
-  private int getZ() {
+  public int getZ() {
     return z;
   }
 

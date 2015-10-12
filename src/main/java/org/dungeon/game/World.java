@@ -62,10 +62,6 @@ public class World implements Serializable {
     worldStatistics.addLocation(locationObject.getName().getSingular());
   }
 
-  boolean doesNotHaveLocationAt(Point point) {
-    return !locations.containsKey(point);
-  }
-
   /**
    * Gets the Location in the specified Point. If the Location in the Point has not yet been created, the world
    * generator will do it.
@@ -75,7 +71,7 @@ public class World implements Serializable {
    */
   @NotNull
   public Location getLocation(@NotNull Point point) {
-    if (doesNotHaveLocationAt(point)) {
+    if (!locations.containsKey(point)) {
       generator.expand(point);
     }
     return locations.get(point);
@@ -97,6 +93,28 @@ public class World implements Serializable {
     } else {
       worldDate = worldDate.plus(seconds, DungeonTimeUnit.SECOND);
     }
+  }
+
+  /**
+   * Checks if there is a location at the specified point. Invoking this method may trigger world expansion.
+   */
+  public boolean hasLocationAt(Point point) {
+    if (alreadyHasLocationAt(point)) {
+      return true;
+    } else {
+      if (point.getZ() == 0) {
+        generator.expand(point);
+      }
+      return alreadyHasLocationAt(point);
+    }
+  }
+
+  /**
+   * Checks if there is already a location at the specified point. This method should only be called from World and
+   * WorldGenerator.
+   */
+  public boolean alreadyHasLocationAt(Point point) {
+    return locations.containsKey(point);
   }
 
 }

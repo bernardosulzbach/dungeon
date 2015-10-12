@@ -239,9 +239,12 @@ public class Hero extends Creature {
     string.resetColor();
     string.append(". ");
     string.append(location.getDescription().getInfo());
-    string.append(" It is ");
-    string.append(location.getWorld().getPartOfDay().toString().toLowerCase());
-    string.append(".\n");
+    if (canSeeTheSky()) {
+      string.append(" It is ");
+      string.append(location.getWorld().getPartOfDay().toString().toLowerCase());
+      string.append(".");
+    }
+    string.append("\n");
     lookAdjacentLocations(walkedInFrom, string);
     lookCreatures(string);
     lookItems(string);
@@ -255,36 +258,40 @@ public class Hero extends Creature {
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   private void lookAdjacentLocations(Direction walkedInFrom, DungeonString builder) {
-    builder.append("\n");
-    if (!canSeeAdjacentLocations()) {
-      builder.append("You can't clearly see the surrounding locations.\n");
-      return;
-    }
-    World world = Game.getGameState().getWorld();
-    Point pos = Game.getGameState().getHeroPosition();
-    HashMap<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
-    Collection<Direction> directions = Direction.getAllExcept(walkedInFrom); // Don't print the Location you just left.
-    directions.remove(Direction.UP);
-    directions.remove(Direction.DOWN);
-    for (Direction dir : directions) {
-      Point adjacentPoint = new Point(pos, dir);
-      Location adjacentLocation = world.getLocation(adjacentPoint);
-      ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-      explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
-      String name = adjacentLocation.getName().getSingular();
-      Color color = adjacentLocation.getDescription().getColor();
-      ColoredString locationName = new ColoredString(name, color);
-      if (!visibleLocations.containsKey(locationName)) {
-        visibleLocations.put(locationName, new ArrayList<Direction>());
+    if (canSeeAdjacentLocations()) {
+      World world = Game.getGameState().getWorld();
+      Point pos = Game.getGameState().getHeroPosition();
+      HashMap<ColoredString, ArrayList<Direction>> visibleLocations =
+          new HashMap<ColoredString, ArrayList<Direction>>();
+      Collection<Direction> directions =
+          Direction.getAllExcept(walkedInFrom); // Don't print the Location you just left.
+      for (Direction dir : directions) {
+        Point adjacentPoint = new Point(pos, dir);
+        if (world.hasLocationAt(adjacentPoint)) {
+          Location adjacentLocation = world.getLocation(adjacentPoint);
+          ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+          explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
+          String name = adjacentLocation.getName().getSingular();
+          Color color = adjacentLocation.getDescription().getColor();
+          ColoredString locationName = new ColoredString(name, color);
+          if (!visibleLocations.containsKey(locationName)) {
+            visibleLocations.put(locationName, new ArrayList<Direction>());
+          }
+          visibleLocations.get(locationName).add(dir);
+        }
       }
-      visibleLocations.get(locationName).add(dir);
-    }
-    for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-      builder.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
-      builder.setColor(entry.getKey().getColor());
-      builder.append(String.format("%s", entry.getKey().getString()));
-      builder.resetColor();
-      builder.append(".\n");
+      if (!visibleLocations.isEmpty()) {
+        builder.append("\n");
+        for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
+          builder.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
+          builder.setColor(entry.getKey().getColor());
+          builder.append(String.format("%s", entry.getKey().getString()));
+          builder.resetColor();
+          builder.append(".\n");
+        }
+      }
+    } else {
+      builder.append("\nYou can't clearly see the surrounding locations.\n");
     }
   }
 
@@ -735,7 +742,15 @@ public class Hero extends Creature {
     if (worldDate.getMonth() == dateOfBirth.getMonth() && worldDate.getDay() == dateOfBirth.getDay()) {
       Writer.write("Today is your birthday.");
     }
-    Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+    if (canSeeTheSky()) {
+      Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+    } else {
+      Writer.write("You can't see the sky.");
+    }
+  }
+
+  private boolean canSeeTheSky() {
+    return Game.getGameState().getHeroPosition().getZ() >= 0;
   }
 
   /**

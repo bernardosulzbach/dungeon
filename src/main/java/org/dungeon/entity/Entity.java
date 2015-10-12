@@ -64,6 +64,10 @@ public abstract class Entity implements Selectable, Serializable {
     return visibility;
   }
 
+  /**
+   * Returns the total luminosity of this entity. This accounts for its innate luminosity plus the luminosity from any
+   * items it may be holding.
+   */
   public abstract Luminosity getLuminosity();
 
 }

@@ -27,16 +27,16 @@ import java.io.Serializable;
 class WorldGenerator implements Serializable {
 
   private static final int CHUNK_SIDE = 5;
-  private static final int MIN_DIST_RIVER = 6;
-  private static final int MAX_DIST_RIVER = 11;
   private final World world;
   private final RiverGenerator riverGenerator;
+  private final DungeonDistributor dungeonDistributor = new DungeonDistributor();
+  private final DungeonCreator dungeonCreator = new DungeonCreator(dungeonDistributor);
   private final int chunkSide;
 
   WorldGenerator(World world) {
     this.world = world;
+    this.riverGenerator = new RiverGenerator();
     this.chunkSide = WorldGenerator.CHUNK_SIDE;
-    riverGenerator = new RiverGenerator(MIN_DIST_RIVER, MAX_DIST_RIVER);
   }
 
   /**
@@ -70,11 +70,13 @@ class WorldGenerator implements Serializable {
     for (int x = xStart; x < xStart + chunkSide; x++) {
       for (int y = yStart; y < yStart + chunkSide; y++) {
         currentPoint = new Point(x, y, 0);
-        if (world.doesNotHaveLocationAt(currentPoint)) {
+        if (!world.alreadyHasLocationAt(currentPoint)) {
           if (riverGenerator.isRiver(currentPoint)) {
             world.addLocation(createRandomRiverLocation(), currentPoint);
           } else if (riverGenerator.isBridge(currentPoint)) {
             world.addLocation(createRandomBridgeLocation(), currentPoint);
+          } else if (dungeonDistributor.rollForDungeon(currentPoint)) {
+            dungeonCreator.createDungeon(world, currentPoint);
           } else {
             if (currentLocationPreset == null || remainingLocationsOfCurrentPreset == 0) {
               currentLocationPreset = getRandomLandLocationPreset();

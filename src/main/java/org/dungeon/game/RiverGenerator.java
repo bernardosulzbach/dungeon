@@ -25,15 +25,16 @@ import java.util.HashMap;
  */
 final class RiverGenerator implements Serializable {
 
+  private static final int MIN_DIST_RIVER = 6;
+  private static final int MAX_DIST_RIVER = 11;
   private static final int MIN_BRIDGE_DIST = 6;
   private static final int MAX_BRIDGE_DIST = 16;
   private static final int START = 10; // Rivers do not appear in x > 10 || x < 10.
-
   private final ExpandableIntegerSet lines;
   private final HashMap<Integer, River> rivers;
 
-  public RiverGenerator(int minimumDistance, int maximumDistance) {
-    lines = new ExpandableIntegerSet(minimumDistance, maximumDistance);
+  public RiverGenerator() {
+    lines = new ExpandableIntegerSet(MIN_DIST_RIVER, MAX_DIST_RIVER);
     rivers = new HashMap<Integer, River>();
   }
 
