@@ -62,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -261,10 +262,9 @@ public class Hero extends Creature {
     if (canSeeAdjacentLocations()) {
       World world = Game.getGameState().getWorld();
       Point pos = Game.getGameState().getHeroPosition();
-      HashMap<ColoredString, ArrayList<Direction>> visibleLocations =
-          new HashMap<ColoredString, ArrayList<Direction>>();
-      Collection<Direction> directions =
-          Direction.getAllExcept(walkedInFrom); // Don't print the Location you just left.
+      Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
+      // Don't print the Location you just left.
+      Collection<Direction> directions = Direction.getAllExcept(walkedInFrom);
       for (Direction dir : directions) {
         Point adjacentPoint = new Point(pos, dir);
         if (world.hasLocationAt(adjacentPoint)) {
