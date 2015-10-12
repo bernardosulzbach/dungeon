@@ -160,7 +160,7 @@ public final class Engine {
       DungeonString string = new DungeonString();
       string.append(source.getName().getSingular() + " dropped ");
       string.append(Utils.enumerateEntities(source.getDroppedItemsList()));
-      string.append(".");
+      string.append(".\n");
       Writer.write(string);
     }
   }

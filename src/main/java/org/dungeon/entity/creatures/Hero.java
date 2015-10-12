@@ -111,7 +111,7 @@ public class Hero extends Creature {
     if (!items.isEmpty()) {
       builder.append("\nOn the ground you see ");
       builder.append(Utils.enumerateEntities(items));
-      builder.append(".");
+      builder.append(".\n");
     }
   }
 
