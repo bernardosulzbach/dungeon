@@ -17,6 +17,9 @@
 
 package org.dungeon.game;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,8 +52,24 @@ public class DungeonDistributorTest {
     expectedList.add(new Point(-1, -1, 0));
     expectedList.add(new Point(0, -1, 0));
     expectedList.add(new Point(1, -1, 0));
-    Assert.assertTrue(list.containsAll(expectedList));
-    Assert.assertTrue(expectedList.containsAll(list));
+    assertThat(expectedList, containsInAnyOrder(list.toArray()));
+  }
+
+  @Test
+  public void makeNoEntrancesZonePointListShouldWorkWithBiggerDungeons() throws Exception {
+    final int width = 3;
+    final int height = 1;
+    final MinimumBoundingRectangle threeByOneBoundingRectangle = new MinimumBoundingRectangle(width, height);
+    List<Point> returnedList = DungeonDistributor.makeNoEntrancesZonePointList(origin, threeByOneBoundingRectangle);
+    List<Point> expectedList = new ArrayList<Point>();
+    for (int i = -width; i <= width; i++) {
+      for (int j = -height; j <= height; j++) {
+        if (i != origin.getX() || j != origin.getY()) {
+          expectedList.add(new Point(i, j, 0));
+        }
+      }
+    }
+    assertThat(expectedList, containsInAnyOrder(returnedList.toArray()));
   }
 
 }
