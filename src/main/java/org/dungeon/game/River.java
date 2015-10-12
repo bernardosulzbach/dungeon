@@ -24,17 +24,16 @@ import java.io.Serializable;
  */
 class River implements Serializable {
 
+  private static final int MIN_BRIDGE_DIST = 4;
+  private static final int MAX_BRIDGE_DIST = 20;
+
   private final ExpandableIntegerSet bridges;
 
   /**
    * Make a river.
-   *
-   * @param minimumDistanceBetweenBridges the minimum distance between bridges, positive
-   * @param maximumDistanceBetweenBridges the maximum distance between bridges, bigger than
-   * minimumDistanceBetweenBridges
    */
-  River(int minimumDistanceBetweenBridges, int maximumDistanceBetweenBridges) {
-    bridges = new ExpandableIntegerSet(minimumDistanceBetweenBridges, maximumDistanceBetweenBridges);
+  River() {
+    bridges = new ExpandableIntegerSet(MIN_BRIDGE_DIST, MAX_BRIDGE_DIST);
   }
 
   /**
