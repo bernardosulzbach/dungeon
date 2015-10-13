@@ -26,7 +26,7 @@ public class IssuedCommandProcessor {
     CommandSet collection;
     String commandToken;
     int indexOfFirstArgument;
-    if (CommandSets.hasCommandSet(issuedCommand.getTokens()[0])) {
+    if (issuedCommand.getTokens().length > 1 && CommandSets.hasCommandSet(issuedCommand.getTokens()[0])) {
       collection = CommandSets.getCommandSet(issuedCommand.getTokens()[0]);
       commandToken = issuedCommand.getTokens()[1];
       indexOfFirstArgument = 2;
