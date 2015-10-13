@@ -17,17 +17,33 @@
 
 package org.dungeon.commands;
 
-public class InvalidCommandException extends RuntimeException {
+import java.util.Collections;
+import java.util.List;
 
-  private final String commandToken;
+public class IssuedCommandEvaluation {
 
-  public InvalidCommandException(String commandToken) {
-    super(commandToken + " is not a command.");
-    this.commandToken = commandToken;
+  private final boolean valid;
+  private final List<String> suggestions;
+
+  public IssuedCommandEvaluation(boolean valid, List<String> suggestions) {
+    this.valid = valid;
+    this.suggestions = suggestions;
   }
 
-  public String getCommandToken() {
-    return commandToken;
+  public boolean isValid() {
+    return valid;
+  }
+
+  public List<String> getSuggestions() {
+    return Collections.unmodifiableList(suggestions);
+  }
+
+  @Override
+  public String toString() {
+    return "IssuedCommandEvaluation{" +
+        "valid=" + valid +
+        ", suggestions=" + suggestions +
+        '}';
   }
 
 }

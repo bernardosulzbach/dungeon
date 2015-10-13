@@ -19,8 +19,6 @@ package org.dungeon.util;
 
 import org.dungeon.io.Writer;
 
-import java.awt.Color;
-
 /**
  * Messenger helper class that defines several static methods to print uniform warning messages.
  */
@@ -28,14 +26,6 @@ public class Messenger {
 
   private Messenger() { // Ensure that this class cannot be instantiated.
     throw new AssertionError();
-  }
-
-  /**
-   * Prints a message reporting the usage of an invalid command.
-   */
-  public static void printInvalidCommandMessage(String command) {
-    Writer.write("'" + command + "' is not a recognized command.", Color.RED);
-    Writer.write("See 'commands' for a complete list of commands.", Color.ORANGE);
   }
 
   public static void printInvalidNumberFormatOrValue() {

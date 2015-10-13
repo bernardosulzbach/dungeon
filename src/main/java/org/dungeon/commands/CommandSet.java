@@ -21,6 +21,7 @@ import org.dungeon.io.Writer;
 import org.dungeon.logging.DungeonLogger;
 import org.dungeon.util.Utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -110,6 +111,23 @@ public final class CommandSet {
   @Override
   public String toString() {
     return String.format("CommandSet of size %d.", commands.size());
+  }
+
+  public List<String> getClosestCommands(String token) {
+    List<String> closestCommands = new ArrayList<String>();
+    int best = Integer.MAX_VALUE;
+    for (Command command : commands) {
+      String commandName = command.getDescription().getName();
+      int distance = StringUtils.getLevenshteinDistance(token, commandName);
+      if (distance < best) {
+        closestCommands.clear();
+        best = distance;
+      }
+      if (distance == best) {
+        closestCommands.add(commandName);
+      }
+    }
+    return closestCommands;
   }
 
 }

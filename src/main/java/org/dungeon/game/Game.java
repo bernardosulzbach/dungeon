@@ -17,18 +17,23 @@
 
 package org.dungeon.game;
 
-import org.dungeon.commands.InvalidCommandException;
 import org.dungeon.commands.IssuedCommand;
+import org.dungeon.commands.IssuedCommandEvaluation;
 import org.dungeon.commands.IssuedCommandProcessor;
 import org.dungeon.commands.PreparedIssuedCommand;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
 import org.dungeon.logging.DungeonLogger;
-import org.dungeon.util.Messenger;
 import org.dungeon.util.StopWatch;
+import org.dungeon.util.Utils;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -172,20 +177,33 @@ public class Game {
    * this method finds and executes the corresponding Command object or prints a message if there is not such Command.
    *
    * @param issuedCommand the last IssuedCommand.
-   * @return a boolean indicating whether or not thee command successfully executed
+   * @return a boolean indicating whether or not the command executed successfully
    */
   private static boolean processInput(IssuedCommand issuedCommand) {
-    try {
+    IssuedCommandEvaluation evaluation = IssuedCommandProcessor.evaluateIssuedCommand(issuedCommand);
+    if (evaluation.isValid()) {
       PreparedIssuedCommand preparedIssuedCommand = IssuedCommandProcessor.prepareIssuedCommand(issuedCommand);
       instanceInformation.incrementAcceptedCommandCount();
       getGameState().getCommandHistory().addCommand(issuedCommand);
       getGameState().getStatistics().addCommand(issuedCommand);
       preparedIssuedCommand.execute();
       return true;
-    } catch (InvalidCommandException e) {
-      Messenger.printInvalidCommandMessage(e.getCommandToken());
+    } else {
+      DungeonString string = new DungeonString();
+      string.setColor(Color.RED);
+      string.append("That is not a valid command.\n");
+      string.append("But it is similar to ");
+      List<String> suggestionsBetweenCommas = new ArrayList<String>();
+      for (String suggestion : evaluation.getSuggestions()) {
+        suggestionsBetweenCommas.add(StringUtils.wrap(suggestion, '"'));
+      }
+      string.append(Utils.enumerate(suggestionsBetweenCommas));
+      string.append(".\n");
+      string.setColor(Color.ORANGE);
+      string.append("See 'commands' for a complete list of commands.");
+      Writer.write(string);
+      return false;
     }
-    return false;
   }
 
   /**
