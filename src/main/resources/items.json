@@ -782,6 +782,29 @@
       "spell": "HEAL"
     },
     {
+      "id": "TOME_OF_FINGER_OF_DEATH",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Finger of Death",
+        "plural": "Tomes of Finger of Death"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Finger of Death spell instantly kills a creature you can see.",
+      "spell": "FINGER_OF_DEATH"
+    },
+    {
       "id": "TOME_OF_VEIL_OF_DARKNESS",
       "type": "Book",
       "name": {

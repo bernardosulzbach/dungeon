@@ -25,6 +25,8 @@ import org.dungeon.game.DungeonString;
 import org.dungeon.game.Engine;
 import org.dungeon.game.Id;
 import org.dungeon.io.Writer;
+import org.dungeon.stats.CauseOfDeath;
+import org.dungeon.stats.TypeOfCauseOfDeath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,6 +131,35 @@ public final class SpellData {
         Hero.writeCreatureSight(creatureList, string);
         Hero.writeItemSight(hero.getLocation().getItemList(), string);
         Writer.write(string);
+      }
+    });
+    putSpell(new Spell("FINGER_OF_DEATH", "Finger of Death") {
+      private static final int SECONDS_TO_CAST_FINGER_OF_DEATH = 10;
+
+      @Override
+      public void operate(Hero hero, String[] targetMatcher) {
+        if (targetMatcher.length == 0) {
+          Writer.write("Provide a target.");
+        } else {
+          Creature target = hero.findCreature(targetMatcher);
+          if (target != null) {
+            Engine.rollDateAndRefresh(SECONDS_TO_CAST_FINGER_OF_DEATH);
+            DungeonString string = new DungeonString();
+            string.append("You casted ");
+            string.append(getName().getSingular());
+            string.append(" on ");
+            string.append(target.getName().getSingular());
+            string.append(".");
+            target.getHealth().decrementBy(target.getHealth().getCurrent());
+            if (target.getHealth().isDead()) {
+              string.append("\nAnd it died.");
+              target.setCauseOfDeath(new CauseOfDeath(TypeOfCauseOfDeath.SPELL, new Id("FINGER_OF_DEATH")));
+            } else {
+              string.append("\nBut it is still alive.");
+            }
+            Writer.write(string);
+          }
+        }
       }
     });
     putSpell(new Spell("VEIL_OF_DARKNESS", "Veil Of Darkness") {

@@ -94,6 +94,10 @@
         {
           "id": "STICK",
           "probability": 0.3
+        },
+        {
+          "id": "TOME_OF_FINGER_OF_DEATH",
+          "probability": 0.1
         }
       ],
       "blockedEntrances": [
