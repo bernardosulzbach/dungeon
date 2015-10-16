@@ -45,8 +45,8 @@ import java.util.Set;
 /**
  * Provides methods to create different items for the game.
  *
- * Should be blocked by calling blockNewItemPresets as soon as all item presets that are programmatically generated have
- * been created.
+ * <p>Should be blocked by calling blockNewItemPresets as soon as all item presets that are programmatically generated
+ * have been created.
  */
 public abstract class ItemFactory {
 

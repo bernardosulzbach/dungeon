@@ -65,13 +65,6 @@ public final class Writer {
   }
 
   /**
-   * Writes a Writable and waits for the default waiting interval.
-   */
-  public static void writeAndWait(Writable writable) {
-    write(writable, new WritingSpecifications(true, DEFAULT_WAIT_INTERVAL));
-  }
-
-  /**
    * The preferred way to write text to the text pane of the window.
    *
    * @param writable a Writable object, not empty
@@ -91,6 +84,13 @@ public final class Writer {
     if (specifications.shouldWait()) {
       Sleeper.sleep(specifications.getWait());
     }
+  }
+
+  /**
+   * Writes a Writable and waits for the default waiting interval.
+   */
+  public static void writeAndWait(Writable writable) {
+    write(writable, new WritingSpecifications(true, DEFAULT_WAIT_INTERVAL));
   }
 
 }

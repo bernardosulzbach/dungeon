@@ -61,12 +61,12 @@ public final class Utils {
   /**
    * Checks if a string starts with a given string, ignoring case differences.
    *
-   * @param a the base string.
-   * @param b the prefix.
+   * @param left the base string.
+   * @param right the prefix.
    * @return true, if the base string starts with the prefix, ignoring case differences.
    */
-  public static boolean startsWithIgnoreCase(String a, String b) {
-    return a.toLowerCase().startsWith(b.toLowerCase());
+  public static boolean startsWithIgnoreCase(String left, String right) {
+    return left.toLowerCase().startsWith(right.toLowerCase());
   }
 
   /**

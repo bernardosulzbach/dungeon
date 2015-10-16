@@ -38,6 +38,16 @@ public final class HeroUtils {
    * Returns whether all Entities in a Collection have the same name or not.
    *
    * @param entities a {@code Collection} of Entities
+   * @return a boolean indicating if all Entities in the collection have the same name
+   */
+  static boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities) {
+    return checkIfAllEntitiesHaveTheSameName(entities, null);
+  }
+
+  /**
+   * Returns whether all Entities in a Collection have the same name or not.
+   *
+   * @param entities a {@code Collection} of Entities
    * @param ignored an Entity to be ignored, should be {@code null} if no Entity is to be ignored
    * @return a boolean indicating if all Entities in the collection have the same name
    */
@@ -85,16 +95,6 @@ public final class HeroUtils {
       }
     }
     return visible;
-  }
-
-  /**
-   * Returns whether all Entities in a Collection have the same name or not.
-   *
-   * @param entities a {@code Collection} of Entities
-   * @return a boolean indicating if all Entities in the collection have the same name
-   */
-  static boolean checkIfAllEntitiesHaveTheSameName(Collection<? extends Entity> entities) {
-    return checkIfAllEntitiesHaveTheSameName(entities, null);
   }
 
   static void writeNoLongerInInventoryMessage(Item item) {

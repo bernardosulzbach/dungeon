@@ -45,15 +45,15 @@ final class ColoredString {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
 
-    ColoredString that = (ColoredString) o;
+    ColoredString that = (ColoredString) object;
     return string.equals(that.string) && color.equals(that.color);
   }
 

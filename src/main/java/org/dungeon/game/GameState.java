@@ -33,7 +33,7 @@ public class GameState implements Serializable {
   private Hero hero;
   private Point heroPosition;
 
-  transient private boolean saved = false;
+  private transient boolean saved = false;
 
   public GameState() {
     commandHistory = new CommandHistory();

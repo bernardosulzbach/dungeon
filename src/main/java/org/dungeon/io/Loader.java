@@ -51,7 +51,7 @@ public final class Loader {
   }
 
   /**
-   * Evaluates if a File is a save file by checking that it both is a file and
+   * Evaluates if a File is a save file by checking that it is a file and ends with the save extension.
    *
    * @param file a File object
    * @return true if the specified File is not {@code null} and has the properties of a save file
@@ -104,7 +104,8 @@ public final class Loader {
   /**
    * Loads the newest save file if there is a save file. Otherwise, returns {@code null}.
    *
-   * Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code null}.
+   * <p>Note that if the user does not confirm the operation in the dialog that pops up, this method return {@code
+   * null}.
    *
    * @param requireConfirmation whether or not this method should require confirmation from the user
    * @return a GameState or null
@@ -121,14 +122,14 @@ public final class Loader {
   /**
    * Attempts to load the save file indicated by the first argument of the "load" command.
    *
-   * If the filename was provided but didn't match any files, a message about this is written.
+   * <p>If the filename was provided but didn't match any files, a message about this is written.
    *
-   * If the load command was issued without arguments, this method delegates save loading to {@code
+   * <p>If the load command was issued without arguments, this method delegates save loading to {@code
    * Loader.loadGame(false)}.
    *
-   * If no save file could be found, a message is written.
+   * <p>If no save file could be found, a message is written.
    *
-   * This method guarantees that the if null is returned, something is written to the screen.
+   * <p>This method guarantees that the if null is returned, something is written to the screen.
    */
   public static GameState parseLoadCommand(String[] arguments) {
     if (arguments.length != 0) {
@@ -209,7 +210,7 @@ public final class Loader {
       GameState loadedGameState = (GameState) objectInStream.readObject();
       objectInStream.close();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
-      String sizeString = IOUtils.bytesToHuman(file.length());
+      String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
       Writer.write(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
       return loadedGameState;
@@ -242,7 +243,7 @@ public final class Loader {
       objectOutStream.writeObject(state);
       objectOutStream.close();
       state.setSaved(true);
-      String sizeString = IOUtils.bytesToHuman(file.length());
+      String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
       Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
     } catch (IOException bad) {

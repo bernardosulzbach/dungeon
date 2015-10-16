@@ -28,8 +28,8 @@ import java.util.TreeSet;
  */
 class ExpandableIntegerSet implements Serializable {
 
-  private final int MINIMUM_DIFFERENCE;
-  private final int DIFFERENCE_BETWEEN_MIN_AND_MAX;
+  private final int minimumDifference;
+  private final int differenceBetweenMinAndMax;
 
   private final NavigableSet<Integer> set = new TreeSet<Integer>();
 
@@ -41,8 +41,8 @@ class ExpandableIntegerSet implements Serializable {
    */
   public ExpandableIntegerSet(int minimumDifference, int maximumDifference) {
     if (minimumDifference > 0 && maximumDifference > minimumDifference) {
-      this.MINIMUM_DIFFERENCE = minimumDifference;
-      this.DIFFERENCE_BETWEEN_MIN_AND_MAX = maximumDifference - minimumDifference;
+      this.minimumDifference = minimumDifference;
+      this.differenceBetweenMinAndMax = maximumDifference - minimumDifference;
     } else {
       String message = "illegal values for minimumDifference or maximumDifference";
       throw new IllegalArgumentException(message);
@@ -57,29 +57,29 @@ class ExpandableIntegerSet implements Serializable {
     if (!set.isEmpty()) {
       throw new IllegalStateException("set already has an element.");
     } else {
-      set.add(Random.nextInteger(MINIMUM_DIFFERENCE));
+      set.add(Random.nextInteger(minimumDifference));
     }
   }
 
   /**
-   * Expand the set of integers towards an integer a until there is an integer bigger than or equal to a.
+   * Expand the set of integers towards an integer a until there is an integer bigger than or equal to value.
    *
    * @return a list with all new integers.
    */
-  List<Integer> expand(int a) {
+  List<Integer> expand(int value) {
     if (set.isEmpty()) {
       throw new IllegalStateException("the set is empty.");
     }
     ArrayList<Integer> integerList = new ArrayList<Integer>();
     int integer = set.last();
-    while (a >= integer) {
-      integer += MINIMUM_DIFFERENCE + Random.nextInteger(DIFFERENCE_BETWEEN_MIN_AND_MAX);
+    while (value >= integer) {
+      integer += minimumDifference + Random.nextInteger(differenceBetweenMinAndMax);
       integerList.add(integer);
       set.add(integer);
     }
     integer = set.first();
-    while (a <= integer) {
-      integer -= MINIMUM_DIFFERENCE + Random.nextInteger(DIFFERENCE_BETWEEN_MIN_AND_MAX);
+    while (value <= integer) {
+      integer -= minimumDifference + Random.nextInteger(differenceBetweenMinAndMax);
       integerList.add(integer);
       set.add(integer);
     }
@@ -87,10 +87,10 @@ class ExpandableIntegerSet implements Serializable {
   }
 
   /**
-   * @return true if {@code a} is in the set.
+   * @return true if {@code value} is in the set.
    */
-  boolean contains(int a) {
-    return set.contains(a);
+  boolean contains(int value) {
+    return set.contains(value);
   }
 
   @Override

@@ -36,7 +36,7 @@ class DungeonCreator implements Serializable {
   /**
    * It is of uttermost importance that we respect this rectangle.
    *
-   * Currently a 5x1 So that we can make dungeons like this: R=R=R (where R is a room and = is a corridor).
+   * <p>Currently a 5x1 So that we can make dungeons like this: R=R=R (where R is a room and = is a corridor).
    */
   private static final MinimumBoundingRectangle minimumBoundingRectangle = new MinimumBoundingRectangle(5, 1);
   private final DungeonDistributor distributor;
@@ -86,7 +86,7 @@ class DungeonCreator implements Serializable {
   /**
    * Creates the dungeon's entrance and the necessary stairways.
    *
-   * Returns the point where the main dungeon room should be.
+   * <p>Returns the point where the main dungeon room should be.
    */
   private Point createEntrance(@NotNull World world, @NotNull Point entrance) {
     // The entrance.
@@ -117,7 +117,7 @@ class DungeonCreator implements Serializable {
   /**
    * Finishes the dungeon by randomly deciding to expand it to the east and west.
    *
-   * If this method does not make a corridor to east or west, it blocks that entrance in the main room to prevent
+   * <p>If this method does not make a corridor to east or west, it blocks that entrance in the main room to prevent
    * glitches.
    */
   private void finishDungeon(@NotNull World world, Point mainRoomPoint, Location mainRoomLocation) {

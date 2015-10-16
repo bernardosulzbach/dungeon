@@ -25,7 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-class DungeonScrollBarUI extends BasicScrollBarUI {
+class DungeonScrollBarUi extends BasicScrollBarUI {
 
   private static final Dimension ZERO_DIMENSION = new Dimension(0, 0);
   private static final int THUMB_MARGIN = 4;
@@ -37,27 +37,27 @@ class DungeonScrollBarUI extends BasicScrollBarUI {
    * @return a JButton with all sizes set to zero
    */
   private static JButton createZeroButton() {
-    JButton jButton = new JButton();
-    jButton.setPreferredSize(ZERO_DIMENSION);
-    jButton.setMinimumSize(ZERO_DIMENSION);
-    jButton.setMaximumSize(ZERO_DIMENSION);
-    return jButton;
+    JButton button = new JButton();
+    button.setPreferredSize(ZERO_DIMENSION);
+    button.setMinimumSize(ZERO_DIMENSION);
+    button.setMaximumSize(ZERO_DIMENSION);
+    return button;
   }
 
   @Override
-  protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+  protected void paintTrack(Graphics graphics, JComponent component, Rectangle trackBounds) {
   }
 
   @Override
-  protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
-    if (thumbBounds.isEmpty() || !c.isEnabled()) {
+  protected void paintThumb(Graphics graphics, JComponent component, Rectangle thumbBounds) {
+    if (thumbBounds.isEmpty() || !component.isEnabled()) {
       return;
     }
-    g.setColor(SharedConstants.MARGIN_COLOR);
-    int x = thumbBounds.width - THUMB_WIDTH - THUMB_MARGIN;
-    int y = thumbBounds.y + THUMB_MARGIN;
+    graphics.setColor(SharedConstants.MARGIN_COLOR);
+    int topLeftX = thumbBounds.width - THUMB_WIDTH - THUMB_MARGIN;
+    int topLeftY = thumbBounds.y + THUMB_MARGIN;
     int height = thumbBounds.height - THUMB_MARGIN * 2;
-    g.fillRect(x, y, THUMB_WIDTH, height);
+    graphics.fillRect(topLeftX, topLeftY, THUMB_WIDTH, height);
   }
 
   @Override

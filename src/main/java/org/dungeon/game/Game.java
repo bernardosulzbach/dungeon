@@ -20,7 +20,6 @@ package org.dungeon.game;
 import org.dungeon.commands.IssuedCommand;
 import org.dungeon.commands.IssuedCommandEvaluation;
 import org.dungeon.commands.IssuedCommandProcessor;
-import org.dungeon.commands.PreparedIssuedCommand;
 import org.dungeon.gui.GameWindow;
 import org.dungeon.io.Loader;
 import org.dungeon.io.Writer;
@@ -182,11 +181,10 @@ public class Game {
   private static boolean processInput(IssuedCommand issuedCommand) {
     IssuedCommandEvaluation evaluation = IssuedCommandProcessor.evaluateIssuedCommand(issuedCommand);
     if (evaluation.isValid()) {
-      PreparedIssuedCommand preparedIssuedCommand = IssuedCommandProcessor.prepareIssuedCommand(issuedCommand);
       instanceInformation.incrementAcceptedCommandCount();
       getGameState().getCommandHistory().addCommand(issuedCommand);
       getGameState().getStatistics().addCommand(issuedCommand);
-      preparedIssuedCommand.execute();
+      IssuedCommandProcessor.prepareIssuedCommand(issuedCommand).execute();
       return true;
     } else {
       DungeonString string = new DungeonString();

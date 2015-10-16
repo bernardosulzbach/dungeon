@@ -52,8 +52,8 @@ public class JsonObjectFactory {
 
   public static class IllegalFilenameExtensionException extends IllegalArgumentException {
 
-    public IllegalFilenameExtensionException(@NotNull String s) {
-      super(s);
+    public IllegalFilenameExtensionException(@NotNull String string) {
+      super(string);
     }
 
   }

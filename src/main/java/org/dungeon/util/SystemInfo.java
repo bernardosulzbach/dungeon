@@ -40,14 +40,14 @@ public final class SystemInfo {
     Writer.write("Date: " + DATE_FORMAT.format(currentDate));
     Writer.write("User: " + System.getProperty("user.name"));
     Writer.write(getJavaVersionString());
-    Writer.write(getOSVersionString());
+    Writer.write(getOsVersionString());
   }
 
   private static String getJavaVersionString() {
     return "Java version " + System.getProperty("java.version") + " by " + System.getProperty("java.vendor");
   }
 
-  private static String getOSVersionString() {
+  private static String getOsVersionString() {
     String name = System.getProperty("os.name");
     String arch = System.getProperty("os.arch");
     String version = System.getProperty("os.version");

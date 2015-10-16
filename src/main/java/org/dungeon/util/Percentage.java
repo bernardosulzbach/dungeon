@@ -27,6 +27,7 @@ import java.util.Locale;
 /**
  * A class that represents a percentage value between 0.0% and 100.00%.
  */
+@SuppressWarnings("ALL")
 public class Percentage implements Comparable<Percentage>, Serializable {
 
   private static final double ONE = 1.0;
@@ -89,8 +90,8 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return value;
   }
 
-  public Percentage multiply(Percentage o) {
-    return new Percentage(toDouble() * o.toDouble());
+  public Percentage multiply(Percentage percentage) {
+    return new Percentage(toDouble() * percentage.toDouble());
   }
 
   @Override
@@ -98,19 +99,19 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return DungeonMath.fuzzyCompare(toDouble(), percentage.toDouble());
   }
 
-  public boolean biggerThanOrEqualTo(Percentage o) {
-    return compareTo(o) >= 0;
+  public boolean biggerThanOrEqualTo(Percentage percentage) {
+    return compareTo(percentage) >= 0;
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
-    return compareTo((Percentage) o) == 0;
+    return compareTo((Percentage) object) == 0;
   }
 
   @Override

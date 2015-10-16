@@ -35,7 +35,7 @@ import java.util.Map;
 
 public final class SpellData {
 
-  private final static Map<Id, Spell> spellMap = new HashMap<Id, Spell>();
+  private static final Map<Id, Spell> spellMap = new HashMap<Id, Spell>();
 
   static {
     putSpell(new Spell("HEAL", "Heal") {

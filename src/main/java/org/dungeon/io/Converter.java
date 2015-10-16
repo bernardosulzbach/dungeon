@@ -17,7 +17,14 @@
 
 package org.dungeon.io;
 
-class IOUtils {
+/**
+ * Uninstantiable Converter class that defines methods for IO related data conversion.
+ */
+class Converter {
+
+  private Converter() {
+    throw new AssertionError();
+  }
 
   /**
    * Converts a given number of bytes to a human readable format.

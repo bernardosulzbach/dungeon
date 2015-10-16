@@ -47,14 +47,14 @@ public final class CircularList<T> implements Serializable {
   /**
    * Add an element to this CircularList.
    *
-   * @param t the element to be added
+   * @param element the element to be added
    */
-  public void add(T t) {
+  public void add(T element) {
     if (isFull()) {
-      list.set(zeroIndex, t);
+      list.set(zeroIndex, element);
       incrementZeroIndex();
     } else {
-      list.add(t);
+      list.add(element);
     }
   }
 

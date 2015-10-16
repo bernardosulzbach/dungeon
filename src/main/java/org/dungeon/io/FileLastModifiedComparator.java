@@ -25,15 +25,16 @@ import java.util.Comparator;
  * A Comparator function that compares the last modification times of Files. This comparator orders files from newest to
  * oldest, which is, in terms of last modified timestamps, from largest to smallest.
  *
- * This is not consistent with equals.
+ * <p>This is not consistent with equals.
  *
- * Serializable is not implemented by design. This Comparator was devised to be used by Arrays.sort and nothing else.
+ * <p>Serializable is not implemented by design. This Comparator was devised to be used by Arrays.sort and nothing
+ * else.
  */
 class FileLastModifiedComparator implements Comparator<File>, Serializable {
 
   @Override
-  public int compare(File a, File b) {
-    return Long.valueOf(b.lastModified()).compareTo(a.lastModified());
+  public int compare(File left, File right) {
+    return Long.valueOf(right.lastModified()).compareTo(left.lastModified());
   }
 
 }

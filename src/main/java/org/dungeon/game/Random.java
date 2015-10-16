@@ -44,8 +44,7 @@ public class Random {
   /**
    * Simulates a random roll.
    *
-   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1. Will be passed
-   * to Percentage's constructors in order to guarantee that it is a valid value.
+   * @param chance the probability of a true result. Must be nonnegative and smaller than or equal to 1.
    * @return a boolean indicating if the roll was successful or not.
    */
   public static boolean roll(double chance) {

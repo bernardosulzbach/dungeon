@@ -60,8 +60,8 @@ class DungeonDistributor implements Serializable {
       ## ##
 
      */
-    final int width = minimumBoundingRectangle.getX();
-    final int height = minimumBoundingRectangle.getY();
+    final int width = minimumBoundingRectangle.getWidth();
+    final int height = minimumBoundingRectangle.getHeight();
     List<Point> points = new ArrayList<Point>();
     for (int x = point.getX() - width; x <= point.getX() + width; x++) {
       for (int y = point.getY() - height; y <= point.getY() + height; y++) {

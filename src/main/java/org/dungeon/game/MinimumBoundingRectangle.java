@@ -21,20 +21,20 @@ import java.io.Serializable;
 
 public class MinimumBoundingRectangle implements Serializable {
 
-  private final int x;
-  private final int y;
+  private final int width;
+  private final int height;
 
-  public MinimumBoundingRectangle(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public MinimumBoundingRectangle(int width, int height) {
+    this.width = width;
+    this.height = height;
   }
 
-  public int getX() {
-    return x;
+  public int getWidth() {
+    return width;
   }
 
-  public int getY() {
-    return y;
+  public int getHeight() {
+    return height;
   }
 
 }

@@ -62,15 +62,15 @@ public class Duration implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
 
-    Duration duration = (Duration) o;
+    Duration duration = (Duration) object;
 
     return this.duration == duration.duration;
   }

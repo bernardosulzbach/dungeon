@@ -48,11 +48,11 @@ public final class SavesTableWriter {
           Date lastModified = new Date(file.lastModified());
           String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
           String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
-          table.insertRow(file.getName(), IOUtils.bytesToHuman(file.length()), lastModifiedString);
+          table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), lastModifiedString);
         }
         if (fileCount > 1) {
           table.insertSeparator();
-          table.insertRow("Sum of these " + fileCount + " files", IOUtils.bytesToHuman((byteCount)), "");
+          table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "");
         }
         Writer.write(table);
       } else {

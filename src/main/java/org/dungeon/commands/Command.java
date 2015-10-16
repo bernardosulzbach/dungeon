@@ -48,14 +48,14 @@ public abstract class Command {
    * <p>Two Commands are considered to be equal when their names are equal.
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
-    Command command = (Command) o;
+    Command command = (Command) object;
     return description.getName().equals(command.description.getName());
   }
 

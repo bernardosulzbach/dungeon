@@ -51,7 +51,7 @@ public final class Location implements Serializable {
   /**
    * Constructs a new location for the specified world based on the provided preset.
    *
-   * The creation date of the items in this location is the world date at the time this location was created.
+   * <p>The creation date of the items in this location is the world date at the time this location was created.
    *
    * @param preset the LocationPreset object
    * @param world the World object

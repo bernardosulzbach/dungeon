@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * SpellDefinition class that contains immutable data that may be shared by multiple Spell objects.
  *
- * Equality is tested based on the Id field.
+ * <p>Equality is tested based on the Id field.
  */
 final class SpellDefinition implements Serializable {
 
@@ -40,14 +40,14 @@ final class SpellDefinition implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
-    SpellDefinition that = (SpellDefinition) o;
+    SpellDefinition that = (SpellDefinition) object;
     return id.equals(that.id);
   }
 

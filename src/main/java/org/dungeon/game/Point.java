@@ -53,14 +53,14 @@ public class Point implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
-    Point point = (Point) o;
+    Point point = (Point) object;
     return getX() == point.getX() && getY() == point.getY() && getZ() == point.getZ();
   }
 

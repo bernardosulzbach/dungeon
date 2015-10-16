@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Table class that represents an arrangement of strings in rows and columns.
  *
- * Only allows for data addition, you cannot query or update a Table in any way. This class is used for data
+ * <p>Only allows for data addition, you cannot query or update a Table in any way. This class is used for data
  * visualization, not organization or storage.
  */
 public class Table implements Writable {
@@ -231,8 +231,6 @@ public class Table implements Writable {
       return string.toColoredStringList();
     }
 
-    int rowCount = columns.get(0).rows.size();
-
     String[] currentRow = new String[columnCount];
 
     // Insert headers
@@ -244,6 +242,7 @@ public class Table implements Writable {
     // A horizontal separator.
     appendHorizontalSeparator(string, columnWidths, columnCount);
 
+    int rowCount = columns.get(0).rows.size();
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
       if (separators != null) {

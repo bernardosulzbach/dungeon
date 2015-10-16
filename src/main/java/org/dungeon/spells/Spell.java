@@ -47,14 +47,14 @@ public abstract class Spell implements Selectable, Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
-    Spell spell = (Spell) o;
+    Spell spell = (Spell) object;
     return definition.equals(spell.definition);
   }
 

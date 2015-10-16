@@ -333,9 +333,9 @@ final class CommandSets {
         for (LocationPreset preset : GameData.getLocationPresetStore().getAllPresets()) {
           String name = preset.getName().getSingular();
           String kills = String.valueOf(explorationStatistics.getKillCount(preset.getId()));
-          String VisitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getId()));
+          String visitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getId()));
           String maximumNumberOfVisits = String.valueOf(explorationStatistics.getMaximumNumberOfVisits(preset.getId()));
-          table.insertRow(name, kills, VisitedSoFar, maximumNumberOfVisits);
+          table.insertRow(name, kills, visitedSoFar, maximumNumberOfVisits);
         }
         Writer.write(table);
       }
@@ -359,29 +359,29 @@ final class CommandSets {
     commandSet.addCommand(new Command("location", "Writes information about the current location.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        final int WIDTH = 40;  // The width of the row's "tag".
+        final int width = 40;  // The width of the row's "tag".
         GameState gameState = Game.getGameState();
         Point heroPosition = gameState.getHeroPosition();
         Location location = gameState.getWorld().getLocation(heroPosition);
         StringBuilder sb = new StringBuilder();
-        sb.append(Utils.padString("Point:", WIDTH)).append(heroPosition.toString()).append('\n');
-        sb.append(Utils.padString("Creatures (" + location.getCreatureCount() + "):", WIDTH)).append('\n');
+        sb.append(Utils.padString("Point:", width)).append(heroPosition.toString()).append('\n');
+        sb.append(Utils.padString("Creatures (" + location.getCreatureCount() + "):", width)).append('\n');
         for (Creature creature : location.getCreatures()) {
-          sb.append(Utils.padString("  " + creature.getName(), WIDTH));
+          sb.append(Utils.padString("  " + creature.getName(), width));
           sb.append(creature.getVisibility().toPercentage()).append('\n');
         }
         if (!location.getItemList().isEmpty()) {
-          sb.append(Utils.padString("Items (" + location.getItemList().size() + "):", WIDTH)).append('\n');
+          sb.append(Utils.padString("Items (" + location.getItemList().size() + "):", width)).append('\n');
           for (Item item : location.getItemList()) {
-            sb.append(Utils.padString("  " + item.getQualifiedName(), WIDTH));
+            sb.append(Utils.padString("  " + item.getQualifiedName(), width));
             sb.append(item.getVisibility().toPercentage()).append('\n');
           }
         } else {
           sb.append("No items.\n");
         }
-        sb.append(Utils.padString("Luminosity:", WIDTH)).append(location.getLuminosity().toPercentage()).append('\n');
-        sb.append(Utils.padString("Permittivity:", WIDTH)).append(location.getLightPermittivity()).append('\n');
-        sb.append(Utils.padString("Blocked Entrances:", WIDTH)).append(location.getBlockedEntrances()).append('\n');
+        sb.append(Utils.padString("Luminosity:", width)).append(location.getLuminosity().toPercentage()).append('\n');
+        sb.append(Utils.padString("Permittivity:", width)).append(location.getLightPermittivity()).append('\n');
+        sb.append(Utils.padString("Blocked Entrances:", width)).append(location.getBlockedEntrances()).append('\n');
         Writer.write(sb.toString());
       }
     });

@@ -44,6 +44,7 @@ public final class DungeonLogger {
       handler.setFormatter(new DungeonFormatter());
       logger.addHandler(handler);
     } catch (IOException ignored) {
+      // Couldn't add the file handler. There's nothing that can be done and this shouldn't stop the application.
     }
   }
 
@@ -54,7 +55,7 @@ public final class DungeonLogger {
   /**
    * Logs a fine message. This should be used for tracing information.
    *
-   * If the file handler could not be initialized, the message will be unceremoniously discarded.
+   * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
@@ -65,7 +66,7 @@ public final class DungeonLogger {
   /**
    * Logs an info message. This should be used for application-related information.
    *
-   * If the file handler could not be initialized, the message will be unceremoniously discarded.
+   * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
@@ -76,7 +77,7 @@ public final class DungeonLogger {
   /**
    * Logs a warning message. This should be used for non-fatal exceptions.
    *
-   * If the file handler could not be initialized, the message will be unceremoniously discarded.
+   * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */
@@ -87,7 +88,7 @@ public final class DungeonLogger {
   /**
    * Logs a severe message. This should be used for unrecoverable errors that cause application termination.
    *
-   * If the file handler could not be initialized, the message will be unceremoniously discarded.
+   * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
    * @param message the log message
    */

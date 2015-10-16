@@ -28,7 +28,7 @@ import java.io.Serializable;
  */
 public class CauseOfDeath implements Serializable {
 
-  private final static CauseOfDeath UNARMED = new CauseOfDeath(TypeOfCauseOfDeath.UNARMED, new Id("UNARMED"));
+  private static final CauseOfDeath UNARMED = new CauseOfDeath(TypeOfCauseOfDeath.UNARMED, new Id("UNARMED"));
   private final TypeOfCauseOfDeath type;
   private final Id id;
 
@@ -51,15 +51,15 @@ public class CauseOfDeath implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
 
-    CauseOfDeath that = (CauseOfDeath) o;
+    CauseOfDeath that = (CauseOfDeath) object;
 
     return id.equals(that.id) && type == that.type;
   }

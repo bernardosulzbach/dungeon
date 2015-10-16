@@ -97,14 +97,14 @@ public final class DungeonTimeParser {
   }
 
   public static class InvalidMultiplierException extends IllegalArgumentException {
-    public InvalidMultiplierException(@NotNull String s) {
-      super(s);
+    public InvalidMultiplierException(@NotNull String string) {
+      super(string);
     }
   }
 
   public static class InvalidUnitException extends IllegalArgumentException {
-    public InvalidUnitException(@NotNull String s) {
-      super(s);
+    public InvalidUnitException(@NotNull String string) {
+      super(string);
     }
   }
 

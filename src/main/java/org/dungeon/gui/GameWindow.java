@@ -133,9 +133,13 @@ public class GameWindow extends JFrame {
         UIManager.setLookAndFeel(lookAndFeel);
       }
     } catch (UnsupportedLookAndFeelException ignored) {
+      // Nothing can be done about this.
     } catch (ClassNotFoundException ignored) {
+      // Nothing can be done about this.
     } catch (InstantiationException ignored) {
+      // Nothing can be done about this.
     } catch (IllegalAccessException ignored) {
+      // Nothing can be done about this.
     }
   }
 
@@ -151,20 +155,18 @@ public class GameWindow extends JFrame {
     panel.setBackground(SharedConstants.MARGIN_COLOR);
 
     textPane = new JTextPane();
-    textField = new JTextField();
-
-    JScrollPane scrollPane = new JScrollPane();
-
     textPane.setEditable(false);
     textPane.setBackground(SharedConstants.INSIDE_COLOR);
     textPane.setFont(FONT);
 
+    JScrollPane scrollPane = new JScrollPane();
     scrollPane.setViewportView(textPane);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.setBorder(BorderFactory.createEmptyBorder());
     scrollPane.getVerticalScrollBar().setBackground(SharedConstants.INSIDE_COLOR);
-    scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUI());
+    scrollPane.getVerticalScrollBar().setUI(new DungeonScrollBarUi());
 
+    textField = new JTextField();
     textField.setBackground(SharedConstants.INSIDE_COLOR);
     textField.setForeground(Color.LIGHT_GRAY);
     textField.setCaretColor(Color.WHITE);
@@ -180,34 +182,34 @@ public class GameWindow extends JFrame {
 
     textField.addKeyListener(new KeyAdapter() {
       @Override
-      public void keyPressed(KeyEvent e) {
-        textFieldKeyPressed(e);
+      public void keyPressed(KeyEvent event) {
+        textFieldKeyPressed(event);
       }
     });
 
-    GridBagConstraints c = new GridBagConstraints();
-    c.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
-    panel.add(scrollPane, c);
+    GridBagConstraints constants = new GridBagConstraints();
+    constants.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+    panel.add(scrollPane, constants);
 
-    c.gridy = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
-    panel.add(textField, c);
+    constants.gridy = 1;
+    constants.fill = GridBagConstraints.HORIZONTAL;
+    constants.insets = new Insets(0, MARGIN, MARGIN, MARGIN);
+    panel.add(textField, constants);
 
     setTitle(WINDOW_TITLE);
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     addWindowListener(new WindowAdapter() {
       @Override
-      public void windowClosing(WindowEvent e) {
-        super.windowClosing(e);
+      public void windowClosing(WindowEvent event) {
+        super.windowClosing(event);
         Game.exit();
       }
     });
 
     Action save = new AbstractAction() {
       @Override
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent event) {
         if (acceptingNextCommand) {
           clearTextPane();
           Loader.saveGame(Game.getGameState());
@@ -268,6 +270,7 @@ public class GameWindow extends JFrame {
             try {
               get();
             } catch (InterruptedException ignore) {
+              // For some reason the thread was interrupted. Nothing should be done.
             } catch (ExecutionException fatal) {
               logExecutionExceptionAndExit(fatal);
             }
@@ -283,10 +286,10 @@ public class GameWindow extends JFrame {
    * Handles a key press in the text field. This method checks for a command history access by the keys UP, DOWN, or TAB
    * and, if this is the case, processes this query.
    *
-   * @param e the KeyEvent.
+   * @param event the KeyEvent.
    */
-  private void textFieldKeyPressed(KeyEvent e) {
-    int keyCode = e.getKeyCode();
+  private void textFieldKeyPressed(KeyEvent event) {
+    int keyCode = event.getKeyCode();
     if (isUpDownOrTab(keyCode)) { // Check if the event is of interest.
       GameState gameState = Game.getGameState();
       if (gameState != null) {
@@ -358,7 +361,7 @@ public class GameWindow extends JFrame {
   /**
    * Clears the TextPane by erasing everything in the local Document.
    *
-   * This schedules the operation to be ran on the EDT, so it is safe to invoke this on any thread.
+   * <p>This schedules the operation to be ran on the EDT, so it is safe to invoke this on any thread.
    */
   public void clearTextPane() {
     SwingUtilities.invokeLater(new Runnable() {

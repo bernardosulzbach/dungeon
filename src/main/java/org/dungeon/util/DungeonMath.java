@@ -40,13 +40,13 @@ public final class DungeonMath {
   /**
    * Evaluates the weighted average of two values.
    *
-   * @param a the first value
-   * @param b the second value
-   * @param bContribution how much the second value contributes to the average
+   * @param first the first value
+   * @param second the second value
+   * @param firstContribution how much the second value contributes to the average
    * @return the weighted average between the two values
    */
-  public static double weightedAverage(double a, double b, Percentage bContribution) {
-    return a + (b - a) * bContribution.toDouble();
+  public static double weightedAverage(double first, double second, Percentage firstContribution) {
+    return first + (second - first) * firstContribution.toDouble();
   }
 
   /**
@@ -63,17 +63,17 @@ public final class DungeonMath {
   /**
    * Compares two doubles with the default tolerance margin.
    */
-  public static int fuzzyCompare(double a, double b) {
-    return fuzzyCompare(a, b, DEFAULT_DOUBLE_TOLERANCE);
+  public static int fuzzyCompare(double first, double second) {
+    return fuzzyCompare(first, second, DEFAULT_DOUBLE_TOLERANCE);
   }
 
   /**
    * Compares two doubles with a specified tolerance margin.
    */
-  private static int fuzzyCompare(double a, double b, double epsilon) {
-    if (a + epsilon < b) {
+  private static int fuzzyCompare(double first, double second, double epsilon) {
+    if (first + epsilon < second) {
       return -1;
-    } else if (a - epsilon > b) {
+    } else if (first - epsilon > second) {
       return 1;
     } else {
       return 0;
@@ -85,23 +85,23 @@ public final class DungeonMath {
    */
   public static void parseFibonacci(String[] arguments) {
     if (arguments.length != 0) {
-      int n;
+      int number;
       String argument = arguments[0];
       try {
-        n = Integer.parseInt(argument);
+        number = Integer.parseInt(argument);
       } catch (NumberFormatException warn) {
         Messenger.printInvalidNumberFormatOrValue();
         return;
       }
-      if (n < 1) {
+      if (number < 1) {
         Messenger.printInvalidNumberFormatOrValue();
         return;
       }
-      String result = fibonacci(n);
+      String result = fibonacci(number);
       if (result.equals(TIMEOUT)) {
         Writer.write("Calculation exceeded the time limit.");
       } else {
-        Writer.write(functionEvaluationString("fibonacci", String.valueOf(n), fibonacci(n)));
+        Writer.write(functionEvaluationString("fibonacci", String.valueOf(number), fibonacci(number)));
       }
     } else {
       Messenger.printMissingArgumentsMessage();
@@ -111,25 +111,25 @@ public final class DungeonMath {
   /**
    * Finds the n-th element of the fibonacci sequence if it can be computed in less than one second.
    *
-   * @param n the position of the element on the sequence
+   * @param number the position of the element on the sequence
    * @return a String representation of the number or the {@code TIMEOUT} constant
    */
-  private static String fibonacci(int n) {
+  private static String fibonacci(int number) {
     // Allow this method to run for one second.
     final long interruptTime = System.nanoTime() + SECOND_IN_NANOSECONDS;
-    BigInteger a = BigInteger.ZERO;
-    BigInteger b = BigInteger.ONE;
+    BigInteger first = BigInteger.ZERO;
+    BigInteger second = BigInteger.ONE;
     // Swap variable.
-    BigInteger s;
-    for (int i = 1; i < n; i++) {
-      s = a;
-      a = b;
-      b = b.add(s);
+    BigInteger swap;
+    for (int i = 1; i < number; i++) {
+      swap = first;
+      first = second;
+      second = second.add(swap);
       if (System.nanoTime() >= interruptTime) {
         return TIMEOUT;
       }
     }
-    return a.toString();
+    return first.toString();
   }
 
   /**
@@ -176,15 +176,15 @@ public final class DungeonMath {
   /**
    * Safely casts a long into an integer.
    *
-   * @param l the long that will be converted, should be in the range [Integer.MIN_VALUE, Integer.MAX_VALUE]
+   * @param value the long that will be converted, should be in the range [Integer.MIN_VALUE, Integer.MAX_VALUE]
    * @return an integer equal to the provided long
    * @throws IllegalArgumentException if the long does not fit into an integer
    */
-  public static int safeCastLongToInteger(long l) {
-    if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
-      throw new IllegalArgumentException(l + " does not fit into an integer.");
+  public static int safeCastLongToInteger(long value) {
+    if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
+      throw new IllegalArgumentException(value + " does not fit into an integer.");
     } else {
-      return (int) l;
+      return (int) value;
     }
   }
 

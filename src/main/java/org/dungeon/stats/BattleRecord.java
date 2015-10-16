@@ -59,15 +59,15 @@ public final class BattleRecord implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object object) {
+    if (this == object) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (object == null || getClass() != object.getClass()) {
       return false;
     }
 
-    BattleRecord that = (BattleRecord) o;
+    BattleRecord that = (BattleRecord) object;
 
     return id.equals(that.id) && type.equals(that.type) && causeOfDeath.equals(that.causeOfDeath) &&
         partOfDay == that.partOfDay;

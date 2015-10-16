@@ -25,8 +25,8 @@ import java.util.Comparator;
 class DateUnlockedAchievementComparator implements Comparator<UnlockedAchievement>, Serializable {
 
   @Override
-  public int compare(UnlockedAchievement a, UnlockedAchievement b) {
-    return a.getDate().compareTo(b.getDate());
+  public int compare(UnlockedAchievement left, UnlockedAchievement right) {
+    return left.getDate().compareTo(right.getDate());
   }
 
 }

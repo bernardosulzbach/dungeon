@@ -56,21 +56,21 @@ public class Weight implements Comparable<Weight>, Serializable {
   /**
    * Produces a new Weight object by adding two existing ones.
    *
-   * @param o a Weight object
+   * @param weight a Weight object
    * @return a Weight object representing the sum
    */
-  public Weight add(Weight o) {
-    return newInstance(this.value + o.value);
+  public Weight add(Weight weight) {
+    return newInstance(this.value + weight.value);
   }
 
   /**
    * Returns a Weight object that is equal to this Weight multiplied by a Percentage.
    *
-   * @param p a Percentage object
+   * @param percentage a Percentage object
    * @return a Weight object representing the relative value
    */
-  public Weight multiply(Percentage p) {
-    return newInstance(this.value * p.toDouble());
+  public Weight multiply(Percentage percentage) {
+    return newInstance(this.value * percentage.toDouble());
   }
 
   @Override

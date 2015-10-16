@@ -56,13 +56,13 @@ class WorldGenerator implements Serializable {
     return new Location(Random.select(GameData.getLocationPresetStore().getLocationPresetsByType(Type.BRIDGE)), world);
   }
 
-  public void expand(Point p) {
-    riverGenerator.expand(p, chunkSide);
+  public void expand(Point point) {
+    riverGenerator.expand(point, chunkSide);
     Point currentPoint;
     LocationPreset currentLocationPreset = null;
     int remainingLocationsOfCurrentPreset = 0;
-    int pX = p.getX();
-    int pY = p.getY();
+    int pX = point.getX();
+    int pY = point.getY();
     // Get the closest smaller chunkSide multiple of x and y.
     // For instance, if chunkSide == 5, x == -2 and y == 1, then it makes xStart == -5 and yStart == 0.
     int xStart = pX < 0 ? chunkSide * (((pX + 1) / chunkSide) - 1) : chunkSide * (pX / chunkSide);

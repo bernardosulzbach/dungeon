@@ -68,12 +68,12 @@ class DebugWaitParser {
   private static void writeDebugWaitSyntax() {
     DungeonString string = new DungeonString();
     string.append("Usage: wait ");
-    final Color HIGHLIGHT_COLOR = Color.ORANGE;
-    string.setColor(HIGHLIGHT_COLOR);
+    final Color highlightColor = Color.ORANGE;
+    string.setColor(highlightColor);
     string.append("for");
     string.resetColor();
     string.append(" [amount of time] or wait ");
-    string.setColor(HIGHLIGHT_COLOR);
+    string.setColor(highlightColor);
     string.append("until next");
     string.resetColor();
     string.append(" [part of the day].");
