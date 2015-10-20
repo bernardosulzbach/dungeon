@@ -13,6 +13,9 @@
 src/META-INF/
 out/
 
+# Allow the project's dictionary.
+!.idea/dictionaries/Dungeon.xml
+
 # Maven
 target/
 
