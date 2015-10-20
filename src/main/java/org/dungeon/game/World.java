@@ -57,6 +57,9 @@ public class World implements Serializable {
     return worldDate;
   }
 
+  /**
+   * Adds a Location to this World.
+   */
   public void addLocation(Location locationObject, Point coordinates) {
     if (locations.containsKey(coordinates)) {
       throw new IllegalStateException("tried to repeatedly add a location to " + coordinates + ".");

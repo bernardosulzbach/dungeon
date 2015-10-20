@@ -35,6 +35,9 @@ public class GameState implements Serializable {
 
   private transient boolean saved = false;
 
+  /**
+   * Constructs a new GameState.
+   */
   public GameState() {
     commandHistory = new CommandHistory();
     world = new World(statistics.getWorldStatistics());

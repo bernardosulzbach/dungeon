@@ -89,6 +89,9 @@ public class GameWindow extends JFrame {
 
   private boolean acceptingNextCommand;
 
+  /**
+   * Constructs a new GameWindow.
+   */
   public GameWindow() {
     initComponents();
     document = textPane.getStyledDocument();
@@ -112,6 +115,7 @@ public class GameWindow extends JFrame {
         try {
           fontStream.close();
         } catch (IOException ignore) {
+          // An IO error occurred. Not much left to do.
         }
       }
     }
@@ -375,6 +379,9 @@ public class GameWindow extends JFrame {
     });
   }
 
+  /**
+   * Schedules a focus request on the text field.
+   */
   public void requestFocusOnTextField() {
     SwingUtilities.invokeLater(new Runnable() {
       @Override

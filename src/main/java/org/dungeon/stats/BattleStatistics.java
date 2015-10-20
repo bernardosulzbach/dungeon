@@ -56,6 +56,9 @@ public class BattleStatistics implements Serializable {
     return causeOfDeathCounterMap;
   }
 
+  /**
+   * Evaluates if this BattleStatistics satisfies a BattleStatisticsRequirement.
+   */
   public boolean satisfies(BattleStatisticsRequirement requirement) {
     int count = 0;
     for (BattleRecord record : records.keySet()) {

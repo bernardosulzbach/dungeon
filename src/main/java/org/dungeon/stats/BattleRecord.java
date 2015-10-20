@@ -34,6 +34,9 @@ public final class BattleRecord implements Serializable {
   private final CauseOfDeath causeOfDeath;
   private final PartOfDay partOfDay;
 
+  /**
+   * Constructs a BattleRecord from the provided data.
+   */
   public BattleRecord(@NotNull Id id, @NotNull String type, @NotNull CauseOfDeath causeOfDeath,
       @NotNull PartOfDay partOfDay) {
     this.id = id;

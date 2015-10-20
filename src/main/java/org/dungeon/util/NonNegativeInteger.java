@@ -26,6 +26,9 @@ public class NonNegativeInteger {
 
   private final Integer integer;
 
+  /**
+   * Constructs a NonNegativeInteger from an integer. The integer must be nonnegative.
+   */
   public NonNegativeInteger(@NotNull Integer integer) {
     if (integer < 0) {
       throw new IllegalArgumentException("integer must be nonnegative.");

@@ -30,6 +30,9 @@ public class WeaponComponent implements Serializable {
   private final Percentage hitRate;
   private final int integrityDecrementOnHit;
 
+  /**
+   * Constructs a new WeaponComponent.
+   */
   public WeaponComponent(int damage, Percentage hitRate, int integrityDecrementOnHit) {
     this.damage = damage;
     this.hitRate = hitRate;

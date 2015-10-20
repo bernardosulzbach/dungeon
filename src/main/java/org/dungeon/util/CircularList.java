@@ -36,6 +36,9 @@ public final class CircularList<T> implements Serializable {
    */
   private int zeroIndex;
 
+  /**
+   * Constructs an empty CircularList of the specified capacity.
+   */
   public CircularList(int capacity) {
     if (capacity < 1) {
       throw new IllegalArgumentException("capacity must be positive.");

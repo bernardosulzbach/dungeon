@@ -35,6 +35,9 @@ public class Luminosity implements Serializable {
     this.value = value;
   }
 
+  /**
+   * Returns a Luminosity value equal to the resultant luminosity of a collection of entities.
+   */
   public static Luminosity resultantLuminosity(Collection<Entity> entities) {
     double total = 0;
     for (Entity entity : entities) {

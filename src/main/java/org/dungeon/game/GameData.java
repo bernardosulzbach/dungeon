@@ -41,6 +41,9 @@ public final class GameData {
     throw new AssertionError();
   }
 
+  /**
+   * Retrieves the tutorial text.
+   */
   public static String getTutorial() {
     if (tutorial == null) {
       loadTutorial();

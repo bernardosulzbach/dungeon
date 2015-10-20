@@ -35,6 +35,9 @@ public class Percentage implements Comparable<Percentage>, Serializable {
 
   private final double value;
 
+  /**
+   * Constructs a percentage from a double between 0 and 1.
+   */
   public Percentage(double percentage) {
     if (DungeonMath.fuzzyCompare(percentage, ZERO) < 0) {
       value = ZERO;
@@ -62,6 +65,9 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return new Percentage(doubleFromPercentageString(percentage));
   }
 
+  /**
+   * Checks if a String is a valid percentage string.
+   */
   public static boolean isValidPercentageString(String percentage) {
     if (percentage != null) {
       try {

@@ -41,6 +41,9 @@ public final class CommandSet {
   private CommandSet() {
   }
 
+  /**
+   * Constructs an empty CommandSet containing only the "commands" Command.
+   */
   public static CommandSet emptyCommandSet() {
     final CommandSet commandSet = new CommandSet();
     commandSet.addCommand(new Command("commands", "Lists all commands in this command set.") {
@@ -74,6 +77,9 @@ public final class CommandSet {
     return commandSet;
   }
 
+  /**
+   * Retrieves a Command corresponding to the specified token or null if no command matches the token.
+   */
   public Command getCommand(String token) {
     for (Command command : commands) {
       if (command.getDescription().getName().equalsIgnoreCase(token)) {
@@ -113,6 +119,10 @@ public final class CommandSet {
     return String.format("CommandSet of size %d.", commands.size());
   }
 
+  /**
+   * Retrieves a list of the names of the commands closest to the provided token according to their Levenshtein
+   * distance.
+   */
   public List<String> getClosestCommands(String token) {
     List<String> closestCommands = new ArrayList<String>();
     int best = Integer.MAX_VALUE;

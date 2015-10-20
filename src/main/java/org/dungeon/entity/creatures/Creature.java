@@ -51,6 +51,10 @@ public class Creature extends Entity {
    */
   private CauseOfDeath causeOfDeath;
 
+  /**
+   * Constructs a Creature from the provided CreaturePreset. Most of the application code should obtain new creatures
+   * from the CreatureFactory.
+   */
   public Creature(CreaturePreset preset) {
     super(preset);
     health = CreatureHealth.makeCreatureIntegrity(preset.getHealth(), this);

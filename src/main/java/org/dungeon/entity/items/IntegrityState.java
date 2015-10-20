@@ -34,8 +34,13 @@ public enum IntegrityState {
     this.stringRepresentation = stringRepresentation;
   }
 
+  /**
+   * Returns the IntegrityState that corresponds to the specified fraction.
+   */
   public static IntegrityState getIntegrityState(int curIntegrity, int maxIntegrity) {
-    if (curIntegrity == maxIntegrity) {
+    if (curIntegrity > maxIntegrity) {
+      throw new IllegalArgumentException("curIntegrity is greater than maxIntegrity.");
+    } else if (curIntegrity == maxIntegrity) {
       return PERFECT;
     } else if (curIntegrity >= maxIntegrity * 0.65) {
       return SLIGHTLY_DAMAGED;

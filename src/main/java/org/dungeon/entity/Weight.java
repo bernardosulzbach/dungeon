@@ -45,6 +45,9 @@ public class Weight implements Comparable<Weight>, Serializable {
     this.value = value;
   }
 
+  /**
+   * Returns a new Weight object from the provided value. The value must be nonnegative.
+   */
   public static Weight newInstance(double value) {
     if (value < 0) {
       DungeonLogger.warning("Tried to create Weight from negative double.");

@@ -45,6 +45,9 @@ public class LightSource implements Serializable {
     this.enabled = false;
   }
 
+  /**
+   * Returns the luminosity of this light source.
+   */
   public Luminosity getLuminosity() {
     if (enabled) {
       return luminosity;

@@ -32,6 +32,9 @@ public enum Numeral {
     this.stringRepresentation = stringRepresentation;
   }
 
+  /**
+   * Returns a corresponding Numeral of an integer or null if there is not such Numeral.
+   */
   public static Numeral getCorrespondingNumeral(int integer) {
     if (integer < 1) {
       DungeonLogger.warning("Tried to get nonpositive numeral.");

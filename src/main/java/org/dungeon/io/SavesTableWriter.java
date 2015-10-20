@@ -35,6 +35,9 @@ public final class SavesTableWriter {
     throw new AssertionError();
   }
 
+  /**
+   * Writes a table of the files found on the saves folder to the screen.
+   */
   public static void writeSavesFolderTable() {
     File[] files = Loader.getSortedArrayOfSavedFiles();
     if (files != null) {

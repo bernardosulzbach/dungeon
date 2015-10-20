@@ -40,6 +40,9 @@ public class AutomaticShuffledStringLibrary extends Library {
     this.filename = filename;
   }
 
+  /**
+   * Retrieves the next String in the library.
+   */
   @NotNull
   public String next() {
     if (isUninitialized()) {

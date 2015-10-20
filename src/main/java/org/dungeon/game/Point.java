@@ -28,12 +28,19 @@ public class Point implements Serializable {
   private final int y;
   private final int z;
 
+  /**
+   * Constructs a Point from three integers representing x, y, and z, respectively.
+   */
   public Point(int x, int y, int z) {
     this.x = x;
     this.y = y;
     this.z = z;
   }
 
+  /**
+   * Constructs a Point from another Point and a Direction that is equivalent to the specified Point moved towards the
+   * provided Direction.
+   */
   public Point(Point originalPoint, Direction shift) {
     this.x = originalPoint.getX() + shift.getOffset().getX();
     this.y = originalPoint.getY() + shift.getOffset().getY();

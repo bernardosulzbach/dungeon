@@ -40,6 +40,9 @@ public class Matches<T extends Selectable> {
     differentNamesUpToDate = true;
   }
 
+  /**
+   * Converts a Collection to Matches.
+   */
   public static <T extends Selectable> Matches<T> fromCollection(Collection<T> collection) {
     Matches<T> newInstance = new Matches<T>();
     for (T t : collection) {

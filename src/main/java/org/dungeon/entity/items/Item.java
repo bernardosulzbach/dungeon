@@ -41,6 +41,9 @@ public final class Item extends Entity {
   /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
   private BaseInventory inventory;
 
+  /**
+   * Constructs a new Item from the provided preset and with the specified creation date.
+   */
   public Item(ItemPreset preset, Date date) {
     super(preset);
 
@@ -90,6 +93,9 @@ public final class Item extends Entity {
     return existence.getSeconds();
   }
 
+  /**
+   * Returns the name of this Item preceded by its integrity state.
+   */
   public String getQualifiedName() {
     String singularName = getName().getSingular();
     if (getIntegrity().getCurrent() == getIntegrity().getMaximum()) {

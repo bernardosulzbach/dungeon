@@ -46,6 +46,9 @@ public class WorldMap {
     stringRepresentation = rows + "x" + cols + " map.";
   }
 
+  /**
+   * Makes a standard WorldMap.
+   */
   @NotNull
   public static WorldMap makeWorldMap() {
     World world = Game.getGameState().getWorld();
@@ -55,6 +58,9 @@ public class WorldMap {
     return renderWorldMap(factory);
   }
 
+  /**
+   * Makes a debug WorldMap.
+   */
   @NotNull
   public static WorldMap makeDebugWorldMap() {
     World world = Game.getGameState().getWorld();

@@ -93,6 +93,9 @@ public final class Location implements Serializable {
     return description;
   }
 
+  /**
+   * Refreshes all the Spawners of this location.
+   */
   public void refreshSpawners() {
     for (Spawner spawner : spawners) {
       spawner.refresh();
@@ -140,6 +143,9 @@ public final class Location implements Serializable {
     return creatures.size();
   }
 
+  /**
+   * Returns the number of creatures in this Location.
+   */
   public int getCreatureCount(Id id) {
     int count = 0;
     for (Creature creature : creatures) {
@@ -169,6 +175,9 @@ public final class Location implements Serializable {
     items.removeItem(item);
   }
 
+  /**
+   * Removes a creature of this Location.
+   */
   public void removeCreature(Creature creature) {
     for (Spawner spawner : spawners) {
       spawner.notifyKill(creature);

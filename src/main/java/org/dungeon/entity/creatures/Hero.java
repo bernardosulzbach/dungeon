@@ -97,21 +97,27 @@ public class Hero extends Creature {
     dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
   }
 
-  public static void writeCreatureSight(List<Creature> creatures, DungeonString builder) {
+  /**
+   * Appends to a DungeonString the creatures the Hero can see.
+   */
+  public static void writeCreatureSight(List<Creature> creatures, DungeonString dungeonString) {
     if (creatures.isEmpty()) {
-      builder.append("\nYou don't see anyone here.\n");
+      dungeonString.append("\nYou don't see anyone here.\n");
     } else {
-      builder.append("\nHere you can see ");
-      builder.append(Utils.enumerateEntities(creatures));
-      builder.append(".\n");
+      dungeonString.append("\nHere you can see ");
+      dungeonString.append(Utils.enumerateEntities(creatures));
+      dungeonString.append(".\n");
     }
   }
 
-  public static void writeItemSight(List<Item> items, DungeonString builder) {
+  /**
+   * Appends to a DungeonString the items the Hero can see.
+   */
+  public static void writeItemSight(List<Item> items, DungeonString dungeonString) {
     if (!items.isEmpty()) {
-      builder.append("\nOn the ground you see ");
-      builder.append(Utils.enumerateEntities(items));
-      builder.append(".\n");
+      dungeonString.append("\nOn the ground you see ");
+      dungeonString.append(Utils.enumerateEntities(items));
+      dungeonString.append(".\n");
     }
   }
 
@@ -495,7 +501,10 @@ public class Hero extends Creature {
     }
   }
 
-  public void printInventory() {
+  /**
+   * Writes the Hero's inventory to the screen.
+   */
+  public void writeInventory() {
     Name item = NameFactory.newInstance("item");
     String firstLine;
     if (getInventory().getItemCount() == 0) {
@@ -599,6 +608,9 @@ public class Hero extends Creature {
     addHealth(MILK_NUTRITION);
   }
 
+  /**
+   * Attempts to read an Item.
+   */
   public void readItem(String[] arguments) {
     Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
@@ -678,6 +690,9 @@ public class Hero extends Creature {
     }
   }
 
+  /**
+   * Unequips the currently equipped weapon.
+   */
   public void unequipWeapon() {
     if (hasWeapon()) {
       Engine.rollDateAndRefresh(SECONDS_TO_UNEQUIP);

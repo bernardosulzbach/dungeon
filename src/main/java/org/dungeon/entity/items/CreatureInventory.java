@@ -30,6 +30,9 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
   private final int itemLimit;
   private final Weight weightLimit;
 
+  /**
+   * Constructs a new CreatureInventory.
+   */
   public CreatureInventory(Creature owner, int itemLimit, double weightLimit) {
     this.owner = owner;
     this.itemLimit = itemLimit;
@@ -46,6 +49,9 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     return weightLimit;
   }
 
+  /**
+   * Retrieves the sum of the weights of the individual items on this inventory.
+   */
   public Weight getWeight() {
     Weight sum = Weight.ZERO;
     for (Item item : getItems()) {

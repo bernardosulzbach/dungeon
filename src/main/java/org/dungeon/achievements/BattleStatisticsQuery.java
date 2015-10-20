@@ -50,6 +50,9 @@ public class BattleStatisticsQuery {
     this.partOfDay = partOfDay;
   }
 
+  /**
+   * Returns whether or not a given BattleRecord matches this query.
+   */
   public boolean matches(@NotNull BattleRecord record) {
     return (id == null || id.equals(record.getId())) && (type == null || type.equals(record.getType())) &&
         (causeOfDeath == null || causeOfDeath.equals(record.getCauseOfDeath())) &&

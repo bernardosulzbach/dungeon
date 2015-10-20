@@ -37,6 +37,9 @@ public class LocationPresetStore {
   LocationPresetStore() {
   }
 
+  /**
+   * Adds a LocationPreset to the store.
+   */
   public void addLocationPreset(LocationPreset preset) {
     idLocationPresetMap.put(preset.getId(), preset);
     if (!typeLocationPresetMap.containsKey(preset.getType())) {

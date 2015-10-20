@@ -138,7 +138,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("items", "Lists the items in the character's inventory.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().printInventory();
+        Game.getGameState().getHero().writeInventory();
       }
     });
     commandSet.addCommand(new Command("kill", "Attacks the target chosen by the player.") {

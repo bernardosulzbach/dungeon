@@ -44,6 +44,9 @@ public class Game {
   private static GameWindow gameWindow;
   private static GameState gameState;
 
+  /**
+   * The main method.
+   */
   public static void main(String[] args) {
     final StopWatch stopWatch = new StopWatch();
     GameData.loadGameData();
