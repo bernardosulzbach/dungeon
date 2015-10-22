@@ -148,7 +148,7 @@ public class GameWindow extends JFrame {
   }
 
   private static void logExecutionExceptionAndExit(ExecutionException fatal) {
-    DungeonLogger.severe(fatal.getCause().toString()); // Call getCause() as ExecutionException is not good enough.
+    DungeonLogger.logSevere(fatal);
     System.exit(1);
   }
 

@@ -86,14 +86,14 @@ public final class DungeonLogger {
   }
 
   /**
-   * Logs a severe message. This should be used for unrecoverable errors that cause application termination.
+   * Logs an unrecoverable error that cause application termination.
    *
    * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.
    *
-   * @param message the log message
+   * @param throwable the Throwable that needs to be logged
    */
-  public static void severe(String message) {
-    logger.severe(message);
+  public static void logSevere(Throwable throwable) {
+    logger.log(Level.SEVERE, throwable.getMessage(), throwable);
   }
 
   /**

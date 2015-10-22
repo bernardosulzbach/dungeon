@@ -76,10 +76,10 @@ public class Game {
     try {
       SwingUtilities.invokeAndWait(runnable);
     } catch (InterruptedException fatal) {
-      DungeonLogger.severe(fatal.toString());
+      DungeonLogger.logSevere(fatal);
       System.exit(1);
     } catch (InvocationTargetException fatal) {
-      DungeonLogger.severe(fatal.toString());
+      DungeonLogger.logSevere(fatal);
       System.exit(1);
     }
   }
