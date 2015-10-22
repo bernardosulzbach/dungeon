@@ -49,27 +49,9 @@ class DungeonCreator implements Serializable {
     return minimumBoundingRectangle;
   }
 
-  private static LocationPreset getRandomEntrancePreset() {
+  private static LocationPreset getRandomLocationPreset(Type type) {
     LocationPresetStore locationPresetStore = GameData.getLocationPresetStore();
-    List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(Type.DUNGEON_ENTRANCE);
-    return Random.select(entrancePresets);
-  }
-
-  private static LocationPreset getRandomStairwayPreset() {
-    LocationPresetStore locationPresetStore = GameData.getLocationPresetStore();
-    List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(Type.DUNGEON_STAIRWAY);
-    return Random.select(entrancePresets);
-  }
-
-  private static LocationPreset getRandomRoomPreset() {
-    LocationPresetStore locationPresetStore = GameData.getLocationPresetStore();
-    List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(Type.DUNGEON_ROOM);
-    return Random.select(entrancePresets);
-  }
-
-  private static LocationPreset getRandomCorridorPreset() {
-    LocationPresetStore locationPresetStore = GameData.getLocationPresetStore();
-    List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(Type.DUNGEON_CORRIDOR);
+    List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(type);
     return Random.select(entrancePresets);
   }
 
@@ -93,20 +75,20 @@ class DungeonCreator implements Serializable {
     if (world.alreadyHasLocationAt(entrance)) {
       throw new IllegalStateException("world has location at the specified entrance.");
     }
-    Location dungeonEntrance = new Location(getRandomEntrancePreset(), world);
+    Location dungeonEntrance = new Location(getRandomLocationPreset(Type.DUNGEON_ENTRANCE), world);
     world.addLocation(dungeonEntrance, entrance);
     distributor.registerDungeonEntrance(entrance);
     // The stairway.
     Point stairwayPoint = new Point(entrance, Direction.DOWN);
     // Note that all DUNGEON_STAIRWAY presets are blocked towards North, East, South, and West.
-    world.addLocation(new Location(getRandomStairwayPreset(), world), stairwayPoint);
+    world.addLocation(new Location(getRandomLocationPreset(Type.DUNGEON_STAIRWAY), world), stairwayPoint);
     return new Point(stairwayPoint, Direction.DOWN);
   }
 
   @NotNull
   private Location createMainRoom(@NotNull World world, Point mainRoomPoint) {
     // Note that all DUNGEON_ROOM presets are open on all directions. It is up to the code to properly block them.
-    Location dungeonRoom = new Location(getRandomRoomPreset(), world);
+    Location dungeonRoom = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world);
     dungeonRoom.getBlockedEntrances().block(Direction.NORTH);
     dungeonRoom.getBlockedEntrances().block(Direction.DOWN);
     dungeonRoom.getBlockedEntrances().block(Direction.SOUTH);
@@ -140,7 +122,7 @@ class DungeonCreator implements Serializable {
       DungeonLogger.warning("Found an existing location when attempting to expand a Dungeon at " + corridorPoint + ".");
     }
     // Note that all DUNGEON_CORRIDOR presets have blocked UP and DOWN. It is up to the code to properly block the rest.
-    Location corridorLocation = new Location(getRandomCorridorPreset(), world);
+    Location corridorLocation = new Location(getRandomLocationPreset(Type.DUNGEON_CORRIDOR), world);
     corridorLocation.getBlockedEntrances().block(Direction.NORTH);
     corridorLocation.getBlockedEntrances().block(Direction.SOUTH);
     world.addLocation(corridorLocation, corridorPoint);
@@ -148,7 +130,7 @@ class DungeonCreator implements Serializable {
     if (world.alreadyHasLocationAt(roomPoint)) {
       DungeonLogger.warning("Found an existing location when attempting to expand a Dungeon at " + roomPoint + ".");
     }
-    Location roomLocation = new Location(getRandomRoomPreset(), world);
+    Location roomLocation = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world);
     roomLocation.getBlockedEntrances().block(Direction.UP);
     roomLocation.getBlockedEntrances().block(Direction.NORTH);
     roomLocation.getBlockedEntrances().block(Direction.DOWN);
