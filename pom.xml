@@ -18,7 +18,7 @@
         <system>GitHub Issues</system>
     </issueManagement>
 
-    <groupId>org.dungeon</groupId>
+    <groupId>org.mafagafogigante.dungeon</groupId>
     <artifactId>dungeon</artifactId>
     <version>v1.0.3b</version>
 
@@ -65,7 +65,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.dungeon.game.Game</mainClass>
+                            <mainClass>org.mafagafogigante.dungeon.game.Game</mainClass>
                         </manifest>
                         <manifestEntries>
                             <SplashScreen-Image>splash.png</SplashScreen-Image>
