@@ -75,20 +75,21 @@ class DungeonCreator implements Serializable {
     if (world.alreadyHasLocationAt(entrance)) {
       throw new IllegalStateException("world has location at the specified entrance.");
     }
-    Location dungeonEntrance = new Location(getRandomLocationPreset(Type.DUNGEON_ENTRANCE), world);
+    Location dungeonEntrance = new Location(getRandomLocationPreset(Type.DUNGEON_ENTRANCE), world, entrance);
     world.addLocation(dungeonEntrance, entrance);
     distributor.registerDungeonEntrance(entrance);
     // The stairway.
     Point stairwayPoint = new Point(entrance, Direction.DOWN);
     // Note that all DUNGEON_STAIRWAY presets are blocked towards North, East, South, and West.
-    world.addLocation(new Location(getRandomLocationPreset(Type.DUNGEON_STAIRWAY), world), stairwayPoint);
+    Location stairwayLocation = new Location(getRandomLocationPreset(Type.DUNGEON_STAIRWAY), world, stairwayPoint);
+    world.addLocation(stairwayLocation, stairwayPoint);
     return new Point(stairwayPoint, Direction.DOWN);
   }
 
   @NotNull
   private Location createMainRoom(@NotNull World world, Point mainRoomPoint) {
     // Note that all DUNGEON_ROOM presets are open on all directions. It is up to the code to properly block them.
-    Location dungeonRoom = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world);
+    Location dungeonRoom = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world, mainRoomPoint);
     dungeonRoom.getBlockedEntrances().block(Direction.NORTH);
     dungeonRoom.getBlockedEntrances().block(Direction.DOWN);
     dungeonRoom.getBlockedEntrances().block(Direction.SOUTH);
@@ -122,7 +123,7 @@ class DungeonCreator implements Serializable {
       DungeonLogger.warning("Found an existing location when attempting to expand a Dungeon at " + corridorPoint + ".");
     }
     // Note that all DUNGEON_CORRIDOR presets have blocked UP and DOWN. It is up to the code to properly block the rest.
-    Location corridorLocation = new Location(getRandomLocationPreset(Type.DUNGEON_CORRIDOR), world);
+    Location corridorLocation = new Location(getRandomLocationPreset(Type.DUNGEON_CORRIDOR), world, corridorPoint);
     corridorLocation.getBlockedEntrances().block(Direction.NORTH);
     corridorLocation.getBlockedEntrances().block(Direction.SOUTH);
     world.addLocation(corridorLocation, corridorPoint);
@@ -130,7 +131,7 @@ class DungeonCreator implements Serializable {
     if (world.alreadyHasLocationAt(roomPoint)) {
       DungeonLogger.warning("Found an existing location when attempting to expand a Dungeon at " + roomPoint + ".");
     }
-    Location roomLocation = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world);
+    Location roomLocation = new Location(getRandomLocationPreset(Type.DUNGEON_ROOM), world, roomPoint);
     roomLocation.getBlockedEntrances().block(Direction.UP);
     roomLocation.getBlockedEntrances().block(Direction.NORTH);
     roomLocation.getBlockedEntrances().block(Direction.DOWN);

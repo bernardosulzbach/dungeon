@@ -24,7 +24,6 @@ import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
 import org.mafagafogigante.dungeon.entity.Entity;
-import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.items.BaseInventory;
 import org.mafagafogigante.dungeon.entity.items.BookComponent;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
@@ -34,11 +33,9 @@ import org.mafagafogigante.dungeon.game.Direction;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
-import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.game.PartOfDay;
-import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.QuantificationMode;
 import org.mafagafogigante.dungeon.game.Random;
 import org.mafagafogigante.dungeon.game.World;
@@ -46,11 +43,9 @@ import org.mafagafogigante.dungeon.io.Sleeper;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.spells.SpellData;
-import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
-import org.mafagafogigante.dungeon.util.Percentage;
 import org.mafagafogigante.dungeon.util.Utils;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 
@@ -58,12 +53,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -84,10 +74,10 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
   private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
   private static final double MAXIMUM_HEALTH_THROUGH_REST = 0.6;
-  private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
   private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
   private final Walker walker = new Walker();
+  private final Observer observer = new Observer(this);
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
   private final AchievementTracker achievementTracker = new AchievementTracker();
   private final Date dateOfBirth;
@@ -194,15 +184,6 @@ public class Hero extends Creature {
   }
 
   /**
-   * Checks if the Hero can see a given Entity based on the luminosity of the Location the Hero is in and on the
-   * visibility of the specified Entity.
-   */
-  private boolean canSee(Entity entity) {
-    // The Hero is always able to find himself.
-    return entity == this || entity.getVisibility().visibleUnder(getLocation().getLuminosity());
-  }
-
-  /**
    * Returns whether any Item of the current Location is visible to the Hero.
    */
   private boolean canSeeAnItem() {
@@ -212,20 +193,6 @@ public class Hero extends Creature {
       }
     }
     return false;
-  }
-
-  private boolean canSeeAdjacentLocations() {
-    return ADJACENT_LOCATIONS_VISIBILITY.visibleUnder(getLocation().getLuminosity());
-  }
-
-  private <T extends Entity> List<T> filterByVisibility(List<T> list) {
-    List<T> visible = new ArrayList<T>();
-    for (T entity : list) {
-      if (canSee(entity)) {
-        visible.add(entity);
-      }
-    }
-    return visible;
   }
 
   private <T extends Entity> Matches<T> filterByVisibility(Matches<T> matches) {
@@ -238,86 +205,7 @@ public class Hero extends Creature {
    * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
   public void look(Direction walkedInFrom) {
-    DungeonString string = new DungeonString();
-    Location location = getLocation(); // Avoid multiple calls to the getter.
-    string.append(walkedInFrom != null ? "You arrive at " : "You are at ");
-    string.setColor(location.getDescription().getColor());
-    string.append(location.getName().getSingular());
-    string.resetColor();
-    string.append(". ");
-    string.append(location.getDescription().getInfo());
-    if (canSeeTheSky()) {
-      string.append(" It is ");
-      string.append(location.getWorld().getPartOfDay().toString().toLowerCase());
-      string.append(".");
-    }
-    string.append("\n");
-    lookAdjacentLocations(walkedInFrom, string);
-    lookCreatures(string);
-    lookItems(string);
-    Writer.write(string);
-  }
-
-  /**
-   * Looks to the Locations adjacent to the one the Hero is in, informing if the Hero cannot see the adjacent
-   * Locations.
-   *
-   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
-   */
-  private void lookAdjacentLocations(Direction walkedInFrom, DungeonString builder) {
-    if (canSeeAdjacentLocations()) {
-      World world = Game.getGameState().getWorld();
-      Point pos = Game.getGameState().getHeroPosition();
-      Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
-      // Don't print the Location you just left.
-      Collection<Direction> directions = Direction.getAllExcept(walkedInFrom);
-      for (Direction dir : directions) {
-        Point adjacentPoint = new Point(pos, dir);
-        if (world.hasLocationAt(adjacentPoint)) {
-          Location adjacentLocation = world.getLocation(adjacentPoint);
-          ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-          explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
-          String name = adjacentLocation.getName().getSingular();
-          Color color = adjacentLocation.getDescription().getColor();
-          ColoredString locationName = new ColoredString(name, color);
-          if (!visibleLocations.containsKey(locationName)) {
-            visibleLocations.put(locationName, new ArrayList<Direction>());
-          }
-          visibleLocations.get(locationName).add(dir);
-        }
-      }
-      if (!visibleLocations.isEmpty()) {
-        builder.append("\n");
-        for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-          builder.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
-          builder.setColor(entry.getKey().getColor());
-          builder.append(String.format("%s", entry.getKey().getString()));
-          builder.resetColor();
-          builder.append(".\n");
-        }
-      }
-    } else {
-      builder.append("\nYou can't clearly see the surrounding locations.\n");
-    }
-  }
-
-  /**
-   * Prints a human-readable description of what Creatures the Hero sees.
-   */
-  private void lookCreatures(DungeonString builder) {
-    List<Creature> creatures = new ArrayList<Creature>(getLocation().getCreatures());
-    creatures.remove(this);
-    creatures = filterByVisibility(creatures);
-    writeCreatureSight(creatures, builder);
-  }
-
-  /**
-   * Prints a human-readable description of what the Hero sees on the ground.
-   */
-  private void lookItems(DungeonString builder) {
-    List<Item> items = getLocation().getItemList();
-    items = filterByVisibility(items);
-    writeItemSight(items, builder);
+    observer.look(walkedInFrom);
   }
 
   private Item selectInventoryItem(String[] arguments) {
@@ -762,10 +650,6 @@ public class Hero extends Creature {
     } else {
       Writer.write("You can't see the sky.");
     }
-  }
-
-  private boolean canSeeTheSky() {
-    return Game.getGameState().getHeroPosition().getZ() >= 0;
   }
 
   /**

@@ -30,6 +30,7 @@ import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -205,6 +206,29 @@ public class Creature extends Entity {
   @Override
   public String toString() {
     return getName().getSingular();
+  }
+
+  boolean canSeeTheSky() {
+    return getLocation().getPoint().getZ() >= 0;
+  }
+
+  /**
+   * Checks if the Hero can see a given Entity based on the luminosity of the Location the Hero is in and on the
+   * visibility of the specified Entity.
+   */
+  boolean canSee(Entity entity) {
+    // The Hero is always able to find himself.
+    return entity == this || entity.getVisibility().visibleUnder(getLocation().getLuminosity());
+  }
+
+  <T extends Entity> List<T> filterByVisibility(List<T> list) {
+    List<T> visible = new ArrayList<T>();
+    for (T entity : list) {
+      if (canSee(entity)) {
+        visible.add(entity);
+      }
+    }
+    return visible;
   }
 
   public enum Tag {MILKABLE, CORPSE}

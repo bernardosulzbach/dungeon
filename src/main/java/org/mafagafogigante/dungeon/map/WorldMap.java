@@ -38,7 +38,7 @@ public class WorldMap {
    * Initializes the WorldMap with a proper IterationLimits object and a matrix of null objects.
    */
   private WorldMap() {
-    Point center = Game.getGameState().getHeroPosition();
+    Point center = Game.getGameState().getHero().getLocation().getPoint();
     int cols = GameWindow.COLS;
     int rows = GameWindow.ROWS - 1;
     limits = new IterationLimits(center, cols, rows);
@@ -52,7 +52,7 @@ public class WorldMap {
   @NotNull
   public static WorldMap makeWorldMap() {
     World world = Game.getGameState().getWorld();
-    Point heroPosition = Game.getGameState().getHeroPosition();
+    Point heroPosition = Game.getGameState().getHero().getLocation().getPoint();
     ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
     WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition, explorationStatistics);
     return renderWorldMap(factory);
@@ -64,7 +64,7 @@ public class WorldMap {
   @NotNull
   public static WorldMap makeDebugWorldMap() {
     World world = Game.getGameState().getWorld();
-    Point heroPosition = Game.getGameState().getHeroPosition();
+    Point heroPosition = Game.getGameState().getHero().getLocation().getPoint();
     WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition);
     return renderWorldMap(factory);
   }

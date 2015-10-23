@@ -19,6 +19,8 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.game.LocationPreset.Type;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -49,14 +51,14 @@ class WorldGenerator implements Serializable {
     return Random.select(locationPresetStore.getLocationPresetsByType(Type.LAND));
   }
 
-  private Location createRandomRiverLocation() {
+  private Location createRandomRiverLocation(@NotNull final Point point) {
     LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
-    return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.RIVER)), world);
+    return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.RIVER)), world, point);
   }
 
-  private Location createRandomBridgeLocation() {
+  private Location createRandomBridgeLocation(@NotNull final Point point) {
     LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
-    return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.BRIDGE)), world);
+    return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.BRIDGE)), world, point);
   }
 
   public void expand(Point point) {
@@ -75,9 +77,9 @@ class WorldGenerator implements Serializable {
         currentPoint = new Point(x, y, 0);
         if (!world.alreadyHasLocationAt(currentPoint)) {
           if (riverGenerator.isRiver(currentPoint)) {
-            world.addLocation(createRandomRiverLocation(), currentPoint);
+            world.addLocation(createRandomRiverLocation(currentPoint), currentPoint);
           } else if (riverGenerator.isBridge(currentPoint)) {
-            world.addLocation(createRandomBridgeLocation(), currentPoint);
+            world.addLocation(createRandomBridgeLocation(currentPoint), currentPoint);
           } else if (dungeonDistributor.rollForDungeon(currentPoint)) {
             dungeonCreator.createDungeon(world, currentPoint);
           } else {
@@ -85,7 +87,7 @@ class WorldGenerator implements Serializable {
               currentLocationPreset = getRandomLandLocationPreset();
               remainingLocationsOfCurrentPreset = currentLocationPreset.getBlobSize();
             }
-            world.addLocation(new Location(currentLocationPreset, world), currentPoint);
+            world.addLocation(new Location(currentLocationPreset, world, currentPoint), currentPoint);
             remainingLocationsOfCurrentPreset--;
           }
         }

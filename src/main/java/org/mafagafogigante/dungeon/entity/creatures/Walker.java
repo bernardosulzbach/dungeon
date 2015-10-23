@@ -64,7 +64,7 @@ class Walker implements Serializable {
   private void heroWalk(Direction dir) {
     GameState gameState = Game.getGameState();
     World world = gameState.getWorld();
-    Point point = gameState.getHeroPosition();
+    Point point = gameState.getHero().getLocation().getPoint();
     Point destinationPoint = new Point(point, dir);
     // This order is important. Calling .getLocation may trigger location creation, so avoid creating a location that we
     // don't need if we can't get there.

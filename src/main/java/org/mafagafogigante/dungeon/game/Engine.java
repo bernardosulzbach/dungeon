@@ -99,14 +99,14 @@ public final class Engine {
    * Refreshes all relevant Spawners in the world, currently, that is the spawners of the location the Hero is at.
    */
   private static void refreshSpawners() {
-    Game.getGameState().getHeroLocation().refreshSpawners();
+    Game.getGameState().getHero().getLocation().refreshSpawners();
   }
 
   /**
    * Refreshes all the items in the location the Hero is at.
    */
   private static void refreshItems() {
-    Game.getGameState().getHeroLocation().refreshItems();
+    Game.getGameState().getHero().getLocation().refreshItems();
   }
 
   /**
@@ -146,7 +146,7 @@ public final class Engine {
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, defeated.getCauseOfDeath(), partOfDay);
-      Game.getGameState().getStatistics().getExplorationStatistics().addKill(Game.getGameState().getHeroPosition());
+      Game.getGameState().getStatistics().getExplorationStatistics().addKill(hero.getLocation().getPoint());
     }
   }
 

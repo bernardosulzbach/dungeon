@@ -77,10 +77,6 @@ public class GameState implements Serializable {
     return hero;
   }
 
-  public Point getHeroPosition() {
-    return heroPosition;
-  }
-
   public void setHeroPosition(Point heroPosition) {
     this.heroPosition = heroPosition;
   }
@@ -91,15 +87,6 @@ public class GameState implements Serializable {
 
   public void setSaved(boolean saved) {
     this.saved = saved;
-  }
-
-  /**
-   * Retrieves the Location object that contains the hero.
-   *
-   * @return a Location object.
-   */
-  public Location getHeroLocation() {
-    return world.getLocation(heroPosition);
   }
 
 }

@@ -27,6 +27,7 @@ import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
+import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
@@ -361,29 +362,40 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         final int width = 40;  // The width of the row's "tag".
-        GameState gameState = Game.getGameState();
-        Point heroPosition = gameState.getHeroPosition();
-        Location location = gameState.getWorld().getLocation(heroPosition);
-        StringBuilder sb = new StringBuilder();
-        sb.append(Utils.padString("Point:", width)).append(heroPosition.toString()).append('\n');
-        sb.append(Utils.padString("Creatures (" + location.getCreatureCount() + "):", width)).append('\n');
-        for (Creature creature : location.getCreatures()) {
-          sb.append(Utils.padString("  " + creature.getName(), width));
-          sb.append(creature.getVisibility().toPercentage()).append('\n');
+        Location heroLocation = Game.getGameState().getHero().getLocation();
+        Point heroPosition = heroLocation.getPoint();
+        DungeonString dungeonString = new DungeonString();
+        dungeonString.append(Utils.padString("Point:", width));
+        dungeonString.append(heroPosition.toString());
+        dungeonString.append("\n");
+        dungeonString.append(Utils.padString("Creatures (" + heroLocation.getCreatureCount() + "):", width));
+        dungeonString.append("\n");
+        for (Creature creature : heroLocation.getCreatures()) {
+          dungeonString.append(Utils.padString("  " + creature.getName(), width));
+          dungeonString.append(creature.getVisibility().toPercentage().toString());
+          dungeonString.append("\n");
         }
-        if (!location.getItemList().isEmpty()) {
-          sb.append(Utils.padString("Items (" + location.getItemList().size() + "):", width)).append('\n');
-          for (Item item : location.getItemList()) {
-            sb.append(Utils.padString("  " + item.getQualifiedName(), width));
-            sb.append(item.getVisibility().toPercentage()).append('\n');
+        if (!heroLocation.getItemList().isEmpty()) {
+          dungeonString.append(Utils.padString("Items (" + heroLocation.getItemList().size() + "):", width));
+          dungeonString.append("\n");
+          for (Item item : heroLocation.getItemList()) {
+            dungeonString.append(Utils.padString("  " + item.getQualifiedName(), width));
+            dungeonString.append(item.getVisibility().toPercentage().toString());
+            dungeonString.append("\n");
           }
         } else {
-          sb.append("No items.\n");
+          dungeonString.append("No items.\n");
         }
-        sb.append(Utils.padString("Luminosity:", width)).append(location.getLuminosity().toPercentage()).append('\n');
-        sb.append(Utils.padString("Permittivity:", width)).append(location.getLightPermittivity()).append('\n');
-        sb.append(Utils.padString("Blocked Entrances:", width)).append(location.getBlockedEntrances()).append('\n');
-        Writer.write(sb.toString());
+        dungeonString.append(Utils.padString("Luminosity:", width));
+        dungeonString.append(heroLocation.getLuminosity().toPercentage().toString());
+        dungeonString.append("\n");
+        dungeonString.append(Utils.padString("Permittivity:", width));
+        dungeonString.append(heroLocation.getLightPermittivity().toString());
+        dungeonString.append("\n");
+        dungeonString.append(Utils.padString("Blocked Entrances:", width));
+        dungeonString.append(heroLocation.getBlockedEntrances().toString());
+        dungeonString.append("\n");
+        Writer.write(dungeonString);
       }
     });
     commandSet.addCommand(new Command("map", "Produces a map as complete as possible.") {
@@ -404,7 +416,7 @@ final class CommandSets {
                 SimulationResult.SUCCESSFUL) {
               Game.getGameState().getHero().addItem(item);
             } else {
-              Game.getGameState().getHeroLocation().addItem(item);
+              Game.getGameState().getHero().getLocation().addItem(item);
               Writer.write("Item could not be added to your inventory. It was added to the current location instead.");
             }
             Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
@@ -434,7 +446,7 @@ final class CommandSets {
             Id givenId = new Id(argument.toUpperCase());
             Creature clone = CreatureFactory.makeCreature(givenId);
             if (clone != null) {
-              Game.getGameState().getHeroLocation().addCreature(clone);
+              Game.getGameState().getHero().getLocation().addCreature(clone);
               Writer.write("Spawned a " + clone.getName() + ".");
               Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
             } else {

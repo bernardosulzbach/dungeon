@@ -47,6 +47,7 @@ public final class Location implements Serializable {
   private final LocationInventory items;
   private final Percentage lightPermittivity;
   private final World world;
+  private final Point point;
 
   /**
    * Constructs a new location for the specified world based on the provided preset.
@@ -56,11 +57,12 @@ public final class Location implements Serializable {
    * @param preset the LocationPreset object
    * @param world the World object
    */
-  public Location(@NotNull LocationPreset preset, @NotNull World world) {
+  public Location(@NotNull LocationPreset preset, @NotNull World world, @NotNull Point point) {
     this.id = preset.getId();
     this.name = preset.getName();
     this.description = preset.getDescription();
     this.world = world;
+    this.point = point;
     this.blockedEntrances = preset.getBlockedEntrances();
     this.lightPermittivity = preset.getLightPermittivity();
     this.creatures = new ArrayList<Creature>();
@@ -188,6 +190,13 @@ public final class Location implements Serializable {
 
   public World getWorld() {
     return world;
+  }
+
+  /**
+   * Returns at which point of the world this location is in it is.
+   */
+  public Point getPoint() {
+    return point;
   }
 
   public BlockedEntrances getBlockedEntrances() {
