@@ -24,7 +24,6 @@ import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
-import org.mafagafogigante.dungeon.game.GameData.InvalidTagException;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
@@ -44,42 +43,15 @@ import java.util.Set;
 
 /**
  * Provides methods to create different items for the game.
- *
- * <p>Should be blocked by calling blockNewItemPresets as soon as all item presets that are programmatically generated
- * have been created.
  */
 public abstract class ItemFactory {
 
   private static final Map<Id, ItemPreset> itemPresets = new HashMap<Id, ItemPreset>();
-  private static boolean blockingNewItemPresets = false;
-
-  /**
-   * Returns an unmodifiable view of the ItemPreset map.
-   */
-  private static Map<Id, ItemPreset> getItemPresets() {
-    return Collections.unmodifiableMap(itemPresets);
-  }
-
-  /**
-   * Attempts to create an item from the ItemPreset specified by an ID with the provided creation date.
-   *
-   * @param id the ID of the preset, not null
-   * @param date the creation date of the item, not null
-   * @return an Item with the specified creation date or null if the preset could not be found
-   */
-  public static Item makeItem(@NotNull Id id, @NotNull Date date) {
-    ItemPreset itemPreset = getItemPresets().get(id);
-    if (itemPreset != null) {
-      return new Item(itemPreset, date);
-    } else {
-      return null;
-    }
-  }
 
   /**
    * Loads all item presets that are not programmatically generated.
    */
-  public static void loadItemPresets() {
+  static {
     JsonObject objects = JsonObjectFactory.makeJsonObject("items.json");
     for (JsonValue value : objects.get("items").asArray()) {
       JsonObject itemObject = value.asObject();
@@ -122,25 +94,37 @@ public abstract class ItemFactory {
   }
 
   /**
+   * Returns an unmodifiable view of the ItemPreset map.
+   */
+  private static Map<Id, ItemPreset> getItemPresets() {
+    return Collections.unmodifiableMap(itemPresets);
+  }
+
+  /**
+   * Attempts to create an item from the ItemPreset specified by an ID with the provided creation date.
+   *
+   * @param id the ID of the preset, not null
+   * @param date the creation date of the item, not null
+   * @return an Item with the specified creation date or null if the preset could not be found
+   */
+  public static Item makeItem(@NotNull Id id, @NotNull Date date) {
+    ItemPreset itemPreset = getItemPresets().get(id);
+    if (itemPreset != null) {
+      return new Item(itemPreset, date);
+    } else {
+      return null;
+    }
+  }
+
+  /**
    * Adds a new ItemPreset to the factory.
    */
   public static void addItemPreset(ItemPreset preset) {
     if (itemPresets.containsKey(preset.getId())) {
-      throw new IllegalArgumentException("itemPresets already contains a preset with this Id.");
-    } else if (blockingNewItemPresets) {
-      throw new IllegalStateException("ItemFactory is blocking new item presets.");
+      throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
+    } else {
+      itemPresets.put(preset.getId(), preset);
     }
-    itemPresets.put(preset.getId(), preset);
-  }
-
-  /**
-   * Blocks the addition of new item presets to this factory by addItemPreset. Should only be called once.
-   */
-  public static void blockNewItemPresets() {
-    if (blockingNewItemPresets) {
-      throw new IllegalStateException("already blocking new item presets. Repeated call to blockNewItemPresets()?");
-    }
-    blockingNewItemPresets = true;
   }
 
   /**
@@ -185,6 +169,14 @@ public abstract class ItemFactory {
    */
   public static Id makeCorpseIdFromCreatureId(Id id) {
     return new Id(id + "_CORPSE");
+  }
+
+  public static class InvalidTagException extends IllegalArgumentException {
+
+    public InvalidTagException(String message, Throwable cause) {
+      super(message, cause);
+    }
+
   }
 
 }

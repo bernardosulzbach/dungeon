@@ -50,7 +50,7 @@ class DungeonCreator implements Serializable {
   }
 
   private static LocationPreset getRandomLocationPreset(Type type) {
-    LocationPresetStore locationPresetStore = GameData.getLocationPresetStore();
+    LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
     List<LocationPreset> entrancePresets = locationPresetStore.getLocationPresetsByType(type);
     return Random.select(entrancePresets);
   }

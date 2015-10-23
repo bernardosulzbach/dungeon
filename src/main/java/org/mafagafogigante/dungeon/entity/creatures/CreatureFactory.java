@@ -62,7 +62,7 @@ public final class CreatureFactory {
   /**
    * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
    */
-  public static void loadCreaturePresetsAndMakeCorpsePresets() {
+  static {
     Map<Id, CreaturePreset> creaturePresetMap = new HashMap<Id, CreaturePreset>();
     JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
     for (JsonValue value : object.get("creatures").asArray()) {

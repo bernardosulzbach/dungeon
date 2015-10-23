@@ -29,11 +29,11 @@ import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
-import org.mafagafogigante.dungeon.game.GameData;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.LocationPreset;
+import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
@@ -48,6 +48,7 @@ import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.SystemInfo;
 import org.mafagafogigante.dungeon.util.Table;
+import org.mafagafogigante.dungeon.util.Tutorial;
 import org.mafagafogigante.dungeon.util.Utils;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.wiki.WikiSearcher;
@@ -239,7 +240,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("tutorial", "Displays the tutorial.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.write(GameData.getTutorial());
+        Writer.write(new Tutorial());
       }
     });
     commandSet.addCommand(new Command("unequip", "Unequips the currently equipped item.") {
@@ -330,7 +331,7 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
         Table table = new Table("Name", "Kills", "Visited so far", "Maximum number of visits");
-        for (LocationPreset preset : GameData.getLocationPresetStore().getAllPresets()) {
+        for (LocationPreset preset : LocationPresetStore.getLocationPresetStore().getAllPresets()) {
           String name = preset.getName().getSingular();
           String kills = String.valueOf(explorationStatistics.getKillCount(preset.getId()));
           String visitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getId()));

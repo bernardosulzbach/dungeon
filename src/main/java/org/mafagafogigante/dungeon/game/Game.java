@@ -49,8 +49,6 @@ public class Game {
    */
   public static void main(String[] args) {
     final StopWatch stopWatch = new StopWatch();
-    GameData.loadGameData();
-    DungeonLogger.info("Finished loading game data. Took " + stopWatch.toString() + ".");
     invokeOnEventDispatchThreadAndWait(new Runnable() {
       @Override
       public void run() {

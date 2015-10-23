@@ -39,7 +39,6 @@ import java.util.List;
 public class AchievementStore {
 
   private static final List<Achievement> achievements = new ArrayList<Achievement>();
-  private static boolean initialized = false;
 
   private AchievementStore() {
     throw new AssertionError();
@@ -48,10 +47,7 @@ public class AchievementStore {
   /**
    * Initializes this class.
    */
-  public static void initialize() {
-    if (initialized) {
-      throw new IllegalStateException("AchievementStore.initialize() has already been called.");
-    }
+  static {
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
     for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
       JsonObject achievementObject = achievementValue.asObject();
@@ -108,7 +104,6 @@ public class AchievementStore {
       Achievement achievement = builder.createAchievement();
       achievements.add(achievement);
     }
-    initialized = true;
     DungeonLogger.info("Loaded " + achievements.size() + " achievements.");
   }
 
