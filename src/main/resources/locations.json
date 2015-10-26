@@ -233,6 +233,54 @@
       ]
     },
     {
+      "id": "DUNGEON_ROOM",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dark dungeon room with walls made of stone.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+      ],
+      "spawners": [
+        {
+          "id": "SKELETON",
+          "population": 1,
+          "delay": 12
+        },
+        {
+          "id": "ZOMBIE",
+          "population": 1,
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 0.8
+        },
+        {
+          "id": "TORCH",
+          "probability": 0.5
+        },
+        {
+          "id": "AXE",
+          "probability": 0.05
+        },
+        {
+          "id": "TOME_OF_FINGER_OF_DEATH",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
       "id": "DUNGEON_CORRIDOR",
       "type": "DUNGEON_CORRIDOR",
       "name": {
