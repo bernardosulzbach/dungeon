@@ -42,23 +42,4 @@ public class DirectionTest {
     }
   }
 
-  @Test
-  public void getAllExceptShouldGetAllDirectionsExceptOne() throws Exception {
-    for (Direction direction : Direction.values()) {
-      Collection<Direction> allExceptDirection = Direction.getAllExcept(direction);
-      Assert.assertFalse(allExceptDirection.contains(direction));
-      for (Direction anotherDirection : Direction.values()) {
-        if (anotherDirection != direction) {
-          Assert.assertTrue(allExceptDirection.contains(anotherDirection));
-        }
-      }
-    }
-  }
-
-  @Test
-  public void getAllExceptShouldGetAllDirectionsWhenTheArgumentIsNull() throws Exception {
-    Collection<Direction> allDirections = Direction.getAllExcept(null);
-    Assert.assertTrue(allDirections.containsAll(Arrays.asList(Direction.values())));
-  }
-
 }

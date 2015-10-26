@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -89,13 +90,11 @@ class Observer implements Serializable {
 
   /**
    * Prints the name of the player's current location and lists all creatures and items the character sees.
-   *
-   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  public void look(Direction walkedInFrom) {
+  public void look() {
     DungeonString string = new DungeonString();
     Location location = creature.getLocation(); // Avoid multiple calls to the getter.
-    string.append(walkedInFrom != null ? "You arrive at " : "You are at ");
+    string.append("You are at ");
     string.setColor(location.getDescription().getColor());
     string.append(location.getName().getSingular());
     string.resetColor();
@@ -107,12 +106,42 @@ class Observer implements Serializable {
       string.append(".");
     }
     string.append("\n");
-    if (areThereAdjacentLocations()) {
-      lookAdjacentLocations(walkedInFrom, string);
-    }
+    lookLocations(string);
     lookCreatures(string);
     lookItems(string);
     Writer.write(string);
+  }
+
+  /**
+   * Looks to the Locations adjacent to the one the Hero is in, informing if the Hero cannot see the adjacent
+   * Locations.
+   */
+  private void lookLocations(DungeonString dungeonString) {
+    dungeonString.append("\n");
+    World world = creature.getLocation().getWorld();
+    Point point = creature.getLocation().getPoint();
+    lookUpwardsAndDownwards(dungeonString, world, point);
+    if (areThereAdjacentLocations()) {
+      if (canSeeAdjacentLocations()) {
+        lookToTheSides(dungeonString, world, point);
+      } else {
+        dungeonString.append("You can't clearly see the adjacent locations.\n");
+      }
+    }
+  }
+
+  private void lookToVerticalDirection(DungeonString dungeonString, World world, Point up, String adverb) {
+    if (world.alreadyHasLocationAt(up)) {
+      dungeonString.append(adverb);
+      dungeonString.append(" you see ");
+      dungeonString.append(world.getLocation(up).getName().getSingular());
+      dungeonString.append(".\n");
+    }
+  }
+
+  private void lookUpwardsAndDownwards(DungeonString dungeonString, World world, Point point) {
+    lookToVerticalDirection(dungeonString, world, new Point(point, Direction.UP), "Upwards");
+    lookToVerticalDirection(dungeonString, world, new Point(point, Direction.DOWN), "Downwards");
   }
 
   /**
@@ -127,51 +156,46 @@ class Observer implements Serializable {
     return false;
   }
 
-  /**
-   * Looks to the Locations adjacent to the one the Hero is in, informing if the Hero cannot see the adjacent
-   * Locations.
-   *
-   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
-   */
-  private void lookAdjacentLocations(Direction walkedInFrom, DungeonString builder) {
-    if (canSeeAdjacentLocations(creature)) {
-      World world = Game.getGameState().getWorld();
-      Point pos = creature.getLocation().getPoint();
-      Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
-      // Don't print the Location you just left.
-      Collection<Direction> directions = Direction.getAllExcept(walkedInFrom);
-      for (Direction dir : directions) {
-        Point adjacentPoint = new Point(pos, dir);
-        if (world.hasLocationAt(adjacentPoint)) {
-          Location adjacentLocation = world.getLocation(adjacentPoint);
-          ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-          explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
-          String name = adjacentLocation.getName().getSingular();
-          Color color = adjacentLocation.getDescription().getColor();
-          ColoredString locationName = new ColoredString(name, color);
-          if (!visibleLocations.containsKey(locationName)) {
-            visibleLocations.put(locationName, new ArrayList<Direction>());
-          }
-          visibleLocations.get(locationName).add(dir);
+  private boolean canSeeAdjacentLocations() {
+    return ADJACENT_LOCATIONS_VISIBILITY.visibleUnder(creature.getLocation().getLuminosity());
+  }
+
+  private void lookToTheSides(DungeonString dungeonString, World world, Point point) {
+    Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
+    // Don't print the Location you just left.
+    Collection<Direction> directions = getHorizontalDirections();
+    for (Direction dir : directions) {
+      Point adjacentPoint = new Point(point, dir);
+      if (world.hasLocationAt(adjacentPoint)) {
+        Location adjacentLocation = world.getLocation(adjacentPoint);
+        ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+        explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
+        String name = adjacentLocation.getName().getSingular();
+        Color color = adjacentLocation.getDescription().getColor();
+        ColoredString locationName = new ColoredString(name, color);
+        if (!visibleLocations.containsKey(locationName)) {
+          visibleLocations.put(locationName, new ArrayList<Direction>());
         }
+        visibleLocations.get(locationName).add(dir);
       }
-      if (!visibleLocations.isEmpty()) {
-        builder.append("\n");
-        for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-          builder.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
-          builder.setColor(entry.getKey().getColor());
-          builder.append(String.format("%s", entry.getKey().getString()));
-          builder.resetColor();
-          builder.append(".\n");
-        }
+    }
+    if (!visibleLocations.isEmpty()) {
+      for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
+        dungeonString.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
+        dungeonString.setColor(entry.getKey().getColor());
+        dungeonString.append(String.format("%s", entry.getKey().getString()));
+        dungeonString.resetColor();
+        dungeonString.append(".\n");
       }
-    } else {
-      builder.append("\nYou can't clearly see the surrounding locations.\n");
     }
   }
 
-  private boolean canSeeAdjacentLocations(Creature creature) {
-    return ADJACENT_LOCATIONS_VISIBILITY.visibleUnder(creature.getLocation().getLuminosity());
+  private Collection<Direction> getHorizontalDirections() {
+    Collection<Direction> directions = new ArrayList<Direction>();
+    directions.addAll(Arrays.asList(Direction.values()));
+    directions.remove(Direction.UP);
+    directions.remove(Direction.DOWN);
+    return directions;
   }
 
   /**

@@ -79,7 +79,7 @@ class Walker implements Serializable {
       hero.setLocation(world.getLocation(destinationPoint));
       gameState.setHeroPosition(destinationPoint);
       Engine.refresh(); // Hero arrived in a new location, refresh the game.
-      hero.look(dir.invert());
+      hero.look();
       updateExplorationStatistics(destinationPoint);
     }
   }

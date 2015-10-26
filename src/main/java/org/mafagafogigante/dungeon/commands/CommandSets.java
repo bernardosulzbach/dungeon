@@ -162,7 +162,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("look", "Describes what the character can see.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().look(null);
+        Game.getGameState().getHero().look();
       }
     });
     commandSet.addCommand(new Command("map", "Shows a map of your surroundings.") {

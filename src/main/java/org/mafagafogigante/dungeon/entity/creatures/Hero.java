@@ -29,7 +29,6 @@ import org.mafagafogigante.dungeon.entity.items.BookComponent;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.Direction;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
@@ -201,11 +200,9 @@ public class Hero extends Creature {
 
   /**
    * Prints the name of the player's current location and lists all creatures and items the character sees.
-   *
-   * @param walkedInFrom the Direction from which the Hero walked in. {@code null} if the Hero did not walk.
    */
-  public void look(Direction walkedInFrom) {
-    observer.look(walkedInFrom);
+  public void look() {
+    observer.look();
   }
 
   private Item selectInventoryItem(String[] arguments) {

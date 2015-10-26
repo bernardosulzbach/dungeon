@@ -144,7 +144,7 @@ public class Game {
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
     Engine.refresh();
     Writer.write(new DungeonString("\n")); // Improves readability.
-    gameState.getHero().look(null);
+    gameState.getHero().look();
   }
 
   public static void unsetGameState() {
