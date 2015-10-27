@@ -17,6 +17,7 @@
 
 package org.mafagafogigante.dungeon.entity.creatures;
 
+import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
@@ -36,7 +37,12 @@ final class DeathHandler {
     Location defeatedLocation = creature.getLocation();
     defeatedLocation.removeCreature(creature);
     if (creature.hasTag(Creature.Tag.CORPSE)) {
-      defeatedLocation.addItem(ItemFactory.makeCorpse(creature, defeatedLocation.getWorld().getWorldDate()));
+      Item item = ItemFactory.makeCorpse(creature, defeatedLocation.getWorld().getWorldDate());
+      if (item != null) {
+        defeatedLocation.addItem(item);
+      } else {
+        DungeonLogger.warning(creature.getName() + " has the CORPSE tag, but no corpse preset was found.");
+      }
     }
     creature.getDropper().dropEverything();
     DungeonLogger.fine("Disposed of " + creature.getName() + " at " + creature.getLocation() + ".");
