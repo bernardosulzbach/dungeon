@@ -4,8 +4,8 @@ Dungeon
 [![Travis CI](https://travis-ci.org/mafagafogigante/dungeon.svg?branch=master)](https://travis-ci.org/mafagafogigante/dungeon)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/ef8ijtoeov8dy5ba/branch/master?svg=true)](https://ci.appveyor.com/project/mafagafogigante/dungeon/branch/master)
 [![codecov.io](http://codecov.io/github/mafagafogigante/dungeon/coverage.svg?branch=master)](http://codecov.io/github/mafagafogigante/dungeon?branch=master)
-
-[![](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/6794/badge.svg)](https://scan.coverity.com/projects/mafagafogigante-dungeon)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)
 
 Text-based open-world RPG made with Java.
 
