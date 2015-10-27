@@ -324,7 +324,12 @@ public class GameWindow extends JFrame {
    * @return a trimmed String.
    */
   private String getTrimmedTextFieldText() {
-    return textField.getText().trim();
+    String textFieldContent = textField.getText();
+    if (textFieldContent == null) {
+      return "";
+    } else {
+      return textFieldContent.trim();
+    }
   }
 
   /**
