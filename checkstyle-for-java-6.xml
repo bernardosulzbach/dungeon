@@ -4,10 +4,12 @@
           "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <!--
-    Checkstyle configuration that checks the Dungeon coding conventions from:
-    
-    -  Dungeon Java Style
-       https://github.com/mafagafogigante/dungeon/blob/master/STYLE.md
+    Checkstyle configuration that checks the Dungeon coding conventions from Dungeon Java Style
+    https://github.com/mafagafogigante/dungeon/blob/master/STYLE.md
+
+    This version does not enforce ASCII sorting of the import statements in order to be compatible with Checkstyle 6.2.
+    This is the latest version of Checkstyle that allows for Java 6, and instead of checking for ASCII sorting order it
+    checks for alphabetical sorting.
  -->
  
 <module name = "Checker">

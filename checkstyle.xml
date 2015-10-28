@@ -4,10 +4,8 @@
           "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <!--
-    Checkstyle configuration that checks the Dungeon coding conventions from:
-    
-    -  Dungeon Java Style
-       https://github.com/mafagafogigante/dungeon/blob/master/STYLE.md
+    Checkstyle configuration that checks the Dungeon coding conventions from Dungeon Java Style
+    https://github.com/mafagafogigante/dungeon/blob/master/STYLE.md
  -->
  
 <module name = "Checker">
