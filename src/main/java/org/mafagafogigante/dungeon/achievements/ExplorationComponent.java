@@ -17,7 +17,6 @@
 
 package org.mafagafogigante.dungeon.achievements;
 
-import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
@@ -52,25 +51,24 @@ final class ExplorationComponent {
   /**
    * Checks if this component of the Achievement is fulfilled or not.
    */
-  public boolean isFulfilled() {
-    ExplorationStatistics statistics = Game.getGameState().getStatistics().getExplorationStatistics();
+  public boolean isFulfilled(ExplorationStatistics explorationStatistics) {
     if (killsByLocationId != null) {
       for (Id locationId : killsByLocationId.keySet()) {
-        if (statistics.getKillCount(locationId) < killsByLocationId.getCounter(locationId)) {
+        if (explorationStatistics.getKillCount(locationId) < killsByLocationId.getCounter(locationId)) {
           return false;
         }
       }
     }
     if (visitedLocations != null) {
       for (Id locationId : visitedLocations.keySet()) {
-        if (statistics.getVisitedLocations(locationId) < visitedLocations.getCounter(locationId)) {
+        if (explorationStatistics.getVisitedLocations(locationId) < visitedLocations.getCounter(locationId)) {
           return false;
         }
       }
     }
     if (maximumNumberOfVisits != null) {
       for (Id locationId : maximumNumberOfVisits.keySet()) {
-        if (statistics.getMaximumNumberOfVisits(locationId) < maximumNumberOfVisits.getCounter(locationId)) {
+        if (explorationStatistics.getMaximumNumberOfVisits(locationId) < maximumNumberOfVisits.getCounter(locationId)) {
           return false;
         }
       }

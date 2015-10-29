@@ -17,7 +17,6 @@
 
 package org.mafagafogigante.dungeon.achievements;
 
-import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.stats.BattleStatistics;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +37,7 @@ final class BattleComponent {
   /**
    * Checks if this component of the Achievement is fulfilled or not.
    */
-  public boolean isFulfilled() {
-    BattleStatistics battleStatistics = Game.getGameState().getStatistics().getBattleStatistics();
+  public boolean isFulfilled(BattleStatistics battleStatistics) {
     for (BattleStatisticsRequirement requirement : requirements) {
       if (!battleStatistics.satisfies(requirement)) {
         return false;

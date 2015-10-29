@@ -282,7 +282,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("statistics", "Displays all available game statistics.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getStatistics().printStatistics();
+        Game.getGameState().getStatistics().writeStatistics();
       }
     });
     commandSet.addCommand(new Command("system", "Displays information about the underlying system.") {

@@ -111,6 +111,9 @@ public class Date implements Comparable<Date>, Serializable {
         DungeonTimeUnit.DAY.milliseconds * (day - 1);
   }
 
+  /**
+   * Returns the time since epoch in milliseconds.
+   */
   public long getTime() {
     return time;
   }

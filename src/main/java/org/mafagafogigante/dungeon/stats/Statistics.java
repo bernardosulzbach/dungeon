@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Statistics class that stores, processes and prints game statistics.
+ * Statistics class that stores, processes, and writes game statistics.
  */
 public final class Statistics implements Serializable {
 
@@ -65,9 +65,9 @@ public final class Statistics implements Serializable {
   }
 
   /**
-   * Prints the statistics.
+   * Writes most of the available statistics.
    */
-  public void printStatistics() {
+  public void writeStatistics() {
     Table statistics = new Table("Property", "Value");
     insertCommandStatistics(statistics);
     statistics.insertSeparator();

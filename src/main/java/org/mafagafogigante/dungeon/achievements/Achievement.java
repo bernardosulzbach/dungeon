@@ -18,6 +18,9 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.stats.BattleStatistics;
+import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
+import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 import java.util.Collection;
@@ -73,8 +76,10 @@ public class Achievement {
    *
    * @return true if the Achievement is fulfilled, false otherwise.
    */
-  boolean isFulfilled() {
-    return battle.isFulfilled() && exploration.isFulfilled();
+  boolean isFulfilled(Statistics statistics) {
+    BattleStatistics battleStatistics = statistics.getBattleStatistics();
+    ExplorationStatistics explorationStatistics = statistics.getExplorationStatistics();
+    return battle.isFulfilled(battleStatistics) && exploration.isFulfilled(explorationStatistics);
   }
 
   @Override

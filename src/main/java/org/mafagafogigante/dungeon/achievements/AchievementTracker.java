@@ -23,6 +23,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.stats.Statistics;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +38,12 @@ import java.util.Set;
  */
 public class AchievementTracker implements Serializable {
 
+  private final Statistics statistics;
   private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<UnlockedAchievement>();
+
+  public AchievementTracker(Statistics statistics) {
+    this.statistics = statistics;
+  }
 
   /**
    * Writes an achievement unlocked message with some information about the unlocked achievement.
@@ -64,8 +70,8 @@ public class AchievementTracker implements Serializable {
    * @param achievement the Achievement to be unlocked.
    */
   private void unlock(Achievement achievement, DungeonString builder) {
-    Date now = Game.getGameState().getWorld().getWorldDate();
     if (!isUnlocked(achievement)) {
+      Date now = Game.getGameState().getWorld().getWorldDate();
       writeAchievementUnlock(achievement, builder);
       unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
@@ -124,7 +130,7 @@ public class AchievementTracker implements Serializable {
     DungeonString string = new DungeonString();
     boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
     for (Achievement achievement : AchievementStore.getAchievements()) {
-      if (!isUnlocked(achievement) && achievement.isFulfilled()) {
+      if (!isUnlocked(achievement) && achievement.isFulfilled(statistics)) {
         if (!wroteNewLine) {
           string.append("\n");
           wroteNewLine = true;

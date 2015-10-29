@@ -78,12 +78,13 @@ public class Hero extends Creature {
   private final Walker walker = new Walker();
   private final Observer observer = new Observer(this);
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
-  private final AchievementTracker achievementTracker = new AchievementTracker();
+  private final AchievementTracker achievementTracker;
   private final Date dateOfBirth;
 
-  Hero(CreaturePreset preset) {
+  Hero(CreaturePreset preset, AchievementTracker achievementTracker, Date dateOfBirth) {
     super(preset);
-    dateOfBirth = new Date(2035, 6, 4, 8, 30, 0);
+    this.achievementTracker = achievementTracker;
+    this.dateOfBirth = dateOfBirth;
   }
 
   /**

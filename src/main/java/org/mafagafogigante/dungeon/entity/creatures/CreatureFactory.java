@@ -17,6 +17,7 @@
 
 package org.mafagafogigante.dungeon.entity.creatures;
 
+import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.TagSet;
@@ -31,6 +32,7 @@ import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import com.eclipsesource.json.JsonArray;
@@ -205,8 +207,10 @@ public final class CreatureFactory {
    * @param date the Date when the Items the Hero has were created
    * @return the Hero object
    */
-  public static Hero makeHero(Date date) {
-    Hero hero = new Hero(creaturePresetMap.get(new Id("HERO")));
+  public static Hero makeHero(Date date, Statistics statistics) {
+    DateOfBirthGenerator dateOfBirthGenerator = new DateOfBirthGenerator(date, 30);
+    Date dateOfBirth = dateOfBirthGenerator.generateDateOfBirth();
+    Hero hero = new Hero(creaturePresetMap.get(new Id("HERO")), new AchievementTracker(statistics), dateOfBirth);
     giveItems(hero, date);
     return hero;
   }
