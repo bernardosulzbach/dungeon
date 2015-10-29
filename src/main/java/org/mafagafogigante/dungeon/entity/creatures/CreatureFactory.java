@@ -55,10 +55,6 @@ public final class CreatureFactory {
 
   private static Map<Id, CreaturePreset> creaturePresetMap;
 
-  private CreatureFactory() {
-    throw new AssertionError();
-  }
-
   /**
    * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
    */
@@ -95,6 +91,10 @@ public final class CreatureFactory {
     }
     setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
     DungeonLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
+  }
+
+  private CreatureFactory() {
+    throw new AssertionError();
   }
 
   /**
@@ -190,8 +190,8 @@ public final class CreatureFactory {
   public static Creature makeCreature(Id id) {
     CreaturePreset preset = creaturePresetMap.get(id);
     if (preset != null) {
-      Game.getGameState().getStatistics().getWorldStatistics().addSpawn(preset.getName().getSingular());
       Creature creature = new Creature(preset);
+      Game.getGameState().getStatistics().getWorldStatistics().addSpawn(creature.getName().getSingular());
       giveItems(creature);
       return creature;
     } else {

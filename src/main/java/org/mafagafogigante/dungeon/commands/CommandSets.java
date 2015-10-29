@@ -444,10 +444,10 @@ final class CommandSets {
         if (arguments.length != 0) {
           for (String argument : arguments) {
             Id givenId = new Id(argument.toUpperCase());
-            Creature clone = CreatureFactory.makeCreature(givenId);
-            if (clone != null) {
-              Game.getGameState().getHero().getLocation().addCreature(clone);
-              Writer.write("Spawned a " + clone.getName() + ".");
+            Creature creature = CreatureFactory.makeCreature(givenId);
+            if (creature != null) {
+              Game.getGameState().getHero().getLocation().addCreature(creature);
+              Writer.write("Spawned a " + creature.getName() + ".");
               Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
             } else {
               Writer.write(givenId + " does not match any known creature.");
