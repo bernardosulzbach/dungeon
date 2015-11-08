@@ -31,6 +31,15 @@ Contributing
 Check out this project's contributing guide [here](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
 
 
+Versioning scheme
+-----------------
+Dungeon uses [semantic versioning](http://semver.org/spec/v2.0.0.html).
+
+A release that is not compatible with old saved files increases the MAJOR version.
+A release that adds content in a backwards-compatible manner increases the MINOR version.
+A release that makes backwards-compatible bug fixes increases the PATCH version.
+
+
 License
 -------
 [GNU GPLv3](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt).
