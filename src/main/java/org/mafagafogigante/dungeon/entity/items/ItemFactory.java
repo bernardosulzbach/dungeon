@@ -105,15 +105,14 @@ public abstract class ItemFactory {
    *
    * @param id the ID of the preset, not null
    * @param date the creation date of the item, not null
-   * @return an Item with the specified creation date or null if the preset could not be found
+   * @return an Item with the specified creation date
    */
   public static Item makeItem(@NotNull Id id, @NotNull Date date) {
     ItemPreset itemPreset = getItemPresets().get(id);
-    if (itemPreset != null) {
-      return new Item(itemPreset, date);
-    } else {
-      return null;
+    if (itemPreset == null) {
+      throw new IllegalArgumentException("id does not correspond to an ItemPreset.");
     }
+    return new Item(itemPreset, date);
   }
 
   /**
