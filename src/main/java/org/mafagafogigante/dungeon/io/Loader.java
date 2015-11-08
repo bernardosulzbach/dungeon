@@ -272,7 +272,7 @@ public final class Loader {
         fileIterator.remove();
       }
     }
-    Collections.sort(fileList);
+    Collections.sort(fileList, new FileLastModifiedComparator());
     return fileList;
   }
 
