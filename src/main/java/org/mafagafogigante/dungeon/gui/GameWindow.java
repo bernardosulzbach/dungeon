@@ -104,19 +104,24 @@ public class GameWindow extends JFrame {
    */
   private static Font getMonospacedFont() {
     Font font = new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE);
-    InputStream fontStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("DroidSansMono.ttf");
-    try {
-      font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
-    } catch (FontFormatException bad) {
-      DungeonLogger.warning("threw FontFormatException during font creation.");
-    } catch (IOException bad) {
-      DungeonLogger.warning("threw IOException during font creation.");
-    } finally {
-      if (fontStream != null) {
-        try {
-          fontStream.close();
-        } catch (IOException ignore) {
-          // An IO error occurred. Not much left to do.
+    ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+    if (contextClassLoader == null) {
+      DungeonLogger.warning("getContextClassLoader() returned null. Not attempting to get custom font.");
+    } else {
+      InputStream fontStream = contextClassLoader.getResourceAsStream("DroidSansMono.ttf");
+      try {
+        font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(Font.PLAIN, FONT_SIZE);
+      } catch (FontFormatException bad) {
+        DungeonLogger.warning("threw FontFormatException during font creation.");
+      } catch (IOException bad) {
+        DungeonLogger.warning("threw IOException during font creation.");
+      } finally {
+        if (fontStream != null) {
+          try {
+            fontStream.close();
+          } catch (IOException ignore) {
+            // An IO error occurred. Not much left to do.
+          }
         }
       }
     }
