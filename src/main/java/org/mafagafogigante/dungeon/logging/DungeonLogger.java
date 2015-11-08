@@ -66,6 +66,16 @@ public final class DungeonLogger {
   }
 
   /**
+   * Logs a command rendering time.
+   *
+   * @param command the command string entered by the user
+   * @param stopWatchString the string produced by the StopWatch used
+   */
+  public static void logCommandRendering(String command, String stopWatchString) {
+    DungeonLogger.fine("Finished rendering '" + command + "' after " + stopWatchString + ".");
+  }
+
+  /**
    * Logs an info message. This should be used for application-related information.
    *
    * <p>If the file handler could not be initialized, the message will be unceremoniously discarded.

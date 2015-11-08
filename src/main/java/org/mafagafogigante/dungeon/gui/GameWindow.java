@@ -25,6 +25,7 @@ import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.util.StopWatch;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -258,6 +259,8 @@ public class GameWindow extends JFrame {
       final String text = getTrimmedTextFieldText();
       if (!text.isEmpty()) {
         clearTextField();
+        // Visually accepted the command here. Start tracking time from here onwards.
+        final StopWatch stopWatch = new StopWatch();
         acceptingNextCommand = false;
         SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
           @Override
@@ -273,6 +276,7 @@ public class GameWindow extends JFrame {
             // The default behaviour is to log the exception and exit the game with code 1.
             try {
               get();
+              DungeonLogger.logCommandRendering(text, stopWatch.toString());
             } catch (InterruptedException ignore) {
               // For some reason the thread was interrupted. Nothing should be done.
             } catch (ExecutionException fatal) {
