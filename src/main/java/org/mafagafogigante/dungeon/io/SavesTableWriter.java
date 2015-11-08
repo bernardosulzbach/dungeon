@@ -23,6 +23,7 @@ import org.mafagafogigante.dungeon.util.Utils;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class provides a method to write to the screen a table with the existing saves.
@@ -39,30 +40,26 @@ public final class SavesTableWriter {
    * Writes a table of the files found on the saves folder to the screen.
    */
   public static void writeSavesFolderTable() {
-    File[] files = Loader.getSortedArrayOfSavedFiles();
-    if (files != null) {
-      if (files.length != 0) {
-        Table table = new Table("Name", "Size", "Last modified");
-        int fileCount = 0;
-        int byteCount = 0;
-        for (File file : files) {
-          fileCount += 1;
-          byteCount += file.length();
-          Date lastModified = new Date(file.lastModified());
-          String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
-          String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
-          table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), lastModifiedString);
-        }
-        if (fileCount > 1) {
-          table.insertSeparator();
-          table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "");
-        }
-        Writer.write(table);
-      } else {
-        Writer.write("Saves folder is empty.");
+    List<File> files = Loader.getSavedFiles();
+    if (!files.isEmpty()) {
+      Table table = new Table("Name", "Size", "Last modified");
+      int fileCount = 0;
+      int byteCount = 0;
+      for (File file : files) {
+        fileCount += 1;
+        byteCount += file.length();
+        Date lastModified = new Date(file.lastModified());
+        String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
+        String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
+        table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), lastModifiedString);
       }
+      if (fileCount > 1) {
+        table.insertSeparator();
+        table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "");
+      }
+      Writer.write(table);
     } else {
-      Writer.write("Saves folder does not exist.");
+      Writer.write("There are no saved files.");
     }
   }
 

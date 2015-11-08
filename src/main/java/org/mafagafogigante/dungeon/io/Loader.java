@@ -24,6 +24,7 @@ import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.StopWatch;
 
+import org.jetbrains.annotations.NotNull;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 
@@ -31,7 +32,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -64,8 +69,7 @@ public final class Loader {
    * Checks if any file in the saves folder ends with the save extension.
    */
   public static boolean checkForSave() {
-    File[] sortedArrayOfSavedFiles = getSortedArrayOfSavedFiles();
-    return (sortedArrayOfSavedFiles != null && sortedArrayOfSavedFiles.length != 0);
+    return !getSavedFiles().isEmpty();
   }
 
   /**
@@ -252,24 +256,35 @@ public final class Loader {
   }
 
   /**
-   * Returns an array of abstract pathnames denoting the files and directories in the saves folder that end with a valid
-   * extension. Returns null if an I/O error occurs.
+   * Returns a list of abstract pathnames denoting the files in the saves folder that end with a valid extension sorted
+   * in natural order.
    */
-  public static File[] getSortedArrayOfSavedFiles() {
-    File[] saveFiles = SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter());
-    if (saveFiles != null) {
-      Arrays.sort(saveFiles, new FileLastModifiedComparator());
+  @NotNull
+  public static List<File> getSavedFiles() {
+    File[] fileArray = SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter());
+    if (fileArray == null) {
+      fileArray = new File[0];
     }
-    return saveFiles;
+    List<File> fileList = new ArrayList<File>(Arrays.asList(fileArray));
+    for (Iterator<File> fileIterator = fileList.iterator(); fileIterator.hasNext(); ) {
+      File file = fileIterator.next();
+      if (!file.isFile()) {
+        fileIterator.remove();
+      }
+    }
+    Collections.sort(fileList);
+    return fileList;
   }
 
+  /**
+   * Returns the most recently saved file. As a precondition, there must be at least one save file.
+   */
   private static File getMostRecentlySavedFile() {
-    File[] saveFiles = getSortedArrayOfSavedFiles();
-    if (saveFiles.length == 0) {
-      return null;
-    } else {
-      return saveFiles[0];
+    List<File> fileList = getSavedFiles();
+    if (fileList.isEmpty()) {
+      throw new IllegalStateException("called getMostRecentlySavedFile() but there are no save files.");
     }
+    return fileList.get(0);
   }
 
 }
