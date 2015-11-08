@@ -124,7 +124,7 @@ public final class Engine {
    */
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      Writer.write("You cannot attempt suicide.");
+      Writer.write(new DungeonString("You cannot attempt suicide."));
       return;
     }
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
@@ -141,7 +141,13 @@ public final class Engine {
     Creature defeated = (survivor == hero) ? foe : hero;
     // Imagine if a third factor (such as hunger) could kill one of the creatures.
     // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
-    Writer.write(survivor.getName() + " managed to kill " + defeated.getName() + ".", Color.CYAN);
+    DungeonString dungeonString = new DungeonString();
+    dungeonString.setColor(Color.CYAN);
+    dungeonString.append(survivor.getName().getSingular());
+    dungeonString.append(" managed to kill ");
+    dungeonString.append(defeated.getName().getSingular());
+    dungeonString.append(".");
+    Writer.write(dungeonString);
     writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());

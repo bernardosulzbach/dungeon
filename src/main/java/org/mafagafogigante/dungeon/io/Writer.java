@@ -45,21 +45,7 @@ public final class Writer {
    * @param text the string of text to be written.
    */
   public static void write(String text) {
-    write(text, null);
-  }
-
-  /**
-   * Writes a string of text using a specific color.
-   *
-   * @param text the string of text to be written.
-   * @param color the color of the text.
-   */
-  public static void write(String text, Color color) {
-    DungeonString string = new DungeonString();
-    if (color != null) {
-      string.setColor(color);
-    }
-    string.append(text);
+    DungeonString string = new DungeonString(text);
     string.append("\n");
     write(string);
   }
