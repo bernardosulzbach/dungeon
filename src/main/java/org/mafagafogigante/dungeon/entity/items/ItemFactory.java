@@ -24,6 +24,7 @@ import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
+import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
@@ -89,6 +90,7 @@ public abstract class ItemFactory {
         preset.setSpellId(itemObject.get("spell").asString());
       }
       addItemPreset(preset);
+      CreatureFactory.makeCorpsePresets();
     }
     DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
@@ -110,7 +112,7 @@ public abstract class ItemFactory {
   public static Item makeItem(@NotNull Id id, @NotNull Date date) {
     ItemPreset itemPreset = getItemPresets().get(id);
     if (itemPreset == null) {
-      throw new IllegalArgumentException("id does not correspond to an ItemPreset.");
+      throw new IllegalArgumentException("id (" + id + ") does not correspond to an ItemPreset.");
     }
     return new Item(itemPreset, date);
   }

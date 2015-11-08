@@ -262,4 +262,11 @@ public final class CreatureFactory {
     }
   }
 
+  /**
+   * Makes all corpse presets, if they weren't made yet.
+   */
+  public static void makeCorpsePresets() {
+    // Intentionally blank. If the static block was not called yet, it will be when this method is called.
+  }
+
 }
