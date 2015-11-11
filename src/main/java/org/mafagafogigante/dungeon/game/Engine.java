@@ -146,7 +146,7 @@ public final class Engine {
     dungeonString.append(survivor.getName().getSingular());
     dungeonString.append(" managed to kill ");
     dungeonString.append(defeated.getName().getSingular());
-    dungeonString.append(".");
+    dungeonString.append(".\n");
     Writer.write(dungeonString);
     writeDrops(defeated);
     if (hero == survivor) {
