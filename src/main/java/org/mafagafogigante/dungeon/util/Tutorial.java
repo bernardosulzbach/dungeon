@@ -25,7 +25,7 @@ import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import java.util.List;
 
 /**
- * Tutorial class that Created by Bernardo on 23/10/2015.
+ * Tutorial class that contains the game tutorial.
  */
 public class Tutorial implements Writable {
 
