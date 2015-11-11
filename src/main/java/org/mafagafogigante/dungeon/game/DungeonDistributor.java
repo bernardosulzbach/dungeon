@@ -32,8 +32,9 @@ import java.util.Set;
 class DungeonDistributor implements Serializable {
 
   private static final Percentage dungeonProbability = Percentage.fromString("2%");
-  private static final Set<Point> entrances = new HashSet<Point>();
   private static final MinimumBoundingRectangle biggestDungeonPossible = DungeonCreator.getMinimumBoundingRectangle();
+
+  private final Set<Point> entrances = new HashSet<Point>();
 
   public DungeonDistributor() {
   }
