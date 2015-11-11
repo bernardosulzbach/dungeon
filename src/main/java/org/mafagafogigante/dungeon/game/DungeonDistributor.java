@@ -74,7 +74,7 @@ class DungeonDistributor implements Serializable {
   }
 
   /**
-   * Randomly decides whether or not a point should have a dungeon entrance.
+   * Randomly decides whether or not a point should have a dungeon entrance if it is isolated enough.
    */
   public boolean rollForDungeon(Point point) {
     return isIsolatedEnough(point) && Random.roll(dungeonProbability);
