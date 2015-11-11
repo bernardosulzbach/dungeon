@@ -17,7 +17,6 @@
 
 package org.mafagafogigante.dungeon.game;
 
-import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -83,7 +82,7 @@ class DungeonDistributor implements Serializable {
 
   public void registerDungeonEntrance(Point point) {
     if (entrances.contains(point)) {
-      DungeonLogger.warning("Passed already registered point (" + point.toString() + ") to registerDungeonEntrance!");
+      throw new IllegalStateException("point " + point.toString() + " is already registered");
     } else {
       entrances.add(point);
     }

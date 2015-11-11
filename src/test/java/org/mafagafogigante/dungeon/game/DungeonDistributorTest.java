@@ -71,4 +71,24 @@ public class DungeonDistributorTest {
     Assert.assertTrue(returnedList.containsAll(expectedList));
   }
 
+  @Test
+  public void dungeonDistributorShouldThrowExceptionIfTheSameEntranceIsRegisteredTwice() throws Exception {
+    DungeonDistributor first = new DungeonDistributor();
+    first.registerDungeonEntrance(new Point(0, 0, 0));
+    try {
+      first.registerDungeonEntrance(new Point(0, 0, 0));
+      Assert.fail("Expected an IllegalStateException from the DungeonDistributor.");
+    } catch (IllegalStateException expected) {
+      // Expected.
+    }
+  }
+
+  @Test
+  public void dungeonDistributorsEntranceRegistriesShouldBeIndependent() throws Exception {
+    DungeonDistributor first = new DungeonDistributor();
+    first.registerDungeonEntrance(new Point(0, 0, 0));
+    DungeonDistributor second = new DungeonDistributor();
+    second.registerDungeonEntrance(new Point(0, 0, 0));
+  }
+
 }
