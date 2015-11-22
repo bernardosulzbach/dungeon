@@ -19,7 +19,6 @@ package org.mafagafogigante.dungeon.gui;
 
 import org.mafagafogigante.dungeon.commands.CommandHistory;
 import org.mafagafogigante.dungeon.commands.IssuedCommand;
-import org.mafagafogigante.dungeon.game.ColoredString;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Writable;
@@ -63,10 +62,6 @@ import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 public class GameWindow extends JFrame {
 
@@ -83,8 +78,7 @@ public class GameWindow extends JFrame {
    * The border, in pixels.
    */
   private static final int MARGIN = 5;
-  private final SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-  private final StyledDocument document;
+  private final SwappingStyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
 
@@ -95,7 +89,7 @@ public class GameWindow extends JFrame {
    */
   public GameWindow() {
     initComponents();
-    document = textPane.getStyledDocument();
+    document = new SwappingStyledDocument(textPane);
     setVisible(true);
   }
 
@@ -365,15 +359,9 @@ public class GameWindow extends JFrame {
    * @param specifications a WritingSpecifications object
    */
   private void writeToTextPane(Writable writable, WritingSpecifications specifications) {
-    for (ColoredString coloredString : writable.toColoredStringList()) {
-      StyleConstants.setForeground(attributeSet, coloredString.getColor());
-      try {
-        document.insertString(document.getLength(), coloredString.getString(), attributeSet);
-      } catch (BadLocationException warn) {
-        DungeonLogger.warning("insertString resulted in a BadLocationException.");
-      }
-    }
-    textPane.setCaretPosition(specifications.shouldScrollDown() ? document.getLength() : 0);
+    // This is the only way to write text to the screen. One should never modify the contents of the document currently
+    // assigned to the JTextPane directly. It must be done through the SwappingStyledDocument object.
+    document.write(writable, specifications);
   }
 
   /**
@@ -385,10 +373,7 @@ public class GameWindow extends JFrame {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        try {
-          document.remove(0, document.getLength());
-        } catch (BadLocationException ignored) { // Never happens.
-        }
+        document.clear();
       }
     });
   }
