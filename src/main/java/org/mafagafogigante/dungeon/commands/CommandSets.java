@@ -36,6 +36,7 @@ import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.LocationPreset;
 import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
+import org.mafagafogigante.dungeon.game.Random;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
 import org.mafagafogigante.dungeon.io.SavesTableWriter;
@@ -56,7 +57,9 @@ import org.mafagafogigante.dungeon.wiki.WikiSearcher;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -261,6 +264,18 @@ final class CommandSets {
 
   private static CommandSet initializeExtraCommandSet() {
     CommandSet commandSet = CommandSet.emptyCommandSet();
+    commandSet.addCommand(new Command("text", "Throws an enormous amount of colored text on the screen.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        List<String> alphabet = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
+        DungeonString dungeonString = new DungeonString();
+        for (int i = 0; i < 10000; i++) {
+          dungeonString.setColor(new Color(Random.nextInteger(256), Random.nextInteger(256), Random.nextInteger(256)));
+          dungeonString.append(Random.select(alphabet));
+        }
+        Writer.write(dungeonString);
+      }
+    });
     commandSet.addCommand(new Command("fibonacci", "Displays the specified term of the Fibonacci's sequence.") {
       @Override
       public void execute(@NotNull String[] arguments) {
