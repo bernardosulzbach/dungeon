@@ -9,7 +9,8 @@ before_install:
 after_success:
   - codecov
 before_deploy:
-  bash scripts/create-hash-sum.sh target/dungeon-${TRAVIS_TAG}.jar
+  - rvm 1.9.3 do gem install mime-types -v 2.6.2
+  - bash scripts/create-hash-sum.sh target/dungeon-${TRAVIS_TAG}.jar
 deploy:
   provider: releases
   api_key:
