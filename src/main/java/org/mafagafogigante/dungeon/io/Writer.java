@@ -22,8 +22,6 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
 
-import java.awt.Color;
-
 /**
  * Writer class that encapsulates all Input/Output operations. This is the only class that should call the writing
  * methods of the game window.
