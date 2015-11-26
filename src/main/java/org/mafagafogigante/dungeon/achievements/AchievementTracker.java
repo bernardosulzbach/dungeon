@@ -127,19 +127,21 @@ public class AchievementTracker implements Serializable {
    * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
   public void update() {
-    DungeonString string = new DungeonString();
+    DungeonString dungeonString = new DungeonString();
     boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
     for (Achievement achievement : AchievementStore.getAchievements()) {
       if (!isUnlocked(achievement) && achievement.isFulfilled(statistics)) {
         if (!wroteNewLine) {
-          string.append("\n");
+          dungeonString.append("\n");
           wroteNewLine = true;
         }
-        unlock(achievement, string);
-        string.append("\n");
+        unlock(achievement, dungeonString);
+        dungeonString.append("\n");
       }
     }
-    Writer.write(string);
+    if (dungeonString.getLength() != 0) {
+      Writer.write(dungeonString);
+    }
   }
 
 }

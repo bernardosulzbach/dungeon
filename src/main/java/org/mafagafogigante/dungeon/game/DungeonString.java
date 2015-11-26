@@ -64,6 +64,18 @@ public final class DungeonString implements Writable {
   }
 
   /**
+   * Returns the total length of the string.
+   */
+  public int getLength() {
+    int sum = 0;
+    for (ColoredString coloredString : coloredStringList) {
+      sum += coloredString.getString().length();
+    }
+    sum += builder.length();
+    return sum;
+  }
+
+  /**
    * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this builder.
    *
    * @return an unmodifiable list of ColoredStrings
