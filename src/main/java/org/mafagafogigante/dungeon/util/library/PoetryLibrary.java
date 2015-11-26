@@ -28,11 +28,28 @@ import java.util.ArrayList;
 /**
  * A Library of Poems.
  */
-public final class PoetryLibrary extends Library {
+public final class PoetryLibrary {
 
   private final ArrayList<Poem> poems = new ArrayList<Poem>();
+  private final AutomaticShuffledRange automaticShuffledRange;
 
-  private AutomaticShuffledRange automaticShuffledRange;
+  PoetryLibrary() {
+    loadPoems();
+    automaticShuffledRange = new AutomaticShuffledRange(poems.size());
+  }
+
+  private void loadPoems() {
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("poems.json");
+    for (JsonValue poem : jsonObject.get("poems").asArray()) {
+      JsonObject poemObject = poem.asObject();
+      String title = poemObject.get("title").asString();
+      String author = poemObject.get("author").asString();
+      String content = poemObject.get("content").asString();
+      poems.add(new Poem(title, author, content));
+    }
+    poems.trimToSize();
+    DungeonLogger.info("Loaded " + poems.size() + " poems.");
+  }
 
   /**
    * Returns how many poems the library has.
@@ -41,9 +58,6 @@ public final class PoetryLibrary extends Library {
    * yet.
    */
   public int getPoemCount() {
-    if (isUninitialized()) {
-      initialize();
-    }
     return poems.size();
   }
 
@@ -59,21 +73,6 @@ public final class PoetryLibrary extends Library {
    */
   public Poem getNextPoem() {
     return poems.get(automaticShuffledRange.getNext());
-  }
-
-  @Override
-  void load() {
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("poems.json");
-    for (JsonValue poem : jsonObject.get("poems").asArray()) {
-      JsonObject poemObject = poem.asObject();
-      String title = poemObject.get("title").asString();
-      String author = poemObject.get("author").asString();
-      String content = poemObject.get("content").asString();
-      poems.add(new Poem(title, author, content));
-    }
-    poems.trimToSize();
-    automaticShuffledRange = new AutomaticShuffledRange(poems.size());
-    DungeonLogger.info("Loaded " + poems.size() + " poems.");
   }
 
 }
