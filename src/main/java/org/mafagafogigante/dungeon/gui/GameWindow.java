@@ -60,7 +60,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 public class GameWindow extends JFrame {
@@ -136,13 +135,7 @@ public class GameWindow extends JFrame {
       } else {
         UIManager.setLookAndFeel(lookAndFeel);
       }
-    } catch (UnsupportedLookAndFeelException ignored) {
-      // Nothing can be done about this.
-    } catch (ClassNotFoundException ignored) {
-      // Nothing can be done about this.
-    } catch (InstantiationException ignored) {
-      // Nothing can be done about this.
-    } catch (IllegalAccessException ignored) {
+    } catch (Exception ignored) {
       // Nothing can be done about this.
     }
   }

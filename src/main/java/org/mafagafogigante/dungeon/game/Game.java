@@ -73,10 +73,7 @@ public class Game {
   private static void invokeOnEventDispatchThreadAndWait(Runnable runnable) {
     try {
       SwingUtilities.invokeAndWait(runnable);
-    } catch (InterruptedException fatal) {
-      DungeonLogger.logSevere(fatal);
-      System.exit(1);
-    } catch (InvocationTargetException fatal) {
+    } catch (InterruptedException | InvocationTargetException fatal) {
       DungeonLogger.logSevere(fatal);
       System.exit(1);
     }
