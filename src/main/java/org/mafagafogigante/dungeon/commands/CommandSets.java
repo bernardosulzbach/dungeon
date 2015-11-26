@@ -37,6 +37,7 @@ import org.mafagafogigante.dungeon.game.LocationPreset;
 import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.gui.WritingSpecifications;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
 import org.mafagafogigante.dungeon.io.SavesTableWriter;
@@ -244,7 +245,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("tutorial", "Displays the tutorial.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.write(new Tutorial());
+        Writer.write(new Tutorial(), new WritingSpecifications(false, 0));
       }
     });
     commandSet.addCommand(new Command("unequip", "Unequips the currently equipped item.") {
