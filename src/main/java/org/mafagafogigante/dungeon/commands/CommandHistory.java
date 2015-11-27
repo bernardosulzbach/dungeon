@@ -30,20 +30,13 @@ import java.io.Serializable;
 public class CommandHistory implements Serializable {
 
   private static final int HISTORY_MAXIMUM_SIZE = 200; // Enough. Small so it doesn't slow down 'TAB' search.
-  private final CircularList<String> commands;
-  private transient Cursor cursor;
-
-  public CommandHistory() {
-    commands = new CircularList<>(HISTORY_MAXIMUM_SIZE);
-  }
+  private final CircularList<String> commands = new CircularList<>(HISTORY_MAXIMUM_SIZE);
+  private transient Cursor cursor = new Cursor(this);
 
   /**
    * Returns a CommandHistory.Cursor to provide access to the stored commands.
    */
   public Cursor getCursor() {
-    if (cursor == null) {
-      cursor = new Cursor(this);
-    }
     return cursor;
   }
 
