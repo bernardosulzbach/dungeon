@@ -348,7 +348,7 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
         Table table = new Table("Name", "Kills", "Visited so far", "Maximum number of visits");
-        for (LocationPreset preset : LocationPresetStore.getLocationPresetStore().getAllPresets()) {
+        for (LocationPreset preset : LocationPresetStore.getDefaultLocationPresetStore().getAllPresets()) {
           String name = preset.getName().getSingular();
           String kills = String.valueOf(explorationStatistics.getKillCount(preset.getId()));
           String visitedSoFar = String.valueOf(explorationStatistics.getVisitedLocations(preset.getId()));

@@ -461,6 +461,21 @@
       "weapon": "SWORD"
     },
     {
+      "id": "GHOUL",
+      "type": "Undead",
+      "name": {
+        "singular": "Ghoul"
+      },
+      "tags": [
+        "CORPSE"
+      ],
+      "visibility": "75%",
+      "weight": 50.0,
+      "health": 18,
+      "attack": 10,
+      "attackAlgorithmID": "SIMPLE"
+    },
+    {
       "id": "RADIANT_GHOUL",
       "type": "Undead",
       "name": {

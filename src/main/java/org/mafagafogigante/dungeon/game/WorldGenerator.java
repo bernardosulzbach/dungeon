@@ -47,17 +47,17 @@ class WorldGenerator implements Serializable {
    * @return a LocationPreset
    */
   private static LocationPreset getRandomLandLocationPreset() {
-    LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
+    LocationPresetStore locationPresetStore = LocationPresetStore.getDefaultLocationPresetStore();
     return Random.select(locationPresetStore.getLocationPresetsByType(Type.LAND));
   }
 
   private Location createRandomRiverLocation(@NotNull final Point point) {
-    LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
+    LocationPresetStore locationPresetStore = LocationPresetStore.getDefaultLocationPresetStore();
     return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.RIVER)), world, point);
   }
 
   private Location createRandomBridgeLocation(@NotNull final Point point) {
-    LocationPresetStore locationPresetStore = LocationPresetStore.getLocationPresetStore();
+    LocationPresetStore locationPresetStore = LocationPresetStore.getDefaultLocationPresetStore();
     return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.BRIDGE)), world, point);
   }
 

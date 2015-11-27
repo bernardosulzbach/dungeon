@@ -34,25 +34,33 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A store for all LocationPresets.
+ * A class that stores and provides easy retrieval of a set of LocationPresets. Application code should access this
+ * class through the public getDefaultLocationPresetStore() method.
  */
-public class LocationPresetStore {
+public final class LocationPresetStore {
 
-  private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
+  private static final LocationPresetStore defaultLocationPresetStore = new LocationPresetStore();
+  private static boolean defaultLocationPresetStoreIsUninitialized = true;
 
   private final Map<Id, LocationPreset> idLocationPresetMap = new HashMap<>();
   private final Map<Type, List<LocationPreset>> typeLocationPresetMap = new HashMap<>();
 
   private LocationPresetStore() {
-    loadLocationPresets();
   }
 
   private static Color colorFromJsonArray(JsonArray color) {
     return new Color(color.get(0).asInt(), color.get(1).asInt(), color.get(2).asInt());
   }
 
-  public static LocationPresetStore getLocationPresetStore() {
-    return locationPresetStore;
+  /**
+   * Returns the default LocationPresetStore, initializing it if it hasn't already been initialized.
+   */
+  public static LocationPresetStore getDefaultLocationPresetStore() {
+    if (defaultLocationPresetStoreIsUninitialized) {
+      defaultLocationPresetStore.loadLocationPresets();
+      defaultLocationPresetStoreIsUninitialized = false;
+    }
+    return defaultLocationPresetStore;
   }
 
   private void loadLocationPresets() {
@@ -96,9 +104,13 @@ public class LocationPresetStore {
   }
 
   /**
-   * Adds a LocationPreset to the store.
+   * Adds a LocationPreset to the store. Throws an IllegalArgumentException if there is already a preset registered with
+   * the same Id.
    */
   private void addLocationPreset(LocationPreset preset) {
+    if (idLocationPresetMap.containsKey(preset.getId())) {
+      throw new IllegalArgumentException("idLocationPresetMap already contains a preset with the Id " + preset.getId());
+    }
     idLocationPresetMap.put(preset.getId(), preset);
     if (!typeLocationPresetMap.containsKey(preset.getType())) {
       typeLocationPresetMap.put(preset.getType(), new ArrayList<LocationPreset>());

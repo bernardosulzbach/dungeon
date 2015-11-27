@@ -193,7 +193,7 @@
       ]
     },
     {
-      "id": "DUNGEON_ROOM",
+      "id": "DUNGEON_ROOM_1",
       "type": "DUNGEON_ROOM",
       "name": {
         "singular": "Dungeon Room"
@@ -233,7 +233,7 @@
       ]
     },
     {
-      "id": "DUNGEON_ROOM",
+      "id": "DUNGEON_ROOM_2",
       "type": "DUNGEON_ROOM",
       "name": {
         "singular": "Dungeon Room"
@@ -276,6 +276,46 @@
         },
         {
           "id": "TOME_OF_FINGER_OF_DEATH",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "ANCIENT_DUNGEON_ROOM",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Ancient Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dimly illuminated dungeon room with several hieroglyphs carved on the floor. In the center of the room there is a stone plinth whose purpose is unknown to you.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+      ],
+      "spawners": [
+        {
+          "id": "RADIANT_GHOUL",
+          "population": 1,
+          "delay": 12
+        },
+        {
+          "id": "GHOUL",
+          "population": 2,
+          "delay": 10
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
         }
       ]
