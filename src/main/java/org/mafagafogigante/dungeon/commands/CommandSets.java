@@ -425,8 +425,8 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         if (arguments.length != 0) {
           Date date = Game.getGameState().getWorld().getWorldDate();
-          Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase()), date);
-          if (item != null) {
+          try {
+            Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase()), date);
             Writer.write("Item successfully created.");
             if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) ==
                 SimulationResult.SUCCESSFUL) {
@@ -436,7 +436,7 @@ final class CommandSets {
               Writer.write("Item could not be added to your inventory. It was added to the current location instead.");
             }
             Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
-          } else {
+          } catch (IllegalArgumentException invalidPreset) {
             Writer.write("Item could not be created.");
           }
         } else {
