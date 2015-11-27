@@ -204,7 +204,7 @@
         192
       ],
       "symbol": "R",
-      "info": "A gloomy and dimly illuminated dungeon room with walls made of stone. A torch hangs on the wall.",
+      "info": "A gloomy and dimly illuminated dungeon room with walls made of stone.",
       "blobSize": 0,
       "lightPermittivity": 0.0,
       "blockedEntrances": [
