@@ -19,6 +19,8 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
+import java.util.Locale;
+
 /**
  * Simple wrapper for a name and info of a Command.
  */
@@ -38,7 +40,7 @@ public class CommandDescription {
       throw new IllegalArgumentException("Cannot create CommandDescription with null name.");
     } else if (isNotLowercase(name)) {
       DungeonLogger.warning("Passed a String that was not lowercase as name for a CommandDescription.");
-      name = name.toLowerCase();
+      name = name.toLowerCase(Locale.ENGLISH);
     }
     this.name = name;
     this.info = info;
