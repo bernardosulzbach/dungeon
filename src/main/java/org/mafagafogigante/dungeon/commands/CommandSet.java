@@ -17,6 +17,7 @@
 
 package org.mafagafogigante.dungeon.commands;
 
+import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Utils;
@@ -51,26 +52,28 @@ public final class CommandSet {
       public void execute(@NotNull String[] arguments) {
         String filter = arguments.length == 0 ? null : arguments[0];
         List<CommandDescription> descriptions = commandSet.getCommandDescriptions();
-        StringBuilder builder = new StringBuilder();
+        DungeonString dungeonString = new DungeonString();
         int count = 0;
         for (CommandDescription description : descriptions) {
           if (filter == null || Utils.startsWithIgnoreCase(description.getName(), filter)) {
             count++;
-            builder.append(Utils.padString(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
-            builder.append(description.getInfo());
-            builder.append('\n');
+            dungeonString.append(Utils.padString(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
+            dungeonString.append(description.getInfo());
+            dungeonString.append("\n");
           }
         }
         if (count == 0 && filter != null) {
           Writer.write("No command starts with '" + filter + "'.");
         } else {
           if (count > 1) {
-            builder.append("\nListed ").append(count).append(" commands.");
+            dungeonString.append("\nListed ");
+            dungeonString.append(String.valueOf(count));
+            dungeonString.append(" commands.");
             if (filter == null) {
-              builder.append("\nYou can filter the output of this command by typing the beginning of a command.");
+              dungeonString.append("\nYou can filter the output of this command by typing the beginning of a command.");
             }
           }
-          Writer.write(builder.toString());
+          Writer.write(dungeonString.toString());
         }
       }
     });
