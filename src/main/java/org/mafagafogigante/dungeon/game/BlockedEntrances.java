@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class BlockedEntrances implements Serializable {
 
-  private Set<Direction> setOfBlockedEntrances = new HashSet<Direction>();
+  private Set<Direction> setOfBlockedEntrances = new HashSet<>();
 
   public BlockedEntrances() {
   }
@@ -41,7 +41,7 @@ public class BlockedEntrances implements Serializable {
    * @param source the object to be copied.
    */
   public BlockedEntrances(BlockedEntrances source) {
-    setOfBlockedEntrances = new HashSet<Direction>(source.setOfBlockedEntrances);
+    setOfBlockedEntrances = new HashSet<>(source.setOfBlockedEntrances);
   }
 
   /**

@@ -189,7 +189,7 @@ public class Game {
       string.setColor(Color.RED);
       string.append("That is not a valid command.\n");
       string.append("But it is similar to ");
-      List<String> suggestionsBetweenCommas = new ArrayList<String>();
+      List<String> suggestionsBetweenCommas = new ArrayList<>();
       for (String suggestion : evaluation.getSuggestions()) {
         suggestionsBetweenCommas.add(StringUtils.wrap(suggestion, '"'));
       }

@@ -26,8 +26,8 @@ import java.io.Serializable;
  */
 public final class WorldStatistics implements Serializable {
 
-  private final CounterMap<String> spawnCounter = new CounterMap<String>();
-  private final CounterMap<String> locationCounter = new CounterMap<String>();
+  private final CounterMap<String> spawnCounter = new CounterMap<>();
+  private final CounterMap<String> locationCounter = new CounterMap<>();
   private int spawnCount;
   private int locationCount;
 

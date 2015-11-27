@@ -222,7 +222,7 @@ public class Creature extends Entity {
   }
 
   <T extends Entity> List<T> filterByVisibility(List<T> list) {
-    List<T> visible = new ArrayList<T>();
+    List<T> visible = new ArrayList<>();
     for (T entity : list) {
       if (canSee(entity)) {
         visible.add(entity);

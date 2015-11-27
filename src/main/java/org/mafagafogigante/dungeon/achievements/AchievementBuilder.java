@@ -25,7 +25,7 @@ import java.util.Collection;
 
 class AchievementBuilder {
 
-  private final Collection<BattleStatisticsRequirement> requirements = new ArrayList<BattleStatisticsRequirement>();
+  private final Collection<BattleStatisticsRequirement> requirements = new ArrayList<>();
   private String id;
   private String name;
   private String info;

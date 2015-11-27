@@ -31,7 +31,7 @@ class ExpandableIntegerSet implements Serializable {
   private final int minimumDifference;
   private final int differenceBetweenMinAndMax;
 
-  private final NavigableSet<Integer> set = new TreeSet<Integer>();
+  private final NavigableSet<Integer> set = new TreeSet<>();
 
   /**
    * Make a new ExpandableIntegerSet.
@@ -70,7 +70,7 @@ class ExpandableIntegerSet implements Serializable {
     if (set.isEmpty()) {
       throw new IllegalStateException("the set is empty.");
     }
-    ArrayList<Integer> integerList = new ArrayList<Integer>();
+    ArrayList<Integer> integerList = new ArrayList<>();
     int integer = set.last();
     while (value >= integer) {
       integer += minimumDifference + Random.nextInteger(differenceBetweenMinAndMax);

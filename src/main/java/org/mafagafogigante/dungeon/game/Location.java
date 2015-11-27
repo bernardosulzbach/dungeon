@@ -65,8 +65,8 @@ public final class Location implements Serializable {
     this.point = point;
     this.blockedEntrances = preset.getBlockedEntrances();
     this.lightPermittivity = preset.getLightPermittivity();
-    this.creatures = new ArrayList<Creature>();
-    this.spawners = new ArrayList<Spawner>(preset.getSpawners().size());
+    this.creatures = new ArrayList<>();
+    this.spawners = new ArrayList<>(preset.getSpawners().size());
     for (SpawnerPreset spawner : preset.getSpawners()) {
       spawners.add(new Spawner(spawner, this));
     }
@@ -131,7 +131,7 @@ public final class Location implements Serializable {
    * Returns a list with all the entities in the current location.
    */
   private List<Entity> getEntities() {
-    List<Entity> entities = new ArrayList<Entity>();
+    List<Entity> entities = new ArrayList<>();
     entities.addAll(getCreatures());
     entities.addAll(getItemList());
     return entities;

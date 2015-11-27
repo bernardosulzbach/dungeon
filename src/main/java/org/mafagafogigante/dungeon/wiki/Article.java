@@ -34,7 +34,7 @@ final class Article implements Selectable {
 
   private final Name title;
   private final String content;
-  private final Set<String> seeAlso = new TreeSet<String>();
+  private final Set<String> seeAlso = new TreeSet<>();
 
   public Article(@NotNull String title, @NotNull String content) {
     this.title = NameFactory.newInstance(title);

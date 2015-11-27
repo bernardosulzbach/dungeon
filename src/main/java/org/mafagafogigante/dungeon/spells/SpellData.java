@@ -35,7 +35,7 @@ import java.util.Map;
 
 public final class SpellData {
 
-  private static final Map<Id, Spell> spellMap = new HashMap<Id, Spell>();
+  private static final Map<Id, Spell> spellMap = new HashMap<>();
 
   static {
     putSpell(new Spell("HEAL", "Heal") {
@@ -124,7 +124,7 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
-        List<Creature> creatureList = new ArrayList<Creature>(hero.getLocation().getCreatures());
+        List<Creature> creatureList = new ArrayList<>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
         DungeonString string = new DungeonString();
         string.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");

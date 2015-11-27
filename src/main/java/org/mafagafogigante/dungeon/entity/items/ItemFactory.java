@@ -47,7 +47,7 @@ import java.util.Set;
  */
 public abstract class ItemFactory {
 
-  private static final Map<Id, ItemPreset> itemPresets = new HashMap<Id, ItemPreset>();
+  private static final Map<Id, ItemPreset> itemPresets = new HashMap<>();
 
   /**
    * Loads all item presets that are not programmatically generated.

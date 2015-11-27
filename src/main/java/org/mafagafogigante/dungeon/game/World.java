@@ -45,7 +45,7 @@ public class World implements Serializable {
    */
   public World(WorldStatistics statistics) {
     worldStatistics = statistics;
-    locations = new HashMap<Point, Location>();
+    locations = new HashMap<>();
     generator = new WorldGenerator(this);
   }
 

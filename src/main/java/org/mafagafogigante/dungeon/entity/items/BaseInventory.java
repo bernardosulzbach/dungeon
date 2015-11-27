@@ -32,7 +32,7 @@ public abstract class BaseInventory implements Serializable {
   final List<Item> items;
 
   BaseInventory() {
-    items = new ArrayList<Item>();
+    items = new ArrayList<>();
   }
 
   private static boolean isDecomposed(Item item) {
@@ -75,7 +75,7 @@ public abstract class BaseInventory implements Serializable {
    * Iterates through the inventory, removing items that shouldn't exist anymore.
    */
   public void refreshItems() {
-    for (Item item : new ArrayList<Item>(items)) {
+    for (Item item : new ArrayList<>(items)) {
       if (isDecomposed(item)) {
         removeItem(item);
       }

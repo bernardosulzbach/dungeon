@@ -51,8 +51,8 @@ final class Wiki {
   private static void initialize() {
     // The field cannot be initialized in the field declaration as a comparison to null is used to determine whether or
     // not it has already been initialized.
-    articleList = new ArrayList<Article>();
-    Map<Article, Collection<String>> seeAlsoMap = new HashMap<Article, Collection<String>>();
+    articleList = new ArrayList<>();
+    Map<Article, Collection<String>> seeAlsoMap = new HashMap<>();
     JsonObject wikiJsonObject = JsonObjectFactory.makeJsonObject("wiki.json");
     for (JsonValue jsonValue : wikiJsonObject.get("articles").asArray()) {
       JsonObject jsonObject = jsonValue.asObject();
@@ -71,7 +71,7 @@ final class Wiki {
 
   private static void addReferences(Map<Article, Collection<String>> seeAlsoMap) {
     // To speed up, make a set with all the valid article names.
-    Set<String> validReferences = new HashSet<String>();
+    Set<String> validReferences = new HashSet<>();
     for (Article article : articleList) {
       validReferences.add(article.getName().getSingular());
     }

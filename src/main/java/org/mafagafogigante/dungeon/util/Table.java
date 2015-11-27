@@ -45,7 +45,7 @@ public class Table implements Writable {
   /**
    * The content of the Table.
    */
-  private final List<Column> columns = new ArrayList<Column>();
+  private final List<Column> columns = new ArrayList<>();
 
   /**
    * A CounterMap of Integers representing how many horizontal separators should precede each row.
@@ -189,7 +189,7 @@ public class Table implements Writable {
    */
   public void insertSeparator() {
     if (separators == null) {
-      separators = new CounterMap<Integer>();
+      separators = new CounterMap<>();
     }
     separators.incrementCounter(columns.get(0).rows.size());
   }
@@ -262,7 +262,7 @@ public class Table implements Writable {
 
   private class Column {
     final String header;
-    final List<String> rows = new ArrayList<String>();
+    final List<String> rows = new ArrayList<>();
     int widestValue;
 
     public Column(String header) {

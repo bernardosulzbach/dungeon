@@ -33,7 +33,7 @@ import java.util.List;
 public class AutomaticShuffledStringLibrary extends Library {
 
   private final String filename;
-  private final List<String> strings = new ArrayList<String>();
+  private final List<String> strings = new ArrayList<>();
   private AutomaticShuffledRange automaticShuffledRange;
 
   public AutomaticShuffledStringLibrary(@NotNull String filename) {

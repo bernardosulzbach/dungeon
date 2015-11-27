@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public final class PoetryLibrary {
 
-  private final ArrayList<Poem> poems = new ArrayList<Poem>();
+  private final ArrayList<Poem> poems = new ArrayList<>();
   private final AutomaticShuffledRange automaticShuffledRange;
 
   PoetryLibrary() {

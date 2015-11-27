@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class AchievementStore {
 
-  private static final List<Achievement> achievements = new ArrayList<Achievement>();
+  private static final List<Achievement> achievements = new ArrayList<>();
 
   private AchievementStore() {
     throw new AssertionError();
@@ -108,7 +108,7 @@ public class AchievementStore {
   }
 
   private static CounterMap<Id> idCounterMapFromJsonObject(JsonObject jsonObject) {
-    CounterMap<Id> counterMap = new CounterMap<Id>();
+    CounterMap<Id> counterMap = new CounterMap<>();
     for (Member member : jsonObject) {
       counterMap.incrementCounter(new Id(member.getName()), member.getValue().asInt());
     }

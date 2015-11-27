@@ -40,7 +40,7 @@ public class DungeonDistributorTest {
 
   @Test
   public void makeNoEntrancesZonePointListShouldIncludeBorders() throws Exception {
-    List<Point> expectedList = new ArrayList<Point>();
+    List<Point> expectedList = new ArrayList<>();
     expectedList.add(new Point(-1, 1, 0));
     expectedList.add(new Point(0, 1, 0));
     expectedList.add(new Point(1, 1, 0));
@@ -59,7 +59,7 @@ public class DungeonDistributorTest {
     final int height = 1;
     final MinimumBoundingRectangle threeByOneBoundingRectangle = new MinimumBoundingRectangle(width, height);
     List<Point> returnedList = DungeonDistributor.makeNoEntrancesZonePointList(origin, threeByOneBoundingRectangle);
-    List<Point> expectedList = new ArrayList<Point>();
+    List<Point> expectedList = new ArrayList<>();
     for (int i = -width; i <= width; i++) {
       for (int j = -height; j <= height; j++) {
         if (i != origin.getX() || j != origin.getY()) {

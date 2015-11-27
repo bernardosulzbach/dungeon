@@ -34,7 +34,7 @@ public class CommandHistory implements Serializable {
   private transient Cursor cursor;
 
   public CommandHistory() {
-    commands = new CircularList<String>(HISTORY_MAXIMUM_SIZE);
+    commands = new CircularList<>(HISTORY_MAXIMUM_SIZE);
   }
 
   /**

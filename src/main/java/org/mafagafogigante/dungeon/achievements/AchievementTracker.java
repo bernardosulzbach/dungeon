@@ -39,7 +39,7 @@ import java.util.Set;
 public class AchievementTracker implements Serializable {
 
   private final Statistics statistics;
-  private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<UnlockedAchievement>();
+  private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<>();
 
   public AchievementTracker(Statistics statistics) {
     this.statistics = statistics;
@@ -105,7 +105,7 @@ public class AchievementTracker implements Serializable {
     if (comparator == null) {
       throw new IllegalArgumentException("comparator is null.");
     }
-    List<UnlockedAchievement> list = new ArrayList<UnlockedAchievement>(unlockedAchievements);
+    List<UnlockedAchievement> list = new ArrayList<>(unlockedAchievements);
     Collections.sort(list, comparator);
     return list;
   }

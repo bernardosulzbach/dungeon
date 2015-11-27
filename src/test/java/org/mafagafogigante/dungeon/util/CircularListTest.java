@@ -24,7 +24,7 @@ public class CircularListTest {
 
   @Test
   public void testAdd() throws Exception {
-    CircularList<Integer> circularList = new CircularList<Integer>(2);
+    CircularList<Integer> circularList = new CircularList<>(2);
     circularList.add(1);
     Assert.assertTrue(circularList.get(0).equals(1));
     circularList.add(2);
@@ -41,7 +41,7 @@ public class CircularListTest {
   @Test
   public void testSize() throws Exception {
     final int CAPACITY = 10;
-    CircularList<Integer> circularList = new CircularList<Integer>(CAPACITY);
+    CircularList<Integer> circularList = new CircularList<>(CAPACITY);
     Assert.assertEquals(0, circularList.size());
     for (int i = 0; i <= 2 * CAPACITY; i++) { // i is how many elements we have already added.
       Assert.assertEquals(java.lang.Math.min(i, CAPACITY), circularList.size());
@@ -51,7 +51,7 @@ public class CircularListTest {
 
   @Test
   public void testIsFull() throws Exception {
-    CircularList<Integer> circularList = new CircularList<Integer>(2);
+    CircularList<Integer> circularList = new CircularList<>(2);
     Assert.assertFalse(circularList.isFull());
     circularList.add(1);
     Assert.assertFalse(circularList.isFull());
@@ -63,7 +63,7 @@ public class CircularListTest {
 
   @Test
   public void testIsEmpty() throws Exception {
-    CircularList<Integer> circularList = new CircularList<Integer>(1);
+    CircularList<Integer> circularList = new CircularList<>(1);
     Assert.assertTrue(circularList.isEmpty());
     circularList.add(1);
     Assert.assertFalse(circularList.isEmpty());
@@ -72,7 +72,7 @@ public class CircularListTest {
   @Test
   public void testGet() throws Exception {
     final int CAPACITY = 10;
-    CircularList<Integer> circularList = new CircularList<Integer>(CAPACITY);
+    CircularList<Integer> circularList = new CircularList<>(CAPACITY);
     for (int i = 0; i <= 2 * CAPACITY; i++) {
       circularList.add(i);
       Assert.assertTrue(circularList.get(java.lang.Math.min(i, CAPACITY - 1)).equals(i));

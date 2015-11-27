@@ -89,7 +89,7 @@ public final class HeroUtils {
    * Filters a List of Creatures, returning all that have a specified Tag.
    */
   static List<Creature> filterByTag(List<Creature> list, Creature.Tag tag) {
-    List<Creature> visible = new ArrayList<Creature>();
+    List<Creature> visible = new ArrayList<>();
     for (Creature candidate : list) {
       if (candidate.hasTag(tag)) {
         visible.add(candidate);

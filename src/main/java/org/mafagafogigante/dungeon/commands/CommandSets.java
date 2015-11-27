@@ -77,7 +77,7 @@ final class CommandSets {
 
   @NotNull
   private static Map<String, CommandSet> initializeCommandSetMap() {
-    Map<String, CommandSet> map = new HashMap<String, CommandSet>();
+    Map<String, CommandSet> map = new HashMap<>();
     map.put("default", initializeDefaultCommandSet());
     map.put("extra", initializeExtraCommandSet());
     map.put("debug", initializeDebugCommandSet());
@@ -322,7 +322,7 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
-        List<Achievement> notYetUnlockedAchievementList = new ArrayList<Achievement>();
+        List<Achievement> notYetUnlockedAchievementList = new ArrayList<>();
         for (Achievement achievement : AchievementStore.getAchievements()) {
           if (!tracker.isUnlocked(achievement)) {
             notYetUnlockedAchievementList.add(achievement);

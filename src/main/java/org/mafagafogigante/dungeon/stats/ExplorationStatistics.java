@@ -31,7 +31,7 @@ public class ExplorationStatistics implements Serializable {
   private final HashMap<Point, ExplorationStatisticsEntry> entries;
 
   public ExplorationStatistics() {
-    this.entries = new HashMap<Point, ExplorationStatisticsEntry>();
+    this.entries = new HashMap<>();
   }
 
   /**

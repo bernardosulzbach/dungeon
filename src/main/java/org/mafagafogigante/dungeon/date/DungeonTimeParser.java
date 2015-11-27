@@ -93,7 +93,7 @@ public final class DungeonTimeParser {
   private static List<String> cleanAndTokenize(String string) {
     string = string.replaceAll("and", "");
     string = string.replaceAll(",", "");
-    return new ArrayList<String>(Arrays.asList(Utils.split(string)));
+    return new ArrayList<>(Arrays.asList(Utils.split(string)));
   }
 
   public static class InvalidMultiplierException extends IllegalArgumentException {

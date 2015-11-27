@@ -265,7 +265,7 @@ public final class Loader {
     if (fileArray == null) {
       fileArray = new File[0];
     }
-    List<File> fileList = new ArrayList<File>(Arrays.asList(fileArray));
+    List<File> fileList = new ArrayList<>(Arrays.asList(fileArray));
     for (Iterator<File> fileIterator = fileList.iterator(); fileIterator.hasNext(); ) {
       File file = fileIterator.next();
       if (!file.isFile()) {

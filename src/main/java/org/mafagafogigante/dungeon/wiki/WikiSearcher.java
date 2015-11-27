@@ -67,7 +67,7 @@ public final class WikiSearcher {
    * @param arguments an array of arguments that will determine the search
    */
   private static void deepSearch(String[] arguments) {
-    CounterMap<Article> counter = new CounterMap<Article>();
+    CounterMap<Article> counter = new CounterMap<>();
     for (Article article : Wiki.getArticles()) {
       int matches = 0;
       for (String argument : arguments) {

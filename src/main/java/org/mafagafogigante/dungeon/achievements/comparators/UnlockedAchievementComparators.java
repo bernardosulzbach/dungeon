@@ -29,7 +29,7 @@ public class UnlockedAchievementComparators {
   private static final Comparator<UnlockedAchievement> defaultComparator;
 
   static {
-    comparatorMap = new HashMap<String, Comparator<UnlockedAchievement>>();
+    comparatorMap = new HashMap<>();
 
     Comparator<UnlockedAchievement> nameComparator = new NameUnlockedAchievementComparator();
     comparatorMap.put("name", nameComparator);

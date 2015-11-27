@@ -38,7 +38,7 @@ class TimeStringBuilder {
   private final Map<DungeonTimeUnit, NonNegativeInteger> map;
 
   public TimeStringBuilder() {
-    map = new EnumMap<DungeonTimeUnit, NonNegativeInteger>(DungeonTimeUnit.class);
+    map = new EnumMap<>(DungeonTimeUnit.class);
   }
 
   public void set(@NotNull DungeonTimeUnit unit, @NotNull Integer value) {
@@ -53,7 +53,7 @@ class TimeStringBuilder {
    * @return a time string
    */
   private String toString(final int fields) {
-    List<String> strings = new ArrayList<String>();
+    List<String> strings = new ArrayList<>();
     // Enum maps are maintained in the natural order of their keys (the order of declaration of the enum constants).
     for (Entry<DungeonTimeUnit, NonNegativeInteger> entry : map.entrySet()) {
       if (strings.size() < fields) {

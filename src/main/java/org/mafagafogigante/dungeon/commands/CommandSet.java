@@ -35,8 +35,8 @@ public final class CommandSet {
 
   private static final int COMMAND_NAME_COLUMN_WIDTH = 20;
 
-  private final List<Command> commands = new ArrayList<Command>();
-  private final List<CommandDescription> commandDescriptions = new ArrayList<CommandDescription>();
+  private final List<Command> commands = new ArrayList<>();
+  private final List<CommandDescription> commandDescriptions = new ArrayList<>();
 
   private CommandSet() {
   }
@@ -124,7 +124,7 @@ public final class CommandSet {
    * distance.
    */
   public List<String> getClosestCommands(String token) {
-    List<String> closestCommands = new ArrayList<String>();
+    List<String> closestCommands = new ArrayList<>();
     int best = Integer.MAX_VALUE;
     for (Command command : commands) {
       String commandName = command.getDescription().getName();

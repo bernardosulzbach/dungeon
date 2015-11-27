@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class StopWatch {
 
-  private static final Map<TimeUnit, String> ABBREVIATIONS = new EnumMap<TimeUnit, String>(TimeUnit.class);
+  private static final Map<TimeUnit, String> ABBREVIATIONS = new EnumMap<>(TimeUnit.class);
 
   static {
     ABBREVIATIONS.put(TimeUnit.NANOSECONDS, "ns");

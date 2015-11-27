@@ -46,7 +46,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * @return a new TagSet
    */
   public static <E extends Enum<E>> TagSet<E> makeEmptyTagSet(Class<E> enumClass) {
-    return new TagSet<E>(EnumSet.noneOf(enumClass));
+    return new TagSet<>(EnumSet.noneOf(enumClass));
   }
 
   /**
@@ -57,7 +57,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
    * @return a new TagSet
    */
   public static <E extends Enum<E>> TagSet<E> copyTagSet(TagSet<E> tagSet) {
-    return new TagSet<E>(EnumSet.copyOf(tagSet.set));
+    return new TagSet<>(EnumSet.copyOf(tagSet.set));
   }
 
   /**

@@ -61,7 +61,7 @@ public final class CreatureFactory {
    * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
    */
   static {
-    Map<Id, CreaturePreset> creaturePresetMap = new HashMap<Id, CreaturePreset>();
+    Map<Id, CreaturePreset> creaturePresetMap = new HashMap<>();
     JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
     for (JsonValue value : object.get("creatures").asArray()) {
       JsonObject presetObject = value.asObject();
@@ -134,7 +134,7 @@ public final class CreatureFactory {
     if (object.get("inventory") == null) {
       return Collections.emptyList();
     } else {
-      List<Id> list = new ArrayList<Id>();
+      List<Id> list = new ArrayList<>();
       for (JsonValue value : object.get("inventory").asArray()) {
         list.add(new Id(value.asString()));
       }
@@ -146,7 +146,7 @@ public final class CreatureFactory {
     if (object.get("drops") == null) {
       return Collections.emptyList();
     } else {
-      List<Drop> list = new ArrayList<Drop>();
+      List<Drop> list = new ArrayList<>();
       for (JsonValue value : object.get("drops").asArray()) {
         JsonArray dropArray = value.asArray();
         list.add(new Drop(new Id(dropArray.get(0).asString()), new Percentage(dropArray.get(1).asDouble())));

@@ -33,7 +33,7 @@ class DungeonDistributor implements Serializable {
   private static final Percentage dungeonProbability = Percentage.fromString("2%");
   private static final MinimumBoundingRectangle biggestDungeonPossible = DungeonCreator.getMinimumBoundingRectangle();
 
-  private final Set<Point> entrances = new HashSet<Point>();
+  private final Set<Point> entrances = new HashSet<>();
 
   public DungeonDistributor() {
   }
@@ -62,7 +62,7 @@ class DungeonDistributor implements Serializable {
      */
     final int width = minimumBoundingRectangle.getWidth();
     final int height = minimumBoundingRectangle.getHeight();
-    List<Point> points = new ArrayList<Point>();
+    List<Point> points = new ArrayList<>();
     for (int x = point.getX() - width; x <= point.getX() + width; x++) {
       for (int y = point.getY() - height; y <= point.getY() + height; y++) {
         if (x != point.getX() || y != point.getY()) {

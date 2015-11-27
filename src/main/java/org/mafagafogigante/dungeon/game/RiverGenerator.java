@@ -33,7 +33,7 @@ final class RiverGenerator implements Serializable {
 
   public RiverGenerator() {
     lines = new ExpandableIntegerSet(MIN_DIST_RIVER, MAX_DIST_RIVER);
-    rivers = new HashMap<Integer, River>();
+    rivers = new HashMap<>();
   }
 
   /**

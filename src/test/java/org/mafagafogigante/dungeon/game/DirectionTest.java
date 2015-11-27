@@ -20,9 +20,6 @@ package org.mafagafogigante.dungeon.game;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 public class DirectionTest {
 
   @Test

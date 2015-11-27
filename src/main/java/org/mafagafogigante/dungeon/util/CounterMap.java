@@ -34,7 +34,7 @@ import java.util.Set;
 public class CounterMap<K> implements Serializable, Iterable<K> {
 
   // The wrapped HashMap.
-  private final HashMap<K, Integer> map = new HashMap<K, Integer>();
+  private final HashMap<K, Integer> map = new HashMap<>();
 
   /**
    * Constructs a new empty CounterMap.
@@ -96,14 +96,14 @@ public class CounterMap<K> implements Serializable, Iterable<K> {
 
   @Override
   public Iterator<K> iterator() {
-    List<Entry<K, Integer>> entryList = new ArrayList<Entry<K, Integer>>(map.entrySet());
+    List<Entry<K, Integer>> entryList = new ArrayList<>(map.entrySet());
     Collections.sort(entryList, new Comparator<Entry<K, Integer>>() {
       @Override
       public int compare(Entry<K, Integer> o1, Entry<K, Integer> o2) {
         return o2.getValue().compareTo(o1.getValue());
       }
     });
-    List<K> sortedKeyList = new ArrayList<K>();
+    List<K> sortedKeyList = new ArrayList<>();
     for (Entry<K, Integer> entry : entryList) {
       sortedKeyList.add(entry.getKey());
     }

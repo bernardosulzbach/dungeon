@@ -37,7 +37,7 @@ public final class DungeonString implements Writable {
    *
    * <p>Should only be accessed through the getter (except for addBuilderContentToList).
    */
-  private final List<ColoredString> coloredStringList = new ArrayList<ColoredString>();
+  private final List<ColoredString> coloredStringList = new ArrayList<>();
   private final StringBuilder builder = new StringBuilder();
   private Color currentColor = DEFAULT_COLOR;
 

@@ -40,8 +40,8 @@ public class LocationPresetStore {
 
   private static final LocationPresetStore locationPresetStore = new LocationPresetStore();
 
-  private final Map<Id, LocationPreset> idLocationPresetMap = new HashMap<Id, LocationPreset>();
-  private final Map<Type, List<LocationPreset>> typeLocationPresetMap = new HashMap<Type, List<LocationPreset>>();
+  private final Map<Id, LocationPreset> idLocationPresetMap = new HashMap<>();
+  private final Map<Type, List<LocationPreset>> typeLocationPresetMap = new HashMap<>();
 
   private LocationPresetStore() {
     loadLocationPresets();

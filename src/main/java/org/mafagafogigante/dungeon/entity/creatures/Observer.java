@@ -56,7 +56,7 @@ class Observer implements Serializable {
   }
 
   private static List<Point> listAdjacentPoints(Point point) {
-    List<Point> adjacentPoints = new ArrayList<Point>(4);
+    List<Point> adjacentPoints = new ArrayList<>(4);
     adjacentPoints.add(new Point(point, Direction.NORTH));
     adjacentPoints.add(new Point(point, Direction.EAST));
     adjacentPoints.add(new Point(point, Direction.SOUTH));
@@ -161,7 +161,7 @@ class Observer implements Serializable {
   }
 
   private void lookToTheSides(DungeonString dungeonString, World world, Point point) {
-    Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<ColoredString, ArrayList<Direction>>();
+    Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<>();
     // Don't print the Location you just left.
     Collection<Direction> directions = getHorizontalDirections();
     for (Direction dir : directions) {
@@ -191,7 +191,7 @@ class Observer implements Serializable {
   }
 
   private Collection<Direction> getHorizontalDirections() {
-    Collection<Direction> directions = new ArrayList<Direction>();
+    Collection<Direction> directions = new ArrayList<>();
     directions.addAll(Arrays.asList(Direction.values()));
     directions.remove(Direction.UP);
     directions.remove(Direction.DOWN);
@@ -202,7 +202,7 @@ class Observer implements Serializable {
    * Prints a human-readable description of what Creatures the Hero sees.
    */
   private void lookCreatures(DungeonString builder) {
-    List<Creature> creatures = new ArrayList<Creature>(creature.getLocation().getCreatures());
+    List<Creature> creatures = new ArrayList<>(creature.getLocation().getCreatures());
     creatures.remove(creature);
     creatures = creature.filterByVisibility(creatures);
     writeCreatureSight(creatures, builder);

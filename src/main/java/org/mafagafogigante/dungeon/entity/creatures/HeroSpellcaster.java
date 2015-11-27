@@ -35,7 +35,7 @@ import java.util.List;
 public class HeroSpellcaster implements Serializable, Spellcaster {
 
   private final Hero hero;
-  private final List<Spell> spellList = new ArrayList<Spell>();
+  private final List<Spell> spellList = new ArrayList<>();
 
   public HeroSpellcaster(Hero hero) {
     this.hero = hero;

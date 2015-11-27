@@ -35,7 +35,7 @@ public class Matches<T extends Selectable> {
   private boolean differentNamesUpToDate;
 
   private Matches() {
-    matches = new ArrayList<T>();
+    matches = new ArrayList<>();
     differentNames = 0;
     differentNamesUpToDate = true;
   }
@@ -44,7 +44,7 @@ public class Matches<T extends Selectable> {
    * Converts a Collection to Matches.
    */
   public static <T extends Selectable> Matches<T> fromCollection(Collection<T> collection) {
-    Matches<T> newInstance = new Matches<T>();
+    Matches<T> newInstance = new Matches<>();
     for (T t : collection) {
       newInstance.addMatch(t);
     }
@@ -61,7 +61,7 @@ public class Matches<T extends Selectable> {
   }
 
   public List<T> toList() {
-    return new ArrayList<T>(matches);
+    return new ArrayList<>(matches);
   }
 
   /**
@@ -105,7 +105,7 @@ public class Matches<T extends Selectable> {
    * Updates the differentNames variable after iterating over the list of matches.
    */
   private void updateDifferentNamesCount() {
-    HashSet<Name> uniqueNames = new HashSet<Name>();
+    HashSet<Name> uniqueNames = new HashSet<>();
     for (T match : matches) {
       uniqueNames.add(match.getName());
     }

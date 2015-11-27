@@ -88,13 +88,13 @@ public final class Statistics implements Serializable {
 
   private void insertWorldStatistics(Table statistics) {
     statistics.insertRow("Created Locations", String.valueOf(worldStatistics.getLocationCount()));
-    SortedSet<String> locationNames = new TreeSet<String>(worldStatistics.getLocationCounter().keySet());
+    SortedSet<String> locationNames = new TreeSet<>(worldStatistics.getLocationCounter().keySet());
     for (String name : locationNames) {
       statistics.insertRow("  " + name, String.valueOf(worldStatistics.getLocationCounter().getCounter(name)));
     }
     statistics.insertSeparator();
     statistics.insertRow("Spawned Creatures", String.valueOf(worldStatistics.getSpawnCount()));
-    SortedSet<String> spawnNames = new TreeSet<String>(worldStatistics.getSpawnCounter().keySet());
+    SortedSet<String> spawnNames = new TreeSet<>(worldStatistics.getSpawnCounter().keySet());
     for (String name : spawnNames) {
       statistics.insertRow("  " + name, String.valueOf(worldStatistics.getSpawnCounter().getCounter(name)));
     }

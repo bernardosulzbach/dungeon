@@ -43,7 +43,7 @@ public final class ShuffledRange {
     if (start >= end) {
       DungeonLogger.warning("Tried to create a ShuffledRange of negative or zero length.");
     } else {
-      integers = new ArrayList<Integer>(end - start);
+      integers = new ArrayList<>(end - start);
       for (int i = start; i < end; i++) {
         integers.add(i);
       }

@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A class that generates pseudorandom dates of birth.
  */
-public class DateOfBirthGenerator {
+class DateOfBirthGenerator {
 
   private final Date today;
   private final int age;

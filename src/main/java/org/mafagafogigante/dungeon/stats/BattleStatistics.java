@@ -31,7 +31,7 @@ import java.io.Serializable;
  */
 public class BattleStatistics implements Serializable {
 
-  private final CounterMap<BattleRecord> records = new CounterMap<BattleRecord>();
+  private final CounterMap<BattleRecord> records = new CounterMap<>();
 
   /**
    * Adds the outcome of a battle to the statistics.
@@ -49,7 +49,7 @@ public class BattleStatistics implements Serializable {
    * Returns a CounterMap of CauseOfDeath representing how many times each CauseOfDeath already registered occurred.
    */
   public CounterMap<CauseOfDeath> getKillsByCauseOfDeath() {
-    CounterMap<CauseOfDeath> causeOfDeathCounterMap = new CounterMap<CauseOfDeath>();
+    CounterMap<CauseOfDeath> causeOfDeathCounterMap = new CounterMap<>();
     for (BattleRecord record : records.keySet()) {
       causeOfDeathCounterMap.incrementCounter(record.getCauseOfDeath(), records.getCounter(record));
     }

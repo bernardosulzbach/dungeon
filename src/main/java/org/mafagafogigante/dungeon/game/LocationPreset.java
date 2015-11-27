@@ -35,8 +35,8 @@ public final class LocationPreset {
   private final Type type;
   private final Name name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
-  private final List<SpawnerPreset> spawners = new ArrayList<SpawnerPreset>();
-  private final Map<Id, Percentage> items = new HashMap<Id, Percentage>();
+  private final List<SpawnerPreset> spawners = new ArrayList<>();
+  private final Map<Id, Percentage> items = new HashMap<>();
   private Percentage lightPermittivity;
   private int blobSize;
   private LocationDescription description;

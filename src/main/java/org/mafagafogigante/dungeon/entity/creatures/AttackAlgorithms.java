@@ -26,7 +26,7 @@ import java.util.Map;
 final class AttackAlgorithms {
 
   private static final Map<AttackAlgorithmId, AttackAlgorithm> ATTACK_ALGORITHM_MAP =
-      new EnumMap<AttackAlgorithmId, AttackAlgorithm>(AttackAlgorithmId.class);
+      new EnumMap<>(AttackAlgorithmId.class);
   private static boolean uninitialized = true;
 
   private AttackAlgorithms() { // Ensure that this class cannot be instantiated.

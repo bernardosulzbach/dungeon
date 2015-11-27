@@ -106,11 +106,11 @@ public final class Utils {
    * Returns a String representation of the enumeration of all the Entities in a given List.
    */
   public static String enumerateEntities(final List<? extends Entity> listOfEntities) {
-    CounterMap<Name> nameOccurrences = new CounterMap<Name>();
+    CounterMap<Name> nameOccurrences = new CounterMap<>();
     for (Entity entity : listOfEntities) {
       nameOccurrences.incrementCounter(entity.getName());
     }
-    ArrayList<String> quantifiedNames = new ArrayList<String>();
+    ArrayList<String> quantifiedNames = new ArrayList<>();
     for (Name name : nameOccurrences.keySet()) {
       quantifiedNames.add(name.getQuantifiedName(nameOccurrences.getCounter(name)));
     }
@@ -156,7 +156,7 @@ public final class Utils {
    */
   private static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,
       String... tokens) {
-    List<T> listOfMatches = new ArrayList<T>();
+    List<T> listOfMatches = new ArrayList<>();
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
     double maximumSimilarity = 1e-6;
     for (T candidate : collection) {

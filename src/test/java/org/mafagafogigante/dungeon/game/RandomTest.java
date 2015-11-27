@@ -48,7 +48,7 @@ public class RandomTest {
     } catch (IllegalArgumentException expected) {
       // Dungeon Code Style does not require a comment on exceptions named expected in tests.
     }
-    List<Integer> integerList = new ArrayList<Integer>();
+    List<Integer> integerList = new ArrayList<>();
     integerList.add(0);
     Assert.assertTrue(Random.select(integerList).equals(0));
   }
