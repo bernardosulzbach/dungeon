@@ -32,7 +32,6 @@ import java.util.List;
  * A class that parses IssuedCommands for writing unlocked achievements to the screen.
  */
 public class AchievementTrackerWriter {
-
   /**
    * Parses an issued command that makes the game write to the screen all achievements the Hero has unlocked so far.
    */
@@ -79,9 +78,9 @@ public class AchievementTrackerWriter {
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
       Duration sinceUnlock = new Duration(unlockedAchievement.getDate(), now);
       string.setColor(Color.ORANGE);
-      string.append(String.format("%s (%s ago)\n", unlockedAchievement.getName(), sinceUnlock));
+      string.append(String.format("%s (%s ago)%n", unlockedAchievement.getName(), sinceUnlock));
       string.setColor(Color.YELLOW);
-      string.append(String.format(" %s\n", unlockedAchievement.getInfo()));
+      string.append(String.format(" %s%n", unlockedAchievement.getInfo()));
     }
     int total = AchievementStore.getAchievements().size();
     string.setColor(Color.CYAN);
