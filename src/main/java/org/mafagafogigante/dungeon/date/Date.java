@@ -197,6 +197,23 @@ public class Date implements Comparable<Date>, Serializable {
     }
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Date date = (Date) o;
+    return time == date.time;
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) (time ^ (time >>> 32));
+  }
+
   /**
    * Returns a String representation of this date, from year to second.
    *
