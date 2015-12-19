@@ -25,6 +25,8 @@ import org.mafagafogigante.dungeon.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Locale;
+
 /**
  * Uninstantiable WikiSearcher class used to retrieve articles from the Wiki.
  */
@@ -71,7 +73,9 @@ public final class WikiSearcher {
     for (Article article : Wiki.getArticles()) {
       int matches = 0;
       for (String argument : arguments) {
-        matches += StringUtils.countMatches(article.getContent().toLowerCase(), argument.toLowerCase());
+        final String lowerCaseArticleContent = article.getContent().toLowerCase(Locale.ENGLISH);
+        final String lowerCaseArgument = argument.toLowerCase(Locale.ENGLISH);
+        matches += StringUtils.countMatches(lowerCaseArticleContent, lowerCaseArgument);
       }
       if (matches != 0) {
         counter.incrementCounter(article, matches);
