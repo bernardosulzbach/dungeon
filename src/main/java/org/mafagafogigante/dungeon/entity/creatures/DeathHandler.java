@@ -38,11 +38,7 @@ final class DeathHandler {
     defeatedLocation.removeCreature(creature);
     if (creature.hasTag(Creature.Tag.CORPSE)) {
       Item item = ItemFactory.makeCorpse(creature, defeatedLocation.getWorld().getWorldDate());
-      if (item != null) {
-        defeatedLocation.addItem(item);
-      } else {
-        DungeonLogger.warning(creature.getName() + " has the CORPSE tag, but no corpse preset was found.");
-      }
+      defeatedLocation.addItem(item);
     }
     creature.getDropper().dropEverything();
     DungeonLogger.fine("Disposed of " + creature.getName() + " at " + creature.getLocation() + ".");
