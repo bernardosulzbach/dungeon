@@ -82,6 +82,24 @@ public class Weight implements Comparable<Weight>, Serializable {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Weight weight = (Weight) o;
+    return Double.compare(weight.value, value) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    long temp = Double.doubleToLongBits(value);
+    return (int) (temp ^ (temp >>> 32));
+  }
+
+  @Override
   public String toString() {
     return WEIGHT_FORMAT.format(value);
   }
