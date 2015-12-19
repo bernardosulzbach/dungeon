@@ -168,7 +168,9 @@ public class Hero extends Creature {
       while (seconds > 0) {
         final int cycleDuration = Math.min(DREAM_DURATION_IN_SECONDS, seconds);
         Engine.rollDateAndRefresh(cycleDuration);
-        Sleeper.sleep(MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
+        // Cast to long because it is considered best practice. We are going to end with a long anyway, so start doing
+        // long arithmetic at the first multiplication. Reported by ICAST_INTEGER_MULTIPLY_CAST_TO_LONG in FindBugs.
+        Sleeper.sleep((long) MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
         if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
           Writer.write(Libraries.getDreamLibrary().next());
         }
