@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -59,7 +60,7 @@ class TimeStringBuilder {
       if (strings.size() < fields) {
         int value = entry.getValue().toInteger();
         if (value > 0) {
-          String valueString = value + " " + entry.getKey().toString().toLowerCase();
+          String valueString = value + " " + entry.getKey().toString().toLowerCase(Locale.ENGLISH);
           if (value > 1) {
             valueString += "s";
           }

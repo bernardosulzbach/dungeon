@@ -53,6 +53,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Hero class that defines the creature that the player controls.
@@ -600,7 +601,7 @@ public class Hero extends Creature {
     builder.append(getName().getSingular());
     builder.append("\n");
     builder.append("You are ");
-    builder.append(getHealth().getHealthState().toString().toLowerCase());
+    builder.append(getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
     builder.append(".\n");
     builder.append("Your base attack is ");
     builder.append(String.valueOf(getAttack()));
@@ -644,7 +645,7 @@ public class Hero extends Creature {
       Writer.write("Today is your birthday.");
     }
     if (canSeeTheSky()) {
-      Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase() + ".");
+      Writer.write("You can see that it is " + world.getPartOfDay().toString().toLowerCase(Locale.ENGLISH) + ".");
     } else {
       Writer.write("You can't see the sky.");
     }

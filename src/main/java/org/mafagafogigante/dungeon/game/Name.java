@@ -22,6 +22,7 @@ import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Name immutable class that stores the singular and plural forms of a name.
@@ -86,7 +87,7 @@ public final class Name implements Serializable {
       if (correspondingNumeral == null) {
         throw new AssertionError("Numeral.getCorrespondingNumeral() returned null!");
       } else {
-        number = correspondingNumeral.toString().toLowerCase();
+        number = correspondingNumeral.toString().toLowerCase(Locale.ENGLISH);
       }
     }
     return number + " " + name;

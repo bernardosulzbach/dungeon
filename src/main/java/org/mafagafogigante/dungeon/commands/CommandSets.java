@@ -65,6 +65,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 final class CommandSets {
@@ -426,7 +427,7 @@ final class CommandSets {
         if (arguments.length != 0) {
           Date date = Game.getGameState().getWorld().getWorldDate();
           try {
-            Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase()), date);
+            Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase(Locale.ENGLISH)), date);
             Writer.write("Item successfully created.");
             if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) ==
                 SimulationResult.SUCCESSFUL) {
@@ -459,7 +460,7 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         if (arguments.length != 0) {
           for (String argument : arguments) {
-            Id givenId = new Id(argument.toUpperCase());
+            Id givenId = new Id(argument.toUpperCase(Locale.ENGLISH));
             Creature creature = CreatureFactory.makeCreature(givenId);
             if (creature != null) {
               Game.getGameState().getHero().getLocation().addCreature(creature);

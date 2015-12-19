@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public final class DungeonTimeParser {
 
@@ -83,7 +84,7 @@ public final class DungeonTimeParser {
       cleanToken = token;
     }
     try {
-      return DungeonTimeUnit.valueOf(cleanToken.toUpperCase());
+      return DungeonTimeUnit.valueOf(cleanToken.toUpperCase(Locale.ENGLISH));
     } catch (IllegalArgumentException bad) {
       throw new InvalidUnitException(token + " is not a valid unit.");
     }

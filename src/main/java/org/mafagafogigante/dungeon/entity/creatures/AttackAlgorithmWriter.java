@@ -23,6 +23,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.io.Writer;
 
 import java.awt.Color;
+import java.util.Locale;
 
 /**
  * This class is uninstantiable and provides utility IO methods for AttackAlgorithm implementations.
@@ -54,7 +55,7 @@ final class AttackAlgorithmWriter {
     }
     string.append(".");
     string.append(" It looks ");
-    string.append(defender.getHealth().getHealthState().toString().toLowerCase());
+    string.append(defender.getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
     string.append(".\n");
     Writer.writeAndWait(string);
   }
