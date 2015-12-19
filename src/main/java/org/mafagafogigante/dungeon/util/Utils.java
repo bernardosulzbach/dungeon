@@ -66,7 +66,7 @@ public final class Utils {
    * @return true, if the base string starts with the prefix, ignoring case differences.
    */
   public static boolean startsWithIgnoreCase(String left, String right) {
-    return left.toLowerCase().startsWith(right.toLowerCase());
+    return left.toLowerCase(Locale.ENGLISH).startsWith(right.toLowerCase(Locale.ENGLISH));
   }
 
   /**
