@@ -75,7 +75,6 @@ public class Game {
       SwingUtilities.invokeAndWait(runnable);
     } catch (InterruptedException | InvocationTargetException fatal) {
       DungeonLogger.logSevere(fatal);
-      System.exit(1);
     }
   }
 
