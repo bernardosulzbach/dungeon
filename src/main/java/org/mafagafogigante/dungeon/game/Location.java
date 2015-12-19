@@ -23,7 +23,6 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.LocationInventory;
-import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -73,12 +72,7 @@ public final class Location implements Serializable {
     this.items = new LocationInventory();
     for (Entry<Id, Percentage> entry : preset.getItems()) {
       if (Random.roll(entry.getValue())) {
-        Item item = ItemFactory.makeItem(entry.getKey(), world.getWorldDate());
-        if (item != null) {
-          this.addItem(item);
-        } else {
-          DungeonLogger.warning("Item preset not found: " + entry.getKey().toString() + ".");
-        }
+        this.addItem(ItemFactory.makeItem(entry.getKey(), world.getWorldDate()));
       }
     }
   }
