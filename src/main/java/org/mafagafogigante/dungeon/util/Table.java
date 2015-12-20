@@ -260,7 +260,7 @@ public class Table implements Writable {
     return string.toColoredStringList();
   }
 
-  private class Column {
+  private static class Column {
     final String header;
     final List<String> rows = new ArrayList<>();
     int widestValue;
