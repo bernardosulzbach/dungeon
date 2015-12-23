@@ -17,16 +17,16 @@
 
 package org.mafagafogigante.dungeon.entity.creatures;
 
+import org.mafagafogigante.dungeon.io.Split;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.util.Matches;
-import org.mafagafogigante.dungeon.util.ParsingUtils;
-import org.mafagafogigante.dungeon.util.ParsingUtils.SplitResult;
 import org.mafagafogigante.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,17 +64,19 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
   @Override
   public void parseCast(String[] arguments) {
     if (arguments.length > 0) {
-      SplitResult splitResult = ParsingUtils.splitOnOn(arguments);
-      String[] spellMatcher = splitResult.before;
-      String[] targetMatcher = splitResult.after;
-      Matches<Spell> matches = Utils.findBestCompleteMatches(spellList, spellMatcher);
+      Split split = Split.splitOnOn(Arrays.asList(arguments));
+      List<String> spellMatcher = split.getBefore();
+      List<String> targetMatcher = split.getAfter();
+      String[] spellMatcherArray = spellMatcher.toArray(new String[spellMatcher.size()]);
+      String[] targetMatcherArray = targetMatcher.toArray(new String[targetMatcher.size()]);
+      Matches<Spell> matches = Utils.findBestCompleteMatches(spellList, spellMatcherArray);
       if (matches.size() == 0) {
         Writer.write("That did not match any spell you know.");
       }
       if (matches.getDifferentNames() == 1) {
         Spell spell = matches.getMatch(0);
         DungeonLogger.info("Casted " + spell.getName().getSingular() + ".");
-        spell.operate(hero, targetMatcher);
+        spell.operate(hero, targetMatcherArray);
       } else if (matches.getDifferentNames() > 1) {
         Writer.write("Provided input is ambiguous in respect to spell.");
       }
