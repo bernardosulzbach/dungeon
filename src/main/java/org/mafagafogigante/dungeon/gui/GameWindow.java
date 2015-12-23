@@ -75,7 +75,7 @@ public class GameWindow extends JFrame {
    * The border, in pixels.
    */
   private static final int MARGIN = 5;
-  private final SwappingStyledDocument document;
+  private transient SwappingStyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
 
@@ -122,6 +122,11 @@ public class GameWindow extends JFrame {
   private static void logExecutionExceptionAndExit(Throwable fatal) {
     DungeonLogger.logSevere(fatal);
     System.exit(1);
+  }
+
+  private Object readResolve() {
+    document = new SwappingStyledDocument(textPane);
+    return this;
   }
 
   private void initComponents() {
