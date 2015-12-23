@@ -49,7 +49,7 @@ import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Messenger;
-import org.mafagafogigante.dungeon.util.SystemInfo;
+import org.mafagafogigante.dungeon.util.SystemInformation;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Tutorial;
 import org.mafagafogigante.dungeon.util.Utils;
@@ -305,7 +305,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("system", "Displays information about the underlying system.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        SystemInfo.printSystemInfo();
+        Writer.write(new SystemInformation());
       }
     });
     commandSet.addCommand(new Command("unequip", "Unequips the currently equipped item.") {
