@@ -72,12 +72,8 @@ class Dropper implements Serializable {
     for (Drop drop : dropList) {
       if (drop.rollForDrop()) {
         Item item = ItemFactory.makeItem(drop.getItemId(), creature.getLocation().getWorld().getWorldDate());
-        if (item != null) {
-          creature.getLocation().addItem(item);
-          getDroppedItemsList().add(item);
-        } else {
-          DungeonLogger.warning("Got invalid Id (" + drop.getItemId() + ") from drop law.");
-        }
+        creature.getLocation().addItem(item);
+        getDroppedItemsList().add(item);
       }
     }
   }
