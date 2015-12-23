@@ -73,7 +73,7 @@ public final class CommandSet {
               dungeonString.append("\nYou can filter the output of this command by typing the beginning of a command.");
             }
           }
-          Writer.write(dungeonString.toString());
+          Writer.write(dungeonString);
         }
       }
     });
