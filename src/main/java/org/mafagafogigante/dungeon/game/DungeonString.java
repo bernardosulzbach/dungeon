@@ -17,6 +17,8 @@
 
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.logging.DungeonLogger;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -32,6 +34,7 @@ import java.util.List;
 public final class DungeonString implements Writable {
 
   private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
+
   /**
    * A list of ColoredStrings. No string from this list is empty. Adjacent strings may have the same color.
    *
@@ -76,7 +79,7 @@ public final class DungeonString implements Writable {
   }
 
   /**
-   * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this builder.
+   * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this DungeonString.
    *
    * @return an unmodifiable list of ColoredStrings
    */
@@ -93,18 +96,25 @@ public final class DungeonString implements Writable {
   }
 
   /**
-   * Appends a string to this builder.
+   * Appends one or more strings to this DungeonString.
    *
-   * @param string a String object
+   * <p>Logs a warning if called with an empty array.
+   *
+   * @param strings one or more Strings
    */
-  public void append(@NotNull String string) {
-    builder.append(string);
+  public void append(@NotNull String... strings) {
+    if (strings.length == 0) {
+      DungeonLogger.warning("Called DungeonString.append with empty vararg");
+    }
+    for (String string : strings) {
+      builder.append(string);
+    }
   }
 
   /**
-   * Changes the current color of this builder. This will only impact future calls to append.
+   * Changes the current color of this DungeonString. This will only impact future calls to <code>append</code>.
    *
-   * <p>Passing the current color of the builder to this method does no harm.
+   * <p>Passing the current color of this DungeonString is a no-op.
    *
    * @param color a Color object
    */
@@ -116,10 +126,21 @@ public final class DungeonString implements Writable {
   }
 
   /**
-   * Resets the color of this builder to the default color.
+   * Resets the color of this DungeonString to the default color.
    */
   public void resetColor() {
     setColor(DEFAULT_COLOR);
+  }
+
+  /**
+   * Converts the text of this DungeonString to a plain Java String.
+   */
+  public String toJavaString() {
+    StringBuilder builder = new StringBuilder();
+    for (ColoredString coloredString : toColoredStringList()) {
+      builder.append(coloredString.getString());
+    }
+    return builder.toString();
   }
 
   @Override
