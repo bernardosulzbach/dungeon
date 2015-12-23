@@ -45,7 +45,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -80,7 +79,7 @@ public class GameWindow extends JFrame {
   private JTextField textField;
   private JTextPane textPane;
 
-  private boolean acceptingNextCommand;
+  private volatile boolean acceptingNextCommand;
 
   /**
    * Constructs a new GameWindow.
@@ -120,7 +119,7 @@ public class GameWindow extends JFrame {
     return font;
   }
 
-  private static void logExecutionExceptionAndExit(ExecutionException fatal) {
+  private static void logExecutionExceptionAndExit(Throwable fatal) {
     DungeonLogger.logSevere(fatal);
     System.exit(1);
   }
@@ -235,24 +234,15 @@ public class GameWindow extends JFrame {
         SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
           @Override
           protected Void doInBackground() {
-            Game.renderTurn(new IssuedCommand(text));
-            return null;
-          }
-
-          @Override
-          protected void done() {
-            // This method is invoked on the EDT after doInBackground finishes.
-            // Only by calling get() we can get any exceptions that might have been thrown during doInBackground().
-            // The default behaviour is to log the exception and exit the game with code 1.
+            DungeonLogger.logCommandRenderingReport(text, "started doInBackGround", stopWatch);
             try {
-              get();
-              DungeonLogger.logCommandRendering(text, stopWatch.toString());
-            } catch (InterruptedException ignore) {
-              // For some reason the thread was interrupted. Nothing should be done.
-            } catch (ExecutionException fatal) {
-              logExecutionExceptionAndExit(fatal);
+              Game.renderTurn(new IssuedCommand(text), stopWatch);
+            } catch (Throwable throwable) {
+              logExecutionExceptionAndExit(throwable);
             }
             acceptingNextCommand = true;
+            DungeonLogger.logCommandRenderingReport(text, "finished doInBackGround", stopWatch);
+            return null;
           }
         };
         inputRenderer.execute();

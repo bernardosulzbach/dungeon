@@ -153,10 +153,14 @@ public class Game {
    *
    * @param issuedCommand the last IssuedCommand.
    */
-  public static void renderTurn(IssuedCommand issuedCommand) {
+  public static void renderTurn(IssuedCommand issuedCommand, StopWatch stopWatch) {
+    DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "started renderTurn", stopWatch);
     // Clears the text pane.
     getGameWindow().clearTextPane();
-    if (processInput(issuedCommand)) {
+    DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "started processInput", stopWatch);
+    boolean wasSuccessful = processInput(issuedCommand);
+    DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "finished processInput", stopWatch);
+    if (wasSuccessful) {
       if (getGameState().getHero().getHealth().isDead()) {
         getGameWindow().clearTextPane();
         Writer.write("You died.");
@@ -166,6 +170,7 @@ public class Game {
         Engine.endTurn();
       }
     }
+    DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "finished renderTurn", stopWatch);
   }
 
   /**

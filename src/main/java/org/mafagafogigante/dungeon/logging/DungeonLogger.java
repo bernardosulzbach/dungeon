@@ -18,6 +18,7 @@
 package org.mafagafogigante.dungeon.logging;
 
 import org.mafagafogigante.dungeon.util.Messenger;
+import org.mafagafogigante.dungeon.util.StopWatch;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,10 +70,11 @@ public final class DungeonLogger {
    * Logs a command rendering time.
    *
    * @param command the command string entered by the user
-   * @param stopWatchString the string produced by the StopWatch used
+   * @param report the progress report of the command rendering
+   * @param stopWatch the stopWatch used to track the rendering time
    */
-  public static void logCommandRendering(String command, String stopWatchString) {
-    DungeonLogger.fine("Finished rendering '" + command + "' after " + stopWatchString + ".");
+  public static void logCommandRenderingReport(String command, String report, StopWatch stopWatch) {
+    DungeonLogger.fine(String.format("\"%s\" : %s after %s.", command, report, stopWatch.toString()));
   }
 
   /**
