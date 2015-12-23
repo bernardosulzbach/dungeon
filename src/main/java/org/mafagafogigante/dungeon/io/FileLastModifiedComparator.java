@@ -34,7 +34,7 @@ class FileLastModifiedComparator implements Comparator<File>, Serializable {
 
   @Override
   public int compare(File left, File right) {
-    return Long.valueOf(right.lastModified()).compareTo(left.lastModified());
+    return Long.compare(right.lastModified(), left.lastModified());
   }
 
 }
