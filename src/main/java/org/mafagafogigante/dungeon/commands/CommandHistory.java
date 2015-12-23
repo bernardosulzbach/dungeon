@@ -33,6 +33,11 @@ public class CommandHistory implements Serializable {
   private final CircularList<String> commands = new CircularList<>(HISTORY_MAXIMUM_SIZE);
   private transient Cursor cursor = new Cursor(this);
 
+  private Object readResolve() {
+    cursor = new Cursor(this);
+    return this;
+  }
+
   /**
    * Returns a CommandHistory.Cursor to provide access to the stored commands.
    */
