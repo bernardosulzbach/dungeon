@@ -34,7 +34,7 @@ import java.util.List;
  */
 public final class CreaturePreset implements Preset {
 
-  private TagSet<Tag> tagSet;
+  private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private Id id;
   private String type;
   private Name name;
