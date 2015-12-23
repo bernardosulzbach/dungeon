@@ -59,7 +59,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 public class GameWindow extends JFrame {
@@ -121,33 +120,12 @@ public class GameWindow extends JFrame {
     return font;
   }
 
-  /**
-   * Try to set the system's look and feel.
-   *
-   * <p>If the system's default is GTK, the cross-platform L&F is used because GTK L&F does not let you change the
-   * background coloring of a JTextField.
-   */
-  private static void setSystemLookAndFeel() {
-    try {
-      String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-      if (lookAndFeel.equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel")) {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-      } else {
-        UIManager.setLookAndFeel(lookAndFeel);
-      }
-    } catch (Exception ignored) {
-      // Nothing can be done about this.
-    }
-  }
-
   private static void logExecutionExceptionAndExit(ExecutionException fatal) {
     DungeonLogger.logSevere(fatal);
     System.exit(1);
   }
 
   private void initComponents() {
-    setSystemLookAndFeel();
-
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBackground(SharedConstants.MARGIN_COLOR);
 
