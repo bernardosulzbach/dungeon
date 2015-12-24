@@ -74,7 +74,7 @@ public final class DungeonLogger {
    * @param stopWatch the stopWatch used to track the rendering time
    */
   public static void logCommandRenderingReport(String command, String report, StopWatch stopWatch) {
-    DungeonLogger.fine(String.format("\"%s\" : %s after %s.", command, report, stopWatch.toString()));
+    DungeonLogger.fine(String.format("\"%s\": %s after %s.", command, report, stopWatch.toString()));
   }
 
   /**

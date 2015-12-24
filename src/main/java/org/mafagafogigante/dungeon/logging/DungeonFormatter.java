@@ -26,11 +26,10 @@ import java.util.logging.LogRecord;
  */
 class DungeonFormatter extends Formatter {
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
-
   @Override
   public String format(LogRecord record) {
-    return DATE_FORMAT.format(record.getMillis()) + " (" + record.getLevel() + ") : " + record.getMessage() + "\n";
+    final SimpleDateFormat timestampFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
+    return timestampFormat.format(record.getMillis()) + " (" + record.getLevel() + "): " + record.getMessage() + "\n";
   }
 
 }
