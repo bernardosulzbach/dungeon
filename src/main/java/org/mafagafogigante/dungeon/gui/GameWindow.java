@@ -178,13 +178,7 @@ public class GameWindow extends JFrame {
     setTitle(WINDOW_TITLE);
 
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent event) {
-        super.windowClosing(event);
-        Game.exit();
-      }
-    });
+    addWindowListener(new ClosingListener());
 
     Action save = new AbstractAction() {
       @Override
@@ -369,6 +363,14 @@ public class GameWindow extends JFrame {
    */
   public void startAcceptingCommands() {
     acceptingNextCommand = true;
+  }
+
+  private static class ClosingListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+      super.windowClosing(event);
+      Game.exit();
+    }
   }
 
 }
