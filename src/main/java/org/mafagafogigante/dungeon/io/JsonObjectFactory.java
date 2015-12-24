@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 public class JsonObjectFactory {
 
@@ -42,7 +43,7 @@ public class JsonObjectFactory {
       throw new IllegalFilenameExtensionException("filename must end with " + JSON_EXTENSION + ".");
     }
     // Using a BufferedReader here does not improve performance as the library is already buffered.
-    Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename));
+    Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename), Charset.forName("UTF-8"));
     try {
       return Json.parse(reader).asObject();
     } catch (IOException fatal) {
