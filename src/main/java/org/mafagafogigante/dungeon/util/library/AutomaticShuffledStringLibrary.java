@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * An automatically shuffled library of strings.
  */
-public class AutomaticShuffledStringLibrary extends Library {
+public class AutomaticShuffledStringLibrary {
 
   private final String filename;
   private final List<String> strings = new ArrayList<>();
@@ -38,21 +38,10 @@ public class AutomaticShuffledStringLibrary extends Library {
 
   public AutomaticShuffledStringLibrary(@NotNull String filename) {
     this.filename = filename;
+    initialize();
   }
 
-  /**
-   * Retrieves the next String in the library.
-   */
-  @NotNull
-  public String next() {
-    if (isUninitialized()) {
-      initialize();
-    }
-    return strings.get(automaticShuffledRange.getNext());
-  }
-
-  @Override
-  void load() {
+  void initialize() {
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue value : jsonObject.get("strings").asArray()) {
       strings.add(value.asString());
@@ -62,6 +51,13 @@ public class AutomaticShuffledStringLibrary extends Library {
     }
     automaticShuffledRange = new AutomaticShuffledRange(strings.size());
     DungeonLogger.info("Loaded " + strings.size() + " strings from " + filename + ".");
+  }
+
+  /**
+   * Retrieves the next String in the library.
+   */
+  public String next() {
+    return strings.get(automaticShuffledRange.getNext());
   }
 
 }
