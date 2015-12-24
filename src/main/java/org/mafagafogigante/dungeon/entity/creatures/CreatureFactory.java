@@ -42,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -86,10 +87,6 @@ public final class CreatureFactory {
       setWeaponIfPreset(preset, presetObject);
       preset.setAttackAlgorithmId(AttackAlgorithmId.valueOf(presetObject.get("attackAlgorithmID").asString()));
       creaturePresetMap.put(preset.getId(), preset);
-      if (preset.hasTag(Creature.Tag.CORPSE)) {
-        ItemPreset corpse = CorpsePresetFactory.makeCorpsePreset(preset);
-        ItemFactory.addItemPreset(corpse);
-      }
     }
     setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
     DungeonLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
@@ -97,6 +94,10 @@ public final class CreatureFactory {
 
   private CreatureFactory() {
     throw new AssertionError();
+  }
+
+  public static Collection<CreaturePreset> getPresets() {
+    return creaturePresetMap.values();
   }
 
   /**
@@ -260,13 +261,6 @@ public final class CreatureFactory {
         DungeonLogger.warning(String.format(format, preset.getWeaponId(), creature.getId()));
       }
     }
-  }
-
-  /**
-   * Makes all corpse presets, if they weren't made yet.
-   */
-  public static void makeCorpsePresets() {
-    // Intentionally blank. If the static block was not called yet, it will be when this method is called.
   }
 
 }

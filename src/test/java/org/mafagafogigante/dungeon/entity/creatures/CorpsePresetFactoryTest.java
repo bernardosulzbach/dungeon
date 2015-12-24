@@ -26,6 +26,8 @@ import org.mafagafogigante.dungeon.game.NameFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Method;
+
 public class CorpsePresetFactoryTest {
 
   @Test
@@ -38,7 +40,12 @@ public class CorpsePresetFactoryTest {
     TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
     tagSet.addTag(Creature.Tag.CORPSE);
     creaturePreset.setTagSet(tagSet);
-    ItemPreset corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
+    // Using reflection to circumvent an issue caused by overuse of non-instantiable classes. The perfect way would be
+    // to test the CorpsePresetFactory by using only its public methods, but that requires access to the
+    // CreatureFactory, that cannot be instantiated for testing purposes.
+    Method makeCorpsePreset = CorpsePresetFactory.class.getDeclaredMethod("makeCorpsePreset", CreaturePreset.class);
+    makeCorpsePreset.setAccessible(true);
+    ItemPreset corpsePreset = (ItemPreset) makeCorpsePreset.invoke(new CorpsePresetFactory(), creaturePreset);
     Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
     Assert.assertEquals("CORPSE", corpsePreset.getType());
     Assert.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
@@ -47,7 +54,7 @@ public class CorpsePresetFactoryTest {
     Assert.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
     // Extreme cases.
     creaturePreset.setHealth(1);
-    corpsePreset = CorpsePresetFactory.makeCorpsePreset(creaturePreset);
+    corpsePreset = (ItemPreset) makeCorpsePreset.invoke(new CorpsePresetFactory(), creaturePreset);
     Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
     Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
   }

@@ -41,7 +41,7 @@ public class AutomaticShuffledStringLibrary {
     initialize();
   }
 
-  void initialize() {
+  private void initialize() {
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue value : jsonObject.get("strings").asArray()) {
       strings.add(value.asString());

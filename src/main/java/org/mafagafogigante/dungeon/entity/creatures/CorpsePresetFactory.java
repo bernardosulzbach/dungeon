@@ -27,24 +27,39 @@ import org.mafagafogigante.dungeon.entity.items.ItemPreset;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.util.Percentage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A factory of corpse presets.
  */
-final class CorpsePresetFactory {
+public final class CorpsePresetFactory {
 
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
   private static final Percentage CORPSE_HIT_RATE = new Percentage(0.5);
 
-  private CorpsePresetFactory() {
-    throw new AssertionError();
+  public CorpsePresetFactory() {
+  }
+
+  /**
+   * Makes all CorpsePresets that the ItemFactory needs.
+   */
+  public List<ItemPreset> makeCorpsePresets() {
+    List<ItemPreset> itemPresets = new ArrayList<>();
+    for (CreaturePreset creaturePreset : CreatureFactory.getPresets()) {
+      if (creaturePreset.hasTag(Creature.Tag.CORPSE)) {
+        itemPresets.add(makeCorpsePreset(creaturePreset));
+      }
+    }
+    return itemPresets;
   }
 
   /**
    * Makes a corpse preset from a creature preset.
    */
-  public static ItemPreset makeCorpsePreset(CreaturePreset preset) {
+  private ItemPreset makeCorpsePreset(CreaturePreset preset) {
     if (!preset.hasTag(Creature.Tag.CORPSE)) {
       throw new IllegalArgumentException("preset does not have the CORPSE tag.");
     }

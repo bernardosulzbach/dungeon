@@ -23,8 +23,8 @@ import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
+import org.mafagafogigante.dungeon.entity.creatures.CorpsePresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
-import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
@@ -90,7 +90,10 @@ public abstract class ItemFactory {
         preset.setSpellId(itemObject.get("spell").asString());
       }
       addItemPreset(preset);
-      CreatureFactory.makeCorpsePresets();
+    }
+    CorpsePresetFactory corpsePresetFactory = new CorpsePresetFactory();
+    for (ItemPreset corpsePreset : corpsePresetFactory.makeCorpsePresets()) {
+      addItemPreset(corpsePreset);
     }
     DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
@@ -120,7 +123,7 @@ public abstract class ItemFactory {
   /**
    * Adds a new ItemPreset to the factory.
    */
-  public static void addItemPreset(ItemPreset preset) {
+  private static void addItemPreset(ItemPreset preset) {
     if (itemPresets.containsKey(preset.getId())) {
       throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
     } else {
