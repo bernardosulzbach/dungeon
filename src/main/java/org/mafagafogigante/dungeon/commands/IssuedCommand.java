@@ -22,6 +22,10 @@ import org.mafagafogigante.dungeon.util.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * IssuedCommand class that processes a command entered by the player and provides useful query methods.
  *
@@ -30,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 public final class IssuedCommand {
 
   private final String stringRepresentation;
-  private final String[] tokens;
+  private final List<String> tokens; // An unmodifiable list.
 
   /**
    * Creates a new IssuedCommand from a string.
@@ -38,8 +42,8 @@ public final class IssuedCommand {
    * @param source a string with at least one character that is not whitespace.
    */
   public IssuedCommand(@NotNull String source) {
-    tokens = Utils.split(source);
-    if (tokens.length == 0) {
+    tokens = Collections.unmodifiableList(Arrays.asList(Utils.split(source)));
+    if (tokens.isEmpty()) {
       throw new IllegalArgumentException("invalid source, no tokens obtained.");
     }
     this.stringRepresentation = StringUtils.join(tokens, ' ');
@@ -49,8 +53,11 @@ public final class IssuedCommand {
     return stringRepresentation;
   }
 
-  public String[] getTokens() {
-    return tokens;
+  /**
+   * Returns an unmodifiable view of the list of tokens.
+   */
+  public List<String> getTokens() {
+    return tokens; // tokens is already unmodifiable.
   }
 
   @Override

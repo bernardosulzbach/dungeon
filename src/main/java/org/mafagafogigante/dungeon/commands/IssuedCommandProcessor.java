@@ -37,12 +37,12 @@ public class IssuedCommandProcessor {
   public static IssuedCommandEvaluation evaluateIssuedCommand(@NotNull IssuedCommand issuedCommand) {
     CommandSet collection;
     String commandToken;
-    if (issuedCommand.getTokens().length > 1 && CommandSets.hasCommandSet(issuedCommand.getTokens()[0])) {
-      collection = CommandSets.getCommandSet(issuedCommand.getTokens()[0]);
-      commandToken = issuedCommand.getTokens()[1];
+    if (issuedCommand.getTokens().size() > 1 && CommandSets.hasCommandSet(issuedCommand.getTokens().get(0))) {
+      collection = CommandSets.getCommandSet(issuedCommand.getTokens().get(0));
+      commandToken = issuedCommand.getTokens().get(1);
     } else {
       collection = CommandSets.getCommandSet("default");
-      commandToken = issuedCommand.getTokens()[0];
+      commandToken = issuedCommand.getTokens().get(0);
     }
     // At this point. Both collection and commandToken are not null.
     if (collection.getCommand(commandToken) == null) {
@@ -60,13 +60,13 @@ public class IssuedCommandProcessor {
     CommandSet collection;
     String commandToken;
     int indexOfFirstArgument;
-    if (issuedCommand.getTokens().length > 1 && CommandSets.hasCommandSet(issuedCommand.getTokens()[0])) {
-      collection = CommandSets.getCommandSet(issuedCommand.getTokens()[0]);
-      commandToken = issuedCommand.getTokens()[1];
+    if (issuedCommand.getTokens().size() > 1 && CommandSets.hasCommandSet(issuedCommand.getTokens().get(0))) {
+      collection = CommandSets.getCommandSet(issuedCommand.getTokens().get(0));
+      commandToken = issuedCommand.getTokens().get(1);
       indexOfFirstArgument = 2;
     } else {
       collection = CommandSets.getCommandSet("default");
-      commandToken = issuedCommand.getTokens()[0];
+      commandToken = issuedCommand.getTokens().get(0);
       indexOfFirstArgument = 1;
     }
     String[] arguments = makeArgumentArray(issuedCommand, indexOfFirstArgument);
@@ -75,9 +75,10 @@ public class IssuedCommandProcessor {
   }
 
   private static String[] makeArgumentArray(IssuedCommand issuedCommand, int indexOfFirstArgument) {
-    int argumentCount = issuedCommand.getTokens().length - indexOfFirstArgument;
-    String[] arguments = new String[issuedCommand.getTokens().length - indexOfFirstArgument];
-    System.arraycopy(issuedCommand.getTokens(), indexOfFirstArgument, arguments, 0, argumentCount);
+    String[] tokenArray = issuedCommand.getTokens().toArray(new String[issuedCommand.getTokens().size()]);
+    int argumentCount = issuedCommand.getTokens().size() - indexOfFirstArgument;
+    String[] arguments = new String[issuedCommand.getTokens().size() - indexOfFirstArgument];
+    System.arraycopy(tokenArray, indexOfFirstArgument, arguments, 0, argumentCount);
     return arguments;
   }
 
