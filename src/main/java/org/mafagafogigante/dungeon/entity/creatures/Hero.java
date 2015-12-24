@@ -88,28 +88,8 @@ public class Hero extends Creature {
     this.dateOfBirth = dateOfBirth;
   }
 
-  /**
-   * Appends to a DungeonString the creatures the Hero can see.
-   */
-  public static void writeCreatureSight(List<Creature> creatures, DungeonString dungeonString) {
-    if (creatures.isEmpty()) {
-      dungeonString.append("\nYou don't see anyone here.\n");
-    } else {
-      dungeonString.append("\nHere you can see ");
-      dungeonString.append(Utils.enumerateEntities(creatures));
-      dungeonString.append(".\n");
-    }
-  }
-
-  /**
-   * Appends to a DungeonString the items the Hero can see.
-   */
-  public static void writeItemSight(List<Item> items, DungeonString dungeonString) {
-    if (!items.isEmpty()) {
-      dungeonString.append("\nOn the ground you see ");
-      dungeonString.append(Utils.enumerateEntities(items));
-      dungeonString.append(".\n");
-    }
+  public Observer getObserver() {
+    return observer;
   }
 
   public Spellcaster getSpellcaster() {

@@ -46,7 +46,7 @@ import java.util.Map.Entry;
 /**
  * An observer is used to observe from a Creature's viewpoint.
  */
-class Observer implements Serializable {
+public class Observer implements Serializable {
 
   private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
 
@@ -68,7 +68,7 @@ class Observer implements Serializable {
   /**
    * Appends to a DungeonString the creatures that can be seen.
    */
-  private static void writeCreatureSight(List<Creature> creatures, DungeonString dungeonString) {
+  public void writeCreatureSight(List<Creature> creatures, DungeonString dungeonString) {
     if (creatures.isEmpty()) {
       dungeonString.append("\nYou don't see anyone here.\n");
     } else {
@@ -81,7 +81,7 @@ class Observer implements Serializable {
   /**
    * Appends to a DungeonString the items that can be seen.
    */
-  private static void writeItemSight(List<Item> items, DungeonString dungeonString) {
+  public void writeItemSight(List<Item> items, DungeonString dungeonString) {
     if (!items.isEmpty()) {
       dungeonString.append("\nHere you can find ");
       dungeonString.append(Utils.enumerateEntities(items));

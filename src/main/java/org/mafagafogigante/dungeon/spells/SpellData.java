@@ -128,8 +128,8 @@ public final class SpellData {
         creatureList.remove(hero);
         DungeonString string = new DungeonString();
         string.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
-        Hero.writeCreatureSight(creatureList, string);
-        Hero.writeItemSight(hero.getLocation().getItemList(), string);
+        hero.getObserver().writeCreatureSight(creatureList, string);
+        hero.getObserver().writeItemSight(hero.getLocation().getItemList(), string);
         Writer.write(string);
       }
     });
