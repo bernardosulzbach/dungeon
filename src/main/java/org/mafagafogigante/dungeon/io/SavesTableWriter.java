@@ -30,8 +30,6 @@ import java.util.List;
  */
 public final class SavesTableWriter {
 
-  private static final SimpleDateFormat LAST_MODIFIED_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
   private SavesTableWriter() {
     throw new AssertionError();
   }
@@ -45,12 +43,13 @@ public final class SavesTableWriter {
       Table table = new Table("Name", "Size", "Last modified");
       int fileCount = 0;
       int byteCount = 0;
+      final SimpleDateFormat lastModifiedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       for (File file : files) {
         fileCount += 1;
         byteCount += file.length();
         Date lastModified = new Date(file.lastModified());
         String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
-        String lastModifiedString = String.format("%s (%s)", LAST_MODIFIED_FORMAT.format(lastModified), periodString);
+        String lastModifiedString = String.format("%s (%s)", lastModifiedFormat.format(lastModified), periodString);
         table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), lastModifiedString);
       }
       if (fileCount > 1) {
