@@ -30,6 +30,7 @@ import org.nustaq.serialization.FSTObjectOutput;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -218,7 +219,10 @@ public final class Loader {
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
       Writer.write(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
       return loadedGameState;
-    } catch (Exception bad) {
+    } catch (FileNotFoundException bad) { // The filed was moved or deleted.
+      Writer.write("Could not find the specified saved game.");
+      return null;
+    } catch (ClassNotFoundException | IOException exception) {
       Writer.write("Could not load the saved game.");
       return null;
     }
