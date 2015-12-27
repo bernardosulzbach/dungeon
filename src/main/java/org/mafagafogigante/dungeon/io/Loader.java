@@ -25,14 +25,14 @@ import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.StopWatch;
 
 import org.jetbrains.annotations.NotNull;
-import org.nustaq.serialization.FSTObjectInput;
-import org.nustaq.serialization.FSTObjectOutput;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -207,13 +207,8 @@ public final class Loader {
    */
   private static GameState loadFile(File file) {
     StopWatch stopWatch = new StopWatch();
-    FileInputStream fileInStream;
-    FSTObjectInput objectInStream;
-    try {
-      fileInStream = new FileInputStream(file);
-      objectInStream = new FSTObjectInput(fileInStream);
-      GameState loadedGameState = (GameState) objectInStream.readObject();
-      objectInStream.close();
+    try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+      GameState loadedGameState = (GameState) objectInputStream.readObject();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
       String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
@@ -237,19 +232,14 @@ public final class Loader {
   private static void saveFile(GameState state, String name) {
     StopWatch stopWatch = new StopWatch();
     File file = createFileFromName(name);
-    FileOutputStream fileOutStream;
-    FSTObjectOutput objectOutStream;
-    try {
+    try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
       if (!SAVES_FOLDER.exists()) {
         if (!SAVES_FOLDER.mkdir()) {
           Messenger.printFailedToCreateDirectoryMessage(SAVES_FOLDER.getName());
           return;
         }
       }
-      fileOutStream = new FileOutputStream(file);
-      objectOutStream = new FSTObjectOutput(fileOutStream);
-      objectOutStream.writeObject(state);
-      objectOutStream.close();
+      objectOutputStream.writeObject(state);
       state.setSaved(true);
       String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
