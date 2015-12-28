@@ -17,6 +17,8 @@
 
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.achievements.AchievementStoreFactory;
+import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.io.Writer;
@@ -113,7 +115,8 @@ public final class Engine {
    * Iterates over all achievements, trying to unlock yet to be unlocked achievements.
    */
   private static void refreshAchievements() {
-    Game.getGameState().getHero().getAchievementTracker().update();
+    Date worldDate = Game.getGameState().getWorld().getWorldDate();
+    Game.getGameState().getHero().getAchievementTracker().update(AchievementStoreFactory.getDefaultStore(), worldDate);
   }
 
   /**

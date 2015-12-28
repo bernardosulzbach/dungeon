@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <p>The information is generated at construction time, therefore the caller should not cache objects of this class.
  */
-public final class SystemInformation implements Writable {
+public final class SystemInformation extends Writable {
 
   private final DungeonString information = compileInformation();
 
@@ -72,7 +72,7 @@ public final class SystemInformation implements Writable {
 
   @Override
   public String toString() {
-    return information.toJavaString();
+    return toJavaString();
   }
 
 }

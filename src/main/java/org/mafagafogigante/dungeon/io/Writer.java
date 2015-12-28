@@ -64,9 +64,11 @@ public final class Writer {
    * @param specifications a WritingSpecifications object
    */
   public static void write(Writable writable, WritingSpecifications specifications) {
-    Game.getGameWindow().scheduleWriteToTextPane(writable, specifications);
-    if (specifications.shouldWait()) {
-      Sleeper.sleep(specifications.getWait());
+    if (Game.getGameWindow() != null) { // There will be no window when running the tests, so check to prevent a NPE.
+      Game.getGameWindow().scheduleWriteToTextPane(writable, specifications);
+      if (specifications.shouldWait()) {
+        Sleeper.sleep(specifications.getWait());
+      }
     }
   }
 

@@ -35,7 +35,7 @@ import java.util.List;
  * <p>Only allows for data addition, you cannot query or update a Table in any way. This class is used for data
  * visualization, not organization or storage.
  */
-public class Table implements Writable {
+public class Table extends Writable {
 
   private static final char HORIZONTAL_BAR = '-';
   private static final String VERTICAL_BAR = "|";

@@ -18,108 +18,55 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.PartOfDay;
-import org.mafagafogigante.dungeon.io.JsonObjectFactory;
-import org.mafagafogigante.dungeon.logging.DungeonLogger;
-import org.mafagafogigante.dungeon.stats.CauseOfDeath;
-import org.mafagafogigante.dungeon.stats.TypeOfCauseOfDeath;
-import org.mafagafogigante.dungeon.util.CounterMap;
-
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonObject.Member;
-import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * A class that stores all loaded Achievements.
+ * A class that stores Achievements.
  */
-public class AchievementStore {
+public final class AchievementStore {
 
-  private static final List<Achievement> achievements = new ArrayList<>();
+  private final Set<Id> registeredIds = new HashSet<>();
+  private final List<Achievement> achievements = new ArrayList<>();
 
-  private AchievementStore() {
-    throw new AssertionError();
+  private boolean locked = false;
+
+  AchievementStore() {
   }
 
   /**
-   * Initializes this class.
+   * Returns an unmodifiable view of the achievements contained in this AchievementStore.
    */
-  static {
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
-    for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
-      JsonObject achievementObject = achievementValue.asObject();
-      AchievementBuilder builder = new AchievementBuilder();
-      builder.setId(achievementObject.get("id").asString());
-      builder.setName(achievementObject.get("name").asString());
-      builder.setInfo(achievementObject.get("info").asString());
-      builder.setText(achievementObject.get("text").asString());
-      JsonValue battleRequirements = achievementObject.get("battleRequirements");
-      if (battleRequirements != null) {
-        for (JsonValue requirementValue : battleRequirements.asArray()) {
-          JsonObject requirementObject = requirementValue.asObject();
-          JsonObject queryObject = requirementObject.get("query").asObject();
-          BattleStatisticsQuery query = new BattleStatisticsQuery();
-          JsonValue idValue = queryObject.get("id");
-          if (idValue != null) {
-            query.setId(new Id(idValue.asString()));
-          }
-          JsonValue typeValue = queryObject.get("type");
-          if (typeValue != null) {
-            query.setType(typeValue.asString());
-          }
-          JsonValue causeOfDeathValue = queryObject.get("causeOfDeath");
-          if (causeOfDeathValue != null) {
-            JsonObject causeOfDeathObject = causeOfDeathValue.asObject();
-            TypeOfCauseOfDeath type = TypeOfCauseOfDeath.valueOf(causeOfDeathObject.get("type").asString());
-            Id id = new Id(causeOfDeathObject.get("id").asString());
-            query.setCauseOfDeath(new CauseOfDeath(type, id));
-          }
-          JsonValue partOfDayValue = queryObject.get("partOfDay");
-          if (partOfDayValue != null) {
-            query.setPartOfDay(PartOfDay.valueOf(partOfDayValue.asString()));
-          }
-          int count = requirementObject.get("count").asInt();
-          BattleStatisticsRequirement requirement = new BattleStatisticsRequirement(query, count);
-          builder.addBattleStatisticsRequirement(requirement);
-        }
-      }
-      JsonValue explorationRequirements = achievementObject.get("explorationRequirements");
-      if (explorationRequirements != null) {
-        JsonValue killsByLocationId = explorationRequirements.asObject().get("killsByLocationID");
-        if (killsByLocationId != null) {
-          builder.setKillsByLocationId(idCounterMapFromJsonObject(killsByLocationId.asObject()));
-        }
-        JsonValue maximumNumberOfVisits = explorationRequirements.asObject().get("maximumNumberOfVisits");
-        if (maximumNumberOfVisits != null) {
-          builder.setMaximumNumberOfVisits(idCounterMapFromJsonObject(maximumNumberOfVisits.asObject()));
-        }
-        JsonValue visitedLocations = explorationRequirements.asObject().get("visitedLocations");
-        if (visitedLocations != null) {
-          builder.setVisitedLocations(idCounterMapFromJsonObject(visitedLocations.asObject()));
-        }
-      }
-      Achievement achievement = builder.createAchievement();
-      achievements.add(achievement);
-    }
-    DungeonLogger.info("Loaded " + achievements.size() + " achievements.");
-  }
-
-  private static CounterMap<Id> idCounterMapFromJsonObject(JsonObject jsonObject) {
-    CounterMap<Id> counterMap = new CounterMap<>();
-    for (Member member : jsonObject) {
-      counterMap.incrementCounter(new Id(member.getName()), member.getValue().asInt());
-    }
-    return counterMap;
-  }
-
-  /**
-   * Returns an unmodifiable view of all achievements.
-   */
-  public static List<Achievement> getAchievements() {
+  public List<Achievement> getAchievements() {
     return Collections.unmodifiableList(achievements);
+  }
+
+  /**
+   * Adds a new Achievement to this AchievementStore.
+   *
+   * <p>Throws an IllegalStateException if this AchievementStore is locked <p>Throws an IllegalArgumentException if this
+   * AchievementStore already has an Achievement with the same Id
+   */
+  public void addAchievement(Achievement achievement) {
+    if (locked) {
+      throw new IllegalStateException("this AchievementStore is locked");
+    }
+    if (registeredIds.contains(achievement.getId())) {
+      throw new IllegalArgumentException("there is already an Achievement with the id " + achievement.getId());
+    }
+    registeredIds.add(achievement.getId());
+    achievements.add(achievement);
+  }
+
+  /**
+   * Locks this AchievementStore, disallowing it to receive new Achievements.
+   */
+  public void lock() {
+    locked = true;
   }
 
 }

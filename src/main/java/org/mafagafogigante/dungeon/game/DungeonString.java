@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <p>By calling setColor and append multiple times it is possible to generate long, multicolored strings.
  */
-public final class DungeonString implements Writable {
+public final class DungeonString extends Writable {
 
   private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
 
@@ -130,17 +130,6 @@ public final class DungeonString implements Writable {
    */
   public void resetColor() {
     setColor(DEFAULT_COLOR);
-  }
-
-  /**
-   * Converts the text of this DungeonString to a plain Java String.
-   */
-  public String toJavaString() {
-    StringBuilder builder = new StringBuilder();
-    for (ColoredString coloredString : toColoredStringList()) {
-      builder.append(coloredString.getString());
-    }
-    return builder.toString();
   }
 
   @Override

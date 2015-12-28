@@ -18,7 +18,7 @@
 package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.achievements.Achievement;
-import org.mafagafogigante.dungeon.achievements.AchievementStore;
+import org.mafagafogigante.dungeon.achievements.AchievementStoreFactory;
 import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.achievements.AchievementTrackerWriter;
 import org.mafagafogigante.dungeon.date.Date;
@@ -324,8 +324,8 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
         List<Achievement> notYetUnlockedAchievementList = new ArrayList<>();
-        for (Achievement achievement : AchievementStore.getAchievements()) {
-          if (!tracker.isUnlocked(achievement)) {
+        for (Achievement achievement : AchievementStoreFactory.getDefaultStore().getAchievements()) {
+          if (tracker.hasNotBeenUnlocked(achievement)) {
             notYetUnlockedAchievementList.add(achievement);
           }
         }

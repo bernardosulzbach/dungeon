@@ -18,7 +18,6 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.date.Date;
-import org.mafagafogigante.dungeon.game.Id;
 
 import java.io.Serializable;
 
@@ -27,7 +26,6 @@ import java.io.Serializable;
  */
 public final class UnlockedAchievement implements Serializable {
 
-  public final Id id;
   private final String name;
   private final String info;
   private final Date date;
@@ -39,7 +37,6 @@ public final class UnlockedAchievement implements Serializable {
    * @param date the date when the achievement was unlocked
    */
   public UnlockedAchievement(Achievement achievement, Date date) {
-    this.id = achievement.getId();
     this.name = achievement.getName();
     this.info = achievement.getInfo();
     this.date = date;

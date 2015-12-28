@@ -19,19 +19,20 @@ package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.Statistics;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * AchievementTracker that tracks the unlocked achievements.
@@ -39,9 +40,9 @@ import java.util.Set;
 public class AchievementTracker implements Serializable {
 
   private final Statistics statistics;
-  private final Set<UnlockedAchievement> unlockedAchievements = new HashSet<>();
+  private final Map<Id, UnlockedAchievement> unlockedAchievements = new HashMap<>();
 
-  public AchievementTracker(Statistics statistics) {
+  public AchievementTracker(@NotNull Statistics statistics) {
     this.statistics = statistics;
   }
 
@@ -55,8 +56,6 @@ public class AchievementTracker implements Serializable {
 
   /**
    * Returns how many unlocked achievements there are in this AchievementTracker.
-   *
-   * @return how many unlocked achievements there are in this AchievementTracker
    */
   public int getUnlockedCount() {
     return unlockedAchievements.size();
@@ -69,11 +68,10 @@ public class AchievementTracker implements Serializable {
    *
    * @param achievement the Achievement to be unlocked.
    */
-  private void unlock(Achievement achievement, DungeonString builder) {
-    if (!isUnlocked(achievement)) {
-      Date now = Game.getGameState().getWorld().getWorldDate();
+  private void unlock(Achievement achievement, Date date, DungeonString builder) {
+    if (hasNotBeenUnlocked(achievement)) {
+      unlockedAchievements.put(achievement.getId(), new UnlockedAchievement(achievement, date));
       writeAchievementUnlock(achievement, builder);
-      unlockedAchievements.add(new UnlockedAchievement(achievement, now));
     } else {
       DungeonLogger.warning("Tried to unlock an already unlocked achievement.");
     }
@@ -86,13 +84,7 @@ public class AchievementTracker implements Serializable {
    * @return the UnlockedAchievement that corresponds to this Achievement.
    */
   private UnlockedAchievement getUnlockedAchievement(Achievement achievement) {
-    Id id = achievement.getId();
-    for (UnlockedAchievement ua : unlockedAchievements) {
-      if (ua.id.equals(id)) {
-        return ua;
-      }
-    }
-    return null;
+    return unlockedAchievements.get(achievement.getId());
   }
 
   /**
@@ -105,19 +97,16 @@ public class AchievementTracker implements Serializable {
     if (comparator == null) {
       throw new IllegalArgumentException("comparator is null.");
     }
-    List<UnlockedAchievement> list = new ArrayList<>(unlockedAchievements);
+    List<UnlockedAchievement> list = new ArrayList<>(unlockedAchievements.values());
     Collections.sort(list, comparator);
     return list;
   }
 
   /**
-   * Return true if a given Achievement is unlocked in this AchievementTracker.
-   *
-   * @param achievement an Achievement object.
-   * @return true if this Achievement is unlocked, false otherwise.
+   * Return true if a given Achievement has not been unlocked yet.
    */
-  public boolean isUnlocked(Achievement achievement) {
-    return getUnlockedAchievement(achievement) != null;
+  public boolean hasNotBeenUnlocked(@NotNull Achievement achievement) {
+    return getUnlockedAchievement(achievement) == null;
   }
 
   /**
@@ -126,16 +115,16 @@ public class AchievementTracker implements Serializable {
    *
    * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
-  public void update() {
+  public void update(AchievementStore achievementStore, Date date) {
     DungeonString dungeonString = new DungeonString();
     boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
-    for (Achievement achievement : AchievementStore.getAchievements()) {
-      if (!isUnlocked(achievement) && achievement.isFulfilled(statistics)) {
+    for (Achievement achievement : achievementStore.getAchievements()) {
+      if (hasNotBeenUnlocked(achievement) && achievement.isFulfilled(statistics)) {
         if (!wroteNewLine) {
           dungeonString.append("\n");
           wroteNewLine = true;
         }
-        unlock(achievement, dungeonString);
+        unlock(achievement, date, dungeonString);
         dungeonString.append("\n");
       }
     }

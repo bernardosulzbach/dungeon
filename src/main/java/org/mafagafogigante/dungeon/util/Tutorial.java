@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Tutorial class that contains the game tutorial.
  */
-public class Tutorial implements Writable {
+public class Tutorial extends Writable {
 
   private static final String text = JsonObjectFactory.makeJsonObject("tutorial.json").get("tutorial").asString();
 

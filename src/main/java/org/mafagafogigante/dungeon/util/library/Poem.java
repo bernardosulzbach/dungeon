@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Poem class that defines a poem storage data structure.
  */
-public final class Poem implements Writable {
+public final class Poem extends Writable {
 
   private final String title;
   private final String author;
