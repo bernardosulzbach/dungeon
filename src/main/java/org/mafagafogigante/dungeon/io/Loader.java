@@ -232,13 +232,8 @@ public final class Loader {
   private static void saveFile(GameState state, String name) {
     StopWatch stopWatch = new StopWatch();
     File file = createFileFromName(name);
+    ensureSavesFolderExists();
     try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
-      if (!SAVES_FOLDER.exists()) {
-        if (!SAVES_FOLDER.mkdir()) {
-          Messenger.printFailedToCreateDirectoryMessage(SAVES_FOLDER.getName());
-          return;
-        }
-      }
       objectOutputStream.writeObject(state);
       state.setSaved(true);
       String sizeString = Converter.bytesToHuman(file.length());
@@ -246,6 +241,14 @@ public final class Loader {
       Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
     } catch (IOException bad) {
       Writer.write("Could not save the game.");
+    }
+  }
+
+  private static void ensureSavesFolderExists() {
+    if (!SAVES_FOLDER.exists()) {
+      if (!SAVES_FOLDER.mkdir()) {
+        Messenger.printFailedToCreateDirectoryMessage(SAVES_FOLDER.getName());
+      }
     }
   }
 
