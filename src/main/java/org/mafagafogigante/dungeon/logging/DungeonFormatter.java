@@ -26,10 +26,13 @@ import java.util.logging.LogRecord;
  */
 class DungeonFormatter extends Formatter {
 
+  private static final String LINE_SEPARATOR = System.lineSeparator();
+
   @Override
   public String format(LogRecord record) {
     final SimpleDateFormat timestampFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
-    return timestampFormat.format(record.getMillis()) + " (" + record.getLevel() + "): " + record.getMessage() + "\n";
+    String timestamp = timestampFormat.format(record.getMillis());
+    return timestamp + " (" + record.getLevel() + "): " + record.getMessage() + LINE_SEPARATOR;
   }
 
 }
