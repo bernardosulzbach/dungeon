@@ -16,6 +16,9 @@ out/
 # Allow the project's dictionary.
 !.idea/dictionaries/Dungeon.xml
 
+# Ignore a possible local wiki clone
+dungeon.wiki/
+
 # Maven
 target/
 
