@@ -44,7 +44,7 @@ public class Achievement {
    * @param info the String displayed when the "Achievements" command is used
    * @param text the String used to explain why the character unlocked the achievement
    */
-  public Achievement(String id, String name, String info, String text,
+  Achievement(String id, String name, String info, String text,
       Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<Id> killsByLocationId,
       CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits) {
     this.id = new Id(id);
