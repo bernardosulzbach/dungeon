@@ -37,7 +37,7 @@ public class CreatureHealth implements Serializable {
     this.creature = creature;
   }
 
-  public static CreatureHealth makeCreatureIntegrity(int health, @NotNull Creature creature) {
+  public static CreatureHealth makeCreatureHealth(int health, @NotNull Creature creature) {
     return new CreatureHealth(health, creature);
   }
 

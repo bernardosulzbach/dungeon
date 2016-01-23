@@ -22,7 +22,7 @@ import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 /**
- * The exploration component of the achievements.
+ * The exploration component of an achievement.
  */
 final class ExplorationComponent {
 

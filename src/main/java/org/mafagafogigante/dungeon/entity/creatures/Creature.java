@@ -58,7 +58,7 @@ public class Creature extends Entity {
    */
   public Creature(CreaturePreset preset) {
     super(preset);
-    health = CreatureHealth.makeCreatureIntegrity(preset.getHealth(), this);
+    health = CreatureHealth.makeCreatureHealth(preset.getHealth(), this);
     attack = preset.getAttack();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithmId = preset.getAttackAlgorithmId();
