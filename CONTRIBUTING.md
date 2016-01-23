@@ -2,13 +2,21 @@ Contributing
 ============
 This file contains some basic directives for developers interested in contributing to this project.
 
+Forking and submitting changes
+------------------------------
+**Note: read "Commits and PRs" below before trying anything**
+* Fork the project on GitHub to your own account
+* Clone **your fork** locally by using `git clone`
+* Branch it off by using `git branch [descriptive-branch-name]`
+* Run `mvn test` to run all tests locally
+  * Fix all issues you find
+* Commit and push your changes to GitHub and open a pull request
 
 Commits and PRs
 ---------------
-* Discuss design and implementation details on the issue tracker.
-* Respect the coding standard.
-* Do not use any license other than GNU GPLv3.
-
+* Discuss design and implementation details on the issue tracker
+* Respect the coding standard
+* Do not use any license other than GNU GPLv3
 
 Writing code
 ------------
