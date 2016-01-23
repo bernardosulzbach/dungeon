@@ -12,6 +12,19 @@ Forking and submitting changes
   * Fix all issues you find
 * Commit and push your changes to GitHub and open a pull request
 
+Setting up your environment
+---------------------------
+**Note: this is a suggested setup, you may do things differently**
+* Install Git, Maven 3, Java JDK 7 (or later), and IntelliJ IDEA
+* Clone your forked repository locally
+* Open IntelliJ Idea
+  * Press "Create New Project"
+  * Select "Java"
+  * Press "Next"
+  * Press "Next"
+  * Change the location to the clone directory
+  * Press "Finish"
+
 Commits and PRs
 ---------------
 * Discuss design and implementation details on the issue tracker
