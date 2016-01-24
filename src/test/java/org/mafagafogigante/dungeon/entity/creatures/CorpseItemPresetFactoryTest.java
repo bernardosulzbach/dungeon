@@ -26,13 +26,14 @@ import org.mafagafogigante.dungeon.game.NameFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.Collections;
 
 public class CorpseItemPresetFactoryTest {
 
   @Test
-  public void testMakeCorpsePreset() throws Exception {
-    CreaturePreset creaturePreset = new CreaturePreset();
+  public void testBasicFunctionality() throws Exception {
+    final CreaturePreset creaturePreset = new CreaturePreset();
     creaturePreset.setId(new Id("TESTER"));
     creaturePreset.setType("Tester");
     creaturePreset.setName(NameFactory.newInstance("Tester"));
@@ -40,7 +41,12 @@ public class CorpseItemPresetFactoryTest {
     TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
     tagSet.addTag(Creature.Tag.CORPSE);
     creaturePreset.setTagSet(tagSet);
-    CreatureFactory creatureFactory = new CreatureFactory(Collections.singleton(creaturePreset));
+    CreatureFactory creatureFactory = new CreatureFactory(new CreaturePresetFactory() {
+      @Override
+      public Collection<CreaturePreset> getCreaturePresets() {
+        return Collections.singleton(creaturePreset);
+      }
+    });
     ItemPreset corpsePreset = new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next();
     Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
     Assert.assertEquals("CORPSE", corpsePreset.getType());

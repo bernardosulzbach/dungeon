@@ -21,6 +21,8 @@ import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
+import org.mafagafogigante.dungeon.entity.creatures.CreaturePresetFactory;
+import org.mafagafogigante.dungeon.entity.creatures.JsonCreaturePresetFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
@@ -41,7 +43,7 @@ public class World implements Serializable {
   private final WorldGenerator generator = new WorldGenerator(this);
 
   // Each world should have its own factories because their limitations and characteristics are not meant to be shared.
-  private final CreatureFactory creatureFactory = new CreatureFactory(this);
+  private final CreatureFactory creatureFactory;
   private final ItemFactory itemFactory;
 
   private final Map<Point, Location> locations = new HashMap<>();
@@ -57,6 +59,10 @@ public class World implements Serializable {
    */
   public World(WorldStatistics statistics) {
     worldStatistics = statistics;
+
+    CreaturePresetFactory creaturePresetFactory = new JsonCreaturePresetFactory("creatures.json");
+    creatureFactory = new CreatureFactory(creaturePresetFactory);
+
     ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory("items.json");
     ItemPresetFactory corpseItemPresetFactory = new CorpseItemPresetFactory(creatureFactory);
     itemFactory = new ItemFactory(jsonItemPresetFactory, corpseItemPresetFactory);

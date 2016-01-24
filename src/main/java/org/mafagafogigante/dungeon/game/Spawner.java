@@ -50,7 +50,8 @@ class Spawner implements Serializable {
   public void refresh() {
     long worldTime = getWorldTime();
     while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
-      Creature creature = location.getWorld().getCreatureFactory().makeCreature(id);
+      World world = location.getWorld();
+      Creature creature = world.getCreatureFactory().makeCreature(id, world);
       if (creature != null) {
         location.addCreature(creature);
       } else {

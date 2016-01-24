@@ -467,7 +467,8 @@ final class CommandSets {
         if (arguments.length != 0) {
           for (String argument : arguments) {
             Id givenId = new Id(argument.toUpperCase(Locale.ENGLISH));
-            Creature creature = Game.getGameState().getWorld().getCreatureFactory().makeCreature(givenId);
+            World world = Game.getGameState().getWorld();
+            Creature creature = world.getCreatureFactory().makeCreature(givenId, world);
             if (creature != null) {
               Game.getGameState().getHero().getLocation().addCreature(creature);
               Writer.write("Spawned a " + creature.getName() + ".");
