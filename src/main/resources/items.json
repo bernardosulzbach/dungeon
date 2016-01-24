@@ -950,6 +950,7 @@
         "WEAPON",
         "BOOK"
       ],
+      "unique": true,
       "integrity": {
         "current": 4,
         "maximum": 4
