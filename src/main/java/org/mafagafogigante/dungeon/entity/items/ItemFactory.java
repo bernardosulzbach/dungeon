@@ -23,7 +23,6 @@ import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
-import org.mafagafogigante.dungeon.entity.creatures.CorpsePresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
@@ -36,28 +35,79 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * Provides methods to create different items for the game.
  */
-public abstract class ItemFactory {
+public final class ItemFactory implements Serializable {
 
-  private static final Map<Id, ItemPreset> itemPresets = new HashMap<>();
+  private final Map<Id, ItemPreset> itemPresets = new HashMap<>();
+  private ItemFactoryRestrictions restrictions;
+
+  /**
+   * Creates a new ItemFactory from the JSON pointed to by the provided filename and with the extra presets.
+   */
+  public static ItemFactory fromJson(String filename, Collection<ItemPreset> extraPresets) {
+    ItemFactory itemFactory = new ItemFactory();
+    itemFactory.loadFromJson(filename);
+    for (ItemPreset itemPreset : extraPresets) {
+      itemFactory.addItemPreset(itemPreset);
+    }
+    return itemFactory;
+  }
+
+  /**
+   * Creates a Set of tags from an array of Strings.
+   *
+   * @param enumClass the Class of the enum
+   * @param array a JSON array of strings
+   * @param <E> an Enum type
+   * @return a Set of Item.Tag
+   */
+  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
+    Set<E> set = EnumSet.noneOf(enumClass);
+    for (JsonValue value : array) {
+      String tag = value.asString();
+      try {
+        set.add(Enum.valueOf(enumClass, tag));
+      } catch (IllegalArgumentException fatal) {
+        // Guarantee that bugged resource files are not going to make it to a release.
+        String message = "invalid tag '" + tag + "' found.";
+        throw new InvalidTagException(message, fatal);
+      }
+    }
+    return set;
+  }
+
+  /**
+   * Given a Creature ID, this method returns the corresponding corpse's ID.
+   */
+  public static Id makeCorpseIdFromCreatureId(Id id) {
+    return new Id(id + "_CORPSE");
+  }
 
   /**
    * Loads all item presets that are not programmatically generated.
    */
-  static {
-    JsonObject objects = JsonObjectFactory.makeJsonObject("items.json");
+  private void loadFromJson(String filename) {
+    JsonObject objects = JsonObjectFactory.makeJsonObject(filename);
+    Set<Id> uniqueItems = new HashSet<>();
     for (JsonValue value : objects.get("items").asArray()) {
       JsonObject itemObject = value.asObject();
       ItemPreset preset = new ItemPreset();
-      preset.setId(new Id(itemObject.get("id").asString()));
+      Id id = new Id(itemObject.get("id").asString());
+      preset.setId(id);
+      if (itemObject.getBoolean("unique", false)) {
+        uniqueItems.add(id);
+      }
       preset.setType(itemObject.get("type").asString());
       preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
       for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
@@ -91,67 +141,53 @@ public abstract class ItemFactory {
       }
       addItemPreset(preset);
     }
-    CorpsePresetFactory corpsePresetFactory = new CorpsePresetFactory();
-    for (ItemPreset corpsePreset : corpsePresetFactory.makeCorpsePresets()) {
-      addItemPreset(corpsePreset);
-    }
+    restrictions = new UniquenessRestrictions(uniqueItems);
     DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
   }
 
   /**
    * Returns an unmodifiable view of the ItemPreset map.
    */
-  private static Map<Id, ItemPreset> getItemPresets() {
+  private Map<Id, ItemPreset> getItemPresets() {
     return Collections.unmodifiableMap(itemPresets);
+  }
+
+  /**
+   * Returns whether or not this ItemFactory can make an Item with the specified Id based on its restrictions.
+   */
+  public boolean canMakeItem(@NotNull Id id) {
+    return restrictions.canMakeItem(id);
   }
 
   /**
    * Attempts to create an item from the ItemPreset specified by an ID with the provided creation date.
    *
+   * <p>The caller should ensure that this ItemFactory can make this item after taking its restrictions into account by
+   * calling canMakeItem with this Id.
+   *
    * @param id the ID of the preset, not null
    * @param date the creation date of the item, not null
    * @return an Item with the specified creation date
    */
-  public static Item makeItem(@NotNull Id id, @NotNull Date date) {
+  public Item makeItem(@NotNull Id id, @NotNull Date date) {
     ItemPreset itemPreset = getItemPresets().get(id);
     if (itemPreset == null) {
       throw new IllegalArgumentException("id (" + id + ") does not correspond to an ItemPreset.");
     }
-    return new Item(itemPreset, date);
+    Item item = new Item(itemPreset, date);
+    restrictions.registerItem(item.getId());
+    return item;
   }
 
   /**
    * Adds a new ItemPreset to the factory.
    */
-  private static void addItemPreset(ItemPreset preset) {
+  private void addItemPreset(ItemPreset preset) {
     if (itemPresets.containsKey(preset.getId())) {
       throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
     } else {
       itemPresets.put(preset.getId(), preset);
     }
-  }
-
-  /**
-   * Creates a Set of tags from an array of Strings.
-   *
-   * @param enumClass the Class of the enum
-   * @param array a JSON array of strings
-   * @param <E> an Enum type
-   * @return a Set of Item.Tag
-   */
-  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
-    Set<E> set = EnumSet.noneOf(enumClass);
-    for (JsonValue value : array) {
-      String tag = value.asString();
-      try {
-        set.add(Enum.valueOf(enumClass, tag));
-      } catch (IllegalArgumentException fatal) {
-        // Guarantee that bugged resource files are not going to make it to a release.
-        String message = "invalid tag '" + tag + "' found.";
-        throw new InvalidTagException(message, fatal);
-      }
-    }
-    return set;
   }
 
   /**
@@ -161,18 +197,12 @@ public abstract class ItemFactory {
    * @param date the Date when the Creature died
    * @return an Item that represents the corpse of the Creature
    */
-  public static Item makeCorpse(Creature creature, Date date) {
+  public Item makeCorpse(Creature creature, Date date) {
     if (!creature.hasTag(Creature.Tag.CORPSE)) {
       throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
     }
+    // Corpses should never be restricted.
     return makeItem(makeCorpseIdFromCreatureId(creature.getId()), date);
-  }
-
-  /**
-   * Given a Creature ID, this method returns the corresponding corpse's ID.
-   */
-  public static Id makeCorpseIdFromCreatureId(Id id) {
-    return new Id(id + "_CORPSE");
   }
 
   public static class InvalidTagException extends IllegalArgumentException {

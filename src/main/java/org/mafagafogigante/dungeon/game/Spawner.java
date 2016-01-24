@@ -18,7 +18,6 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
-import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import java.io.Serializable;
@@ -51,7 +50,7 @@ class Spawner implements Serializable {
   public void refresh() {
     long worldTime = getWorldTime();
     while (worldTime - lastChange >= spawnDelay && location.getCreatureCount(id) < populationLimit) {
-      Creature creature = CreatureFactory.makeCreature(id);
+      Creature creature = location.getWorld().getCreatureFactory().makeCreature(id);
       if (creature != null) {
         location.addCreature(creature);
       } else {

@@ -28,10 +28,12 @@ import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.util.Percentage;
 
+import java.io.Serializable;
+
 /**
  * Stores the information about an item that the factory may need to create it.
  */
-public final class ItemPreset implements Preset {
+public final class ItemPreset implements Preset, Serializable {
 
   private final TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private Id id;

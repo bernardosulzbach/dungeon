@@ -18,7 +18,6 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.commands.CommandHistory;
-import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import org.mafagafogigante.dungeon.stats.Statistics;
@@ -55,7 +54,7 @@ public class GameState implements Serializable {
    * Creates the Hero and the starting Location.
    */
   private void createHeroAndStartingLocation() {
-    hero = CreatureFactory.makeHero(world.getWorldDate(), statistics);
+    hero = world.getCreatureFactory().makeHero(world.getWorldDate(), statistics);
     heroPosition = new Point(0, 0, 0);
     world.getLocation(heroPosition).addCreature(hero);
     getStatistics().getExplorationStatistics().addVisit(heroPosition, world.getLocation(heroPosition).getId());

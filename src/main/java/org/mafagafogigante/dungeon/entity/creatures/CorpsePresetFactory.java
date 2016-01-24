@@ -40,15 +40,21 @@ public final class CorpsePresetFactory {
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
   private static final Percentage CORPSE_HIT_RATE = new Percentage(0.5);
 
-  public CorpsePresetFactory() {
+  private final CreatureFactory creatureFactory;
+
+  /**
+   * Creates a CorpsePresetFactory from the specified CreatureFactory.
+   */
+  public CorpsePresetFactory(CreatureFactory creatureFactory) {
+    this.creatureFactory = creatureFactory;
   }
 
   /**
-   * Makes all CorpsePresets that the ItemFactory needs.
+   * Makes all CorpsePresets that this CorpsePresetFactory should make.
    */
   public List<ItemPreset> makeCorpsePresets() {
     List<ItemPreset> itemPresets = new ArrayList<>();
-    for (CreaturePreset creaturePreset : CreatureFactory.getPresets()) {
+    for (CreaturePreset creaturePreset : creatureFactory.getPresets()) {
       if (creaturePreset.hasTag(Creature.Tag.CORPSE)) {
         itemPresets.add(makeCorpsePreset(creaturePreset));
       }

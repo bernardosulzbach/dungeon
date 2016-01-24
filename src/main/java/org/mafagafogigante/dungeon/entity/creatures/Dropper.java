@@ -18,7 +18,7 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.entity.items.ItemFactory;
+import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,11 +69,14 @@ class Dropper implements Serializable {
   }
 
   private void dropVariableDrops() {
+    final World world = creature.getLocation().getWorld();
     for (Drop drop : dropList) {
       if (drop.rollForDrop()) {
-        Item item = ItemFactory.makeItem(drop.getItemId(), creature.getLocation().getWorld().getWorldDate());
-        creature.getLocation().addItem(item);
-        getDroppedItemsList().add(item);
+        if (world.getItemFactory().canMakeItem(drop.getItemId())) {
+          Item item = world.getItemFactory().makeItem(drop.getItemId(), world.getWorldDate());
+          creature.getLocation().addItem(item);
+          getDroppedItemsList().add(item);
+        }
       }
     }
   }

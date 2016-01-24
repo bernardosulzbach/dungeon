@@ -23,10 +23,9 @@ import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.achievements.AchievementTrackerWriter;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
-import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
+import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
@@ -37,6 +36,7 @@ import org.mafagafogigante.dungeon.game.LocationPreset;
 import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
@@ -425,18 +425,24 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         if (arguments.length != 0) {
-          Date date = Game.getGameState().getWorld().getWorldDate();
+          World world = Game.getGameState().getWorld();
+          Date date = world.getWorldDate();
           try {
-            Item item = ItemFactory.makeItem(new Id(arguments[0].toUpperCase(Locale.ENGLISH)), date);
-            Writer.write("Item successfully created.");
-            if (Game.getGameState().getHero().getInventory().simulateItemAddition(item) ==
-                SimulationResult.SUCCESSFUL) {
-              Game.getGameState().getHero().addItem(item);
+            Id id = new Id(arguments[0].toUpperCase(Locale.ENGLISH));
+            if (world.getItemFactory().canMakeItem(id)) {
+              Item item = world.getItemFactory().makeItem(id, date);
+              Writer.write("Item successfully created.");
+              Hero hero = Game.getGameState().getHero();
+              if (hero.getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
+                hero.addItem(item);
+              } else {
+                hero.getLocation().addItem(item);
+                Writer.write("Item could not be added to your inventory. Thus, it was added to the current location.");
+              }
+              Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
             } else {
-              Game.getGameState().getHero().getLocation().addItem(item);
-              Writer.write("Item could not be added to your inventory. It was added to the current location instead.");
+              Writer.write("Item could not be created due to a restriction.");
             }
-            Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
           } catch (IllegalArgumentException invalidPreset) {
             Writer.write("Item could not be created.");
           }
@@ -461,7 +467,7 @@ final class CommandSets {
         if (arguments.length != 0) {
           for (String argument : arguments) {
             Id givenId = new Id(argument.toUpperCase(Locale.ENGLISH));
-            Creature creature = CreatureFactory.makeCreature(givenId);
+            Creature creature = Game.getGameState().getWorld().getCreatureFactory().makeCreature(givenId);
             if (creature != null) {
               Game.getGameState().getHero().getLocation().addCreature(creature);
               Writer.write("Spawned a " + creature.getName() + ".");

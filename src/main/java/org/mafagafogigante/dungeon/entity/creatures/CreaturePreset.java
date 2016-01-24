@@ -27,12 +27,13 @@ import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * CreaturePreset class that stores the information that the CreatureFactory uses to produce creatures.
  */
-public final class CreaturePreset implements Preset {
+public final class CreaturePreset implements Preset, Serializable {
 
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private Id id;

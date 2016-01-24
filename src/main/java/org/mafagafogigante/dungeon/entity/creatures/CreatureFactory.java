@@ -26,10 +26,10 @@ import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
-import org.mafagafogigante.dungeon.entity.items.ItemPreset;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
+import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.Statistics;
@@ -41,6 +41,7 @@ import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,53 +52,31 @@ import java.util.Map;
 /**
  * The factory of creatures.
  */
-public final class CreatureFactory {
+public final class CreatureFactory implements Serializable {
 
   private static final int DEFAULT_INVENTORY_ITEM_LIMIT = 100;
   private static final double DEFAULT_INVENTORY_WEIGHT_LIMIT = 100.0;
 
-  private static Map<Id, CreaturePreset> creaturePresetMap;
+  private final World world;
+  private final Map<Id, CreaturePreset> creaturePresetMap;
 
   /**
-   * Loads all creature presets from the resource files. Also makes the item presets used by the corpses.
+   * Creates a CreatureFactory for the specified world.
    */
-  static {
-    Map<Id, CreaturePreset> creaturePresetMap = new HashMap<>();
-    JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
-    for (JsonValue value : object.get("creatures").asArray()) {
-      JsonObject presetObject = value.asObject();
-      CreaturePreset preset = new CreaturePreset();
-      preset.setId(new Id(presetObject.get("id").asString()));
-      preset.setType(presetObject.get("type").asString());
-      preset.setName(NameFactory.fromJsonObject(presetObject.get("name").asObject()));
-      if (presetObject.get("tags") != null) {
-        preset.setTagSet(TagSet.fromJsonArray(presetObject.get("tags").asArray(), Creature.Tag.class));
-      } else {
-        preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
-      }
-      preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", DEFAULT_INVENTORY_ITEM_LIMIT));
-      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", DEFAULT_INVENTORY_WEIGHT_LIMIT));
-      preset.setItems(getInventory(presetObject));
-      preset.setDropList(getDrops(presetObject));
-      setLuminosityIfPresent(preset, presetObject);
-      setVisibility(preset, presetObject);
-      preset.setWeight(Weight.newInstance(presetObject.get("weight").asDouble()));
-      preset.setHealth(presetObject.get("health").asInt());
-      preset.setAttack(presetObject.get("attack").asInt());
-      setWeaponIfPreset(preset, presetObject);
-      preset.setAttackAlgorithmId(AttackAlgorithmId.valueOf(presetObject.get("attackAlgorithmID").asString()));
+  public CreatureFactory(World world) {
+    this.world = world;
+    this.creaturePresetMap = loadCreaturePresetMapFromJson();
+  }
+
+  /**
+   * Creates a CreatureFactory from the specified presets.
+   */
+  public CreatureFactory(Collection<CreaturePreset> presets) {
+    this.world = null;
+    this.creaturePresetMap = new HashMap<>();
+    for (CreaturePreset preset : presets) {
       creaturePresetMap.put(preset.getId(), preset);
     }
-    setCreaturePresetMap(Collections.unmodifiableMap(creaturePresetMap));
-    DungeonLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
-  }
-
-  private CreatureFactory() {
-    throw new AssertionError();
-  }
-
-  public static Collection<CreaturePreset> getPresets() {
-    return creaturePresetMap.values();
   }
 
   /**
@@ -177,12 +156,90 @@ public final class CreatureFactory {
     }
   }
 
-  private static void setCreaturePresetMap(Map<Id, CreaturePreset> creaturePresetMap) {
-    if (CreatureFactory.creaturePresetMap == null) {
-      CreatureFactory.creaturePresetMap = creaturePresetMap;
-    } else {
-      throw new AssertionError("Tried to set the CreaturePreset Map a second time!");
+  private static void equipWeapon(Creature creature, CreaturePreset preset) {
+    if (preset.getWeaponId() != null) {
+      // Get the weapon from the creature's inventory.
+      for (Item item : creature.getInventory().getItems()) {
+        if (item.getId().equals(preset.getWeaponId())) {
+          creature.setWeapon(item);
+          break;
+        }
+      }
+      if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
+        String format = "%s not found in the inventory of %s!";
+        DungeonLogger.warning(String.format(format, preset.getWeaponId(), creature.getId()));
+      }
     }
+  }
+
+  /**
+   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
+   *
+   * @param creature the Creature
+   */
+  private void giveItems(Creature creature) {
+    giveItems(creature, world.getWorldDate());
+  }
+
+  /**
+   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
+   *
+   * @param creature the Creature
+   * @param date the Date when the Items this Creature has were created
+   */
+  private void giveItems(Creature creature, Date date) {
+    CreaturePreset preset = creaturePresetMap.get(creature.getId());
+    ItemFactory itemFactory = world.getItemFactory();
+    for (Id itemId : preset.getItems()) {
+      if (itemFactory.canMakeItem(itemId)) {
+        Item item = itemFactory.makeItem(itemId, date);
+        SimulationResult result = creature.getInventory().simulateItemAddition(item);
+        if (result == SimulationResult.SUCCESSFUL) {
+          creature.getInventory().addItem(item);
+        } else {
+          DungeonLogger.warning("Could not add " + itemId + " to " + creature.getId() + ". Reason: " + result + ".");
+        }
+      }
+    }
+    equipWeapon(creature, preset);
+  }
+
+  /**
+   * Loads all creature presets from the resource file.
+   */
+  private Map<Id, CreaturePreset> loadCreaturePresetMapFromJson() {
+    Map<Id, CreaturePreset> creaturePresetMap = new HashMap<>();
+    JsonObject object = JsonObjectFactory.makeJsonObject("creatures.json");
+    for (JsonValue value : object.get("creatures").asArray()) {
+      JsonObject presetObject = value.asObject();
+      CreaturePreset preset = new CreaturePreset();
+      preset.setId(new Id(presetObject.get("id").asString()));
+      preset.setType(presetObject.get("type").asString());
+      preset.setName(NameFactory.fromJsonObject(presetObject.get("name").asObject()));
+      if (presetObject.get("tags") != null) {
+        preset.setTagSet(TagSet.fromJsonArray(presetObject.get("tags").asArray(), Creature.Tag.class));
+      } else {
+        preset.setTagSet(TagSet.makeEmptyTagSet(Creature.Tag.class));
+      }
+      preset.setInventoryItemLimit(presetObject.getInt("inventoryItemLimit", DEFAULT_INVENTORY_ITEM_LIMIT));
+      preset.setInventoryWeightLimit(presetObject.getDouble("inventoryWeightLimit", DEFAULT_INVENTORY_WEIGHT_LIMIT));
+      preset.setItems(getInventory(presetObject));
+      preset.setDropList(getDrops(presetObject));
+      setLuminosityIfPresent(preset, presetObject);
+      setVisibility(preset, presetObject);
+      preset.setWeight(Weight.newInstance(presetObject.get("weight").asDouble()));
+      preset.setHealth(presetObject.get("health").asInt());
+      preset.setAttack(presetObject.get("attack").asInt());
+      setWeaponIfPreset(preset, presetObject);
+      preset.setAttackAlgorithmId(AttackAlgorithmId.valueOf(presetObject.get("attackAlgorithmID").asString()));
+      creaturePresetMap.put(preset.getId(), preset);
+    }
+    DungeonLogger.info("Loaded " + creaturePresetMap.size() + " creature presets.");
+    return creaturePresetMap;
+  }
+
+  public Collection<CreaturePreset> getPresets() {
+    return creaturePresetMap.values();
   }
 
   /**
@@ -190,7 +247,7 @@ public final class CreatureFactory {
    *
    * <p>Also adds the new creature to the statistics.
    */
-  public static Creature makeCreature(Id id) {
+  public Creature makeCreature(Id id) {
     CreaturePreset preset = creaturePresetMap.get(id);
     if (preset != null) {
       Creature creature = new Creature(preset);
@@ -208,59 +265,12 @@ public final class CreatureFactory {
    * @param date the Date when the Items the Hero has were created
    * @return the Hero object
    */
-  public static Hero makeHero(Date date, Statistics statistics) {
+  public Hero makeHero(Date date, Statistics statistics) {
     DateOfBirthGenerator dateOfBirthGenerator = new DateOfBirthGenerator(date, 30);
     Date dateOfBirth = dateOfBirthGenerator.generateDateOfBirth();
     Hero hero = new Hero(creaturePresetMap.get(new Id("HERO")), new AchievementTracker(statistics), dateOfBirth);
     giveItems(hero, date);
     return hero;
-  }
-
-  /**
-   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
-   * The Date of creation of the Items will be retrieved from the GameState stored in Game. If that field is null or
-   * invalid, use the overloaded version of this method that requires a Date object.
-   *
-   * @param creature the Creature
-   */
-  private static void giveItems(Creature creature) {
-    giveItems(creature, Game.getGameState().getWorld().getWorldDate());
-  }
-
-  /**
-   * Gives a Creature all the Items defined in the corresponding CreaturePreset and equips its weapon, if there is one.
-   *
-   * @param creature the Creature
-   * @param date the Date when the Items this Creature has were created
-   */
-  private static void giveItems(Creature creature, Date date) {
-    CreaturePreset preset = creaturePresetMap.get(creature.getId());
-    for (Id itemId : preset.getItems()) {
-      Item item = ItemFactory.makeItem(itemId, date);
-      SimulationResult result = creature.getInventory().simulateItemAddition(item);
-      if (result == SimulationResult.SUCCESSFUL) {
-        creature.getInventory().addItem(item);
-      } else {
-        DungeonLogger.warning("Could not add " + itemId + " to " + creature.getId() + ". Reason: " + result + ".");
-      }
-    }
-    equipWeapon(creature, preset);
-  }
-
-  private static void equipWeapon(Creature creature, CreaturePreset preset) {
-    if (preset.getWeaponId() != null) {
-      // Get the weapon from the creature's inventory.
-      for (Item item : creature.getInventory().getItems()) {
-        if (item.getId().equals(preset.getWeaponId())) {
-          creature.setWeapon(item);
-          break;
-        }
-      }
-      if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
-        String format = "%s not found in the inventory of %s!";
-        DungeonLogger.warning(String.format(format, preset.getWeaponId(), creature.getId()));
-      }
-    }
   }
 
 }

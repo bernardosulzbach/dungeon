@@ -70,9 +70,13 @@ public final class Location implements Serializable {
       spawners.add(new Spawner(spawner, this));
     }
     this.items = new LocationInventory();
+    ItemFactory itemFactory = getWorld().getItemFactory();
     for (Entry<Id, Percentage> entry : preset.getItems()) {
       if (Random.roll(entry.getValue())) {
-        this.addItem(ItemFactory.makeItem(entry.getKey(), world.getWorldDate()));
+        Id id = entry.getKey();
+        if (itemFactory.canMakeItem(id)) {
+          this.addItem(itemFactory.makeItem(id, world.getWorldDate()));
+        }
       }
     }
   }
