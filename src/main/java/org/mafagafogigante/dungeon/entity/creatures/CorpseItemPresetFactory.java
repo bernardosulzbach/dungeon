@@ -22,18 +22,20 @@ import static org.mafagafogigante.dungeon.date.DungeonTimeUnit.SECOND;
 
 import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemPreset;
+import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
- * A factory of corpse presets.
+ * A factory of ItemPreset for corpses.
  */
-public final class CorpsePresetFactory {
+public final class CorpseItemPresetFactory implements ItemPresetFactory {
 
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
@@ -43,16 +45,24 @@ public final class CorpsePresetFactory {
   private final CreatureFactory creatureFactory;
 
   /**
-   * Creates a CorpsePresetFactory from the specified CreatureFactory.
+   * Creates a CorpseItemPresetFactory from the specified CreatureFactory.
    */
-  public CorpsePresetFactory(CreatureFactory creatureFactory) {
+  public CorpseItemPresetFactory(CreatureFactory creatureFactory) {
     this.creatureFactory = creatureFactory;
   }
 
   /**
-   * Makes all CorpsePresets that this CorpsePresetFactory should make.
+   * Given a Creature ID, this method returns the corresponding corpse's ID.
    */
-  public List<ItemPreset> makeCorpsePresets() {
+  public static Id makeCorpseIdFromCreatureId(Id id) {
+    return new Id(id + "_CORPSE");
+  }
+
+  /**
+   * Makes all CorpsePresets that this CorpseItemPresetFactory should make.
+   */
+  @Override
+  public Collection<ItemPreset> getItemPresets() {
     List<ItemPreset> itemPresets = new ArrayList<>();
     for (CreaturePreset creaturePreset : creatureFactory.getPresets()) {
       if (creaturePreset.hasTag(Creature.Tag.CORPSE)) {
@@ -70,7 +80,7 @@ public final class CorpsePresetFactory {
       throw new IllegalArgumentException("preset does not have the CORPSE tag.");
     }
     ItemPreset corpse = new ItemPreset();
-    corpse.setId(ItemFactory.makeCorpseIdFromCreatureId(preset.getId()));
+    corpse.setId(makeCorpseIdFromCreatureId(preset.getId()));
     corpse.setType("CORPSE");
     corpse.setName(NameFactory.newCorpseName(preset.getName()));
     corpse.setWeight(preset.getWeight());

@@ -26,10 +26,9 @@ import org.mafagafogigante.dungeon.game.NameFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 
-public class CorpsePresetFactoryTest {
+public class CorpseItemPresetFactoryTest {
 
   @Test
   public void testMakeCorpsePreset() throws Exception {
@@ -42,7 +41,7 @@ public class CorpsePresetFactoryTest {
     tagSet.addTag(Creature.Tag.CORPSE);
     creaturePreset.setTagSet(tagSet);
     CreatureFactory creatureFactory = new CreatureFactory(Collections.singleton(creaturePreset));
-    ItemPreset corpsePreset = new CorpsePresetFactory(creatureFactory).makeCorpsePresets().get(0);
+    ItemPreset corpsePreset = new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next();
     Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
     Assert.assertEquals("CORPSE", corpsePreset.getType());
     Assert.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
@@ -51,7 +50,7 @@ public class CorpsePresetFactoryTest {
     Assert.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
     // Extreme cases.
     creaturePreset.setHealth(1);
-    corpsePreset = new CorpsePresetFactory(creatureFactory).makeCorpsePresets().get(0);
+    corpsePreset = new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next();
     Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
     Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
   }

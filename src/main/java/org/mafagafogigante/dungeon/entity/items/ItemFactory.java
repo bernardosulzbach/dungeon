@@ -18,27 +18,15 @@
 package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.date.Date;
-import org.mafagafogigante.dungeon.date.DungeonTimeParser;
-import org.mafagafogigante.dungeon.entity.Integrity;
-import org.mafagafogigante.dungeon.entity.Luminosity;
-import org.mafagafogigante.dungeon.entity.Visibility;
-import org.mafagafogigante.dungeon.entity.Weight;
+import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.NameFactory;
-import org.mafagafogigante.dungeon.io.JsonObjectFactory;
-import org.mafagafogigante.dungeon.logging.DungeonLogger;
-import org.mafagafogigante.dungeon.util.Percentage;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,96 +41,36 @@ public final class ItemFactory implements Serializable {
   private ItemFactoryRestrictions restrictions;
 
   /**
-   * Creates a new ItemFactory from the JSON pointed to by the provided filename and with the extra presets.
+   * Constructs an ItemFactory from one or more ItemPresetFactories.
    */
-  public static ItemFactory fromJson(String filename, Collection<ItemPreset> extraPresets) {
-    ItemFactory itemFactory = new ItemFactory();
-    itemFactory.loadFromJson(filename);
-    for (ItemPreset itemPreset : extraPresets) {
-      itemFactory.addItemPreset(itemPreset);
+  public ItemFactory(@NotNull ItemPresetFactory... itemPresetFactories) {
+    for (ItemPresetFactory itemPresetFactory : itemPresetFactories) {
+      addAllPresets(itemPresetFactory.getItemPresets());
     }
-    return itemFactory;
+    createUniquenessRestrictions();
   }
 
   /**
-   * Creates a Set of tags from an array of Strings.
-   *
-   * @param enumClass the Class of the enum
-   * @param array a JSON array of strings
-   * @param <E> an Enum type
-   * @return a Set of Item.Tag
+   * Iterates over all presets of a Collection, adding them to this factory after they are validated.
    */
-  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
-    Set<E> set = EnumSet.noneOf(enumClass);
-    for (JsonValue value : array) {
-      String tag = value.asString();
-      try {
-        set.add(Enum.valueOf(enumClass, tag));
-      } catch (IllegalArgumentException fatal) {
-        // Guarantee that bugged resource files are not going to make it to a release.
-        String message = "invalid tag '" + tag + "' found.";
-        throw new InvalidTagException(message, fatal);
+  private void addAllPresets(Collection<ItemPreset> presets) {
+    for (ItemPreset preset : presets) {
+      Id id = preset.getId();
+      if (itemPresets.containsKey(id)) {
+        throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
       }
+      itemPresets.put(id, preset);
     }
-    return set;
   }
 
-  /**
-   * Given a Creature ID, this method returns the corresponding corpse's ID.
-   */
-  public static Id makeCorpseIdFromCreatureId(Id id) {
-    return new Id(id + "_CORPSE");
-  }
-
-  /**
-   * Loads all item presets that are not programmatically generated.
-   */
-  private void loadFromJson(String filename) {
-    JsonObject objects = JsonObjectFactory.makeJsonObject(filename);
-    Set<Id> uniqueItems = new HashSet<>();
-    for (JsonValue value : objects.get("items").asArray()) {
-      JsonObject itemObject = value.asObject();
-      ItemPreset preset = new ItemPreset();
-      Id id = new Id(itemObject.get("id").asString());
-      preset.setId(id);
-      if (itemObject.getBoolean("unique", false)) {
-        uniqueItems.add(id);
+  private void createUniquenessRestrictions() {
+    Set<Id> uniqueIds = new HashSet<>();
+    for (ItemPreset itemPreset : getItemPresets().values()) {
+      if (itemPreset.isUnique()) {
+        uniqueIds.add(itemPreset.getId());
       }
-      preset.setType(itemObject.get("type").asString());
-      preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
-      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
-        preset.addTag(tag);
-      }
-      if (itemObject.get("decompositionPeriod") != null) {
-        long seconds = DungeonTimeParser.parsePeriod(itemObject.get("decompositionPeriod").asString()).getSeconds();
-        preset.setPutrefactionPeriod(seconds);
-      }
-      JsonObject integrity = itemObject.get("integrity").asObject();
-      preset.setIntegrity(new Integrity(integrity.get("current").asInt(), integrity.get("maximum").asInt()));
-      preset.setVisibility(new Visibility(Percentage.fromString(itemObject.get("visibility").asString())));
-      if (itemObject.get("luminosity") != null) {
-        preset.setLuminosity(new Luminosity(Percentage.fromString(itemObject.get("luminosity").asString())));
-      }
-      preset.setWeight(Weight.newInstance(itemObject.get("weight").asDouble()));
-      preset.setDamage(itemObject.get("damage").asInt());
-      preset.setHitRate(Percentage.fromString(itemObject.get("hitRate").asString()));
-      preset.setIntegrityDecrementOnHit(itemObject.get("integrityDecrementOnHit").asInt());
-      if (itemObject.get("nutrition") != null) {
-        preset.setNutrition(itemObject.get("nutrition").asInt());
-      }
-      if (itemObject.get("integrityDecrementOnEat") != null) {
-        preset.setIntegrityDecrementOnEat(itemObject.get("integrityDecrementOnEat").asInt());
-      }
-      if (preset.hasTag(Item.Tag.BOOK)) {
-        preset.setText(itemObject.get("text").asString());
-      }
-      if (itemObject.get("spell") != null) {
-        preset.setSpellId(itemObject.get("spell").asString());
-      }
-      addItemPreset(preset);
     }
-    restrictions = new UniquenessRestrictions(uniqueItems);
-    DungeonLogger.info("Loaded " + itemPresets.size() + " item presets.");
+    restrictions = new UniquenessRestrictions(uniqueIds);
   }
 
   /**
@@ -180,17 +108,6 @@ public final class ItemFactory implements Serializable {
   }
 
   /**
-   * Adds a new ItemPreset to the factory.
-   */
-  private void addItemPreset(ItemPreset preset) {
-    if (itemPresets.containsKey(preset.getId())) {
-      throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
-    } else {
-      itemPresets.put(preset.getId(), preset);
-    }
-  }
-
-  /**
    * Makes a corpse from the provided Creature. The creation Date of the corpse should be the Date of death.
    *
    * @param creature the Creature object
@@ -202,15 +119,7 @@ public final class ItemFactory implements Serializable {
       throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
     }
     // Corpses should never be restricted.
-    return makeItem(makeCorpseIdFromCreatureId(creature.getId()), date);
-  }
-
-  public static class InvalidTagException extends IllegalArgumentException {
-
-    public InvalidTagException(String message, Throwable cause) {
-      super(message, cause);
-    }
-
+    return makeItem(CorpseItemPresetFactory.makeCorpseIdFromCreatureId(creature.getId()), date);
   }
 
 }

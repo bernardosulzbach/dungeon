@@ -51,6 +51,7 @@ public final class ItemPreset implements Preset, Serializable {
   private Id spellId;
   private String text;
   private long putrefactionPeriod;
+  private boolean unique;
 
   public TagSet<Item.Tag> getTagSet() {
     return tagSet;
@@ -186,26 +187,12 @@ public final class ItemPreset implements Preset, Serializable {
     this.putrefactionPeriod = putrefactionPeriod;
   }
 
-  @Override
-  public String toString() {
-    return "ItemPreset{" +
-        "id=" + id +
-        ", type='" + type + '\'' +
-        ", name=" + name +
-        ", putrefactionPeriod=" + putrefactionPeriod +
-        ", tagSet=" + tagSet +
-        ", integrity=" + integrity +
-        ", damage=" + damage +
-        ", hitRate=" + hitRate +
-        ", integrityDecrementOnHit=" + integrityDecrementOnHit +
-        ", nutrition=" + nutrition +
-        ", integrityDecrementOnEat=" + integrityDecrementOnEat +
-        ", text='" + text + '\'' +
-        ", weight=" + weight +
-        ", visibility=" + visibility +
-        ", spellId=" + spellId +
-        ", luminosity=" + luminosity +
-        '}';
+  public boolean isUnique() {
+    return unique;
+  }
+
+  public void setUnique(boolean unique) {
+    this.unique = unique;
   }
 
 }
