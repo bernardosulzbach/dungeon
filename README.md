@@ -7,7 +7,10 @@ Dungeon
 [![codecov.io](http://codecov.io/github/mafagafogigante/dungeon/coverage.svg?branch=master)](http://codecov.io/github/mafagafogigante/dungeon?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)
 
-Text-based open-world RPG made with Java.
+Dungeon is a text-based open-world RPG made with Java. You are in control of
+the life of a character that wakes up with a headache and can't remember
+exactly what happened to him. You need to do your best to equip yourself to
+explore Darrowmere while scavenging for powerful and valuable treasure.
 
 Screenshots
 -----------
