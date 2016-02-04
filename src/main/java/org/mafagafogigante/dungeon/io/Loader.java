@@ -219,6 +219,7 @@ public final class Loader {
       return null;
     } catch (ClassNotFoundException | IOException exception) {
       Writer.write("Could not load the saved game.");
+      DungeonLogger.logSevere(exception);
       return null;
     }
   }
@@ -239,8 +240,9 @@ public final class Loader {
       String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
       Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
-    } catch (IOException bad) {
+    } catch (IOException exception) {
       Writer.write("Could not save the game.");
+      DungeonLogger.logSevere(exception);
     }
   }
 
