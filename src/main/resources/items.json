@@ -963,6 +963,29 @@
       "text": "My Diary - Volund Loke Frey - Page 22\n\n210-5-2: I finally feel compelled to respond to the offense Birgmar made! And I will not be gentle.\n\n210-5-3: Things did not go according to the plan. Birgmar was not alone, that bastard Orc was hosting this \"Orc Reunion\" thing and I was really surprised that after kicking in the door and screaming \"You are gonna die, scum!\" I had not one but twelve Orcs staring at me. I outran them but cannot go back home as they know where I live. My wife is probably dead now.\n\n210-5-4: Went back to my old place and found my wife's body nailed to the rooftop of our shack. I will find another woman later on, I've got bigger problems now. In the wooden door they wrote a threat: \"We are coming for you.\"\n\n210-5-5: I woke in the middle of the night as I heard the breaking of dry wood branches in the ground below me, looked down and saw two Orcs. I then drew two arrows from my quiver, nocked them on the string of my longbow, silently drew the string back, and released with perfect timing. Silently and efficiently I killed both Orcs. I don't know if I will last much longer if they are all coming after me."
     },
     {
+      "id": "RED_ONYX_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Red Onyx Watch",
+        "plural": "Red Onyx Watches"
+      },
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.10,
+      "visibility": "60.00%",
+      "damage": 5,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
       "id": "POCKET_WATCH",
       "type": "Misc",
       "name": {

@@ -359,6 +359,10 @@
         {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
+        },
+        {
+          "id": "RED_ONYX_WATCH",
+          "probability": 0.1
         }
       ]
     },
