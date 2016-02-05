@@ -131,6 +131,10 @@
       "seeAlso": [
         "Spells"
       ]
+    },
+    {
+      "title": "Weather",
+      "content": "The weather changes with the passing of time. There are five weather conditions on the game: clear, cloudy, overcast, rain, and storm. The character is intelligent enough to know how to handle bad weather and is not hindered by it."
     }
   ]
 }
