@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * Represents a nonnegative amount of time.
  */
-public class Duration implements Serializable {
+public class Duration implements Comparable<Duration>, Serializable {
 
   /**
    * The duration, in milliseconds.
@@ -59,6 +59,11 @@ public class Duration implements Serializable {
 
   public long getSeconds() {
     return duration / 1000;
+  }
+
+  @Override
+  public int compareTo(@NotNull Duration duration) {
+    return Long.compare(this.duration, duration.duration);
   }
 
   @Override
