@@ -45,9 +45,10 @@ contribute.
 
 Check out the [issue
 tracker](https://github.com/mafagafogigante/dungeon/issues) to see what could
-be done or just figure out something you would like to do and start working on
-it. Remember that discussing it in the issues before writing code is a good
-way to prevent the frustration of not having your changes accepted.
+be done or figure out something you would like to do and start working on it.
+
+Discussing your ideas on the tracker before coding is a good way to increase
+the chance of your changes being accepted.
 
 Do not forget to also read the project's contributing guide
 [here](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
