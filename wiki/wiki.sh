@@ -11,6 +11,7 @@ python3 wiki/wiki.py
 
 # Commit changes and update remote
 cd dungeon.wiki
+git add *.md
 git commit -am "Regenerated the Wiki"
 git push origin
 
