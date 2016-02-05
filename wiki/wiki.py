@@ -28,8 +28,7 @@ def make_filename_for_article(title):
 
 def make_markdown_for_article(article):
     title = article['title']
-    markdown = ['# ' + title, '\n\n']
-    markdown.extend(article['content'])
+    markdown = [article['content']]
     see_also = article.get('seeAlso')
     if see_also is not None:
         markdown.append('\n\n')
