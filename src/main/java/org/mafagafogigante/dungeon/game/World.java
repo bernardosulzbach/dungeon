@@ -28,6 +28,7 @@ import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.WorldStatistics;
+import org.mafagafogigante.dungeon.world.Weather;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,8 +50,11 @@ public class World implements Serializable {
   private final Map<Point, Location> locations = new HashMap<>();
 
   private final WorldStatistics worldStatistics;
+
   private final Date worldCreationDate = new Date(1, 1, 1);
   private Date worldDate = new Date(2055, 6, 2, 6, 10, 0);
+
+  private final Weather weather = new Weather(worldDate);
 
   /**
    * Creates a new World.
@@ -123,6 +127,13 @@ public class World implements Serializable {
    */
   public PartOfDay getPartOfDay() {
     return PartOfDay.getCorrespondingConstant(worldDate);
+  }
+
+  /**
+   * Returns the current Weather of this World.
+   */
+  public Weather getWeather() {
+    return weather;
   }
 
   /**

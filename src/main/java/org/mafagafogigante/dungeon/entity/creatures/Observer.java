@@ -103,8 +103,12 @@ public class Observer implements Serializable {
     string.append(location.getDescription().getInfo());
     if (creature.canSeeTheSky()) {
       string.append(" It is ");
-      string.append(location.getWorld().getPartOfDay().toString().toLowerCase(Locale.ENGLISH));
+      World world = location.getWorld();
+      string.append(world.getPartOfDay().toString().toLowerCase(Locale.ENGLISH));
+      string.append(" and ");
+      string.append(world.getWeather().getCurrentCondition(world.getWorldDate()).toDescriptiveString());
       string.append(".");
+      // Could use hearing to detect the weather based on the current condition and how underneath the character is.
     }
     string.append("\n");
     lookLocations(string);
