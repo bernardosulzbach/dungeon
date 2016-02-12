@@ -36,7 +36,7 @@ class DateOfBirthGenerator {
     Date minimumDate = today.minus(age + 1, DungeonTimeUnit.YEAR).plus(1, DungeonTimeUnit.SECOND);
     int secondsInYear = DungeonMath.safeCastLongToInteger(DungeonTimeUnit.YEAR.as(DungeonTimeUnit.SECOND));
     // Will add up to secondsInYear - 1 seconds to the minimum date, which should respect the year.
-    return minimumDate.plus(Random.nextInteger(secondsInYear), DungeonTimeUnit.SECOND);
+    return minimumDate.plus(Random.nextInteger(secondsInYear - 1) + 1, DungeonTimeUnit.SECOND);
   }
 
   @Override
