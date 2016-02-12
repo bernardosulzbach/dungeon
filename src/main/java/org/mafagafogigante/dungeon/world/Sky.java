@@ -17,10 +17,16 @@ public class Sky implements Serializable {
   Sky() {
   }
 
+  /**
+   * Adds an astronomical body to the sky.
+   */
   public void addAstronomicalBody(AstronomicalBody astronomicalBody) {
     astronomicalBodies.add(astronomicalBody);
   }
 
+  /**
+   * Returns a description of the sky with all its visible features.
+   */
   public String describeYourself() {
     StringBuilder stringBuilder = new StringBuilder();
     for (AstronomicalBody astronomicalBody : astronomicalBodies) {
