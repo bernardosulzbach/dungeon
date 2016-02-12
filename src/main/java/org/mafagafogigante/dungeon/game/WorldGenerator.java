@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bernardo Sulzbach
+ * Copyright (C) 2014, 2015, 2016 Bernardo Sulzbach
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ import java.io.Serializable;
  */
 class WorldGenerator implements Serializable {
 
-  private static final int CHUNK_SIDE = 5;
+  private static final int DEFAULT_CHUNK_SIDE = 5;
+
   private final World world;
   private final RiverGenerator riverGenerator;
   private final DungeonDistributor dungeonDistributor = new DungeonDistributor();
@@ -38,7 +39,7 @@ class WorldGenerator implements Serializable {
   WorldGenerator(World world) {
     this.world = world;
     this.riverGenerator = new RiverGenerator();
-    this.chunkSide = WorldGenerator.CHUNK_SIDE;
+    this.chunkSide = WorldGenerator.DEFAULT_CHUNK_SIDE;
   }
 
   /**
