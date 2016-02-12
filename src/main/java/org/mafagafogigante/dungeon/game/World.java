@@ -11,6 +11,8 @@ import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.WorldStatistics;
+import org.mafagafogigante.dungeon.world.Sky;
+import org.mafagafogigante.dungeon.world.SkyFactory;
 import org.mafagafogigante.dungeon.world.Weather;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,8 +37,8 @@ public class World implements Serializable {
   private final WorldStatistics worldStatistics;
 
   private final Date worldCreationDate = new Date(1, 1, 1);
+  private final Sky sky = SkyFactory.makeDefaultSkyGenerator(this);
   private Date worldDate = new Date(2055, 6, 2, 6, 10, 0);
-
   private final Weather weather = new Weather(worldDate);
 
   /**
@@ -53,6 +55,13 @@ public class World implements Serializable {
     ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory("items.json");
     ItemPresetFactory corpseItemPresetFactory = new CorpseItemPresetFactory(creatureFactory);
     itemFactory = new ItemFactory(jsonItemPresetFactory, corpseItemPresetFactory);
+  }
+
+  /**
+   * Returns a thorough description of what is currently visible in the world's sky.
+   */
+  public String describeTheSky() {
+    return sky.describeYourself();
   }
 
   public ItemFactory getItemFactory() {
