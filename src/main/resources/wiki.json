@@ -88,7 +88,7 @@
     },
     {
       "title": "Keyboard Shortcuts",
-      "content": "The single implemented keyboard shortcut now is CTRL + S and it saves the game."
+      "content": "This an exhaustive list of all the keyboard shortcuts currently implemented and what they do.\n\nCtrl + S: saves the game\nCtrl + W: deletes the last word before the cursor\nCtrl + U: deletes everything before the cursor\nCtrl + K: deletes everything after the cursor until the end"
     },
     {
       "title": "License",

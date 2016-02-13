@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -163,7 +162,8 @@ public class GameWindow extends JFrame {
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     addWindowListener(new ClosingListener());
 
-    Action save = new AbstractAction() {
+    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
+    textField.getActionMap().put("SAVE", new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent event) {
         if (acceptingNextCommand) {
@@ -171,9 +171,59 @@ public class GameWindow extends JFrame {
           Loader.saveGame(Game.getGameState());
         }
       }
-    };
-    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "SAVE");
-    textField.getActionMap().put("SAVE", save);
+    });
+
+    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_DOWN_MASK), "DELETE_BEFORE");
+    textField.getActionMap().put("DELETE_BEFORE", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        if (acceptingNextCommand) {
+          int caretPosition = textField.getCaretPosition();
+          textField.setText(textField.getText().substring(caretPosition));
+          textField.setCaretPosition(0);
+        }
+      }
+    });
+
+    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_K, InputEvent.CTRL_DOWN_MASK), "DELETE_AFTER");
+    textField.getActionMap().put("DELETE_AFTER", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        if (acceptingNextCommand) {
+          int caretPosition = textField.getCaretPosition();
+          textField.setText(textField.getText().substring(0, caretPosition));
+        }
+      }
+    });
+
+    textField.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK), "DELETE_WORD_BEFORE");
+    textField.getActionMap().put("DELETE_WORD_BEFORE", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        if (acceptingNextCommand) {
+          String text = textField.getText();
+          boolean gotToken = false;
+          int caretPosition = textField.getCaretPosition();
+          for (int i = caretPosition - 1; i >= 0; i--) {
+            if (Character.isWhitespace(text.charAt(i))) {
+              if (gotToken) {
+                int endIndex = i + 1;
+                int offset = caretPosition - endIndex;
+                textField.setText(text.substring(0, endIndex) + text.substring(caretPosition));
+                textField.setCaretPosition(caretPosition - offset);
+                return;
+              }
+            } else {
+              if (!gotToken) {
+                gotToken = true;
+              }
+            }
+          }
+          textField.setText(text.substring(caretPosition));
+          textField.setCaretPosition(0);
+        }
+      }
+    });
 
     add(panel);
 
