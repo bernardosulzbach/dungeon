@@ -4,7 +4,6 @@ import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.TagSet.InvalidTagException;
-import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
@@ -76,7 +75,7 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       }
       JsonObject integrity = itemObject.get("integrity").asObject();
       preset.setIntegrity(new Integrity(integrity.get("current").asInt(), integrity.get("maximum").asInt()));
-      preset.setVisibility(new Visibility(Percentage.fromString(itemObject.get("visibility").asString())));
+      preset.setVisibility(Percentage.fromString(itemObject.get("visibility").asString()));
       if (itemObject.get("luminosity") != null) {
         preset.setLuminosity(new Luminosity(Percentage.fromString(itemObject.get("luminosity").asString())));
       }

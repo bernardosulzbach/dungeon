@@ -2,7 +2,6 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.TagSet;
-import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
@@ -93,7 +92,7 @@ public class JsonCreaturePresetFactory implements CreaturePresetFactory {
   private static void setVisibility(CreaturePreset preset, JsonObject presetObject) {
     Percentage visibilityPercentage = getPercentageFromJsonObject(presetObject, "visibility");
     if (visibilityPercentage != null) {
-      preset.setVisibility(new Visibility(visibilityPercentage));
+      preset.setVisibility(visibilityPercentage);
     }
   }
 

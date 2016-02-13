@@ -28,8 +28,10 @@ public class Creature extends Entity {
   private final LightSource lightSource;
   private final CreatureHealth health;
   private final Dropper dropper;
+  private final Observer observer = new Observer(this);
   private Item weapon;
   private Location location;
+
   /**
    * What caused the death of this creature. If getHealth().isAlive() evaluates to true, this should be null.
    */
@@ -201,7 +203,7 @@ public class Creature extends Entity {
    */
   boolean canSee(Entity entity) {
     // The Hero is always able to find himself.
-    return entity == this || entity.getVisibility().visibleUnder(getLocation().getLuminosity());
+    return entity == this || entity.getVisibilityCriteria().isMetBy(observer);
   }
 
   <T extends Entity> List<T> filterByVisibility(List<T> list) {

@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
-import org.mafagafogigante.dungeon.entity.Visibility;
+import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.Direction;
 import org.mafagafogigante.dungeon.game.DungeonString;
@@ -12,6 +12,10 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.Percentage;
 import org.mafagafogigante.dungeon.util.Utils;
+import org.mafagafogigante.dungeon.world.LuminosityVisibilityCriterion;
+import org.mafagafogigante.dungeon.world.VisibilityCriteria;
+import org.mafagafogigante.dungeon.world.WeatherCondition;
+import org.mafagafogigante.dungeon.world.WeatherConditionVisibilityCriterion;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +35,15 @@ import java.util.Map.Entry;
  */
 public class Observer implements Serializable {
 
-  private static final Visibility ADJACENT_LOCATIONS_VISIBILITY = new Visibility(new Percentage(0.6));
+  private static final VisibilityCriteria ADJACENT_LOCATIONS_VISIBILITY;
+
+  static {
+    LuminosityVisibilityCriterion luminosity = new LuminosityVisibilityCriterion(new Luminosity(new Percentage(0.4)));
+    WeatherCondition minimum = WeatherCondition.CLEAR;
+    WeatherCondition maximum = WeatherCondition.RAIN;
+    WeatherConditionVisibilityCriterion weather = new WeatherConditionVisibilityCriterion(minimum, maximum);
+    ADJACENT_LOCATIONS_VISIBILITY = new VisibilityCriteria(luminosity, weather);
+  }
 
   private final Creature creature;
 
@@ -156,7 +168,7 @@ public class Observer implements Serializable {
   }
 
   private boolean canSeeAdjacentLocations() {
-    return ADJACENT_LOCATIONS_VISIBILITY.visibleUnder(creature.getLocation().getLuminosity());
+    return ADJACENT_LOCATIONS_VISIBILITY.isMetBy(this);
   }
 
   private void lookToTheSides(DungeonString dungeonString, World world, Point point) {

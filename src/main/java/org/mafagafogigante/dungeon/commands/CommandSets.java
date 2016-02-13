@@ -371,16 +371,14 @@ final class CommandSets {
         dungeonString.append(Utils.padString("Creatures (" + heroLocation.getCreatureCount() + "):", width));
         dungeonString.append("\n");
         for (Creature creature : heroLocation.getCreatures()) {
-          dungeonString.append(Utils.padString("  " + creature.getName(), width));
-          dungeonString.append(creature.getVisibility().toPercentage().toString());
+          dungeonString.append("  " + creature.getName());
           dungeonString.append("\n");
         }
         if (!heroLocation.getItemList().isEmpty()) {
           dungeonString.append(Utils.padString("Items (" + heroLocation.getItemList().size() + "):", width));
           dungeonString.append("\n");
           for (Item item : heroLocation.getItemList()) {
-            dungeonString.append(Utils.padString("  " + item.getQualifiedName(), width));
-            dungeonString.append(item.getVisibility().toPercentage().toString());
+            dungeonString.append("  " + item.getQualifiedName());
             dungeonString.append("\n");
           }
         } else {

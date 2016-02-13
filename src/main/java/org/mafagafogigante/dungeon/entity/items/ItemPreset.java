@@ -29,7 +29,7 @@ public final class ItemPreset implements Preset, Serializable {
   private int nutrition;
   private int integrityDecrementOnEat;
   private Weight weight;
-  private Visibility visibility;
+  private Percentage visibility;
   private Luminosity luminosity = Luminosity.ZERO;
   private Id spellId;
   private String text;
@@ -130,11 +130,11 @@ public final class ItemPreset implements Preset, Serializable {
   }
 
   @Override
-  public Visibility getVisibility() {
+  public Percentage getVisibility() {
     return visibility;
   }
 
-  public void setVisibility(Visibility visibility) {
+  public void setVisibility(Percentage visibility) {
     this.visibility = visibility;
   }
 

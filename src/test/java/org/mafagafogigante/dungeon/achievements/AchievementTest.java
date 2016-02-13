@@ -8,6 +8,7 @@ import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
+import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class AchievementTest {
     cowPreset.setId(new Id("COW"));
     cowPreset.setType("BEAST");
     cowPreset.setHealth(1);
+    cowPreset.setVisibility(Percentage.fromString("80%"));
 
     CauseOfDeath unarmedCauseOfDeath = CauseOfDeath.getUnarmedCauseOfDeath();
 

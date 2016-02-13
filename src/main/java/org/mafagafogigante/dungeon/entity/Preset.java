@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity;
 
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.util.Percentage;
 
 /**
  * An interface that simplifies Entity instantiation.
@@ -16,6 +17,6 @@ public interface Preset {
 
   Weight getWeight();
 
-  Visibility getVisibility();
+  Percentage getVisibility();
 
 }

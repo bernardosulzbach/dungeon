@@ -9,6 +9,7 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature.Tag;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,7 +29,7 @@ public final class CreaturePreset implements Preset, Serializable {
   private AttackAlgorithmId attackAlgorithmId;
   private List<Id> items;
   private List<Drop> dropList;
-  private Visibility visibility;
+  private Percentage visibility;
   private Luminosity luminosity = Luminosity.ZERO;
   private Id weaponId;
   private int inventoryItemLimit;
@@ -139,11 +140,11 @@ public final class CreaturePreset implements Preset, Serializable {
     this.dropList = dropList;
   }
 
-  public Visibility getVisibility() {
+  public Percentage getVisibility() {
     return visibility;
   }
 
-  public void setVisibility(Visibility visibility) {
+  public void setVisibility(Percentage visibility) {
     this.visibility = visibility;
   }
 
