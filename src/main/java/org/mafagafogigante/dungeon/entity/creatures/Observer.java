@@ -48,6 +48,10 @@ public class Observer implements Serializable {
     return adjacentPoints;
   }
 
+  public Location getObserverLocation() {
+    return creature.getLocation();
+  }
+
   /**
    * Appends to a DungeonString the creatures that can be seen.
    */
@@ -92,10 +96,13 @@ public class Observer implements Serializable {
       string.append(world.getWeather().getCurrentCondition(world.getWorldDate()).toDescriptiveString());
       string.append(".");
       // Could use hearing to detect the weather based on the current condition and how underneath the character is.
-      string.append(" ");
-      string.append("Looking upwards you see ");
-      string.append(world.describeTheSky());
-      string.append(".");
+      String skyDescription = world.describeTheSky(this);
+      if (!skyDescription.isEmpty()) {
+        string.append(" ");
+        string.append("Looking upwards you see ");
+        string.append(skyDescription);
+        string.append(".");
+      }
     }
     string.append("\n");
     lookLocations(string);

@@ -1,10 +1,10 @@
 package org.mafagafogigante.dungeon.world;
 
-import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.entity.creatures.Observer;
 
 import java.io.Serializable;
 
-public class TimeVisibilityRule implements Serializable, VisibilityRule {
+public class TimeVisibilityCriterion implements Serializable, VisibilityCriterion {
 
   private static final int HOURS_IN_DAY = 24;
 
@@ -12,12 +12,12 @@ public class TimeVisibilityRule implements Serializable, VisibilityRule {
   private final int duration;
 
   /**
-   * Constructs a new TimeVisibilityRule that starts at begin and ends at end.
+   * Constructs a new TimeVisibilityCriterion that starts at begin and ends at end.
    *
    * @param begin the hour when it begins, nonnegative, smaller than the number of hours in the day
    * @param end the hour when it ends, nonnegative, smaller than the number of hours in the day, not equal to begin
    */
-  public TimeVisibilityRule(final int begin, final int end) {
+  public TimeVisibilityCriterion(final int begin, final int end) {
     if (begin == end) {
       throw new IllegalArgumentException("begin should not be equal to end");
     }
@@ -29,8 +29,8 @@ public class TimeVisibilityRule implements Serializable, VisibilityRule {
   }
 
   @Override
-  public boolean isRespected(World world) {
-    final long hour = world.getWorldDate().getHour();
+  public boolean isMetBy(Observer observer) {
+    final long hour = observer.getObserverLocation().getWorld().getWorldDate().getHour();
     long delta = hour - begin;
     if (delta < 0) {
       delta += HOURS_IN_DAY;

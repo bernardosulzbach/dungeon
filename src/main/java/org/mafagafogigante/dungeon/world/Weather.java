@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * An object that represents the weather of the world.
  */
-public final class Weather implements Serializable {
+public class Weather implements Serializable {
 
   // Eight hours.
   private static final Duration UPDATE_INTERVAL = new Duration(new Date(1, 1, 1, 1, 1, 1), new Date(1, 1, 1, 9, 1, 1));
@@ -22,7 +22,7 @@ public final class Weather implements Serializable {
   // The probability of a trend (weather getting lighter or heavier) being followed.
   private static final double TREND_FORCE = 0.6;
 
-  private CircularList<Condition> conditionHistory = new CircularList<>(2);
+  private CircularList<WeatherCondition> conditionHistory = new CircularList<>(2);
   private Date lastWeatherUpdate;
 
   /**
@@ -33,7 +33,7 @@ public final class Weather implements Serializable {
     rollNewCondition(date);
   }
 
-  public Condition getCurrentCondition(Date date) {
+  public WeatherCondition getCurrentCondition(Date date) {
     refresh(date);
     return conditionHistory.get(0);
   }
@@ -48,18 +48,18 @@ public final class Weather implements Serializable {
   }
 
   /**
-   * Randomly selects a new Condition and adds it to the condition history.
+   * Randomly selects a new WeatherCondition and adds it to the condition history.
    */
   private void rollNewCondition(@NotNull Date date) {
     if (conditionHistory.isEmpty()) {
-      conditionHistory.add(Random.select(Arrays.asList(Condition.values())));
+      conditionHistory.add(Random.select(Arrays.asList(WeatherCondition.values())));
     } else {
-      final Condition lastCondition = conditionHistory.get(0);
+      final WeatherCondition lastCondition = conditionHistory.get(0);
       if (conditionHistory.size() == 1) {
-        final List<Condition> list = Arrays.asList(lastCondition.getLighter(), lastCondition.getHeavier());
+        final List<WeatherCondition> list = Arrays.asList(lastCondition.getLighter(), lastCondition.getHeavier());
         conditionHistory.add(Random.select(list));
-      } else { // Condition history has at least two conditions.
-        final Condition semiLastCondition = conditionHistory.get(1);
+      } else { // WeatherCondition history has at least two conditions.
+        final WeatherCondition semiLastCondition = conditionHistory.get(1);
         // Try to force change in the same way so that extremes are more common.
         if (semiLastCondition.isLighterThan(lastCondition)) {
           conditionHistory.add(Random.roll(TREND_FORCE) ? lastCondition.getHeavier() : lastCondition.getLighter());

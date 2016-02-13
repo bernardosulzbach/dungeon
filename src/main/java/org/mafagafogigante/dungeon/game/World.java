@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CreaturePresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.JsonCreaturePresetFactory;
+import org.mafagafogigante.dungeon.entity.creatures.Observer;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
@@ -60,8 +61,8 @@ public class World implements Serializable {
   /**
    * Returns a thorough description of what is currently visible in the world's sky.
    */
-  public String describeTheSky() {
-    return sky.describeYourself();
+  public String describeTheSky(Observer observer) {
+    return sky.describeYourself(observer);
   }
 
   public ItemFactory getItemFactory() {

@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.world;
 
+import org.mafagafogigante.dungeon.entity.creatures.Observer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,10 +29,10 @@ public class Sky implements Serializable {
   /**
    * Returns a description of the sky with all its visible features.
    */
-  public String describeYourself() {
+  public String describeYourself(Observer observer) {
     StringBuilder stringBuilder = new StringBuilder();
     for (AstronomicalBody astronomicalBody : astronomicalBodies) {
-      if (astronomicalBody.isVisible()) {
+      if (astronomicalBody.isVisible(observer)) {
         if (stringBuilder.length() != 0) {
           stringBuilder.append(' ');
         }
@@ -42,7 +44,7 @@ public class Sky implements Serializable {
 
   @Override
   public String toString() {
-    return describeYourself();
+    return "Sky{astronomicalBodies=" + astronomicalBodies + '}';
   }
 
 }

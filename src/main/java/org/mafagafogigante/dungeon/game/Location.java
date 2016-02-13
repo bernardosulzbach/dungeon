@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 /**
  * The Location class that defines a Location of a World.
  */
-public final class Location implements Serializable {
+public class Location implements Serializable {
 
   private final Id id;
   private final Name name;

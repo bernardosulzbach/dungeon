@@ -1,11 +1,13 @@
 package org.mafagafogigante.dungeon.world;
 
+import org.mafagafogigante.dungeon.entity.creatures.Observer;
+
 /**
  * An astronomical body that may be seen from a world.
  */
 public interface AstronomicalBody {
 
-  boolean isVisible();
+  boolean isVisible(Observer observer);
 
   String describeYourself();
 
