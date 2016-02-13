@@ -50,7 +50,10 @@
       "spawners": [
         {
           "id": "HARPY",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 24
         }
       ],
@@ -150,12 +153,18 @@
       "spawners": [
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "HUGE_SPIDER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 4
         }
       ],
@@ -212,12 +221,18 @@
       "spawners": [
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "HUGE_SPIDER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 4
         }
       ],
@@ -252,12 +267,18 @@
       "spawners": [
         {
           "id": "SKELETON",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 12
         },
         {
           "id": "ZOMBIE",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 4
         }
       ],
@@ -300,12 +321,18 @@
       "spawners": [
         {
           "id": "RADIANT_GHOUL",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 12
         },
         {
           "id": "GHOUL",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 10
         }
       ],
@@ -342,12 +369,18 @@
       "spawners": [
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "HUGE_SPIDER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 4
         }
       ],
@@ -388,32 +421,50 @@
       "spawners": [
         {
           "id": "FOX",
-          "population": 4,
+          "population": {
+            "minimum": 2,
+            "maximum": 6
+          },
           "delay": 4
         },
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "RABBIT",
-          "population": 8,
+          "population": {
+            "minimum": 2,
+            "maximum": 10
+          },
           "delay": 1
         },
         {
           "id": "HUGE_SPIDER",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 4
         },
         {
           "id": "COW",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 20
         },
         {
           "id": "FARMER",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
           "delay": 18
         }
       ],
@@ -446,22 +497,34 @@
       "spawners": [
         {
           "id": "BOAR",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
           "delay": 8
         },
         {
           "id": "GIANT_RAT",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 2
         },
         {
           "id": "SNAKE",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
           "delay": 4
         },
         {
           "id": "ZOMBIE",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 4
         }
       ],
@@ -514,27 +577,42 @@
       "spawners": [
         {
           "id": "BEAR",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 12
         },
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "FRUIT_BAT",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "RABBIT",
-          "population": 8,
+          "population": {
+            "minimum": 4,
+            "maximum": 12
+          },
           "delay": 1
         },
         {
           "id": "WHITE_TIGER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 24
         }
       ],
@@ -579,37 +657,58 @@
       "spawners": [
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 2
         },
         {
           "id": "FRUIT_BAT",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 2
         },
         {
           "id": "RABBIT",
-          "population": 8,
+          "population": {
+            "minimum": 4,
+            "maximum": 10
+          },
           "delay": 1
         },
         {
           "id": "WHITE_TIGER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
           "delay": 24
         },
         {
           "id": "BOAR",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 10
         },
         {
           "id": "FOX",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
           "delay": 6
         },
         {
           "id": "MERCHANT",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 36
         }
       ],
@@ -650,27 +749,42 @@
       "spawners": [
         {
           "id": "RADIANT_GHOUL",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 18
         },
         {
           "id": "BAT",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 6
         },
         {
           "id": "ORC",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 2
         },
         {
           "id": "SKELETON",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
           "delay": 12
         },
         {
           "id": "ZOMBIE",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 4
         }
       ],
@@ -711,22 +825,34 @@
       "spawners": [
         {
           "id": "WHITE_TIGER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 24
         },
         {
           "id": "WOLF",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
           "delay": 12
         },
         {
           "id": "FARMER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 24
         },
         {
           "id": "TRAVELER",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 48
         }
       ],
@@ -759,22 +885,34 @@
       "spawners": [
         {
           "id": "CROCODILE",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 6
         },
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
           "delay": 2
         },
         {
           "id": "GREEN_IGUANA",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 2
+          },
           "delay": 32
         },
         {
           "id": "MERCHANT",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 36
         }
       ],
@@ -807,22 +945,34 @@
       "spawners": [
         {
           "id": "BOAR",
-          "population": 3,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 8
         },
         {
           "id": "SNAKE",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
           "delay": 4
         },
         {
           "id": "WHITE_TIGER",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
           "delay": 24
         },
         {
           "id": "KOMODO_DRAGON",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
           "delay": 12
         }
       ],
@@ -855,17 +1005,26 @@
       "spawners": [
         {
           "id": "CROCODILE",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 6
         },
         {
           "id": "FROG",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
           "delay": 2
         },
         {
           "id": "SNAKE",
-          "population": 3,
+          "population": {
+            "minimum": 1,
+            "maximum": 6
+          },
           "delay": 4
         }
       ],
@@ -898,27 +1057,42 @@
       "spawners": [
         {
           "id": "GIANT_RAT",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 2
         },
         {
           "id": "SNAKE",
-          "population": 3,
+          "population": {
+            "minimum": 2,
+            "maximum": 3
+          },
           "delay": 4
         },
         {
           "id": "HUGE_SPIDER",
-          "population": 2,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 4
         },
         {
           "id": "KOMODO_DRAGON",
-          "population": 1,
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
           "delay": 12
         },
         {
           "id": "TRAVELER",
-          "population": 2,
+          "population": {
+            "minimum": 2,
+            "maximum": 3
+          },
           "delay": 48
         }
       ],

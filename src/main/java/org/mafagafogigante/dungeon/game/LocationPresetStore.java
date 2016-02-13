@@ -63,9 +63,11 @@ public final class LocationPresetStore {
         for (JsonValue spawnerValue : presetObject.get("spawners").asArray()) {
           JsonObject spawner = spawnerValue.asObject();
           String spawnerId = spawner.get("id").asString();
-          int population = spawner.get("population").asInt();
+          JsonObject population = spawner.get("population").asObject();
+          int minimumPopulation = population.get("minimum").asInt();
+          int maximumPopulation = population.get("maximum").asInt();
           int delay = spawner.get("delay").asInt();
-          preset.addSpawner(new SpawnerPreset(spawnerId, population, delay));
+          preset.addSpawner(new SpawnerPreset(spawnerId, minimumPopulation, maximumPopulation, delay));
         }
       }
       if (presetObject.get("items") != null) {

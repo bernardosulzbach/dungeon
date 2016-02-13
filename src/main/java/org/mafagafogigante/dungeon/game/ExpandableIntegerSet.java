@@ -12,7 +12,7 @@ import java.util.TreeSet;
 class ExpandableIntegerSet implements Serializable {
 
   private final int minimumDifference;
-  private final int differenceBetweenMinAndMax;
+  private final int maximumDifference;
 
   private final NavigableSet<Integer> set = new TreeSet<>();
 
@@ -23,12 +23,13 @@ class ExpandableIntegerSet implements Serializable {
    * @param maximumDifference the maximum difference between integers, bigger than {@code minimumDifference}
    */
   public ExpandableIntegerSet(int minimumDifference, int maximumDifference) {
-    if (minimumDifference > 0 && maximumDifference > minimumDifference) {
-      this.minimumDifference = minimumDifference;
-      this.differenceBetweenMinAndMax = maximumDifference - minimumDifference;
+    if (minimumDifference < 1) {
+      throw new IllegalArgumentException("minimumDifference must be positive");
+    } else if (minimumDifference >= maximumDifference) {
+      throw new IllegalArgumentException("maximumDifference must be bigger than minimumDifference");
     } else {
-      String message = "illegal values for minimumDifference or maximumDifference";
-      throw new IllegalArgumentException(message);
+      this.minimumDifference = minimumDifference;
+      this.maximumDifference = maximumDifference;
     }
     initialize();
   }
@@ -56,13 +57,13 @@ class ExpandableIntegerSet implements Serializable {
     ArrayList<Integer> integerList = new ArrayList<>();
     int integer = set.last();
     while (value >= integer) {
-      integer += minimumDifference + Random.nextInteger(differenceBetweenMinAndMax);
+      integer += Random.nextInteger(minimumDifference, maximumDifference);
       integerList.add(integer);
       set.add(integer);
     }
     integer = set.first();
     while (value <= integer) {
-      integer -= minimumDifference + Random.nextInteger(differenceBetweenMinAndMax);
+      integer -= Random.nextInteger(minimumDifference, maximumDifference);
       integerList.add(integer);
       set.add(integer);
     }

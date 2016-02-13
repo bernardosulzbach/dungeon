@@ -54,6 +54,19 @@ public class Random {
   }
 
   /**
+   * Returns a pseudorandom, uniformly distributed int value between minimum (inclusive) and n (exclusive).
+   *
+   * @param n the bound on the random number to be returned, must be positive
+   * @return an int in the range [minimum, n)
+   */
+  public static int nextInteger(int minimum, int n) {
+    if (minimum >= n) {
+      throw new IllegalArgumentException("minimum must be less than n");
+    }
+    return minimum + nextInteger(n - minimum);
+  }
+
+  /**
    * Selects a random element from a List.
    *
    * @param list a List object, not empty, not null

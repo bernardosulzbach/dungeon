@@ -19,7 +19,7 @@ class Spawner implements Serializable {
 
   public Spawner(SpawnerPreset preset, Location location) {
     id = preset.id;
-    populationLimit = preset.population;
+    populationLimit = Random.nextInteger(preset.minimumPopulation, preset.maximumPopulation + 1);
     spawnDelay = preset.spawnDelay;
     this.location = location;
     lastChange = getWorldCreationTime();

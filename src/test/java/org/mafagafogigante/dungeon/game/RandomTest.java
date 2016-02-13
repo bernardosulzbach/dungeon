@@ -36,4 +36,11 @@ public class RandomTest {
     Assert.assertTrue(Random.select(integerList).equals(0));
   }
 
+  @Test
+  public void testRandomIntegerRespectsMinimum() throws Exception {
+    for (int i = 0; i < 1000; i++) {
+      Assert.assertEquals(i, Random.nextInteger(i, i + 1));
+    }
+  }
+
 }
