@@ -12,6 +12,13 @@
       ]
     },
     {
+      "title": "Bones",
+      "content": "Most creatures in Darrowmere have a bone endoskeleton. These bones may be used as makeshift weapons.",
+      "seeAlso": [
+        "Decomposition"
+      ]
+    },
+    {
       "title": "Calendar",
       "content": "Darrowmere has years of 10 months, months of 10 days and days of 24 hours. Each hour lasts 60 minutes of 60 seconds.",
       "seeAlso": [
@@ -36,11 +43,14 @@
     },
     {
       "title": "Corpses",
-      "content": "Corpses weight as much as the creature and will eventually decompose. The integrity of a corpse is directly proportional to the health of the creature when it was uninjured."
+      "content": "Corpses weight as much as the creature and will eventually decompose. The integrity of a corpse is directly proportional to the health of the creature when it was uninjured.",
+      "seeAlso": [
+        "Decomposition"
+      ]
     },
     {
       "title": "Decomposition",
-      "content": "Some items decompose over time. The time it takes for an item to decompose (disappear from the game) depends on the characteristics of the item. An item may vanish from your hand during combat or from your inventory while you are exploring, so if those cherries you were so sure to have collected are no longer in your inventory, do not report a bug. Eat you cherries sooner instead."
+      "content": "Some items decompose over time. The time it takes for an item to decompose and disappear from the world depends on the characteristics of the item.\n\nCorpses, for instance, decompose in a matter of days, while bones may take hundreds of years to decompose.\n\nAn item may vanish from your hand during combat or from your inventory while you are exploring. Therefore, you should try to consume food as soon as possible and only take nondecomposable weapons to battle."
     },
     {
       "title": "Eating",

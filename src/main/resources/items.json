@@ -730,7 +730,7 @@
       },
       "weight": 0.8,
       "visibility": "60.00%",
-      "decompositionPeriod": "4 months",
+      "decompositionPeriod": "100 years",
       "damage": 10,
       "hitRate": "90.00%",
       "integrityDecrementOnHit": 5
