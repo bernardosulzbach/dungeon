@@ -82,7 +82,7 @@
     },
     {
       "title": "License",
-      "content": "The GNU General Public License is the most widely used free software license, which guarantees end users (individuals, organizations, companies) the freedoms to run, study, share, and modify the software. The license was originally written by Richard Stallman of the Free Software Foundation.\nThe founder of this project (Bernardo Sulzbach) believes in the power of free software. Dungeon is released under GNU GPLv3 license because according to his thoughts everyone should be free to run, study, and modify the game as he or she intends. This license also requires that any program which uses code from Dungeon to also be open source.\n\nFollows a brief summary of the aforementioned license.\n\nCopyright (C) 2014 Bernardo Sulzbach\n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details."
+      "content": "This project used the GNU GPLv3 license in the past. However, it is currently licensed under the BSD 3-Clause license."
     },
     {
       "title": "Komodo dragon",

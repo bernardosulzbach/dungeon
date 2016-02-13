@@ -27,9 +27,7 @@ Setting up your environment
 
 Commits and PRs
 ---------------
-* Discuss design and implementation details on the issue tracker
-* Respect the coding standard
-* Do not use any license other than GNU GPLv3
+Please discuss design and implementation details on the issue tracker.
 
 Writing code
 ------------

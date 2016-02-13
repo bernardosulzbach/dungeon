@@ -66,4 +66,4 @@ Dungeon uses [semantic versioning](http://semver.org/spec/v2.0.0.html).
 
 License
 -------
-[GNU GPLv3](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt).
+[BSD 3-Clause](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt).
