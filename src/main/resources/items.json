@@ -534,6 +534,27 @@
       "integrityDecrementOnHit": 1
     },
     {
+      "id": "DAGGER_OF_INFINITY",
+      "type": "Weapon",
+      "name": {
+        "singular": "Dagger of Infinity",
+        "plural": "Daggers of Infinity"
+      },
+      "tags": [
+        "WEAPON"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.4,
+      "visibility": "70.00%",
+      "damage": 13,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 0
+    },
+    {
       "id": "FLAIL",
       "type": "Weapon",
       "name": {
@@ -554,6 +575,26 @@
       "integrityDecrementOnHit": 1
     },
     {
+      "id": "ETHEREAL_FLAIL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Ethereal Flail"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.005,
+      "visibility": "80.00%",
+      "damage": 16,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
       "id": "LONGSWORD",
       "type": "Weapon",
       "name": {
@@ -570,6 +611,48 @@
       "weight": 1.6,
       "visibility": "75.00%",
       "damage": 20,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "GLASS_SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Glass Sword"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 15,
+        "maximum": 15
+      },
+      "weight": 1.0,
+      "visibility": "45.00%",
+      "damage": 40,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 15
+    },
+    {
+      "id": "THE_SUN_BLADE",
+      "type": "Weapon",
+      "name": {
+        "singular": "The Sun Blade"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 1.2,
+      "visibility": "90.00%",
+      "luminosity": "25.00%",
+      "damage": 22,
       "hitRate": "85.00%",
       "integrityDecrementOnHit": 1
     },
