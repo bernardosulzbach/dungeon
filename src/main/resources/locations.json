@@ -242,6 +242,10 @@
           "probability": 1.0
         },
         {
+          "id": "ETHEREAL_FLAIL",
+          "probability": 0.05
+        },
+        {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
         }
@@ -390,12 +394,16 @@
           "probability": 1.0
         },
         {
-          "id": "TOME_OF_PERCEIVE",
-          "probability": 0.05
+          "id": "GLASS_SWORD",
+          "probability": 0.2
         },
         {
           "id": "RED_ONYX_WATCH",
           "probability": 0.1
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
         }
       ]
     },
@@ -724,6 +732,10 @@
         {
           "id": "TOME_OF_VEIL_OF_DARKNESS",
           "probability": 0.05
+        },
+        {
+          "id": "DAGGER_OF_INFINITY",
+          "probability": 0.05
         }
       ]
     },
@@ -799,6 +811,10 @@
         },
         {
           "id": "WRIST_WATCH",
+          "probability": 0.025
+        },
+        {
+          "id": "THE_SUN_BLADE",
           "probability": 0.025
         }
       ]
