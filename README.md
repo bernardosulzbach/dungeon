@@ -33,6 +33,17 @@ Running the game
 
 You only need an updated version of Java to play this game.
 
+Building the game
+-----------------
+If you want to build the game locally, issue
+
+```bash
+$ git clone https://github.com/mafagafogigante/dungeon.git
+$ cd dungeon
+$ mvn package
+$ java -jar target/dungeon-[version].jar
+```
+
 Reporting bugs
 --------------
 Bug reports, questions, and suggestions are welcome on our [issue
