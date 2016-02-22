@@ -23,8 +23,24 @@ def make_markdown_for_article(article):
     return markdown
 
 
+def should_be_deleted(filename):
+    return not filename.startswith('_') and filename != 'Home.md'
+
+
+def clean_wiki_clone(dungeon_root):
+    """
+    Deletes all files in the wiki clone to which should_be_deleted returns true.
+    :param dungeon_root: the root of the dungeon repository
+    """
+    root = os.path.join(dungeon_root, 'dungeon.wiki')
+    for filename in os.listdir(root):
+        if os.path.isfile(os.path.join(root, filename)) and should_be_deleted(filename):
+            os.remove(os.path.join(root, filename))
+
+
 def main():
     dungeon_root = os.path.dirname(os.path.dirname(__file__))
+    clean_wiki_clone(dungeon_root)
     wiki_json_path = os.path.join(dungeon_root, 'src', 'main', 'resources', 'wiki.json')
     with open(wiki_json_path) as wiki_file:
         wiki_json = json.load(wiki_file)
