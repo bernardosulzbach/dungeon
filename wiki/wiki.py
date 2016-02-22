@@ -4,12 +4,24 @@ import json
 import os
 
 
+def get_wiki_root_url():
+    return 'https://github.com/mafagafogigante/dungeon/wiki/'
+
+
 def make_filename_for_article(title):
     """
     Returns the correct filename for a given article
     :param title: the title of the article
     """
     return title + '.md'
+
+
+def make_see_also_link(reference):
+    """
+    Makes a Markdown link for a See Also reference in an article.
+    :param reference: the plain text reference to another article
+    """
+    return '[' + reference + '](' + get_wiki_root_url() + reference.replace(' ', '-') + '/)'
 
 
 def make_markdown_for_article(article):
@@ -19,7 +31,7 @@ def make_markdown_for_article(article):
     see_also = article.get('seeAlso')
     if see_also is not None:
         markdown.append('\n\n')
-        markdown.append('## See Also' + '\n\n' + '; '.join(see_also))
+        markdown.append('## See Also' + '\n\n' + '; '.join([make_see_also_link(reference) for reference in see_also]))
     return markdown
 
 
