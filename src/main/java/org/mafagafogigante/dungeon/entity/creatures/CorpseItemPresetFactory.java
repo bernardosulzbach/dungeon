@@ -11,6 +11,8 @@ import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.util.Percentage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,8 +70,7 @@ public final class CorpseItemPresetFactory implements ItemPresetFactory {
     corpse.setName(NameFactory.newCorpseName(preset.getName()));
     corpse.setWeight(preset.getWeight());
     corpse.setPutrefactionPeriod(CORPSE_PUTREFACTION_PERIOD);
-    int integrity = (int) Math.ceil(preset.getHealth() / (double) 2); // The health of the preset over two rounded up.
-    corpse.setIntegrity(new Integrity(integrity, integrity));
+    corpse.setIntegrity(makeCorpseIntegrity(preset));
     corpse.setVisibility(preset.getVisibility());
     corpse.setLuminosity(preset.getLuminosity());
     corpse.setHitRate(CORPSE_HIT_RATE);
@@ -79,6 +80,12 @@ public final class CorpseItemPresetFactory implements ItemPresetFactory {
     corpse.addTag(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
     corpse.addTag(Item.Tag.DECOMPOSES);
     return corpse;
+  }
+
+  private Integrity makeCorpseIntegrity(@NotNull final CreaturePreset preset) {
+    // The health of the preset over two rounded up.
+    final int integrity = (int) Math.ceil(preset.getHealth() / 2.0);
+    return new Integrity(integrity, integrity);
   }
 
 }
