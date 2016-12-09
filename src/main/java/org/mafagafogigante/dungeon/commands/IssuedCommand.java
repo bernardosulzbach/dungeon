@@ -25,11 +25,18 @@ public final class IssuedCommand {
    * @param source a string with at least one character that is not whitespace.
    */
   public IssuedCommand(@NotNull String source) {
+    if (!isValidSource(source)) {
+      throw new IllegalArgumentException("invalid source, command limits violated.");
+    }
     tokens = Collections.unmodifiableList(Arrays.asList(Utils.split(source)));
     if (tokens.isEmpty()) {
       throw new IllegalArgumentException("invalid source, no tokens obtained.");
     }
     this.stringRepresentation = StringUtils.join(tokens, ' ');
+  }
+
+  public static boolean isValidSource(String text) {
+    return CommandLimits.isValidSource(text);
   }
 
   public String getStringRepresentation() {

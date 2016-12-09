@@ -16,4 +16,8 @@ class CommandLimits {
     return candidate.length() <= MAXIMUM_COMMAND_LENGTH;
   }
 
+  static boolean isValidSource(@NotNull final String source) {
+    return isWithinMaximumCommandLength(source);
+  }
+
 }

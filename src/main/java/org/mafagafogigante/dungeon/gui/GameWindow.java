@@ -266,14 +266,18 @@ public class GameWindow extends JFrame {
         SwingWorker<Void, Void> inputRenderer = new SwingWorker<Void, Void>() {
           @Override
           protected Void doInBackground() {
-            DungeonLogger.logCommandRenderingReport(text, "started doInBackGround", stopWatch);
-            try {
-              Game.renderTurn(new IssuedCommand(text), stopWatch);
-            } catch (Throwable throwable) {
-              logExecutionExceptionAndExit(throwable);
+            if (IssuedCommand.isValidSource(text)) {
+              DungeonLogger.logCommandRenderingReport(text, "started doInBackGround", stopWatch);
+              try {
+                Game.renderTurn(new IssuedCommand(text), stopWatch);
+              } catch (Throwable throwable) {
+                logExecutionExceptionAndExit(throwable);
+              }
+              DungeonLogger.logCommandRenderingReport(text, "finished doInBackGround", stopWatch);
+            } else {
+              DungeonLogger.warning("Input is not a valid command source.");
             }
             acceptingNextCommand = true;
-            DungeonLogger.logCommandRenderingReport(text, "finished doInBackGround", stopWatch);
             return null;
           }
         };
