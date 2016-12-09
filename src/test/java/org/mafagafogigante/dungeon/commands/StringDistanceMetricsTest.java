@@ -18,7 +18,7 @@ public class StringDistanceMetricsTest {
   private static final Random random = new Random();
 
   private static char randomCharacter() {
-    return (char) ((int) 'a' + random.nextInt('z' - 'a'));
+    return (char) ((int) 'a' + random.nextInt('z' - 'a' + 1));
   }
 
   private static String makeRandomString(int size) {
