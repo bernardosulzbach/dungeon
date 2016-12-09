@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ResourcesFolderTest {
@@ -64,6 +65,11 @@ public class ResourcesFolderTest {
     }
 
     private List<File> findFilesByFileFilter(FileFilter fileFilter) {
-        return Arrays.asList(resourcesDir.listFiles(fileFilter));
+        final File[] files = resourcesDir.listFiles(fileFilter);
+        if (files == null) {
+            return Collections.emptyList();
+        } else {
+            return Arrays.asList(files);
+        }
     }
 }
