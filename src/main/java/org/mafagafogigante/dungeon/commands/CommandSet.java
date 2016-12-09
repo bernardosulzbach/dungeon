@@ -5,7 +5,6 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Utils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -109,12 +108,12 @@ public final class CommandSet {
    * Retrieves a list of the names of the commands closest to the provided token according to their Levenshtein
    * distance.
    */
-  public List<String> getClosestCommands(String token) {
+  List<String> getClosestCommands(final String token) {
     List<String> closestCommands = new ArrayList<>();
     int best = Integer.MAX_VALUE;
     for (Command command : commands) {
       String commandName = command.getDescription().getName();
-      int distance = StringUtils.getLevenshteinDistance(token, commandName);
+      int distance = StringDistanceMetrics.levenshteinDistance(token, commandName);
       if (distance < best) {
         closestCommands.clear();
         best = distance;

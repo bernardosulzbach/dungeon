@@ -8,7 +8,7 @@ public class IssuedCommandEvaluation {
   private final boolean valid;
   private final List<String> suggestions;
 
-  public IssuedCommandEvaluation(boolean valid, List<String> suggestions) {
+  IssuedCommandEvaluation(boolean valid, List<String> suggestions) {
     this.valid = valid;
     this.suggestions = suggestions;
   }
