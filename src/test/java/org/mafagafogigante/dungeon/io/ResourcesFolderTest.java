@@ -13,63 +13,63 @@ import java.util.List;
 
 public class ResourcesFolderTest {
 
-    private static final int FONT_FILES_NUMBER = 1;
-    private static final int JSON_FILES_NUMBER = 10;
-    private static final String RESOURCES_TARGET_PATH = "../classes/";
-    private static final String JSON_FILE_EXTENSION = ".json";
-    private static final String FONT_FILE_EXTENSION = ".ttf";
-    private static final String SPLASH_SCREEN_FILE_NAME = "splash.png";
+  private static final int FONT_FILES_NUMBER = 1;
+  private static final int JSON_FILES_NUMBER = 10;
+  private static final String RESOURCES_TARGET_PATH = "../classes/";
+  private static final String JSON_FILE_EXTENSION = ".json";
+  private static final String FONT_FILE_EXTENSION = ".ttf";
+  private static final String SPLASH_SCREEN_FILE_NAME = "splash.png";
 
-    private File resourcesDir;
+  private File resourcesDir;
 
-    @Before
-    public void initialize() {
-        URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
-        if (resourcesUrl != null) {
+  @Before
+  public void initialize() {
+    URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
+    if (resourcesUrl != null) {
 
-            resourcesDir = new File(resourcesUrl.getFile());
+      resourcesDir = new File(resourcesUrl.getFile());
 
-            if (!resourcesDir.isDirectory()) {
-                Assert.fail("Resources file should be a directory");
-            }
-        } else {
-            Assert.fail("Unable to find resources folder");
-        }
+      if (!resourcesDir.isDirectory()) {
+        Assert.fail("Resources file should be a directory");
+      }
+    } else {
+      Assert.fail("Unable to find resources folder");
     }
+  }
 
-    @Test
-    public void testIsResourcesFolderContainsCorrectNumberOfJsonFiles() {
-        List<File> jsonFiles = findFilesByFileFilter(getEndWithFileFilter(JSON_FILE_EXTENSION));
-        Assert.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
-    }
+  @Test
+  public void testIsResourcesFolderContainsCorrectNumberOfJsonFiles() {
+    List<File> jsonFiles = findFilesByFileFilter(getEndWithFileFilter(JSON_FILE_EXTENSION));
+    Assert.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
+  }
 
-    @Test
-    public void testIsResourcesFolderContainsFontFile() {
-        List<File> fontFiles = findFilesByFileFilter(getEndWithFileFilter(FONT_FILE_EXTENSION));
-        Assert.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
-    }
+  @Test
+  public void testIsResourcesFolderContainsFontFile() {
+    List<File> fontFiles = findFilesByFileFilter(getEndWithFileFilter(FONT_FILE_EXTENSION));
+    Assert.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
+  }
 
-    @Test
-    public void testIsResourcesFolderContainsSplashScreenFile() {
-        List<File> splashScreenFile = findFilesByFileFilter(getEndWithFileFilter(SPLASH_SCREEN_FILE_NAME));
-        Assert.assertEquals(1, splashScreenFile.size());
-    }
+  @Test
+  public void testIsResourcesFolderContainsSplashScreenFile() {
+    List<File> splashScreenFile = findFilesByFileFilter(getEndWithFileFilter(SPLASH_SCREEN_FILE_NAME));
+    Assert.assertEquals(1, splashScreenFile.size());
+  }
 
-    private FileFilter getEndWithFileFilter(final String endWithExpression) {
-        return new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(endWithExpression);
-            }
-        };
-    }
+  private FileFilter getEndWithFileFilter(final String endWithExpression) {
+    return new FileFilter() {
+      @Override
+      public boolean accept(File pathname) {
+        return pathname.getName().endsWith(endWithExpression);
+      }
+    };
+  }
 
-    private List<File> findFilesByFileFilter(FileFilter fileFilter) {
-        final File[] files = resourcesDir.listFiles(fileFilter);
-        if (files == null) {
-            return Collections.emptyList();
-        } else {
-            return Arrays.asList(files);
-        }
+  private List<File> findFilesByFileFilter(FileFilter fileFilter) {
+    final File[] files = resourcesDir.listFiles(fileFilter);
+    if (files == null) {
+      return Collections.emptyList();
+    } else {
+      return Arrays.asList(files);
     }
+  }
 }
