@@ -12,8 +12,9 @@ import java.util.List;
 
 public class ResourcesFolderTest {
 
+    private static final int FONT_FILES_NUMBER = 1;
+    private static final int JSON_FILES_NUMBER = 10;
     private static final String RESOURCES_TARGET_PATH = "../classes/";
-
     private static final String JSON_FILE_EXTENSION = ".json";
     private static final String FONT_FILE_EXTENSION = ".ttf";
     private static final String SPLASH_SCREEN_FILE_NAME = "splash.png";
@@ -22,7 +23,6 @@ public class ResourcesFolderTest {
 
     @Before
     public void initialize() {
-
         URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
         if (resourcesUrl != null) {
 
@@ -38,21 +38,18 @@ public class ResourcesFolderTest {
 
     @Test
     public void testIsResourcesFolderContainsCorrectNumberOfJsonFiles() {
-
         List<File> jsonFiles = findFilesByFileFilter(getEndWithFileFilter(JSON_FILE_EXTENSION));
-        Assert.assertEquals(10, jsonFiles.size());
+        Assert.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
     }
 
     @Test
     public void testIsResourcesFolderContainsFontFile() {
-
         List<File> fontFiles = findFilesByFileFilter(getEndWithFileFilter(FONT_FILE_EXTENSION));
-        Assert.assertEquals(1, fontFiles.size());
+        Assert.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
     }
 
     @Test
     public void testIsResourcesFolderContainsSplashScreenFile() {
-
         List<File> splashScreenFile = findFilesByFileFilter(getEndWithFileFilter(SPLASH_SCREEN_FILE_NAME));
         Assert.assertEquals(1, splashScreenFile.size());
     }
