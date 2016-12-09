@@ -819,6 +819,28 @@
       "integrityDecrementOnHit": 5
     },
     {
+      "id": "SKULL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Skull"
+      },
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 40,
+        "maximum": 40
+      },
+      "weight": 0.6,
+      "visibility": "65.00%",
+      "decompositionPeriod": "100 years",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
       "id": "SPIDER_VENOM_GLAND",
       "type": "Weapon",
       "name": {

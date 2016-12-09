@@ -407,6 +407,7 @@
       "drops": [
         ["AXE", 0.1],
         ["BONE", 0.5],
+        ["SKULL", 1.0],
         ["POTATO", 0.2]
       ],
       "visibility": "70%",
@@ -430,6 +431,7 @@
       ],
       "drops": [
         ["BONE", 0.6],
+        ["SKULL", 0.8],
         ["PINEAPPLE", 0.1]
       ],
       "visibility": "70%",
@@ -451,7 +453,8 @@
       "drops": [
         ["BONE", 1.0],
         ["BONE", 0.8],
-        ["BONE", 0.6]
+        ["BONE", 0.6],
+        ["SKULL", 1.0]
       ],
       "visibility": "65%",
       "weight": 12.0,
