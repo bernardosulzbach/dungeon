@@ -10,9 +10,9 @@ import java.util.List;
 
 public class UniquenessRestrictionsTest {
 
-  public static final Id UNIQUE_ID = new Id("BANANA");
-  public static final Id NON_UNIQUE_ID = new Id("CARAMEL");
-  private final static List<Id> uniqueIds = Arrays.asList(new Id("APPLE"), UNIQUE_ID);
+  private static final Id UNIQUE_ID = new Id("BANANA");
+  private static final Id NON_UNIQUE_ID = new Id("CARAMEL");
+  private static final List<Id> uniqueIds = Arrays.asList(new Id("APPLE"), UNIQUE_ID);
 
   @Test
   public void testUniquenessRestrictionsShouldNeverBanNonUniqueItems() throws Exception {

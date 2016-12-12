@@ -12,10 +12,13 @@ import org.mockito.Mockito;
 
 public class TimeVisibilityCriterionTest {
 
-  Observer observer = Mockito.mock(Observer.class);
-  Location location = Mockito.mock(Location.class);
-  World world = Mockito.mock(World.class);
+  private Observer observer = Mockito.mock(Observer.class);
+  private Location location = Mockito.mock(Location.class);
+  private World world = Mockito.mock(World.class);
 
+  /**
+   * Initialize the Mockito stubs.
+   */
   @Before
   public void initialize() {
     Mockito.when(observer.getObserverLocation()).thenReturn(location);
@@ -50,8 +53,7 @@ public class TimeVisibilityCriterionTest {
   }
 
   @Test
-  public void testIsMetByShouldReturnFalseWhenTheCriterionIsUnmetEvenForCriteriaThatCrossMidnight()
-      throws Exception {
+  public void testIsMetByShouldReturnFalseWhenTheCriterionIsUnmetEvenForCriteriaThatCrossMidnight() throws Exception {
     TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(18, 6);
     for (int i = 0; i < 12; i++) {
       Mockito.when(world.getWorldDate()).thenReturn(new Date(1, 1, 1, (i + 6) % 24, 0, 0));

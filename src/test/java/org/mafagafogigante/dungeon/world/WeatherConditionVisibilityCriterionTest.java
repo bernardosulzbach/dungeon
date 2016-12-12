@@ -12,12 +12,15 @@ import org.mockito.Mockito;
 
 public class WeatherConditionVisibilityCriterionTest {
 
-  Observer observer = Mockito.mock(Observer.class);
-  Location location = Mockito.mock(Location.class);
-  World world = Mockito.mock(World.class);
+  private Observer observer = Mockito.mock(Observer.class);
+  private Location location = Mockito.mock(Location.class);
+  private World world = Mockito.mock(World.class);
 
-  Weather weather = Mockito.mock(Weather.class);
+  private Weather weather = Mockito.mock(Weather.class);
 
+  /**
+   * Initialize the Mockito stubs.
+   */
   @Before
   public void initialize() {
     Mockito.when(observer.getObserverLocation()).thenReturn(location);

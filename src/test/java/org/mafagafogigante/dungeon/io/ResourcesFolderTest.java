@@ -22,13 +22,14 @@ public class ResourcesFolderTest {
 
   private File resourcesDir;
 
+  /**
+   * Try to initialize the resources directory.
+   */
   @Before
   public void initialize() {
     URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
     if (resourcesUrl != null) {
-
       resourcesDir = new File(resourcesUrl.getFile());
-
       if (!resourcesDir.isDirectory()) {
         Assert.fail("Resources file should be a directory");
       }
@@ -72,4 +73,5 @@ public class ResourcesFolderTest {
       return Arrays.asList(files);
     }
   }
+
 }
