@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * General utility class. All utility methods of the game should be placed in this class.
+ * General utility class.
  */
 public final class Utils {
 
