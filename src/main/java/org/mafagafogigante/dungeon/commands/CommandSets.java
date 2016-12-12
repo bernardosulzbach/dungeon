@@ -89,16 +89,16 @@ final class CommandSets {
         Game.getGameState().getHero().getSpellcaster().parseCast(arguments);
       }
     });
-    commandSet.addCommand(new Command("destroy", "Destroys an item on the ground.") {
+    commandSet.addCommand(new Command("destroy", "Destroys items on the ground.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().destroyItem(arguments);
+        Game.getGameState().getHero().destroyItems(arguments);
       }
     });
-    commandSet.addCommand(new Command("drop", "Drops the specified item.") {
+    commandSet.addCommand(new Command("drop", "Drops the specified items.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().dropItem(arguments);
+        Game.getGameState().getHero().dropItems(arguments);
       }
     });
     commandSet.addCommand(new Command("eat", "Eats an item.") {
@@ -172,10 +172,10 @@ final class CommandSets {
         Game.setGameState(Loader.newGame());
       }
     });
-    commandSet.addCommand(new Command("pick", "Attempts to pick up an item from the current location.") {
+    commandSet.addCommand(new Command("pick", "Attempts to pick up items from the current location.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().pickItem(arguments);
+        Game.getGameState().getHero().pickItems(arguments);
       }
     });
     commandSet.addCommand(new Command("read", "Reads the specified item.") {
@@ -472,11 +472,11 @@ final class CommandSets {
     return commandSet;
   }
 
-  public static boolean hasCommandSet(String identifier) {
+  static boolean hasCommandSet(String identifier) {
     return commandSetMap.containsKey(identifier);
   }
 
-  public static CommandSet getCommandSet(String identifier) {
+  static CommandSet getCommandSet(String identifier) {
     return commandSetMap.get(identifier);
   }
 

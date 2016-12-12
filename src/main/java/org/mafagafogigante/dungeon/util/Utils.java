@@ -139,17 +139,20 @@ public final class Utils {
    */
   private static <T extends Selectable> Matches<T> findMatches(Collection<T> collection, boolean complete,
       String... tokens) {
-    List<T> listOfMatches = new ArrayList<>();
+    final List<T> listOfMatches = new ArrayList<>();
     // Do not start with 0, as this would gather all Articles if the query did not match any Article.
     double maximumSimilarity = 1e-6;
+    // A flag to indicate whether or not the best match was plural.
+    boolean bestIsPlural = false;
+    // Attempt at singular matches.
     for (T candidate : collection) {
-      String[] titleWords = split(candidate.getName().getSingular());
-      int matches = countMatches(tokens, titleWords);
+      final String[] titleWords = split(candidate.getName().getSingular());
+      final int matches = countMatches(tokens, titleWords);
       if (!complete || matches >= tokens.length) {
-        double matchesOverTitleWords = matches / (double) titleWords.length;
-        double matchesOverSearchArgs = matches / (double) tokens.length;
-        double similarity = DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
-        int comparisonResult = DungeonMath.fuzzyCompare(similarity, maximumSimilarity);
+        final double matchesOverTitleWords = matches / (double) titleWords.length;
+        final double matchesOverSearchArgs = matches / (double) tokens.length;
+        final double similarity = DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
+        final int comparisonResult = DungeonMath.fuzzyCompare(similarity, maximumSimilarity);
         if (comparisonResult > 0) {
           maximumSimilarity = similarity;
           listOfMatches.clear();
@@ -159,7 +162,28 @@ public final class Utils {
         }
       }
     }
-    return Matches.fromCollection(listOfMatches);
+    // Attempt to match pluralized names.
+    for (T candidate : collection) {
+      final String[] titleWords = split(candidate.getName().getPlural());
+      final int matches = countMatches(tokens, titleWords);
+      if (!complete || matches >= tokens.length) {
+        final double matchesOverTitleWords = matches / (double) titleWords.length;
+        final double matchesOverSearchArgs = matches / (double) tokens.length;
+        final double similarity = DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
+        final int comparisonResult = DungeonMath.fuzzyCompare(similarity, maximumSimilarity);
+        final boolean isBetterMatch = comparisonResult > 0;
+        final boolean isAsGoodMatch = comparisonResult == 0;
+        if (isBetterMatch) {
+          maximumSimilarity = similarity;
+          listOfMatches.clear();
+          listOfMatches.add(candidate);
+          bestIsPlural = true;
+        } else if (bestIsPlural && isAsGoodMatch) {
+          listOfMatches.add(candidate);
+        }
+      }
+    }
+    return Matches.fromCollection(listOfMatches, !bestIsPlural);
   }
 
   /**

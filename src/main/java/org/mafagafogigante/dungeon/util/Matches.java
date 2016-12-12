@@ -12,26 +12,40 @@ import java.util.List;
  */
 public class Matches<T extends Selectable> {
 
-  private final List<T> matches;
+  private final List<T> matches = new ArrayList<>();
+  private final boolean disjoint;
+  private int differentNames = 0;
+  private boolean differentNamesUpToDate = true;
 
-  private int differentNames;
-  private boolean differentNamesUpToDate;
-
-  private Matches() {
-    matches = new ArrayList<>();
-    differentNames = 0;
-    differentNamesUpToDate = true;
+  private Matches(boolean disjoint) {
+    this.disjoint = disjoint;
   }
 
   /**
    * Converts a Collection to Matches.
    */
   public static <T extends Selectable> Matches<T> fromCollection(Collection<T> collection) {
-    Matches<T> newInstance = new Matches<>();
+    return fromCollection(collection, true);
+  }
+
+  /**
+   * Converts a Collection to possibly not disjoint Matches.
+   */
+  static <T extends Selectable> Matches<T> fromCollection(Collection<T> collection, boolean disjoint) {
+    Matches<T> newInstance = new Matches<>(disjoint);
     for (T t : collection) {
       newInstance.addMatch(t);
     }
     return newInstance;
+  }
+
+  /**
+   * Returns whether or not the Matches are disjoint.
+   *
+   * <p>If they are, any element constitutes a match, otherwise, only all elements together constitute a match.
+   */
+  public boolean isDisjoint() {
+    return disjoint;
   }
 
   private void addMatch(T match) {

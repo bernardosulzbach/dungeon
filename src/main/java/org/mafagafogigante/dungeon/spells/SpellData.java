@@ -65,17 +65,18 @@ public final class SpellData {
 
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
-        Item selectedItem;
+        List<Item> selectedItems = new ArrayList<>();
         if (targetMatcher.length == 0) {
-          selectedItem = hero.getWeapon();
-          if (selectedItem == null) {
+          if (hero.getWeapon() == null) {
             Writer.write("You are not equipping anything.");
+          } else {
+            selectedItems.add(hero.getWeapon());
           }
         } else {
-          selectedItem = HeroUtils.findItem(hero.getInventory().getItems(), targetMatcher);
+          selectedItems.addAll(HeroUtils.findItems(hero.getInventory().getItems(), targetMatcher));
         }
-        if (selectedItem != null) {
-          effectivelyOperate(hero, selectedItem);
+        for (Item item : selectedItems) {
+          effectivelyOperate(hero, item);
         }
       }
 
@@ -164,7 +165,7 @@ public final class SpellData {
     });
     putSpell(new Spell("UNVEIL", "Unveil") {
 
-      public static final int SECONDS_TO_CAST_UNVEIL = 10;
+      static final int SECONDS_TO_CAST_UNVEIL = 10;
 
       @Override
       public void operate(Hero hero, String[] targetMatcher) {

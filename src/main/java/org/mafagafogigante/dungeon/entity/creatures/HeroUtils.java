@@ -10,6 +10,7 @@ import org.mafagafogigante.dungeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public final class HeroUtils {
@@ -52,20 +53,23 @@ public final class HeroUtils {
   }
 
   /**
-   * Attempts to find an item by its name in a specified Inventory.
-   *
-   * @return an Item object if there is a match. null otherwise.
+   * Attempts to find items by their name in a specified Inventory.
    */
-  public static Item findItem(List<Item> items, String[] tokens) {
+  public static List<Item> findItems(List<Item> items, String[] tokens) {
     Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
       Writer.write("Item not found.");
-    } else if (matches.size() == 1 || matches.getDifferentNames() == 1) {
-      return matches.getMatch(0);
+    } else if (matches.isDisjoint()) {
+      // Matches are disjoint, if there is more than one different name, the results are ambiguous.
+      if (matches.size() == 1 || matches.getDifferentNames() == 1) {
+        return Collections.singletonList(matches.getMatch(0));
+      } else {
+        Messenger.printAmbiguousSelectionMessage();
+      }
     } else {
-      Messenger.printAmbiguousSelectionMessage();
+      return matches.toList();
     }
-    return null;
+    return Collections.emptyList();
   }
 
   /**
@@ -85,7 +89,7 @@ public final class HeroUtils {
     Writer.write(item.getQualifiedName() + " is no longer in the inventory.");
   }
 
-  public static void writeNoLongerInLocationMessage(Item item) {
+  static void writeNoLongerInLocationMessage(Item item) {
     Writer.write(item.getQualifiedName() + " is no longer in this location.");
   }
 

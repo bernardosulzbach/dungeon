@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -172,39 +173,52 @@ public class Hero extends Creature {
     observer.look();
   }
 
-  private Item selectInventoryItem(String[] arguments) {
+  /**
+   * Selects multiple items from the inventory.
+   */
+  private List<Item> selectInventoryItems(final String[] arguments) {
     if (getInventory().getItemCount() == 0) {
       Writer.write("Your inventory is empty.");
-      return null;
-    } else {
-      return selectItem(arguments, getInventory(), false);
+      return Collections.emptyList();
     }
+    return selectItems(arguments, getInventory(), false);
   }
 
   /**
-   * Select an item of the current location based on the arguments of a command.
-   *
-   * @param arguments an array of arguments that will determine the item search
-   * @return an Item or {@code null}
+   * Selects a single item from the inventory.
    */
-  private Item selectLocationItem(String[] arguments) {
+  private Item selectInventoryItem(final String[] arguments) {
+    final List<Item> selectedItems = selectInventoryItems(arguments);
+    if (selectedItems.size() == 1) {
+      return selectedItems.get(0);
+    }
+    if (selectedItems.size() > 1) {
+      Writer.write("The query matched multiple items.");
+    }
+    return null;
+  }
+
+  /**
+   * Select a list of items of the current location based on the arguments of a command.
+   */
+  private List<Item> selectLocationItems(String[] arguments) {
     if (filterByVisibility(getLocation().getItemList()).isEmpty()) {
       Writer.write("You don't see any items here.");
-      return null;
+      return Collections.emptyList();
     } else {
-      return selectItem(arguments, getLocation().getInventory(), true);
+      return selectItems(arguments, getLocation().getInventory(), true);
     }
   }
 
   /**
-   * Selects an item of the specified {@code BaseInventory} based on the arguments of a command.
+   * Selects items of the specified {@code BaseInventory} based on the arguments of a command.
    *
    * @param arguments an array of arguments that will determine the item search
    * @param inventory an object of a subclass of {@code BaseInventory}
    * @param checkForVisibility true if only visible items should be selectable
-   * @return an Item or {@code null}
+   * @return a List of items
    */
-  private Item selectItem(String[] arguments, BaseInventory inventory, boolean checkForVisibility) {
+  private List<Item> selectItems(String[] arguments, BaseInventory inventory, boolean checkForVisibility) {
     List<Item> visibleItems;
     if (checkForVisibility) {
       visibleItems = filterByVisibility(inventory.getItems());
@@ -212,10 +226,10 @@ public class Hero extends Creature {
       visibleItems = inventory.getItems();
     }
     if (arguments.length != 0 || HeroUtils.checkIfAllEntitiesHaveTheSameName(visibleItems)) {
-      return HeroUtils.findItem(visibleItems, arguments);
+      return HeroUtils.findItems(visibleItems, arguments);
     } else {
       Writer.write("You must specify an item.");
-      return null;
+      return Collections.emptyList();
     }
   }
 
@@ -278,24 +292,28 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to pick an Item and add it to the inventory.
+   * Attempts to pick up items from the current location.
    */
-  public void pickItem(String[] arguments) {
+  public void pickItems(String[] arguments) {
     if (canSeeAnItem()) {
-      Item selectedItem = selectLocationItem(arguments);
-      if (selectedItem != null) {
-        SimulationResult result = getInventory().simulateItemAddition(selectedItem);
+      final List<Item> selectedItems = selectLocationItems(arguments);
+      for (final Item item : selectedItems) {
+        final SimulationResult result = getInventory().simulateItemAddition(item);
+        // We stop adding items as soon as we hit the first one which would exceed the amount or weight limit.
         if (result == SimulationResult.AMOUNT_LIMIT) {
           Writer.write("Your inventory is full.");
+          break;
         } else if (result == SimulationResult.WEIGHT_LIMIT) {
           Writer.write("You can't carry more weight.");
+          // This may not be ideal, as there may be a selection which has lighter items after this item.
+          break;
         } else if (result == SimulationResult.SUCCESSFUL) {
           Engine.rollDateAndRefresh(SECONDS_TO_PICK_UP_AN_ITEM);
-          if (getLocation().getInventory().hasItem(selectedItem)) {
-            getLocation().removeItem(selectedItem);
-            addItem(selectedItem);
+          if (getLocation().getInventory().hasItem(item)) {
+            getLocation().removeItem(item);
+            addItem(item);
           } else {
-            HeroUtils.writeNoLongerInLocationMessage(selectedItem);
+            HeroUtils.writeNoLongerInLocationMessage(item);
           }
         }
       }
@@ -335,21 +353,21 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to drop an item from the hero's inventory.
+   * Attempts to drop items from the inventory.
    */
-  public void dropItem(String[] arguments) {
-    Item selectedItem = selectInventoryItem(arguments);
-    if (selectedItem != null) {
-      if (selectedItem == getWeapon()) {
+  public void dropItems(String[] arguments) {
+    final List<Item> selectedItems = selectInventoryItems(arguments);
+    for (Item item : selectedItems) {
+      if (item == getWeapon()) {
         unsetWeapon(); // Just unset the weapon, it does not need to be moved to the inventory before being dropped.
       }
       // Take the time to drop the item.
       Engine.rollDateAndRefresh(SECONDS_TO_DROP_AN_ITEM);
-      if (getInventory().hasItem(selectedItem)) { // The item may have disappeared while dropping.
-        dropItem(selectedItem); // Just drop it if has not disappeared.
+      if (getInventory().hasItem(item)) { // The item may have disappeared while dropping.
+        dropItem(item); // Just drop it if has not disappeared.
       }
       // The character "dropped" the item even if it disappeared while doing it, so write about it.
-      Writer.write(String.format("Dropped %s.", selectedItem.getQualifiedName()));
+      Writer.write(String.format("Dropped %s.", item.getQualifiedName()));
     }
   }
 
@@ -506,19 +524,21 @@ public class Hero extends Creature {
   /**
    * Tries to destroy an item from the current location.
    */
-  public void destroyItem(String[] arguments) {
-    Item target = selectLocationItem(arguments);
-    if (target != null) {
-      if (target.isBroken()) {
-        Writer.write(target.getName() + " is already crashed.");
-      } else {
-        Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
-        if (getLocation().getInventory().hasItem(target)) {
-          target.decrementIntegrityToZero();
-          String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
-          Writer.write(getName() + " " + verb + " " + target.getName() + ".");
+  public void destroyItems(String[] arguments) {
+    final List<Item> selectedItems = selectLocationItems(arguments);
+    for (Item target : selectedItems) {
+      if (target != null) {
+        if (target.isBroken()) {
+          Writer.write(target.getName() + " is already crashed.");
         } else {
-          HeroUtils.writeNoLongerInLocationMessage(target);
+          Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
+          if (getLocation().getInventory().hasItem(target)) {
+            target.decrementIntegrityToZero();
+            String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
+            Writer.write(getName() + " " + verb + " " + target.getName() + ".");
+          } else {
+            HeroUtils.writeNoLongerInLocationMessage(target);
+          }
         }
       }
     }
