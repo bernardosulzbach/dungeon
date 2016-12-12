@@ -126,7 +126,7 @@
     },
     {
       "title": "Sleeping",
-      "content": "The character can sleep when it is dark, waking up when it is dawn. During the sleep, the character may dream.\n\nSleeping is also heals the character.",
+      "content": "The character can sleep when it is dark, waking up when it is dawn. While sleeping, the character may dream.\n\nSleeping also heals the character.",
       "seeAlso": [
         "Eating"
       ]
