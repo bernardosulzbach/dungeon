@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public class Weight implements Comparable<Weight>, Serializable {
 
-  public static final Weight ZERO = newInstance(0);
+  public static final Weight ZERO = newInstance(0.0);
   private static final DecimalFormat WEIGHT_FORMAT = (DecimalFormat) NumberFormat.getInstance(Locale.US);
 
   static {
@@ -32,7 +32,7 @@ public class Weight implements Comparable<Weight>, Serializable {
    * Returns a new Weight object from the provided value. The value must be nonnegative.
    */
   public static Weight newInstance(double value) {
-    if (value < 0) {
+    if (value < 0.0) {
       DungeonLogger.warning("Tried to create Weight from negative double.");
       return ZERO;
     }
