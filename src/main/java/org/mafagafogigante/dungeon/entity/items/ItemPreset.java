@@ -4,7 +4,6 @@ import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Preset;
 import org.mafagafogigante.dungeon.entity.TagSet;
-import org.mafagafogigante.dungeon.entity.Visibility;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.items.Item.Tag;
 import org.mafagafogigante.dungeon.game.Id;

@@ -1,7 +1,5 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
-import org.mafagafogigante.dungeon.entity.items.ItemPreset;
-
 import java.util.Collection;
 
 /**
