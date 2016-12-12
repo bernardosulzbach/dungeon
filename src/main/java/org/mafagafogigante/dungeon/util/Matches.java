@@ -34,7 +34,7 @@ public class Matches<T extends Selectable> {
     return newInstance;
   }
 
-  void addMatch(T match) {
+  private void addMatch(T match) {
     matches.add(match);
     differentNamesUpToDate = false;
   }
