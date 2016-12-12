@@ -25,7 +25,6 @@ public class AchievementTest {
     cowQuery.setId(new Id("COW"));
 
     achievementBuilder.addBattleStatisticsRequirement(new BattleStatisticsRequirement(cowQuery, 2));
-    Achievement achievement = achievementBuilder.createAchievement();
 
     CreaturePreset cowPreset = new CreaturePreset();
     cowPreset.setId(new Id("COW"));
@@ -33,6 +32,7 @@ public class AchievementTest {
     cowPreset.setHealth(1);
     cowPreset.setVisibility(Percentage.fromString("80%"));
 
+    Achievement achievement = achievementBuilder.createAchievement();
     CauseOfDeath unarmedCauseOfDeath = CauseOfDeath.getUnarmedCauseOfDeath();
 
     Statistics statistics = new Statistics();

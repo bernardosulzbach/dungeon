@@ -61,8 +61,8 @@ public class AchievementTrackerTest {
 
   @Test
   public void testHasNotBeenUnlocked() throws Exception {
-    Statistics statistics = new Statistics();
-    AchievementTracker tracker = new AchievementTracker(statistics);
+    final Statistics statistics = new Statistics();
+    final AchievementTracker tracker = new AchievementTracker(statistics);
 
     AchievementBuilder achievementBuilder = new AchievementBuilder();
     achievementBuilder.setId("ACHIEVEMENT");
