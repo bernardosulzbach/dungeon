@@ -5,7 +5,6 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.util.Matches;
-import org.mafagafogigante.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
       List<String> targetMatcher = split.getAfter();
       String[] spellMatcherArray = spellMatcher.toArray(new String[spellMatcher.size()]);
       String[] targetMatcherArray = targetMatcher.toArray(new String[targetMatcher.size()]);
-      Matches<Spell> matches = Utils.findBestCompleteMatches(spellList, spellMatcherArray);
+      Matches<Spell> matches = Matches.findBestCompleteMatches(spellList, spellMatcherArray);
       if (matches.size() == 0) {
         Writer.write("That did not match any spell you know.");
       }

@@ -35,6 +35,13 @@ public final class Name implements Serializable {
   }
 
   /**
+   * Returns the plural form of this Name.
+   */
+  public String getPlural() {
+    return plural;
+  }
+
+  /**
    * Returns a string representing a quantified name using words for quantifiers. e.g.: {@code "One Sword", "Two Bears",
    * "Three Elephants", "A few Cows"}
    *

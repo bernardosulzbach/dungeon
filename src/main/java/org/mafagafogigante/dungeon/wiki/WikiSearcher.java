@@ -4,7 +4,6 @@ import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.Matches;
-import org.mafagafogigante.dungeon.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +25,7 @@ public final class WikiSearcher {
    */
   public static void search(String[] arguments) {
     if (arguments.length != 0) {
-      Matches<Article> matches = Utils.findBestMatches(Wiki.getArticles(), arguments);
+      Matches<Article> matches = Matches.findBestMatches(Wiki.getArticles(), arguments);
       if (matches.size() == 0) {
         deepSearch(arguments);
       } else if (matches.size() == 1) {

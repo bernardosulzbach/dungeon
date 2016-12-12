@@ -10,7 +10,6 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
-import org.mafagafogigante.dungeon.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +76,7 @@ class DebugWaitParser {
           Writer.write("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
         }
       } else if (syntax == Syntax.UNTIL) {
-        Matches<PartOfDay> matches = Utils.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), arguments[2]);
+        Matches<PartOfDay> matches = Matches.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), arguments[2]);
         if (matches.size() == 0) {
           Writer.write("That did not match any part of the day.");
         } else if (matches.size() == 1) {
