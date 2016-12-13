@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.util;
 import org.mafagafogigante.dungeon.game.ColoredString;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Writable;
+import org.mafagafogigante.dungeon.io.Converter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,8 +25,8 @@ public final class SystemInformation extends Writable {
 
   private static String getMemoryInformation() {
     Runtime runtime = Runtime.getRuntime();
-    Mebibytes used = new Mebibytes(runtime.totalMemory() - runtime.freeMemory());
-    Mebibytes total = new Mebibytes(runtime.totalMemory());
+    String used = Converter.bytesToHuman(runtime.totalMemory() - runtime.freeMemory());
+    String total = Converter.bytesToHuman(runtime.totalMemory());
     return "Using " + used + " out of the allocated " + total;
   }
 

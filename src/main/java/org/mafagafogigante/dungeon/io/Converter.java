@@ -3,7 +3,7 @@ package org.mafagafogigante.dungeon.io;
 /**
  * Uninstantiable Converter class that defines methods for IO related data conversion.
  */
-class Converter {
+public class Converter {
 
   private Converter() {
     throw new AssertionError();
@@ -18,8 +18,8 @@ class Converter {
     if (bytes < 1024) {
       return bytes + " B";
     }
-    // 2 ^ 10 (1 kB) has (63 - 10) = 53 leading zeros.
-    // 2 ^ 20 (1 MB) has (63 - 20) = 43 leading zeros.
+    // 2 ^ 10 (1 KiB) has (63 - 10) = 53 leading zeros.
+    // 2 ^ 20 (1 MiB) has (63 - 20) = 43 leading zeros.
     // And so forth.
     // Bits used to represent the number of bytes = number of bits available - number of leading zeros.
     int bitsUsed = 63 - Long.numberOfLeadingZeros(bytes);
@@ -28,8 +28,8 @@ class Converter {
     double significand = (double) bytes / (1L << (bitsUsed - bitsUsed % 10));
     // By dividing the number of bits used by 10, get the prefix that should be used.
     // Subtract one as Strings are zero indexed.
-    char prefix = "kMGTPE".charAt(bitsUsed / 10 - 1);
-    return String.format("%.1f %sB", significand, prefix);
+    char prefix = "KMGTPE".charAt(bitsUsed / 10 - 1);
+    return String.format("%.1f %siB", significand, prefix);
   }
 
 }
