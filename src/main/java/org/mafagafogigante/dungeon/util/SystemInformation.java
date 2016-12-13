@@ -22,6 +22,13 @@ public final class SystemInformation extends Writable {
     return System.getProperty("user.name");
   }
 
+  private static String getMemoryInformation() {
+    Runtime runtime = Runtime.getRuntime();
+    Mebibytes used = new Mebibytes(runtime.totalMemory() - runtime.freeMemory());
+    Mebibytes total = new Mebibytes(runtime.totalMemory());
+    return "Using " + used + " out of the allocated " + total;
+  }
+
   private static String getJavaVersionString() {
     return "Java version " + System.getProperty("java.version") + " by " + System.getProperty("java.vendor");
   }
@@ -40,11 +47,12 @@ public final class SystemInformation extends Writable {
     String time = timeFormat.format(currentDate);
     String date = dateFormat.format(currentDate);
     DungeonString dungeonString = new DungeonString();
+    dungeonString.append("User: ", getUserString(), "\n");
     dungeonString.append("Time: ", time, "\n");
     dungeonString.append("Date: ", date, "\n");
-    dungeonString.append("User: ", getUserString(), "\n");
-    dungeonString.append(getJavaVersionString(), "\n");
-    dungeonString.append(getOsVersionString());
+    dungeonString.append("Java: ", getJavaVersionString(), "\n");
+    dungeonString.append("Heap: ", getMemoryInformation(), "\n");
+    dungeonString.append("OS: ", getOsVersionString());
     return dungeonString;
   }
 

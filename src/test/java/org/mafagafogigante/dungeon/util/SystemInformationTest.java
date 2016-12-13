@@ -9,7 +9,7 @@ public class SystemInformationTest {
   public void testToColoredStringListShouldHaveTheExpectedFormat() throws Exception {
     SystemInformation systemInformation = new SystemInformation();
     String string = systemInformation.toString();
-    String expectedRegexp = "Time: .*\nDate: .*\nUser: .*\n.*\n.*";
+    String expectedRegexp = "User: .*\nTime: .*\nDate: .*\nJava: .*\nHeap: .*\nOS: .*";
     Assert.assertTrue("SystemInformation string does not match the expected format", string.matches(expectedRegexp));
   }
 
