@@ -291,12 +291,6 @@ final class CommandSets {
         Writer.write(new SystemInformation());
       }
     });
-    commandSet.addCommand(new Command("unequip", "Unequips the currently equipped item.") {
-      @Override
-      public void execute(@NotNull String[] arguments) {
-        Game.getGameState().getHero().unequipWeapon();
-      }
-    });
     return commandSet;
   }
 
