@@ -12,6 +12,7 @@ import java.util.Locale;
  */
 public final class Name implements Serializable {
 
+  private static final long serialVersionUID = 3198273263451197501L;
   private final String singular;
   private final String plural;
 

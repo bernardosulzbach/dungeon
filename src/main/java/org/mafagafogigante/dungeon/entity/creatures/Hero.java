@@ -44,6 +44,7 @@ import java.util.Locale;
  */
 public class Hero extends Creature {
 
+  private static final long serialVersionUID = 640405734043893761L;
   // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
   // It seems a good idea to let the Hero have one dream every 4 hours.
   private static final int DREAM_DURATION_IN_SECONDS = 4 * DungeonMath.safeCastLongToInteger(HOUR.as(SECOND));
