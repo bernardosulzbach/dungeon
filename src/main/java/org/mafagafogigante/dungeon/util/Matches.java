@@ -78,22 +78,20 @@ public class Matches<T extends Selectable> {
     }
   }
 
-  private static <T extends Selectable> double calculateSingularSimilarity(T element, String[] tokens, boolean full) {
-    return calculateSimilarity(Utils.split(element.getName().getSingular()), tokens, full);
+  private static double calculateSingularSimilarity(Name name, String[] tokens, boolean full) {
+    return calculateSimilarity(Utils.split(name.getSingular()), tokens, full);
   }
 
-  private static <T extends Selectable> double calculatePluralSimilarity(T element, String[] tokens, boolean full) {
-    return calculateSimilarity(Utils.split(element.getName().getPlural()), tokens, full);
+  private static double calculatePluralSimilarity(Name name, String[] tokens, boolean full) {
+    return calculateSimilarity(Utils.split(name.getPlural()), tokens, full);
   }
 
-  private static <T extends Selectable> MatchResult evaluateMatch(T element, String[] tokens, boolean full) {
-    double singularSimilarity = calculateSingularSimilarity(element, tokens, full);
-    double pluralSimilarity = calculatePluralSimilarity(element, tokens, full);
-    boolean areEqual = DungeonMath.fuzzyCompare(singularSimilarity, pluralSimilarity) == 0;
-    boolean areZero = areEqual && DungeonMath.fuzzyCompare(singularSimilarity, 0.0) == 0;
-    if (areZero) {
-      return new MatchResult(0.0, true);
+  private static MatchResult evaluateMatch(Name name, int frequency, String[] tokens, boolean full) {
+    double singularSimilarity = calculateSingularSimilarity(name, tokens, full);
+    if (frequency < 2) {
+      return new MatchResult(singularSimilarity, false);
     }
+    double pluralSimilarity = calculatePluralSimilarity(name, tokens, full);
     if (DungeonMath.fuzzyCompare(singularSimilarity, pluralSimilarity) >= 0) {
       // Disjoint matches are preferred.
       return new MatchResult(singularSimilarity, true);
@@ -115,8 +113,13 @@ public class Matches<T extends Selectable> {
     List<T> list = new ArrayList<>();
     double maximumSimilarity = 0.0;
     boolean disjoint = true;
+    CounterMap<Name> nameCounters = new CounterMap<>();
     for (T element : elements) {
-      MatchResult result = evaluateMatch(element, tokens, full);
+      nameCounters.incrementCounter(element.getName());
+    }
+    for (T element : elements) {
+      Name name = element.getName();
+      MatchResult result = evaluateMatch(name, nameCounters.getCounter(name), tokens, full);
       if (DungeonMath.fuzzyCompare(result.similarity, 0.0) > 0) {
         boolean isBetter = DungeonMath.fuzzyCompare(result.similarity, maximumSimilarity) > 0;
         boolean isAsGood = DungeonMath.fuzzyCompare(result.similarity, maximumSimilarity) == 0;
