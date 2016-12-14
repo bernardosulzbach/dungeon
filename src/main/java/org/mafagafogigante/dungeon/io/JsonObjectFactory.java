@@ -13,6 +13,7 @@ public class JsonObjectFactory {
 
   private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   private static final String JSON_EXTENSION = ".json";
+  private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
   /**
    * Makes a new JsonObject from the resource file pointed to by the specified filename.
@@ -26,8 +27,7 @@ public class JsonObjectFactory {
       throw new IllegalFilenameExtensionException("filename must end with " + JSON_EXTENSION + ".");
     }
     // Using a BufferedReader here does not improve performance as the library is already buffered.
-    Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename), Charset.forName("UTF-8"));
-    try {
+    try (Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename), DEFAULT_CHARSET)) {
       return Json.parse(reader).asObject();
     } catch (IOException fatal) {
       throw new RuntimeException(fatal);
@@ -36,7 +36,7 @@ public class JsonObjectFactory {
 
   public static class IllegalFilenameExtensionException extends IllegalArgumentException {
 
-    public IllegalFilenameExtensionException(@NotNull String string) {
+    IllegalFilenameExtensionException(@NotNull String string) {
       super(string);
     }
 
