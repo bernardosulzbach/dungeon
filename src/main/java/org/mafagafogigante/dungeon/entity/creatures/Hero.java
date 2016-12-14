@@ -176,7 +176,7 @@ public class Hero extends Creature {
   /**
    * Selects multiple items from the inventory.
    */
-  private List<Item> selectInventoryItems(final String[] arguments) {
+  private List<Item> selectInventoryItems(String[] arguments) {
     if (getInventory().getItemCount() == 0) {
       Writer.write("Your inventory is empty.");
       return Collections.emptyList();
@@ -187,8 +187,8 @@ public class Hero extends Creature {
   /**
    * Selects a single item from the inventory.
    */
-  private Item selectInventoryItem(final String[] arguments) {
-    final List<Item> selectedItems = selectInventoryItems(arguments);
+  private Item selectInventoryItem(String[] arguments) {
+    List<Item> selectedItems = selectInventoryItems(arguments);
     if (selectedItems.size() == 1) {
       return selectedItems.get(0);
     }
@@ -296,8 +296,8 @@ public class Hero extends Creature {
    */
   public void pickItems(String[] arguments) {
     if (canSeeAnItem()) {
-      final List<Item> selectedItems = selectLocationItems(arguments);
-      for (final Item item : selectedItems) {
+      List<Item> selectedItems = selectLocationItems(arguments);
+      for (Item item : selectedItems) {
         final SimulationResult result = getInventory().simulateItemAddition(item);
         // We stop adding items as soon as we hit the first one which would exceed the amount or weight limit.
         if (result == SimulationResult.AMOUNT_LIMIT) {
@@ -356,7 +356,7 @@ public class Hero extends Creature {
    * Attempts to drop items from the inventory.
    */
   public void dropItems(String[] arguments) {
-    final List<Item> selectedItems = selectInventoryItems(arguments);
+    List<Item> selectedItems = selectInventoryItems(arguments);
     for (Item item : selectedItems) {
       if (item == getWeapon()) {
         unsetWeapon(); // Just unset the weapon, it does not need to be moved to the inventory before being dropped.
