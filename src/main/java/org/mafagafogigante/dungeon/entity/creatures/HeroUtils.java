@@ -6,7 +6,6 @@ import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
-import org.mafagafogigante.dungeon.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +55,7 @@ public final class HeroUtils {
    * Attempts to find items by their name in a specified Inventory.
    */
   public static List<Item> findItems(List<Item> items, String[] tokens) {
-    Matches<Item> matches = Utils.findBestCompleteMatches(items, tokens);
+    Matches<Item> matches = Matches.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
       Writer.write("Item not found.");
     } else if (matches.isDisjoint()) {

@@ -277,7 +277,7 @@ public class Hero extends Creature {
    * @return a Creature or null.
    */
   public Creature findCreature(String[] tokens) {
-    Matches<Creature> result = Utils.findBestCompleteMatches(getLocation().getCreatures(), tokens);
+    Matches<Creature> result = Matches.findBestCompleteMatches(getLocation().getCreatures(), tokens);
     result = filterByVisibility(result);
     if (result.size() == 0) {
       Writer.write("Creature not found.");
