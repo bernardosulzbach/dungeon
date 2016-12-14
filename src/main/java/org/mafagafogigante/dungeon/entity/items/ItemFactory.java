@@ -4,9 +4,11 @@ import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,6 +25,10 @@ public final class ItemFactory implements Serializable {
   private final Map<Id, ItemPreset> itemPresets = new HashMap<>();
   private ItemFactoryRestrictions restrictions;
 
+  // The flag that indicates we have already refreshed this ItemFactory with the resource files.
+  // An ItemFactory is refreshed after construction, but not after deserialization.
+  private transient boolean refreshed = true;
+
   /**
    * Constructs an ItemFactory from one or more ItemPresetFactories.
    */
@@ -31,6 +37,11 @@ public final class ItemFactory implements Serializable {
       addAllPresets(itemPresetFactory.getItemPresets());
     }
     createUniquenessRestrictions();
+  }
+
+  private Object readResolve() throws ObjectStreamException {
+    refreshed = false;
+    return this;
   }
 
   /**
@@ -60,6 +71,9 @@ public final class ItemFactory implements Serializable {
    * Returns an unmodifiable view of the ItemPreset map.
    */
   private Map<Id, ItemPreset> getItemPresets() {
+    if (!refreshed) {
+      refreshItemPresets();
+    }
     return Collections.unmodifiableMap(itemPresets);
   }
 
@@ -88,6 +102,17 @@ public final class ItemFactory implements Serializable {
     Item item = new Item(itemPreset, date);
     restrictions.registerItem(item.getId());
     return item;
+  }
+
+  private void refreshItemPresets() {
+    DungeonLogger.info("Refreshing item presets.");
+    ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory("items.json");
+    for (ItemPreset preset : jsonItemPresetFactory.getItemPresets()) {
+      if (!itemPresets.containsKey(preset.getId())) {
+        itemPresets.put(preset.getId(), preset);
+      }
+    }
+    refreshed = true;
   }
 
   /**
