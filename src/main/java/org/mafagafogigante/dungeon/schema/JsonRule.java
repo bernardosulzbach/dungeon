@@ -10,6 +10,6 @@ public interface JsonRule {
   /**
    * Validates the provided JSON value.
    */
-  JsonValidationResult validate(JsonValue validationElement);
+  void validate(JsonValue value);
 
 }

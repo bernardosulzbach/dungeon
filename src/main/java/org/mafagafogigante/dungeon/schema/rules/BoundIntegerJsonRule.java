@@ -1,12 +1,8 @@
 package org.mafagafogigante.dungeon.schema.rules;
 
-import org.mafagafogigante.dungeon.schema.JsonRule;
-import org.mafagafogigante.dungeon.schema.JsonValidationResult;
-import org.mafagafogigante.dungeon.schema.TypeOfJsonValidationResult;
-
 import com.eclipsesource.json.JsonValue;
 
-public final class BoundIntegerJsonRule implements JsonRule {
+public final class BoundIntegerJsonRule extends IntegerJsonRule {
 
   private final int minValue;
   private final int maxValue;
@@ -17,12 +13,14 @@ public final class BoundIntegerJsonRule implements JsonRule {
   }
 
   @Override
-  public JsonValidationResult validate(JsonValue validationElement) {
-    int intValue = validationElement.asInt();
-    if (intValue >= minValue && intValue <= maxValue) {
-      return new JsonValidationResult(Integer.toString(intValue), TypeOfJsonValidationResult.VALID);
-    } else {
-      return new JsonValidationResult(Integer.toString(intValue), TypeOfJsonValidationResult.ELEMENT_NOT_IN_BOUND);
+  public void validate(JsonValue value) {
+    super.validate(value);
+    int intValue = value.asInt();
+    if (intValue < minValue) {
+      throw new IllegalArgumentException("value is below the allowed minimum.");
+    }
+    if (intValue > maxValue) {
+      throw new IllegalArgumentException("value is above the allowed maximum.");
     }
   }
 
