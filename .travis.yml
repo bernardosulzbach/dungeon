@@ -3,12 +3,9 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
-before_install:
-  - pip install --user codecov
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
 before_deploy:
-  - rvm 1.9.3 do gem install mime-types -v 2.6.2
   - bash scripts/create-hash-sum.sh target/dungeon-${TRAVIS_TAG}.jar
 deploy:
   provider: releases
@@ -20,19 +17,3 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "HmxadjZ+WagbCKezkiiz8b86mwsV19jfdY5QgG123mHa9ueyTn+4smGjEtjn6Ypz0pJqXpaTwEL3hXvHu7F4H57/03RlOajolhNyulg2bA/xRvSxr7Al3Kpsi3fUfInNo+OVtM54/nsHc+xPsKLorpkAWW5O6LJkQmj6gfaJuxp0fgi1dcD9f/NfKOjbBpbTASZOQb+DosfI+HG2tKc6zI86IBf/SpdBhOyxwXrX33YzrrKdZd6QIF+e2U69QygqIpsL0nBm2fT51hOH2FTq/txPXCNH8oGGLP9E2BVwoB6IENlQgrBQeiQHtq3olBr9RsiEZ2mI4J0vQXuYXKn2iDc4by9t92DRK4fkxqbfatNYG9X1btYgAg5WvGIFW/Xm+XJuRJH0TCzzd5BaoeGQemhkYJnN6PCvxSUv4ecWrem2XqAESaVUO1FeJZ/bHC5feZL3VCFuB2GTXPZ8wdDMCtrlqG/Jusp8694EzQwGMWRxAIPg43LHV3wB7kD7gIreH9OC86H4USROXv9c2QnRykT1JHqC0N8dgzOEAzJdm59+0jE/CwdVgCjqF2AhNgjnm3RXV1x30ZqHQNNIwWvtqlCLbtYQ+Pp1q+brrGVZ0HwVs9DJhoDT9MU13JnpJCRPlpcxFc82+TcXSVKe6m7OpEq7cErWLgw5basYPUzXljA="
-
-addons:
-  coverity_scan:
-    project:
-      name: "mafagafogigante/dungeon"
-      description: "Build submitted via Travis CI."
-    notification_email: mafagafogigante@gmail.com
-    build_command_prepend: "mvn clean"
-    build_command: "mvn -DskipTests=true compile"
-    branch_pattern: coverity_scan
