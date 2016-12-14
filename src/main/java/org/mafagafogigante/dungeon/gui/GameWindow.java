@@ -238,19 +238,12 @@ public class GameWindow extends JFrame {
     // Set the ClassName so that Gnome presents the window title correctly.
     // See https://github.com/mafagafogigante/dungeon/issues/307 for more information.
     Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Field awtAppClassNameField = null;
     try {
-      awtAppClassNameField = toolkit.getClass().getDeclaredField("awtAppClassName");
-    } catch (NoSuchFieldException logged) {
-      DungeonLogger.logSevere(logged);
-    }
-    if (awtAppClassNameField != null) {
+      Field awtAppClassNameField = toolkit.getClass().getDeclaredField("awtAppClassName");
       awtAppClassNameField.setAccessible(true);
-      try {
-        awtAppClassNameField.set(toolkit, title);
-      } catch (IllegalAccessException logged) {
-        DungeonLogger.logSevere(logged);
-      }
+      awtAppClassNameField.set(toolkit, title);
+    } catch (NoSuchFieldException | IllegalAccessException logged) {
+      DungeonLogger.logSevere(logged);
     }
   }
 
