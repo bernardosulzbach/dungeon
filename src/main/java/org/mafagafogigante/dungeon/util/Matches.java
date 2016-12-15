@@ -2,6 +2,8 @@ package org.mafagafogigante.dungeon.util;
 
 import org.mafagafogigante.dungeon.game.Name;
 
+import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -70,9 +72,10 @@ public class Matches<T extends Selectable> {
   private static double calculateSimilarity(String[] nameWords, String[] tokens, boolean full) {
     if (!full || nameWords.length >= tokens.length) {
       int matches = countMatches(tokens, nameWords);
-      double matchesOverTitleWords = matches / (double) nameWords.length;
-      double matchesOverSearchArgs = matches / (double) tokens.length;
-      return DungeonMath.mean(matchesOverTitleWords, matchesOverSearchArgs);
+      SummaryStatistics statistics = new SummaryStatistics();
+      statistics.addValue(matches / (double) nameWords.length);
+      statistics.addValue(matches / (double) tokens.length);
+      return statistics.getMean();
     } else {
       return 0.0;
     }
