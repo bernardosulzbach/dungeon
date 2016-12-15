@@ -5,6 +5,7 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public final class CommandSet {
         for (CommandDescription description : descriptions) {
           if (filter == null || Utils.startsWithIgnoreCase(description.getName(), filter)) {
             count++;
-            dungeonString.append(Utils.padString(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
+            dungeonString.append(StringUtils.rightPad(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
             dungeonString.append(description.getInfo());
             dungeonString.append("\n");
           }

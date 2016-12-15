@@ -28,7 +28,7 @@ public final class DungeonMath {
   /**
    * Compares two doubles with the default tolerance margin.
    */
-  public static int fuzzyCompare(double first, double second) {
+  static int fuzzyCompare(double first, double second) {
     return fuzzyCompare(first, second, DEFAULT_DOUBLE_TOLERANCE);
   }
 
@@ -66,7 +66,7 @@ public final class DungeonMath {
    * @param integers the array of integers, not null
    * @return the sum
    */
-  public static int sum(@NotNull int[] integers) {
+  static int sum(@NotNull int[] integers) {
     int total = 0;
     for (int integer : integers) {
       total += integer;
