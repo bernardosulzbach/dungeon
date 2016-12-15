@@ -38,6 +38,7 @@ import org.mafagafogigante.dungeon.util.Utils;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.wiki.WikiSearcher;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -352,17 +353,17 @@ final class CommandSets {
         Location heroLocation = Game.getGameState().getHero().getLocation();
         Point heroPosition = heroLocation.getPoint();
         DungeonString dungeonString = new DungeonString();
-        dungeonString.append(Utils.padString("Point:", width));
+        dungeonString.append(StringUtils.rightPad("Point:", width));
         dungeonString.append(heroPosition.toString());
         dungeonString.append("\n");
-        dungeonString.append(Utils.padString("Creatures (" + heroLocation.getCreatureCount() + "):", width));
+        dungeonString.append(StringUtils.rightPad("Creatures (" + heroLocation.getCreatureCount() + "):", width));
         dungeonString.append("\n");
         for (Creature creature : heroLocation.getCreatures()) {
           dungeonString.append("  " + creature.getName());
           dungeonString.append("\n");
         }
         if (!heroLocation.getItemList().isEmpty()) {
-          dungeonString.append(Utils.padString("Items (" + heroLocation.getItemList().size() + "):", width));
+          dungeonString.append(StringUtils.rightPad("Items (" + heroLocation.getItemList().size() + "):", width));
           dungeonString.append("\n");
           for (Item item : heroLocation.getItemList()) {
             dungeonString.append("  " + item.getQualifiedName());
@@ -371,13 +372,13 @@ final class CommandSets {
         } else {
           dungeonString.append("No items.\n");
         }
-        dungeonString.append(Utils.padString("Luminosity:", width));
+        dungeonString.append(StringUtils.rightPad("Luminosity:", width));
         dungeonString.append(heroLocation.getLuminosity().toPercentage().toString());
         dungeonString.append("\n");
-        dungeonString.append(Utils.padString("Permittivity:", width));
+        dungeonString.append(StringUtils.rightPad("Permittivity:", width));
         dungeonString.append(heroLocation.getLightPermittivity().toString());
         dungeonString.append("\n");
-        dungeonString.append(Utils.padString("Blocked Entrances:", width));
+        dungeonString.append(StringUtils.rightPad("Blocked Entrances:", width));
         dungeonString.append(heroLocation.getBlockedEntrances().toString());
         dungeonString.append("\n");
         Writer.write(dungeonString);
