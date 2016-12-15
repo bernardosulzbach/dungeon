@@ -92,6 +92,11 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       if (preset.hasTag(Item.Tag.BOOK)) {
         preset.setText(itemObject.get("text").asString());
       }
+      if (preset.hasTag(Item.Tag.DRINKABLE)) {
+        preset.setDrinkableDoses(itemObject.get("drinkableDoses").asInt());
+        preset.setDrinkableHealing(itemObject.get("drinkableHealing").asInt());
+        preset.setIntegrityDecrementPerDose(itemObject.get("integrityDecrementPerDose").asInt());
+      }
       if (itemObject.get("spell") != null) {
         preset.setSpellId(itemObject.get("spell").asString());
       }

@@ -394,6 +394,14 @@
           "probability": 1.0
         },
         {
+          "id": "HEALING_POTION",
+          "probability": 0.6
+        },
+        {
+          "id": "HEALING_DRAUGHT",
+          "probability": 0.4
+        },
+        {
           "id": "GLASS_SWORD",
           "probability": 0.2
         },

@@ -113,6 +113,13 @@
       ]
     },
     {
+      "title": "Potions",
+      "content": "Potions are drinkable items which may be found throughout the world. They are fairly common in dungeons, where fallen adventurers lost them.",
+      "seeAlso": [
+        "Heal"
+      ]
+    },
+    {
       "title": "Races",
       "content": "There are four races in Darrowmere: Common, Light Elf, Dark Elf, and Orc."
     },

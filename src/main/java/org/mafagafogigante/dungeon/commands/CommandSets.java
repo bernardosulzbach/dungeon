@@ -34,7 +34,6 @@ import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.SystemInformation;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Tutorial;
-import org.mafagafogigante.dungeon.util.Utils;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.wiki.WikiSearcher;
 
@@ -99,6 +98,12 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         Game.getGameState().getHero().dropItems(arguments);
+      }
+    });
+    commandSet.addCommand(new Command("drink", "Drinks an item.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        Game.getGameState().getHero().drinkItem(arguments);
       }
     });
     commandSet.addCommand(new Command("eat", "Eats an item.") {

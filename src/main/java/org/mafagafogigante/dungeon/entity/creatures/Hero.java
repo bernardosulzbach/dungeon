@@ -10,6 +10,7 @@ import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.items.BaseInventory;
 import org.mafagafogigante.dungeon.entity.items.BookComponent;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
+import org.mafagafogigante.dungeon.entity.items.DrinkableComponent;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.DungeonString;
@@ -52,6 +53,7 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
   private static final int SECONDS_TO_DESTROY_AN_ITEM = 120;
   private static final int SECONDS_TO_EAT_AN_ITEM = 30;
+  private static final int SECONDS_TO_DRINK_AN_ITEM = 10;
   private static final int SECONDS_TO_DROP_AN_ITEM = 2;
   private static final int SECONDS_TO_UNEQUIP = 4;
   private static final int SECONDS_TO_EQUIP = 6;
@@ -412,7 +414,7 @@ public class Hero extends Creature {
   }
 
   /**
-   * Attempts to eat an item from the ground.
+   * Attempts to eat an item.
    */
   public void eatItem(String[] arguments) {
     Item selectedItem = selectInventoryItem(arguments);
@@ -441,6 +443,37 @@ public class Hero extends Creature {
         }
       } else {
         Writer.write("You can only eat food.");
+      }
+    }
+  }
+
+  /**
+   * Attempts to drink an item.
+   */
+  public void drinkItem(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
+    if (selectedItem != null) {
+      if (selectedItem.hasTag(Item.Tag.DRINKABLE)) {
+        Engine.rollDateAndRefresh(SECONDS_TO_DRINK_AN_ITEM);
+        if (getInventory().hasItem(selectedItem)) {
+          DrinkableComponent component = selectedItem.getDrinkableComponent();
+          if (!component.isDepleted()) {
+            component.decrementDoses();
+            selectedItem.decrementIntegrityByDrinking();
+            if (component.isDepleted()) {
+              Writer.write("You drank the last dose of " + selectedItem.getName() + ".");
+            } else {
+              Writer.write("You drank a dose of " + selectedItem.getName() + ".");
+            }
+            addHealth(component.getEffect().getHealing());
+          } else {
+            Writer.write("This item is depleted.");
+          }
+        } else {
+          HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
+        }
+      } else {
+        Writer.write("This item is not drinkable.");
       }
     }
   }

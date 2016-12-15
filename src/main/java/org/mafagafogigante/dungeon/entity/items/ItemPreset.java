@@ -17,6 +17,7 @@ import java.io.Serializable;
  */
 public final class ItemPreset implements Preset, Serializable {
 
+  private static final long serialVersionUID = -3795444867261167258L;
   private final TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private Id id;
   private String type;
@@ -34,6 +35,9 @@ public final class ItemPreset implements Preset, Serializable {
   private String text;
   private long putrefactionPeriod;
   private boolean unique;
+  private int drinkableHealing;
+  private int drinkableDoses;
+  private int integrityDecrementPerDose;
 
   public TagSet<Item.Tag> getTagSet() {
     return tagSet;
@@ -175,6 +179,30 @@ public final class ItemPreset implements Preset, Serializable {
 
   public void setUnique(boolean unique) {
     this.unique = unique;
+  }
+
+  public int getIntegrityDecrementPerDose() {
+    return integrityDecrementPerDose;
+  }
+
+  public void setIntegrityDecrementPerDose(int integrityDecrementPerDose) {
+    this.integrityDecrementPerDose = integrityDecrementPerDose;
+  }
+
+  public int getDrinkableHealing() {
+    return drinkableHealing;
+  }
+
+  public void setDrinkableHealing(int healing) {
+    this.drinkableHealing = healing;
+  }
+
+  public int getDrinkableDoses() {
+    return drinkableDoses;
+  }
+
+  public void setDrinkableDoses(int doses) {
+    this.drinkableDoses = doses;
   }
 
 }

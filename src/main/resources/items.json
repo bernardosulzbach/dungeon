@@ -199,6 +199,54 @@
       "integrityDecrementOnEat": 10
     },
     {
+      "id": "HEALING_POTION",
+      "type": "Potion",
+      "name": {
+        "singular": "Healing Potion"
+      },
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 2,
+      "drinkableHealing": 10,
+      "integrityDecrementPerDose": 5
+    },
+    {
+      "id": "HEALING_DRAUGHT",
+      "type": "Potion",
+      "name": {
+        "singular": "Healing Draught"
+      },
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.4,
+      "visibility": "65.00%",
+      "damage": 6,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 4,
+      "drinkableHealing": 10,
+      "integrityDecrementPerDose": 5
+    },
+    {
       "id": "BEAR_BEEF",
       "type": "Food",
       "name": {

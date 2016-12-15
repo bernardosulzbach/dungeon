@@ -12,6 +12,7 @@ import org.mafagafogigante.dungeon.util.Percentage;
 
 public final class Item extends Entity {
 
+  private static final long serialVersionUID = -2382173647397790563L;
   private final ItemIntegrity integrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;
@@ -19,6 +20,7 @@ public final class Item extends Entity {
   private final LightSource lightSource;
   private WeaponComponent weaponComponent;
   private FoodComponent foodComponent;
+  private DrinkableComponent drinkableComponent;
   private ClockComponent clockComponent;
   private BookComponent bookComponent;
   /* The Inventory this Item is in. Should be null whenever this Item is not in an Inventory. */
@@ -47,6 +49,12 @@ public final class Item extends Entity {
     }
     if (hasTag(Tag.FOOD)) {
       foodComponent = new FoodComponent(preset.getNutrition(), preset.getIntegrityDecrementOnEat());
+    }
+    if (hasTag(Tag.DRINKABLE)) {
+      ItemUsageEffect effect = new ItemUsageEffect(preset.getDrinkableHealing());
+      int integrityDecrementPerDose = preset.getIntegrityDecrementPerDose();
+      int drinkableDoses = preset.getDrinkableDoses();
+      drinkableComponent = new DrinkableComponent(effect, integrityDecrementPerDose, drinkableDoses);
     }
     if (hasTag(Tag.CLOCK)) {
       clockComponent = new ClockComponent(this);
@@ -104,6 +112,10 @@ public final class Item extends Entity {
     return foodComponent;
   }
 
+  public DrinkableComponent getDrinkableComponent() {
+    return drinkableComponent;
+  }
+
   public ClockComponent getClockComponent() {
     return clockComponent;
   }
@@ -137,6 +149,10 @@ public final class Item extends Entity {
     integrity.decrementBy(foodComponent.getIntegrityDecrementOnEat());
   }
 
+  public void decrementIntegrityByDrinking() {
+    integrity.decrementBy(drinkableComponent.getIntegrityDecrementPerDose());
+  }
+
   public void decrementIntegrityToZero() {
     integrity.decrementBy(integrity.getCurrent());
   }
@@ -162,6 +178,6 @@ public final class Item extends Entity {
     return getName().toString();
   }
 
-  public enum Tag {WEAPON, FOOD, CLOCK, BOOK, DECOMPOSES, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
+  public enum Tag {WEAPON, FOOD, DRINKABLE, CLOCK, BOOK, DECOMPOSES, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
 
 }
