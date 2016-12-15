@@ -1,7 +1,6 @@
 package org.mafagafogigante.dungeon.date;
 
-import org.mafagafogigante.dungeon.util.Utils;
-
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -77,17 +76,17 @@ public final class DungeonTimeParser {
   private static List<String> cleanAndTokenize(String string) {
     string = string.replaceAll("and", "");
     string = string.replaceAll(",", "");
-    return new ArrayList<>(Arrays.asList(Utils.split(string)));
+    return new ArrayList<>(Arrays.asList(StringUtils.split(string)));
   }
 
   public static class InvalidMultiplierException extends IllegalArgumentException {
-    public InvalidMultiplierException(@NotNull String string) {
+    InvalidMultiplierException(@NotNull String string) {
       super(string);
     }
   }
 
   public static class InvalidUnitException extends IllegalArgumentException {
-    public InvalidUnitException(@NotNull String string) {
+    InvalidUnitException(@NotNull String string) {
       super(string);
     }
   }

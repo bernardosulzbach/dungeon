@@ -28,7 +28,7 @@ public final class IssuedCommand {
     if (!isValidSource(source)) {
       throw new IllegalArgumentException("invalid source, command limits violated.");
     }
-    tokens = Collections.unmodifiableList(Arrays.asList(Utils.split(source)));
+    tokens = Collections.unmodifiableList(Arrays.asList(StringUtils.split(source)));
     if (tokens.isEmpty()) {
       throw new IllegalArgumentException("invalid source, no tokens obtained.");
     }

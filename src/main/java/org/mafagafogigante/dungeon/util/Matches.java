@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.util;
 
 import org.mafagafogigante.dungeon.game.Name;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
 import java.util.ArrayList;
@@ -82,11 +83,11 @@ public class Matches<T extends Selectable> {
   }
 
   private static double calculateSingularSimilarity(Name name, String[] tokens, boolean full) {
-    return calculateSimilarity(Utils.split(name.getSingular()), tokens, full);
+    return calculateSimilarity(StringUtils.split(name.getSingular()), tokens, full);
   }
 
   private static double calculatePluralSimilarity(Name name, String[] tokens, boolean full) {
-    return calculateSimilarity(Utils.split(name.getPlural()), tokens, full);
+    return calculateSimilarity(StringUtils.split(name.getPlural()), tokens, full);
   }
 
   private static MatchResult evaluateMatch(Name name, int frequency, String[] tokens, boolean full) {
