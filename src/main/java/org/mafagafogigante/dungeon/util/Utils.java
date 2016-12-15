@@ -35,13 +35,6 @@ public final class Utils {
   }
 
   /**
-   * Split a string of text into an array of words.
-   */
-  public static String[] split(String string) {
-    return string.split("\\s+");
-  }
-
-  /**
    * Enumerates the elements of a Collection in a human-readable way.
    *
    * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.
