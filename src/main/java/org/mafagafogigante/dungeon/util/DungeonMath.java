@@ -33,17 +33,6 @@ public final class DungeonMath {
   }
 
   /**
-   * Calculates the arithmetic mean of a sequence of doubles.
-   */
-  public static double mean(double... values) {
-    double sum = 0;
-    for (double value : values) {
-      sum += value;
-    }
-    return sum / values.length;
-  }
-
-  /**
    * Compares two doubles with the default tolerance margin.
    */
   public static int fuzzyCompare(double first, double second) {
