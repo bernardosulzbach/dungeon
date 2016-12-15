@@ -30,7 +30,6 @@ import org.mafagafogigante.dungeon.map.WorldMapWriter;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
-import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.SystemInformation;
 import org.mafagafogigante.dungeon.util.Table;
@@ -259,12 +258,6 @@ final class CommandSets {
           dungeonString.append(Random.select(alphabet));
         }
         Writer.write(dungeonString);
-      }
-    });
-    commandSet.addCommand(new Command("fibonacci", "Displays the specified term of the Fibonacci's sequence.") {
-      @Override
-      public void execute(@NotNull String[] arguments) {
-        DungeonMath.parseFibonacci(arguments);
       }
     });
     commandSet.addCommand(new Command("hint", "Displays a random hint of the game.") {
