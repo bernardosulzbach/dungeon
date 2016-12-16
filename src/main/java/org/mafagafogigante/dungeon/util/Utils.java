@@ -24,24 +24,6 @@ public final class Utils {
   }
 
   /**
-   * Pads a string with spaces at the end in order to reach a desired length. If the provided string's length is bigger
-   * than the desired length, the same string is returned.
-   */
-  public static String padString(String original, int desiredLength) {
-    int requiredSpaces = desiredLength - original.length();
-    if (requiredSpaces > 0) {
-      StringBuilder stringBuilder = new StringBuilder(desiredLength);
-      stringBuilder.append(original);
-      for (int i = 0; i < requiredSpaces; i++) {
-        stringBuilder.append(' ');
-      }
-      return stringBuilder.toString();
-    } else {
-      return original;
-    }
-  }
-
-  /**
    * Checks if a string starts with a given string, ignoring case differences.
    *
    * @param left the base string.
@@ -50,13 +32,6 @@ public final class Utils {
    */
   public static boolean startsWithIgnoreCase(String left, String right) {
     return left.toLowerCase(Locale.ENGLISH).startsWith(right.toLowerCase(Locale.ENGLISH));
-  }
-
-  /**
-   * Split a string of text into an array of words.
-   */
-  public static String[] split(String string) {
-    return string.split("\\s+");
   }
 
   /**
