@@ -4,12 +4,12 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.JsonValue;
 
-public class NumberJsonRule implements JsonRule {
+class NumberJsonRule implements JsonRule {
 
   @Override
   public void validate(JsonValue value) {
     if (!value.isNumber()) {
-      throw new IllegalArgumentException("expected a number.");
+      throw new IllegalArgumentException(value + " is not a number.");
     }
   }
 

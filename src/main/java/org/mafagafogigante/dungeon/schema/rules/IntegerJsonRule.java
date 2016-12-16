@@ -2,7 +2,7 @@ package org.mafagafogigante.dungeon.schema.rules;
 
 import com.eclipsesource.json.JsonValue;
 
-public class IntegerJsonRule extends NumberJsonRule {
+class IntegerJsonRule extends NumberJsonRule {
 
   @Override
   public void validate(JsonValue value) {
@@ -10,7 +10,7 @@ public class IntegerJsonRule extends NumberJsonRule {
     try {
       value.asInt();
     } catch (NumberFormatException exception) {
-      throw new IllegalArgumentException("value is not an integer.");
+      throw new IllegalArgumentException(value + " is not an integer.");
     }
   }
 

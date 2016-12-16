@@ -4,11 +4,11 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.JsonValue;
 
-public class OptionalJsonRule implements JsonRule {
+class OptionalJsonRule implements JsonRule {
 
   private final JsonRule rule;
 
-  public OptionalJsonRule(JsonRule rule) {
+  OptionalJsonRule(JsonRule rule) {
     this.rule = rule;
   }
 

@@ -4,13 +4,13 @@ import com.eclipsesource.json.JsonValue;
 
 import java.util.Locale;
 
-public final class UppercaseStringJsonRule extends StringJsonRule {
+final class UppercaseStringJsonRule extends StringJsonRule {
 
   @Override
   public void validate(JsonValue value) {
     super.validate(value);
     if (!isAllCharsInUppercase(value.asString())) {
-      throw new IllegalArgumentException("string is not uppercase.");
+      throw new IllegalArgumentException(value + " is not uppercase.");
     }
   }
 

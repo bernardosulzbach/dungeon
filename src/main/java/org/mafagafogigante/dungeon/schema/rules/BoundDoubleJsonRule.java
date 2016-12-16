@@ -2,12 +2,12 @@ package org.mafagafogigante.dungeon.schema.rules;
 
 import com.eclipsesource.json.JsonValue;
 
-final class BoundIntegerJsonRule extends IntegerJsonRule {
+final class BoundDoubleJsonRule extends DoubleJsonRule {
 
-  private final int minValue;
-  private final int maxValue;
+  private final double minValue;
+  private final double maxValue;
 
-  BoundIntegerJsonRule(int minValue, int maxValue) {
+  BoundDoubleJsonRule(double minValue, double maxValue) {
     this.minValue = minValue;
     this.maxValue = maxValue;
   }
@@ -15,11 +15,11 @@ final class BoundIntegerJsonRule extends IntegerJsonRule {
   @Override
   public void validate(JsonValue value) {
     super.validate(value);
-    int intValue = value.asInt();
-    if (intValue < minValue) {
+    double doubleValue = value.asDouble();
+    if (doubleValue < minValue) {
       throw new IllegalArgumentException(value + " is below the allowed minimum " + minValue + ".");
     }
-    if (intValue > maxValue) {
+    if (doubleValue > maxValue) {
       throw new IllegalArgumentException(value + " is above the allowed maximum " + maxValue + ".");
     }
   }
