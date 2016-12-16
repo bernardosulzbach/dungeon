@@ -590,7 +590,10 @@ public class Hero extends Creature {
     Engine.rollDateAndRefresh(SECONDS_TO_EQUIP);
     if (getInventory().hasItem(weapon)) {
       setWeapon(weapon);
-      Writer.write(getName() + " equipped " + weapon.getQualifiedName() + ".");
+      DungeonString string = new DungeonString();
+      string.append(getName() + " equipped " + weapon.getQualifiedName() + ".");
+      string.append(" " + "Your total damage is now " + getTotalDamage() + ".");
+      Writer.write(string);
     } else {
       HeroUtils.writeNoLongerInInventoryMessage(weapon);
     }
@@ -616,35 +619,48 @@ public class Hero extends Creature {
    * Prints a message with the current status of the Hero.
    */
   public void printAllStatus() {
-    DungeonString builder = new DungeonString();
-    builder.append(getName().getSingular());
-    builder.append("\n");
-    builder.append("You are ");
-    builder.append(getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
-    builder.append(".\n");
-    builder.append("Your base attack is ");
-    builder.append(String.valueOf(getAttack()));
-    builder.append(".\n");
+    DungeonString string = new DungeonString();
+    string.append("Your name is ");
+    string.append(getName().getSingular());
+    string.append(".");
+    string.append(" ");
+    string.append("You are now ");
+    string.append(getAgeString());
+    string.append(" old");
+    string.append(".\n");
+    string.append("You are ");
+    string.append(getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
+    string.append(".\n");
+    string.append("Your base attack is ");
+    string.append(String.valueOf(getAttack()));
+    string.append(".\n");
     if (hasWeapon()) {
-      builder.append("You are currently equipping ");
-      builder.append(getWeapon().getQualifiedName());
-      builder.append(", whose base damage is ");
-      builder.append(String.valueOf(getWeapon().getWeaponComponent().getDamage()));
-      builder.append(". This makes your total damage ");
-      builder.append(String.valueOf(getAttack() + getWeapon().getWeaponComponent().getDamage()));
-      builder.append(".\n");
+      string.append("You are currently equipping ");
+      string.append(getWeapon().getQualifiedName());
+      string.append(", whose base damage is ");
+      string.append(String.valueOf(getWeapon().getWeaponComponent().getDamage()));
+      string.append(". This makes your total damage ");
+      string.append(String.valueOf(getTotalDamage()));
+      string.append(".\n");
     } else {
-      builder.append("You are fighting bare-handed.\n");
+      string.append("You are fighting bare-handed.\n");
     }
-    Writer.write(builder);
+    Writer.write(string);
+  }
+
+  private int getTotalDamage() {
+    return getAttack() + getWeapon().getWeaponComponent().getDamage();
   }
 
   /**
    * Prints the Hero's age.
    */
   public void printAge() {
-    String age = new Duration(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
-    Writer.write(new DungeonString("You are " + age + " old.", Color.CYAN));
+    Writer.write(new DungeonString("You are " + getAgeString() + " old.", Color.CYAN));
+  }
+
+  private String getAgeString() {
+    return new Duration(dateOfBirth, Game.getGameState().getWorld().getWorldDate()).toString();
   }
 
   /**
