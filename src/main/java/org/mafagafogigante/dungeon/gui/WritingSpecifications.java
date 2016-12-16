@@ -5,7 +5,7 @@ import org.mafagafogigante.dungeon.util.NonNegativeInteger;
 /**
  * A series of specifications for a text pane write.
  */
-public class WritingSpecifications {
+public final class WritingSpecifications {
 
   private final boolean scrollDown;
   private final NonNegativeInteger wait;
@@ -21,7 +21,7 @@ public class WritingSpecifications {
     this.wait = new NonNegativeInteger(wait);
   }
 
-  public boolean shouldScrollDown() {
+  boolean shouldScrollDown() {
     return scrollDown;
   }
 
@@ -35,9 +35,7 @@ public class WritingSpecifications {
 
   @Override
   public String toString() {
-    return "WritingSpecifications{" +
-        "scrollDown=" + scrollDown +
-        '}';
+    return "WritingSpecifications{scrollDown=" + scrollDown + "}";
   }
 
 }

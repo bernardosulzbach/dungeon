@@ -25,7 +25,6 @@ import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
 import org.mafagafogigante.dungeon.io.SavesTableWriter;
 import org.mafagafogigante.dungeon.io.Writer;
-import org.mafagafogigante.dungeon.map.WorldMap;
 import org.mafagafogigante.dungeon.map.WorldMapWriter;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
@@ -161,7 +160,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("map", "Shows a map of your surroundings.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        WorldMapWriter.writeMap(WorldMap.makeWorldMap());
+        WorldMapWriter.writeMap();
       }
     });
     commandSet.addCommand(new Command("milk", "Attempts to milk a creature.") {
@@ -392,7 +391,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("map", "Produces a map as complete as possible.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        WorldMapWriter.writeMap(WorldMap.makeDebugWorldMap());
+        WorldMapWriter.writeDebugMap();
       }
     });
     commandSet.addCommand(new Command("give", "Gives items to the character.") {

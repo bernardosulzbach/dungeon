@@ -15,12 +15,11 @@ class IterationLimits {
    * Constructs new iteration limits based on the center of the map, the number of columns and the number of rows.
    *
    * @param center the Point at the center of the map, not null
-   * @param cols the number of columns
    * @param rows the number of rows
    */
-  IterationLimits(@NotNull Point center, int cols, int rows) {
-    minX = center.getX() - (cols - 1) / 2;
-    maxX = minX + cols - 1;
+  IterationLimits(@NotNull Point center, int rows, int columns) {
+    minX = center.getX() - (columns - 1) / 2;
+    maxX = minX + columns - 1;
     minY = center.getY() + (rows - 1) / 2;
     maxY = minY - rows + 1;
   }

@@ -3,7 +3,6 @@ package org.mafagafogigante.dungeon.map;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.World;
-import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,45 +14,34 @@ public class WorldMap {
 
   private final WorldMapSymbol[][] matrix;
   private final IterationLimits limits;
-  private final String stringRepresentation;
 
   /**
    * Initializes the WorldMap with a proper IterationLimits object and a matrix of null objects.
    */
-  private WorldMap() {
+  private WorldMap(int rows, int columns) {
     Point center = Game.getGameState().getHero().getLocation().getPoint();
-    int cols = GameWindow.COLS;
-    int rows = GameWindow.ROWS - 1;
-    limits = new IterationLimits(center, cols, rows);
-    matrix = new WorldMapSymbol[rows][cols]; // Add 1 to account for newlines.
-    stringRepresentation = rows + "x" + cols + " map.";
+    this.limits = new IterationLimits(center, rows, columns);
+    this.matrix = new WorldMapSymbol[rows][columns];
   }
 
   /**
-   * Makes a standard WorldMap.
+   * Makes a WorldMap of the specified size. If limited, only contains already seen locations.
    */
   @NotNull
-  public static WorldMap makeWorldMap() {
+  static WorldMap makeWorldMap(int rows, int columns, boolean limited) {
     World world = Game.getGameState().getWorld();
     Point heroPosition = Game.getGameState().getHero().getLocation().getPoint();
-    ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-    WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition, explorationStatistics);
-    return renderWorldMap(factory);
+    if (limited) {
+      ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+      return renderWorldMap(new WorldMapSymbolFactory(world, heroPosition, explorationStatistics), rows, columns);
+    } else {
+      return renderWorldMap(new WorldMapSymbolFactory(world, heroPosition), rows, columns);
+
+    }
   }
 
-  /**
-   * Makes a debug WorldMap.
-   */
-  @NotNull
-  public static WorldMap makeDebugWorldMap() {
-    World world = Game.getGameState().getWorld();
-    Point heroPosition = Game.getGameState().getHero().getLocation().getPoint();
-    WorldMapSymbolFactory factory = new WorldMapSymbolFactory(world, heroPosition);
-    return renderWorldMap(factory);
-  }
-
-  private static WorldMap renderWorldMap(WorldMapSymbolFactory symbolFactory) {
-    WorldMap map = new WorldMap();
+  private static WorldMap renderWorldMap(WorldMapSymbolFactory symbolFactory, int rows, int columns) {
+    WorldMap map = new WorldMap(rows, columns);
     for (int curY = map.limits.minY; curY >= map.limits.maxY; curY--) {
       for (int curX = map.limits.minX; curX <= map.limits.maxX; curX++) {
         Point currentPosition = new Point(curX, curY, 0);
@@ -65,11 +53,6 @@ public class WorldMap {
 
   WorldMapSymbol[][] getSymbolMatrix() {
     return matrix;
-  }
-
-  @Override
-  public String toString() {
-    return stringRepresentation;
   }
 
 }

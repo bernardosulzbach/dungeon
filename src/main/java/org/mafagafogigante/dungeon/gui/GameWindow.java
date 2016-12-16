@@ -49,8 +49,8 @@ public class GameWindow extends JFrame {
   /**
    * Returns how many text rows are shown in the Window.
    */
-  public static final int ROWS = 30;
-  public static final int COLS = 100;
+  private static final int ROWS = 30;
+  private static final int COLUMNS = 100;
   private static final int FONT_SIZE = 15;
   private static final Font FONT = getMonospacedFont();
   private static final String WINDOW_TITLE = "Dungeon";
@@ -62,7 +62,6 @@ public class GameWindow extends JFrame {
   private transient SwappingStyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
-
   private volatile boolean acceptingNextCommand;
 
   /**
@@ -72,6 +71,14 @@ public class GameWindow extends JFrame {
     initComponents();
     document = new SwappingStyledDocument(textPane);
     setVisible(true);
+  }
+
+  public static int getRows() {
+    return ROWS;
+  }
+
+  public static int getColumns() {
+    return COLUMNS;
   }
 
   /**
@@ -254,7 +261,7 @@ public class GameWindow extends JFrame {
    */
   private Dimension calculateTextPaneSize() {
     FontMetrics fontMetrics = getFontMetrics(FONT);
-    int width = fontMetrics.charWidth(' ') * (COLS + 1); // columns + magic constant
+    int width = fontMetrics.charWidth(' ') * (COLUMNS + 1); // Add a padding column.
     int height = fontMetrics.getHeight() * ROWS;
     return new Dimension(width, height);
   }

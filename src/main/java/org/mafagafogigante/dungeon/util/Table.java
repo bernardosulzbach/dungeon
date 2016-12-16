@@ -187,7 +187,7 @@ public class Table extends Writable {
 
   private int getAvailableWidth() {
     // Subtract the number of columns to account for separators. Add one because there is not a separator at the end.
-    return GameWindow.COLS - columns.size() + 1;
+    return GameWindow.getColumns() - columns.size() + 1;
   }
 
   private int[] getMaximumColumnWidths() {
