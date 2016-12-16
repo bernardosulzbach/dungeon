@@ -4,17 +4,11 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 
 public class StringUppercaseJsonRuleTest {
 
-  private JsonRule uppercaseStringJsonRule;
-
-  @Before
-  public void setUp() {
-    uppercaseStringJsonRule = new UppercaseStringJsonRule();
-  }
+  private static final JsonRule uppercaseStringJsonRule = new UppercaseStringJsonRule();
 
   @Test(expected = IllegalArgumentException.class)
   public void uppercaseStringJsonRuleShouldFailLowercase() {
@@ -25,7 +19,7 @@ public class StringUppercaseJsonRuleTest {
 
   @Test
   public void uppercaseStringJsonRuleShouldPassUppercase() {
-    String uppercase = "AB";
+    String uppercase = "A";
     JsonValue jsonValue = Json.value(uppercase);
     uppercaseStringJsonRule.validate(jsonValue);
   }

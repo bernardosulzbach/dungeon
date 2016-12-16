@@ -4,20 +4,13 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 
 public class BoundIntegerJsonRuleTest {
 
   private static final int MIN_BOUND_VALUE = 2;
   private static final int MAX_BOUND_VALUE = 5;
-
-  private JsonRule boundIntegerJsonRule;
-
-  @Before
-  public void setUp() {
-    boundIntegerJsonRule = new BoundIntegerJsonRule(MIN_BOUND_VALUE, MAX_BOUND_VALUE);
-  }
+  private static final JsonRule boundIntegerJsonRule = new BoundIntegerJsonRule(MIN_BOUND_VALUE, MAX_BOUND_VALUE);
 
   @Test(expected = IllegalArgumentException.class)
   public void boundIntegerJsonRuleShouldFailWhenValueOutOfLowerBound() {

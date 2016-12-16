@@ -35,7 +35,7 @@ public final class JsonRuleFactory {
   }
 
   public static JsonRule makePercentRule() {
-    return new PercentJsonRule();
+    return new PercentageJsonRule();
   }
 
   public static JsonRule makeBoundIntegerRule(int minimumValue, int maximumValue) {

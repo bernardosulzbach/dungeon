@@ -7,20 +7,13 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 public class OptionalJsonRuleTest {
 
-  private JsonRule optionalJsonRule;
-  private JsonRule jsonRuleStub;
-
-  @Before
-  public void setUp() {
-    jsonRuleStub = Mockito.mock(JsonRule.class);
-    optionalJsonRule = new OptionalJsonRule(jsonRuleStub);
-  }
+  private static final JsonRule jsonRuleStub = Mockito.mock(JsonRule.class);
+  private static final JsonRule optionalJsonRule = new OptionalJsonRule(jsonRuleStub);
 
   @Test
   public void optionalJsonRuleShouldIgnoreNullValue() {
@@ -36,4 +29,3 @@ public class OptionalJsonRuleTest {
   }
 
 }
-

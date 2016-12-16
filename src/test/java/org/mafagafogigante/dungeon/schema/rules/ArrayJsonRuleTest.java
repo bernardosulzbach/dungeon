@@ -5,17 +5,11 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ArrayJsonRuleTest {
 
-  private JsonRule arrayJsonRule;
-
-  @Before
-  public void setUp() {
-    arrayJsonRule = new ArrayJsonRule();
-  }
+  private static final JsonRule arrayJsonRule = new ArrayJsonRule();
 
   @Test(expected = IllegalArgumentException.class)
   public void arrayJsonRuleShouldFailNonArrayType() {

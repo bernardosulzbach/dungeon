@@ -18,7 +18,7 @@ class StringLengthJsonRule extends StringJsonRule {
       throw new IllegalArgumentException(value + " is below the allowed minimum " + stringLength + ".");
     }
     if (stringValue.length() > stringLength) {
-      throw new IllegalArgumentException(value + " is below the allowed maximum " + stringLength + ".");
+      throw new IllegalArgumentException(value + " is above the allowed maximum " + stringLength + ".");
     }
   }
 

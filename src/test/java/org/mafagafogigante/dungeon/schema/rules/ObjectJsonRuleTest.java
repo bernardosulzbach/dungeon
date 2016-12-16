@@ -27,7 +27,7 @@ public class ObjectJsonRuleTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void shouldFailNonObjectValue() {
+  public void shouldFailOnNonObjectValue() {
     JsonValue value = Json.value(true);
     Map<String, JsonRule> rules = new HashMap<>();
     JsonRule rule = new ObjectJsonRule(rules);
@@ -35,7 +35,7 @@ public class ObjectJsonRuleTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void shouldFailObjectWithInvalidAttributes() {
+  public void shouldFailOnObjectWithInvalidAttributes() {
     JsonObject object = new JsonObject();
     object.add("id", "john");
     Map<String, JsonRule> rules = new HashMap<>();

@@ -18,7 +18,7 @@ public class IntegerJsonRuleTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void integerJsonRuleShouldFailNonIntegerType() {
-    final double invalidValue = 2.1d;
+    final double invalidValue = 2.5;
     JsonValue jsonValue = Json.value(invalidValue);
     integerJsonRule.validate(jsonValue);
   }

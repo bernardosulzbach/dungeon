@@ -4,19 +4,12 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 
 public class StringLengthJsonRuleTest {
 
   private static final int VALIDATION_STRING_LENGTH = 2;
-
-  private JsonRule stringLengthJsonRule;
-
-  @Before
-  public void setUp() {
-    stringLengthJsonRule = new StringLengthJsonRule(VALIDATION_STRING_LENGTH);
-  }
+  private static final JsonRule stringLengthJsonRule = new StringLengthJsonRule(VALIDATION_STRING_LENGTH);
 
   @Test(expected = IllegalArgumentException.class)
   public void stringLengthJsonRuleShouldFailLowerLength() {

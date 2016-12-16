@@ -24,7 +24,7 @@ public class DoubleJsonRuleTest {
 
   @Test
   public void doubleJsonRuleShouldPassValidType() {
-    JsonValue jsonValue = Json.value(1d);
+    JsonValue jsonValue = Json.value(1.0);
     doubleJsonRule.validate(jsonValue);
   }
 
