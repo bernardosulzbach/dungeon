@@ -24,6 +24,7 @@ import org.mafagafogigante.dungeon.gui.WritingSpecifications;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
 import org.mafagafogigante.dungeon.io.SavesTableWriter;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.map.WorldMapWriter;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
@@ -287,6 +288,12 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         Writer.write(new SystemInformation());
+      }
+    });
+    commandSet.addCommand(new Command("version", "Displays the game version.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        Writer.write("Dungeon version " + new Version() + ".");
       }
     });
     return commandSet;

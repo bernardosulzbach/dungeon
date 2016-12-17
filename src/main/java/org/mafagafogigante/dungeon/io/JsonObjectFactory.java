@@ -5,15 +5,11 @@ import com.eclipsesource.json.JsonObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.Charset;
 
 public class JsonObjectFactory {
 
-  private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   private static final String JSON_EXTENSION = ".json";
-  private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
   /**
    * Makes a new JsonObject from the resource file pointed to by the specified filename.
@@ -27,7 +23,7 @@ public class JsonObjectFactory {
       throw new IllegalFilenameExtensionException("filename must end with " + JSON_EXTENSION + ".");
     }
     // Using a BufferedReader here does not improve performance as the library is already buffered.
-    try (Reader reader = new InputStreamReader(classLoader.getResourceAsStream(filename), DEFAULT_CHARSET)) {
+    try (Reader reader = ResourceStreamFactory.getInputStreamReader(filename)) {
       return Json.parse(reader).asObject();
     } catch (IOException fatal) {
       throw new RuntimeException(fatal);
