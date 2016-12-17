@@ -20,7 +20,7 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
   private static final Percentage DEFAULT_UNARMED_HIT_RATE = new Percentage(0.9);
   private static final Percentage DEFAULT_CRITICAL_CHANCE = new Percentage(0.1);
 
-  private static boolean isEquippingUnbrokenWeapon(@NotNull Creature attacker) {
+  private static boolean isEquippingWorkingWeapon(@NotNull Creature attacker) {
     return attacker.hasWeapon() && !attacker.getWeapon().isBroken();
   }
 
@@ -29,7 +29,7 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
    * if the creature is not equipping an unbroken weapon. Otherwise the hit rate of the weapon is used.
    */
   Percentage getHitRate(@NotNull Creature creature) {
-    if (isEquippingUnbrokenWeapon(creature)) {
+    if (isEquippingWorkingWeapon(creature)) {
       return creature.getWeapon().getWeaponComponent().getHitRate();
     } else {
       return DEFAULT_UNARMED_HIT_RATE;
@@ -47,8 +47,8 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
     if (Random.roll(getHitRate(attacker))) {
       int damage = attacker.getAttack();
-      boolean attackerIsEquippingUnbrokenWeapon = isEquippingUnbrokenWeapon(attacker);
-      if (attackerIsEquippingUnbrokenWeapon) {
+      boolean attackerIsEquippingWorkingWeapon = isEquippingWorkingWeapon(attacker);
+      if (attackerIsEquippingWorkingWeapon) {
         damage += attacker.getWeapon().getWeaponComponent().getDamage();
       }
       boolean isCriticalHit = Random.roll(getCriticalChance(attacker));
@@ -60,14 +60,14 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
       AttackAlgorithmWriter.writeInflictedDamage(attacker, damage, defender, isCriticalHit);
       // Respect the contract: If the defender is dead, set its cause of death.
       if (defender.getHealth().isDead()) {
-        if (attackerIsEquippingUnbrokenWeapon) {
+        if (attackerIsEquippingWorkingWeapon) {
           defender.setCauseOfDeath(new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, attacker.getWeapon().getId()));
         } else {
           defender.setCauseOfDeath(CauseOfDeath.getUnarmedCauseOfDeath());
         }
       }
       // Decrement the integrity of the weapon.
-      if (attackerIsEquippingUnbrokenWeapon) {
+      if (attackerIsEquippingWorkingWeapon) {
         Item weapon = attacker.getWeapon();
         weapon.decrementIntegrityByHit();
         if (weapon.isBroken()) {
