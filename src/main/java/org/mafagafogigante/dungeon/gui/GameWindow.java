@@ -240,7 +240,9 @@ public class GameWindow extends JFrame {
       Field awtAppClassNameField = toolkit.getClass().getDeclaredField("awtAppClassName");
       awtAppClassNameField.setAccessible(true);
       awtAppClassNameField.set(toolkit, title);
-    } catch (NoSuchFieldException | IllegalAccessException logged) {
+    } catch (NoSuchFieldException ignored) {
+      // Not a problem.
+    } catch (IllegalAccessException logged) {
       DungeonLogger.logSevere(logged);
     }
   }
