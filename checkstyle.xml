@@ -15,6 +15,7 @@
         <property name="eachLine" value="true"/>
     </module>
 
+    <module name="NewlineAtEndOfFile"/>
     <module name="TreeWalker">
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">

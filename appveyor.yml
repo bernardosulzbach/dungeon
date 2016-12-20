@@ -10,7 +10,10 @@ environment:
 matrix:
   fast_finish: true  # Enables fast failing.
 
+
 os: Windows Server 2012
+init:
+  - git config --global core.autocrlf true
 build_script:
   - mvn clean package -B -Dmaven.test.skip=true
 test_script:
