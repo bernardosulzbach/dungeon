@@ -4,17 +4,11 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DoubleJsonRuleTest {
 
-  private JsonRule doubleJsonRule;
-
-  @Before
-  public void setUp() {
-    doubleJsonRule = new DoubleJsonRule();
-  }
+  private static final JsonRule doubleJsonRule = new DoubleJsonRule();
 
   @Test(expected = IllegalArgumentException.class)
   public void doubleJsonRuleShouldFailNonDoubleType() {

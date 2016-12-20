@@ -14,22 +14,22 @@ public class BoundIntegerJsonRuleTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void boundIntegerJsonRuleShouldFailWhenValueOutOfLowerBound() {
-    final int ltLowerBound = 1;
-    JsonValue jsonValue = Json.value(ltLowerBound);
+    final int lowerThanLowerBound = 1;
+    JsonValue jsonValue = Json.value(lowerThanLowerBound);
     boundIntegerJsonRule.validate(jsonValue);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void boundIntegerJsonRuleShouldFailWhenValueOutOfUpperBound() {
-    final int gtLowerBound = 6;
-    JsonValue jsonValue = Json.value(gtLowerBound);
+    final int greaterThanUpperBound = 6;
+    JsonValue jsonValue = Json.value(greaterThanUpperBound);
     boundIntegerJsonRule.validate(jsonValue);
   }
 
   @Test
   public void boundIntegerJsonRuleShouldPassWhenValueInBound() {
-    final int inBound = 3;
-    JsonValue jsonValue = Json.value(inBound);
+    final int valid = 3;
+    JsonValue jsonValue = Json.value(valid);
     boundIntegerJsonRule.validate(jsonValue);
   }
 
