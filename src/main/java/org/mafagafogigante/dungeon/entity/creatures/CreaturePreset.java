@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature.Tag;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public final class CreaturePreset implements Preset, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private Id id;
   private String type;

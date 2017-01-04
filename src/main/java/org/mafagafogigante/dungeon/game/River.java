@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  */
 class River implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int MIN_BRIDGE_DIST = 4;
   private static final int MAX_BRIDGE_DIST = 20;
 

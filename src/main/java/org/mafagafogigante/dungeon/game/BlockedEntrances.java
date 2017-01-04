@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Utils;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  */
 public class BlockedEntrances implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private Set<Direction> setOfBlockedEntrances = new HashSet<>();
 
   public BlockedEntrances() {

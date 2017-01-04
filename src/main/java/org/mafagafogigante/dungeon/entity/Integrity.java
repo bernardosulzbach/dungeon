@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public class Integrity implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final int maximum;
   private int current;
 

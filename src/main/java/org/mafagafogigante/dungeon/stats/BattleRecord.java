@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.PartOfDay;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public final class BattleRecord implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Id id;
   private final String type;
   private final CauseOfDeath causeOfDeath;

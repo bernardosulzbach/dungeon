@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.Statistics;
 
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public final class CreatureFactory implements Serializable {
 
-
+  private static final long serialVersionUID = Version.MAJOR;
   private final Map<Id, CreaturePreset> creaturePresets = new HashMap<>();
 
   /**
@@ -31,6 +32,22 @@ public final class CreatureFactory implements Serializable {
   public CreatureFactory(@NotNull CreaturePresetFactory... creaturePresetFactories) {
     for (CreaturePresetFactory creaturePresetFactory : creaturePresetFactories) {
       addAllPresets(creaturePresetFactory.getCreaturePresets());
+    }
+  }
+
+  private static void equipWeapon(Creature creature, CreaturePreset preset) {
+    if (preset.getWeaponId() != null) {
+      // Get the weapon from the creature's inventory.
+      for (Item item : creature.getInventory().getItems()) {
+        if (item.getId().equals(preset.getWeaponId())) {
+          creature.setWeapon(item);
+          break;
+        }
+      }
+      if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
+        String format = "%s not found in the inventory of %s!";
+        DungeonLogger.warning(String.format(format, preset.getWeaponId(), creature.getId()));
+      }
     }
   }
 
@@ -90,21 +107,6 @@ public final class CreatureFactory implements Serializable {
     }
   }
 
-  private static void equipWeapon(Creature creature, CreaturePreset preset) {
-    if (preset.getWeaponId() != null) {
-      // Get the weapon from the creature's inventory.
-      for (Item item : creature.getInventory().getItems()) {
-        if (item.getId().equals(preset.getWeaponId())) {
-          creature.setWeapon(item);
-          break;
-        }
-      }
-      if (!creature.hasWeapon()) { // Did not found a suitable Item in the inventory.
-        String format = "%s not found in the inventory of %s!";
-        DungeonLogger.warning(String.format(format, preset.getWeaponId(), creature.getId()));
-      }
-    }
-  }
   /**
    * Creates the Hero.
    *

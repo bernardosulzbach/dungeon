@@ -8,6 +8,7 @@ import java.util.Properties;
 
 public class Version {
 
+  public static final long MAJOR = 7L;
   private static final String PROPERTIES_NAME = "project.properties";
   private final String version;
 

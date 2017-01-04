@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 public class LuminosityVisibilityCriterion implements Serializable, VisibilityCriterion {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Luminosity minimumLuminosity;
 
   public LuminosityVisibilityCriterion(Luminosity minimumLuminosity) {

@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 
@@ -18,6 +19,7 @@ import java.io.Serializable;
  */
 class Walker implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int WALK_BLOCKED = 2;
   private static final int WALK_SUCCESS = 200;
 

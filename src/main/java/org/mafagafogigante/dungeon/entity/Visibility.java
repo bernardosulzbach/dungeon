@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class Visibility implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Percentage value;
 
   public Visibility(@NotNull Percentage value) {

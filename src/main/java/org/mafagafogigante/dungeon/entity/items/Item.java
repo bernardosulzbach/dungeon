@@ -8,11 +8,12 @@ import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 public final class Item extends Entity {
 
-  private static final long serialVersionUID = -2382173647397790563L;
+  private static final long serialVersionUID = Version.MAJOR;
   private final ItemIntegrity integrity;
   private final Date dateOfCreation;
   private final long decompositionPeriod;

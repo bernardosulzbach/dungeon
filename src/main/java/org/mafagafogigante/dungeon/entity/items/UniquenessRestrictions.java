@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +15,7 @@ import java.util.Set;
  */
 class UniquenessRestrictions implements ItemFactoryRestrictions, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Set<Id> uniqueIds;
   private final Set<Id> alreadyCreatedUniqueIds = new HashSet<>();
 

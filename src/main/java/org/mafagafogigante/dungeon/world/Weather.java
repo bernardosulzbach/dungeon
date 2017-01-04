@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.world;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.CircularList;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class Weather implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   // Eight hours.
   private static final Duration UPDATE_INTERVAL = new Duration(new Date(1, 1, 1, 1, 1, 1), new Date(1, 1, 1, 9, 1, 1));
 

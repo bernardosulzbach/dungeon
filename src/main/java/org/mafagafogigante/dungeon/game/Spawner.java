@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 class Spawner implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Id id;
   private final int populationLimit;
   private final int spawnDelay;

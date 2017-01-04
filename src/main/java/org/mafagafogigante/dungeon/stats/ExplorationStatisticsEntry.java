@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 class ExplorationStatisticsEntry implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Id locationId;
   private int visitCount;
   private int killCount;

@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -8,6 +10,7 @@ import java.util.HashMap;
  */
 final class RiverGenerator implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int MIN_DIST_RIVER = 6;
   private static final int MAX_DIST_RIVER = 11;
   private static final int START = 10; // Rivers do not appear in x > 10 || x < 10.

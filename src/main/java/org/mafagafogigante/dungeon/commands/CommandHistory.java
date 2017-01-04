@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.commands;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.CircularList;
 import org.mafagafogigante.dungeon.util.Utils;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public class CommandHistory implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int HISTORY_MAXIMUM_SIZE = 200; // Enough. Small so it doesn't slow down 'TAB' search.
   private final CircularList<String> commands = new CircularList<>(HISTORY_MAXIMUM_SIZE);
   private transient Cursor cursor = new Cursor(this);

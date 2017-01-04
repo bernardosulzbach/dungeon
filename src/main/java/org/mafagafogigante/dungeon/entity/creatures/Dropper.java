@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 class Dropper implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Creature creature;
   private final List<Drop> dropList;
   private final List<Item> droppedItemsList = new ArrayList<>();

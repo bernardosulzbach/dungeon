@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class VisibilityCriteria implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final List<VisibilityCriterion> visibilityCriteria;
 
   public VisibilityCriteria(VisibilityCriterion... visibilityCriteria) {

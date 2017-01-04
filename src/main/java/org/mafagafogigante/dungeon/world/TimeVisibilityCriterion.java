@@ -1,11 +1,13 @@
 package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
 public class TimeVisibilityCriterion implements Serializable, VisibilityCriterion {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int HOURS_IN_DAY = 24;
 
   private final int begin;

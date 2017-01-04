@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 class Drop implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Id itemId;
   private final Percentage probability;
 

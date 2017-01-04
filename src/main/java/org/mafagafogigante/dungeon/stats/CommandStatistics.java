@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.commands.IssuedCommand;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 final class CommandStatistics implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private int commands;
   private int chars;
   private int words;

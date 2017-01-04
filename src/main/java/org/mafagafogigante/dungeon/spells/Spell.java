@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.spells;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Selectable;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public abstract class Spell implements Selectable, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final SpellDefinition definition;
 
   Spell(String id, String name) {

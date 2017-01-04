@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.TreeSet;
  */
 class ExpandableIntegerSet implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final int minimumDifference;
   private final int maximumDifference;
 

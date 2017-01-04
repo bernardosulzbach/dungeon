@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.io.Split;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.spells.Spell;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class HeroSpellcaster implements Serializable, Spellcaster {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Hero hero;
   private final List<Spell> spellList = new ArrayList<>();
 

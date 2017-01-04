@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.game.LocationPreset.Type;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 class DungeonCreator implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final Percentage HORIZONTAL_EXPANSION_PROBABILITY = Percentage.fromString("50%");
 
   /**

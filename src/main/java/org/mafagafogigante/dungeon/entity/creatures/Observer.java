@@ -8,6 +8,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.Percentage;
@@ -35,6 +36,7 @@ import java.util.Map.Entry;
  */
 public class Observer implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final VisibilityCriteria ADJACENT_LOCATIONS_VISIBILITY;
 
   static {

@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.util;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +11,9 @@ import java.util.Locale;
 /**
  * A class that represents a percentage value between 0.0% and 100.00%.
  */
-@SuppressWarnings("ALL")
 public class Percentage implements Comparable<Percentage>, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final double ONE = 1.0;
   private static final double ZERO = 0.0;
 

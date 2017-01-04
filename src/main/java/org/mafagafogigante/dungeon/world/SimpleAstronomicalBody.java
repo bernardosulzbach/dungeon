@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Collection;
 
 class SimpleAstronomicalBody implements AstronomicalBody, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final String description;
   private final Collection<VisibilityCriterion> visibilityCriteria;
 

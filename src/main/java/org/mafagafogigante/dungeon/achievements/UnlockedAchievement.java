@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.date.Date;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public final class UnlockedAchievement implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final String name;
   private final String info;
   private final Date date;

@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.entity.items.Item.Tag;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public abstract class BaseInventory implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   final List<Item> items;
 
   BaseInventory() {

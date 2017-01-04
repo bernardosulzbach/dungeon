@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonArray;
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 public class TagSet<E extends Enum<E>> implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Set<E> set;
 
   private TagSet(Set<E> set) {

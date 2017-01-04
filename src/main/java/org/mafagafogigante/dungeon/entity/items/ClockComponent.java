@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.entity.items;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class ClockComponent implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Item master;
 
   /**

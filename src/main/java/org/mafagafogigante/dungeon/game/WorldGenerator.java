@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.game.LocationPreset.Type;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 class WorldGenerator implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int DEFAULT_CHUNK_SIDE = 5;
 
   private final World world;

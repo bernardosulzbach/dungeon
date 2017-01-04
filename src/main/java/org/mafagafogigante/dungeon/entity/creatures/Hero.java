@@ -25,6 +25,7 @@ import org.mafagafogigante.dungeon.game.QuantificationMode;
 import org.mafagafogigante.dungeon.game.Random;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Sleeper;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.spells.SpellData;
@@ -48,7 +49,7 @@ import java.util.Locale;
  */
 public class Hero extends Creature {
 
-  private static final long serialVersionUID = 640405734043893761L;
+  private static final long serialVersionUID = Version.MAJOR;
   // The longest possible sleep starts at 19:00 and ends at 05:15 (takes 10 hours and 15 minutes).
   // It seems a good idea to let the Hero have one dream every 4 hours.
   private static final int DREAM_DURATION_IN_SECONDS = 4 * DungeonMath.safeCastLongToInteger(HOUR.as(SECOND));

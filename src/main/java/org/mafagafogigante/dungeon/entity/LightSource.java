@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  */
 public class LightSource implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Luminosity luminosity;
   private boolean enabled = true;
 

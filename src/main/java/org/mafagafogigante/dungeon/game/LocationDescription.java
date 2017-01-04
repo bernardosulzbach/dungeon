@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -10,6 +12,7 @@ import java.io.Serializable;
  */
 public class LocationDescription implements Examinable, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final char symbol;
   private final Color color;
   private String info = "You don't discover anything.";

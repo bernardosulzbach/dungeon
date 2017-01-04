@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,7 @@ import java.util.Locale;
  */
 public final class Name implements Serializable {
 
-  private static final long serialVersionUID = 3198273263451197501L;
+  private static final long serialVersionUID = Version.MAJOR;
   private final String singular;
   private final String plural;
 

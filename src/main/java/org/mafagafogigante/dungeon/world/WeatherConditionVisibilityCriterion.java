@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
 import org.mafagafogigante.dungeon.game.World;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public class WeatherConditionVisibilityCriterion implements Serializable, VisibilityCriterion {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final WeatherCondition minimumCondition;
   private final WeatherCondition maximumCondition;
 

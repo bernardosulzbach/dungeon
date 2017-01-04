@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +18,7 @@ import java.util.Set;
  */
 public class CounterMap<K> implements Serializable, Iterable<K> {
 
+  private static final long serialVersionUID = Version.MAJOR;
   // The wrapped HashMap.
   private final HashMap<K, Integer> map = new HashMap<>();
 

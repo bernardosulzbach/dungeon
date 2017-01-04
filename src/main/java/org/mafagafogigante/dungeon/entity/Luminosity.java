@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Collection;
  */
 public class Luminosity implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   public static final Luminosity ZERO = new Luminosity(new Percentage(0.0));
 
   private final Percentage value;

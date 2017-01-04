@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.LocationInventory;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,7 @@ import java.util.Map.Entry;
  */
 public class Location implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Id id;
   private final Name name;
   private final LocationDescription description;

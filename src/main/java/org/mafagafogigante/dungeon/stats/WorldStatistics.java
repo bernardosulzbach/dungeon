@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.stats;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public final class WorldStatistics implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final CounterMap<String> spawnCounter = new CounterMap<>();
   private final CounterMap<String> locationCounter = new CounterMap<>();
   private int spawnCount;

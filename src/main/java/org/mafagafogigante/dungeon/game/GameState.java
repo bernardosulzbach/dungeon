@@ -3,12 +3,14 @@ package org.mafagafogigante.dungeon.game;
 import org.mafagafogigante.dungeon.commands.CommandHistory;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.stats.Statistics;
 
 import java.io.Serializable;
 
 public class GameState implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final CommandHistory commandHistory;
   private final World world;
   private final Statistics statistics = new Statistics();

@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.achievements;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.Statistics;
@@ -22,6 +23,7 @@ import java.util.Map;
  */
 public class AchievementTracker implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Statistics statistics;
   private final Map<Id, UnlockedAchievement> unlockedAchievements = new HashMap<>();
 

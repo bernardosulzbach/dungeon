@@ -8,6 +8,7 @@ import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.items.Item.Tag;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.io.Serializable;
  */
 public final class ItemPreset implements Preset, Serializable {
 
-  private static final long serialVersionUID = -3795444867261167258L;
+  private static final long serialVersionUID = Version.MAJOR;
   private Id id;
   private String type;
   private Name name;

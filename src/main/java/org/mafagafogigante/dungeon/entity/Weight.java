@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
@@ -15,6 +16,7 @@ import java.util.Locale;
  */
 public class Weight implements Comparable<Weight>, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   public static final Weight ZERO = newInstance(0.0);
   private static final DecimalFormat WEIGHT_FORMAT = (DecimalFormat) NumberFormat.getInstance(Locale.US);
 

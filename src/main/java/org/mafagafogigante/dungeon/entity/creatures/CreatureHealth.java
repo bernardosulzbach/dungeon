@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.Integrity;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public class CreatureHealth implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Integrity integrity;
   private final Creature creature;
 

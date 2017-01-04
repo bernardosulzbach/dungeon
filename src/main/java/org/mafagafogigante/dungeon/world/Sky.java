@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Utils;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class Sky implements Serializable {
 
-  private static final long serialVersionUID = 4645468371061618602L;
+  private static final long serialVersionUID = Version.MAJOR;
   private final Collection<AstronomicalBody> astronomicalBodies = new ArrayList<>();
 
   /**

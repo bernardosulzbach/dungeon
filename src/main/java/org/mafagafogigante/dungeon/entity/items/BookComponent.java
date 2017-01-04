@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 public class BookComponent implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final int SECONDS_PER_CHARACTER = 1;
   private final Id spellId;
   private final String text;

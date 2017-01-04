@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ import java.io.Serializable;
  */
 public final class Id implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final String id;
 
   /**

@@ -3,6 +3,7 @@ package org.mafagafogigante.dungeon.stats;
 import org.mafagafogigante.dungeon.achievements.BattleStatisticsRequirement;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.PartOfDay;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 public class BattleStatistics implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final CounterMap<BattleRecord> records = new CounterMap<>();
 
   /**

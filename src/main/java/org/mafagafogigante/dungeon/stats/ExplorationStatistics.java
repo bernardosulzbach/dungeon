@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Point;
+import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.HashMap;
  */
 public class ExplorationStatistics implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final HashMap<Point, ExplorationStatisticsEntry> entries;
 
   public ExplorationStatistics() {

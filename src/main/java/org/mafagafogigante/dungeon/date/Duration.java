@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.date;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.DungeonMath;
 
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class Duration implements Comparable<Duration>, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   /**
    * The duration, in milliseconds.
    */

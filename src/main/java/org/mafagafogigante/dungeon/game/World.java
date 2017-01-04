@@ -10,6 +10,7 @@ import org.mafagafogigante.dungeon.entity.creatures.Observer;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.WorldStatistics;
 import org.mafagafogigante.dungeon.world.Sky;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 public class World implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final WorldGenerator generator = new WorldGenerator(this);
 
   // Each world should have its own factories because their limitations and characteristics are not meant to be shared.

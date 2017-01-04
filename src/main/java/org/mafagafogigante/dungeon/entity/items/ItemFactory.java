@@ -4,6 +4,7 @@ import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,7 @@ import java.util.Set;
  */
 public final class ItemFactory implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Map<Id, ItemPreset> itemPresets = new HashMap<>();
   private ItemFactoryRestrictions restrictions;
 

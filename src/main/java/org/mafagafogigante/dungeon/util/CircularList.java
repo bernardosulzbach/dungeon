@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 public final class CircularList<T> implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final int capacity;
   private final List<T> list;
   /**

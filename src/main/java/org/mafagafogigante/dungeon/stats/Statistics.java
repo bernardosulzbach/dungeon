@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.commands.IssuedCommand;
 import org.mafagafogigante.dungeon.date.Date;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Table;
 
@@ -14,6 +15,7 @@ import java.util.TreeSet;
  */
 public final class Statistics implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final WorldStatistics worldStatistics = new WorldStatistics();
   private final ExplorationStatistics explorationStatistics = new ExplorationStatistics();
   private final BattleStatistics battleStatistics = new BattleStatistics();

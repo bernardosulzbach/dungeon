@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.Version;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class CauseOfDeath implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final CauseOfDeath UNARMED = new CauseOfDeath(TypeOfCauseOfDeath.UNARMED, new Id("UNARMED"));
   private final TypeOfCauseOfDeath type;
   private final Id id;
