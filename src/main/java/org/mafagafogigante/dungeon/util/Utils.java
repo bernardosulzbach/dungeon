@@ -76,7 +76,7 @@ public final class Utils {
   }
 
   /**
-   * Given a duration in milliseconds, this method returns a human-readable period string with up to two fields.
+   * Given a duration in milliseconds, this method returns a human-readable period string.
    *
    * @param duration a duration in milliseconds, nonnegative
    * @return a String
@@ -86,15 +86,15 @@ public final class Utils {
       throw new IllegalArgumentException("duration should be nonnegative.");
     }
     Period period = new Period(duration).normalizedStandard();
-    period = withTwoMostSignificantNonZeroFieldsOnly(period);
+    period = withMostSignificantNonZeroFieldsOnly(period, 1);
     return PeriodFormat.wordBased(Locale.ENGLISH).print(period);
   }
 
-  private static Period withTwoMostSignificantNonZeroFieldsOnly(Period period) {
+  private static Period withMostSignificantNonZeroFieldsOnly(Period period, int fields) {
     int nonZeroFieldsFound = 0;
     for (DurationFieldType durationFieldType : period.getFieldTypes()) {
       if (period.get(durationFieldType) != 0) {
-        if (nonZeroFieldsFound < 2) {
+        if (nonZeroFieldsFound < fields) {
           nonZeroFieldsFound++;
         } else {
           period = period.withField(durationFieldType, 0);

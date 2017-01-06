@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -193,7 +194,7 @@ public final class Loader {
    * @param saveFile the save file
    * @return a File object
    */
-  private static File createVersionTagFileFromSaveFile(File saveFile) {
+  private static File createVersionFileFromSaveFile(File saveFile) {
     String path = saveFile.getPath();
     if (!path.endsWith(SAVE_EXTENSION)) {
       throw new IllegalArgumentException("save file does not end with the default extension");
@@ -241,7 +242,7 @@ public final class Loader {
   private static void saveFile(GameState state, String name) {
     StopWatch stopWatch = new StopWatch();
     File saveFile = createSaveFileFromName(name);
-    File versionFile = createVersionTagFileFromSaveFile(saveFile);
+    File versionFile = createVersionFileFromSaveFile(saveFile);
     ensureSavesFolderExists();
     try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
          ObjectOutputStream objectOutputStream = new ObjectOutputStream(out)) {
@@ -288,6 +289,28 @@ public final class Loader {
     }
     Collections.sort(fileList, new FileLastModifiedComparator());
     return fileList;
+  }
+
+  @NotNull
+  static List<Version> getSavedFilesVersions(List<File> savedFiles) {
+    List<Version> versionList = new ArrayList<>();
+    char[] versionBuffer = new char[32];
+    for (File saveFile : savedFiles) {
+      File versionFile = createVersionFileFromSaveFile(saveFile);
+      Charset charset = DungeonCharset.DEFAULT_CHARSET;
+      try (InputStreamReader reader = new InputStreamReader(new FileInputStream(versionFile), charset)) {
+        int end = reader.read(versionBuffer);
+        while (end > 1 && Character.isWhitespace(versionBuffer[end - 1])) {
+          end--;
+        }
+        versionList.add(new Version(new String(versionBuffer, 0, end)));
+      } catch (FileNotFoundException exception) {
+        versionList.add(null);
+      } catch (IOException fatal) {
+        DungeonLogger.logSevere(fatal);
+      }
+    }
+    return versionList;
   }
 
   /**

@@ -22,22 +22,26 @@ public final class SavesTableWriter {
    */
   public static void writeSavesFolderTable() {
     List<File> files = Loader.getSavedFiles();
+    List<Version> versions = Loader.getSavedFilesVersions(files);
     if (!files.isEmpty()) {
-      Table table = new Table("Name", "Size", "Last modified");
+      Table table = new Table("Name", "Size", "Version", "Last modified");
       int fileCount = 0;
       int byteCount = 0;
       final SimpleDateFormat lastModifiedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      for (File file : files) {
+      for (int i = 0; i < files.size(); i++) {
+        File file = files.get(i);
+        Version version = versions.get(i);
         fileCount += 1;
         byteCount += file.length();
         Date lastModified = new Date(file.lastModified());
         String periodString = Utils.makePeriodString(System.currentTimeMillis() - lastModified.getTime()) + " ago";
         String lastModifiedString = String.format("%s (%s)", lastModifiedFormat.format(lastModified), periodString);
-        table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), lastModifiedString);
+        String versionString = version == null ? "N/A" : version.toString();
+        table.insertRow(file.getName(), Converter.bytesToHuman(file.length()), versionString, lastModifiedString);
       }
       if (fileCount > 1) {
         table.insertSeparator();
-        table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "");
+        table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "", "");
       }
       Writer.write(table);
     } else {
