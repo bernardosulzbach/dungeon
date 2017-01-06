@@ -1077,6 +1077,29 @@
       "spell": "REPAIR"
     },
     {
+      "id": "TOME_OF_DISPLACE",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Displace",
+        "plural": "Tomes of Displace"
+      },
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Displace spell allows the caster to manipulate the magic that permeates the world and displace a creature to a random adjacent location.",
+      "spell": "DISPLACE"
+    },
+    {
       "id": "HISTORY_OF_THE_THIRD_ERA",
       "type": "Book",
       "name": {

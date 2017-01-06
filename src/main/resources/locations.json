@@ -257,6 +257,10 @@
         {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
+        },
+        {
+          "id": "TOME_OF_DISPLACE",
+          "probability": 0.05
         }
       ]
     },
