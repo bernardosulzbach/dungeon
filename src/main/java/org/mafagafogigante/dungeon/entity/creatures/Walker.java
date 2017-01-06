@@ -61,7 +61,6 @@ class Walker implements Serializable {
       Engine.rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
       hero.getLocation().removeCreature(hero);
       world.getLocation(destinationPoint).addCreature(hero);
-      hero.setLocation(world.getLocation(destinationPoint));
       gameState.setHeroPosition(destinationPoint);
       Engine.refresh(); // Hero arrived in a new location, refresh the game.
       hero.look();
