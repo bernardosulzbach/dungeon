@@ -18,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +35,7 @@ public final class Loader {
 
   private static final File SAVES_FOLDER = new File("saves/");
   private static final String SAVE_EXTENSION = ".dungeon";
+  private static final String VERSION_EXTENSION = ".version";
   private static final String DEFAULT_SAVE_NAME = "default" + SAVE_EXTENSION;
   private static final String SAVE_CONFIRM = "Do you want to save the game?";
   private static final String LOAD_CONFIRM = "Do you want to load the game?";
@@ -73,8 +76,8 @@ public final class Loader {
    * @param name a file name
    * @return a String ending with the file extension
    */
-  private static String ensureSaveEndsWithExtension(String name) {
-    return name.endsWith(SAVE_EXTENSION) ? name : name + SAVE_EXTENSION;
+  private static String ensureFileEndsWithExtension(String name, String extension) {
+    return name.endsWith(extension) ? name : name + extension;
   }
 
   /**
@@ -125,8 +128,8 @@ public final class Loader {
     if (arguments.length != 0) {
       // A save name was provided.
       String argument = arguments[0];
-      argument = ensureSaveEndsWithExtension(argument);
-      File save = createFileFromName(argument);
+      argument = ensureFileEndsWithExtension(argument, SAVE_EXTENSION);
+      File save = createSaveFileFromName(argument);
       if (isSaveFile(save)) {
         return loadFile(save);
       } else {
@@ -171,7 +174,7 @@ public final class Loader {
    * @return true if the corresponding file does not exist
    */
   private static boolean saveFileDoesNotExist(String name) {
-    return !createFileFromName(name).exists();
+    return !createSaveFileFromName(name).exists();
   }
 
   /**
@@ -180,8 +183,23 @@ public final class Loader {
    * @param name the provided filename
    * @return a File object
    */
-  private static File createFileFromName(String name) {
-    return new File(SAVES_FOLDER, ensureSaveEndsWithExtension(name));
+  private static File createSaveFileFromName(String name) {
+    return new File(SAVES_FOLDER, ensureFileEndsWithExtension(name, SAVE_EXTENSION));
+  }
+
+  /**
+   * Returns a File object for the corresponding version file for a specified save file.
+   *
+   * @param saveFile the save file
+   * @return a File object
+   */
+  private static File createVersionTagFileFromSaveFile(File saveFile) {
+    String path = saveFile.getPath();
+    if (!path.endsWith(SAVE_EXTENSION)) {
+      throw new IllegalArgumentException("save file does not end with the default extension");
+    }
+    String versionFilePath = path.substring(0, path.length() - SAVE_EXTENSION.length()) + VERSION_EXTENSION;
+    return new File(versionFilePath);
   }
 
   /**
@@ -196,6 +214,10 @@ public final class Loader {
          ObjectInputStream objectInputStream = new ObjectInputStream(in)) {
       GameState loadedGameState = (GameState) objectInputStream.readObject();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
+      // Update the GameState version if required.
+      if (loadedGameState.getGameVersion().compareTo(Version.getCurrentVersion()) < 0) {
+        loadedGameState.setGameVersion(Version.getCurrentVersion());
+      }
       String sizeString = Converter.bytesToHuman(file.length());
       DungeonLogger.info(String.format("Loaded %s in %s.", sizeString, stopWatch.toString()));
       Writer.write(String.format("Successfully loaded the game (read %s from %s).", sizeString, file.getName()));
@@ -218,15 +240,21 @@ public final class Loader {
    */
   private static void saveFile(GameState state, String name) {
     StopWatch stopWatch = new StopWatch();
-    File file = createFileFromName(name);
+    File saveFile = createSaveFileFromName(name);
+    File versionFile = createVersionTagFileFromSaveFile(saveFile);
     ensureSavesFolderExists();
-    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
          ObjectOutputStream objectOutputStream = new ObjectOutputStream(out)) {
       objectOutputStream.writeObject(state);
       state.setSaved(true);
-      String sizeString = Converter.bytesToHuman(file.length());
+      String sizeString = Converter.bytesToHuman(saveFile.length());
+      Charset charset = DungeonCharset.DEFAULT_CHARSET;
+      try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(versionFile), charset)) {
+        writer.write(state.getGameVersion().toString());
+        writer.append(System.lineSeparator());
+      }
       DungeonLogger.info(String.format("Saved %s in %s.", sizeString, stopWatch.toString()));
-      Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, file.getName()));
+      Writer.write(String.format("Successfully saved the game (wrote %s to %s).", sizeString, saveFile.getName()));
     } catch (IOException exception) {
       Writer.write("Could not save the game.");
       DungeonLogger.logSevere(exception);
@@ -246,7 +274,7 @@ public final class Loader {
    * in natural order.
    */
   @NotNull
-  public static List<File> getSavedFiles() {
+  static List<File> getSavedFiles() {
     File[] fileArray = SAVES_FOLDER.listFiles(DungeonFilenameFilters.getExtensionFilter());
     if (fileArray == null) {
       fileArray = new File[0];

@@ -16,6 +16,7 @@ public class GameState implements Serializable {
   private final Statistics statistics = new Statistics();
   private Hero hero;
   private Point heroPosition;
+  private Version gameVersion = Version.getCurrentVersion();
 
   private transient boolean saved = false;
 
@@ -71,6 +72,14 @@ public class GameState implements Serializable {
 
   public void setSaved(boolean saved) {
     this.saved = saved;
+  }
+
+  public Version getGameVersion() {
+    return gameVersion;
+  }
+
+  public void setGameVersion(Version version) {
+    this.gameVersion = version;
   }
 
 }
