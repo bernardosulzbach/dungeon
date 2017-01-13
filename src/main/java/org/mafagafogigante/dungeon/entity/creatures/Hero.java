@@ -51,7 +51,7 @@ public class Hero extends Creature {
   private static final int DREAM_DURATION_IN_SECONDS = 4 * DungeonMath.safeCastLongToInteger(HOUR.as(SECOND));
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
-  private static final int SECONDS_TO_DESTROY_AN_ITEM = 120;
+  private static final int SECONDS_TO_HIT_AN_ITEM = 4;
   private static final int SECONDS_TO_EAT_AN_ITEM = 30;
   private static final int SECONDS_TO_DRINK_AN_ITEM = 10;
   private static final int SECONDS_TO_DROP_AN_ITEM = 2;
@@ -555,6 +555,23 @@ public class Hero extends Creature {
     }
   }
 
+  private void destroyItem(@NotNull Item target) {
+    if (target.isBroken()) {
+      Writer.write(target.getName() + " is already crashed.");
+    } else {
+      while (getLocation().getInventory().hasItem(target) && !target.isBroken()) {
+        // Simulate item-on-item damage by decrementing an item's integrity by its own hit decrement.
+        target.decrementIntegrityByHit();
+        if (hasWeapon() && !getWeapon().isBroken()) {
+          getWeapon().decrementIntegrityByHit();
+        }
+        Engine.rollDateAndRefresh(SECONDS_TO_HIT_AN_ITEM);
+      }
+      String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
+      Writer.write(getName() + " " + verb + " " + target.getName() + ".");
+    }
+  }
+
   /**
    * Tries to destroy an item from the current location.
    */
@@ -562,18 +579,7 @@ public class Hero extends Creature {
     final List<Item> selectedItems = selectLocationItems(arguments);
     for (Item target : selectedItems) {
       if (target != null) {
-        if (target.isBroken()) {
-          Writer.write(target.getName() + " is already crashed.");
-        } else {
-          Engine.rollDateAndRefresh(SECONDS_TO_DESTROY_AN_ITEM); // Time passes before destroying the item.
-          if (getLocation().getInventory().hasItem(target)) {
-            target.decrementIntegrityToZero();
-            String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
-            Writer.write(getName() + " " + verb + " " + target.getName() + ".");
-          } else {
-            HeroUtils.writeNoLongerInLocationMessage(target);
-          }
-        }
+        destroyItem(target);
       }
     }
   }
