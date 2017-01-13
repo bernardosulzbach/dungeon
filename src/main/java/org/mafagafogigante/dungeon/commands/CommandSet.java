@@ -28,7 +28,7 @@ public final class CommandSet {
   /**
    * Constructs an empty CommandSet containing only the "commands" Command.
    */
-  public static CommandSet emptyCommandSet() {
+  static CommandSet emptyCommandSet() {
     final CommandSet commandSet = new CommandSet();
     commandSet.addCommand(new Command("commands", "Lists all commands in this command set.") {
       @Override
@@ -66,7 +66,7 @@ public final class CommandSet {
   /**
    * Retrieves a Command corresponding to the specified token or null if no command matches the token.
    */
-  public Command getCommand(String token) {
+  Command getCommand(String token) {
     for (Command command : commands) {
       if (command.getDescription().getName().equalsIgnoreCase(token)) {
         return command;

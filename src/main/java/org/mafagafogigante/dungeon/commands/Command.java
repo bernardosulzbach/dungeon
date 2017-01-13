@@ -17,7 +17,7 @@ public abstract class Command {
    * @param name a String for name, lowercase
    * @param info a String for info
    */
-  public Command(@NotNull String name, @NotNull String info) {
+  Command(@NotNull String name, @NotNull String info) {
     description = new CommandDescription(name, info);
   }
 
