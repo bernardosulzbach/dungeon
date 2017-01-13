@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.schema.rules;
 
 import org.mafagafogigante.dungeon.schema.JsonRule;
 
+import java.util.List;
 import java.util.Map;
 
 public final class JsonRuleFactory {
@@ -30,8 +31,12 @@ public final class JsonRuleFactory {
     return new StringLengthJsonRule(stringLength);
   }
 
-  public static JsonRule makeArrayRule() {
-    return new ArrayJsonRule();
+  public static JsonRule makeFixedArrayRule(List<JsonRule> rules) {
+    return new FixedArrayJsonRule(rules);
+  }
+
+  public static JsonRule makeVariableArrayRule(JsonRule rule) {
+    return new VariableArrayJsonRule(rule);
   }
 
   public static JsonRule makePercentRule() {
