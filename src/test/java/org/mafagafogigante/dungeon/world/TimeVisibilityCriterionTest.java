@@ -12,6 +12,8 @@ import org.mockito.Mockito;
 
 public class TimeVisibilityCriterionTest {
 
+  private static final int HOURS_IN_DAY = 24;
+
   private Observer observer = Mockito.mock(Observer.class);
   private Location location = Mockito.mock(Location.class);
   private World world = Mockito.mock(World.class);
@@ -38,26 +40,36 @@ public class TimeVisibilityCriterionTest {
   public void testIsMetByShouldReturnFalseWhenTheCriterionIsUnmet() throws Exception {
     TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(6, 18);
     for (int i = 0; i < 12; i++) {
-      Mockito.when(world.getWorldDate()).thenReturn(new Date(1, 1, 1, (i + 18) % 24, 0, 0));
+      Mockito.when(world.getWorldDate()).thenReturn(new Date(1, 1, 1, (i + 18) % HOURS_IN_DAY, 0, 0));
       Assert.assertFalse(criterion.isMetBy(observer));
     }
   }
 
   @Test
   public void testIsMetByShouldReturnTrueWhenTheCriterionIsMetEvenForCriteriaThatCrossMidnight() throws Exception {
-    TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(18, 6);
-    for (int i = 0; i < 12; i++) {
-      Mockito.when(world.getWorldDate()).thenReturn(new Date(1, 1, 1, (i + 18) % 24, 0, 0));
-      Assert.assertTrue(criterion.isMetBy(observer));
+    for (int begin = 1; begin < HOURS_IN_DAY; begin++) {
+      for (int end = 0; end < begin; end++) {
+        TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(begin, end);
+        for (int hour = begin; hour != end; hour = (hour + 1) % HOURS_IN_DAY) {
+          Date date = new Date(1, 1, 1, hour, 0, 0);
+          Mockito.when(world.getWorldDate()).thenReturn(date);
+          Assert.assertTrue(criterion.isMetBy(observer));
+        }
+      }
     }
   }
 
   @Test
   public void testIsMetByShouldReturnFalseWhenTheCriterionIsUnmetEvenForCriteriaThatCrossMidnight() throws Exception {
-    TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(18, 6);
-    for (int i = 0; i < 12; i++) {
-      Mockito.when(world.getWorldDate()).thenReturn(new Date(1, 1, 1, (i + 6) % 24, 0, 0));
-      Assert.assertFalse(criterion.isMetBy(observer));
+    for (int begin = 1; begin < HOURS_IN_DAY; begin++) {
+      for (int end = 0; end < begin; end++) {
+        TimeVisibilityCriterion criterion = new TimeVisibilityCriterion(begin, end);
+        for (int hour = end; hour != begin; hour = (hour + 1) % HOURS_IN_DAY) {
+          Date date = new Date(1, 1, 1, hour, 0, 0);
+          Mockito.when(world.getWorldDate()).thenReturn(date);
+          Assert.assertFalse(criterion.isMetBy(observer));
+        }
+      }
     }
   }
 

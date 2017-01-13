@@ -18,14 +18,17 @@ public class TimeVisibilityCriterion implements Serializable, VisibilityCriterio
    * @param end the hour when it ends, nonnegative, smaller than the number of hours in the day, not equal to begin
    */
   public TimeVisibilityCriterion(final int begin, final int end) {
-    if (begin == end) {
-      throw new IllegalArgumentException("begin should not be equal to end");
-    }
     if (end >= HOURS_IN_DAY) {
       throw new IllegalArgumentException("end should be a valid hour");
     }
     this.begin = begin;
-    this.duration = Math.abs(end - begin);
+    if (begin == end) {
+      throw new IllegalArgumentException("begin should not be equal to end");
+    } else if (begin < end) {
+      this.duration = end - begin;
+    } else {
+      this.duration = HOURS_IN_DAY + end - begin;
+    }
   }
 
   @Override
