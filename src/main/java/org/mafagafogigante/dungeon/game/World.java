@@ -38,7 +38,7 @@ public class World implements Serializable {
   private final WorldStatistics worldStatistics;
 
   private final Date worldCreationDate = new Date(1, 1, 1);
-  private final Sky sky = SkyFactory.makeDarrowmereSky(this);
+  private final Sky sky = SkyFactory.makeDarrowmereSky();
   private Date worldDate = new Date(2055, 6, 2, 6, 10, 0);
   private final Weather weather = new Weather(worldDate);
 

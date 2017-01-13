@@ -1,10 +1,12 @@
 package org.mafagafogigante.dungeon.world;
 
 import org.mafagafogigante.dungeon.entity.creatures.Observer;
+import org.mafagafogigante.dungeon.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The sky of a world.
@@ -22,7 +24,7 @@ public class Sky implements Serializable {
   /**
    * Adds an astronomical body to the sky.
    */
-  public void addAstronomicalBody(AstronomicalBody astronomicalBody) {
+  void addAstronomicalBody(AstronomicalBody astronomicalBody) {
     astronomicalBodies.add(astronomicalBody);
   }
 
@@ -30,16 +32,13 @@ public class Sky implements Serializable {
    * Returns a description of the sky with all its visible features.
    */
   public String describeYourself(Observer observer) {
-    StringBuilder stringBuilder = new StringBuilder();
+    List<String> descriptions = new ArrayList<>();
     for (AstronomicalBody astronomicalBody : astronomicalBodies) {
       if (astronomicalBody.isVisible(observer)) {
-        if (stringBuilder.length() != 0) {
-          stringBuilder.append(' ');
-        }
-        stringBuilder.append(astronomicalBody.describeYourself());
+        descriptions.add(astronomicalBody.describeYourself());
       }
     }
-    return stringBuilder.toString();
+    return Utils.enumerate(descriptions);
   }
 
   @Override
