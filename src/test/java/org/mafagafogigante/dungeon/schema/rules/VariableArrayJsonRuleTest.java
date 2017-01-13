@@ -30,11 +30,42 @@ public class VariableArrayJsonRuleTest {
     rule.validate(jsonArray);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void variableArrayJsonRuleShouldFailOnInvalidSingleElementArray() {
+    JsonArray jsonArray = new JsonArray();
+    jsonArray.add("A");
+    rule.validate(jsonArray);
+  }
+
   @Test
   public void variableArrayJsonRuleShouldPassOnMultipleElementArray() {
     JsonArray jsonArray = new JsonArray();
     jsonArray.add(true);
     jsonArray.add(false);
+    rule.validate(jsonArray);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void variableArrayJsonRuleShouldFailOnInvalidFirstElement() {
+    JsonArray jsonArray = new JsonArray();
+    jsonArray.add("A");
+    jsonArray.add(false);
+    rule.validate(jsonArray);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void variableArrayJsonRuleShouldFailOnInvalidSecondElement() {
+    JsonArray jsonArray = new JsonArray();
+    jsonArray.add(true);
+    jsonArray.add("B");
+    rule.validate(jsonArray);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void variableArrayJsonRuleShouldFailOnInvalidElements() {
+    JsonArray jsonArray = new JsonArray();
+    jsonArray.add("A");
+    jsonArray.add("B");
     rule.validate(jsonArray);
   }
 
