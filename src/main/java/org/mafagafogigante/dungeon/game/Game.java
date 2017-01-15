@@ -5,6 +5,7 @@ import org.mafagafogigante.dungeon.commands.IssuedCommandEvaluation;
 import org.mafagafogigante.dungeon.commands.IssuedCommandProcessor;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.io.Loader;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.StopWatch;
@@ -32,6 +33,7 @@ public class Game {
    */
   public static void main(String[] args) {
     final StopWatch stopWatch = new StopWatch();
+    DungeonLogger.info("Started initializing Dungeon " + Version.getCurrentVersion() + ".");
     invokeOnEventDispatchThreadAndWait(new Runnable() {
       @Override
       public void run() {
