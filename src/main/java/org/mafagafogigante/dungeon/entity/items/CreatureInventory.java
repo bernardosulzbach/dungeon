@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 /**
@@ -9,6 +10,7 @@ import org.mafagafogigante.dungeon.logging.DungeonLogger;
  */
 public class CreatureInventory extends BaseInventory implements LimitedInventory {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final Creature owner;
   private final int itemLimit;
   private final Weight weightLimit;

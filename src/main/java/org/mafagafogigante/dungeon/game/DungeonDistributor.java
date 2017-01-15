@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.Set;
  */
 class DungeonDistributor implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private static final Percentage dungeonProbability = Percentage.fromString("2%");
   private static final MinimumBoundingRectangle biggestDungeonPossible = DungeonCreator.getMinimumBoundingRectangle();
 

@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.Location;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.util.Percentage;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class Creature extends Entity {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final int attack;
   private final AttackAlgorithmId attackAlgorithmId;
   private final TagSet<Tag> tagSet;

@@ -15,6 +15,8 @@ import java.util.Comparator;
  */
 class FileLastModifiedComparator implements Comparator<File>, Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
+
   @Override
   public int compare(File left, File right) {
     return Long.compare(right.lastModified(), left.lastModified());

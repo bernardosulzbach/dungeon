@@ -69,6 +69,7 @@ public class CommandHistory implements Serializable {
    */
   public static final class Cursor implements Serializable {
 
+    private static final long serialVersionUID = Version.MAJOR;
     private final CommandHistory history;
     private int index;
 
