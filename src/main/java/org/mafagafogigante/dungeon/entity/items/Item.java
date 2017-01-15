@@ -52,10 +52,9 @@ public final class Item extends Entity {
       foodComponent = new FoodComponent(preset.getNutrition(), preset.getIntegrityDecrementOnEat());
     }
     if (hasTag(Tag.DRINKABLE)) {
-      ItemUsageEffect effect = new ItemUsageEffect(preset.getDrinkableHealing());
+      int doses = preset.getDrinkableDoses();
       int integrityDecrementPerDose = preset.getIntegrityDecrementPerDose();
-      int drinkableDoses = preset.getDrinkableDoses();
-      drinkableComponent = new DrinkableComponent(effect, integrityDecrementPerDose, drinkableDoses);
+      drinkableComponent = new DrinkableComponent(preset.getDrinkableEffects(), integrityDecrementPerDose, doses);
     }
     if (hasTag(Tag.CLOCK)) {
       clockComponent = new ClockComponent(this);

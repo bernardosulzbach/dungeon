@@ -5,6 +5,8 @@ import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.Preset;
 import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
+import org.mafagafogigante.dungeon.entity.creatures.Effect;
+import org.mafagafogigante.dungeon.entity.creatures.EffectFactory;
 import org.mafagafogigante.dungeon.entity.items.Item.Tag;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
@@ -12,6 +14,8 @@ import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores the information about an item that the factory may need to create it.
@@ -19,6 +23,7 @@ import java.io.Serializable;
 public final class ItemPreset implements Preset, Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
+  private final List<Effect> drinkableEffects = new ArrayList<>();
   private Id id;
   private String type;
   private Name name;
@@ -36,9 +41,16 @@ public final class ItemPreset implements Preset, Serializable {
   private String text;
   private long putrefactionPeriod;
   private boolean unique;
-  private int drinkableHealing;
   private int drinkableDoses;
   private int integrityDecrementPerDose;
+
+  List<Effect> getDrinkableEffects() {
+    return drinkableEffects;
+  }
+
+  void addDrinkableEffect(Id effectId, List<String> effectParameters) {
+    drinkableEffects.add(EffectFactory.getDefaultFactory().getEffect(effectId, effectParameters));
+  }
 
   public Id getId() {
     return id;
@@ -184,14 +196,6 @@ public final class ItemPreset implements Preset, Serializable {
 
   void setIntegrityDecrementPerDose(int integrityDecrementPerDose) {
     this.integrityDecrementPerDose = integrityDecrementPerDose;
-  }
-
-  int getDrinkableHealing() {
-    return drinkableHealing;
-  }
-
-  void setDrinkableHealing(int healing) {
-    this.drinkableHealing = healing;
   }
 
   int getDrinkableDoses() {

@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
+import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.LightSource;
 import org.mafagafogigante.dungeon.entity.Luminosity;
@@ -27,6 +28,7 @@ public class Creature extends Entity {
   private final AttackAlgorithmId attackAlgorithmId;
   private final TagSet<Tag> tagSet;
   private final CreatureInventory inventory;
+  private final List<Condition> conditions;
   private final LightSource lightSource;
   private final CreatureHealth health;
   private final Dropper dropper;
@@ -51,6 +53,7 @@ public class Creature extends Entity {
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     attackAlgorithmId = preset.getAttackAlgorithmId();
     inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
+    conditions = new ArrayList<>();
     lightSource = new LightSource(preset.getLuminosity());
     dropper = new Dropper(this, preset.getDropList());
   }
@@ -71,8 +74,29 @@ public class Creature extends Entity {
     return dropper;
   }
 
-  public int getAttack() {
-    return attack;
+  private void refreshConditions() {
+    Date date = getLocation().getWorld().getWorldDate();
+    for (Condition condition : new ArrayList<>(conditions)) {
+      if (condition.hasExpired(date)) {
+        conditions.remove(condition);
+      }
+    }
+  }
+
+  void addCondition(@NotNull Condition condition) {
+    conditions.add(condition);
+  }
+
+  /**
+   * Returns the attack of this creature after taking into account all of its active conditions.
+   */
+  int getAttack() {
+    refreshConditions();
+    int total = attack;
+    for (Condition condition : conditions) {
+      total = condition.modifyAttack(total);
+    }
+    return total;
   }
 
   public CreatureInventory getInventory() {
@@ -159,7 +183,7 @@ public class Creature extends Entity {
     }
   }
 
-  public AttackAlgorithmId getAttackAlgorithmId() {
+  AttackAlgorithmId getAttackAlgorithmId() {
     return attackAlgorithmId;
   }
 

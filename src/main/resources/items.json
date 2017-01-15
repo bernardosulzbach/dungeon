@@ -219,7 +219,12 @@
       "hitRate": "50.00%",
       "integrityDecrementOnHit": 5,
       "drinkableDoses": 2,
-      "drinkableHealing": 10,
+      "drinkableEffects": [
+        [
+          "HEALING",
+          10
+        ]
+      ],
       "integrityDecrementPerDose": 5
     },
     {
@@ -243,8 +248,47 @@
       "hitRate": "60.00%",
       "integrityDecrementOnHit": 5,
       "drinkableDoses": 4,
-      "drinkableHealing": 10,
+      "drinkableEffects": [
+        [
+          "HEALING",
+          10
+        ]
+      ],
       "integrityDecrementPerDose": 5
+    },
+    {
+      "id": "POTION_OF_THE_WARRIOR",
+      "type": "Potion",
+      "name": {
+        "singular": "Potion of the Warrior",
+        "plural": "Potions of the Warrior"
+      },
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "effects": [
+        "POTION_OF_COMBAT_FOCUS_EFFECT"
+      ],
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 1,
+      "drinkableEffects": [
+        [
+          "EXTRA_ATTACK",
+          4,
+          "1 hour"
+        ]
+      ],
+      "integrityDecrementPerDose": 10
     },
     {
       "id": "BEAR_BEEF",

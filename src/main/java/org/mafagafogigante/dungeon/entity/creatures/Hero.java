@@ -509,14 +509,12 @@ public class Hero extends Creature {
         if (getInventory().hasItem(selectedItem)) {
           DrinkableComponent component = selectedItem.getDrinkableComponent();
           if (!component.isDepleted()) {
-            component.decrementDoses();
-            selectedItem.decrementIntegrityByDrinking();
+            component.affect(this);
             if (component.isDepleted()) {
               Writer.write("You drank the last dose of " + selectedItem.getName() + ".");
             } else {
               Writer.write("You drank a dose of " + selectedItem.getName() + ".");
             }
-            addHealth(component.getEffect().getHealing());
           } else {
             Writer.write("This item is depleted.");
           }
