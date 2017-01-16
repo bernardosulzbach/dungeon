@@ -59,6 +59,14 @@ public final class JsonRuleFactory {
     return new UppercaseStringJsonRule();
   }
 
+  public static JsonRule makeIdRule() {
+    return new IdJsonRule();
+  }
+
+  public static JsonRule makeGroupRule(JsonRule... jsonRules) {
+    return new GroupJsonRule(jsonRules);
+  }
+
   public static JsonRule makeOptionalRule(JsonRule jsonRule) {
     return new OptionalJsonRule(jsonRule);
   }
