@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class WikiJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject wikiJsonFile = getJsonObjectByJsonFile(JsonFileEnum.WIKI);
+  private static final JsonObject wikiJson = getJsonObjectByJsonFile(JsonFileEnum.WIKI);
   private static final String ARTICLES_FIELD = "articles";
   private static final String TITLE_FIELD = "title";
   private static final String CONTENT_FIELD = "content";
@@ -23,7 +23,7 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
         JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeStringRule()));
     JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
     JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
-    wikiFileRuleObject.validate(wikiJsonFile);
+    wikiFileRuleObject.validate(wikiJson);
   }
 
   private JsonRule getWikiFileRuleObject(JsonRule articleRuleObject) {

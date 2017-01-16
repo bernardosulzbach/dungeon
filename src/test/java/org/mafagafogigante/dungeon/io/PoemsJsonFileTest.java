@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PoemsJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject poemsJsonFile = getJsonObjectByJsonFile(JsonFileEnum.POEMS);
+  private static final JsonObject poemsJson = getJsonObjectByJsonFile(JsonFileEnum.POEMS);
   private static final String POEMS_FIELD = "poems";
   private static final String TITLE_FIELD = "title";
   private static final String AUTHOR_FIELD = "author";
@@ -21,7 +21,7 @@ public class PoemsJsonFileTest extends ResourcesTypeTest {
   public void testIsFileHasValidStructure() {
     JsonRule poemsRuleObject = getPoemsRuleObject();
     JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
-    poemsFileJsonRule.validate(poemsJsonFile);
+    poemsFileJsonRule.validate(poemsJson);
   }
 
   private JsonRule getPoemsFileRuleObject(JsonRule poemsRuleObject) {

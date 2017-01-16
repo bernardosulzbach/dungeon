@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class LocationsJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject locationsJsonFile = getJsonObjectByJsonFile(JsonFileEnum.LOCATIONS);
+  private static final JsonObject locationsJson = getJsonObjectByJsonFile(JsonFileEnum.LOCATIONS);
   private static final String ID_FIELD = "id";
   private static final String TYPE_FIELD = "type";
   private static final String NAME_FIELD = "name";
@@ -54,7 +54,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
         getLocationsRuleObject(itemsRuleObject, spawnersRuleObject, blockedEntrancesRuleObject, colorRule,
             nameRuleObject);
     JsonRule locationsFileJsonRule = getLocationsFileRuleObject(locationRuleObject);
-    locationsFileJsonRule.validate(locationsJsonFile);
+    locationsFileJsonRule.validate(locationsJson);
   }
 
   private JsonRule getLocationsRuleObject(JsonRule itemsRuleObject, JsonRule spawnersRuleObject,

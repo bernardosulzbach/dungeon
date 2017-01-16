@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class TutorialJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject tutorialJsonFile = getJsonObjectByJsonFile(JsonFileEnum.TUTORIAL);
+  private static final JsonObject tutorialJson = getJsonObjectByJsonFile(JsonFileEnum.TUTORIAL);
   private static final String TUTORIAL_FIELD = "tutorial";
 
   @Test
@@ -19,7 +19,7 @@ public class TutorialJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> tutorialFileRules = new HashMap<>();
     tutorialFileRules.put(TUTORIAL_FIELD, JsonRuleFactory.makeStringRule());
     JsonRule tutorialJsonRule = JsonRuleFactory.makeObjectRule(tutorialFileRules);
-    tutorialJsonRule.validate(tutorialJsonFile);
+    tutorialJsonRule.validate(tutorialJson);
   }
 
 }

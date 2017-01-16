@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class AchievementsJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject achievementsJsonFile = getJsonObjectByJsonFile(JsonFileEnum.ACHIEVEMENTS);
+  private static final JsonObject achievementsJson = getJsonObjectByJsonFile(JsonFileEnum.ACHIEVEMENTS);
   private static final String ACHIEVEMENTS_FIELD = "achievements";
   private static final String ID_FIELD = "id";
   private static final String NAME_FIELD = "name";
@@ -47,7 +47,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     JsonRule achievementRuleObject =
         makeAchievementsRuleObject(explorationRequirementsRuleObject, battleRequirementsRuleObject);
     JsonRule achievementsFileRuleObject = getAchievementsFileRuleObject(achievementRuleObject);
-    achievementsFileRuleObject.validate(achievementsJsonFile);
+    achievementsFileRuleObject.validate(achievementsJson);
   }
 
   private JsonRule getAchievementsFileRuleObject(JsonRule achievementRuleObject) {

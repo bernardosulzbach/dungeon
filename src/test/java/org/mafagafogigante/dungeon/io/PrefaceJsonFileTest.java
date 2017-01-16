@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PrefaceJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject prefaceJsonFile = getJsonObjectByJsonFile(JsonFileEnum.PREFACE);
+  private static final JsonObject prefaceJson = getJsonObjectByJsonFile(JsonFileEnum.PREFACE);
   private static final String FORMAT_FIELD = "format";
 
   @Test
@@ -19,7 +19,7 @@ public class PrefaceJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> tutorialFileRules = new HashMap<>();
     tutorialFileRules.put(FORMAT_FIELD, JsonRuleFactory.makeStringRule());
     JsonRule tutorialJsonRule = JsonRuleFactory.makeObjectRule(tutorialFileRules);
-    tutorialJsonRule.validate(prefaceJsonFile);
+    tutorialJsonRule.validate(prefaceJson);
   }
 
 }
