@@ -9,6 +9,8 @@ import org.mafagafogigante.dungeon.util.StopWatch;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -190,7 +192,8 @@ public final class Loader {
    */
   private static GameState loadFile(File file) {
     StopWatch stopWatch = new StopWatch();
-    try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+    try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+         ObjectInputStream objectInputStream = new ObjectInputStream(in)) {
       GameState loadedGameState = (GameState) objectInputStream.readObject();
       loadedGameState.setSaved(true); // It is saved, we just loaded it (needed as it now defaults to false).
       String sizeString = Converter.bytesToHuman(file.length());
@@ -217,7 +220,8 @@ public final class Loader {
     StopWatch stopWatch = new StopWatch();
     File file = createFileFromName(name);
     ensureSavesFolderExists();
-    try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+         ObjectOutputStream objectOutputStream = new ObjectOutputStream(out)) {
       objectOutputStream.writeObject(state);
       state.setSaved(true);
       String sizeString = Converter.bytesToHuman(file.length());
