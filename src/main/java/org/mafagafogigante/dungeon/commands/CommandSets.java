@@ -112,6 +112,12 @@ final class CommandSets {
         Game.getGameState().getHero().eatItem(arguments);
       }
     });
+    commandSet.addCommand(new Command("conditions", "Lists the currently active conditions.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        Game.getGameState().getHero().writeConditions();
+      }
+    });
     commandSet.addCommand(new Command("equip", "Equips the specified item.") {
       @Override
       public void execute(@NotNull String[] arguments) {

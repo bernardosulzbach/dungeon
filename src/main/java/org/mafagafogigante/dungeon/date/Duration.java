@@ -2,10 +2,14 @@ package org.mafagafogigante.dungeon.date;
 
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.DungeonMath;
+import org.mafagafogigante.dungeon.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Represents a nonnegative amount of time.
@@ -68,6 +72,29 @@ public class Duration implements Comparable<Duration>, Serializable {
   @Override
   public int hashCode() {
     return (int) (duration ^ (duration >>> 32));
+  }
+
+  /**
+   * Returns a human-readable string of this duration most significant nonzero fields.
+   */
+  public String toStringWithMostSignificantNonZeroFieldsOnly(int fields) {
+    DungeonTimeUnit[] values = DungeonTimeUnit.values();
+    List<String> components = new ArrayList<>();
+    long remaining = duration;
+    int nonZeroFieldsFound = 0;
+    for (int i = values.length - 1; nonZeroFieldsFound < fields && i >= 0; i--) {
+      if (remaining >= values[i].milliseconds) {
+        nonZeroFieldsFound++;
+        long units = remaining / values[i].milliseconds;
+        remaining -= units * values[i].milliseconds;
+        String word = values[i].toString().toLowerCase(Locale.ENGLISH);
+        if (units > 1) {
+          word += 's';
+        }
+        components.add(units + " " + word);
+      }
+    }
+    return Utils.enumerate(components);
   }
 
   @Override

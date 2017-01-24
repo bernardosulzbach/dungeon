@@ -76,24 +76,37 @@ public class Creature extends Entity {
 
   private void refreshConditions() {
     Date date = getLocation().getWorld().getWorldDate();
-    for (Condition condition : new ArrayList<>(conditions)) {
+    boolean hasExpired = false;
+    for (Condition condition : conditions) {
       if (condition.hasExpired(date)) {
-        conditions.remove(condition);
+        hasExpired = true;
+        break;
+      }
+    }
+    if (hasExpired) {
+      for (Condition condition : new ArrayList<>(conditions)) {
+        if (condition.hasExpired(date)) {
+          conditions.remove(condition);
+        }
       }
     }
   }
 
+  List<Condition> getConditions() {
+    refreshConditions();
+    return conditions;
+  }
+
   void addCondition(@NotNull Condition condition) {
-    conditions.add(condition);
+    getConditions().add(condition);
   }
 
   /**
    * Returns the attack of this creature after taking into account all of its active conditions.
    */
   int getAttack() {
-    refreshConditions();
     int total = attack;
-    for (Condition condition : conditions) {
+    for (Condition condition : getConditions()) {
       total = condition.modifyAttack(total);
     }
     return total;

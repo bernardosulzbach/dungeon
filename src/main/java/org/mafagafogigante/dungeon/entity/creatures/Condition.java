@@ -11,6 +11,8 @@ abstract class Condition implements Serializable {
 
   abstract Date getExpirationDate();
 
+  abstract String getDescription();
+
   final boolean hasExpired(Date date) {
     return getExpirationDate().compareTo(date) < 0;
   }

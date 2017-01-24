@@ -114,6 +114,11 @@ public class EffectFactory implements Serializable {
         }
 
         @Override
+        String getDescription() {
+          return "+" + extraDamage + " to attack";
+        }
+
+        @Override
         int modifyAttack(int currentAttack) {
           return currentAttack + extraDamage;
         }

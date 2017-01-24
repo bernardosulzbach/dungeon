@@ -800,7 +800,7 @@ public class Hero extends Creature {
   }
 
   /**
-   * Writes a list with all the Spells that the Hero knows.
+   * Writes a list of all the Spells that the Hero knows.
    */
   public void writeSpellList() {
     DungeonString string = new DungeonString();
@@ -810,6 +810,30 @@ public class Hero extends Creature {
       string.append("You know ");
       string.append(Utils.enumerate(getSpellcaster().getSpellList()));
       string.append(".");
+    }
+    Writer.write(string);
+  }
+
+  /**
+   * Writes a list of all the active conditions.
+   */
+  public void writeConditions() {
+    Date worldDate = getLocation().getWorld().getWorldDate();
+    List<Condition> conditions = getConditions();
+    DungeonString string = new DungeonString();
+    if (conditions.isEmpty()) {
+      string.append("There are no active conditions.");
+    } else {
+      for (Condition condition : conditions) {
+        string.append(condition.getDescription());
+        string.append(" ");
+        string.append("(");
+        string.append("expires in ");
+        Duration duration = new Duration(worldDate, condition.getExpirationDate());
+        string.append(duration.toStringWithMostSignificantNonZeroFieldsOnly(2));
+        string.append(")");
+        string.append("\n");
+      }
     }
     Writer.write(string);
   }
