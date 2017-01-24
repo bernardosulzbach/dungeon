@@ -255,6 +255,10 @@
           "probability": 0.05
         },
         {
+          "id": "POTION_OF_THE_WARRIOR",
+          "probability": 0.25
+        },
+        {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
         },
