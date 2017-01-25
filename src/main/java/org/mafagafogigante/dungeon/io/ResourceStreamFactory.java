@@ -1,9 +1,8 @@
 package org.mafagafogigante.dungeon.io;
 
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 
-public class ResourceStreamFactory {
+class ResourceStreamFactory {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
