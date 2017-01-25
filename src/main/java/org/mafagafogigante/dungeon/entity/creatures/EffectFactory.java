@@ -30,13 +30,20 @@ public class EffectFactory implements Serializable {
     return defaultFactory;
   }
 
+  private static void assertParameterCount(List<String> parameters, int count) {
+    int actual = parameters.size();
+    if (actual != count) {
+      throw new IllegalArgumentException(String.format("Wrong number of arguments: %d instead of %d", actual, count));
+    }
+  }
+
   /**
    * Returns an Effect for the specified Id with the provided parameterization.
    */
   public Effect getEffect(Id id, List<String> parameters) {
     EffectTemplate template = templates.get(id);
     if (template == null) {
-      throw new IllegalArgumentException(id + " did not match any effect template!");
+      throw new IllegalArgumentException(id + " did not match any effect template");
     }
     return template.instantiate(parameters);
   }
@@ -46,9 +53,7 @@ public class EffectFactory implements Serializable {
 
     @Override
     public Effect instantiate(List<String> parameters) {
-      if (parameters.size() != 1) {
-        throw new IllegalArgumentException("expected one parameter, got " + parameters.size());
-      }
+      assertParameterCount(parameters, 1);
       final int healing = Integer.parseInt(parameters.get(0));
       return new HealingEffect(healing);
     }
@@ -73,9 +78,7 @@ public class EffectFactory implements Serializable {
 
     @Override
     public Effect instantiate(List<String> parameters) {
-      if (parameters.size() != 2) {
-        throw new IllegalArgumentException("expected two parameters");
-      }
+      assertParameterCount(parameters, 2);
       final int extraDamage = Integer.parseInt(parameters.get(0));
       // Period parsing already throws only IllegalArgumentException and derived exceptions.
       final Duration duration = DungeonTimeParser.parsePeriod(parameters.get(1));
@@ -89,9 +92,7 @@ public class EffectFactory implements Serializable {
 
     @Override
     public Effect instantiate(List<String> parameters) {
-      if (!parameters.isEmpty()) {
-        throw new IllegalArgumentException("expected an empty parameter list");
-      }
+      assertParameterCount(parameters, 0);
       return new HitRateEffect(SIX_HOURS, 1.05, 1);
     }
   }
