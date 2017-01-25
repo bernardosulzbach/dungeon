@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.util;
 
+import org.apache.commons.math3.util.Precision;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,20 +30,7 @@ public final class DungeonMath {
    * Compares two doubles with the default tolerance margin.
    */
   static int fuzzyCompare(double first, double second) {
-    return fuzzyCompare(first, second, DEFAULT_DOUBLE_TOLERANCE);
-  }
-
-  /**
-   * Compares two doubles with a specified tolerance margin.
-   */
-  private static int fuzzyCompare(double first, double second, double epsilon) {
-    if (first + epsilon < second) {
-      return -1;
-    } else if (first - epsilon > second) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return Precision.compareTo(first, second, DEFAULT_DOUBLE_TOLERANCE);
   }
 
   /**
