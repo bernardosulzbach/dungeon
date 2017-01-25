@@ -156,7 +156,7 @@ public class Matches<T extends Selectable> {
     int indexOfLastMatchPlusOne = 0;
     for (int i = 0; i < query.length && indexOfLastMatchPlusOne < entry.length; i++) {
       for (int j = indexOfLastMatchPlusOne; j < entry.length; j++) {
-        if (Utils.startsWithIgnoreCase(entry[j], query[i])) {
+        if (StringUtils.startsWithIgnoreCase(entry[j], query[i])) {
           indexOfLastMatchPlusOne = j + 1;
           matches++;
         }

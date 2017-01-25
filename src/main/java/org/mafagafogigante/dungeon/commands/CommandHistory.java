@@ -2,8 +2,8 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.CircularList;
-import org.mafagafogigante.dungeon.util.Utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class CommandHistory implements Serializable {
    */
   public String getLastSimilarCommand(String command) {
     for (int i = commands.size() - 1; i >= 0; i--) {
-      if (Utils.startsWithIgnoreCase(commands.get(i), command)) {
+      if (StringUtils.startsWithIgnoreCase(commands.get(i), command)) {
         return commands.get(i);
       }
     }

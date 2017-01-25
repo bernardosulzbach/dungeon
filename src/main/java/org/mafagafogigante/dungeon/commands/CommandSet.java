@@ -2,7 +2,6 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.io.Writer;
-import org.mafagafogigante.dungeon.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +37,7 @@ public final class CommandSet {
         DungeonString dungeonString = new DungeonString();
         int count = 0;
         for (CommandDescription description : descriptions) {
-          if (filter == null || Utils.startsWithIgnoreCase(description.getName(), filter)) {
+          if (filter == null || StringUtils.startsWithIgnoreCase(description.getName(), filter)) {
             count++;
             dungeonString.append(StringUtils.rightPad(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
             dungeonString.append(description.getInfo());

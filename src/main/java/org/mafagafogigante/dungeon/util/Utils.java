@@ -24,17 +24,6 @@ public final class Utils {
   }
 
   /**
-   * Checks if a string starts with a given string, ignoring case differences.
-   *
-   * @param left the base string.
-   * @param right the prefix.
-   * @return true, if the base string starts with the prefix, ignoring case differences.
-   */
-  public static boolean startsWithIgnoreCase(String left, String right) {
-    return left.toLowerCase(Locale.ENGLISH).startsWith(right.toLowerCase(Locale.ENGLISH));
-  }
-
-  /**
    * Enumerates the elements of a Collection in a human-readable way.
    *
    * <p>This method calls {@code toString()} on each object, so the result depends on what that method returns.
