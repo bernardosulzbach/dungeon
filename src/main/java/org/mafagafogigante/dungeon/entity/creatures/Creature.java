@@ -98,7 +98,26 @@ public class Creature extends Entity {
   }
 
   void addCondition(@NotNull Condition condition) {
-    getConditions().add(condition);
+    List<Condition> conditions = getConditions();
+    if (condition.getEffect().getMaximumStack() > 0) {
+      int stack = 0;
+      Condition firstToExpire = null;
+      for (Condition existingCondition : conditions) {
+        if (existingCondition.equals(condition) && existingCondition.getEffect().equals(condition.getEffect())) {
+          Date existingConditionExpiration = existingCondition.getExpirationDate();
+          if (firstToExpire == null || existingConditionExpiration.compareTo(firstToExpire.getExpirationDate()) < 0) {
+            firstToExpire = existingCondition;
+          }
+          stack++;
+        }
+      }
+      if (stack == condition.getEffect().getMaximumStack()) {
+        conditions.remove(firstToExpire);
+      } else if (stack > condition.getEffect().getMaximumStack()) {
+        throw new IllegalStateException("Condition stack is bigger than maximum stack");
+      }
+    }
+    conditions.add(condition);
   }
 
   /**

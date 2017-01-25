@@ -29,11 +29,16 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
    * if the creature is not equipping an unbroken weapon. Otherwise the hit rate of the weapon is used.
    */
   Percentage getHitRate(@NotNull Creature creature) {
+    Percentage hitRate;
     if (isEquippingWorkingWeapon(creature)) {
-      return creature.getWeapon().getWeaponComponent().getHitRate();
+      hitRate = creature.getWeapon().getWeaponComponent().getHitRate();
     } else {
-      return DEFAULT_UNARMED_HIT_RATE;
+      hitRate = DEFAULT_UNARMED_HIT_RATE;
     }
+    for (Condition condition : creature.getConditions()) {
+      hitRate = condition.modifyHitRate(hitRate);
+    }
+    return hitRate;
   }
 
   /**

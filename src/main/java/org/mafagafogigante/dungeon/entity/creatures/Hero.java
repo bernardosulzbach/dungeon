@@ -73,6 +73,9 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
   private static final Id FISH_ID = new Id("FISH");
+  private static final Id WELL_FED_ID = new Id("WELL_FED");
+  private static final List<String> WELL_FED_LIST = Collections.emptyList();
+  private static final Effect WELL_FED_EFFECT = EffectFactory.getDefaultFactory().getEffect(WELL_FED_ID, WELL_FED_LIST);
   private final Walker walker = new Walker();
   private final Observer observer = new Observer(this);
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
@@ -455,6 +458,9 @@ public class Hero extends Creature {
             Writer.write("You ate a bit of " + selectedItem.getName() + ".");
           }
           addHealth(healthChange);
+          if (healthChange > 0) {
+            WELL_FED_EFFECT.affect(this);
+          }
         } else {
           HeroUtils.writeNoLongerInInventoryMessage(selectedItem);
         }
