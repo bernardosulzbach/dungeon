@@ -11,17 +11,18 @@ import java.util.Map;
 
 public class PoemsJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject poemsJson = getJsonObjectByJsonFile(JsonFileEnum.POEMS);
   private static final String POEMS_FIELD = "poems";
   private static final String TITLE_FIELD = "title";
   private static final String AUTHOR_FIELD = "author";
   private static final String CONTENT_FIELD = "content";
+  private static final String POEMS_JSON_FILE_NAME = "poems.json";
 
   @Test
   public void testIsFileHasValidStructure() {
-    JsonRule poemsRuleObject = getPoemsRuleObject();
-    JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
-    poemsFileJsonRule.validate(poemsJson);
+    final JsonRule poemsRuleObject = getPoemsRuleObject();
+    final JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
+    JsonObject poemsFileJsonObject = getJsonObjectByJsonFile(POEMS_JSON_FILE_NAME);
+    poemsFileJsonRule.validate(poemsFileJsonObject);
   }
 
   private JsonRule getPoemsFileRuleObject(JsonRule poemsRuleObject) {
@@ -32,9 +33,10 @@ public class PoemsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getPoemsRuleObject() {
     Map<String, JsonRule> poemsRules = new HashMap<>();
-    poemsRules.put(TITLE_FIELD, JsonRuleFactory.makeStringRule());
-    poemsRules.put(AUTHOR_FIELD, JsonRuleFactory.makeStringRule());
-    poemsRules.put(CONTENT_FIELD, JsonRuleFactory.makeStringRule());
+    final JsonRule stringRule = JsonRuleFactory.makeStringRule();
+    poemsRules.put(TITLE_FIELD, stringRule);
+    poemsRules.put(AUTHOR_FIELD, stringRule);
+    poemsRules.put(CONTENT_FIELD, stringRule);
     return JsonRuleFactory.makeObjectRule(poemsRules);
   }
 
