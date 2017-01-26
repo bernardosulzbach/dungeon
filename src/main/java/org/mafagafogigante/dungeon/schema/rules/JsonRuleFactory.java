@@ -71,4 +71,8 @@ public final class JsonRuleFactory {
     return new OptionalJsonRule(jsonRule);
   }
 
+  public static JsonRule makePeriodRule() {
+    return new PeriodJsonRule();
+  }
+
 }

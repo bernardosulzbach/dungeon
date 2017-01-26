@@ -11,19 +11,20 @@ import java.util.Map;
 
 public class WikiJsonFileTest extends ResourcesTypeTest {
 
-  private static final JsonObject wikiJson = getJsonObjectByJsonFile(JsonFileEnum.WIKI);
-  private static final String ARTICLES_FIELD = "articles";
   private static final String TITLE_FIELD = "title";
   private static final String CONTENT_FIELD = "content";
   private static final String SEE_ALSO_FIELD = "seeAlso";
+  private static final String ARTICLES_FIELD = "articles";
+  private static final String WIKI_JSON_FILE_NAME = "wiki.json";
 
   @Test
   public void testIsFileHasValidStructure() {
-    JsonRule seeAlsoOptionalRule =
+    final JsonRule seeAlsoOptionalRule =
         JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeStringRule()));
-    JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
-    JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
-    wikiFileRuleObject.validate(wikiJson);
+    final JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
+    final JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
+    JsonObject wikiFileJsonObject = getJsonObjectByJsonFile(WIKI_JSON_FILE_NAME);
+    wikiFileRuleObject.validate(wikiFileJsonObject);
   }
 
   private JsonRule getWikiFileRuleObject(JsonRule articleRuleObject) {
@@ -34,8 +35,9 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getArticleRuleObject(JsonRule seeAlsoJsonRule) {
     Map<String, JsonRule> articleRules = new HashMap<>();
-    articleRules.put(TITLE_FIELD, JsonRuleFactory.makeStringRule());
-    articleRules.put(CONTENT_FIELD, JsonRuleFactory.makeStringRule());
+    final JsonRule stringRule = JsonRuleFactory.makeStringRule();
+    articleRules.put(TITLE_FIELD, stringRule);
+    articleRules.put(CONTENT_FIELD, stringRule);
     articleRules.put(SEE_ALSO_FIELD, seeAlsoJsonRule);
     return JsonRuleFactory.makeObjectRule(articleRules);
   }
