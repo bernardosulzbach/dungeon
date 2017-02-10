@@ -35,100 +35,91 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
 
   @Test
   public void testIsFileHasValidStructure() {
-    JsonRule caseOfDeathRuleObject = getCauseOfDeathRuleObject();
-    JsonRule queryRuleObject = getQueryRuleObject(caseOfDeathRuleObject);
-    JsonRule battleRequirementsRuleObject = getBattleRequirementsRuleObject(queryRuleObject);
-    JsonRule visitedLocationsRuleObject = getVisitedLocationsRuleObject();
-    JsonRule maximumNumberOfVisitsRuleObject = getMaximumNumberOfVisitsRuleObject();
-    JsonRule killsByLocationIdRuleObject = getKillsByLocationIdRuleObject();
-    JsonRule explorationRequirementsRuleObject =
-        getExplorationRequirementsRuleObject(visitedLocationsRuleObject, maximumNumberOfVisitsRuleObject,
-            killsByLocationIdRuleObject);
-    JsonRule achievementRuleObject =
-        makeAchievementsRuleObject(explorationRequirementsRuleObject, battleRequirementsRuleObject);
-    JsonRule achievementsFileRuleObject = getAchievementsFileRuleObject(achievementRuleObject);
-    JsonObject achievementsFileJsonObject = getJsonObjectByJsonFile(ACHIEVEMENTS_JSON_FILE_NAME);
-    achievementsFileRuleObject.validate(achievementsFileJsonObject);
+    JsonRule caseOfDeathRule = getCauseOfDeathRule();
+    JsonRule queryRule = getQueryRule(caseOfDeathRule);
+    JsonRule battleRequirementsRule = getBattleRequirementsRule(queryRule);
+    JsonRule visitedLocationsRule = getVisitedLocationsRule();
+    JsonRule maximumNumberOfVisitsRule = getMaximumNumberOfVisitsRule();
+    JsonRule killsByLocationIdRule = getKillsByLocationIdRule();
+    Map<String, JsonRule> explorationRequirementsRules = new HashMap<>();
+    JsonRule optionalKillsByLocationRule = JsonRuleFactory.makeOptionalRule(killsByLocationIdRule);
+    explorationRequirementsRules.put(KILLS_BY_LOCATION_ID_FIELD, optionalKillsByLocationRule);
+    JsonRule optionalMaximumNumberRule = JsonRuleFactory.makeOptionalRule(maximumNumberOfVisitsRule);
+    explorationRequirementsRules.put(MAXIMUM_NUMBER_OF_VISITS_FIELD, optionalMaximumNumberRule);
+    JsonRule optionalVisitedLocationsRule = JsonRuleFactory.makeOptionalRule(visitedLocationsRule);
+    explorationRequirementsRules.put(VISITED_LOCATIONS_FIELD, optionalVisitedLocationsRule);
+    JsonRule explorationRequirementsRule = JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
+    JsonRule achievementRule = makeAchievementsRule(explorationRequirementsRule, battleRequirementsRule);
+    JsonRule achievementsFileRule = getAchievementsFileRule(achievementRule);
+    JsonObject achievementsFileJson = getJsonObjectByJsonFile(ACHIEVEMENTS_JSON_FILE_NAME);
+    achievementsFileRule.validate(achievementsFileJson);
   }
 
-  private JsonRule getAchievementsFileRuleObject(JsonRule achievementRuleObject) {
+  private JsonRule getAchievementsFileRule(JsonRule achievementRule) {
     Map<String, JsonRule> achievementsFileRules = new HashMap<>();
-    achievementsFileRules.put(ACHIEVEMENTS_FIELD, JsonRuleFactory.makeVariableArrayRule(achievementRuleObject));
+    achievementsFileRules.put(ACHIEVEMENTS_FIELD, JsonRuleFactory.makeVariableArrayRule(achievementRule));
     return JsonRuleFactory.makeObjectRule(achievementsFileRules);
   }
 
-  private JsonRule makeAchievementsRuleObject(JsonRule explorationRequirementsRuleObject,
-      JsonRule battleRequirementsRuleObject) {
-    final JsonRule jsonStringRule = JsonRuleFactory.makeStringRule();
+  private JsonRule makeAchievementsRule(JsonRule explorationRequirementsRule, JsonRule battleRequirementsRule) {
+    JsonRule jsonStringRule = JsonRuleFactory.makeStringRule();
     Map<String, JsonRule> achievementRules = new HashMap<>();
     achievementRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
     achievementRules.put(NAME_FIELD, jsonStringRule);
     achievementRules.put(INFO_FIELD, jsonStringRule);
     achievementRules.put(TEXT_FIELD, jsonStringRule);
-    final JsonRule battleVariableJsonRule = JsonRuleFactory.makeVariableArrayRule(battleRequirementsRuleObject);
+    JsonRule battleVariableJsonRule = JsonRuleFactory.makeVariableArrayRule(battleRequirementsRule);
     achievementRules.put(BATTLE_REQUIREMENTS_FIELD, JsonRuleFactory.makeOptionalRule(battleVariableJsonRule));
-    final JsonRule optionalExplorationRule = JsonRuleFactory.makeOptionalRule(explorationRequirementsRuleObject);
+    JsonRule optionalExplorationRule = JsonRuleFactory.makeOptionalRule(explorationRequirementsRule);
     achievementRules.put(EXPLORATION_REQUIREMENTS_FIELD, optionalExplorationRule);
     return JsonRuleFactory.makeObjectRule(achievementRules);
   }
 
-  private JsonRule getBattleRequirementsRuleObject(JsonRule queryRuleObject) {
+  private JsonRule getBattleRequirementsRule(JsonRule queryRule) {
     Map<String, JsonRule> battleRequirementsRules = new HashMap<>();
     battleRequirementsRules.put(COUNT_FIELD, JsonRuleFactory.makeIntegerRule());
-    battleRequirementsRules.put(QUERY_FIELD, queryRuleObject);
+    battleRequirementsRules.put(QUERY_FIELD, queryRule);
     return JsonRuleFactory.makeObjectRule(battleRequirementsRules);
   }
 
-  private JsonRule getQueryRuleObject(JsonRule caseOfDeathRuleObject) {
+  private JsonRule getQueryRule(JsonRule caseOfDeathRule) {
     Map<String, JsonRule> queryRules = new HashMap<>();
-    final JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
+    JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
     queryRules.put(ID_FIELD, optionalStringRule);
     queryRules.put(TYPE_FIELD, optionalStringRule);
-    final JsonRule uppercaseRule = JsonRuleFactory.makeUppercaseStringRule();
-    final JsonRule optionalUppercaseRule = JsonRuleFactory.makeOptionalRule(uppercaseRule);
+    JsonRule uppercaseRule = JsonRuleFactory.makeUppercaseStringRule();
+    JsonRule optionalUppercaseRule = JsonRuleFactory.makeOptionalRule(uppercaseRule);
     queryRules.put(PART_OF_DAY_FIELD, optionalUppercaseRule);
-    queryRules.put(CAUSE_OF_DEATH_FIELD, JsonRuleFactory.makeOptionalRule(caseOfDeathRuleObject));
+    queryRules.put(CAUSE_OF_DEATH_FIELD, JsonRuleFactory.makeOptionalRule(caseOfDeathRule));
     return JsonRuleFactory.makeObjectRule(queryRules);
   }
 
-  private JsonRule getCauseOfDeathRuleObject() {
+  private JsonRule getCauseOfDeathRule() {
     Map<String, JsonRule> causeOfDeathRules = new HashMap<>();
     causeOfDeathRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
     causeOfDeathRules.put(TYPE_FIELD, JsonRuleFactory.makeUppercaseStringRule());
     return JsonRuleFactory.makeObjectRule(causeOfDeathRules);
   }
 
-  private JsonRule getExplorationRequirementsRuleObject(JsonRule visitedLocationsRuleObject,
-      JsonRule maximumNumberOfVisitsRuleObject, JsonRule killsByLocationIdRuleObject) {
-    Map<String, JsonRule> explorationRequirementsRules = new HashMap<>();
-    final JsonRule optionalKillsByLocationRule = JsonRuleFactory.makeOptionalRule(killsByLocationIdRuleObject);
-    explorationRequirementsRules.put(KILLS_BY_LOCATION_ID_FIELD, optionalKillsByLocationRule);
-    final JsonRule optionalMaximumNumberRule = JsonRuleFactory.makeOptionalRule(maximumNumberOfVisitsRuleObject);
-    explorationRequirementsRules.put(MAXIMUM_NUMBER_OF_VISITS_FIELD, optionalMaximumNumberRule);
-    final JsonRule optionalVisitedLocationsRule = JsonRuleFactory.makeOptionalRule(visitedLocationsRuleObject);
-    explorationRequirementsRules.put(VISITED_LOCATIONS_FIELD, optionalVisitedLocationsRule);
-    return JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
-  }
-
-  private JsonRule getKillsByLocationIdRuleObject() {
+  private JsonRule getKillsByLocationIdRule() {
     Map<String, JsonRule> killsByLocationIdRules = new HashMap<>();
-    final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
     killsByLocationIdRules.put(FOREST_FIELD, optionalIntegerRule);
     return JsonRuleFactory.makeObjectRule(killsByLocationIdRules);
   }
 
-  private JsonRule getMaximumNumberOfVisitsRuleObject() {
+  private JsonRule getMaximumNumberOfVisitsRule() {
     Map<String, JsonRule> maximumNumberOfVisitsRules = new HashMap<>();
-    final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
     maximumNumberOfVisitsRules.put(STONE_BRIDGE_FIELD, optionalIntegerRule);
     maximumNumberOfVisitsRules.put(TIMBER_BRIDGE_FIELD, optionalIntegerRule);
     maximumNumberOfVisitsRules.put(GRAVEYARD_FIELD, optionalIntegerRule);
     return JsonRuleFactory.makeObjectRule(maximumNumberOfVisitsRules);
   }
 
-  private JsonRule getVisitedLocationsRuleObject() {
+  private JsonRule getVisitedLocationsRule() {
     Map<String, JsonRule> visitedLocationsRules = new HashMap<>();
-    final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
     visitedLocationsRules.put(DESERT_FIELD, optionalIntegerRule);
     visitedLocationsRules.put(GRAVEYARD_FIELD, optionalIntegerRule);
     return JsonRuleFactory.makeObjectRule(visitedLocationsRules);
