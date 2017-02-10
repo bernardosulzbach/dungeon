@@ -6,7 +6,10 @@ import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 import com.eclipsesource.json.JsonObject;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreaturesJsonFileTest extends ResourcesTypeTest {
@@ -15,6 +18,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
   private static final String TYPE_FIELD = "type";
   private static final String NAME_FIELD = "name";
   private static final String TAGS_FIELD = "tags";
+  private static final String DROPS_FIELD = "drops";
   private static final String PLURAL_FIELD = "plural";
   private static final String WEIGHT_FIELD = "weight";
   private static final String HEALTH_FIELD = "health";
@@ -61,6 +65,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     creatureRules.put(INVENTORY_WEIGHT_LIMIT_FIELD, optionalIntegerRule);
     final JsonRule variableIdRule = JsonRuleFactory.makeVariableArrayRule(idRule);
     creatureRules.put(INVENTORY_FIELD, JsonRuleFactory.makeOptionalRule(variableIdRule));
+    creatureRules.put(DROPS_FIELD, getDropsRule());
     creatureRules.put(LUMINOSITY_FIELD, JsonRuleFactory.makeOptionalRule(percentRule));
     creatureRules.put(VISIBILITY_FIELD, percentRule);
     creatureRules.put(WEIGHT_FIELD, JsonRuleFactory.makeBoundDoubleRule(Double.MIN_VALUE, Double.MAX_VALUE));
@@ -77,6 +82,15 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     nameRules.put(SINGULAR_FIELD, JsonRuleFactory.makeStringRule());
     nameRules.put(PLURAL_FIELD, optionalStringRule);
     return JsonRuleFactory.makeObjectRule(nameRules);
+  }
+
+  private JsonRule getDropsRule() {
+    JsonRule doubleRule = JsonRuleFactory.makeBoundDoubleRule(0.0, 1.0);
+    JsonRule idRule = JsonRuleFactory.makeIdRule();
+    List<JsonRule> dropRules = new ArrayList<>(Arrays.asList(idRule, doubleRule));
+    JsonRule innerArrayRule = JsonRuleFactory.makeFixedArrayRule(dropRules);
+    JsonRule outerArrayRule = JsonRuleFactory.makeVariableArrayRule(innerArrayRule);
+    return JsonRuleFactory.makeOptionalRule(outerArrayRule);
   }
 
 }
