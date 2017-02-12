@@ -7,6 +7,7 @@ Dungeon
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)<br>
 Forked by Fatih Furkan HAS<br>
 Cloned by Emre Kaan SUSLU<br>
+Cloned by Omer Mert UNAL<br>
 Dungeon is a text-based open-world role-playing-game. You are in control of the
 life of a character that wakes up with a headache and can't remember exactly
 what happened to him. You need to do your best to equip yourself to explore
