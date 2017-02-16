@@ -272,9 +272,6 @@
         "current": 10,
         "maximum": 10
       },
-      "effects": [
-        "POTION_OF_COMBAT_FOCUS_EFFECT"
-      ],
       "weight": 0.2,
       "visibility": "60.00%",
       "damage": 4,
