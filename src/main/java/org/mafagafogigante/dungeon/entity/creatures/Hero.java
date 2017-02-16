@@ -521,6 +521,7 @@ public class Hero extends Creature {
             } else {
               Writer.write("You drank a dose of " + selectedItem.getName() + ".");
             }
+            selectedItem.decrementIntegrityByDrinking();
           } else {
             Writer.write("This item is depleted.");
           }
