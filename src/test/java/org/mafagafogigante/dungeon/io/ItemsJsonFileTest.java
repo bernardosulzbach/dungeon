@@ -34,6 +34,9 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String DECOMPOSITION_PERIOD_FIELD = "decompositionPeriod";
   private static final String INTEGRITY_DECREMENT_ON_HIT_FIELD = "integrityDecrementOnHit";
   private static final String INTEGRITY_DECREMENT_ON_EAT_FIELD = "integrityDecrementOnEat";
+  private static final String DRINKABLE_DOSES_FIELD = "drinkableDoses";
+  private static final String DRINKABLE_HEALING_FIELD = "drinkableHealing";
+  private static final String INTEGRITY_DECREMENT_PER_DOSE_FIELD = "integrityDecrementPerDose";
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -71,8 +74,11 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     itemRules.put(DAMAGE_FIELD, integerRule);
     itemRules.put(HIT_RATE_FIELD, percentRule);
     itemRules.put(INTEGRITY_DECREMENT_ON_HIT_FIELD, integerRule);
-    itemRules.put(NUTRITION_FIELD, JsonRuleFactory.makeOptionalRule(integerRule));
+    itemRules.put(NUTRITION_FIELD, optionalIntegerRule);
     itemRules.put(INTEGRITY_DECREMENT_ON_EAT_FIELD, optionalIntegerRule);
+    itemRules.put(DRINKABLE_DOSES_FIELD, optionalIntegerRule);
+    itemRules.put(DRINKABLE_HEALING_FIELD, optionalIntegerRule);
+    itemRules.put(INTEGRITY_DECREMENT_PER_DOSE_FIELD, optionalIntegerRule);
     itemRules.put(TEXT_FIELD, JsonRuleFactory.makeOptionalRule(stringRule));
     itemRules.put(SPELL_FIELD, JsonRuleFactory.makeOptionalRule(idRule));
     return JsonRuleFactory.makeObjectRule(itemRules);
