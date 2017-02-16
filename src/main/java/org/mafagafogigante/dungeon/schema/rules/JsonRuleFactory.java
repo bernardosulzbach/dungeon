@@ -11,6 +11,10 @@ public final class JsonRuleFactory {
     throw new AssertionError();
   }
 
+  public static JsonRule makeEmptyRule() {
+    return new EmptyRule();
+  }
+
   public static JsonRule makeObjectRule(Map<String, JsonRule> rules) {
     return new ObjectJsonRule(rules);
   }
