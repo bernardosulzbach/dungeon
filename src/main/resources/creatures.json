@@ -311,7 +311,7 @@
       "tags": [
         "CORPSE"
       ],
-      "drop": [
+      "drops": [
         ["GIANT_RAT_BEEF", 1.0]
       ],
       "visibility": "70%",
