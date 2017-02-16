@@ -45,7 +45,7 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       preset.setTagSet(new TagSetParser<>(Item.Tag.class, itemObject.get("tags")).parse());
       preset.setUnique(itemObject.getBoolean("unique", false));
       if (itemObject.get("decompositionPeriod") != null) {
-        long seconds = DungeonTimeParser.parsePeriod(itemObject.get("decompositionPeriod").asString()).getSeconds();
+        long seconds = DungeonTimeParser.parseDuration(itemObject.get("decompositionPeriod").asString()).getSeconds();
         preset.setPutrefactionPeriod(seconds);
       }
       JsonObject integrity = itemObject.get("integrity").asObject();

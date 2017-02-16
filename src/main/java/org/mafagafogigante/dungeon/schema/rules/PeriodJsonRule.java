@@ -10,7 +10,7 @@ class PeriodJsonRule extends StringJsonRule {
   public void validate(JsonValue value) {
     super.validate(value);
     try {
-      DungeonTimeParser.parsePeriod(value.asString());
+      DungeonTimeParser.parseDuration(value.asString());
     } catch (IllegalArgumentException invalidValue) {
       throw new IllegalArgumentException(value + " is not a valid Dungeon period.");
     }

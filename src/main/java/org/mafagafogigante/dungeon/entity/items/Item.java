@@ -79,7 +79,7 @@ public final class Item extends Entity {
    *
    * @return a long representing an amount of seconds
    */
-  public long getAge() {
+  long getAge() {
     Duration existence = new Duration(dateOfCreation, Game.getGameState().getWorld().getWorldDate());
     return existence.getSeconds();
   }
@@ -153,10 +153,6 @@ public final class Item extends Entity {
     integrity.decrementBy(drinkableComponent.getIntegrityDecrementPerDose());
   }
 
-  public void decrementIntegrityToZero() {
-    integrity.decrementBy(integrity.getCurrent());
-  }
-
   /**
    * Returns a string representation of the integrity state of this item.
    */
@@ -164,7 +160,7 @@ public final class Item extends Entity {
     return IntegrityState.getIntegrityState(getIntegrity().getCurrent(), getIntegrity().getMaximum()).toString();
   }
 
-  public long getDecompositionPeriod() {
+  long getDecompositionPeriod() {
     return decompositionPeriod;
   }
 

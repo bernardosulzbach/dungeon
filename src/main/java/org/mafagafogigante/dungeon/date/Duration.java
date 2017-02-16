@@ -17,6 +17,7 @@ import java.util.Locale;
 public class Duration implements Comparable<Duration>, Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
+
   /**
    * The duration, in milliseconds.
    */

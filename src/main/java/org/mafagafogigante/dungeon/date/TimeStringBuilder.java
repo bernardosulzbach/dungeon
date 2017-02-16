@@ -21,7 +21,7 @@ class TimeStringBuilder {
 
   private final Map<DungeonTimeUnit, NonNegativeInteger> map;
 
-  public TimeStringBuilder() {
+  TimeStringBuilder() {
     map = new EnumMap<>(DungeonTimeUnit.class);
   }
 

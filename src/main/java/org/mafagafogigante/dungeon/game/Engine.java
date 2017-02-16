@@ -22,7 +22,7 @@ public final class Engine {
 
   /**
    * Refreshes the game. This method should be called whenever the state of the game is changed and the engine should be
-   * updated. If time passed, use {@link Engine#rollDateAndRefresh(int)}.
+   * updated. If time passed, use {@link Engine#rollDateAndRefresh(long)}.
    */
   public static void refresh() {
     effectivelyUpdate(0);
@@ -34,7 +34,7 @@ public final class Engine {
    *
    * @param seconds how many seconds to roll the date forward, a positive integer
    */
-  public static void rollDateAndRefresh(int seconds) {
+  public static void rollDateAndRefresh(long seconds) {
     if (seconds <= 0) {
       throw new IllegalArgumentException("seconds should be positive.");
     }
@@ -46,7 +46,7 @@ public final class Engine {
    *
    * @param seconds how many seconds to roll the date forward, nonnegative
    */
-  private static void effectivelyUpdate(int seconds) {
+  private static void effectivelyUpdate(long seconds) {
     if (seconds < 0) {
       throw new IllegalArgumentException("seconds should be nonnegative.");
     }

@@ -6,7 +6,6 @@ import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
 import org.mafagafogigante.dungeon.date.Duration;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.io.Version;
-import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.io.Serializable;
@@ -81,14 +80,14 @@ public class EffectFactory implements Serializable {
       assertParameterCount(parameters, 2);
       final int extraDamage = Integer.parseInt(parameters.get(0));
       // Period parsing already throws only IllegalArgumentException and derived exceptions.
-      final Duration duration = DungeonTimeParser.parsePeriod(parameters.get(1));
+      final Duration duration = DungeonTimeParser.parseDuration(parameters.get(1));
       return new AttackEffect(duration, extraDamage);
     }
   }
 
   private static class WellFedEffectTemplate extends EffectTemplate {
     private static final long serialVersionUID = Version.MAJOR;
-    private static final Duration SIX_HOURS = DungeonTimeParser.parsePeriod("6 hours");
+    private static final Duration SIX_HOURS = DungeonTimeParser.parseDuration("6 hours");
 
     @Override
     public Effect instantiate(List<String> parameters) {
@@ -110,8 +109,7 @@ public class EffectFactory implements Serializable {
     @Override
     public void affect(final Creature creature) {
       Date start = creature.getLocation().getWorld().getWorldDate();
-      int durationSeconds = DungeonMath.safeCastLongToInteger(duration.getSeconds());
-      final Date end = start.plus(durationSeconds, DungeonTimeUnit.SECOND);
+      final Date end = start.plus(duration.getSeconds(), DungeonTimeUnit.SECOND);
       creature.addCondition(new AttackCondition(this, end, extraDamage));
     }
 
@@ -168,8 +166,7 @@ public class EffectFactory implements Serializable {
     @Override
     public void affect(final Creature creature) {
       Date start = creature.getLocation().getWorld().getWorldDate();
-      int durationSeconds = DungeonMath.safeCastLongToInteger(duration.getSeconds());
-      final Date end = start.plus(durationSeconds, DungeonTimeUnit.SECOND);
+      final Date end = start.plus(duration.getSeconds(), DungeonTimeUnit.SECOND);
       creature.addCondition(new HitRateCondition(this, end, hitRateMultiplier));
     }
 

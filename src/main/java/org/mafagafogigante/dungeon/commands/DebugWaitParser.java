@@ -7,7 +7,6 @@ import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.io.Writer;
-import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
 
@@ -70,8 +69,8 @@ class DebugWaitParser {
       if (syntax == Syntax.FOR) {
         String timeString = StringUtils.join(arguments, " ", 1, arguments.length);
         try {
-          Duration duration = DungeonTimeParser.parsePeriod(timeString);
-          rollDate(DungeonMath.safeCastLongToInteger(duration.getSeconds()));
+          Duration duration = DungeonTimeParser.parseDuration(timeString);
+          rollDate(duration.getSeconds());
         } catch (IllegalArgumentException badArgument) {
           Writer.write("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
         }
@@ -88,7 +87,7 @@ class DebugWaitParser {
     }
   }
 
-  private static void rollDate(int seconds) {
+  private static void rollDate(long seconds) {
     Engine.rollDateAndRefresh(seconds);
     Writer.write("Waited for " + seconds + " seconds.");
   }

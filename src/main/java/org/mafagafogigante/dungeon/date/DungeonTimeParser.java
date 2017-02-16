@@ -15,18 +15,15 @@ public final class DungeonTimeParser {
   }
 
   /**
-   * Parses a period string.
+   * Parses a duration string.
    *
    * <p>Such string should only contain pairs of positive numerical multipliers and time units separated by spaces,
    * "and", and commas.
    *
    * <p>For example: "2 years, 5 months, 8 days, and 20 hours".
-   *
-   * @param string a period string, not null
-   * @return a Duration, not null
    */
   @NotNull
-  public static Duration parsePeriod(@NotNull String string) {
+  public static Duration parseDuration(@NotNull String string) {
     List<String> tokens = cleanAndTokenize(string);
     if (tokens.size() < 2) {
       throw new IllegalArgumentException("string should provide at least one multiplier-unit pair.");
