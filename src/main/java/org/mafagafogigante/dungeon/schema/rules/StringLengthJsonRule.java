@@ -4,7 +4,7 @@ import com.eclipsesource.json.JsonValue;
 
 class StringLengthJsonRule extends StringJsonRule {
 
-  private int stringLength;
+  private final int stringLength;
 
   StringLengthJsonRule(int stringLength) {
     this.stringLength = stringLength;

@@ -11,10 +11,6 @@ public class Messenger {
     throw new AssertionError();
   }
 
-  public static void printInvalidNumberFormatOrValue() {
-    Writer.write("Invalid number format or value.");
-  }
-
   /**
    * Prints a warning that a command requires arguments.
    */
