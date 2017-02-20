@@ -185,7 +185,7 @@
                     <regex>true</regex>
                     <replacements>
                         <replacement>
-                            <token>\s(?=([^"]*"[^"]*")*[^"]*$)</token>
+                            <token>\s(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)</token>
                         </replacement>
                     </replacements>
                 </configuration>
