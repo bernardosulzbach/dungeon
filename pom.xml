@@ -166,6 +166,23 @@
                     <check/>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.unknownnpc.plugins</groupId>
+                <artifactId>json-to-string-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>${project.build.directory}/classes/*.json</include>
+                    </includes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
