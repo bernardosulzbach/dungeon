@@ -8,8 +8,8 @@ public class DrinkableComponent implements Serializable {
 
   private static final long serialVersionUID = 6L;
   private final ItemUsageEffect effect;
+  private final int integrityDecrementPerDose;
   private int doses;
-  private int integrityDecrementPerDose;
 
   DrinkableComponent(ItemUsageEffect effect, int integrityDecrementPerDose, int doses) {
     this.effect = effect;

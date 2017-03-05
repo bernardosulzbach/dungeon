@@ -15,6 +15,9 @@
       "info": "This is a wide bridge made of stone blocks. It seems resistant to both weather and weight.",
       "blobSize": 0,
       "lightPermittivity": 1,
+      "tags": [
+        "FISHABLE"
+      ],
       "items": [
         {
           "id": "TOME_OF_HEAL",
@@ -57,6 +60,9 @@
           "delay": 24
         }
       ],
+      "tags": [
+        "FISHABLE"
+      ],
       "items": [
         {
           "id": "TOME_OF_UNVEIL",
@@ -93,6 +99,9 @@
       "info": "This is simply a long wood log felled over the river. It has signs of rot and looks like it is infested by wood-eating insects.",
       "blobSize": 0,
       "lightPermittivity": 1,
+      "tags": [
+        "FISHABLE"
+      ],
       "items": [
         {
           "id": "STICK",
@@ -940,6 +949,9 @@
           "delay": 36
         }
       ],
+      "tags": [
+        "FISHABLE"
+      ],
       "items": [
         {
           "id": "SPEAR",
@@ -1051,6 +1063,9 @@
           },
           "delay": 4
         }
+      ],
+      "tags": [
+        "FISHABLE"
       ],
       "items": [
         {

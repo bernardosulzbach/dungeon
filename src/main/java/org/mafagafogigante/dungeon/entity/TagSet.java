@@ -84,12 +84,14 @@ public class TagSet<E extends Enum<E>> implements Serializable {
 
   @Override
   public String toString() {
-    return "TagSet{" +
-        "set=" + set +
-        '}';
+    return "TagSet{" + "set=" + set + '}';
   }
 
   public static class InvalidTagException extends IllegalArgumentException {
+    public InvalidTagException(String message) {
+      super(message);
+    }
+
     public InvalidTagException(String message, Throwable cause) {
       super(message, cause);
     }
