@@ -124,6 +124,12 @@ final class CommandSets {
         Game.exit();
       }
     });
+    commandSet.addCommand(new Command("fish", "Attempts to fish.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        Game.getGameState().getHero().fish();
+      }
+    });
     commandSet.addCommand(new Command("go", "Makes the character move in the specified direction.") {
       @Override
       public void execute(@NotNull String[] arguments) {
