@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.game.LocationPreset.Type;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.TagSetParser;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonArray;
@@ -59,6 +60,7 @@ public final class LocationPresetStore {
       preset.getDescription().setInfo(presetObject.get("info").asString());
       preset.setBlobSize(presetObject.get("blobSize").asInt());
       preset.setLightPermittivity(presetObject.get("lightPermittivity").asDouble());
+      preset.setTagSet(new TagSetParser<>(Location.Tag.class,presetObject.get("tags")).parse());
       if (presetObject.get("spawners") != null) {
         for (JsonValue spawnerValue : presetObject.get("spawners").asArray()) {
           JsonObject spawner = spawnerValue.asObject();

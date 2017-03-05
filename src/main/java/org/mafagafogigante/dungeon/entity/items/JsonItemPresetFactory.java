@@ -3,22 +3,20 @@ package org.mafagafogigante.dungeon.entity.items;
 import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
-import org.mafagafogigante.dungeon.entity.TagSet.InvalidTagException;
 import org.mafagafogigante.dungeon.entity.Weight;
+import org.mafagafogigante.dungeon.entity.items.Item.Tag;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.TagSetParser;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
 
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
 
 /**
  * An ItemPresetFactory based on JSON files.
@@ -29,29 +27,6 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
 
   public JsonItemPresetFactory(String filename) {
     this.filename = filename;
-  }
-
-  /**
-   * Creates a Set of tags from an array of Strings.
-   *
-   * @param enumClass the Class of the enum
-   * @param array a JSON array of strings
-   * @param <E> an Enum type
-   * @return a Set of Item.Tag
-   */
-  private static <E extends Enum<E>> Set<E> tagSetFromArray(Class<E> enumClass, JsonArray array) {
-    Set<E> set = EnumSet.noneOf(enumClass);
-    for (JsonValue value : array) {
-      String tag = value.asString();
-      try {
-        set.add(Enum.valueOf(enumClass, tag));
-      } catch (IllegalArgumentException fatal) {
-        // Guarantee that bugged resource files are not going to make it to a release.
-        String message = "invalid tag '" + tag + "' found.";
-        throw new InvalidTagException(message, fatal);
-      }
-    }
-    return set;
   }
 
   @Override
@@ -65,9 +40,7 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       preset.setId(id);
       preset.setType(itemObject.get("type").asString());
       preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
-      for (Item.Tag tag : tagSetFromArray(Item.Tag.class, itemObject.get("tags").asArray())) {
-        preset.addTag(tag);
-      }
+      preset.setTagSet(new TagSetParser<>(Item.Tag.class, itemObject.get("tags")).parse());
       preset.setUnique(itemObject.getBoolean("unique", false));
       if (itemObject.get("decompositionPeriod") != null) {
         long seconds = DungeonTimeParser.parsePeriod(itemObject.get("decompositionPeriod").asString()).getSeconds();
@@ -89,10 +62,10 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       if (itemObject.get("integrityDecrementOnEat") != null) {
         preset.setIntegrityDecrementOnEat(itemObject.get("integrityDecrementOnEat").asInt());
       }
-      if (preset.hasTag(Item.Tag.BOOK)) {
+      if (preset.getTagSet().hasTag(Tag.BOOK)) {
         preset.setText(itemObject.get("text").asString());
       }
-      if (preset.hasTag(Item.Tag.DRINKABLE)) {
+      if (preset.getTagSet().hasTag(Tag.DRINKABLE)) {
         preset.setDrinkableDoses(itemObject.get("drinkableDoses").asInt());
         preset.setDrinkableHealing(itemObject.get("drinkableHealing").asInt());
         preset.setIntegrityDecrementPerDose(itemObject.get("integrityDecrementPerDose").asInt());

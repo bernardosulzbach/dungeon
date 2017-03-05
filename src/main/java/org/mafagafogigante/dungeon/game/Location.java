@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.Luminosity;
+import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
@@ -26,6 +27,7 @@ public class Location implements Serializable {
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
   private final List<Spawner> spawners;
+  private final TagSet<Tag> tagSet;
   private final LocationInventory items;
   private final Percentage lightPermittivity;
   private final World world;
@@ -52,6 +54,7 @@ public class Location implements Serializable {
     for (SpawnerPreset spawner : preset.getSpawners()) {
       spawners.add(new Spawner(spawner, this));
     }
+    this.tagSet = TagSet.copyTagSet(preset.getTagSet());
     this.items = new LocationInventory();
     ItemFactory itemFactory = getWorld().getItemFactory();
     for (Entry<Id, Percentage> entry : preset.getItems()) {
@@ -79,10 +82,14 @@ public class Location implements Serializable {
   /**
    * Refreshes all the Spawners of this location.
    */
-  public void refreshSpawners() {
+  void refreshSpawners() {
     for (Spawner spawner : spawners) {
       spawner.refresh();
     }
+  }
+
+  public TagSet<Tag> getTagSet() {
+    return tagSet;
   }
 
   public Percentage getLightPermittivity() {
@@ -129,7 +136,7 @@ public class Location implements Serializable {
   /**
    * Returns the number of creatures in this Location.
    */
-  public int getCreatureCount(Id id) {
+  int getCreatureCount(Id id) {
     int count = 0;
     for (Creature creature : creatures) {
       if (creature.getId().equals(id)) {
@@ -192,7 +199,7 @@ public class Location implements Serializable {
    * Refreshes all the items in this location's inventory and all the items in the inventories of the creatures in this
    * location.
    */
-  public void refreshItems() {
+  void refreshItems() {
     getInventory().refreshItems();
     for (Creature creature : creatures) {
       creature.getInventory().refreshItems();
@@ -203,5 +210,7 @@ public class Location implements Serializable {
   public String toString() {
     return name.getSingular();
   }
+
+  public enum Tag {FISHABLE}
 
 }

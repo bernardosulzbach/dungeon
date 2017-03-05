@@ -18,10 +18,10 @@ import java.io.Serializable;
 public final class ItemPreset implements Preset, Serializable {
 
   private static final long serialVersionUID = -3795444867261167258L;
-  private final TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private Id id;
   private String type;
   private Name name;
+  private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private Integrity integrity;
   private int damage;
   private Percentage hitRate;
@@ -38,18 +38,6 @@ public final class ItemPreset implements Preset, Serializable {
   private int drinkableHealing;
   private int drinkableDoses;
   private int integrityDecrementPerDose;
-
-  public TagSet<Item.Tag> getTagSet() {
-    return tagSet;
-  }
-
-  public boolean hasTag(Item.Tag tag) {
-    return getTagSet().hasTag(tag);
-  }
-
-  public void addTag(Item.Tag tag) {
-    getTagSet().addTag(tag);
-  }
 
   public Id getId() {
     return id;
@@ -75,6 +63,14 @@ public final class ItemPreset implements Preset, Serializable {
     this.name = name;
   }
 
+  public TagSet<Item.Tag> getTagSet() {
+    return tagSet;
+  }
+
+  void setTagSet(TagSet<Tag> tagSet) {
+    this.tagSet = tagSet;
+  }
+
   public Integrity getIntegrity() {
     return integrity;
   }
@@ -91,7 +87,7 @@ public final class ItemPreset implements Preset, Serializable {
     this.damage = damage;
   }
 
-  public Percentage getHitRate() {
+  Percentage getHitRate() {
     return hitRate;
   }
 
@@ -107,19 +103,19 @@ public final class ItemPreset implements Preset, Serializable {
     this.integrityDecrementOnHit = integrityDecrementOnHit;
   }
 
-  public int getNutrition() {
+  int getNutrition() {
     return nutrition;
   }
 
-  public void setNutrition(int nutrition) {
+  void setNutrition(int nutrition) {
     this.nutrition = nutrition;
   }
 
-  public int getIntegrityDecrementOnEat() {
+  int getIntegrityDecrementOnEat() {
     return integrityDecrementOnEat;
   }
 
-  public void setIntegrityDecrementOnEat(int integrityDecrementOnEat) {
+  void setIntegrityDecrementOnEat(int integrityDecrementOnEat) {
     this.integrityDecrementOnEat = integrityDecrementOnEat;
   }
 
@@ -149,11 +145,11 @@ public final class ItemPreset implements Preset, Serializable {
     this.luminosity = luminosity;
   }
 
-  public Id getSpellId() {
+  Id getSpellId() {
     return spellId;
   }
 
-  public void setSpellId(String spellIdString) {
+  void setSpellId(String spellIdString) {
     this.spellId = new Id(spellIdString);
   }
 
@@ -165,7 +161,7 @@ public final class ItemPreset implements Preset, Serializable {
     this.text = text;
   }
 
-  public long getPutrefactionPeriod() {
+  long getPutrefactionPeriod() {
     return putrefactionPeriod;
   }
 
@@ -173,35 +169,35 @@ public final class ItemPreset implements Preset, Serializable {
     this.putrefactionPeriod = putrefactionPeriod;
   }
 
-  public boolean isUnique() {
+  boolean isUnique() {
     return unique;
   }
 
-  public void setUnique(boolean unique) {
+  void setUnique(boolean unique) {
     this.unique = unique;
   }
 
-  public int getIntegrityDecrementPerDose() {
+  int getIntegrityDecrementPerDose() {
     return integrityDecrementPerDose;
   }
 
-  public void setIntegrityDecrementPerDose(int integrityDecrementPerDose) {
+  void setIntegrityDecrementPerDose(int integrityDecrementPerDose) {
     this.integrityDecrementPerDose = integrityDecrementPerDose;
   }
 
-  public int getDrinkableHealing() {
+  int getDrinkableHealing() {
     return drinkableHealing;
   }
 
-  public void setDrinkableHealing(int healing) {
+  void setDrinkableHealing(int healing) {
     this.drinkableHealing = healing;
   }
 
-  public int getDrinkableDoses() {
+  int getDrinkableDoses() {
     return drinkableDoses;
   }
 
-  public void setDrinkableDoses(int doses) {
+  void setDrinkableDoses(int doses) {
     this.drinkableDoses = doses;
   }
 

@@ -15,6 +15,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   private static final String TYPE_FIELD = "type";
   private static final String NAME_FIELD = "name";
   private static final String INFO_FIELD = "info";
+  private static final String TAGS_FIELD = "tags";
   private static final String COLOR_FIELD = "color";
   private static final String ITEMS_FIELD = "items";
   private static final String DELAY_FIELD = "delay";
@@ -44,16 +45,16 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
 
   @Test
   public void testIsFileHasValidStructure() {
-    final JsonRule itemsRule = getItemsRule();
-    final JsonRule populationRule = getPopulationRule();
-    final JsonRule spawnersRule = getSpawnersRule(populationRule);
-    final JsonRule blockedEntrancesRule = getBlockedEntrancesRule();
-    final JsonRule colorRule = getColorRuleGroup();
-    final JsonRule nameRule = getNameRule();
+    JsonRule itemsRule = getItemsRule();
+    JsonRule populationRule = getPopulationRule();
+    JsonRule spawnersRule = getSpawnersRule(populationRule);
+    JsonRule blockedEntrancesRule = getBlockedEntrancesRule();
+    JsonRule colorRule = getColorRuleGroup();
+    JsonRule nameRule = getNameRule();
     Map<String, JsonRule> locationsRules = new HashMap<>();
-    final JsonRule idRule = JsonRuleFactory.makeIdRule();
-    final JsonRule blobBoundRule = JsonRuleFactory.makeBoundIntegerRule(BLOB_SIZE_MIN, BLOB_SIZE_MAX);
-    final JsonRule lightBoundRule = JsonRuleFactory.makeBoundDoubleRule(PERMITTIVITY_MIN, PERMITTIVITY_MAX);
+    JsonRule idRule = JsonRuleFactory.makeIdRule();
+    JsonRule blobBoundRule = JsonRuleFactory.makeBoundIntegerRule(BLOB_SIZE_MIN, BLOB_SIZE_MAX);
+    JsonRule lightBoundRule = JsonRuleFactory.makeBoundDoubleRule(PERMITTIVITY_MIN, PERMITTIVITY_MAX);
     locationsRules.put(ID_FIELD, idRule);
     locationsRules.put(TYPE_FIELD, idRule);
     locationsRules.put(NAME_FIELD, nameRule);
@@ -64,9 +65,12 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
     locationsRules.put(LIGHT_PERMITTIVITY_FIELD, lightBoundRule);
     locationsRules.put(BLOCKED_ENTRANCES_FIELD, blockedEntrancesRule);
     locationsRules.put(SPAWNERS_FIELD, spawnersRule);
+    JsonRule idArrayRule = JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeIdRule());
+    JsonRule tagsRule = JsonRuleFactory.makeOptionalRule(idArrayRule);
+    locationsRules.put(TAGS_FIELD, tagsRule);
     locationsRules.put(ITEMS_FIELD, itemsRule);
-    final JsonRule locationRule = JsonRuleFactory.makeObjectRule(locationsRules);
-    final JsonRule locationsFileJsonRule = getLocationsFileRule(locationRule);
+    JsonRule locationRule = JsonRuleFactory.makeObjectRule(locationsRules);
+    JsonRule locationsFileJsonRule = getLocationsFileRule(locationRule);
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
     locationsFileJsonRule.validate(locationsFileJsonObject);
   }

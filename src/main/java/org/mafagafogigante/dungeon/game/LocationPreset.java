@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.entity.TagSet;
+import org.mafagafogigante.dungeon.game.Location.Tag;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public final class LocationPreset {
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final List<SpawnerPreset> spawners = new ArrayList<>();
   private final Map<Id, Percentage> items = new HashMap<>();
+  private TagSet<Tag> tagSet;
   private Percentage lightPermittivity;
   private int blobSize;
   private LocationDescription description;
@@ -50,7 +53,7 @@ public final class LocationPreset {
     this.description = description;
   }
 
-  public List<SpawnerPreset> getSpawners() {
+  List<SpawnerPreset> getSpawners() {
     return spawners;
   }
 
@@ -59,7 +62,7 @@ public final class LocationPreset {
    *
    * @param preset the SpawnerPreset
    */
-  public void addSpawner(SpawnerPreset preset) {
+  void addSpawner(SpawnerPreset preset) {
     this.spawners.add(preset);
   }
 
@@ -77,7 +80,7 @@ public final class LocationPreset {
     items.put(new Id(id), new Percentage(probability));
   }
 
-  public BlockedEntrances getBlockedEntrances() {
+  BlockedEntrances getBlockedEntrances() {
     return new BlockedEntrances(blockedEntrances);
   }
 
@@ -86,23 +89,31 @@ public final class LocationPreset {
    *
    * @param direction a Direction to be blocked.
    */
-  public void block(Direction direction) {
+  void block(Direction direction) {
     blockedEntrances.block(direction);
   }
 
-  public Percentage getLightPermittivity() {
+  TagSet<Tag> getTagSet() {
+    return tagSet;
+  }
+
+  void setTagSet(TagSet<Tag> tagSet) {
+    this.tagSet = tagSet;
+  }
+
+  Percentage getLightPermittivity() {
     return lightPermittivity;
   }
 
-  public void setLightPermittivity(double lightPermittivity) {
+  void setLightPermittivity(double lightPermittivity) {
     this.lightPermittivity = new Percentage(lightPermittivity);
   }
 
-  public int getBlobSize() {
+  int getBlobSize() {
     return blobSize;
   }
 
-  public void setBlobSize(int blobSize) {
+  void setBlobSize(int blobSize) {
     this.blobSize = blobSize;
   }
 
