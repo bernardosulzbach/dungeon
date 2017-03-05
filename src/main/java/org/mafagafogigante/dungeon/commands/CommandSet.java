@@ -2,15 +2,16 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.io.Writer;
-import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A set of Commands.
@@ -19,8 +20,7 @@ public final class CommandSet {
 
   private static final int COMMAND_NAME_COLUMN_WIDTH = 20;
 
-  private final List<Command> commands = new ArrayList<>();
-  private final List<CommandDescription> commandDescriptions = new ArrayList<>();
+  private final Map<String, Command> commands = new TreeMap<>();
 
   private CommandSet() {
   }
@@ -67,12 +67,7 @@ public final class CommandSet {
    * Retrieves a Command corresponding to the specified token or null if no command matches the token.
    */
   Command getCommand(String token) {
-    for (Command command : commands) {
-      if (command.getDescription().getName().equalsIgnoreCase(token)) {
-        return command;
-      }
-    }
-    return null;
+    return commands.get(token.toLowerCase(Locale.ENGLISH));
   }
 
   /**
@@ -80,15 +75,12 @@ public final class CommandSet {
    *
    * @param command a Command object, not null
    */
-  void addCommand(Command command) {
-    if (command == null) {
-      DungeonLogger.warning("Passed null to CommandSet.addCommand().");
-    } else if (commands.contains(command)) {
-      DungeonLogger.warning("Attempted to add the same Command to a CommandSet twice.");
-    } else {
-      commands.add(command);
-      commandDescriptions.add(command.getDescription());
+  void addCommand(@NotNull Command command) {
+    String name = command.getDescription().getName().toLowerCase(Locale.ENGLISH);
+    if (commands.containsKey(name)) {
+      throw new IllegalArgumentException("Tried to add '" + name + "' multiple times.");
     }
+    commands.put(name, command);
   }
 
   /**
@@ -97,7 +89,11 @@ public final class CommandSet {
    * @return an unmodifiable List of CommandDescriptions
    */
   private List<CommandDescription> getCommandDescriptions() {
-    return Collections.unmodifiableList(commandDescriptions);
+    List<CommandDescription> descriptions = new ArrayList<>(commands.size());
+    for (Command command : commands.values()) {
+      descriptions.add(command.getDescription());
+    }
+    return descriptions;
   }
 
   @Override
@@ -112,7 +108,7 @@ public final class CommandSet {
   List<String> getClosestCommands(final String token) {
     List<String> closestCommands = new ArrayList<>();
     int best = Integer.MAX_VALUE;
-    for (Command command : commands) {
+    for (Command command : commands.values()) {
       String commandName = command.getDescription().getName();
       int distance = StringDistanceMetrics.levenshteinDistance(token, commandName);
       if (distance < best) {
