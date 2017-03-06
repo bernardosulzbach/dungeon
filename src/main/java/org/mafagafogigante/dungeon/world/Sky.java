@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Sky implements Serializable {
 
+  private static final long serialVersionUID = 4645468371061618602L;
   private final Collection<AstronomicalBody> astronomicalBodies = new ArrayList<>();
 
   /**
