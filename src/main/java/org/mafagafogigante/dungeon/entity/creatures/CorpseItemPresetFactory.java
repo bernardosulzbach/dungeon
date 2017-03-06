@@ -76,9 +76,9 @@ public final class CorpseItemPresetFactory implements ItemPresetFactory {
     corpse.setHitRate(CORPSE_HIT_RATE);
     corpse.setIntegrityDecrementOnHit(CORPSE_INTEGRITY_DECREMENT_ON_HIT);
     corpse.setDamage(CORPSE_DAMAGE);
-    corpse.addTag(Item.Tag.WEAPON);
-    corpse.addTag(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
-    corpse.addTag(Item.Tag.DECOMPOSES);
+    corpse.getTagSet().addTag(Item.Tag.WEAPON);
+    corpse.getTagSet().addTag(Item.Tag.WEIGHT_PROPORTIONAL_TO_INTEGRITY);
+    corpse.getTagSet().addTag(Item.Tag.DECOMPOSES);
     return corpse;
   }
 

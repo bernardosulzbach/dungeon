@@ -16,6 +16,8 @@ import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.game.PartOfDay;
@@ -50,6 +52,7 @@ public class Hero extends Creature {
   // It seems a good idea to let the Hero have one dream every 4 hours.
   private static final int DREAM_DURATION_IN_SECONDS = 4 * DungeonMath.safeCastLongToInteger(HOUR.as(SECOND));
   private static final int MILLISECONDS_TO_SLEEP_AN_HOUR = 500;
+  private static final int MILLISECONDS_TO_FISH = 400;
   private static final int SECONDS_TO_PICK_UP_AN_ITEM = 10;
   private static final int SECONDS_TO_HIT_AN_ITEM = 4;
   private static final int SECONDS_TO_EAT_AN_ITEM = 30;
@@ -57,12 +60,17 @@ public class Hero extends Creature {
   private static final int SECONDS_TO_DROP_AN_ITEM = 2;
   private static final int SECONDS_TO_UNEQUIP = 4;
   private static final int SECONDS_TO_EQUIP = 6;
+  private static final int SECONDS_TO_FISH = 60;
   private static final int SECONDS_TO_MILK_A_CREATURE = 45;
   private static final int SECONDS_TO_READ_EQUIPPED_CLOCK = 4;
   private static final int SECONDS_TO_READ_UNEQUIPPED_CLOCK = 10;
+  private static final int MAXIMUM_FISHING_ATTEMPTS = 5;
+  // Chance to catch a fish within five minutes: 1 - (1 - 0.25) ** 5 ~= 0.7626953125
+  private static final double FISHING_PROBABILITY = 0.25;
   private static final double MAXIMUM_HEALTH_THROUGH_REST = 0.6;
   private static final int SECONDS_TO_REGENERATE_FULL_HEALTH = 30000; // 500 minutes (or 8 hours and 20 minutes).
   private static final int MILK_NUTRITION = 12;
+  private static final Id FISH_ID = new Id("FISH");
   private final Walker walker = new Walker();
   private final Observer observer = new Observer(this);
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
@@ -444,6 +452,40 @@ public class Hero extends Creature {
       } else {
         Writer.write("You can only eat food.");
       }
+    }
+  }
+
+  /**
+   * Attempts to fish at the current location.
+   */
+  public void fish() {
+    if (getLocation().getTagSet().hasTag(Location.Tag.FISHABLE)) {
+      Writer.write("You started trying to fish.");
+      for (int attempts = 0; attempts < MAXIMUM_FISHING_ATTEMPTS; attempts++) {
+        Engine.rollDateAndRefresh(SECONDS_TO_FISH);
+        Sleeper.sleep(MILLISECONDS_TO_FISH);
+        if (Random.roll(FISHING_PROBABILITY)) {
+          Writer.write("You caught a fish!");
+          World world = getLocation().getWorld();
+          Item item = world.getItemFactory().makeItem(FISH_ID, world.getWorldDate());
+          SimulationResult result = getInventory().simulateItemAddition(item);
+          if (result == SimulationResult.AMOUNT_LIMIT) {
+            Writer.write("Your inventory is full, you decide to drop the fish in the ground.");
+            getLocation().getInventory().addItem(item);
+          } else if (result == SimulationResult.WEIGHT_LIMIT) {
+            Writer.write("You can't carry more weight, you decide to drop the fish in the ground.");
+            getLocation().getInventory().addItem(item);
+          } else if (result == SimulationResult.SUCCESSFUL) {
+            getInventory().addItem(item);
+          }
+          return;
+        } else {
+          Writer.write("You did not catch anything.");
+        }
+      }
+      Writer.write("After multiple failed attempts, you stop trying to fish.");
+    } else {
+      Writer.write("You cannot fish in this location.");
     }
   }
 
