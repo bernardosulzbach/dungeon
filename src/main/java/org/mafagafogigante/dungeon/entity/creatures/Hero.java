@@ -419,15 +419,17 @@ public class Hero extends Creature {
     if (getInventory().getItemCount() == 0) {
       throw new IllegalStateException("inventory item count is 0.");
     }
-    Writer.write("You are carrying:");
+    DungeonString text = new DungeonString("You are carrying:");
+    text.append("\n");
     for (Item item : getInventory().getItems()) {
-      String name = String.format("%s (%s)", item.getQualifiedName(), item.getWeight());
+      text.setColor(item.getRarity().getColor());
       if (hasWeapon() && getWeapon() == item) {
-        Writer.write(" [Equipped] " + name);
-      } else {
-        Writer.write(" " + name);
+        text.append(" [Equipped]");
       }
+      text.append(String.format(" %s (%s)", item.getQualifiedName(), item.getWeight()));
+      text.append("\n");
     }
+    Writer.write(text);
   }
 
   /**

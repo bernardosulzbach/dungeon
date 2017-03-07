@@ -18,6 +18,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String TEXT_FIELD = "text";
   private static final String ITEMS_FIELD = "items";
   private static final String SPELL_FIELD = "spell";
+  private static final String RARITY_FIELD = "rarity";
   private static final String UNIQUE_FIELD = "unique";
   private static final String WEIGHT_FIELD = "weight";
   private static final String DAMAGE_FIELD = "damage";
@@ -65,6 +66,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     itemRules.put(ID_FIELD, idRule);
     itemRules.put(TYPE_FIELD, stringRule);
     itemRules.put(NAME_FIELD, nameRuleObject);
+    itemRules.put(RARITY_FIELD, idRule);
     itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(stringRule));
     itemRules.put(UNIQUE_FIELD, JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeBooleanRule()));
     itemRules.put(INTEGRITY_FIELD, integrityRuleObject);

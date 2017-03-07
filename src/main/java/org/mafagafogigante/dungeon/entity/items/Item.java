@@ -16,6 +16,7 @@ public final class Item extends Entity {
   private static final long serialVersionUID = Version.MAJOR;
   private final ItemIntegrity integrity;
   private final Date dateOfCreation;
+  private final Rarity rarity;
   private final long decompositionPeriod;
   private final TagSet<Tag> tagSet;
   private final LightSource lightSource;
@@ -32,16 +33,12 @@ public final class Item extends Entity {
    */
   public Item(ItemPreset preset, Date date) {
     super(preset);
-
+    rarity = preset.getRarity();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
     dateOfCreation = date;
-
     decompositionPeriod = preset.getPutrefactionPeriod();
-
     integrity = ItemIntegrity.makeItemIntegrity(preset.getIntegrity(), this);
-
     lightSource = new LightSource(preset.getLuminosity());
-
     if (hasTag(Tag.WEAPON)) {
       int damage = preset.getDamage();
       Percentage hitRate = preset.getHitRate();
@@ -62,6 +59,10 @@ public final class Item extends Entity {
     if (hasTag(Tag.BOOK)) {
       bookComponent = new BookComponent(preset.getSpellId(), preset.getText());
     }
+  }
+
+  public Rarity getRarity() {
+    return rarity;
   }
 
   @Override

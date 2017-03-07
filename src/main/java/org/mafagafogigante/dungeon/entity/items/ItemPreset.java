@@ -27,6 +27,7 @@ public final class ItemPreset implements Preset, Serializable {
   private Id id;
   private String type;
   private Name name;
+  private Rarity rarity;
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private Integrity integrity;
   private int damage;
@@ -74,6 +75,14 @@ public final class ItemPreset implements Preset, Serializable {
 
   public void setName(Name name) {
     this.name = name;
+  }
+
+  public Rarity getRarity() {
+    return rarity;
+  }
+
+  public void setRarity(Rarity rarity) {
+    this.rarity = rarity;
   }
 
   public TagSet<Item.Tag> getTagSet() {

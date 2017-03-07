@@ -7,6 +7,7 @@ import org.mafagafogigante.dungeon.entity.Integrity;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.entity.items.ItemPreset;
 import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
+import org.mafagafogigante.dungeon.entity.items.Rarity;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.util.Percentage;
@@ -22,11 +23,11 @@ import java.util.List;
  */
 public final class CorpseItemPresetFactory implements ItemPresetFactory {
 
+  public static final Rarity CORPSE_RARITY = Rarity.POOR;
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
   private static final Percentage CORPSE_HIT_RATE = new Percentage(0.5);
-
   private final CreatureFactory creatureFactory;
 
   /**
@@ -68,6 +69,7 @@ public final class CorpseItemPresetFactory implements ItemPresetFactory {
     corpse.setId(makeCorpseIdFromCreatureId(preset.getId()));
     corpse.setType("CORPSE");
     corpse.setName(NameFactory.newCorpseName(preset.getName()));
+    corpse.setRarity(CORPSE_RARITY);
     corpse.setWeight(preset.getWeight());
     corpse.setPutrefactionPeriod(CORPSE_PUTREFACTION_PERIOD);
     corpse.setIntegrity(makeCorpseIntegrity(preset));

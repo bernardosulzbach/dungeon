@@ -42,6 +42,7 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       preset.setId(id);
       preset.setType(itemObject.get("type").asString());
       preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
+      preset.setRarity(Rarity.valueOf(itemObject.get("rarity").asString()));
       preset.setTagSet(new TagSetParser<>(Item.Tag.class, itemObject.get("tags")).parse());
       preset.setUnique(itemObject.getBoolean("unique", false));
       if (itemObject.get("decompositionPeriod") != null) {
