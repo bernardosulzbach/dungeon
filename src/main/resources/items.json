@@ -288,6 +288,37 @@
       "integrityDecrementPerDose": 10
     },
     {
+      "id": "POTION_OF_THE_FISHERMAN",
+      "type": "Potion",
+      "name": {
+        "singular": "Potion of the Fisherman",
+        "plural": "Potions of the Fisherman"
+      },
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 1,
+      "drinkableEffects": [
+        [
+          "IMPROVED_FISHING",
+          "15%",
+          "1 hour"
+        ]
+      ],
+      "integrityDecrementPerDose": 10
+    },
+    {
       "id": "BEAR_BEEF",
       "type": "Food",
       "name": {

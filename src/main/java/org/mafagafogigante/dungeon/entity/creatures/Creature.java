@@ -24,6 +24,7 @@ import java.util.List;
 public class Creature extends Entity {
 
   private static final long serialVersionUID = Version.MAJOR;
+  private static final Percentage BASE_FISHING_PROFICIENCY = Percentage.fromString("25%");
   private final int attack;
   private final AttackAlgorithmId attackAlgorithmId;
   private final TagSet<Tag> tagSet;
@@ -127,6 +128,17 @@ public class Creature extends Entity {
     int total = attack;
     for (Condition condition : getConditions()) {
       total = condition.modifyAttack(total);
+    }
+    return total;
+  }
+
+  /**
+   * Returns the fishing proficiency of this creature after taking into account all of its active conditions.
+   */
+  Percentage getFishingProficiency() {
+    Percentage total = BASE_FISHING_PROFICIENCY;
+    for (Condition condition : getConditions()) {
+      total = condition.modifyFishingProficiency(total);
     }
     return total;
   }

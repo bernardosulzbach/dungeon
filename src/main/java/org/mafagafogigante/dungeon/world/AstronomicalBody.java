@@ -5,7 +5,7 @@ import org.mafagafogigante.dungeon.entity.creatures.Observer;
 /**
  * An astronomical body that may be seen from a world.
  */
-public interface AstronomicalBody {
+interface AstronomicalBody {
 
   boolean isVisible(Observer observer);
 

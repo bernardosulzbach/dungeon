@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * WorldMap class that represents an ASCII map from the surroundings of the player.
  */
-public class WorldMap {
+class WorldMap {
 
   private final WorldMapSymbol[][] matrix;
   private final IterationLimits limits;

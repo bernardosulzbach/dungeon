@@ -80,6 +80,10 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return value;
   }
 
+  public Percentage add(Percentage extraProficiency) {
+    return new Percentage(Math.min(value + extraProficiency.value, ONE));
+  }
+
   public Percentage multiply(Percentage percentage) {
     return new Percentage(toDouble() * percentage.toDouble());
   }
@@ -89,7 +93,7 @@ public class Percentage implements Comparable<Percentage>, Serializable {
     return DungeonMath.fuzzyCompare(toDouble(), percentage.toDouble());
   }
 
-  public boolean biggerThanOrEqualTo(Percentage percentage) {
+  boolean biggerThanOrEqualTo(Percentage percentage) {
     return compareTo(percentage) >= 0;
   }
 

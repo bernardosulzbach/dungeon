@@ -24,7 +24,7 @@ public class Weather implements Serializable {
   // The probability of a trend (weather getting lighter or heavier) being followed.
   private static final double TREND_FORCE = 0.6;
 
-  private CircularList<WeatherCondition> conditionHistory = new CircularList<>(2);
+  private final CircularList<WeatherCondition> conditionHistory = new CircularList<>(2);
   private Date lastWeatherUpdate;
 
   /**

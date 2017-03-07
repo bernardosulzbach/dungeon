@@ -22,6 +22,7 @@ public class EffectFactory implements Serializable {
   private EffectFactory() {
     templates.put(new Id("HEALING"), new HealingEffectTemplate());
     templates.put(new Id("EXTRA_ATTACK"), new AttackEffectTemplate());
+    templates.put(new Id("IMPROVED_FISHING"), new ImprovedFishingEffectTemplate());
     templates.put(new Id("WELL_FED"), new WellFedEffectTemplate());
   }
 
@@ -56,20 +57,6 @@ public class EffectFactory implements Serializable {
       final int healing = Integer.parseInt(parameters.get(0));
       return new HealingEffect(healing);
     }
-
-    private static class HealingEffect extends Effect {
-      private static final long serialVersionUID = Version.MAJOR;
-      private final int healing;
-
-      HealingEffect(int healing) {
-        this.healing = healing;
-      }
-
-      @Override
-      public void affect(Creature creature) {
-        creature.getHealth().incrementBy(healing);
-      }
-    }
   }
 
   private static class AttackEffectTemplate extends EffectTemplate {
@@ -93,6 +80,33 @@ public class EffectFactory implements Serializable {
     public Effect instantiate(List<String> parameters) {
       assertParameterCount(parameters, 0);
       return new HitRateEffect(SIX_HOURS, 1.05, 1);
+    }
+  }
+
+  private static class ImprovedFishingEffectTemplate extends EffectTemplate {
+    private static final long serialVersionUID = Version.MAJOR;
+
+    @Override
+    public Effect instantiate(List<String> parameters) {
+      assertParameterCount(parameters, 2);
+      final Percentage extraProficiency = Percentage.fromString(parameters.get(0));
+      // Period parsing already throws only IllegalArgumentException and derived exceptions.
+      final Duration duration = DungeonTimeParser.parseDuration(parameters.get(1));
+      return new ImprovedFishingEffect(duration, extraProficiency);
+    }
+  }
+
+  private static class HealingEffect extends Effect {
+    private static final long serialVersionUID = Version.MAJOR;
+    private final int healing;
+
+    HealingEffect(int healing) {
+      this.healing = healing;
+    }
+
+    @Override
+    public void affect(Creature creature) {
+      creature.getHealth().incrementBy(healing);
     }
   }
 
@@ -203,6 +217,56 @@ public class EffectFactory implements Serializable {
           asDouble = 1.0;
         }
         return new Percentage(asDouble);
+      }
+    }
+  }
+
+  private static class ImprovedFishingEffect extends Effect {
+    private static final long serialVersionUID = Version.MAJOR;
+    private final Duration duration;
+    private final Percentage extraProficiency;
+
+    ImprovedFishingEffect(Duration duration, Percentage extraProficiency) {
+      this.duration = duration;
+      this.extraProficiency = extraProficiency;
+    }
+
+    @Override
+    public void affect(final Creature creature) {
+      Date start = creature.getLocation().getWorld().getWorldDate();
+      final Date end = start.plus(duration.getSeconds(), DungeonTimeUnit.SECOND);
+      creature.addCondition(new ImprovedFishingCondition(this, end, extraProficiency));
+    }
+
+    private static class ImprovedFishingCondition extends Condition {
+      private static final long serialVersionUID = Version.MAJOR;
+      private final Date end;
+      private final Effect effect;
+      private final Percentage extraProficiency;
+
+      ImprovedFishingCondition(Effect effect, Date end, Percentage extraProficiency) {
+        this.effect = effect;
+        this.end = end;
+        this.extraProficiency = extraProficiency;
+      }
+
+      @Override
+      Date getExpirationDate() {
+        return end;
+      }
+
+      public Effect getEffect() {
+        return effect;
+      }
+
+      @Override
+      String getDescription() {
+        return "+" + extraProficiency + " to fishing proficiency";
+      }
+
+      @Override
+      Percentage modifyFishingProficiency(Percentage proficiency) {
+        return proficiency.add(extraProficiency);
       }
     }
   }
