@@ -22,7 +22,7 @@ public class EffectFactory implements Serializable {
   private EffectFactory() {
     templates.put(new Id("HEALING"), new HealingEffectTemplate());
     templates.put(new Id("EXTRA_ATTACK"), new AttackEffectTemplate());
-    templates.put(new Id("IMPROVED_FISHING"), new ImprovedFishingEffectTemplate());
+    templates.put(new Id("FISHING_PROFICIENCY"), new FishingProficiencyTemplate());
     templates.put(new Id("WELL_FED"), new WellFedEffectTemplate());
   }
 
@@ -83,7 +83,7 @@ public class EffectFactory implements Serializable {
     }
   }
 
-  private static class ImprovedFishingEffectTemplate extends EffectTemplate {
+  private static class FishingProficiencyTemplate extends EffectTemplate {
     private static final long serialVersionUID = Version.MAJOR;
 
     @Override
@@ -92,7 +92,7 @@ public class EffectFactory implements Serializable {
       final Percentage extraProficiency = Percentage.fromString(parameters.get(0));
       // Period parsing already throws only IllegalArgumentException and derived exceptions.
       final Duration duration = DungeonTimeParser.parseDuration(parameters.get(1));
-      return new ImprovedFishingEffect(duration, extraProficiency);
+      return new FishingProficiencyEffect(duration, extraProficiency, 1);
     }
   }
 
@@ -221,14 +221,21 @@ public class EffectFactory implements Serializable {
     }
   }
 
-  private static class ImprovedFishingEffect extends Effect {
+  private static class FishingProficiencyEffect extends Effect {
     private static final long serialVersionUID = Version.MAJOR;
     private final Duration duration;
     private final Percentage extraProficiency;
+    private final int maximumStack;
 
-    ImprovedFishingEffect(Duration duration, Percentage extraProficiency) {
+    FishingProficiencyEffect(Duration duration, Percentage extraProficiency, int maximumStack) {
       this.duration = duration;
       this.extraProficiency = extraProficiency;
+      this.maximumStack = maximumStack;
+    }
+
+    @Override
+    public int getMaximumStack() {
+      return maximumStack;
     }
 
     @Override

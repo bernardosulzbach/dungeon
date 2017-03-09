@@ -323,7 +323,7 @@
       "drinkableDoses": 1,
       "drinkableEffects": [
         [
-          "IMPROVED_FISHING",
+          "FISHING_PROFICIENCY",
           "15%",
           "1 hour"
         ]
