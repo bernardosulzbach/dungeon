@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.io;
 
+import org.mafagafogigante.dungeon.entity.creatures.AttackAlgorithmId;
+import org.mafagafogigante.dungeon.entity.creatures.Creature.Tag;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
@@ -54,16 +56,16 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     final JsonRule idRule = JsonRuleFactory.makeIdRule();
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
-    final JsonRule uppercaseJsonRule = JsonRuleFactory.makeUppercaseStringRule();
     creatureRules.put(ID_FIELD, idRule);
     creatureRules.put(TYPE_FIELD, JsonRuleFactory.makeStringRule());
     creatureRules.put(NAME_FIELD, nameJsonRuleObject);
-    final JsonRule variableUppercaseRule = JsonRuleFactory.makeVariableArrayRule(uppercaseJsonRule);
-    creatureRules.put(TAGS_FIELD, JsonRuleFactory.makeOptionalRule(variableUppercaseRule));
+    JsonRule tagEnumRule = JsonRuleFactory.makeEnumJsonRule(Tag.class);
+    JsonRule variableTagEnumRule = JsonRuleFactory.makeVariableArrayRule(tagEnumRule);
+    creatureRules.put(TAGS_FIELD, JsonRuleFactory.makeOptionalRule(variableTagEnumRule));
     creatureRules.put(INVENTORY_ITEM_LIMIT_FIELD, JsonRuleFactory.makeOptionalRule(integerRule));
-    final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
     creatureRules.put(INVENTORY_WEIGHT_LIMIT_FIELD, optionalIntegerRule);
-    final JsonRule variableIdRule = JsonRuleFactory.makeVariableArrayRule(idRule);
+    JsonRule variableIdRule = JsonRuleFactory.makeVariableArrayRule(idRule);
     creatureRules.put(INVENTORY_FIELD, JsonRuleFactory.makeOptionalRule(variableIdRule));
     creatureRules.put(DROPS_FIELD, getDropsRule());
     creatureRules.put(LUMINOSITY_FIELD, JsonRuleFactory.makeOptionalRule(percentRule));
@@ -71,7 +73,8 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     creatureRules.put(WEIGHT_FIELD, JsonRuleFactory.makeBoundDoubleRule(Double.MIN_VALUE, Double.MAX_VALUE));
     creatureRules.put(HEALTH_FIELD, integerRule);
     creatureRules.put(ATTACK_FIELD, integerRule);
-    creatureRules.put(ATTACK_ALGORITHM_ID_FIELD, idRule);
+    JsonRule attackAlgorithmEnumRule = JsonRuleFactory.makeEnumJsonRule(AttackAlgorithmId.class);
+    creatureRules.put(ATTACK_ALGORITHM_ID_FIELD, attackAlgorithmEnumRule);
     creatureRules.put(WEAPON_FIELD, JsonRuleFactory.makeOptionalRule(idRule));
     return JsonRuleFactory.makeObjectRule(creatureRules);
   }

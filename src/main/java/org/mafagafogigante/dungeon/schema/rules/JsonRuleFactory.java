@@ -75,4 +75,8 @@ public final class JsonRuleFactory {
     return new PeriodJsonRule();
   }
 
+  public static <T extends Enum<T>> JsonRule makeEnumJsonRule(Class<T> enumClass) {
+    return new EnumJsonRule<>(enumClass);
+  }
+
 }
