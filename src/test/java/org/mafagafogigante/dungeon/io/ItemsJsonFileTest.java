@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.io;
 
+import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
@@ -67,7 +68,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     itemRules.put(TYPE_FIELD, stringRule);
     itemRules.put(NAME_FIELD, nameRuleObject);
     itemRules.put(RARITY_FIELD, idRule);
-    itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(stringRule));
+    JsonRule itemTagEnumRule = JsonRuleFactory.makeEnumJsonRule(Item.Tag.class);
+    itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(itemTagEnumRule));
     itemRules.put(UNIQUE_FIELD, JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeBooleanRule()));
     itemRules.put(INTEGRITY_FIELD, integrityRuleObject);
     itemRules.put(WEIGHT_FIELD, JsonRuleFactory.makeBoundDoubleRule(Double.MIN_VALUE, 100));
