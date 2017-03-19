@@ -44,7 +44,7 @@ final class AttackAlgorithms {
    */
   private static void registerAttackAlgorithm(AttackAlgorithmId id, AttackAlgorithm algorithm) {
     if (ATTACK_ALGORITHM_MAP.containsKey(id)) {
-      throw new IllegalStateException("There is an AttackAlgorithm already defined for this AttackAlgorithmId!");
+      throw new IllegalStateException("There is an AttackAlgorithm already defined for this AttackAlgorithmId");
     }
     ATTACK_ALGORITHM_MAP.put(id, algorithm);
   }
@@ -55,7 +55,7 @@ final class AttackAlgorithms {
   private static void validateMap() {
     for (AttackAlgorithmId id : AttackAlgorithmId.values()) {
       if (!ATTACK_ALGORITHM_MAP.containsKey(id)) {
-        throw new AssertionError(id + " is not mapped to an AttackAlgorithm!");
+        throw new AssertionError(id + " is not mapped to an AttackAlgorithm");
       }
     }
   }

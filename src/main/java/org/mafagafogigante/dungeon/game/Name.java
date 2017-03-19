@@ -64,7 +64,7 @@ public final class Name implements Serializable {
     String name;
     if (quantity < 0) {
       DungeonLogger.warning("Called getQuantifiedName with nonpositive quantity.");
-      throw new AssertionError("Negative quantity passed to getQuantifiedName()!");
+      throw new AssertionError("Negative quantity passed to getQuantifiedName()");
     } else if (quantity == 1) {
       name = singular;
     } else {
@@ -76,7 +76,7 @@ public final class Name implements Serializable {
     } else {
       Numeral correspondingNumeral = Numeral.getCorrespondingNumeral(quantity);
       if (correspondingNumeral == null) {
-        throw new AssertionError("Numeral.getCorrespondingNumeral() returned null!");
+        throw new AssertionError("Numeral.getCorrespondingNumeral() returned null");
       } else {
         number = correspondingNumeral.toString().toLowerCase(Locale.ENGLISH);
       }

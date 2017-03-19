@@ -148,7 +148,7 @@ public class Creature extends Entity {
       getInventory().removeItem(item);
       getLocation().addItem(item);
     } else {
-      throw new IllegalStateException("item should be in the creature's inventory.");
+      throw new IllegalStateException("Item should be in the creature's inventory");
     }
   }
 
@@ -169,9 +169,9 @@ public class Creature extends Entity {
    */
   public void setCauseOfDeath(@NotNull CauseOfDeath causeOfDeath) {
     if (this.causeOfDeath != null) {
-      throw new IllegalStateException("creature already has a CauseOfDeath.");
+      throw new IllegalStateException("Creature already has a CauseOfDeath");
     } else if (getHealth().isAlive()) {
-      throw new IllegalStateException("creature is still alive.");
+      throw new IllegalStateException("Creature is still alive");
     } else {
       this.causeOfDeath = causeOfDeath;
     }

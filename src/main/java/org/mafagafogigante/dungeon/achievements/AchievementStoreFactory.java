@@ -74,7 +74,7 @@ public class AchievementStoreFactory {
    */
   private static void loadAchievements(AchievementStore store) {
     if (!store.getAchievements().isEmpty()) {
-      throw new IllegalStateException("called loadAchievements on a not empty AchievementStore");
+      throw new IllegalStateException("Called loadAchievements on a not empty AchievementStore");
     }
     JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
     for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {

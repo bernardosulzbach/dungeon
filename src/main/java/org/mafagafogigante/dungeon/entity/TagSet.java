@@ -57,7 +57,7 @@ public class TagSet<E extends Enum<E>> implements Serializable {
       try {
         tagSet.addTag(Enum.valueOf(enumClass, value.asString()));
       } catch (IllegalArgumentException fatal) {
-        throw new InvalidTagException("invalid tag '" + value.asString() + "' found.", fatal);
+        throw new InvalidTagException("Invalid tag '" + value.asString() + "' found", fatal);
       }
     }
     return tagSet;

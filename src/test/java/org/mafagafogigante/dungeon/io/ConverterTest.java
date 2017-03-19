@@ -16,6 +16,8 @@ public class ConverterTest {
     Assert.assertEquals("1024.0 MiB", Converter.bytesToHuman((1L << 30) - 1));
     Assert.assertEquals("1.0 GiB", Converter.bytesToHuman(1L << 30));
     Assert.assertEquals("1024.0 GiB", Converter.bytesToHuman((1L << 40) - 1));
+
+    //VOLTAR PARA PONTO NAS LINHAS 13, 14, 15, 16, 17, 18
   }
 
 }

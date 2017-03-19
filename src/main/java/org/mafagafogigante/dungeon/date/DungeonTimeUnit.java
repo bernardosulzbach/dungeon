@@ -23,7 +23,7 @@ public enum DungeonTimeUnit {
    */
   public long as(DungeonTimeUnit unit) {
     if (this.milliseconds <= unit.milliseconds) {
-      throw new IllegalArgumentException("unit is bigger than or equal to the caller.");
+      throw new IllegalArgumentException("Unit is bigger than or equal to the caller");
     } else {
       return this.milliseconds / unit.milliseconds;
     }

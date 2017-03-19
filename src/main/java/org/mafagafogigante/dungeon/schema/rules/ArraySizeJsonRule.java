@@ -16,7 +16,7 @@ class ArraySizeJsonRule extends ArrayJsonRule {
     super.validate(value);
     JsonArray jsonArray = value.asArray();
     if (jsonArray.size() != arraySize) {
-      throw new IllegalArgumentException(jsonArray + " size is not valid.");
+      throw new IllegalArgumentException(jsonArray + " size is not valid");
     }
   }
 

@@ -61,7 +61,7 @@ public class Random {
    */
   public static int nextInteger(int minimum, int n) {
     if (minimum >= n) {
-      throw new IllegalArgumentException("minimum must be less than n");
+      throw new IllegalArgumentException("Minimum must be less than n");
     }
     return minimum + nextInteger(n - minimum);
   }
@@ -75,7 +75,7 @@ public class Random {
    */
   public static <T> T select(@NotNull List<T> list) {
     if (list.isEmpty()) {
-      throw new IllegalArgumentException("list is empty.");
+      throw new IllegalArgumentException("List is empty");
     }
     return list.get(nextInteger(list.size()));
   }

@@ -45,9 +45,9 @@ public class Table extends Writable {
    */
   public Table(String... headers) {
     if (headers.length == 0) {
-      throw new IllegalArgumentException("tried to create Table with no headers.");
+      throw new IllegalArgumentException("Tried to create Table with no headers");
     } else if (headers.length > MAXIMUM_COLUMNS) {
-      throw new IllegalArgumentException("tried to create Table with more than " + MAXIMUM_COLUMNS + " headers.");
+      throw new IllegalArgumentException("Tried to create Table with more than " + MAXIMUM_COLUMNS + " headers");
     }
     for (String header : headers) {
       columns.add(new Column(header));
@@ -131,7 +131,7 @@ public class Table extends Writable {
    */
   private static void repeatModification(int reps, int modification, @NotNull int[] buckets) {
     if (buckets.length == 0) {
-      throw new IllegalArgumentException("buckets must have at least one element.");
+      throw new IllegalArgumentException("Buckets must have at least one element");
     }
     if (DungeonMath.sum(buckets) + reps * modification < MINIMUM_WIDTH * buckets.length) {
       String format = "minimum is impossible. Got %d x %d for %s for a minimum of %d.";
@@ -157,9 +157,9 @@ public class Table extends Writable {
     if (values.length != columns.size()) {
       String expectedButGotString = "Expected " + columns.size() + ", but got " + values.length + ".";
       if (values.length < columns.size()) {
-        throw new IllegalArgumentException("provided less values than there are rows. " + expectedButGotString);
+        throw new IllegalArgumentException("Provided less values than there are rows. " + expectedButGotString);
       } else if (values.length > columns.size()) {
-        throw new IllegalArgumentException("provided more values than there are rows. " + expectedButGotString);
+        throw new IllegalArgumentException("Provided more values than there are rows. " + expectedButGotString);
       }
     }
     for (int i = 0; i < values.length; i++) {

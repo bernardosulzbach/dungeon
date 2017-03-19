@@ -9,7 +9,7 @@ class BooleanJsonRule implements JsonRule {
   @Override
   public void validate(JsonValue value) {
     if (!value.isBoolean()) {
-      throw new IllegalArgumentException(value + " is not a boolean.");
+      throw new IllegalArgumentException(value + " is not a boolean");
     }
   }
 

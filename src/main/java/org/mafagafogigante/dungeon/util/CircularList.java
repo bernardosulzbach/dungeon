@@ -24,7 +24,7 @@ public final class CircularList<T> implements Serializable {
    */
   public CircularList(int capacity) {
     if (capacity < 1) {
-      throw new IllegalArgumentException("capacity must be positive.");
+      throw new IllegalArgumentException("Capacity must be positive");
     }
     this.capacity = capacity;
     this.list = new ArrayList<>(capacity);

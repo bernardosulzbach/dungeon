@@ -20,13 +20,13 @@ public class Integrity implements Serializable {
    */
   public Integrity(int maximum, int current) {
     if (maximum < 1) {
-      throw new IllegalArgumentException("maximum should be positive.");
+      throw new IllegalArgumentException("Maximum should be positive");
     }
     if (current < 0) {
-      throw new IllegalArgumentException("current should be nonnegative.");
+      throw new IllegalArgumentException("Current should be nonnegative");
     }
     if (maximum < current) {
-      throw new IllegalArgumentException("current should be greater than or equal to maximum.");
+      throw new IllegalArgumentException("Current should be greater than or equal to maximum");
     }
     this.maximum = maximum;
     this.current = current;

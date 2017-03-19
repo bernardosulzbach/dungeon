@@ -268,7 +268,7 @@ public final class Loader {
   private static File getMostRecentlySavedFile() {
     List<File> fileList = getSavedFiles();
     if (fileList.isEmpty()) {
-      throw new IllegalStateException("called getMostRecentlySavedFile() but there are no save files.");
+      throw new IllegalStateException("Called getMostRecentlySavedFile() but there are no save files");
     }
     return fileList.get(0);
   }

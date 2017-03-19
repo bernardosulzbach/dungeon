@@ -36,7 +36,7 @@ public final class Engine {
    */
   public static void rollDateAndRefresh(int seconds) {
     if (seconds <= 0) {
-      throw new IllegalArgumentException("seconds should be positive.");
+      throw new IllegalArgumentException("Seconds should be positive");
     }
     effectivelyUpdate(seconds);
   }
@@ -48,7 +48,7 @@ public final class Engine {
    */
   private static void effectivelyUpdate(int seconds) {
     if (seconds < 0) {
-      throw new IllegalArgumentException("seconds should be nonnegative.");
+      throw new IllegalArgumentException("Seconds should be nonnegative");
     }
     if (seconds > 0) {
       Game.getGameState().getWorld().rollDate(seconds);

@@ -20,7 +20,7 @@ public class JsonObjectFactory {
    */
   public static JsonObject makeJsonObject(@NotNull String filename) {
     if (!filename.endsWith(JSON_EXTENSION)) {
-      throw new IllegalFilenameExtensionException("filename must end with " + JSON_EXTENSION + ".");
+      throw new IllegalFilenameExtensionException("Filename must end with " + JSON_EXTENSION);
     }
     // Using a BufferedReader here does not improve performance as the library is already buffered.
     try (Reader reader = ResourceStreamFactory.getInputStreamReader(filename)) {

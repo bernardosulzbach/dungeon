@@ -78,7 +78,7 @@ public class AchievementTracker implements Serializable {
    */
   public List<UnlockedAchievement> getUnlockedAchievements(Comparator<UnlockedAchievement> comparator) {
     if (comparator == null) {
-      throw new IllegalArgumentException("comparator is null.");
+      throw new IllegalArgumentException("Comparator is null");
     }
     List<UnlockedAchievement> list = new ArrayList<>(unlockedAchievements.values());
     Collections.sort(list, comparator);

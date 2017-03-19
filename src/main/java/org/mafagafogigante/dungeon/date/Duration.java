@@ -27,7 +27,7 @@ public class Duration implements Comparable<Duration>, Serializable {
     if (difference >= 0) {
       duration = difference;
     } else {
-      throw new IllegalArgumentException("end is before start.");
+      throw new IllegalArgumentException("End is before start");
     }
   }
 

@@ -58,7 +58,7 @@ public class JsonCreaturePresetFactory implements CreaturePresetFactory {
       if (Percentage.isValidPercentageString(percentageString)) {
         return Percentage.fromString(percentageString);
       } else {
-        throw new IllegalStateException("JSON contains invalid percentage string: " + percentageString + ".");
+        throw new IllegalStateException("JSON contains invalid percentage string: " + percentageString);
       }
     }
     return null;

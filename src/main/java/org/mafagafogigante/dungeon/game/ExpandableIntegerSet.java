@@ -24,9 +24,9 @@ class ExpandableIntegerSet implements Serializable {
    */
   public ExpandableIntegerSet(int minimumDifference, int maximumDifference) {
     if (minimumDifference < 1) {
-      throw new IllegalArgumentException("minimumDifference must be positive");
+      throw new IllegalArgumentException("MinimumDifference must be positive");
     } else if (minimumDifference >= maximumDifference) {
-      throw new IllegalArgumentException("maximumDifference must be bigger than minimumDifference");
+      throw new IllegalArgumentException("MaximumDifference must be bigger than minimumDifference");
     } else {
       this.minimumDifference = minimumDifference;
       this.maximumDifference = maximumDifference;
@@ -39,7 +39,7 @@ class ExpandableIntegerSet implements Serializable {
    */
   private void initialize() {
     if (!set.isEmpty()) {
-      throw new IllegalStateException("set already has an element.");
+      throw new IllegalStateException("Set already has an element");
     } else {
       set.add(Random.nextInteger(minimumDifference));
     }
@@ -52,7 +52,7 @@ class ExpandableIntegerSet implements Serializable {
    */
   List<Integer> expand(int value) {
     if (set.isEmpty()) {
-      throw new IllegalStateException("the set is empty.");
+      throw new IllegalStateException("The set is empty");
     }
     ArrayList<Integer> integerList = new ArrayList<>();
     int integer = set.last();

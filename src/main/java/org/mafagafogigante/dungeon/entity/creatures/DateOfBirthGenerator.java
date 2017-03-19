@@ -24,7 +24,7 @@ class DateOfBirthGenerator {
   public DateOfBirthGenerator(@NotNull Date now, int age) {
     this.today = now;
     if (age < 0) {
-      throw new IllegalArgumentException("age must be nonnegative.");
+      throw new IllegalArgumentException("Age must be nonnegative");
     }
     this.age = age;
   }

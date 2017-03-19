@@ -56,7 +56,7 @@ class DungeonCreator implements Serializable {
   private Point createEntrance(@NotNull World world, @NotNull Point entrance) {
     // The entrance.
     if (world.alreadyHasLocationAt(entrance)) {
-      throw new IllegalStateException("world has location at the specified entrance.");
+      throw new IllegalStateException("World has location at the specified entrance");
     }
     Location dungeonEntrance = new Location(getRandomLocationPreset(Type.DUNGEON_ENTRANCE), world, entrance);
     world.addLocation(dungeonEntrance, entrance);

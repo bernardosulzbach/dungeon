@@ -15,10 +15,10 @@ class StringLengthJsonRule extends StringJsonRule {
     super.validate(value);
     String stringValue = value.asString();
     if (stringValue.length() < stringLength) {
-      throw new IllegalArgumentException(value + " is below the allowed minimum " + stringLength + ".");
+      throw new IllegalArgumentException(value + " is below the allowed minimum " + stringLength);
     }
     if (stringValue.length() > stringLength) {
-      throw new IllegalArgumentException(value + " is above the allowed maximum " + stringLength + ".");
+      throw new IllegalArgumentException(value + " is above the allowed maximum " + stringLength);
     }
   }
 

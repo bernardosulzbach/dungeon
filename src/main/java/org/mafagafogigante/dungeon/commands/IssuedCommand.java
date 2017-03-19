@@ -26,11 +26,11 @@ public final class IssuedCommand {
    */
   public IssuedCommand(@NotNull String source) {
     if (!isValidSource(source)) {
-      throw new IllegalArgumentException("invalid source, command limits violated.");
+      throw new IllegalArgumentException("Invalid source, command limits violated");
     }
     tokens = Collections.unmodifiableList(Arrays.asList(StringUtils.split(source)));
     if (tokens.isEmpty()) {
-      throw new IllegalArgumentException("invalid source, no tokens obtained.");
+      throw new IllegalArgumentException("Invalid source, no tokens obtained");
     }
     this.stringRepresentation = StringUtils.join(tokens, ' ');
   }

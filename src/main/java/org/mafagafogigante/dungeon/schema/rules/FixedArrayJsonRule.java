@@ -21,7 +21,7 @@ class FixedArrayJsonRule extends ArrayJsonRule {
     super.validate(value);
     JsonArray array = value.asArray();
     if (rules.size() != array.size()) {
-      throw new IllegalArgumentException("Array is not of the right size.");
+      throw new IllegalArgumentException("Array is not of the right size");
     }
     for (int i = 0; i < rules.size(); i++) {
       rules.get(i).validate(array.values().get(i));

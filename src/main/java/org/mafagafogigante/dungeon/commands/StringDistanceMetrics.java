@@ -6,10 +6,10 @@ class StringDistanceMetrics {
 
   static int levenshteinDistance(final String a, final String b) {
     if (!CommandLimits.isWithinMaximumCommandLength(a)) {
-      throw new IllegalArgumentException("input is too big.");
+      throw new IllegalArgumentException("Input is too big");
     }
     if (!CommandLimits.isWithinMaximumCommandLength(b)) {
-      throw new IllegalArgumentException("input is too big.");
+      throw new IllegalArgumentException("Input is too big");
     }
     return StringUtils.getLevenshteinDistance(a, b);
   }

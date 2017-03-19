@@ -19,7 +19,7 @@ final class BreakageHandler {
    */
   public static void handleBreakage(@NotNull Item item) {
     if (!item.isBroken()) {
-      throw new IllegalArgumentException("item should be broken.");
+      throw new IllegalArgumentException("Item should be broken");
     }
     if (!item.hasTag(Item.Tag.REPAIRABLE)) {
       item.getInventory().removeItem(item);

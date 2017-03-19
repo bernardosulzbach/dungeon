@@ -116,7 +116,7 @@ public class Game {
       DungeonLogger.warning("Called setGameState without unsetting the old game state.");
     }
     if (state == null) {
-      throw new IllegalArgumentException("passed null to setGameState.");
+      throw new IllegalArgumentException("Passed null to setGameState");
     }
     gameState = state;
     DungeonLogger.info("Set the GameState field in Game to a GameState.");

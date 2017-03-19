@@ -9,7 +9,7 @@ class NumberJsonRule implements JsonRule {
   @Override
   public void validate(JsonValue value) {
     if (!value.isNumber()) {
-      throw new IllegalArgumentException(value + " is not a number.");
+      throw new IllegalArgumentException(value + " is not a number");
     }
   }
 

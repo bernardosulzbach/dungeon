@@ -21,7 +21,7 @@ class ObjectJsonRule implements JsonRule {
   @Override
   public void validate(JsonValue value) {
     if (!value.isObject()) {
-      throw new IllegalArgumentException(value + " is not an object.");
+      throw new IllegalArgumentException(value + " is not an object");
     }
     JsonObject object = value.asObject();
     Set<String> names = new HashSet<>(object.names());
@@ -30,7 +30,7 @@ class ObjectJsonRule implements JsonRule {
       names.remove(entry.getKey());
     }
     if (!names.isEmpty()) {
-      throw new IllegalArgumentException(String.format("%s does not have a rule.", names.iterator().next()));
+      throw new IllegalArgumentException(String.format("%s does not have a rule", names.iterator().next()));
     }
   }
 

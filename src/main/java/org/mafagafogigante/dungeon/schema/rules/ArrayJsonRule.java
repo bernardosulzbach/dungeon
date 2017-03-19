@@ -9,7 +9,7 @@ class ArrayJsonRule implements JsonRule {
   @Override
   public void validate(JsonValue value) {
     if (!value.isArray()) {
-      throw new IllegalArgumentException(value + " is not an array.");
+      throw new IllegalArgumentException(value + " is not an array");
     }
   }
 

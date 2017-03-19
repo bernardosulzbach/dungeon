@@ -9,7 +9,7 @@ final class UppercaseStringJsonRule extends StringJsonRule {
   public void validate(JsonValue value) {
     super.validate(value);
     if (!StringUtils.isAllUpperCase(value.asString())) {
-      throw new IllegalArgumentException(value + " is not uppercase.");
+      throw new IllegalArgumentException(value + " is not uppercase");
     }
   }
 
