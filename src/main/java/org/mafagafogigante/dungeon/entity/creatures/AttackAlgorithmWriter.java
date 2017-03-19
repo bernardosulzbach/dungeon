@@ -59,7 +59,7 @@ final class AttackAlgorithmWriter {
    */
   static void writeWeaponBreak(Item weapon) {
     if (!weapon.isBroken()) {
-      throw new IllegalArgumentException("weapon is not broken.");
+      throw new IllegalArgumentException("Weapon is not broken");
     }
     Writer.write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
   }

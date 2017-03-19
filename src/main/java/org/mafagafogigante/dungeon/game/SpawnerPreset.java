@@ -19,10 +19,10 @@ class SpawnerPreset {
    */
   public SpawnerPreset(String id, int minimumPopulation, int maximumPopulation, int delayInHours) {
     if (minimumPopulation < 1) {
-      throw new IllegalArgumentException("minimumPopulation must be positive");
+      throw new IllegalArgumentException("MinimumPopulation must be positive");
     }
     if (minimumPopulation > maximumPopulation) {
-      throw new IllegalArgumentException("minimumPopulation must be smaller than or equal to maximumPopulation");
+      throw new IllegalArgumentException("MinimumPopulation must be smaller than or equal to maximumPopulation");
     }
     this.id = new Id(id);
     this.minimumPopulation = minimumPopulation;

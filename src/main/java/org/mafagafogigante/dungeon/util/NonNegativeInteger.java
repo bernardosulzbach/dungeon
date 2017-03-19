@@ -14,7 +14,7 @@ public class NonNegativeInteger {
    */
   public NonNegativeInteger(@NotNull Integer integer) {
     if (integer < 0) {
-      throw new IllegalArgumentException("integer must be nonnegative.");
+      throw new IllegalArgumentException("Integer must be nonnegative");
     }
     this.integer = integer;
   }

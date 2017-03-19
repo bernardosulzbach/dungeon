@@ -55,7 +55,7 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
       String format = "Added %s to the inventory of %s.";
       DungeonLogger.fine(String.format(format, item.getQualifiedName(), owner));
     } else {
-      throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL.");
+      throw new IllegalStateException("simulateItemAddition did not return SimulationResult.SUCCESSFUL");
     }
   }
 

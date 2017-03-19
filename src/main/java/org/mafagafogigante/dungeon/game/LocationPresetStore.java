@@ -94,7 +94,7 @@ public final class LocationPresetStore {
    */
   private void addLocationPreset(LocationPreset preset) {
     if (idLocationPresetMap.containsKey(preset.getId())) {
-      throw new IllegalArgumentException("idLocationPresetMap already contains a preset with the Id " + preset.getId());
+      throw new IllegalArgumentException("IdLocationPresetMap already contains a preset with the Id " + preset.getId());
     }
     idLocationPresetMap.put(preset.getId(), preset);
     if (!typeLocationPresetMap.containsKey(preset.getType())) {

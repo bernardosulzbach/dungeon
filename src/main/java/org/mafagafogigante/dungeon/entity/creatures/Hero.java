@@ -337,7 +337,7 @@ public class Hero extends Creature {
       getInventory().addItem(item);
       Writer.write(String.format("Added %s to the inventory.", item.getQualifiedName()));
     } else {
-      throw new IllegalStateException("simulateItemAddition did not return SUCCESSFUL.");
+      throw new IllegalStateException("SimulateItemAddition did not return SUCCESSFUL");
     }
   }
 
@@ -400,7 +400,7 @@ public class Hero extends Creature {
    */
   private void printItems() {
     if (getInventory().getItemCount() == 0) {
-      throw new IllegalStateException("inventory item count is 0.");
+      throw new IllegalStateException("Inventory item count is 0");
     }
     Writer.write("You are carrying:");
     for (Item item : getInventory().getItems()) {
@@ -544,7 +544,7 @@ public class Hero extends Creature {
    */
   private void learnSpell(@NotNull BookComponent book) {
     if (!book.isDidactic()) {
-      throw new IllegalArgumentException("book should be didactic.");
+      throw new IllegalArgumentException("Book should be didactic");
     }
     Spell spell = SpellData.getSpellMap().get(book.getSpellId());
     if (getSpellcaster().knowsSpell(spell)) {

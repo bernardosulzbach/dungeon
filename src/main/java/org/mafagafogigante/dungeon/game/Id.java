@@ -22,13 +22,13 @@ public final class Id implements Serializable {
    */
   public Id(String id) {
     if (id == null) {
-      throw new IllegalArgumentException("tried to create an Id with null.");
+      throw new IllegalArgumentException("Tried to create an Id with null");
     } else if (id.isEmpty()) {
-      throw new IllegalArgumentException("tried to create an Id with the empty string.");
+      throw new IllegalArgumentException("Tried to create an Id with the empty string");
     } else {
       for (char character : id.toCharArray()) {
         if (isInvalidCharacter(character)) {
-          throw new IllegalArgumentException("got invalid Id string: " + id);
+          throw new IllegalArgumentException("Got invalid Id string: " + id);
         }
       }
       this.id = id;

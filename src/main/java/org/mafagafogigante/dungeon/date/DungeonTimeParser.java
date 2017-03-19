@@ -29,7 +29,7 @@ public final class DungeonTimeParser {
   public static Duration parsePeriod(@NotNull String string) {
     List<String> tokens = cleanAndTokenize(string);
     if (tokens.size() < 2) {
-      throw new IllegalArgumentException("string should provide at least one multiplier-unit pair.");
+      throw new IllegalArgumentException("String should provide at least one multiplier-unit pair");
     }
     long milliseconds = 0;
     // Alternatively get a multiplier and a unit.
@@ -40,10 +40,10 @@ public final class DungeonTimeParser {
         try {
           multiplier = Long.parseLong(token);
           if (multiplier <= 0) {
-            throw new InvalidMultiplierException("nonpositive multipliers are not allowed.");
+            throw new InvalidMultiplierException("Nonpositive multipliers are not allowed");
           }
         } catch (NumberFormatException bad) {
-          throw new InvalidMultiplierException(token + " is not a valid multiplier.");
+          throw new InvalidMultiplierException(token + " is not a valid multiplier");
         }
       } else {
         unit = parseDungeonTimeUnit(token);
@@ -68,7 +68,7 @@ public final class DungeonTimeParser {
     try {
       return DungeonTimeUnit.valueOf(cleanToken.toUpperCase(Locale.ENGLISH));
     } catch (IllegalArgumentException bad) {
-      throw new InvalidUnitException(token + " is not a valid unit.");
+      throw new InvalidUnitException(token + " is not a valid unit");
     }
   }
 

@@ -83,7 +83,7 @@ public final class Utils {
    */
   public static String makePeriodString(long duration) {
     if (duration < 0) {
-      throw new IllegalArgumentException("duration should be nonnegative.");
+      throw new IllegalArgumentException("Duration should be nonnegative");
     }
     Period period = new Period(duration).normalizedStandard();
     period = withTwoMostSignificantNonZeroFieldsOnly(period);

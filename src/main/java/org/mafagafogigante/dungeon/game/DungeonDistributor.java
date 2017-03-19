@@ -65,7 +65,7 @@ class DungeonDistributor implements Serializable {
 
   public void registerDungeonEntrance(Point point) {
     if (entrances.contains(point)) {
-      throw new IllegalStateException("point " + point.toString() + " is already registered");
+      throw new IllegalStateException("Point " + point.toString() + " is already registered");
     } else {
       entrances.add(point);
     }

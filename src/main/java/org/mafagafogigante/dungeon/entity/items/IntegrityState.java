@@ -22,7 +22,7 @@ public enum IntegrityState {
    */
   public static IntegrityState getIntegrityState(int curIntegrity, int maxIntegrity) {
     if (curIntegrity > maxIntegrity) {
-      throw new IllegalArgumentException("curIntegrity is greater than maxIntegrity.");
+      throw new IllegalArgumentException("CurIntegrity is greater than maxIntegrity");
     } else if (curIntegrity == maxIntegrity) {
       return PERFECT;
     } else if (curIntegrity >= maxIntegrity * 0.65) {

@@ -20,7 +20,7 @@ public class CommandDescription {
    */
   public CommandDescription(String name, String info) {
     if (name == null) {
-      throw new IllegalArgumentException("Cannot create CommandDescription with null name.");
+      throw new IllegalArgumentException("Cannot create CommandDescription with null name");
     } else if (isNotLowercase(name)) {
       DungeonLogger.warning("Passed a String that was not lowercase as name for a CommandDescription.");
       name = name.toLowerCase(Locale.ENGLISH);

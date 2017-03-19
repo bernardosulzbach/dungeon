@@ -14,7 +14,7 @@ class IdJsonRule extends StringJsonRule {
     super.validate(value);
     Matcher matcher = pattern.matcher(value.asString());
     if (!matcher.matches()) {
-      throw new IllegalArgumentException(value + " is not a valid Dungeon id.");
+      throw new IllegalArgumentException(value + " is not a valid Dungeon id");
     }
   }
 

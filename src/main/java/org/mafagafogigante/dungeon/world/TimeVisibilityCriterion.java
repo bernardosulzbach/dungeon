@@ -19,11 +19,11 @@ public class TimeVisibilityCriterion implements Serializable, VisibilityCriterio
    */
   public TimeVisibilityCriterion(final int begin, final int end) {
     if (end >= HOURS_IN_DAY) {
-      throw new IllegalArgumentException("end should be a valid hour");
+      throw new IllegalArgumentException("End should be a valid hour");
     }
     this.begin = begin;
     if (begin == end) {
-      throw new IllegalArgumentException("begin should not be equal to end");
+      throw new IllegalArgumentException("Begin should not be equal to end");
     } else if (begin < end) {
       this.duration = end - begin;
     } else {

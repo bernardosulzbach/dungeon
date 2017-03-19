@@ -21,7 +21,7 @@ public class WeatherConditionVisibilityCriterion implements Serializable, Visibi
    */
   public WeatherConditionVisibilityCriterion(@NotNull WeatherCondition minimum, @NotNull WeatherCondition maximum) {
     if (minimum.isHeavierThan(maximum)) {
-      throw new IllegalArgumentException("minimum cannot be heavier than maximum");
+      throw new IllegalArgumentException("Minimum cannot be heavier than maximum");
     }
     this.minimumCondition = minimum;
     this.maximumCondition = maximum;

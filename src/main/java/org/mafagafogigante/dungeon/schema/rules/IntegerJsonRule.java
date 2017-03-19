@@ -10,7 +10,7 @@ class IntegerJsonRule extends NumberJsonRule {
     try {
       value.asInt();
     } catch (NumberFormatException exception) {
-      throw new IllegalArgumentException(value + " is not an integer.");
+      throw new IllegalArgumentException(value + " is not an integer");
     }
   }
 

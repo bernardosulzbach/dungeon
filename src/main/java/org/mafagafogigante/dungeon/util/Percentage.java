@@ -43,7 +43,7 @@ public class Percentage implements Comparable<Percentage>, Serializable {
    */
   public static Percentage fromString(String percentage) {
     if (!isValidPercentageString(percentage)) {
-      throw new IllegalArgumentException("Provided String is not a valid percentage: " + percentage + "!");
+      throw new IllegalArgumentException("Provided String is not a valid percentage: " + percentage);
     }
     return new Percentage(doubleFromPercentageString(percentage));
   }

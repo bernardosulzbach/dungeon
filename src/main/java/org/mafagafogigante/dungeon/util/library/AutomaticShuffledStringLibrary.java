@@ -30,7 +30,7 @@ public class AutomaticShuffledStringLibrary {
       strings.add(value.asString());
     }
     if (strings.isEmpty()) {
-      throw new IllegalStateException("no strings were loaded.");
+      throw new IllegalStateException("No strings were loaded");
     }
     automaticShuffledRange = new AutomaticShuffledRange(strings.size());
     DungeonLogger.info("Loaded " + strings.size() + " strings from " + filename + ".");

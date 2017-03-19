@@ -135,9 +135,9 @@ public class Date implements Comparable<Date>, Serializable {
    */
   public Date plus(int amount, DungeonTimeUnit unit) {
     if (amount <= 0) {
-      throw new IllegalArgumentException("amount must be positive.");
+      throw new IllegalArgumentException("Amount must be positive");
     } else if (unit == null) {
-      throw new IllegalArgumentException("unit should not be null.");
+      throw new IllegalArgumentException("Unit should not be null");
     } else {
       return new Date(time + amount * unit.milliseconds);
     }
@@ -153,9 +153,9 @@ public class Date implements Comparable<Date>, Serializable {
    */
   public Date minus(int amount, DungeonTimeUnit unit) {
     if (amount <= 0) {
-      throw new IllegalArgumentException("amount must be positive.");
+      throw new IllegalArgumentException("Amount must be positive");
     } else if (unit == null) {
-      throw new IllegalArgumentException("unit should not be null.");
+      throw new IllegalArgumentException("Unit should not be null");
     } else {
       return new Date(time - amount * unit.milliseconds);
     }

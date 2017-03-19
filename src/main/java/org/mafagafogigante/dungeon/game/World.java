@@ -86,15 +86,15 @@ public class World implements Serializable {
    */
   public void addLocation(Location locationObject, Point coordinates) {
     if (locations.containsKey(coordinates)) {
-      throw new IllegalStateException("tried to repeatedly add a location to " + coordinates + ".");
+      throw new IllegalStateException("Tried to repeatedly add a location to " + coordinates);
     }
     if (!locationObject.getWorld().equals(this)) {
       World world = locationObject.getWorld();
-      throw new IllegalStateException("tried to add location with World field " + world + " to " + this + ".");
+      throw new IllegalStateException("Tried to add location with World field " + world + " to " + this);
     }
     if (!locationObject.getPoint().equals(coordinates)) {
       Point point = locationObject.getPoint();
-      throw new IllegalStateException("tried to add location with Point field " + point + " to " + coordinates + ".");
+      throw new IllegalStateException("Tried to add location with Point field " + point + " to " + coordinates);
     }
     locations.put(coordinates, locationObject);
     worldStatistics.addLocation(locationObject.getName().getSingular());

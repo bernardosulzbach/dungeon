@@ -17,10 +17,10 @@ final class BoundDoubleJsonRule extends DoubleJsonRule {
     super.validate(value);
     double doubleValue = value.asDouble();
     if (doubleValue < minValue) {
-      throw new IllegalArgumentException(value + " is below the allowed minimum " + minValue + ".");
+      throw new IllegalArgumentException(value + " is below the allowed minimum " + minValue);
     }
     if (doubleValue > maxValue) {
-      throw new IllegalArgumentException(value + " is above the allowed maximum " + maxValue + ".");
+      throw new IllegalArgumentException(value + " is above the allowed maximum " + maxValue);
     }
   }
 

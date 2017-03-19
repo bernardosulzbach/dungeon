@@ -35,7 +35,7 @@ final class Article implements Selectable {
    */
   void addReference(@NotNull final String reference) {
     if (hasReference(reference)) {
-      throw new IllegalStateException("article " + getName() + " already has a reference to " + reference);
+      throw new IllegalStateException("Article " + getName() + " already has a reference to " + reference);
     }
     seeAlso.add(reference);
   }

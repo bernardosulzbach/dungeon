@@ -51,7 +51,7 @@ public final class ItemFactory implements Serializable {
     for (ItemPreset preset : presets) {
       Id id = preset.getId();
       if (itemPresets.containsKey(id)) {
-        throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
+        throw new IllegalArgumentException("Factory already contains a preset with the Id " + preset.getId());
       }
       itemPresets.put(id, preset);
     }
@@ -97,7 +97,7 @@ public final class ItemFactory implements Serializable {
   public Item makeItem(@NotNull Id id, @NotNull Date date) {
     ItemPreset itemPreset = getItemPresets().get(id);
     if (itemPreset == null) {
-      throw new IllegalArgumentException("id (" + id + ") does not correspond to an ItemPreset.");
+      throw new IllegalArgumentException("Id (" + id + ") does not correspond to an ItemPreset");
     }
     Item item = new Item(itemPreset, date);
     restrictions.registerItem(item.getId());
@@ -124,7 +124,7 @@ public final class ItemFactory implements Serializable {
    */
   public Item makeCorpse(Creature creature, Date date) {
     if (!creature.hasTag(Creature.Tag.CORPSE)) {
-      throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag!");
+      throw new AssertionError("Called makeCorpse for Creature that does not have the CORPSE tag");
     }
     // Corpses should never be restricted.
     return makeItem(CorpseItemPresetFactory.makeCorpseIdFromCreatureId(creature.getId()), date);

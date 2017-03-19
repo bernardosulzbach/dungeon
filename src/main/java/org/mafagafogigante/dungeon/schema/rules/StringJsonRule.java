@@ -9,7 +9,7 @@ class StringJsonRule implements JsonRule {
   @Override
   public void validate(JsonValue value) {
     if (!value.isString()) {
-      throw new IllegalArgumentException(value + " is not a string.");
+      throw new IllegalArgumentException(value + " is not a string");
     }
   }
 

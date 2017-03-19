@@ -54,7 +54,7 @@ public final class DungeonMath {
    */
   public static int safeCastLongToInteger(long value) {
     if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-      throw new IllegalArgumentException(value + " does not fit into an integer.");
+      throw new IllegalArgumentException(value + " does not fit into an integer");
     } else {
       return (int) value;
     }

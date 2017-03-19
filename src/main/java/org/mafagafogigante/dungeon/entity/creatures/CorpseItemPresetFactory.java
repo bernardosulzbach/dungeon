@@ -62,7 +62,7 @@ public final class CorpseItemPresetFactory implements ItemPresetFactory {
    */
   private ItemPreset makeCorpsePreset(CreaturePreset preset) {
     if (!preset.hasTag(Creature.Tag.CORPSE)) {
-      throw new IllegalArgumentException("preset does not have the CORPSE tag.");
+      throw new IllegalArgumentException("Preset does not have the CORPSE tag");
     }
     ItemPreset corpse = new ItemPreset();
     corpse.setId(makeCorpseIdFromCreatureId(preset.getId()));

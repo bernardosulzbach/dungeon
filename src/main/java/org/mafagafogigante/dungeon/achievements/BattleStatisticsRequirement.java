@@ -18,7 +18,7 @@ public class BattleStatisticsRequirement {
    */
   public BattleStatisticsRequirement(@NotNull BattleStatisticsQuery query, int count) {
     if (count < 1) {
-      throw new IllegalArgumentException("count must be positive.");
+      throw new IllegalArgumentException("Count must be positive");
     }
     this.query = query;
     this.count = count;

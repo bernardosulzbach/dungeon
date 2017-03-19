@@ -42,7 +42,7 @@ public final class CreatureFactory implements Serializable {
     for (CreaturePreset preset : presets) {
       Id id = preset.getId();
       if (creaturePresets.containsKey(id)) {
-        throw new IllegalArgumentException("factory already contains a preset with the Id " + preset.getId() + ".");
+        throw new IllegalArgumentException("Factory already contains a preset with the Id " + preset.getId());
       }
       creaturePresets.put(id, preset);
     }

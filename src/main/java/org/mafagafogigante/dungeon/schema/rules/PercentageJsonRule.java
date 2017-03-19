@@ -12,7 +12,7 @@ class PercentageJsonRule extends StringJsonRule {
     try {
       Percentage.fromString(value.asString());
     } catch (IllegalArgumentException invalidValue) {
-      throw new IllegalArgumentException(value + " is not a valid Dungeon percentage.");
+      throw new IllegalArgumentException(value + " is not a valid Dungeon percentage");
     }
   }
 

@@ -15,7 +15,7 @@ final class DeathHandler {
 
   public static void handleDeath(@NotNull Creature creature) {
     if (creature.getHealth().isAlive()) {
-      throw new IllegalStateException("creature is alive.");
+      throw new IllegalStateException("Creature is alive");
     }
     Location defeatedLocation = creature.getLocation();
     defeatedLocation.removeCreature(creature);
