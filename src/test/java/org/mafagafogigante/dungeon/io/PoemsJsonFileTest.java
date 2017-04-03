@@ -15,7 +15,6 @@ public class PoemsJsonFileTest extends ResourcesTypeTest {
   private static final String TITLE_FIELD = "title";
   private static final String AUTHOR_FIELD = "author";
   private static final String CONTENT_FIELD = "content";
-  private static final String POEMS_JSON_FILE_NAME = "poems.json";
 
   @Test
   public void testIsFileHasValidStructure() {

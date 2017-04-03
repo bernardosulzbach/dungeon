@@ -1,16 +1,21 @@
 package org.mafagafogigante.dungeon.io;
 
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
+
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
@@ -29,10 +34,12 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
   private static final String INVENTORY_FIELD = "inventory";
   private static final String LUMINOSITY_FIELD = "luminosity";
   private static final String VISIBILITY_FIELD = "visibility";
-  private static final String CREATURES_JSON_FILE_NAME = "creatures.json";
   private static final String ATTACK_ALGORITHM_ID_FIELD = "attackAlgorithmID";
   private static final String INVENTORY_ITEM_LIMIT_FIELD = "inventoryItemLimit";
   private static final String INVENTORY_WEIGHT_LIMIT_FIELD = "inventoryWeightLimit";
+  private static final String LOCATIONS_SPAWNERS_ID_PATH = "locations.spawners.id";
+  private static final List<String> CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS =
+      new ArrayList<>(Arrays.asList("HERO", "DUMMY"));
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -55,7 +62,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     final JsonRule uppercaseJsonRule = JsonRuleFactory.makeUppercaseStringRule();
-    creatureRules.put(ID_FIELD, idRule);
+    creatureRules.put(ID_FIELD, getIdInLocationsSpawnersJsonRule());
     creatureRules.put(TYPE_FIELD, JsonRuleFactory.makeStringRule());
     creatureRules.put(NAME_FIELD, nameJsonRuleObject);
     final JsonRule variableUppercaseRule = JsonRuleFactory.makeVariableArrayRule(uppercaseJsonRule);
@@ -91,6 +98,18 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     JsonRule innerArrayRule = JsonRuleFactory.makeFixedArrayRule(dropRules);
     JsonRule outerArrayRule = JsonRuleFactory.makeVariableArrayRule(innerArrayRule);
     return JsonRuleFactory.makeOptionalRule(outerArrayRule);
+  }
+
+  private JsonRule getIdInLocationsSpawnersJsonRule() {
+    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
+    Set<JsonValue> locationSpawnerIdValues =
+        searchJsonValuesByPath(LOCATIONS_SPAWNERS_ID_PATH, locationsFileJsonObject);
+    Set<String> creatureIdsInLocationsSpawners = new HashSet<>();
+    for (JsonValue locationSpawnerId : locationSpawnerIdValues) {
+      creatureIdsInLocationsSpawners.add(locationSpawnerId.asString());
+    }
+    creatureIdsInLocationsSpawners.addAll(CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS);
+    return JsonRuleFactory.makeSpecificIdJsonRule(creatureIdsInLocationsSpawners);
   }
 
 }

@@ -27,7 +27,6 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   private static final String LOCATIONS_FIELD = "locations";
   private static final String POPULATION_FIELD = "population";
   private static final String PROBABILITY_FIELD = "probability";
-  private static final String LOCATIONS_JSON_FILE_NAME = "locations.json";
   private static final String BLOCKED_ENTRANCES_FIELD = "blockedEntrances";
   private static final String LIGHT_PERMITTIVITY_FIELD = "lightPermittivity";
   private static final int COLOR_MIN = 0;

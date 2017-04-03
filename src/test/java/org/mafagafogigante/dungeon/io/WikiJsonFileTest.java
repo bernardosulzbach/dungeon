@@ -15,7 +15,6 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
   private static final String CONTENT_FIELD = "content";
   private static final String SEE_ALSO_FIELD = "seeAlso";
   private static final String ARTICLES_FIELD = "articles";
-  private static final String WIKI_JSON_FILE_NAME = "wiki.json";
 
   @Test
   public void testIsFileHasValidStructure() {

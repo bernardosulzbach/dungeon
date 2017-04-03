@@ -12,7 +12,6 @@ import java.util.Map;
 public class DreamsJsonFileTest extends ResourcesTypeTest {
 
   private static final String STRINGS_FIELD = "strings";
-  private static final String DREAMS_JSON_FILE_NAME = "dreams.json";
 
   @Test
   public void testIsFileHasValidStructure() {

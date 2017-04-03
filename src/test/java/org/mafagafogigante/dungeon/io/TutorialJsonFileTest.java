@@ -12,7 +12,6 @@ import java.util.Map;
 public class TutorialJsonFileTest extends ResourcesTypeTest {
 
   private static final String TUTORIAL_FIELD = "tutorial";
-  private static final String TUTORIAL_JSON_FILE_NAME = "tutorial.json";
 
   @Test
   public void testIsFileHasValidStructure() {

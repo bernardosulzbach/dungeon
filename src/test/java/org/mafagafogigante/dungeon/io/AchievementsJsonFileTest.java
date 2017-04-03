@@ -29,7 +29,6 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String VISITED_LOCATIONS_FIELD = "visitedLocations";
   private static final String BATTLE_REQUIREMENTS_FIELD = "battleRequirements";
   private static final String KILLS_BY_LOCATION_ID_FIELD = "killsByLocationID";
-  private static final String ACHIEVEMENTS_JSON_FILE_NAME = "achievements.json";
   private static final String MAXIMUM_NUMBER_OF_VISITS_FIELD = "maximumNumberOfVisits";
   private static final String EXPLORATION_REQUIREMENTS_FIELD = "explorationRequirements";
 
