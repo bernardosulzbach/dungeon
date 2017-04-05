@@ -20,8 +20,7 @@ class SpecificIdJsonRule extends IdJsonRule {
   public void validate(JsonValue value) {
     super.validate(value);
     Id testId = new Id(value.asString());
-    boolean isValueExists = searchIds.contains(testId);
-    if (!isValueExists) {
+    if (!searchIds.contains(testId)) {
       throw new IllegalArgumentException(testId + " is not a valid Id");
     }
   }
