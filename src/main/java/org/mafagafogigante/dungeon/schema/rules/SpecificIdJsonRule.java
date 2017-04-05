@@ -10,21 +10,19 @@ import java.util.Set;
 
 class SpecificIdJsonRule extends IdJsonRule {
 
-  private final Set<Id> ids = new HashSet<>();
+  private final Set<Id> searchIds = new HashSet<>();
 
-  SpecificIdJsonRule(Collection<String> stringIds) {
-    for (String stringId : stringIds) {
-      ids.add(new Id(stringId));
-    }
+  SpecificIdJsonRule(Collection<Id> ids) {
+    searchIds.addAll(ids);
   }
 
   @Override
   public void validate(JsonValue value) {
     super.validate(value);
     Id testId = new Id(value.asString());
-    boolean isValueExist = ids.contains(testId);
-    if (!isValueExist) {
-      throw new IllegalArgumentException(testId + " is not exist in next rule id list: " + ids + ".");
+    boolean isValueExists = searchIds.contains(testId);
+    if (!isValueExists) {
+      throw new IllegalArgumentException(testId + " is not a valid Id");
     }
   }
 

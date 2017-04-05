@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.io;
 
 import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
 
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
@@ -38,8 +39,8 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
   private static final String INVENTORY_ITEM_LIMIT_FIELD = "inventoryItemLimit";
   private static final String INVENTORY_WEIGHT_LIMIT_FIELD = "inventoryWeightLimit";
   private static final String LOCATIONS_SPAWNERS_ID_PATH = "locations.spawners.id";
-  private static final List<String> CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS =
-      new ArrayList<>(Arrays.asList("HERO", "DUMMY"));
+  private static final List<Id> CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS =
+      new ArrayList<>(Arrays.asList(new Id("HERO"), new Id("DUMMY")));
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -100,13 +101,13 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     return JsonRuleFactory.makeOptionalRule(outerArrayRule);
   }
 
-  private Set<String> findAllCreaturesIdsUsage() {
+  private Set<Id> findAllCreaturesIdsUsage() {
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
     Set<JsonValue> locationSpawnerIdValues =
         searchJsonValuesByPath(LOCATIONS_SPAWNERS_ID_PATH, locationsFileJsonObject);
-    Set<String> creatureIdsInLocationsSpawners = new HashSet<>();
+    Set<Id> creatureIdsInLocationsSpawners = new HashSet<>();
     for (JsonValue locationSpawnerId : locationSpawnerIdValues) {
-      creatureIdsInLocationsSpawners.add(locationSpawnerId.asString());
+      creatureIdsInLocationsSpawners.add(new Id(locationSpawnerId.asString()));
     }
     creatureIdsInLocationsSpawners.addAll(CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS);
     return creatureIdsInLocationsSpawners;

@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.schema.rules;
 
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import java.util.Collection;
@@ -76,7 +77,7 @@ public final class JsonRuleFactory {
     return new PeriodJsonRule();
   }
 
-  public static JsonRule makeSpecificIdJsonRule(Collection<String> ids) {
+  public static JsonRule makeSpecificIdJsonRule(Collection<Id> ids) {
     return new SpecificIdJsonRule(ids);
   }
 

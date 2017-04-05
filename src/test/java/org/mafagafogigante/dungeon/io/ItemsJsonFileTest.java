@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.io;
 
 import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
 
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
@@ -46,8 +47,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_DECREMENT_PER_DOSE_FIELD = "integrityDecrementPerDose";
   private static final String CREATURES_DROPS_PATH = "creatures.drops";
   private static final String LOCATIONS_ITEMS_ID_PATH = "locations.items.id";
-  private static final List<String> EXCLUSION_ITEM_IDS =
-      new ArrayList<>(Arrays.asList("PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY"));
+  private static final List<Id> EXCLUSION_ITEM_IDS =
+      new ArrayList<>(Arrays.asList(new Id("PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY")));
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -112,8 +113,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     return JsonRuleFactory.makeObjectRule(integrityRules);
   }
 
-  private Set<String> findAllItemIdsUsage() {
-    return new HashSet<String>() {
+  private Set<Id> findAllItemIdsUsage() {
+    return new HashSet<Id>() {
       {
         addAll(getLocationsItemIds());
         addAll(getCreaturesDropsItemIds());
@@ -122,24 +123,26 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     };
   }
 
-  private Set<String> getLocationsItemIds() {
+  private Set<Id> getLocationsItemIds() {
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
     Set<JsonValue> itemIdsInLocationItems = searchJsonValuesByPath(LOCATIONS_ITEMS_ID_PATH, locationsFileJsonObject);
-    Set<String> itemIdsInLocationsItems = new HashSet<>();
+    Set<Id> itemIdsInLocationsItems = new HashSet<>();
     for (JsonValue locationItemId : itemIdsInLocationItems) {
-      itemIdsInLocationsItems.add(locationItemId.asString());
+      Id itemId = new Id(locationItemId.asString());
+      itemIdsInLocationsItems.add(itemId);
     }
     return itemIdsInLocationsItems;
   }
 
-  private Set<String> getCreaturesDropsItemIds() {
+  private Set<Id> getCreaturesDropsItemIds() {
     JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
     Set<JsonValue> creaturesDrops = searchJsonValuesByPath(CREATURES_DROPS_PATH, creaturesFileJsonObject);
-    Set<String> itemIdsInCreaturesDrops = new HashSet<>();
+    Set<Id> itemIdsInCreaturesDrops = new HashSet<>();
     for (JsonValue creatureDrops : creaturesDrops) {
       for (JsonValue creatureDrop : creatureDrops.asArray()) {
         String itemIdFromDrop = creatureDrop.asArray().get(0).asString();
-        itemIdsInCreaturesDrops.add(itemIdFromDrop);
+        Id itemId = new Id(itemIdFromDrop);
+        itemIdsInCreaturesDrops.add(itemId);
       }
     }
     return itemIdsInCreaturesDrops;
