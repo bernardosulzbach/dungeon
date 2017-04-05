@@ -8,11 +8,12 @@ import com.eclipsesource.json.JsonValue;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class SpecificIdJsonRuleTest {
 
-  private static final JsonRule specificIdJsonRule =
-      new SpecificIdJsonRule(Arrays.asList(new Id("ONE"), new Id("TWO"), new Id("TWO")));
+  private static final List<Id> TEST_IDS = Arrays.asList(new Id("ONE"), new Id("TWO"), new Id("TWO"));
+  private static final JsonRule specificIdJsonRule = new SpecificIdJsonRule(TEST_IDS);
 
   @Test(expected = IllegalArgumentException.class)
   public void specificIdJsonRuleShouldFailOnNonExistsId() {
