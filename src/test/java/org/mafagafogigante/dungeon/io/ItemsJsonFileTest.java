@@ -46,17 +46,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_DECREMENT_PER_DOSE_FIELD = "integrityDecrementPerDose";
   private static final String CREATURES_DROPS_PATH = "creatures.drops";
   private static final String LOCATIONS_ITEMS_ID_PATH = "locations.items.id";
-  private static final List<String> ITEMS_NOT_EXIST_IN_LOCATION_ITEMS = new ArrayList<>(Arrays
-      .asList("APPLE", "BANANA", "CHERRY", "PINEAPPLE", "POTATO", "STRAWBERRY", "WATERMELON", "BEAR_BEEF", "WOLF_BEEF",
-          "TIGER_BEEF", "RABBIT_BEEF", "BOAR_BEEF", "CROCODILE_BEEF", "COW_BEEF", "FOX_BEEF", "IGUANA_BEEF",
-          "KOMODO_DRAGON_BEEF", "GIANT_RAT_BEEF", "ORC_SWORD", "BONE", "SKULL", "SPIDER_VENOM_GLAND",
-          "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY", "WOOD_LOG", "RADIANT_SKIN", "HARPY_FEATHER"));
-  private static final List<String> ITEMS_NOT_EXIST_IN_CREATURE_DROPS_ITEMS = new ArrayList<>(Arrays
-      .asList("TORCH", "HEALING_POTION", "HEALING_DRAUGHT", "CLUB", "DAGGER", "DAGGER_OF_INFINITY", "FLAIL",
-          "ETHEREAL_FLAIL", "LONGSWORD", "GLASS_SWORD", "THE_SUN_BLADE", "MACE", "SPEAR", "STAFF", "STONE", "SWORD",
-          "TOME_OF_HEAL", "TOME_OF_FINGER_OF_DEATH", "TOME_OF_VEIL_OF_DARKNESS", "TOME_OF_UNVEIL",
-          "HISTORY_OF_THE_THIRD_ERA", "CORVUS_EDGE", "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY", "RED_ONYX_WATCH",
-          "POCKET_WATCH", "WRIST_WATCH"));
+  private static final List<String> EXCLUSION_ITEM_IDS =
+      new ArrayList<>(Arrays.asList("PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY"));
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -81,9 +72,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
-    JsonRule idJsonRule =
-        JsonRuleFactory.makeGroupRule(getIdInLocationsItemsJsonRule(), getIdInCreaturesDropsJsonRule());
-    itemRules.put(ID_FIELD, idJsonRule);
+    itemRules.put(ID_FIELD, JsonRuleFactory.makeSpecificIdJsonRule(findAllItemIdsUsage()));
     itemRules.put(TYPE_FIELD, stringRule);
     itemRules.put(NAME_FIELD, nameRuleObject);
     itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(stringRule));
@@ -123,18 +112,27 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     return JsonRuleFactory.makeObjectRule(integrityRules);
   }
 
-  private JsonRule getIdInLocationsItemsJsonRule() {
+  private Set<String> findAllItemIdsUsage() {
+    return new HashSet<String>() {
+      {
+        addAll(getLocationsItemIds());
+        addAll(getCreaturesDropsItemIds());
+        addAll(EXCLUSION_ITEM_IDS);
+      }
+    };
+  }
+
+  private Set<String> getLocationsItemIds() {
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
     Set<JsonValue> itemIdsInLocationItems = searchJsonValuesByPath(LOCATIONS_ITEMS_ID_PATH, locationsFileJsonObject);
     Set<String> itemIdsInLocationsItems = new HashSet<>();
     for (JsonValue locationItemId : itemIdsInLocationItems) {
       itemIdsInLocationsItems.add(locationItemId.asString());
     }
-    itemIdsInLocationsItems.addAll(ITEMS_NOT_EXIST_IN_LOCATION_ITEMS);
-    return JsonRuleFactory.makeSpecificIdJsonRule(itemIdsInLocationsItems);
+    return itemIdsInLocationsItems;
   }
 
-  private JsonRule getIdInCreaturesDropsJsonRule() {
+  private Set<String> getCreaturesDropsItemIds() {
     JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
     Set<JsonValue> creaturesDrops = searchJsonValuesByPath(CREATURES_DROPS_PATH, creaturesFileJsonObject);
     Set<String> itemIdsInCreaturesDrops = new HashSet<>();
@@ -144,8 +142,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
         itemIdsInCreaturesDrops.add(itemIdFromDrop);
       }
     }
-    itemIdsInCreaturesDrops.addAll(ITEMS_NOT_EXIST_IN_CREATURE_DROPS_ITEMS);
-    return JsonRuleFactory.makeSpecificIdJsonRule(itemIdsInCreaturesDrops);
+    return itemIdsInCreaturesDrops;
   }
 
 }

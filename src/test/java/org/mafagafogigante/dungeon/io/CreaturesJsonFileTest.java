@@ -62,7 +62,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     final JsonRule uppercaseJsonRule = JsonRuleFactory.makeUppercaseStringRule();
-    creatureRules.put(ID_FIELD, getIdInLocationsSpawnersJsonRule());
+    creatureRules.put(ID_FIELD, JsonRuleFactory.makeSpecificIdJsonRule(findAllCreaturesIdsUsage()));
     creatureRules.put(TYPE_FIELD, JsonRuleFactory.makeStringRule());
     creatureRules.put(NAME_FIELD, nameJsonRuleObject);
     final JsonRule variableUppercaseRule = JsonRuleFactory.makeVariableArrayRule(uppercaseJsonRule);
@@ -100,7 +100,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     return JsonRuleFactory.makeOptionalRule(outerArrayRule);
   }
 
-  private JsonRule getIdInLocationsSpawnersJsonRule() {
+  private Set<String> findAllCreaturesIdsUsage() {
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
     Set<JsonValue> locationSpawnerIdValues =
         searchJsonValuesByPath(LOCATIONS_SPAWNERS_ID_PATH, locationsFileJsonObject);
@@ -109,7 +109,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
       creatureIdsInLocationsSpawners.add(locationSpawnerId.asString());
     }
     creatureIdsInLocationsSpawners.addAll(CREATURES_NOT_EXIST_IN_LOCATION_SPAWNERS);
-    return JsonRuleFactory.makeSpecificIdJsonRule(creatureIdsInLocationsSpawners);
+    return creatureIdsInLocationsSpawners;
   }
 
 }
