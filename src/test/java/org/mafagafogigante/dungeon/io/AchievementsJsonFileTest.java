@@ -50,7 +50,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     JsonRule explorationRequirementsRule = JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
     JsonRule achievementRule = makeAchievementsRule(explorationRequirementsRule, battleRequirementsRule);
     JsonRule achievementsFileRule = getAchievementsFileRule(achievementRule);
-    JsonObject achievementsFileJson = getJsonObjectByJsonFile(ACHIEVEMENTS_JSON_FILE_NAME);
+    JsonObject achievementsFileJson = getJsonObjectByJsonFile(JsonFileName.ACHIEVEMENTS);
     achievementsFileRule.validate(achievementsFileJson);
   }
 

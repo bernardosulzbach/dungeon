@@ -38,7 +38,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
     JsonRule nameJsonRuleObject = getNameRuleObject();
     JsonRule creatureRuleObject = getCreatureRuleObject(nameJsonRuleObject);
     JsonRule creaturesFileJsonRuleObject = getCreaturesFileRuleObject(creatureRuleObject);
-    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
+    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(JsonFileName.CREATURES);
     creaturesFileJsonRuleObject.validate(creaturesFileJsonObject);
   }
 

@@ -20,7 +20,7 @@ public class PoemsJsonFileTest extends ResourcesTypeTest {
   public void testIsFileHasValidStructure() {
     final JsonRule poemsRuleObject = getPoemsRuleObject();
     final JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
-    JsonObject poemsFileJsonObject = getJsonObjectByJsonFile(POEMS_JSON_FILE_NAME);
+    JsonObject poemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.POEMS);
     poemsFileJsonRule.validate(poemsFileJsonObject);
   }
 

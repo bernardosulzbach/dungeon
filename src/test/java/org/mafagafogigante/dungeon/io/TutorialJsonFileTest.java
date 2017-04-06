@@ -18,7 +18,7 @@ public class TutorialJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> tutorialFileRules = new HashMap<>();
     tutorialFileRules.put(TUTORIAL_FIELD, JsonRuleFactory.makeStringRule());
     final JsonRule tutorialJsonRule = JsonRuleFactory.makeObjectRule(tutorialFileRules);
-    JsonObject tutorialFileJsonObject = getJsonObjectByJsonFile(TUTORIAL_JSON_FILE_NAME);
+    JsonObject tutorialFileJsonObject = getJsonObjectByJsonFile(JsonFileName.TUTORIAL);
     tutorialJsonRule.validate(tutorialFileJsonObject);
   }
 

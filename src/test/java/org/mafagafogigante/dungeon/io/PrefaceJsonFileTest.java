@@ -18,7 +18,7 @@ public class PrefaceJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> tutorialFileRules = new HashMap<>();
     tutorialFileRules.put(FORMAT_FIELD, JsonRuleFactory.makeStringRule());
     final JsonRule tutorialJsonRule = JsonRuleFactory.makeObjectRule(tutorialFileRules);
-    JsonObject prefaceFileJsonObject = getJsonObjectByJsonFile(PREFACE_JSON_FILE_NAME);
+    JsonObject prefaceFileJsonObject = getJsonObjectByJsonFile(JsonFileName.PREFACE);
     tutorialJsonRule.validate(prefaceFileJsonObject);
   }
 

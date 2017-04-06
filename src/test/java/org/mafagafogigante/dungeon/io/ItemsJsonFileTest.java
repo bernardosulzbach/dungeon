@@ -56,7 +56,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule nameRuleObject = getNameRuleObject();
     final JsonRule itemsJsonRuleObject = getItemRuleObject(integrityRuleObject, nameRuleObject);
     final JsonRule itemsFileJsonRuleObject = getItemsFileJsonRuleObject(itemsJsonRuleObject);
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(ITEMS_JSON_FILE_NAME);
+    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.ITEMS);
     itemsFileJsonRuleObject.validate(itemsFileJsonObject);
   }
 
@@ -124,7 +124,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   }
 
   private Set<Id> getLocationsItemIds() {
-    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
+    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.LOCATIONS);
     Set<JsonValue> itemIdsInLocationItems = searchJsonValuesByPath(LOCATIONS_ITEMS_ID_PATH, locationsFileJsonObject);
     Set<Id> itemIdsInLocationsItems = new HashSet<>();
     for (JsonValue locationItemId : itemIdsInLocationItems) {
@@ -135,7 +135,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   }
 
   private Set<Id> getCreaturesDropsItemIds() {
-    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
+    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(JsonFileName.CREATURES);
     Set<JsonValue> creaturesDrops = searchJsonValuesByPath(CREATURES_DROPS_PATH, creaturesFileJsonObject);
     Set<Id> itemIdsInCreaturesDrops = new HashSet<>();
     for (JsonValue creatureDrops : creaturesDrops) {

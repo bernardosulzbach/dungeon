@@ -16,7 +16,7 @@ public class DreamsJsonFileTest extends ResourcesTypeTest {
   @Test
   public void testIsFileHasValidStructure() {
     final JsonRule dreamsFileRuleObject = getDreamsFileRuleObject();
-    JsonObject dreamsFileJsonObject = getJsonObjectByJsonFile(DREAMS_JSON_FILE_NAME);
+    JsonObject dreamsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.DREAMS);
     dreamsFileRuleObject.validate(dreamsFileJsonObject);
   }
 

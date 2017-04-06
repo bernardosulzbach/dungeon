@@ -16,7 +16,7 @@ public class HintsJsonFileTest extends ResourcesTypeTest {
   @Test
   public void testIsFileHasValidStructure() {
     final JsonRule hintsFileRuleObject = getHintsFileRuleObject();
-    JsonObject hitsFileJsonObject = getJsonObjectByJsonFile(HINTS_JSON_FILE_NAME);
+    JsonObject hitsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.HINTS);
     hintsFileRuleObject.validate(hitsFileJsonObject);
   }
 

@@ -66,7 +66,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
     locationsRules.put(ITEMS_FIELD, itemsRule);
     final JsonRule locationRule = JsonRuleFactory.makeObjectRule(locationsRules);
     final JsonRule locationsFileJsonRule = getLocationsFileRule(locationRule);
-    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
+    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.LOCATIONS);
     locationsFileJsonRule.validate(locationsFileJsonObject);
   }
 

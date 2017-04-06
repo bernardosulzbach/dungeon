@@ -22,7 +22,7 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
     JsonRule seeAlsoOptionalRule = JsonRuleFactory.makeOptionalRule(variableStringArrayRule);
     JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
     JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
-    JsonObject wikiFileJsonObject = getJsonObjectByJsonFile(WIKI_JSON_FILE_NAME);
+    JsonObject wikiFileJsonObject = getJsonObjectByJsonFile(JsonFileName.WIKI);
     wikiFileRuleObject.validate(wikiFileJsonObject);
   }
 
