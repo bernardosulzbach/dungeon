@@ -1,13 +1,19 @@
 package org.mafagafogigante.dungeon.io;
 
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.convertJsonValuesToDungeonIds;
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
+
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class LocationsJsonFileTest extends ResourcesTypeTest {
 
@@ -29,6 +35,8 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   private static final String PROBABILITY_FIELD = "probability";
   private static final String BLOCKED_ENTRANCES_FIELD = "blockedEntrances";
   private static final String LIGHT_PERMITTIVITY_FIELD = "lightPermittivity";
+  private static final String ITEMS_ID_PATH = "items.id";
+  private static final String CREATURES_ID_PATH = "creatures.id";
   private static final int COLOR_MIN = 0;
   private static final int COLOR_MAX = 255;
   private static final int COLOR_ARRAY_SIZE = 3;
@@ -91,7 +99,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getSpawnersRule(JsonRule populationRule) {
     Map<String, JsonRule> spawnersRules = new HashMap<>();
-    spawnersRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
+    spawnersRules.put(ID_FIELD, JsonRuleFactory.makeSpecificIdJsonRule(getCreaturesIds()));
     spawnersRules.put(DELAY_FIELD, JsonRuleFactory.makeIntegerRule());
     spawnersRules.put(POPULATION_FIELD, populationRule);
     JsonRule spawnerElementsRule = JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeObjectRule(spawnersRules));
@@ -109,7 +117,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   private JsonRule getItemsRule() {
     Map<String, JsonRule> itemsRules = new HashMap<>();
     final JsonRule probabilityBoundRule = JsonRuleFactory.makeBoundDoubleRule(PROBABILITY_MIN, PROBABILITY_MAX);
-    itemsRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
+    itemsRules.put(ID_FIELD, JsonRuleFactory.makeSpecificIdJsonRule(getItemsIds()));
     itemsRules.put(PROBABILITY_FIELD, probabilityBoundRule);
     final JsonRule itemsObjectRule = JsonRuleFactory.makeObjectRule(itemsRules);
     final JsonRule itemElementsRule = JsonRuleFactory.makeVariableArrayRule(itemsObjectRule);
@@ -120,6 +128,18 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> locationsFileRules = new HashMap<>();
     locationsFileRules.put(LOCATIONS_FIELD, JsonRuleFactory.makeVariableArrayRule(locationsRule));
     return JsonRuleFactory.makeObjectRule(locationsFileRules);
+  }
+
+  private Set<Id> getCreaturesIds() {
+    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.CREATURES);
+    Set<JsonValue> itemIdsJsonValue = searchJsonValuesByPath(CREATURES_ID_PATH, itemsFileJsonObject);
+    return convertJsonValuesToDungeonIds(itemIdsJsonValue);
+  }
+
+  private Set<Id> getItemsIds() {
+    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.ITEMS);
+    Set<JsonValue> itemIdsJsonValue = searchJsonValuesByPath(ITEMS_ID_PATH, itemsFileJsonObject);
+    return convertJsonValuesToDungeonIds(itemIdsJsonValue);
   }
 
 }

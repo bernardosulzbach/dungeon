@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.io;
 
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.convertJsonValuesToDungeonIds;
 import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
 
 import org.mafagafogigante.dungeon.game.Id;
@@ -126,12 +127,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private Set<Id> getLocationsItemIds() {
     JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.LOCATIONS);
     Set<JsonValue> itemIdsInLocationItems = searchJsonValuesByPath(LOCATIONS_ITEMS_ID_PATH, locationsFileJsonObject);
-    Set<Id> itemIdsInLocationsItems = new HashSet<>();
-    for (JsonValue locationItemId : itemIdsInLocationItems) {
-      Id itemId = new Id(locationItemId.asString());
-      itemIdsInLocationsItems.add(itemId);
-    }
-    return itemIdsInLocationsItems;
+    return convertJsonValuesToDungeonIds(itemIdsInLocationItems);
   }
 
   private Set<Id> getCreaturesDropsItemIds() {

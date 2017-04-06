@@ -1,5 +1,7 @@
 package org.mafagafogigante.dungeon.io;
 
+import org.mafagafogigante.dungeon.game.Id;
+
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -16,6 +18,14 @@ final class JsonSearchUtil {
     Set<JsonValue> accResult = new HashSet<>();
     Queue<String> paths = new LinkedList<>(Arrays.asList(path.split("\\.")));
     return recursionSearch(paths, object, accResult);
+  }
+
+  static Set<Id> convertJsonValuesToDungeonIds(Set<JsonValue> idJsonValues) {
+    Set<Id> ids = new HashSet<>();
+    for (JsonValue idJsonValue : idJsonValues) {
+      ids.add(new Id(idJsonValue.asString()));
+    }
+    return ids;
   }
 
   private static Set<JsonValue> recursionSearch(Queue<String> paths, JsonObject object, Set<JsonValue> accResult) {
