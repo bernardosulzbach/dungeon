@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AchievementsJsonFileTest extends ResourcesTypeTest {
+public class AchievementsJsonFileTest {
 
   private static final String ID_FIELD = "id";
   private static final String NAME_FIELD = "name";
@@ -50,7 +50,8 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     JsonRule explorationRequirementsRule = JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
     JsonRule achievementRule = makeAchievementsRule(explorationRequirementsRule, battleRequirementsRule);
     JsonRule achievementsFileRule = getAchievementsFileRule(achievementRule);
-    JsonObject achievementsFileJson = getJsonObjectByJsonFile(JsonFileName.ACHIEVEMENTS);
+    String achievementsFileName = JsonFileName.ACHIEVEMENTS.getStringRepresentation();
+    JsonObject achievementsFileJson = JsonObjectFactory.makeJsonObject(achievementsFileName);
     achievementsFileRule.validate(achievementsFileJson);
   }
 

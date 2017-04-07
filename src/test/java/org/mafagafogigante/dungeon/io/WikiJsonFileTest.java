@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WikiJsonFileTest extends ResourcesTypeTest {
+public class WikiJsonFileTest {
 
   private static final String TITLE_FIELD = "title";
   private static final String CONTENT_FIELD = "content";
@@ -22,7 +22,7 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
     JsonRule seeAlsoOptionalRule = JsonRuleFactory.makeOptionalRule(variableStringArrayRule);
     JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
     JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
-    JsonObject wikiFileJsonObject = getJsonObjectByJsonFile(JsonFileName.WIKI);
+    JsonObject wikiFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.WIKI.getStringRepresentation());
     wikiFileRuleObject.validate(wikiFileJsonObject);
   }
 

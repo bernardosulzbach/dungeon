@@ -1,25 +1,15 @@
 package org.mafagafogigante.dungeon.io;
 
-import static org.mafagafogigante.dungeon.io.JsonSearchUtil.convertJsonValuesToDungeonIds;
-import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
-
-import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class ItemsJsonFileTest extends ResourcesTypeTest {
+public class ItemsJsonFileTest {
 
   private static final String ID_FIELD = "id";
   private static final String TYPE_FIELD = "type";
@@ -46,10 +36,6 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_DECREMENT_ON_HIT_FIELD = "integrityDecrementOnHit";
   private static final String INTEGRITY_DECREMENT_ON_EAT_FIELD = "integrityDecrementOnEat";
   private static final String INTEGRITY_DECREMENT_PER_DOSE_FIELD = "integrityDecrementPerDose";
-  private static final String CREATURES_DROPS_PATH = "creatures.drops";
-  private static final String LOCATIONS_ITEMS_ID_PATH = "locations.items.id";
-  private static final List<Id> EXCLUSION_ITEM_IDS =
-      new ArrayList<>(Arrays.asList(new Id("PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY")));
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -57,7 +43,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule nameRuleObject = getNameRuleObject();
     final JsonRule itemsJsonRuleObject = getItemRuleObject(integrityRuleObject, nameRuleObject);
     final JsonRule itemsFileJsonRuleObject = getItemsFileJsonRuleObject(itemsJsonRuleObject);
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.ITEMS);
+    JsonObject itemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.ITEMS.getStringRepresentation());
     itemsFileJsonRuleObject.validate(itemsFileJsonObject);
   }
 
@@ -74,7 +60,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
-    itemRules.put(ID_FIELD, JsonRuleFactory.makeSpecificIdJsonRule(findAllItemIdsUsage()));
+    itemRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
     itemRules.put(TYPE_FIELD, stringRule);
     itemRules.put(NAME_FIELD, nameRuleObject);
     itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(stringRule));
@@ -112,36 +98,6 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     integrityRules.put(CURRENT_FIELD, integerRule);
     integrityRules.put(MAXIMUM_FIELD, integerRule);
     return JsonRuleFactory.makeObjectRule(integrityRules);
-  }
-
-  private Set<Id> findAllItemIdsUsage() {
-    return new HashSet<Id>() {
-      {
-        addAll(getLocationsItemIds());
-        addAll(getCreaturesDropsItemIds());
-        addAll(EXCLUSION_ITEM_IDS);
-      }
-    };
-  }
-
-  private Set<Id> getLocationsItemIds() {
-    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.LOCATIONS);
-    Set<JsonValue> itemIdsInLocationItems = searchJsonValuesByPath(LOCATIONS_ITEMS_ID_PATH, locationsFileJsonObject);
-    return convertJsonValuesToDungeonIds(itemIdsInLocationItems);
-  }
-
-  private Set<Id> getCreaturesDropsItemIds() {
-    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(JsonFileName.CREATURES);
-    Set<JsonValue> creaturesDrops = searchJsonValuesByPath(CREATURES_DROPS_PATH, creaturesFileJsonObject);
-    Set<Id> itemIdsInCreaturesDrops = new HashSet<>();
-    for (JsonValue creatureDrops : creaturesDrops) {
-      for (JsonValue creatureDrop : creatureDrops.asArray()) {
-        String itemIdFromDrop = creatureDrop.asArray().get(0).asString();
-        Id itemId = new Id(itemIdFromDrop);
-        itemIdsInCreaturesDrops.add(itemId);
-      }
-    }
-    return itemIdsInCreaturesDrops;
   }
 
 }

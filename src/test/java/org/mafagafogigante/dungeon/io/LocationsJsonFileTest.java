@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class LocationsJsonFileTest extends ResourcesTypeTest {
+public class LocationsJsonFileTest {
 
   private static final String ID_FIELD = "id";
   private static final String TYPE_FIELD = "type";
@@ -74,7 +74,8 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
     locationsRules.put(ITEMS_FIELD, itemsRule);
     final JsonRule locationRule = JsonRuleFactory.makeObjectRule(locationsRules);
     final JsonRule locationsFileJsonRule = getLocationsFileRule(locationRule);
-    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.LOCATIONS);
+    JsonObject locationsFileJsonObject =
+        JsonObjectFactory.makeJsonObject(JsonFileName.LOCATIONS.getStringRepresentation());
     locationsFileJsonRule.validate(locationsFileJsonObject);
   }
 
@@ -131,13 +132,13 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   }
 
   private Set<Id> getCreaturesIds() {
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.CREATURES);
+    JsonObject itemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.CREATURES.getStringRepresentation());
     Set<JsonValue> itemIdsJsonValue = searchJsonValuesByPath(CREATURES_ID_PATH, itemsFileJsonObject);
     return convertJsonValuesToDungeonIds(itemIdsJsonValue);
   }
 
   private Set<Id> getItemsIds() {
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.ITEMS);
+    JsonObject itemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.ITEMS.getStringRepresentation());
     Set<JsonValue> itemIdsJsonValue = searchJsonValuesByPath(ITEMS_ID_PATH, itemsFileJsonObject);
     return convertJsonValuesToDungeonIds(itemIdsJsonValue);
   }

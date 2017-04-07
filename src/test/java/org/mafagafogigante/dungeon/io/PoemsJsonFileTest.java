@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PoemsJsonFileTest extends ResourcesTypeTest {
+public class PoemsJsonFileTest {
 
   private static final String POEMS_FIELD = "poems";
   private static final String TITLE_FIELD = "title";
@@ -20,7 +20,7 @@ public class PoemsJsonFileTest extends ResourcesTypeTest {
   public void testIsFileHasValidStructure() {
     final JsonRule poemsRuleObject = getPoemsRuleObject();
     final JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
-    JsonObject poemsFileJsonObject = getJsonObjectByJsonFile(JsonFileName.POEMS);
+    JsonObject poemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.POEMS.getStringRepresentation());
     poemsFileJsonRule.validate(poemsFileJsonObject);
   }
 
