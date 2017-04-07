@@ -33,7 +33,6 @@ public class WeatherConditionTest {
     Assert.assertEquals(WeatherCondition.STORM, WeatherCondition.STORM.getHeavier());
   }
 
-
   @Test
   public void testIsHeavierThanWorksAsIntended() {
     WeatherCondition condition = WeatherCondition.CLEAR;

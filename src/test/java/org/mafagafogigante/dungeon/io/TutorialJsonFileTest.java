@@ -9,17 +9,17 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TutorialJsonFileTest extends ResourcesTypeTest {
+public class TutorialJsonFileTest {
 
   private static final String TUTORIAL_FIELD = "tutorial";
-  private static final String TUTORIAL_JSON_FILE_NAME = "tutorial.json";
 
   @Test
   public void testIsFileHasValidStructure() {
     Map<String, JsonRule> tutorialFileRules = new HashMap<>();
     tutorialFileRules.put(TUTORIAL_FIELD, JsonRuleFactory.makeStringRule());
     final JsonRule tutorialJsonRule = JsonRuleFactory.makeObjectRule(tutorialFileRules);
-    JsonObject tutorialFileJsonObject = getJsonObjectByJsonFile(TUTORIAL_JSON_FILE_NAME);
+    JsonObject tutorialFileJsonObject =
+        JsonObjectFactory.makeJsonObject(JsonFileName.TUTORIAL.getStringRepresentation());
     tutorialJsonRule.validate(tutorialFileJsonObject);
   }
 

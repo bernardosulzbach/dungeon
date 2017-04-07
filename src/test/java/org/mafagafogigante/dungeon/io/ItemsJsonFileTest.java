@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemsJsonFileTest extends ResourcesTypeTest {
+public class ItemsJsonFileTest {
 
   private static final String ID_FIELD = "id";
   private static final String TYPE_FIELD = "type";
@@ -30,12 +30,11 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_FIELD = "integrity";
   private static final String VISIBILITY_FIELD = "visibility";
   private static final String LUMINOSITY_FIELD = "luminosity";
-  private static final String ITEMS_JSON_FILE_NAME = "items.json";
+  private static final String DRINKABLE_DOSES_FIELD = "drinkableDoses";
+  private static final String DRINKABLE_HEALING_FIELD = "drinkableHealing";
   private static final String DECOMPOSITION_PERIOD_FIELD = "decompositionPeriod";
   private static final String INTEGRITY_DECREMENT_ON_HIT_FIELD = "integrityDecrementOnHit";
   private static final String INTEGRITY_DECREMENT_ON_EAT_FIELD = "integrityDecrementOnEat";
-  private static final String DRINKABLE_DOSES_FIELD = "drinkableDoses";
-  private static final String DRINKABLE_HEALING_FIELD = "drinkableHealing";
   private static final String INTEGRITY_DECREMENT_PER_DOSE_FIELD = "integrityDecrementPerDose";
 
   @Test
@@ -44,7 +43,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule nameRuleObject = getNameRuleObject();
     final JsonRule itemsJsonRuleObject = getItemRuleObject(integrityRuleObject, nameRuleObject);
     final JsonRule itemsFileJsonRuleObject = getItemsFileJsonRuleObject(itemsJsonRuleObject);
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(ITEMS_JSON_FILE_NAME);
+    JsonObject itemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.ITEMS.getStringRepresentation());
     itemsFileJsonRuleObject.validate(itemsFileJsonObject);
   }
 
@@ -61,7 +60,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     final JsonRule percentRule = JsonRuleFactory.makePercentRule();
     final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
-    itemRules.put(ID_FIELD, idRule);
+    itemRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
     itemRules.put(TYPE_FIELD, stringRule);
     itemRules.put(NAME_FIELD, nameRuleObject);
     itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(stringRule));

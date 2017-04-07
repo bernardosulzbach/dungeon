@@ -9,15 +9,14 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DreamsJsonFileTest extends ResourcesTypeTest {
+public class DreamsJsonFileTest {
 
   private static final String STRINGS_FIELD = "strings";
-  private static final String DREAMS_JSON_FILE_NAME = "dreams.json";
 
   @Test
   public void testIsFileHasValidStructure() {
     final JsonRule dreamsFileRuleObject = getDreamsFileRuleObject();
-    JsonObject dreamsFileJsonObject = getJsonObjectByJsonFile(DREAMS_JSON_FILE_NAME);
+    JsonObject dreamsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.DREAMS.getStringRepresentation());
     dreamsFileRuleObject.validate(dreamsFileJsonObject);
   }
 

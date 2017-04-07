@@ -9,13 +9,12 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WikiJsonFileTest extends ResourcesTypeTest {
+public class WikiJsonFileTest {
 
   private static final String TITLE_FIELD = "title";
   private static final String CONTENT_FIELD = "content";
   private static final String SEE_ALSO_FIELD = "seeAlso";
   private static final String ARTICLES_FIELD = "articles";
-  private static final String WIKI_JSON_FILE_NAME = "wiki.json";
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -23,7 +22,7 @@ public class WikiJsonFileTest extends ResourcesTypeTest {
     JsonRule seeAlsoOptionalRule = JsonRuleFactory.makeOptionalRule(variableStringArrayRule);
     JsonRule articleRuleObject = getArticleRuleObject(seeAlsoOptionalRule);
     JsonRule wikiFileRuleObject = getWikiFileRuleObject(articleRuleObject);
-    JsonObject wikiFileJsonObject = getJsonObjectByJsonFile(WIKI_JSON_FILE_NAME);
+    JsonObject wikiFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.WIKI.getStringRepresentation());
     wikiFileRuleObject.validate(wikiFileJsonObject);
   }
 

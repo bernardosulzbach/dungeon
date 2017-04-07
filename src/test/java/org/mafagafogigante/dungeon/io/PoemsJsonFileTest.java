@@ -9,19 +9,18 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PoemsJsonFileTest extends ResourcesTypeTest {
+public class PoemsJsonFileTest {
 
   private static final String POEMS_FIELD = "poems";
   private static final String TITLE_FIELD = "title";
   private static final String AUTHOR_FIELD = "author";
   private static final String CONTENT_FIELD = "content";
-  private static final String POEMS_JSON_FILE_NAME = "poems.json";
 
   @Test
   public void testIsFileHasValidStructure() {
     final JsonRule poemsRuleObject = getPoemsRuleObject();
     final JsonRule poemsFileJsonRule = getPoemsFileRuleObject(poemsRuleObject);
-    JsonObject poemsFileJsonObject = getJsonObjectByJsonFile(POEMS_JSON_FILE_NAME);
+    JsonObject poemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.POEMS.getStringRepresentation());
     poemsFileJsonRule.validate(poemsFileJsonObject);
   }
 

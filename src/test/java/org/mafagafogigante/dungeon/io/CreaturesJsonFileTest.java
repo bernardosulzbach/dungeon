@@ -1,9 +1,14 @@
 package org.mafagafogigante.dungeon.io;
 
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.convertJsonValuesToDungeonIds;
+import static org.mafagafogigante.dungeon.io.JsonSearchUtil.searchJsonValuesByPath;
+
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,8 +16,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class CreaturesJsonFileTest extends ResourcesTypeTest {
+public class CreaturesJsonFileTest {
 
   private static final String ID_FIELD = "id";
   private static final String TYPE_FIELD = "type";
@@ -29,17 +35,18 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
   private static final String INVENTORY_FIELD = "inventory";
   private static final String LUMINOSITY_FIELD = "luminosity";
   private static final String VISIBILITY_FIELD = "visibility";
-  private static final String CREATURES_JSON_FILE_NAME = "creatures.json";
   private static final String ATTACK_ALGORITHM_ID_FIELD = "attackAlgorithmID";
   private static final String INVENTORY_ITEM_LIMIT_FIELD = "inventoryItemLimit";
   private static final String INVENTORY_WEIGHT_LIMIT_FIELD = "inventoryWeightLimit";
+  private static final String ITEMS_ID_PATH = "items.id";
 
   @Test
   public void testIsFileHasValidStructure() {
-    final JsonRule nameJsonRuleObject = getNameRuleObject();
-    final JsonRule creatureRuleObject = getCreatureRuleObject(nameJsonRuleObject);
-    final JsonRule creaturesFileJsonRuleObject = getCreaturesFileRuleObject(creatureRuleObject);
-    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
+    JsonRule nameJsonRuleObject = getNameRuleObject();
+    JsonRule creatureRuleObject = getCreatureRuleObject(nameJsonRuleObject);
+    JsonRule creaturesFileJsonRuleObject = getCreaturesFileRuleObject(creatureRuleObject);
+    String creaturesFileName = JsonFileName.CREATURES.getStringRepresentation();
+    JsonObject creaturesFileJsonObject = JsonObjectFactory.makeJsonObject(creaturesFileName);
     creaturesFileJsonRuleObject.validate(creaturesFileJsonObject);
   }
 
@@ -51,20 +58,21 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getCreatureRuleObject(JsonRule nameJsonRuleObject) {
     Map<String, JsonRule> creatureRules = new HashMap<>();
-    final JsonRule idRule = JsonRuleFactory.makeIdRule();
-    final JsonRule percentRule = JsonRuleFactory.makePercentRule();
-    final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
-    final JsonRule uppercaseJsonRule = JsonRuleFactory.makeUppercaseStringRule();
+    JsonRule idRule = JsonRuleFactory.makeIdRule();
+    JsonRule itemIdRule = JsonRuleFactory.makeSpecificIdJsonRule(getItemsIds());
+    JsonRule percentRule = JsonRuleFactory.makePercentRule();
+    JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
+    JsonRule uppercaseJsonRule = JsonRuleFactory.makeUppercaseStringRule();
+    JsonRule variableUppercaseRule = JsonRuleFactory.makeVariableArrayRule(uppercaseJsonRule);
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
+    JsonRule variableItemIdRule = JsonRuleFactory.makeVariableArrayRule(itemIdRule);
     creatureRules.put(ID_FIELD, idRule);
     creatureRules.put(TYPE_FIELD, JsonRuleFactory.makeStringRule());
     creatureRules.put(NAME_FIELD, nameJsonRuleObject);
-    final JsonRule variableUppercaseRule = JsonRuleFactory.makeVariableArrayRule(uppercaseJsonRule);
     creatureRules.put(TAGS_FIELD, JsonRuleFactory.makeOptionalRule(variableUppercaseRule));
     creatureRules.put(INVENTORY_ITEM_LIMIT_FIELD, JsonRuleFactory.makeOptionalRule(integerRule));
-    final JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(integerRule);
     creatureRules.put(INVENTORY_WEIGHT_LIMIT_FIELD, optionalIntegerRule);
-    final JsonRule variableIdRule = JsonRuleFactory.makeVariableArrayRule(idRule);
-    creatureRules.put(INVENTORY_FIELD, JsonRuleFactory.makeOptionalRule(variableIdRule));
+    creatureRules.put(INVENTORY_FIELD, JsonRuleFactory.makeOptionalRule(variableItemIdRule));
     creatureRules.put(DROPS_FIELD, getDropsRule());
     creatureRules.put(LUMINOSITY_FIELD, JsonRuleFactory.makeOptionalRule(percentRule));
     creatureRules.put(VISIBILITY_FIELD, percentRule);
@@ -78,7 +86,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getNameRuleObject() {
     Map<String, JsonRule> nameRules = new HashMap<>();
-    final JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
+    JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
     nameRules.put(SINGULAR_FIELD, JsonRuleFactory.makeStringRule());
     nameRules.put(PLURAL_FIELD, optionalStringRule);
     return JsonRuleFactory.makeObjectRule(nameRules);
@@ -86,11 +94,17 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getDropsRule() {
     JsonRule doubleRule = JsonRuleFactory.makeBoundDoubleRule(0.0, 1.0);
-    JsonRule idRule = JsonRuleFactory.makeIdRule();
-    List<JsonRule> dropRules = new ArrayList<>(Arrays.asList(idRule, doubleRule));
+    JsonRule itemIdRule = JsonRuleFactory.makeSpecificIdJsonRule(getItemsIds());
+    List<JsonRule> dropRules = new ArrayList<>(Arrays.asList(itemIdRule, doubleRule));
     JsonRule innerArrayRule = JsonRuleFactory.makeFixedArrayRule(dropRules);
     JsonRule outerArrayRule = JsonRuleFactory.makeVariableArrayRule(innerArrayRule);
     return JsonRuleFactory.makeOptionalRule(outerArrayRule);
+  }
+
+  private Set<Id> getItemsIds() {
+    JsonObject itemsFileJsonObject = JsonObjectFactory.makeJsonObject(JsonFileName.ITEMS.getStringRepresentation());
+    Set<JsonValue> itemIdsJsonValue = searchJsonValuesByPath(ITEMS_ID_PATH, itemsFileJsonObject);
+    return convertJsonValuesToDungeonIds(itemIdsJsonValue);
   }
 
 }
