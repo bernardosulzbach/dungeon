@@ -20,8 +20,8 @@ public class Date implements Comparable<Date>, Serializable {
    */
   private long time; // Supports 1067519911 full years.
 
-  private Date(long millis) {
-    time = millis;
+  public Date(long milliseconds) {
+    time = milliseconds;
   }
 
   /**

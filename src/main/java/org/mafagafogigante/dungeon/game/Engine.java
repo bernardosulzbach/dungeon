@@ -139,6 +139,10 @@ public final class Engine {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
       Game.getGameState().getStatistics().getBattleStatistics().addBattle(foe, defeated.getCauseOfDeath(), partOfDay);
       Game.getGameState().getStatistics().getExplorationStatistics().addKill(hero.getLocation().getPoint());
+      long heroTakenDamage = hero.getBattleLog().getAndResetTaken();
+      long heroInflictedDamage = hero.getBattleLog().getAndResetInflicted();
+      Game.getGameState().getStatistics().getHeroStatistics().incrementDamageTaken(heroTakenDamage);
+      Game.getGameState().getStatistics().getHeroStatistics().incrementDamageInflicted(heroInflictedDamage);
     }
   }
 

@@ -29,6 +29,7 @@ public class Creature extends Entity {
   private final CreatureHealth health;
   private final Dropper dropper;
   private final Observer observer = new Observer(this);
+  BattleLog battleLog = DummyBattleLog.getInstance();
   private Item weapon;
   private Location location;
 
@@ -58,6 +59,10 @@ public class Creature extends Entity {
 
   public CreatureHealth getHealth() {
     return health;
+  }
+
+  public BattleLog getBattleLog() {
+    return battleLog;
   }
 
   Dropper getDropper() {

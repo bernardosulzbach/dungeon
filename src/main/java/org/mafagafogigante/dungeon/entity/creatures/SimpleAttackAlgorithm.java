@@ -56,7 +56,7 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
         damage *= 2;
       }
       // Decrement the health of the defender.
-      defender.getHealth().decrementBy(damage);
+      DamageHandler.inflictDamage(attacker, defender, damage);
       AttackAlgorithmWriter.writeInflictedDamage(attacker, damage, defender, isCriticalHit);
       // Respect the contract: If the defender is dead, set its cause of death.
       if (defender.getHealth().isDead()) {

@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.commands.IssuedCommand;
+import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Table;
 
@@ -17,6 +18,7 @@ public final class Statistics implements Serializable {
   private final ExplorationStatistics explorationStatistics = new ExplorationStatistics();
   private final BattleStatistics battleStatistics = new BattleStatistics();
   private final CommandStatistics commandStatistics = new CommandStatistics();
+  private final HeroStatistics heroStatistics = new HeroStatistics();
 
   /**
    * Returns the WorldStatistics object of this Statistics.
@@ -41,6 +43,15 @@ public final class Statistics implements Serializable {
   }
 
   /**
+   * Returns the HeroStatistics object of this Statistics.
+   *
+   * @return a HeroStatistics object.
+   */
+  public HeroStatistics getHeroStatistics() {
+    return heroStatistics;
+  }
+
+  /**
    * Adds an issued command to the CommandStatistics.
    */
   public void addCommand(IssuedCommand issuedCommand) {
@@ -54,8 +65,18 @@ public final class Statistics implements Serializable {
     Table statistics = new Table("Property", "Value");
     insertCommandStatistics(statistics);
     statistics.insertSeparator();
+    insertHeroStatistics(statistics);
+    statistics.insertSeparator();
     insertWorldStatistics(statistics);
     Writer.write(statistics);
+  }
+
+  private void insertHeroStatistics(Table statistics) {
+    statistics.insertRow("Damage inflicted", String.valueOf(heroStatistics.getDamageInflicted()));
+    statistics.insertRow("Damage taken", String.valueOf(heroStatistics.getDamageTaken()));
+    statistics.insertRow("Healing through eating", String.valueOf(heroStatistics.getHealingThroughEating()));
+    statistics.insertRow("Sleeping time", new Date(heroStatistics.getSleepingTime()).toTimeString());
+    statistics.insertRow("Resting time", new Date(heroStatistics.getRestingTime()).toTimeString());
   }
 
   private void insertCommandStatistics(Table statistics) {
