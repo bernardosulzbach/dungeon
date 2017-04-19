@@ -1,6 +1,5 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
-import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
@@ -115,7 +114,7 @@ public final class CreatureFactory implements Serializable {
   public Hero makeHero(Date date, World world, Statistics statistics) {
     DateOfBirthGenerator dateOfBirthGenerator = new DateOfBirthGenerator(date, 30);
     Date dateOfBirth = dateOfBirthGenerator.generateDateOfBirth();
-    Hero hero = new Hero(creaturePresets.get(new Id("HERO")), new AchievementTracker(statistics), dateOfBirth);
+    Hero hero = new Hero(creaturePresets.get(new Id("HERO")), statistics, dateOfBirth);
     giveItems(hero, world);
     return hero;
   }

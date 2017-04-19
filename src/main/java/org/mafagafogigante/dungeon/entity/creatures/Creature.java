@@ -27,6 +27,7 @@ public class Creature extends Entity {
   private final CreatureInventory inventory;
   private final LightSource lightSource;
   private final CreatureHealth health;
+  private final CreatureBattleDamage battleDamage;
   private final Dropper dropper;
   private final Observer observer = new Observer(this);
   private Item weapon;
@@ -50,6 +51,7 @@ public class Creature extends Entity {
     inventory = new CreatureInventory(this, preset.getInventoryItemLimit(), preset.getInventoryWeightLimit());
     lightSource = new LightSource(preset.getLuminosity());
     dropper = new Dropper(this, preset.getDropList());
+    battleDamage = new CreatureBattleDamage();
   }
 
   public boolean hasTag(Tag tag) {
@@ -58,6 +60,10 @@ public class Creature extends Entity {
 
   public CreatureHealth getHealth() {
     return health;
+  }
+
+  public CreatureBattleDamage getBattleDamage() {
+    return battleDamage;
   }
 
   Dropper getDropper() {
