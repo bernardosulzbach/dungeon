@@ -155,7 +155,7 @@ public class Table extends Writable {
    */
   public void insertRow(String... values) {
     if (values.length != columns.size()) {
-      String expectedButGotString = "Expected " + columns.size() + ", but got " + values.length + ".";
+      String expectedButGotString = "Expected " + columns.size() + ", but got " + values.length;
       if (values.length < columns.size()) {
         throw new IllegalArgumentException("provided less values than there are rows. " + expectedButGotString);
       } else if (values.length > columns.size()) {

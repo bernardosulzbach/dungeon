@@ -17,10 +17,10 @@ final class BoundIntegerJsonRule extends IntegerJsonRule {
     super.validate(value);
     int intValue = value.asInt();
     if (intValue < minValue) {
-      throw new IllegalArgumentException(value + " is below the allowed minimum " + minValue + ".");
+      throw new IllegalArgumentException(value + " is below the allowed minimum of " + minValue);
     }
     if (intValue > maxValue) {
-      throw new IllegalArgumentException(value + " is above the allowed maximum " + maxValue + ".");
+      throw new IllegalArgumentException(value + " is above the allowed maximum of " + maxValue);
     }
   }
 
