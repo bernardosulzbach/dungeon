@@ -42,7 +42,7 @@ public class AchievementTracker implements Serializable {
   /**
    * Returns how many unlocked achievements there are in this AchievementTracker.
    */
-  public int getUnlockedCount() {
+  int getUnlockedCount() {
     return unlockedAchievements.size();
   }
 
@@ -78,10 +78,7 @@ public class AchievementTracker implements Serializable {
    * @param comparator a Comparator of UnlockedAchievements, not null
    * @return a sorted List with all the UnlockedAchievements in this AchievementTracker
    */
-  public List<UnlockedAchievement> getUnlockedAchievements(Comparator<UnlockedAchievement> comparator) {
-    if (comparator == null) {
-      throw new IllegalArgumentException("comparator is null.");
-    }
+  List<UnlockedAchievement> getUnlockedAchievements(@NotNull Comparator<UnlockedAchievement> comparator) {
     List<UnlockedAchievement> list = new ArrayList<>(unlockedAchievements.values());
     Collections.sort(list, comparator);
     return list;

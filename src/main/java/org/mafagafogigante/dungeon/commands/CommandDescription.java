@@ -2,6 +2,8 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 /**
@@ -18,10 +20,8 @@ public class CommandDescription {
    * @param name a String for name, not null, lowercase
    * @param info a String for info, nullable
    */
-  public CommandDescription(String name, String info) {
-    if (name == null) {
-      throw new IllegalArgumentException("Cannot create CommandDescription with null name.");
-    } else if (isNotLowercase(name)) {
+  CommandDescription(@NotNull String name, String info) {
+    if (isNotLowercase(name)) {
       DungeonLogger.warning("Passed a String that was not lowercase as name for a CommandDescription.");
       name = name.toLowerCase(Locale.ENGLISH);
     }
