@@ -26,6 +26,7 @@ import org.mafagafogigante.dungeon.io.Sleeper;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.spells.SpellData;
+import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
@@ -67,11 +68,13 @@ public class Hero extends Creature {
   private final Observer observer = new Observer(this);
   private final Spellcaster spellcaster = new HeroSpellcaster(this);
   private final AchievementTracker achievementTracker;
+  private final Statistics statistics;
   private final Date dateOfBirth;
 
-  Hero(CreaturePreset preset, AchievementTracker achievementTracker, Date dateOfBirth) {
+  Hero(CreaturePreset preset, Statistics statistics, Date dateOfBirth) {
     super(preset);
-    this.achievementTracker = achievementTracker;
+    this.statistics = statistics;
+    this.achievementTracker = new AchievementTracker(statistics);
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -93,6 +96,7 @@ public class Hero extends Creature {
    */
   private void addHealth(int amount) {
     getHealth().incrementBy(amount);
+    statistics.getHeroStatistics().incrementHealByEatCount(amount);
     if (getHealth().isFull()) {
       Writer.write("You are completely healed.");
     }
@@ -111,6 +115,7 @@ public class Hero extends Creature {
       // Therefore, the following expression may evaluate to 0 if we do not use Math.max to secure the call to
       // Engine.rollDateAndRefresh.
       int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum());
+      statistics.getHeroStatistics().incrementRestTimeCount(timeResting);
       Engine.rollDateAndRefresh(timeResting);
       Writer.write("Resting...");
       getHealth().incrementBy(healthRecovered);
@@ -137,7 +142,9 @@ public class Hero extends Creature {
         Engine.rollDateAndRefresh(cycleDuration);
         // Cast to long because it is considered best practice. We are going to end with a long anyway, so start doing
         // long arithmetic at the first multiplication. Reported by ICAST_INTEGER_MULTIPLY_CAST_TO_LONG in FindBugs.
-        Sleeper.sleep((long) MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND));
+        long timeForSleep = (long) MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND);
+        Sleeper.sleep(timeForSleep);
+        statistics.getHeroStatistics().incrementSleepTimeCount(timeForSleep);
         if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
           Writer.write(Libraries.getDreamLibrary().next());
         }
