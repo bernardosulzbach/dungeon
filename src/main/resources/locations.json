@@ -505,6 +505,10 @@
         {
           "id": "HISTORY_OF_THE_THIRD_ERA",
           "probability": 0.025
+        },
+        {
+          "id": "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY",
+          "probability": 0.05
         }
       ]
     },
