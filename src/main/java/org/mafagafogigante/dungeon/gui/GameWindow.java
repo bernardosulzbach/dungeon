@@ -179,8 +179,11 @@ public class GameWindow extends JFrame {
       public void actionPerformed(ActionEvent event) {
         if (acceptingNextCommand) {
           int caretPosition = textField.getCaretPosition();
-          textField.setText(textField.getText().substring(caretPosition));
-          textField.setCaretPosition(0);
+          String text = textField.getText();
+          if (text != null) {
+            textField.setText(text.substring(caretPosition));
+            textField.setCaretPosition(0);
+          }
         }
       }
     });
@@ -191,7 +194,10 @@ public class GameWindow extends JFrame {
       public void actionPerformed(ActionEvent event) {
         if (acceptingNextCommand) {
           int caretPosition = textField.getCaretPosition();
-          textField.setText(textField.getText().substring(0, caretPosition));
+          String text = textField.getText();
+          if (text != null) {
+            textField.setText(text.substring(0, caretPosition));
+          }
         }
       }
     });
@@ -202,6 +208,9 @@ public class GameWindow extends JFrame {
       public void actionPerformed(ActionEvent event) {
         if (acceptingNextCommand) {
           String text = textField.getText();
+          if (text == null) {
+            return;
+          }
           boolean gotToken = false;
           int caretPosition = textField.getCaretPosition();
           for (int i = caretPosition - 1; i >= 0; i--) {
