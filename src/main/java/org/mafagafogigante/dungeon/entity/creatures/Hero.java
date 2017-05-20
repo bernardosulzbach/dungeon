@@ -88,6 +88,10 @@ public class Hero extends Creature {
     this.battleLog = new SimpleBattleLog();
   }
 
+  private static int nextRandomTimeChunk() {
+    return Random.nextInteger(15 * 60 + 1);
+  }
+
   public Observer getObserver() {
     return observer;
   }
@@ -122,9 +126,9 @@ public class Hero extends Creature {
     } else {
       int healthRecovered = maximumHealthFromRest - getHealth().getCurrent(); // A positive integer.
       // The fraction SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum() may be smaller than 1.
-      // Therefore, the following expression may evaluate to 0 if we do not use Math.max to secure the call to
-      // Engine.rollDateAndRefresh.
       int timeResting = Math.max(1, healthRecovered * SECONDS_TO_REGENERATE_FULL_HEALTH / getHealth().getMaximum());
+      // Add a randomizing factor to make this more realistic.
+      timeResting += nextRandomTimeChunk();
       statistics.getHeroStatistics().incrementRestingTime(timeResting);
       Engine.rollDateAndRefresh(timeResting);
       Writer.write("Resting...");
@@ -145,8 +149,8 @@ public class Hero extends Creature {
     if (pod == PartOfDay.EVENING || pod == PartOfDay.MIDNIGHT || pod == PartOfDay.NIGHT) {
       Writer.write("You fall asleep.");
       seconds = PartOfDay.getSecondsToNext(world.getWorldDate(), PartOfDay.DAWN);
-      // In order to increase realism, add up to 15 minutes to the time it would take to wake up exactly at dawn.
-      seconds += Random.nextInteger(15 * 60 + 1);
+      // In order to increase realism, add some time for the time it would take to wake up exactly at dawn.
+      seconds += nextRandomTimeChunk();
       statistics.getHeroStatistics().incrementSleepingTime(seconds);
       while (seconds > 0) {
         final int cycleDuration = Math.min(DREAM_DURATION_IN_SECONDS, seconds);
