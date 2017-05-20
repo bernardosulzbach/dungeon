@@ -4,8 +4,8 @@ import com.eclipsesource.json.JsonObject;
 
 class ResourcesTypeTest {
 
-  static JsonObject getJsonObjectByJsonFile(String jsonFileName) {
-    return JsonObjectFactory.makeJsonObject(jsonFileName);
+  static JsonObject getJsonObjectByJsonFilename(String filename) {
+    return JsonObjectFactory.makeJsonObject(filename);
   }
 
 }

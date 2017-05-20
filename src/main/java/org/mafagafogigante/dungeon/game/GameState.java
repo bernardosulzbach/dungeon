@@ -2,7 +2,9 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.commands.CommandHistory;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
+import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.stats.Statistics;
 
@@ -33,7 +35,8 @@ public class GameState implements Serializable {
    * Returns a String with a story about how the character got where he or she currently is.
    */
   public String getPreface() {
-    return String.format(JsonObjectFactory.makeJsonObject("preface.json").get("format").asString(), hero.getLocation());
+    String filename = ResourceNameResolver.resolveName(DungeonResource.PREFACE);
+    return String.format(JsonObjectFactory.makeJsonObject(filename).get("format").asString(), hero.getLocation());
   }
 
   /**

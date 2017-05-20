@@ -1,9 +1,14 @@
 package org.mafagafogigante.dungeon.util.library;
 
+import org.mafagafogigante.dungeon.io.DungeonResource;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
+
 public final class Libraries {
 
-  private static final AutomaticShuffledStringLibrary dreamLibrary = new AutomaticShuffledStringLibrary("dreams.json");
-  private static final AutomaticShuffledStringLibrary hintLibrary = new AutomaticShuffledStringLibrary("hints.json");
+  private static final String DREAMS_JSON = ResourceNameResolver.resolveName(DungeonResource.DREAMS);
+  private static final String HINTS_JSON = ResourceNameResolver.resolveName(DungeonResource.HINTS);
+  private static final AutomaticShuffledStringLibrary dreamLibrary = new AutomaticShuffledStringLibrary(DREAMS_JSON);
+  private static final AutomaticShuffledStringLibrary hintLibrary = new AutomaticShuffledStringLibrary(HINTS_JSON);
   private static final PoetryLibrary poetryLibrary = new PoetryLibrary();
 
   private Libraries() {

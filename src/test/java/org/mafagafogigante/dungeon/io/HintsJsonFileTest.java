@@ -12,12 +12,12 @@ import java.util.Map;
 public class HintsJsonFileTest extends ResourcesTypeTest {
 
   private static final String STRINGS_FIELD = "strings";
-  private static final String HINTS_JSON_FILE_NAME = "hints.json";
 
   @Test
   public void testIsFileHasValidStructure() {
     final JsonRule hintsFileRuleObject = getHintsFileRuleObject();
-    JsonObject hitsFileJsonObject = getJsonObjectByJsonFile(HINTS_JSON_FILE_NAME);
+    String filename = ResourceNameResolver.resolveName(DungeonResource.HINTS);
+    JsonObject hitsFileJsonObject = getJsonObjectByJsonFilename(filename);
     hintsFileRuleObject.validate(hitsFileJsonObject);
   }
 

@@ -2,7 +2,9 @@ package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.PartOfDay;
+import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.TypeOfCauseOfDeath;
@@ -76,7 +78,8 @@ public class AchievementStoreFactory {
     if (!store.getAchievements().isEmpty()) {
       throw new IllegalStateException("called loadAchievements on a not empty AchievementStore");
     }
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("achievements.json");
+    String filename = ResourceNameResolver.resolveName(DungeonResource.ACHIEVEMENTS);
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue achievementValue : jsonObject.get("achievements").asArray()) {
       JsonObject achievementObject = achievementValue.asObject();
       AchievementBuilder builder = new AchievementBuilder();

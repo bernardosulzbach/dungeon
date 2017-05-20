@@ -31,17 +31,17 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
   private static final String INVENTORY_FIELD = "inventory";
   private static final String LUMINOSITY_FIELD = "luminosity";
   private static final String VISIBILITY_FIELD = "visibility";
-  private static final String CREATURES_JSON_FILE_NAME = "creatures.json";
   private static final String ATTACK_ALGORITHM_ID_FIELD = "attackAlgorithmID";
   private static final String INVENTORY_ITEM_LIMIT_FIELD = "inventoryItemLimit";
   private static final String INVENTORY_WEIGHT_LIMIT_FIELD = "inventoryWeightLimit";
 
   @Test
   public void testIsFileHasValidStructure() {
-    final JsonRule nameJsonRuleObject = getNameRuleObject();
-    final JsonRule creatureRuleObject = getCreatureRuleObject(nameJsonRuleObject);
-    final JsonRule creaturesFileJsonRuleObject = getCreaturesFileRuleObject(creatureRuleObject);
-    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFile(CREATURES_JSON_FILE_NAME);
+    JsonRule nameJsonRuleObject = getNameRuleObject();
+    JsonRule creatureRuleObject = getCreatureRuleObject(nameJsonRuleObject);
+    JsonRule creaturesFileJsonRuleObject = getCreaturesFileRuleObject(creatureRuleObject);
+    String filename = ResourceNameResolver.resolveName(DungeonResource.CREATURES);
+    JsonObject creaturesFileJsonObject = getJsonObjectByJsonFilename(filename);
     creaturesFileJsonRuleObject.validate(creaturesFileJsonObject);
   }
 
@@ -53,9 +53,9 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getCreatureRuleObject(JsonRule nameJsonRuleObject) {
     Map<String, JsonRule> creatureRules = new HashMap<>();
-    final JsonRule idRule = JsonRuleFactory.makeIdRule();
-    final JsonRule percentRule = JsonRuleFactory.makePercentRule();
-    final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
+    JsonRule idRule = JsonRuleFactory.makeIdRule();
+    JsonRule percentRule = JsonRuleFactory.makePercentRule();
+    JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     creatureRules.put(ID_FIELD, idRule);
     creatureRules.put(TYPE_FIELD, JsonRuleFactory.makeStringRule());
     creatureRules.put(NAME_FIELD, nameJsonRuleObject);
@@ -81,7 +81,7 @@ public class CreaturesJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getNameRuleObject() {
     Map<String, JsonRule> nameRules = new HashMap<>();
-    final JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
+    JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeStringRule());
     nameRules.put(SINGULAR_FIELD, JsonRuleFactory.makeStringRule());
     nameRules.put(PLURAL_FIELD, optionalStringRule);
     return JsonRuleFactory.makeObjectRule(nameRules);

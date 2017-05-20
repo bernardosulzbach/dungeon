@@ -1,6 +1,8 @@
 package org.mafagafogigante.dungeon.util.library;
 
+import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonObject;
@@ -22,7 +24,8 @@ public final class PoetryLibrary {
   }
 
   private void loadPoems() {
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("poems.json");
+    String filename = ResourceNameResolver.resolveName(DungeonResource.POEMS);
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue poem : jsonObject.get("poems").asArray()) {
       JsonObject poemObject = poem.asObject();
       String title = poemObject.get("title").asString();

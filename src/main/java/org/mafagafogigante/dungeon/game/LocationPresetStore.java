@@ -1,7 +1,9 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.game.LocationPreset.Type;
+import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.io.TagSetParser;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
@@ -48,7 +50,8 @@ public final class LocationPresetStore {
   }
 
   private void loadLocationPresets() {
-    JsonObject jsonObject = JsonObjectFactory.makeJsonObject("locations.json");
+    String filename = ResourceNameResolver.resolveName(DungeonResource.LOCATIONS);
+    JsonObject jsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue jsonValue : jsonObject.get("locations").asArray()) {
       JsonObject presetObject = jsonValue.asObject();
       Id id = new Id(presetObject.get("id").asString());
@@ -60,7 +63,7 @@ public final class LocationPresetStore {
       preset.getDescription().setInfo(presetObject.get("info").asString());
       preset.setBlobSize(presetObject.get("blobSize").asInt());
       preset.setLightPermittivity(presetObject.get("lightPermittivity").asDouble());
-      preset.setTagSet(new TagSetParser<>(Location.Tag.class,presetObject.get("tags")).parse());
+      preset.setTagSet(new TagSetParser<>(Location.Tag.class, presetObject.get("tags")).parse());
       if (presetObject.get("spawners") != null) {
         for (JsonValue spawnerValue : presetObject.get("spawners").asArray()) {
           JsonObject spawner = spawnerValue.asObject();

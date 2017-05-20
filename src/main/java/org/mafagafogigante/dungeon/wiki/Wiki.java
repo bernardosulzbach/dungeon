@@ -1,6 +1,8 @@
 package org.mafagafogigante.dungeon.wiki;
 
+import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonObject;
@@ -36,7 +38,8 @@ final class Wiki {
     // not it has already been initialized.
     articleList = new ArrayList<>();
     Map<Article, Collection<String>> seeAlsoMap = new HashMap<>();
-    JsonObject wikiJsonObject = JsonObjectFactory.makeJsonObject("wiki.json");
+    String filename = ResourceNameResolver.resolveName(DungeonResource.WIKI);
+    JsonObject wikiJsonObject = JsonObjectFactory.makeJsonObject(filename);
     for (JsonValue jsonValue : wikiJsonObject.get("articles").asArray()) {
       JsonObject jsonObject = jsonValue.asObject();
       Article article = new Article(jsonObject.get("title").asString(), jsonObject.get("content").asString());

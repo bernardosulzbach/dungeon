@@ -4,6 +4,8 @@ import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.io.DungeonResource;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
@@ -108,7 +110,8 @@ public final class ItemFactory implements Serializable {
 
   private void refreshItemPresets() {
     DungeonLogger.info("Refreshing item presets.");
-    ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory("items.json");
+    String filename = ResourceNameResolver.resolveName(DungeonResource.ITEMS);
+    ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory(filename);
     for (ItemPreset preset : jsonItemPresetFactory.getItemPresets()) {
       if (!itemPresets.containsKey(preset.getId())) {
         itemPresets.put(preset.getId(), preset);

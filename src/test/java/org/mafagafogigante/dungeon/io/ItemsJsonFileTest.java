@@ -32,7 +32,6 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_FIELD = "integrity";
   private static final String VISIBILITY_FIELD = "visibility";
   private static final String LUMINOSITY_FIELD = "luminosity";
-  private static final String ITEMS_JSON_FILE_NAME = "items.json";
   private static final String DECOMPOSITION_PERIOD_FIELD = "decompositionPeriod";
   private static final String INTEGRITY_DECREMENT_ON_HIT_FIELD = "integrityDecrementOnHit";
   private static final String INTEGRITY_DECREMENT_ON_EAT_FIELD = "integrityDecrementOnEat";
@@ -43,11 +42,12 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
 
   @Test
   public void testIsFileHasValidStructure() {
-    final JsonRule integrityRuleObject = getIntegrityRuleObject();
-    final JsonRule nameRuleObject = getNameRuleObject();
-    final JsonRule itemsJsonRuleObject = getItemRuleObject(integrityRuleObject, nameRuleObject);
-    final JsonRule itemsFileJsonRuleObject = getItemsFileJsonRuleObject(itemsJsonRuleObject);
-    JsonObject itemsFileJsonObject = getJsonObjectByJsonFile(ITEMS_JSON_FILE_NAME);
+    JsonRule integrityRuleObject = getIntegrityRuleObject();
+    JsonRule nameRuleObject = getNameRuleObject();
+    JsonRule itemsJsonRuleObject = getItemRuleObject(integrityRuleObject, nameRuleObject);
+    JsonRule itemsFileJsonRuleObject = getItemsFileJsonRuleObject(itemsJsonRuleObject);
+    String filename = ResourceNameResolver.resolveName(DungeonResource.ITEMS);
+    JsonObject itemsFileJsonObject = getJsonObjectByJsonFilename(filename);
     itemsFileJsonRuleObject.validate(itemsFileJsonObject);
   }
 
@@ -93,8 +93,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getNameRuleObject() {
     Map<String, JsonRule> nameRules = new HashMap<>();
-    final JsonRule stringRule = JsonRuleFactory.makeStringRule();
-    final JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(stringRule);
+    JsonRule stringRule = JsonRuleFactory.makeStringRule();
+    JsonRule optionalStringRule = JsonRuleFactory.makeOptionalRule(stringRule);
     nameRules.put(SINGULAR_FIELD, stringRule);
     nameRules.put(PLURAL_FIELD, optionalStringRule);
     return JsonRuleFactory.makeObjectRule(nameRules);
@@ -102,7 +102,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getIntegrityRuleObject() {
     Map<String, JsonRule> integrityRules = new HashMap<>();
-    final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
+    JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     integrityRules.put(CURRENT_FIELD, integerRule);
     integrityRules.put(MAXIMUM_FIELD, integerRule);
     return JsonRuleFactory.makeObjectRule(integrityRules);

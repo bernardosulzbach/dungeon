@@ -1,7 +1,9 @@
 package org.mafagafogigante.dungeon.schema.rules;
 
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +67,10 @@ public final class JsonRuleFactory {
 
   public static JsonRule makeIdRule() {
     return new IdJsonRule();
+  }
+
+  public static JsonRule makeIdSetRule(Collection<Id> ids) {
+    return new IdSetJsonRule(ids);
   }
 
   public static JsonRule makeGroupRule(JsonRule... jsonRules) {

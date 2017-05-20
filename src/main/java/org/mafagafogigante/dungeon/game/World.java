@@ -10,6 +10,8 @@ import org.mafagafogigante.dungeon.entity.creatures.Observer;
 import org.mafagafogigante.dungeon.entity.items.ItemFactory;
 import org.mafagafogigante.dungeon.entity.items.ItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.items.JsonItemPresetFactory;
+import org.mafagafogigante.dungeon.io.DungeonResource;
+import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.WorldStatistics;
@@ -52,10 +54,12 @@ public class World implements Serializable {
   public World(WorldStatistics statistics) {
     worldStatistics = statistics;
 
-    CreaturePresetFactory creaturePresetFactory = new JsonCreaturePresetFactory("creatures.json");
+    String creaturesFilename = ResourceNameResolver.resolveName(DungeonResource.CREATURES);
+    CreaturePresetFactory creaturePresetFactory = new JsonCreaturePresetFactory(creaturesFilename);
     creatureFactory = new CreatureFactory(creaturePresetFactory);
 
-    ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory("items.json");
+    String itemsFilename = ResourceNameResolver.resolveName(DungeonResource.ITEMS);
+    ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory(itemsFilename);
     ItemPresetFactory corpseItemPresetFactory = new CorpseItemPresetFactory(creatureFactory);
     itemFactory = new ItemFactory(jsonItemPresetFactory, corpseItemPresetFactory);
   }

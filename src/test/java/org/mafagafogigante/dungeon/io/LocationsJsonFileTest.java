@@ -1,13 +1,19 @@
 package org.mafagafogigante.dungeon.io;
 
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.LocationPreset;
 import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LocationsJsonFileTest extends ResourcesTypeTest {
@@ -29,7 +35,6 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   private static final String LOCATIONS_FIELD = "locations";
   private static final String POPULATION_FIELD = "population";
   private static final String PROBABILITY_FIELD = "probability";
-  private static final String LOCATIONS_JSON_FILE_NAME = "locations.json";
   private static final String BLOCKED_ENTRANCES_FIELD = "blockedEntrances";
   private static final String LIGHT_PERMITTIVITY_FIELD = "lightPermittivity";
   private static final int COLOR_MIN = 0;
@@ -73,7 +78,8 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
     locationsRules.put(ITEMS_FIELD, itemsRule);
     JsonRule locationRule = JsonRuleFactory.makeObjectRule(locationsRules);
     JsonRule locationsFileJsonRule = getLocationsFileRule(locationRule);
-    JsonObject locationsFileJsonObject = getJsonObjectByJsonFile(LOCATIONS_JSON_FILE_NAME);
+    String locationsFilename = ResourceNameResolver.resolveName(DungeonResource.LOCATIONS);
+    JsonObject locationsFileJsonObject = ResourcesTypeTest.getJsonObjectByJsonFilename(locationsFilename);
     locationsFileJsonRule.validate(locationsFileJsonObject);
   }
 
@@ -84,15 +90,15 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   }
 
   private JsonRule getColorRuleGroup() {
-    final JsonRule colorIntegerInboundRule = JsonRuleFactory.makeBoundIntegerRule(COLOR_MIN, COLOR_MAX);
-    final JsonRule colorElementRule = JsonRuleFactory.makeVariableArrayRule(colorIntegerInboundRule);
+    JsonRule colorIntegerInboundRule = JsonRuleFactory.makeBoundIntegerRule(COLOR_MIN, COLOR_MAX);
+    JsonRule colorElementRule = JsonRuleFactory.makeVariableArrayRule(colorIntegerInboundRule);
     return JsonRuleFactory.makeGroupRule(JsonRuleFactory.makeArraySizeRule(COLOR_ARRAY_SIZE), colorElementRule);
   }
 
   private JsonRule getBlockedEntrancesRule() {
-    final JsonRule blockedEntranceLengthRule = JsonRuleFactory.makeStringLengthRule(BLOCKED_ENTRANCE_STRING_LENGTH);
-    final JsonRule uppercaseRule = JsonRuleFactory.makeUppercaseStringRule();
-    final JsonRule blockedEntranceGroupRule = JsonRuleFactory.makeGroupRule(blockedEntranceLengthRule, uppercaseRule);
+    JsonRule blockedEntranceLengthRule = JsonRuleFactory.makeStringLengthRule(BLOCKED_ENTRANCE_STRING_LENGTH);
+    JsonRule uppercaseRule = JsonRuleFactory.makeUppercaseStringRule();
+    JsonRule blockedEntranceGroupRule = JsonRuleFactory.makeGroupRule(blockedEntranceLengthRule, uppercaseRule);
     return JsonRuleFactory.makeVariableArrayRule(blockedEntranceGroupRule);
   }
 
@@ -107,7 +113,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getPopulationRule() {
     Map<String, JsonRule> populationRules = new HashMap<>();
-    final JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
+    JsonRule integerRule = JsonRuleFactory.makeIntegerRule();
     populationRules.put(MINIMUM_FIELD, integerRule);
     populationRules.put(MAXIMUM_FIELD, integerRule);
     return JsonRuleFactory.makeObjectRule(populationRules);
@@ -115,12 +121,26 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
 
   private JsonRule getItemsRule() {
     Map<String, JsonRule> itemsRules = new HashMap<>();
-    final JsonRule probabilityBoundRule = JsonRuleFactory.makeBoundDoubleRule(PROBABILITY_MIN, PROBABILITY_MAX);
-    itemsRules.put(ID_FIELD, JsonRuleFactory.makeIdRule());
+    JsonRule probabilityBoundRule = JsonRuleFactory.makeBoundDoubleRule(PROBABILITY_MIN, PROBABILITY_MAX);
+    String itemsFilename = ResourceNameResolver.resolveName(DungeonResource.ITEMS);
+    List<Id> idGroup = extractIds(getJsonObjectByJsonFilename(itemsFilename));
+    itemsRules.put(ID_FIELD, JsonRuleFactory.makeIdSetRule(idGroup));
     itemsRules.put(PROBABILITY_FIELD, probabilityBoundRule);
-    final JsonRule itemsObjectRule = JsonRuleFactory.makeObjectRule(itemsRules);
-    final JsonRule itemElementsRule = JsonRuleFactory.makeVariableArrayRule(itemsObjectRule);
+    JsonRule itemsObjectRule = JsonRuleFactory.makeObjectRule(itemsRules);
+    JsonRule itemElementsRule = JsonRuleFactory.makeVariableArrayRule(itemsObjectRule);
     return JsonRuleFactory.makeOptionalRule(itemElementsRule);
+  }
+
+  private List<Id> extractIds(JsonObject object) {
+    if (object.names().size() != 1) {
+      Assert.fail();
+    }
+    JsonArray values = object.get(object.names().get(0)).asArray();
+    List<Id> ids = new ArrayList<>();
+    for (JsonValue value : values) {
+      ids.add(new Id(value.asObject().get("id").asString()));
+    }
+    return ids;
   }
 
   private JsonRule getLocationsFileRule(JsonRule locationsRule) {
