@@ -1,11 +1,15 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 
 /**
  * The simplest possible implementation of a BattleLog.
  */
 public class SimpleBattleLog implements BattleLog, Serializable {
+
+  private static final long serialVersionUID = Version.MAJOR;
 
   private long inflicted;
   private long taken;

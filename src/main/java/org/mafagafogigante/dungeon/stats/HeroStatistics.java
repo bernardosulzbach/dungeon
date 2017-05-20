@@ -1,11 +1,15 @@
 package org.mafagafogigante.dungeon.stats;
 
+import org.mafagafogigante.dungeon.io.Version;
+
 import java.io.Serializable;
 
 /**
  * HeroStatistics class that tracks the Hero's statistics.
  */
 public final class HeroStatistics implements Serializable {
+
+  private static final long serialVersionUID = Version.MAJOR;
 
   private long healingThroughEating;
   private long damageInflicted;
