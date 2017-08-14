@@ -1,5 +1,5 @@
-Dungeon
-=======
+# Dungeon
+
 [![Travis CI](https://travis-ci.org/mafagafogigante/dungeon.svg?branch=master)](https://travis-ci.org/mafagafogigante/dungeon)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/ef8ijtoeov8dy5ba/branch/master?svg=true)](https://ci.appveyor.com/project/mafagafogigante/dungeon/branch/master)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/6794/badge.svg)](https://scan.coverity.com/projects/mafagafogigante-dungeon)
@@ -20,21 +20,21 @@ dealing with the aberrations roaming the land.
 
 The world is randomly generated, making each and every experience unique. There
 is also an in-game wiki with a lot of information about the different facets of
-the game. You can preview this wiki
-[here](https://github.com/mafagafogigante/dungeon/wiki).
+the game. You can also [browse the wiki
+online](https://github.com/mafagafogigante/dungeon/wiki).
 
-Screenshots
------------
+## Screenshots
+
 [See the gallery](http://mafagafogigante.github.io/dungeon/screenshots/).
 
-Running the game
-----------------
+## Running the game
+
 [Download a release](https://github.com/mafagafogigante/dungeon/releases).
 
 You only need an updated version of Java to play this game.
 
-Building the game
------------------
+## Building the game
+
 If you want to build the game locally, issue
 
 ```bash
@@ -44,28 +44,28 @@ $ mvn package
 $ java -jar target/dungeon-[version].jar
 ```
 
-Reporting bugs
---------------
+## Reporting bugs
+
 Bug reports, questions, and suggestions are welcome on our [issue
 tracker](https://github.com/mafagafogigante/dungeon/issues).
 
-Contributing
-------------
+## Contributing
+
 If you know Java, Python, or even if you just know English well, you can
 contribute.
 
-Check out the [issue
-tracker](https://github.com/mafagafogigante/dungeon/issues) to see what could
-be done or figure out something you would like to do and start working on it.
+Check out the [issue tracker](https://github.com/mafagafogigante/dungeon/issues)
+to see what could be done or figure out something you would like to do and start
+working on it.
 
 Discussing your ideas on the tracker before coding is a good way to increase
 the chance of your changes being accepted.
 
-Do not forget to also read the project's contributing guide
-[here](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
+Do not forget to also read [Dungeon's contributing
+guide](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
 
-Versioning scheme
------------------
+## Versioning scheme
+
 Dungeon uses [semantic versioning](http://semver.org/spec/v2.0.0.html).
 
 - A release that is **incompatible with old saved files** increases the
@@ -75,6 +75,6 @@ Dungeon uses [semantic versioning](http://semver.org/spec/v2.0.0.html).
 - A release that makes backwards-compatible **bug fixes** increases the
   **PATCH** version.
 
-License
--------
+## License
+
 [BSD 3-Clause](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt).
