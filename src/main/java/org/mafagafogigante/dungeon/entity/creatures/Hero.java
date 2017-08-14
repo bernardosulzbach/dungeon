@@ -6,6 +6,7 @@ import static org.mafagafogigante.dungeon.date.DungeonTimeUnit.SECOND;
 import org.mafagafogigante.dungeon.achievements.AchievementTracker;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
+import org.mafagafogigante.dungeon.entity.Enchantment;
 import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.items.BaseInventory;
 import org.mafagafogigante.dungeon.entity.items.BookComponent;
@@ -558,6 +559,47 @@ public class Hero extends Creature {
           Writer.write("You need to be more specific.");
         }
       }
+    }
+  }
+
+  /**
+   * Examines an item.
+   */
+  public void examineItem(String[] arguments) {
+    Item selectedItem = selectInventoryItem(arguments);
+    if (selectedItem != null) {
+      DungeonString text = new DungeonString();
+      text.setColor(selectedItem.getRarity().getColor());
+      text.append(selectedItem.getQualifiedName());
+      text.append(" ");
+      text.append("(");
+      text.append(selectedItem.getRarity().getName());
+      text.append(")");
+      text.append("\n");
+      text.append("\n");
+      text.resetColor();
+      if (selectedItem.getWeaponComponent() != null) {
+        List<Enchantment> enchantments = selectedItem.getWeaponComponent().getEnchantments();
+        if (!enchantments.isEmpty()) {
+          text.append("This item has the following enchantments:");
+          text.append("\n");
+          for (Enchantment enchantment : enchantments) {
+            text.append("  ");
+            text.append(enchantment.getName());
+            text.append(" ");
+            text.append("(");
+            text.append(enchantment.getDescription());
+            text.append(")");
+            text.append("\n");
+          }
+          text.append("\n");
+        }
+      }
+      text.append("The damage of this item is ");
+      text.append(String.valueOf(selectedItem.getWeaponComponent().getDamage()));
+      text.append(".");
+      text.append("\n");
+      Writer.write(text);
     }
   }
 

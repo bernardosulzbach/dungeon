@@ -124,6 +124,12 @@ final class CommandSets {
         Game.getGameState().getHero().parseEquip(arguments);
       }
     });
+    commandSet.addCommand(new Command("examine", "Examines an item.") {
+      @Override
+      public void execute(@NotNull String[] arguments) {
+        Game.getGameState().getHero().examineItem(arguments);
+      }
+    });
     commandSet.addCommand(new Command("exit", "Exits the game.") {
       @Override
       public void execute(@NotNull String[] arguments) {

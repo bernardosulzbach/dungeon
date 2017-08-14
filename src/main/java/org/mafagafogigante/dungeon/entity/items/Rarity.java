@@ -4,13 +4,19 @@ import java.awt.Color;
 
 public enum Rarity {
 
-  POOR(Palette.POOR), COMMON(Palette.COMMON), UNCOMMON(Palette.UNCOMMON), RARE(Palette.RARE),
-  LEGENDARY(Palette.LEGENDARY), UNIQUE(Palette.UNIQUE);
+  POOR("Poor", Palette.POOR), COMMON("Common", Palette.COMMON), UNCOMMON("Uncommon", Palette.UNCOMMON),
+  RARE("Rare", Palette.RARE), LEGENDARY("Legendary", Palette.LEGENDARY), UNIQUE("Unique", Palette.UNIQUE);
 
+  private final String name;
   private final Color color;
 
-  Rarity(Color color) {
+  Rarity(String name, Color color) {
+    this.name = name;
     this.color = color;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public Color getColor() {

@@ -55,7 +55,7 @@ public class WeaponComponent implements Serializable {
     return integrityDecrementOnHit;
   }
 
-  List<Enchantment> getEnchantments() {
+  public List<Enchantment> getEnchantments() {
     return enchantments;
   }
 
