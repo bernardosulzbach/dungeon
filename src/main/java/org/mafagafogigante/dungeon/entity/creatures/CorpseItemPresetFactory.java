@@ -23,7 +23,7 @@ import java.util.List;
  */
 public final class CorpseItemPresetFactory implements ItemPresetFactory {
 
-  public static final Rarity CORPSE_RARITY = Rarity.POOR;
+  private static final Rarity CORPSE_RARITY = Rarity.POOR;
   private static final int CORPSE_DAMAGE = 2;
   private static final int CORPSE_INTEGRITY_DECREMENT_ON_HIT = 5;
   private static final long CORPSE_PUTREFACTION_PERIOD = DAY.as(SECOND);
