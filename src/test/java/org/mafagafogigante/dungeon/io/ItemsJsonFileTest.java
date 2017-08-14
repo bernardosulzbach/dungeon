@@ -32,6 +32,8 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
   private static final String INTEGRITY_FIELD = "integrity";
   private static final String VISIBILITY_FIELD = "visibility";
   private static final String LUMINOSITY_FIELD = "luminosity";
+  private static final String PROBABILITY_FIELD = "probability";
+  private static final String ENCHANTMENTS_FIELD = "enchantments";
   private static final String DECOMPOSITION_PERIOD_FIELD = "decompositionPeriod";
   private static final String INTEGRITY_DECREMENT_ON_HIT_FIELD = "integrityDecrementOnHit";
   private static final String INTEGRITY_DECREMENT_ON_EAT_FIELD = "integrityDecrementOnEat";
@@ -70,6 +72,7 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     itemRules.put(RARITY_FIELD, idRule);
     JsonRule itemTagEnumRule = JsonRuleFactory.makeEnumJsonRule(Item.Tag.class);
     itemRules.put(TAGS_FIELD, JsonRuleFactory.makeVariableArrayRule(itemTagEnumRule));
+    itemRules.put(ENCHANTMENTS_FIELD, JsonRuleFactory.makeOptionalRule(getEnchantmentRuleObject()));
     itemRules.put(UNIQUE_FIELD, JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeBooleanRule()));
     itemRules.put(INTEGRITY_FIELD, integrityRuleObject);
     itemRules.put(WEIGHT_FIELD, JsonRuleFactory.makeBoundDoubleRule(Double.MIN_VALUE, 100));
@@ -98,6 +101,15 @@ public class ItemsJsonFileTest extends ResourcesTypeTest {
     nameRules.put(SINGULAR_FIELD, stringRule);
     nameRules.put(PLURAL_FIELD, optionalStringRule);
     return JsonRuleFactory.makeObjectRule(nameRules);
+  }
+
+  private JsonRule getEnchantmentRuleObject() {
+    Map<String, JsonRule> nameRules = new HashMap<>();
+    JsonRule idRule = JsonRuleFactory.makeIdRule();
+    JsonRule probabilityRule = JsonRuleFactory.makeBoundDoubleRule(0.0, 1.0);
+    nameRules.put(ID_FIELD, idRule);
+    nameRules.put(PROBABILITY_FIELD, probabilityRule);
+    return JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeObjectRule(nameRules));
   }
 
   private JsonRule getIntegrityRuleObject() {

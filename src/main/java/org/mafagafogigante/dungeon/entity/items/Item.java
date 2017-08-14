@@ -2,12 +2,14 @@ package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
+import org.mafagafogigante.dungeon.entity.EnchantmentFactory;
 import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.LightSource;
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
@@ -31,7 +33,7 @@ public final class Item extends Entity {
   /**
    * Constructs a new Item from the provided preset and with the specified creation date.
    */
-  public Item(ItemPreset preset, Date date) {
+  public Item(ItemPreset preset, Date date, EnchantmentFactory enchantmentFactory) {
     super(preset);
     rarity = preset.getRarity();
     tagSet = TagSet.copyTagSet(preset.getTagSet());
@@ -58,6 +60,9 @@ public final class Item extends Entity {
     }
     if (hasTag(Tag.BOOK)) {
       bookComponent = new BookComponent(preset.getSpellId(), preset.getText());
+    }
+    for (Id enchantmentId : preset.getEnchantmentRules().randomRoll()) {
+      weaponComponent.getEnchantments().add(enchantmentFactory.makeEnchantment(enchantmentId));
     }
   }
 
@@ -90,11 +95,15 @@ public final class Item extends Entity {
    */
   public String getQualifiedName() {
     String singularName = getName().getSingular();
-    if (getIntegrity().getCurrent() == getIntegrity().getMaximum()) {
-      return singularName;
-    } else {
-      return getIntegrityString() + " " + singularName;
+    String integrityPrefix = "";
+    if (getIntegrity().getCurrent() != getIntegrity().getMaximum()) {
+      integrityPrefix = getIntegrityString() + " ";
     }
+    String enchantmentPrefix = "";
+    if (!getWeaponComponent().getEnchantments().isEmpty()) {
+      enchantmentPrefix = "Enchanted ";
+    }
+    return integrityPrefix + enchantmentPrefix + singularName;
   }
 
   public boolean hasTag(Tag tag) {

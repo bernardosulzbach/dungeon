@@ -44,6 +44,13 @@ public class JsonItemPresetFactory implements ItemPresetFactory {
       preset.setName(NameFactory.fromJsonObject(itemObject.get("name").asObject()));
       preset.setRarity(Rarity.valueOf(itemObject.get("rarity").asString()));
       preset.setTagSet(new TagSetParser<>(Item.Tag.class, itemObject.get("tags")).parse());
+      if (itemObject.get("enchantments") != null) {
+        for (JsonValue enchantment : itemObject.get("enchantments").asArray()) {
+          Id enchantmentId = new Id(enchantment.asObject().get("id").asString());
+          double probability = enchantment.asObject().get("probability").asDouble();
+          preset.getEnchantmentRules().add(enchantmentId, probability);
+        }
+      }
       preset.setUnique(itemObject.getBoolean("unique", false));
       if (itemObject.get("decompositionPeriod") != null) {
         long seconds = DungeonTimeParser.parseDuration(itemObject.get("decompositionPeriod").asString()).getSeconds();

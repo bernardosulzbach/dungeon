@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.date.Date;
+import org.mafagafogigante.dungeon.entity.EnchantmentFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.game.Id;
@@ -27,6 +28,7 @@ public final class ItemFactory implements Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
   private final Map<Id, ItemPreset> itemPresets = new HashMap<>();
+  private final EnchantmentFactory enchantmentFactory;
   private ItemFactoryRestrictions restrictions;
 
   // The flag that indicates we have already refreshed this ItemFactory with the resource files.
@@ -36,7 +38,8 @@ public final class ItemFactory implements Serializable {
   /**
    * Constructs an ItemFactory from one or more ItemPresetFactories.
    */
-  public ItemFactory(@NotNull ItemPresetFactory... itemPresetFactories) {
+  public ItemFactory(EnchantmentFactory enchantmentFactory, @NotNull ItemPresetFactory... itemPresetFactories) {
+    this.enchantmentFactory = enchantmentFactory;
     for (ItemPresetFactory itemPresetFactory : itemPresetFactories) {
       addAllPresets(itemPresetFactory.getItemPresets());
     }
@@ -103,7 +106,7 @@ public final class ItemFactory implements Serializable {
     if (itemPreset == null) {
       throw new IllegalArgumentException("id (" + id + ") does not correspond to an ItemPreset.");
     }
-    Item item = new Item(itemPreset, date);
+    Item item = new Item(itemPreset, date, enchantmentFactory);
     restrictions.registerItem(item.getId());
     return item;
   }

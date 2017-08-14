@@ -654,6 +654,12 @@
         "WEAPON",
         "REPAIRABLE"
       ],
+      "enchantments": [
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        }
+      ],
       "integrity": {
         "current": 85,
         "maximum": 85
@@ -695,6 +701,12 @@
       "tags": [
         "WEAPON",
         "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        }
       ],
       "integrity": {
         "current": 80,
@@ -780,6 +792,12 @@
       "tags": [
         "WEAPON",
         "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        }
       ],
       "integrity": {
         "current": 100,
@@ -971,6 +989,12 @@
       "tags": [
         "WEAPON",
         "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        }
       ],
       "integrity": {
         "current": 80,

@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
+import org.mafagafogigante.dungeon.entity.EnchantmentFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CorpseItemPresetFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CreatureFactory;
 import org.mafagafogigante.dungeon.entity.creatures.CreaturePresetFactory;
@@ -59,9 +60,11 @@ public class World implements Serializable {
     creatureFactory = new CreatureFactory(creaturePresetFactory);
 
     String itemsFilename = ResourceNameResolver.resolveName(DungeonResource.ITEMS);
+    String enchantmentsFilename = ResourceNameResolver.resolveName(DungeonResource.ENCHANTMENTS);
     ItemPresetFactory jsonItemPresetFactory = new JsonItemPresetFactory(itemsFilename);
     ItemPresetFactory corpseItemPresetFactory = new CorpseItemPresetFactory(creatureFactory);
-    itemFactory = new ItemFactory(jsonItemPresetFactory, corpseItemPresetFactory);
+    EnchantmentFactory enchantmentFactory = new EnchantmentFactory(enchantmentsFilename);
+    itemFactory = new ItemFactory(enchantmentFactory, jsonItemPresetFactory, corpseItemPresetFactory);
   }
 
   /**
@@ -79,7 +82,7 @@ public class World implements Serializable {
     return creatureFactory;
   }
 
-  public Date getWorldCreationDate() {
+  Date getWorldCreationDate() {
     return worldCreationDate;
   }
 
@@ -90,7 +93,7 @@ public class World implements Serializable {
   /**
    * Adds a Location to this World.
    */
-  public void addLocation(Location locationObject, Point coordinates) {
+  void addLocation(Location locationObject, Point coordinates) {
     if (locations.containsKey(coordinates)) {
       throw new IllegalStateException("tried to repeatedly add a location to " + coordinates + ".");
     }

@@ -14,7 +14,7 @@ import java.util.List;
 public class ResourcesFolderTest {
 
   private static final int FONT_FILES_NUMBER = 1;
-  private static final int JSON_FILES_NUMBER = 10;
+  private static final int JSON_FILES_NUMBER = 11;
   private static final String RESOURCES_TARGET_PATH = "../classes/";
   private static final String JSON_FILE_EXTENSION = ".json";
   private static final String FONT_FILE_EXTENSION = ".ttf";
@@ -39,19 +39,19 @@ public class ResourcesFolderTest {
   }
 
   @Test
-  public void testIsResourcesFolderContainsCorrectNumberOfJsonFiles() {
+  public void testResourcesFolderContainsTheCorrectNumberOfJsonFiles() {
     List<File> jsonFiles = findFilesByFileFilter(getEndWithFileFilter(JSON_FILE_EXTENSION));
     Assert.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
   }
 
   @Test
-  public void testIsResourcesFolderContainsFontFile() {
+  public void testResourcesFolderContainsTheCorrectNumberOfFontFiles() {
     List<File> fontFiles = findFilesByFileFilter(getEndWithFileFilter(FONT_FILE_EXTENSION));
     Assert.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
   }
 
   @Test
-  public void testIsResourcesFolderContainsSplashScreenFile() {
+  public void testResourcesFolderContainsTheSplashScreenFile() {
     List<File> splashScreenFile = findFilesByFileFilter(getEndWithFileFilter(SPLASH_SCREEN_FILE_NAME));
     Assert.assertEquals(1, splashScreenFile.size());
   }

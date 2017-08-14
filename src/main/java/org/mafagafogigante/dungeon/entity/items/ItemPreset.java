@@ -29,6 +29,7 @@ public final class ItemPreset implements Preset, Serializable {
   private Name name;
   private Rarity rarity;
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
+  private EnchantmentRules enchantmentRules = new EnchantmentRules();
   private Integrity integrity;
   private int damage;
   private Percentage hitRate;
@@ -77,7 +78,7 @@ public final class ItemPreset implements Preset, Serializable {
     this.name = name;
   }
 
-  public Rarity getRarity() {
+  Rarity getRarity() {
     return rarity;
   }
 
@@ -91,6 +92,10 @@ public final class ItemPreset implements Preset, Serializable {
 
   void setTagSet(TagSet<Tag> tagSet) {
     this.tagSet = tagSet;
+  }
+
+  EnchantmentRules getEnchantmentRules() {
+    return enchantmentRules;
   }
 
   public Integrity getIntegrity() {
