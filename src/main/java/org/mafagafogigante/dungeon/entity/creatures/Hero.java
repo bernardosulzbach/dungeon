@@ -657,8 +657,9 @@ public class Hero extends Creature {
   }
 
   private void destroyItem(@NotNull Item target) {
+    String nameBeforeAction = target.getName().getSingular();
     if (target.isBroken()) {
-      Writer.write(target.getName() + " is already crashed.");
+      Writer.write(nameBeforeAction + " is already crashed.");
     } else {
       while (getLocation().getInventory().hasItem(target) && !target.isBroken()) {
         // Simulate item-on-item damage by decrementing an item's integrity by its own hit decrement.
@@ -669,7 +670,7 @@ public class Hero extends Creature {
         Engine.rollDateAndRefresh(SECONDS_TO_HIT_AN_ITEM);
       }
       String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
-      Writer.write(getName() + " " + verb + " " + target.getName() + ".");
+      Writer.write(getName() + " " + verb + " " + nameBeforeAction + ".");
     }
   }
 
