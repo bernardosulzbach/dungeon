@@ -20,8 +20,12 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
   private static final Percentage DEFAULT_UNARMED_HIT_RATE = new Percentage(0.9);
   private static final Percentage DEFAULT_CRITICAL_CHANCE = new Percentage(0.1);
 
-  private static boolean isEquippingWorkingWeapon(@NotNull Creature attacker) {
-    return attacker.hasWeapon() && !attacker.getWeapon().isBroken();
+  private static boolean isEquippingBrokenWeapon(@NotNull Creature creature) {
+    return creature.hasWeapon() && creature.getWeapon().isBroken();
+  }
+
+  private static boolean isEquippingWorkingWeapon(@NotNull Creature creature) {
+    return creature.hasWeapon() && !creature.getWeapon().isBroken();
   }
 
   /**
@@ -52,6 +56,7 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
     if (Random.roll(getHitRate(attacker))) {
       int damage = attacker.getAttack();
+      boolean attackerIsEquippingBrokenWeapon = isEquippingBrokenWeapon(attacker);
       boolean attackerIsEquippingWorkingWeapon = isEquippingWorkingWeapon(attacker);
       if (attackerIsEquippingWorkingWeapon) {
         damage += attacker.getWeapon().getWeaponComponent().getDamage();
@@ -67,6 +72,8 @@ class SimpleAttackAlgorithm implements AttackAlgorithm {
       if (defender.getHealth().isDead()) {
         if (attackerIsEquippingWorkingWeapon) {
           defender.setCauseOfDeath(new CauseOfDeath(TypeOfCauseOfDeath.WEAPON, attacker.getWeapon().getId()));
+        } else if (attackerIsEquippingBrokenWeapon) {
+          defender.setCauseOfDeath(new CauseOfDeath(TypeOfCauseOfDeath.BROKEN_WEAPON, attacker.getWeapon().getId()));
         } else {
           defender.setCauseOfDeath(CauseOfDeath.getUnarmedCauseOfDeath());
         }
