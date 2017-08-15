@@ -77,4 +77,9 @@ public class QualifiedName extends Name implements Serializable {
     return result;
   }
 
+  @Override
+  public String toString() {
+    return getSingular();
+  }
+
 }
