@@ -3,6 +3,8 @@ package org.mafagafogigante.dungeon.util;
 import org.apache.commons.math3.util.Precision;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 /**
  * A collection of mathematical utility methods.
  */
@@ -55,6 +57,17 @@ public final class DungeonMath {
    * @return the sum
    */
   static int sum(@NotNull int[] integers) {
+    int total = 0;
+    for (int integer : integers) {
+      total += integer;
+    }
+    return total;
+  }
+
+  /**
+   * Returns the sum of a collection of integers.
+   */
+  static int sum(Collection<Integer> integers) {
     int total = 0;
     for (int integer : integers) {
       total += integer;

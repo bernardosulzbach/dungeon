@@ -6,8 +6,6 @@ import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +27,7 @@ public class Table extends Writable {
    * The content of the Table.
    */
   private final List<Column> columns = new ArrayList<>();
+  private final List<ColumnAlignment> columnAlignments = new ArrayList<>();
 
   /**
    * A CounterMap of Integers representing how many horizontal separators should precede each row.
@@ -51,6 +50,7 @@ public class Table extends Writable {
     }
     for (String header : headers) {
       columns.add(new Column(header));
+      columnAlignments.add(ColumnAlignment.LEFT);
     }
   }
 
@@ -66,15 +66,48 @@ public class Table extends Writable {
   }
 
   /**
-   * Appends a row to a DungeonString.
+   * Distributes a value among buckets. For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8
+   * over {5, 10} gives {1, 6}. If the division of value by the size of buckets is not exact, the first buckets are
+   * going to get more modified. For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10,
+   * 15} gives {2, 7, 13}.
    *
-   * @param builder the DungeonString object
-   * @param widths the widths of the columns of the table
-   * @param values the values of the row
+   * <p>This algorithm respects the MINIMUM_WIDTH constant.
+   *
+   * <p>The time complexity of this implementation is O(n) on the size of buckets.
    */
-  private static void appendRow(DungeonString builder, int[] widths, String... values) {
+  private static void distribute(int value, List<Integer> buckets) {
+    repeatModification(Math.abs(value), Integer.signum(value), buckets);
+  }
+
+  /**
+   * Applies modification repetitions times over the bucket array.
+   */
+  private static void repeatModification(int repetitions, int modification, List<Integer> buckets) {
+    if (buckets.isEmpty()) {
+      throw new IllegalArgumentException("buckets must have at least one element.");
+    }
+    if (DungeonMath.sum(buckets) + repetitions * modification < MINIMUM_WIDTH * buckets.size()) {
+      String format = "minimum is impossible. Got %d x %d for %s for a minimum of %d.";
+      String bucketsString = Arrays.toString(buckets.toArray());
+      String message = String.format(format, repetitions, modification, bucketsString, MINIMUM_WIDTH);
+      throw new IllegalArgumentException(message);
+    }
+    int i = 0;
+    while (repetitions > 0) {
+      if (buckets.get(i) + modification >= MINIMUM_WIDTH) {
+        buckets.set(i, buckets.get(i) + modification);
+        repetitions--;
+      }
+      i = (i + 1) % buckets.size();
+    }
+  }
+
+  /**
+   * Appends a row to a DungeonString.
+   */
+  private void appendRow(DungeonString builder, boolean header, List<Integer> widths, String... values) {
     for (int i = 0; i < values.length; i++) {
-      int columnWidth = widths[i];
+      int columnWidth = widths.get(i);
       String currentValue = values[i];
       if (currentValue.length() > columnWidth) {
         if (columnWidth < 4) { // This is how spreadsheet editors seem to handle it.
@@ -84,9 +117,18 @@ public class Table extends Writable {
           builder.append("...");
         }
       } else {
-        builder.append(currentValue);
+        // Headers are always left-aligned.
+        ColumnAlignment alignment = header ? ColumnAlignment.LEFT : columnAlignments.get(i);
         int extraSpaces = columnWidth - currentValue.length();
-        builder.append(makeRepeatedCharacterString(extraSpaces, ' '));
+        if (alignment == ColumnAlignment.LEFT) {
+          builder.append(currentValue);
+          builder.append(makeRepeatedCharacterString(extraSpaces, ' '));
+        } else if (alignment == ColumnAlignment.RIGHT) {
+          builder.append(makeRepeatedCharacterString(extraSpaces, ' '));
+          builder.append(currentValue);
+        } else {
+          throw new IllegalArgumentException("Cannot handle ColumnAlignment: " + alignment.toString());
+        }
       }
       if (i < values.length - 1) {
         builder.append(VERTICAL_BAR);
@@ -97,55 +139,25 @@ public class Table extends Writable {
 
   /**
    * Append a horizontal separator made up of dashes to a DungeonString.
-   *
-   * @param builder the DungeonString object
-   * @param columnWidths the width of the columns of the table
    */
-  private static void appendHorizontalSeparator(DungeonString builder, int[] columnWidths, int columnCount) {
+  private void appendHorizontalSeparator(DungeonString builder, List<Integer> columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
-    for (int i = 0; i < columnWidths.length; i++) {
-      pseudoRow[i] = makeRepeatedCharacterString(columnWidths[i], HORIZONTAL_BAR);
+    for (int i = 0; i < columnWidths.size(); i++) {
+      pseudoRow[i] = makeRepeatedCharacterString(columnWidths.get(i), HORIZONTAL_BAR);
     }
-    appendRow(builder, columnWidths, pseudoRow);
+    appendRow(builder, false, columnWidths, pseudoRow);
   }
 
   /**
-   * Distributes a value among buckets. For instance, distributing 3 over {2, 3, 4} gives {3, 4, 5} and distributing -8
-   * over {5, 10} gives {1, 6}. If the division of value by the size of buckets is not exact, the first buckets are
-   * going to get more modified. For instance, distributing 3 over {2, 3} gives {4, 4} and distributing -8 over {5, 10,
-   * 15} gives {2, 7, 13}.
-   *
-   * <p>This algorithm respects the MINIMUM_WIDTH constant.
-   *
-   * <p>The time complexity of this implementation is O(n) on the size of buckets
-   *
-   * @param value the total to be distributed
-   * @param buckets the buckets, not empty, not null
+   * Defines how each column should be aligned.
    */
-  private static void distribute(int value, @NotNull int[] buckets) {
-    repeatModification(Math.abs(value), Integer.signum(value), buckets);
-  }
-
-  /**
-   * Applies modification reps times over the bucket array.
-   */
-  private static void repeatModification(int reps, int modification, @NotNull int[] buckets) {
-    if (buckets.length == 0) {
-      throw new IllegalArgumentException("buckets must have at least one element.");
+  public void setColumnAlignments(List<ColumnAlignment> columnAlignments) {
+    if (columnAlignments.size() != columns.size()) {
+      String expectedButGotString = "Expected " + columns.size() + ", but got " + columnAlignments.size();
+      throw new IllegalArgumentException(expectedButGotString);
     }
-    if (DungeonMath.sum(buckets) + reps * modification < MINIMUM_WIDTH * buckets.length) {
-      String format = "minimum is impossible. Got %d x %d for %s for a minimum of %d.";
-      String message = String.format(format, reps, modification, Arrays.toString(buckets), MINIMUM_WIDTH);
-      throw new IllegalArgumentException(message);
-    }
-    int i = 0;
-    while (reps > 0) {
-      if (buckets[i] + modification >= MINIMUM_WIDTH) {
-        buckets[i] += modification;
-        reps--;
-      }
-      i = (i + 1) % buckets.length;
-    }
+    this.columnAlignments.clear();
+    this.columnAlignments.addAll(columnAlignments);
   }
 
   /**
@@ -177,8 +189,8 @@ public class Table extends Writable {
     separators.incrementCounter(columns.get(0).rows.size());
   }
 
-  private int[] calculateColumnWidths() throws IllegalArgumentException {
-    int[] widths = getMaximumColumnWidths();
+  private List<Integer> calculateColumnWidths() throws IllegalArgumentException {
+    List<Integer> widths = getMaximumColumnWidths();
     int availableWidth = getAvailableWidth();
     int difference = availableWidth - DungeonMath.sum(widths);
     distribute(difference, widths);
@@ -190,10 +202,10 @@ public class Table extends Writable {
     return GameWindow.getColumns() - columns.size() + 1;
   }
 
-  private int[] getMaximumColumnWidths() {
-    int[] widths = new int[columns.size()];
-    for (int i = 0; i < widths.length; i++) {
-      widths[i] = columns.get(i).widestValue;
+  private List<Integer> getMaximumColumnWidths() {
+    List<Integer> widths = new ArrayList<>();
+    for (Column column : columns) {
+      widths.add(column.widestValue);
     }
     return widths;
   }
@@ -201,10 +213,7 @@ public class Table extends Writable {
   @Override
   public List<ColoredString> toColoredStringList() {
     DungeonString string = new DungeonString();
-
-    int columnCount = columns.size();
-
-    int[] columnWidths;
+    List<Integer> columnWidths;
     try {
       // You likely don't want toColoredStringList to be throwing exceptions, so catch them early.
       columnWidths = calculateColumnWidths();
@@ -213,31 +222,27 @@ public class Table extends Writable {
       string.append("Failed to generate a visual representation of the table.");
       return string.toColoredStringList();
     }
-
-    String[] currentRow = new String[columnCount];
-
+    String[] currentRow = new String[columns.size()];
     // Insert headers
-    for (int i = 0; i < columnCount; i++) {
+    for (int i = 0; i < columns.size(); i++) {
       currentRow[i] = columns.get(i).header;
     }
-    appendRow(string, columnWidths, currentRow);
-
+    appendRow(string, true, columnWidths, currentRow);
     // A horizontal separator.
-    appendHorizontalSeparator(string, columnWidths, columnCount);
-
+    appendHorizontalSeparator(string, columnWidths, columns.size());
     int rowCount = columns.get(0).rows.size();
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
       if (separators != null) {
         for (int remaining = separators.getCounter(rowIndex); remaining > 0; remaining--) {
-          appendHorizontalSeparator(string, columnWidths, columnCount);
+          appendHorizontalSeparator(string, columnWidths, columns.size());
         }
       }
       if (rowIndex != rowCount) {
-        for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+        for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
           currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
         }
-        appendRow(string, columnWidths, currentRow);
+        appendRow(string, false, columnWidths, currentRow);
       }
     }
     return string.toColoredStringList();

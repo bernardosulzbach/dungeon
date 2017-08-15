@@ -29,6 +29,7 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.map.WorldMapWriter;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
+import org.mafagafogigante.dungeon.util.ColumnAlignment;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.SystemInformation;
@@ -348,7 +349,13 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
+        List<ColumnAlignment> columnAlignments = new ArrayList<>();
+        columnAlignments.add(ColumnAlignment.LEFT);
+        columnAlignments.add(ColumnAlignment.RIGHT);
+        columnAlignments.add(ColumnAlignment.RIGHT);
+        columnAlignments.add(ColumnAlignment.RIGHT);
         Table table = new Table("Name", "Kills", "Visited so far", "Maximum number of visits");
+        table.setColumnAlignments(columnAlignments);
         for (LocationPreset preset : LocationPresetStore.getDefaultLocationPresetStore().getAllPresets()) {
           String name = preset.getName().getSingular();
           String kills = String.valueOf(explorationStatistics.getKillCount(preset.getId()));
@@ -366,6 +373,7 @@ final class CommandSets {
             Game.getGameState().getStatistics().getBattleStatistics().getKillsByCauseOfDeath();
         if (map.isNotEmpty()) {
           Table table = new Table("Type", "Count");
+          table.setColumnAlignments(Arrays.asList(ColumnAlignment.LEFT, ColumnAlignment.RIGHT));
           for (CauseOfDeath causeOfDeath : map.keySet()) {
             table.insertRow(causeOfDeath.toString(), String.valueOf(map.getCounter(causeOfDeath)));
           }

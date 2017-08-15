@@ -4,9 +4,11 @@ import org.mafagafogigante.dungeon.commands.IssuedCommand;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.ColumnAlignment;
 import org.mafagafogigante.dungeon.util.Table;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -65,6 +67,7 @@ public final class Statistics implements Serializable {
    */
   public void writeStatistics() {
     Table statistics = new Table("Property", "Value");
+    statistics.setColumnAlignments(Arrays.asList(ColumnAlignment.LEFT, ColumnAlignment.RIGHT));
     insertCommandStatistics(statistics);
     statistics.insertSeparator();
     insertHeroStatistics(statistics);

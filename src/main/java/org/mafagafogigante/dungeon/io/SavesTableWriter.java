@@ -1,10 +1,12 @@
 package org.mafagafogigante.dungeon.io;
 
+import org.mafagafogigante.dungeon.util.ColumnAlignment;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,13 @@ public final class SavesTableWriter {
     List<File> files = Loader.getSavedFiles();
     List<Version> versions = Loader.getSavedFilesVersions(files);
     if (!files.isEmpty()) {
+      List<ColumnAlignment> columnAlignments = new ArrayList<>();
+      columnAlignments.add(ColumnAlignment.LEFT);
+      columnAlignments.add(ColumnAlignment.RIGHT);
+      columnAlignments.add(ColumnAlignment.RIGHT);
+      columnAlignments.add(ColumnAlignment.LEFT);
       Table table = new Table("Name", "Size", "Version", "Last modified");
+      table.setColumnAlignments(columnAlignments);
       int fileCount = 0;
       int byteCount = 0;
       final SimpleDateFormat lastModifiedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
