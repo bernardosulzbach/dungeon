@@ -7,10 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.util.List;
 
-public class QualifiedName implements Name, Serializable {
+public class QualifiedName extends Name implements Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
-
   private final Name name;
   private final List<String> prefixes;
   private final List<String> suffixes;
@@ -50,11 +49,6 @@ public class QualifiedName implements Name, Serializable {
   @Override
   public String getPlural() {
     return getConcatenatedPrefixes() + name.getPlural() + getConcatenatedSuffixes();
-  }
-
-  @Override
-  public String getQuantifiedName(int quantity) {
-    return name.getQuantifiedName(quantity);
   }
 
   @Override
