@@ -1,6 +1,5 @@
 package org.mafagafogigante.dungeon.entity;
 
-import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Version;
@@ -20,7 +19,7 @@ public abstract class Entity implements Selectable, Serializable {
   private static final long serialVersionUID = Version.MAJOR;
   private final Id id;
   private final String type;
-  private final BaseName name;
+  private final Name name;
   private final Weight weight;
   private final VisibilityCriteria visibilityCriteria;
 

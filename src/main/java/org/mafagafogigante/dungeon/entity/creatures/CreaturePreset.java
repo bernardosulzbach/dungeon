@@ -5,8 +5,8 @@ import org.mafagafogigante.dungeon.entity.Preset;
 import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature.Tag;
-import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
@@ -23,7 +23,7 @@ public final class CreaturePreset implements Preset, Serializable {
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private Id id;
   private String type;
-  private BaseName name;
+  private Name name;
   private Weight weight;
   private int health;
   private int attack;
@@ -59,7 +59,7 @@ public final class CreaturePreset implements Preset, Serializable {
     return tagSet;
   }
 
-  public void setTagSet(TagSet<Creature.Tag> tagSet) {
+  void setTagSet(TagSet<Creature.Tag> tagSet) {
     this.tagSet = tagSet;
   }
 
@@ -83,11 +83,11 @@ public final class CreaturePreset implements Preset, Serializable {
     this.type = type;
   }
 
-  public BaseName getName() {
+  public Name getName() {
     return name;
   }
 
-  public void setName(BaseName name) {
+  public void setName(Name name) {
     this.name = name;
   }
 
@@ -117,11 +117,11 @@ public final class CreaturePreset implements Preset, Serializable {
     this.attack = attack;
   }
 
-  public AttackAlgorithmId getAttackAlgorithmId() {
+  AttackAlgorithmId getAttackAlgorithmId() {
     return attackAlgorithmId;
   }
 
-  public void setAttackAlgorithmId(AttackAlgorithmId attackAlgorithmId) {
+  void setAttackAlgorithmId(AttackAlgorithmId attackAlgorithmId) {
     this.attackAlgorithmId = attackAlgorithmId;
   }
 
@@ -133,11 +133,11 @@ public final class CreaturePreset implements Preset, Serializable {
     this.items = items;
   }
 
-  public List<Drop> getDropList() {
+  List<Drop> getDropList() {
     return dropList;
   }
 
-  public void setDropList(List<Drop> dropList) {
+  void setDropList(List<Drop> dropList) {
     this.dropList = dropList;
   }
 
@@ -157,27 +157,27 @@ public final class CreaturePreset implements Preset, Serializable {
     this.luminosity = luminosity;
   }
 
-  public Id getWeaponId() {
+  Id getWeaponId() {
     return weaponId;
   }
 
-  public void setWeaponId(Id weaponId) {
+  void setWeaponId(Id weaponId) {
     this.weaponId = weaponId;
   }
 
-  public int getInventoryItemLimit() {
+  int getInventoryItemLimit() {
     return inventoryItemLimit;
   }
 
-  public void setInventoryItemLimit(int inventoryItemLimit) {
+  void setInventoryItemLimit(int inventoryItemLimit) {
     this.inventoryItemLimit = inventoryItemLimit;
   }
 
-  public double getInventoryWeightLimit() {
+  double getInventoryWeightLimit() {
     return inventoryWeightLimit;
   }
 
-  public void setInventoryWeightLimit(double inventoryWeightLimit) {
+  void setInventoryWeightLimit(double inventoryWeightLimit) {
     this.inventoryWeightLimit = inventoryWeightLimit;
   }
 

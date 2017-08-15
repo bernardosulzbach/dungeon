@@ -14,12 +14,12 @@ import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResu
 import org.mafagafogigante.dungeon.entity.items.DrinkableComponent;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
+import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.QuantificationMode;
@@ -400,7 +400,7 @@ public class Hero extends Creature {
    * Writes the Hero's inventory to the screen.
    */
   public void writeInventory() {
-    BaseName item = NameFactory.newInstance("item");
+    Name item = NameFactory.newInstance("item");
     String firstLine;
     if (getInventory().getItemCount() == 0) {
       firstLine = "Your inventory is empty.";

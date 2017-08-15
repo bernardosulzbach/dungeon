@@ -7,7 +7,7 @@ import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A factory of names. All BaseName objects should be created through this factory.
+ * A factory of names. Names should be created through this factory.
  */
 public final class NameFactory {
 
@@ -16,43 +16,32 @@ public final class NameFactory {
   }
 
   /**
-   * Creates a new BaseName from a singular form.
-   *
-   * @param singular the singular form, not null
-   * @return a BaseName constructed using the provided singular form and this form concatenated with an 's'
+   * Creates a new name from a singular form.
    */
-  public static BaseName newInstance(@NotNull String singular) {
+  public static Name newInstance(@NotNull String singular) {
     return newInstance(singular, singular + 's');
   }
 
   /**
-   * Creates a new BaseName from a singular and a plural form.
-   *
-   * @param singular the singular form
-   * @param plural the plural form
-   * @return a BaseName constructed using the provided singular and plural forms
+   * Creates a new name from a singular and a plural form.
    */
-  private static BaseName newInstance(String singular, String plural) {
+  private static Name newInstance(String singular, String plural) {
     return new BaseName(singular, plural);
   }
 
   /**
-   * Creates the BaseName the corpse Item of a creature whose name is provided should have.
-   *
-   * @param creatureName the BaseName of the creature
-   * @return a BaseName object
+   * Creates the name the corpse item of a creature whose name is provided should have.
    */
-  public static BaseName newCorpseName(BaseName creatureName) {
+  public static Name newCorpseName(Name creatureName) {
     return newInstance(creatureName.getSingular() + " Corpse");
   }
 
   /**
-   * Attempts to generate a BaseName object from a JSON object.
+   * Attempts to generate a name object from a JSON object.
    *
    * <p>The JSON object should have the form:
    * <pre>
-   *   {"singular": "singularForm",
-   *    "plural": "pluralForm"}}
+   *   {"singular": "singularForm", "plural": "pluralForm"}
    * </pre>
    *
    *
@@ -62,11 +51,8 @@ public final class NameFactory {
    *   {"singular": "singularForm"}
    * </pre>
    * This rule helps remove unnecessary information from developers reading the resource files.
-   *
-   * @param jsonObject a JsonObject, not null, as specified in the Javadoc
-   * @return a BaseName object
    */
-  public static BaseName fromJsonObject(@NotNull JsonObject jsonObject) {
+  public static Name fromJsonObject(@NotNull JsonObject jsonObject) {
     String singular = jsonObject.get("singular").asString();
     String plural = readOrRenderPlural(jsonObject, singular);
     return newInstance(singular, plural);
