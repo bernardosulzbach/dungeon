@@ -5,8 +5,8 @@ import org.mafagafogigante.dungeon.entity.Preset;
 import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Creature.Tag;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Percentage;
@@ -23,7 +23,7 @@ public final class CreaturePreset implements Preset, Serializable {
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Creature.Tag.class);
   private Id id;
   private String type;
-  private Name name;
+  private BaseName name;
   private Weight weight;
   private int health;
   private int attack;
@@ -83,11 +83,11 @@ public final class CreaturePreset implements Preset, Serializable {
     this.type = type;
   }
 
-  public Name getName() {
+  public BaseName getName() {
     return name;
   }
 
-  public void setName(Name name) {
+  public void setName(BaseName name) {
     this.name = name;
   }
 

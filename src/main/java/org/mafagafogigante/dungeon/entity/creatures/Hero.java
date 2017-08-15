@@ -14,12 +14,12 @@ import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResu
 import org.mafagafogigante.dungeon.entity.items.DrinkableComponent;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.QuantificationMode;
@@ -400,7 +400,7 @@ public class Hero extends Creature {
    * Writes the Hero's inventory to the screen.
    */
   public void writeInventory() {
-    Name item = NameFactory.newInstance("item");
+    BaseName item = NameFactory.newInstance("item");
     String firstLine;
     if (getInventory().getItemCount() == 0) {
       firstLine = "Your inventory is empty.";
@@ -599,6 +599,10 @@ public class Hero extends Creature {
       text.append(String.valueOf(selectedItem.getWeaponComponent().getDamage()));
       text.append(".");
       text.append("\n");
+      text.append("The base hit rate of this item is ");
+      text.append(String.valueOf(selectedItem.getWeaponComponent().getHitRate()));
+      text.append(".");
+      text.append("\n");
       Writer.write(text);
     }
   }
@@ -684,7 +688,7 @@ public class Hero extends Creature {
   private void equipWeapon(Item weapon) {
     if (hasWeapon()) {
       if (getWeapon() == weapon) {
-        Writer.write(getName() + " is already equipping " + weapon.getName() + ".");
+        Writer.write(getName().getSingular() + " is already equipping " + weapon.getName().getSingular() + ".");
         return;
       } else {
         unequipWeapon();

@@ -24,7 +24,7 @@ public class Location implements Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
   private final Id id;
-  private final Name name;
+  private final BaseName name;
   private final LocationDescription description;
   private final BlockedEntrances blockedEntrances;
   private final List<Creature> creatures;
@@ -73,7 +73,7 @@ public class Location implements Serializable {
     return id;
   }
 
-  public Name getName() {
+  public BaseName getName() {
     return name;
   }
 

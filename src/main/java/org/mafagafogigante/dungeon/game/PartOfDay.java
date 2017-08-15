@@ -24,7 +24,7 @@ public enum PartOfDay implements Selectable {
   EVENING("Evening", 0.4, 19),
   MIDNIGHT("Midnight", 0.2, 23);
 
-  private final Name name;
+  private final BaseName name;
 
   // How bright is the sun at this part of the day?
   // Should be bigger than or equal to 0 and smaller than or equal to 1.
@@ -97,7 +97,7 @@ public enum PartOfDay implements Selectable {
   }
 
   @Override
-  public Name getName() {
+  public BaseName getName() {
     // Whenever the player sees a PartOfDay, he or she sees the return value of toString().
     // Therefore it makes sense to delegate the name of a PartOfDay to the toString() method.
     return name;

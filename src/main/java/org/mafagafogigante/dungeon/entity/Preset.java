@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.entity;
 
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.util.Percentage;
 
 /**
@@ -13,7 +13,7 @@ public interface Preset {
 
   String getType();
 
-  Name getName();
+  BaseName getName();
 
   Weight getWeight();
 

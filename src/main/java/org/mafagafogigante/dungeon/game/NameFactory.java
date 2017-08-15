@@ -7,7 +7,7 @@ import com.eclipsesource.json.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A factory of names. All Name objects should be created through this factory.
+ * A factory of names. All BaseName objects should be created through this factory.
  */
 public final class NameFactory {
 
@@ -16,38 +16,38 @@ public final class NameFactory {
   }
 
   /**
-   * Creates a new Name from a singular form.
+   * Creates a new BaseName from a singular form.
    *
    * @param singular the singular form, not null
-   * @return a Name constructed using the provided singular form and this form concatenated with an 's'
+   * @return a BaseName constructed using the provided singular form and this form concatenated with an 's'
    */
-  public static Name newInstance(@NotNull String singular) {
+  public static BaseName newInstance(@NotNull String singular) {
     return newInstance(singular, singular + 's');
   }
 
   /**
-   * Creates a new Name from a singular and a plural form.
+   * Creates a new BaseName from a singular and a plural form.
    *
    * @param singular the singular form
    * @param plural the plural form
-   * @return a Name constructed using the provided singular and plural forms
+   * @return a BaseName constructed using the provided singular and plural forms
    */
-  private static Name newInstance(String singular, String plural) {
-    return new Name(singular, plural);
+  private static BaseName newInstance(String singular, String plural) {
+    return new BaseName(singular, plural);
   }
 
   /**
-   * Creates the Name the corpse Item of a creature whose name is provided should have.
+   * Creates the BaseName the corpse Item of a creature whose name is provided should have.
    *
-   * @param creatureName the Name of the creature
-   * @return a Name object
+   * @param creatureName the BaseName of the creature
+   * @return a BaseName object
    */
-  public static Name newCorpseName(Name creatureName) {
+  public static BaseName newCorpseName(BaseName creatureName) {
     return newInstance(creatureName.getSingular() + " Corpse");
   }
 
   /**
-   * Attempts to generate a Name object from a JSON object.
+   * Attempts to generate a BaseName object from a JSON object.
    *
    * <p>The JSON object should have the form:
    * <pre>
@@ -64,9 +64,9 @@ public final class NameFactory {
    * This rule helps remove unnecessary information from developers reading the resource files.
    *
    * @param jsonObject a JsonObject, not null, as specified in the Javadoc
-   * @return a Name object
+   * @return a BaseName object
    */
-  public static Name fromJsonObject(@NotNull JsonObject jsonObject) {
+  public static BaseName fromJsonObject(@NotNull JsonObject jsonObject) {
     String singular = jsonObject.get("singular").asString();
     String plural = readOrRenderPlural(jsonObject, singular);
     return newInstance(singular, plural);

@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.Entity;
 import org.mafagafogigante.dungeon.entity.items.Item;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;

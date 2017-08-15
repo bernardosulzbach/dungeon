@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.NameFactory;
 
 import org.junit.Assert;
@@ -54,7 +54,7 @@ public class MatchesTest {
   }
 
   class WrappedString implements Selectable {
-    private final Name name;
+    private final BaseName name;
 
     WrappedString(String name) {
       this.name = NameFactory.newInstance(name);
@@ -80,7 +80,7 @@ public class MatchesTest {
     }
 
     @Override
-    public Name getName() {
+    public BaseName getName() {
       return name;
     }
   }

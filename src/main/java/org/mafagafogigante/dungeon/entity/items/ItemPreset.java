@@ -8,8 +8,8 @@ import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.entity.creatures.Effect;
 import org.mafagafogigante.dungeon.entity.creatures.EffectFactory;
 import org.mafagafogigante.dungeon.entity.items.Item.Tag;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
 
@@ -26,7 +26,7 @@ public final class ItemPreset implements Preset, Serializable {
   private final List<Effect> drinkableEffects = new ArrayList<>();
   private Id id;
   private String type;
-  private Name name;
+  private BaseName name;
   private Rarity rarity;
   private TagSet<Tag> tagSet = TagSet.makeEmptyTagSet(Item.Tag.class);
   private EnchantmentRules enchantmentRules = new EnchantmentRules();
@@ -70,11 +70,11 @@ public final class ItemPreset implements Preset, Serializable {
     this.type = type;
   }
 
-  public Name getName() {
+  public BaseName getName() {
     return name;
   }
 
-  public void setName(Name name) {
+  public void setName(BaseName name) {
     this.name = name;
   }
 

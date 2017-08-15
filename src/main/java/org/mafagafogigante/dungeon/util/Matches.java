@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.util;
 
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Name;
 
 import org.apache.commons.lang3.StringUtils;

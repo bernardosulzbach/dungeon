@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.spells;
 
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Selectable;
 
@@ -27,7 +27,7 @@ public abstract class Spell implements Selectable, Serializable {
   }
 
   @Override
-  public Name getName() {
+  public BaseName getName() {
     return definition.name; // Delegate to SpellDefinition.
   }
 

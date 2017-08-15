@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.wiki;
 
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.util.Selectable;
@@ -15,7 +16,7 @@ import java.util.TreeSet;
  */
 final class Article implements Selectable {
 
-  private final Name title;
+  private final BaseName title;
   private final String content;
   private final Set<String> seeAlso = new TreeSet<>();
 

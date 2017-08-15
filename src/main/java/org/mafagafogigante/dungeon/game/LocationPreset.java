@@ -18,7 +18,7 @@ public final class LocationPreset {
 
   private final Id id;
   private final Type type;
-  private final Name name;
+  private final BaseName name;
   private final BlockedEntrances blockedEntrances = new BlockedEntrances();
   private final List<SpawnerPreset> spawners = new ArrayList<>();
   private final Map<Id, Percentage> items = new HashMap<>();
@@ -27,7 +27,7 @@ public final class LocationPreset {
   private int blobSize;
   private LocationDescription description;
 
-  LocationPreset(Id id, Type type, Name name) {
+  LocationPreset(Id id, Type type, BaseName name) {
     this.id = id;
     this.type = type;
     this.name = name;
@@ -41,7 +41,7 @@ public final class LocationPreset {
     return type;
   }
 
-  public Name getName() {
+  public BaseName getName() {
     return name;
   }
 

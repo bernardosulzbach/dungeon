@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.spells;
 
+import org.mafagafogigante.dungeon.game.BaseName;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.io.Version;
 
@@ -17,7 +17,7 @@ final class SpellDefinition implements Serializable {
   private static final long serialVersionUID = Version.MAJOR;
   public final Id id;
   // Use a name because in the future we may want to write stuff like "you casted 10 fireballs so far."
-  public final Name name;
+  public final BaseName name;
 
   public SpellDefinition(String id, String name) {
     this.id = new Id(id);
@@ -43,10 +43,7 @@ final class SpellDefinition implements Serializable {
 
   @Override
   public String toString() {
-    return "SpellDefinition{" +
-        "id=" + id +
-        ", name=" + name +
-        '}';
+    return "SpellDefinition{" + "id=" + id + ", name=" + name + '}';
   }
 
 }

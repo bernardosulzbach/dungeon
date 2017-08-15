@@ -10,8 +10,14 @@ import org.mafagafogigante.dungeon.entity.TagSet;
 import org.mafagafogigante.dungeon.entity.Weight;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.Name;
+import org.mafagafogigante.dungeon.game.QualifiedName;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.util.Percentage;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public final class Item extends Entity {
 
@@ -90,20 +96,24 @@ public final class Item extends Entity {
     return existence.getSeconds();
   }
 
+  @Override
+  public Name getName() {
+    Name name = super.getName();
+    List<String> prefixes = new ArrayList<>();
+    if (getIntegrity().getCurrent() != getIntegrity().getMaximum()) {
+      prefixes.add(getIntegrityString());
+    }
+    if (!getWeaponComponent().getEnchantments().isEmpty()) {
+      prefixes.add("Enchanted");
+    }
+    return new QualifiedName(name, prefixes, Collections.<String>emptyList());
+  }
+
   /**
    * Returns the name of this Item preceded by its integrity state.
    */
   public String getQualifiedName() {
-    String singularName = getName().getSingular();
-    String integrityPrefix = "";
-    if (getIntegrity().getCurrent() != getIntegrity().getMaximum()) {
-      integrityPrefix = getIntegrityString() + " ";
-    }
-    String enchantmentPrefix = "";
-    if (!getWeaponComponent().getEnchantments().isEmpty()) {
-      enchantmentPrefix = "Enchanted ";
-    }
-    return integrityPrefix + enchantmentPrefix + singularName;
+    return getName().getSingular();
   }
 
   public boolean hasTag(Tag tag) {
