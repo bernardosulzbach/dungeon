@@ -656,7 +656,27 @@
       ],
       "enchantments": [
         {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
           "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
           "probability": 0.05
         }
       ],
@@ -704,7 +724,27 @@
       ],
       "enchantments": [
         {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
           "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
           "probability": 0.05
         }
       ],
@@ -795,7 +835,27 @@
       ],
       "enchantments": [
         {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
           "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
           "probability": 0.05
         }
       ],
@@ -992,7 +1052,27 @@
       ],
       "enchantments": [
         {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
           "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
           "probability": 0.05
         }
       ],
