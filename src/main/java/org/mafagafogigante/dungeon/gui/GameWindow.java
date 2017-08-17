@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Loader;
+import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.StopWatch;
 
@@ -233,11 +234,10 @@ public class GameWindow extends JFrame {
         }
       }
     });
-
     add(panel);
-
     setResizable(false);
     resize();
+    Writer.getDefaultWriter().subscribe(this);
   }
 
   private void setGameWindowTitle(String title) {

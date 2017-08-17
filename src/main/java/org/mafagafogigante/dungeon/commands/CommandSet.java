@@ -45,7 +45,7 @@ public final class CommandSet {
           }
         }
         if (count == 0 && filter != null) {
-          Writer.write("No command starts with '" + filter + "'.");
+          Writer.getDefaultWriter().write("No command starts with '" + filter + "'.");
         } else {
           if (count > 1) {
             dungeonString.append("\nListed ");
@@ -55,7 +55,7 @@ public final class CommandSet {
               dungeonString.append("\nYou can filter the output of this command by typing the beginning of a command.");
             }
           }
-          Writer.write(dungeonString);
+          Writer.getDefaultWriter().write(dungeonString);
         }
       }
     });

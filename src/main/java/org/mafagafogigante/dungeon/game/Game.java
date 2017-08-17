@@ -82,7 +82,7 @@ public class Game {
   }
 
   private static void suggestTutorial() {
-    Writer.write(new DungeonString("\nYou may want to issue 'tutorial' to learn the basics.\n"));
+    Writer.getDefaultWriter().write(new DungeonString("\nYou may want to issue 'tutorial' to learn the basics.\n"));
   }
 
   /**
@@ -124,7 +124,7 @@ public class Game {
     DungeonLogger.info("Set the GameState field in Game to a GameState.");
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
     Engine.refresh();
-    Writer.write(new DungeonString("\n")); // Improves readability.
+    Writer.getDefaultWriter().write(new DungeonString("\n")); // Improves readability.
     gameState.getHero().look();
   }
 
@@ -135,8 +135,6 @@ public class Game {
 
   /**
    * Renders a turn based on the last IssuedCommand.
-   *
-   * @param issuedCommand the last IssuedCommand.
    */
   public static void renderTurn(IssuedCommand issuedCommand, StopWatch stopWatch) {
     DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "started renderTurn", stopWatch);
@@ -148,7 +146,7 @@ public class Game {
     if (wasSuccessful) {
       if (getGameState().getHero().getHealth().isDead()) {
         getGameWindow().clearTextPane();
-        Writer.write("You died.");
+        Writer.getDefaultWriter().write("You died.");
         unsetGameState();
         setGameState(getAfterDeathGameState());
       } else {
@@ -186,7 +184,7 @@ public class Game {
       string.append(".\n");
       string.setColor(Color.ORANGE);
       string.append("See 'commands' for a complete list of commands.");
-      Writer.write(string);
+      Writer.getDefaultWriter().write(string);
       return false;
     }
   }

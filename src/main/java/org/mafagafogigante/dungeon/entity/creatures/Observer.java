@@ -122,7 +122,7 @@ public class Observer implements Serializable {
     lookLocations(string);
     lookCreatures(string);
     lookItems(string);
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   /**

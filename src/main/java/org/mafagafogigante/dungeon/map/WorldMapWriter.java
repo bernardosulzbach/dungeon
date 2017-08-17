@@ -46,7 +46,7 @@ public final class WorldMapWriter {
         string.append("\n");
       }
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
 }

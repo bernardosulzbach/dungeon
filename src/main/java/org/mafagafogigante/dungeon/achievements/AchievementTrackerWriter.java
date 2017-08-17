@@ -68,16 +68,16 @@ public class AchievementTrackerWriter {
     int total = AchievementStoreFactory.getDefaultStore().getAchievements().size();
     string.setColor(Color.CYAN);
     string.append(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total));
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   /**
    * Writes a listing of valid UnlockedAchievement orderings to the screen.
    */
   private static void writeValidOrderings() {
-    Writer.write("Valid orderings:");
+    Writer.getDefaultWriter().write("Valid orderings:");
     for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
-      Writer.write(" " + comparatorName);
+      Writer.getDefaultWriter().write(" " + comparatorName);
     }
   }
 

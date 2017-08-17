@@ -29,10 +29,7 @@ public class ColoredString {
 
   @Override
   public String toString() {
-    return "ColoredString{" +
-        "string='" + string + '\'' +
-        ", color=" + color +
-        '}';
+    return "ColoredString{" + "string='" + string + '\'' + ", color=" + color + '}';
   }
 
 }

@@ -58,7 +58,7 @@ public final class HeroUtils {
   public static List<Item> findItems(List<Item> items, String[] tokens) {
     Matches<Item> matches = Matches.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
-      Writer.write("Item not found.");
+      Writer.getDefaultWriter().write("Item not found.");
     } else if (matches.isDisjoint()) {
       // Matches are disjoint, if there is more than one different name, the results are ambiguous.
       if (matches.size() == 1 || matches.getDifferentNames() == 1) {
@@ -86,11 +86,11 @@ public final class HeroUtils {
   }
 
   static void writeNoLongerInInventoryMessage(Item item) {
-    Writer.write(item.getQualifiedName() + " is no longer in the inventory.");
+    Writer.getDefaultWriter().write(item.getQualifiedName() + " is no longer in the inventory.");
   }
 
   static void writeNoLongerInLocationMessage(Item item) {
-    Writer.write(item.getQualifiedName() + " is no longer in this location.");
+    Writer.getDefaultWriter().write(item.getQualifiedName() + " is no longer in this location.");
   }
 
 }
