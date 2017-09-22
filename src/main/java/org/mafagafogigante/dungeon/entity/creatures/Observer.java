@@ -2,6 +2,7 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.items.Item;
+import org.mafagafogigante.dungeon.game.ColoredString;
 import org.mafagafogigante.dungeon.game.Direction;
 import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
