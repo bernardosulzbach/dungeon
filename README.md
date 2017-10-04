@@ -17,7 +17,7 @@ found in the world to learn about its history and the lives of some of the
 Commons (the human-like race of Darrowmere) that lived there. Some books may
 even teach your character magical spells that give him some advantage when
 dealing with the aberrations roaming the land.
-
+qqqqqqqqqqqqqqqq
 The world is randomly generated, making each and every experience unique. There
 is also an in-game wiki with a lot of information about the different facets of
 the game. You can also [browse the wiki
@@ -59,7 +59,7 @@ to see what could be done or figure out something you would like to do and start
 working on it.
 
 Discussing your ideas on the tracker before coding is a good way to increase
-the chance of your changes being accepted.----
+the chance of your changes being accepted.
 
 Do not forget to also read [Dungeon's contributing
 guide](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
