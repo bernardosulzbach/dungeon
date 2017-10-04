@@ -1,0 +1,1536 @@
+{
+  "items": [
+    {
+      "id": "TORCH",
+      "type": "Tool",
+      "name": {
+        "singular": "Torch",
+        "plural": "Torches"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.35,
+      "visibility": "90.00%",
+      "damage": 3,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 5,
+      "luminosity": "40.00%"
+    },
+    {
+      "id": "APPLE",
+      "type": "Food",
+      "name": {
+        "singular": "Apple"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 12,
+        "maximum": 12
+      },
+      "weight": 0.25,
+      "visibility": "60.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 6
+    },
+    {
+      "id": "BANANA",
+      "type": "Food",
+      "name": {
+        "singular": "Banana"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 16,
+        "maximum": 16
+      },
+      "weight": 0.15,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 3,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 7,
+      "integrityDecrementOnEat": 8
+    },
+    {
+      "id": "CHERRY",
+      "type": "Food",
+      "name": {
+        "singular": "Cherry",
+        "plural": "Cherries"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.008,
+      "visibility": "50.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 4,
+      "nutrition": 4,
+      "integrityDecrementOnEat": 4
+    },
+    {
+      "id": "PINEAPPLE",
+      "type": "Food",
+      "name": {
+        "singular": "Pineapple"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 21,
+        "maximum": 21
+      },
+      "weight": 1.3,
+      "visibility": "65.00%",
+      "decompositionPeriod": "4 days",
+      "damage": 9,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 3,
+      "nutrition": 9,
+      "integrityDecrementOnEat": 7
+    },
+    {
+      "id": "POTATO",
+      "type": "Food",
+      "name": {
+        "singular": "Potato"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.175,
+      "visibility": "55.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 4,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "STRAWBERRY",
+      "type": "Food",
+      "name": {
+        "singular": "Strawberry",
+        "plural": "Strawberries"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 5,
+        "maximum": 5
+      },
+      "weight": 0.01,
+      "visibility": "50.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 3,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 5,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "WATERMELON",
+      "type": "Food",
+      "name": {
+        "singular": "Watermelon"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 40,
+        "maximum": 40
+      },
+      "weight": 9,
+      "visibility": "70.00%",
+      "decompositionPeriod": "6 days",
+      "damage": 8,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 8,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "HEALING_POTION",
+      "type": "Potion",
+      "name": {
+        "singular": "Healing Potion"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 2,
+      "drinkableEffects": [
+        [
+          "HEALING",
+          10
+        ]
+      ],
+      "integrityDecrementPerDose": 5
+    },
+    {
+      "id": "HEALING_DRAUGHT",
+      "type": "Potion",
+      "name": {
+        "singular": "Healing Draught"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.4,
+      "visibility": "65.00%",
+      "damage": 6,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 4,
+      "drinkableEffects": [
+        [
+          "HEALING",
+          15
+        ]
+      ],
+      "integrityDecrementPerDose": 5
+    },
+    {
+      "id": "POTION_OF_THE_WARRIOR",
+      "type": "Potion",
+      "name": {
+        "singular": "Potion of the Warrior",
+        "plural": "Potions of the Warrior"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 1,
+      "drinkableEffects": [
+        [
+          "EXTRA_ATTACK",
+          4,
+          "1 hour"
+        ]
+      ],
+      "integrityDecrementPerDose": 10
+    },
+    {
+      "id": "POTION_OF_THE_FISHERMAN",
+      "type": "Potion",
+      "name": {
+        "singular": "Potion of the Fisherman",
+        "plural": "Potions of the Fisherman"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "DRINKABLE",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.2,
+      "visibility": "60.00%",
+      "damage": 4,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 5,
+      "drinkableDoses": 1,
+      "drinkableEffects": [
+        [
+          "FISHING_PROFICIENCY",
+          "15%",
+          "1 hour"
+        ]
+      ],
+      "integrityDecrementPerDose": 10
+    },
+    {
+      "id": "BEAR_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Bear Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "WOLF_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Wolf Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "TIGER_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Tiger Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "RABBIT_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Rabbit Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.5,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "BOAR_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Boar Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "CROCODILE_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Crocodile Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "COW_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Cow Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "FOX_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Fox Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.5,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "IGUANA_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Iguana Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.5,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 10,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "KOMODO_DRAGON_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Komodo Dragon Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "GIANT_RAT_BEEF",
+      "type": "Food",
+      "name": {
+        "singular": "Giant Rat Beef"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 1.5,
+      "visibility": "70.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "FISH",
+      "type": "Food",
+      "name": {
+        "singular": "Fish",
+        "plural": "Fishes"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.8,
+      "visibility": "60.00%",
+      "decompositionPeriod": "1 day",
+      "damage": 4,
+      "hitRate": "45.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "AXE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Axe"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
+          "probability": 0.05
+        }
+      ],
+      "integrity": {
+        "current": 85,
+        "maximum": 85
+      },
+      "weight": 2,
+      "visibility": "70.00%",
+      "damage": 18,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "CLUB",
+      "type": "Weapon",
+      "name": {
+        "singular": "Club"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 90,
+        "maximum": 90
+      },
+      "weight": 1.1,
+      "visibility": "65.00%",
+      "damage": 11,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "DAGGER",
+      "type": "Weapon",
+      "name": {
+        "singular": "Dagger"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
+          "probability": 0.05
+        }
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.4,
+      "visibility": "65.00%",
+      "damage": 12,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "DAGGER_OF_INFINITY",
+      "type": "Weapon",
+      "name": {
+        "singular": "Dagger of Infinity",
+        "plural": "Daggers of Infinity"
+      },
+      "rarity": "UNIQUE",
+      "tags": [
+        "WEAPON"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.4,
+      "visibility": "70.00%",
+      "damage": 13,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 0
+    },
+    {
+      "id": "FLAIL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Flail"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.9,
+      "visibility": "70.00%",
+      "damage": 18,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "ETHEREAL_FLAIL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Ethereal Flail"
+      },
+      "rarity": "RARE",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 0.005,
+      "visibility": "80.00%",
+      "damage": 16,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "LONGSWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Longsword"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
+          "probability": 0.05
+        }
+      ],
+      "integrity": {
+        "current": 100,
+        "maximum": 100
+      },
+      "weight": 1.6,
+      "visibility": "75.00%",
+      "damage": 20,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "GLASS_SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Glass Sword"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 15,
+        "maximum": 15
+      },
+      "weight": 1.0,
+      "visibility": "45.00%",
+      "damage": 40,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 15
+    },
+    {
+      "id": "THE_SUN_BLADE",
+      "type": "Weapon",
+      "name": {
+        "singular": "The Sun Blade"
+      },
+      "rarity": "UNIQUE",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 1.2,
+      "visibility": "90.00%",
+      "luminosity": "25.00%",
+      "damage": 22,
+      "hitRate": "85.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "MACE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Mace"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 90,
+        "maximum": 90
+      },
+      "weight": 6,
+      "visibility": "70.00%",
+      "damage": 16,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "ORC_SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Orc Sword"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 60,
+        "maximum": 60
+      },
+      "weight": 1.1,
+      "visibility": "65.00%",
+      "damage": 14,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "SPEAR",
+      "type": "Weapon",
+      "name": {
+        "singular": "Spear"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 70,
+        "maximum": 70
+      },
+      "weight": 1.8,
+      "visibility": "70.00%",
+      "damage": 10,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STAFF",
+      "type": "Weapon",
+      "name": {
+        "singular": "Staff"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 75,
+        "maximum": 75
+      },
+      "weight": 3,
+      "visibility": "60.00%",
+      "damage": 14,
+      "hitRate": "75.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STICK",
+      "type": "Weapon",
+      "name": {
+        "singular": "Stick"
+      },
+      "rarity": "POOR",
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 30,
+        "maximum": 30
+      },
+      "weight": 0.7,
+      "visibility": "55.00%",
+      "decompositionPeriod": "1 month",
+      "damage": 6,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "STONE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Stone"
+      },
+      "rarity": "POOR",
+      "tags": [
+        "WEAPON"
+      ],
+      "integrity": {
+        "current": 200,
+        "maximum": 200
+      },
+      "weight": 0.4,
+      "visibility": "60.00%",
+      "damage": 8,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "SWORD",
+      "type": "Weapon",
+      "name": {
+        "singular": "Sword"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE"
+      ],
+      "enchantments": [
+        {
+          "id": "CORROSIVE_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "FREEZING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "SHOCKING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "BURNING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "POISONING_LASH",
+          "probability": 0.05
+        },
+        {
+          "id": "THUNDERING_LASH",
+          "probability": 0.05
+        }
+      ],
+      "integrity": {
+        "current": 80,
+        "maximum": 80
+      },
+      "weight": 1.2,
+      "visibility": "65.00%",
+      "damage": 16,
+      "hitRate": "95.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "BONE",
+      "type": "Weapon",
+      "name": {
+        "singular": "Bone"
+      },
+      "rarity": "POOR",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 60,
+        "maximum": 60
+      },
+      "weight": 0.8,
+      "visibility": "60.00%",
+      "decompositionPeriod": "100 years",
+      "damage": 10,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
+      "id": "SKULL",
+      "type": "Weapon",
+      "name": {
+        "singular": "Skull"
+      },
+      "rarity": "POOR",
+      "tags": [
+        "WEAPON",
+        "REPAIRABLE",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 40,
+        "maximum": 40
+      },
+      "weight": 0.6,
+      "visibility": "65.00%",
+      "decompositionPeriod": "100 years",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
+      "id": "SPIDER_VENOM_GLAND",
+      "type": "Weapon",
+      "name": {
+        "singular": "Spider Venom Gland"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.4,
+      "visibility": "60.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 2,
+      "hitRate": "90.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": -5,
+      "integrityDecrementOnEat": 10
+    },
+    {
+      "id": "TOME_OF_HEAL",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Heal",
+        "plural": "Tomes of Heal"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Heal spell is very useful as it allows the character to restore health very quickly.",
+      "spell": "HEAL"
+    },
+    {
+      "id": "TOME_OF_FINGER_OF_DEATH",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Finger of Death",
+        "plural": "Tomes of Finger of Death"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Finger of Death spell instantly kills a creature you can see.",
+      "spell": "FINGER_OF_DEATH"
+    },
+    {
+      "id": "TOME_OF_VEIL_OF_DARKNESS",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Veil of Darkness",
+        "plural": "Tomes of Veil of Darkness"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Veil of Darkness spell summons a magical opaque veil that blocks all luminosity coming from a creature.",
+      "spell": "VEIL_OF_DARKNESS"
+    },
+    {
+      "id": "TOME_OF_UNVEIL",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Unveil",
+        "plural": "Tomes of Unveil"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Unveil spell removes all veils that afflict a creature.",
+      "spell": "UNVEIL"
+    },
+    {
+      "id": "TOME_OF_PERCEIVE",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Perceive",
+        "plural": "Tomes of Perceive"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "Perceive is a classic spell that allows the caster to notice all entities in the vicinity.",
+      "spell": "PERCEIVE"
+    },
+    {
+      "id": "TOME_OF_REPAIR",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Repair",
+        "plural": "Tomes of Repair"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Repair spell allows the caster to channel a burst of magical energy into an item, possibly reassembling broken parts and restoring its integrity.",
+      "spell": "REPAIR"
+    },
+    {
+      "id": "TOME_OF_DISPLACE",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Displace",
+        "plural": "Tomes of Displace"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Displace spell allows the caster to manipulate the magic that permeates the world and displace a creature to a random adjacent location.",
+      "spell": "DISPLACE"
+    },
+    {
+      "id": "HISTORY_OF_THE_THIRD_ERA",
+      "type": "Book",
+      "name": {
+        "singular": "History of the Third Era"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 28,
+        "maximum": 28
+      },
+      "weight": 0.8,
+      "visibility": "65.00%",
+      "damage": 8,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Third Era is a period of time that lasted 440 years. It starts with the end of the Second Era - the fall of the Empire of Light - and ends with the rebellion of the Red Warlocks."
+    },
+    {
+      "id": "CORVUS_EDGE",
+      "type": "Book",
+      "name": {
+        "singular": "Corvus Edge"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 28,
+        "maximum": 28
+      },
+      "weight": 0.8,
+      "visibility": "65.00%",
+      "damage": 8,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "[A crow standing over a blue sphere. In the middle of this sphere is a mortar and pestle.]\n\nAccording to the legend, The God of Alchemy banishes from Darrowmere any living creature that dares to use potions to obtain powers that are exclusive to gods.\n\nThis limit is known as Corvus Edge and has only been reached once, in the year 1435 by the Grand Alchemist Natolemy, which created a potion that stopped his natural aging process. Unceremoniously, The God of Alchemy himself assumed his animal form, flew into Natolemy's home at night and ate both of his eyeballs during his sleep. Natolemy never woke up and was buried right next to the trail where he used to harvest alchemy ingredients."
+    },
+    {
+      "id": "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY",
+      "type": "Book",
+      "name": {
+        "singular": "Page From Volund Loke Frey's Diary",
+        "plural": "Pages From Volund Loke Frey's Diary"
+      },
+      "rarity": "UNIQUE",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.02,
+      "visibility": "55.00%",
+      "damage": 1,
+      "hitRate": "20.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "My Diary - Volund Loke Frey - Page 22\n\n210-5-2: I finally feel compelled to respond to the offense Birgmar made! And I will not be gentle.\n\n210-5-3: Things did not go according to the plan. Birgmar was not alone, that bastard Orc was hosting this \"Orc Reunion\" thing and I was really surprised that after kicking in the door and screaming \"You are gonna die, scum!\" I had not one but twelve Orcs staring at me. I outran them but cannot go back home as they know where I live. My wife is probably dead now.\n\n210-5-4: Went back to my old place and found my wife's body nailed to the rooftop of our shack. I will find another woman later on, I've got bigger problems now. In the wooden door they wrote a threat: \"We are coming for you.\"\n\n210-5-5: I woke in the middle of the night as I heard the breaking of dry wood branches in the ground below me, looked down and saw two Orcs. I then drew two arrows from my quiver, nocked them on the string of my longbow, silently drew the string back, and released with perfect timing. Silently and efficiently I killed both Orcs. I don't know if I will last much longer if they are all coming after me."
+    },
+    {
+      "id": "RED_ONYX_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Red Onyx Watch",
+        "plural": "Red Onyx Watches"
+      },
+      "rarity": "UNIQUE",
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "unique": true,
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.10,
+      "visibility": "60.00%",
+      "damage": 5,
+      "hitRate": "65.00%",
+      "integrityDecrementOnHit": 5
+    },
+    {
+      "id": "POCKET_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Pocket Watch",
+        "plural": "Pocket Watches"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 16,
+        "maximum": 16
+      },
+      "weight": 0.14,
+      "visibility": "70.00%",
+      "damage": 8,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 8
+    },
+    {
+      "id": "WRIST_WATCH",
+      "type": "Misc",
+      "name": {
+        "singular": "Wrist Watch",
+        "plural": "Wrist Watches"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "CLOCK",
+        "REPAIRABLE"
+      ],
+      "integrity": {
+        "current": 10,
+        "maximum": 10
+      },
+      "weight": 0.08,
+      "visibility": "70.00%",
+      "damage": 6,
+      "hitRate": "50.00%",
+      "integrityDecrementOnHit": 10
+    },
+    {
+      "id": "WOOD_LOG",
+      "type": "Misc",
+      "name": {
+        "singular": "Wood Log"
+      },
+      "rarity": "POOR",
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 50,
+        "maximum": 50
+      },
+      "weight": 70,
+      "visibility": "80.00%",
+      "decompositionPeriod": "2 months",
+      "damage": 10,
+      "hitRate": "10.00%",
+      "integrityDecrementOnHit": 1
+    },
+    {
+      "id": "RADIANT_SKIN",
+      "type": "Misc",
+      "name": {
+        "singular": "Radiant Skin"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 4,
+        "maximum": 4
+      },
+      "weight": 0.4,
+      "visibility": "80.00%",
+      "luminosity": "4.00%",
+      "decompositionPeriod": "2 days",
+      "damage": 1,
+      "hitRate": "80.00%",
+      "integrityDecrementOnHit": 2
+    },
+    {
+      "id": "HARPY_FEATHER",
+      "type": "Misc",
+      "name": {
+        "singular": "Harpy Feather"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "DECOMPOSES"
+      ],
+      "integrity": {
+        "current": 8,
+        "maximum": 8
+      },
+      "weight": 0.2,
+      "visibility": "75.00%",
+      "luminosity": "1.00%",
+      "decompositionPeriod": "1 year",
+      "damage": 1,
+      "hitRate": "40.00%",
+      "integrityDecrementOnHit": 2
+    }
+  ]
+}

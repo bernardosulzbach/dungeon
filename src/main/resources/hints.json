@@ -1,0 +1,10 @@
+{
+  "strings": [
+    "The command 'achievements' also shows the total number of achievements.",
+    "There is a 'poem' command that prints a poem to the screen.",
+    "Use the 'wiki' command to browse the in-game wiki and to better understand the world of Dungeon.",
+    "You can filter the output of the 'commands' command by typing the beginning of the command.",
+    "Try to fight bats out in the open during daytime.",
+    "Orcs become enraged when they are hurt and land several easy critical hits, kill them as fast as you can."
+  ]
+}

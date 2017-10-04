@@ -1,0 +1,20 @@
+dist: precise
+language: java
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+before_deploy:
+  - bash scripts/create-hash-sum.sh target/dungeon-${TRAVIS_TAG}.jar
+deploy:
+  provider: releases
+  api_key:
+    secure: SS+0XrFZBqJRAKvghsaZ3op1/UzKvip3osFoSX2oS1EOpRQnCyJmH0oJlIJsAQfnz8jZ4DDqUCEHK1UyJJjaZpEv2KKrTslYw3D6chOHmWlQnHvUF60KcmYRg/Qs0dTSep4fDcElh8vTqh03VjcxH41Dt0+qjKHhFKzjMDM0RT7OUYvvZI00aZOWAdfgoVmcTZauZRggLgwj5DGw4VaFqHg9m3MASj4J/yQao5c9K/tvwd8rm3V/Dvq/kJtNJ5eYKlNz/0bkCXiNFzXTz1cVoymLFpZcckBgxO0TUmgejwFNknAAqPYeCLVMJ6gh3oDbYr8JYLwimL/q5nMPZo4C2vFRUzOOHACwsTSKDOgclcP3nYAOLmUtP6Tl8/iXoMo4E1gDNGkOSELB/o2kL+Ptu1ck6bR7tvIxHgttQor/zibVoTQbafJBNowtYD6aBokZ3ZSa6YUiSKLUB26TRZ/vhzNNGnym/oTQu74q1cE7ThN5Ht20pOG9ujj5xPst0d/om19mi/oB/7HpI5I8/8Y4Z9G0Mk/BUPUQ6eu4g6vOG7sa7xuiD60Xle+ZjAOL0r9Njl8iNmHfv2QLlxGRjlDenVJZGCY6NhrT8XmKqZVRi7/QxAzQ8ZQjnP8cA9wqtkmTMxZFfY3LsY8jW46y7EWAFLw5azvlKocgpM1/pNqyZkg=
+  file:
+    - target/dungeon-${TRAVIS_TAG}.jar
+    - target/dungeon-${TRAVIS_TAG}.jar.sha256
+  skip_cleanup: true
+  on:
+    tags: true

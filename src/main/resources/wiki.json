@@ -1,0 +1,161 @@
+{
+  "articles": [
+    {
+      "title": "Achievements",
+      "content": "Dungeon has dozens of achievements for you to unlock. All achievements can be unlocked through simple exploration and battling, but some have requirements much harder to satisfy than others. There are not any rewards for unlocking achievements, they are just a way to measure your progress in the game.\n\nYou can look up the achievements you have already unlocked with the 'achievements' command. It is also possible to sort the output of this command with 'by name' and 'by date'."
+    },
+    {
+      "title": "Bat",
+      "content": "Bats are mammals whose forelimbs form webbed wings, making them the only mammals naturally capable of true and sustained flight. They are natural inhabitants of humid and quiet places, such as graveyards. The danger bats present in Dungeon varies according to the location's luminosity. The darker the place is, more likely the bats are to hit and to critically hit. Engaging bats during daytime out in the open vastly increases your chance of success.",
+      "seeAlso": [
+        "Fruit Bat"
+      ]
+    },
+    {
+      "title": "Bones",
+      "content": "Most creatures in Darrowmere have a bone endoskeleton. These bones may be used as makeshift weapons.",
+      "seeAlso": [
+        "Decomposition"
+      ]
+    },
+    {
+      "title": "Calendar",
+      "content": "Darrowmere has years of 10 months, months of 10 days and days of 24 hours. Each hour lasts 60 minutes of 60 seconds.",
+      "seeAlso": [
+        "Eras"
+      ]
+    },
+    {
+      "title": "Combat",
+      "content": "Combat in dungeon is quite straightforward, issue 'kill' followed by the name of your target. Once in combat, all turns are simulated by the game engine. The player cannot interfere until either the attacker or the defender dies."
+    },
+    {
+      "title": "Commands",
+      "content": "Dungeon has multiple command sets, which store different commands. You use a command by specifying the command set (if the command you want is not on the default command set), the command itself, and a list of arguments, if necessary."
+    },
+    {
+      "title": "Command History",
+      "content": "The game stores your last 200 commands. Pressing TAB while the cursor is on the input field will either do nothing (if the command history is empty), get the last similar command to what is already on the text field (if there is one), or return the last command (if the text field is empty and there is at least one command on the command history)."
+    },
+    {
+      "title": "Contributors",
+      "content": "Everyone that contributed to the project in a significant way and their e-mail addresses:\n\nAllan Bezerra (allan.bezerra017@gmail.com)\nBernardo Sulzbach (mafagafogigante@gmail.com)\nGabriel Bellini Bohmer (gabrielbellinibohmer@gmail.com)\nVitalii Zymukha (unknownnpc@gmail.com)\n\nIf you want your name on this list, consider coding, reporting bugs, or writing new content to the game."
+    },
+    {
+      "title": "Corpses",
+      "content": "Corpses weight as much as the creature and will eventually decompose. The integrity of a corpse is directly proportional to the health of the creature when it was uninjured.",
+      "seeAlso": [
+        "Decomposition"
+      ]
+    },
+    {
+      "title": "Decomposition",
+      "content": "Some items decompose over time. The time it takes for an item to decompose and disappear from the world depends on the characteristics of the item.\n\nCorpses, for instance, decompose in a matter of days, while bones may take hundreds of years to decompose.\n\nAn item may vanish from your hand during combat or from your inventory while you are exploring. Therefore, you should try to consume food as soon as possible and only take nondecomposable weapons to battle."
+    },
+    {
+      "title": "Eating",
+      "content": "Eating heals the character up to uninjured, which is better than resting for health recovery as resting will only heal the character until he or she is no longer badly injured.",
+      "seeAlso": [
+        "Sleeping"
+      ]
+    },
+    {
+      "title": "Eras",
+      "content": "The First Era starts with the development of writing by the Commons and ends in the year 1050 with the murder of The God of Spellcasting by a group of wizards self-entitled The Red Warlocks.\n\nThe Second Era starts in the year 1050 and ends in the year 1600. The Empire of Light, an empire founded by the most influential Commons to protects the majority of the Common race from The Red Warlocks is founded in 1052. In the year 1425, the Common-Orc Peace Treatise is signed and the two biggest races of Darrowmere stop fighting each other. This Era ends with the fall of The Empire of Light.\n\nThe Third Era encompasses 440 years. It starts in the year 1600 with the Fall of The Empire of Light and ends in the year 2040 with the undertaking of The Red Warlocks to dominate the world.\n\nThe Fourth Era is the present time. Most live in deadly fear of The Red Warlocks, that now rule Darrowmere and kill innocent creatures mercilessly."
+    },
+    {
+      "title": "Fishing",
+      "content": "The character can attempt to fish in bodies of water to obtain fresh fishes. These fishes serve as food."
+    },
+    {
+      "title": "Fruit Bat",
+      "content": "Fruit bats are usually larger than normal bats. The largest attain a wingspan of 1.7 meters, weighing up to 1.6 kilograms. Most have large eyes, allowing them to orient themselves visually in twilight and inside caves and forests. Their sense of smell is excellent. In contrast to other bats, fruit bats do not use echolocation.",
+      "seeAlso": [
+        "Bat"
+      ]
+    },
+    {
+      "title": "Gods",
+      "content": "Darrowmere's Pantheon is made up of five asexual polymorphic gods whose names have been long forgotten. According to the legends, the gods may be summoned only by the vocalization of their names.\n\nTwo of these gods are more powerful and important to Darrowmere than the others, these are The God of Creation and The God of Destruction. The other gods are The God of Spellcasting, The God of Alchemy, and The God of Enchanting."
+    },
+    {
+      "title": "Green Iguana",
+      "content": "The green iguana or common iguana is a large, arboreal, mostly herbivorous species of lizard of the genus Iguana. Despite their name, green iguanas can come in different colors. They are diurnal, arboreal, and are often found near water. When frightened by a predator, green iguanas will attempt to flee, and if near a body of water, they dive into it and swim away. Agile climbers, iguanas can fall up to fifteen meters and land unhurt (iguanas use their hind leg claws to clasp leaves and branches to break a fall). During cold, wet weather, green iguanas prefer to stay on the ground for greater warmth. When swimming, an iguana remains submerged, letting its four legs hang limply against its side. They propel through the water with powerful tail strokes."
+    },
+    {
+      "title": "Heal",
+      "content": "Heal is a very common spell that allows the spellcaster to regenerate health quickly and effectively. It can also be cast on other targets.",
+      "seeAlso": [
+        "Tomes",
+        "Spells"
+      ]
+    },
+    {
+      "title": "Keyboard Shortcuts",
+      "content": "This an exhaustive list of all the keyboard shortcuts currently implemented and what they do.\n\nCtrl + S: saves the game\nCtrl + W: deletes the last word before the cursor\nCtrl + U: deletes everything before the cursor\nCtrl + K: deletes everything after the cursor until the end"
+    },
+    {
+      "title": "License",
+      "content": "This project used the GNU GPLv3 license in the past. However, it is currently licensed under the BSD 3-Clause license."
+    },
+    {
+      "title": "Komodo Dragon",
+      "content": "The Komodo Dragon is the largest living species of lizard, growing to a maximum length of 3 metres and weighing up to approximately 70 kilograms. It prefers hot and dry places, and typically lives in dry, open grassland, savanna, and tropical forest at low elevations. There are two glands in their lower jaw which secrete an anticoagulant."
+    },
+    {
+      "title": "Luminosity",
+      "content": "The luminosity near the character is determined by three factors: the part of day, the characteristics of the location in which the character is, and the luminosity emmited by the surrounding entities.\n\nThe darker it gets, the less the character will be able to see.",
+      "seeAlso": [
+        "Parts of Day"
+      ]
+    },
+    {
+      "title": "Parts of Day",
+      "content": "The day is divided in the following parts: night, from 1:01 to 5:00; dawn, from 5:01 to 7:00; morning, from 7:01 to 11:00; noon, from 11:01 to 13:00; afternoon, from 13:01 to 17:00; dusk, from 17:01 to 19:00; evening, from 19:01 to 23:00; and midnight, from 23:01 to 1:00.",
+      "seeAlso": [
+        "Luminosity"
+      ]
+    },
+    {
+      "title": "Potions",
+      "content": "Potions are drinkable items which may be found throughout the world. They are fairly common in dungeons, where fallen adventurers lost them.",
+      "seeAlso": [
+        "Heal"
+      ]
+    },
+    {
+      "title": "Races",
+      "content": "There are four races in Darrowmere: Common, Light Elf, Dark Elf, and Orc."
+    },
+    {
+      "title": "Spells",
+      "content": "The character may learn spells through tomes scattered throughout the world. In order to use these spells, the character must issue the 'read' command targeting the desired tome, which must be in his or hers inventory. After reading the tome and learning the spell, the spell may be used through the 'cast' command.",
+      "seeAlso": [
+        "Tomes",
+        "Heal"
+      ]
+    },
+    {
+      "title": "Sleeping",
+      "content": "The character can sleep when it is dark, waking up when it is dawn. While sleeping, the character may dream.\n\nSleeping also heals the character.",
+      "seeAlso": [
+        "Eating"
+      ]
+    },
+    {
+      "title": "Time",
+      "content": "Time passes after every turn. How much each turn lasts, however, depends on what the character did.\n\nWatches are used to keep precise track of time. Looking the time (using a watch) costs a little time, though. The character needs about four seconds to see what time it is in an equipped watch and around ten seconds to look up the time in a clock placed on his or hers backpack.\n\nA broken watch usually displays the time it broke.\n\nIf the character is equipping a broken watch but has a working one in his or hers backpack, any attempt to look up the time will result in the character picking up the watch in his or hers backpack."
+    },
+    {
+      "title": "Tomes",
+      "content": "Tomes are books that can teach a spell for the player character.",
+      "seeAlso": [
+        "Spells"
+      ]
+    },
+    {
+      "title": "Weather",
+      "content": "The weather changes with the passing of time. There are five weather conditions on the game: clear, cloudy, overcast, rain, and storm. The character is intelligent enough to know how to handle bad weather and is not hindered by it."
+    }
+  ]
+}

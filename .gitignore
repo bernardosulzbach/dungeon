@@ -1,0 +1,28 @@
+# Java
+*.class
+*.jar
+
+# Except exported IDEA settings.
+!idea/settings.jar
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+src/META-INF/
+out/
+
+# Allow the project's dictionary.
+!.idea/dictionaries/Dungeon.xml
+
+# Ignore a possible local wiki clone
+dungeon.wiki/
+
+# Maven
+target/
+
+# Dungeon
+saves/
+logs/
+

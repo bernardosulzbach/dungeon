@@ -1,0 +1,1162 @@
+{
+  "locations": [
+    {
+      "id": "STONE_BRIDGE",
+      "type": "BRIDGE",
+      "name": {
+        "singular": "Stone Bridge"
+      },
+      "color": [
+        160,
+        160,
+        160
+      ],
+      "symbol": "=",
+      "info": "This is a wide bridge made of stone blocks. It seems resistant to both weather and weight.",
+      "blobSize": 0,
+      "lightPermittivity": 1,
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "TOME_OF_HEAL",
+          "probability": 0.15
+        },
+        {
+          "id": "FLAIL",
+          "probability": 0.2
+        }
+      ],
+      "blockedEntrances": [
+        "U",
+        "N",
+        "D",
+        "S"
+      ]
+    },
+    {
+      "id": "TIMBER_BRIDGE",
+      "type": "BRIDGE",
+      "name": {
+        "singular": "Timber Bridge"
+      },
+      "color": [
+        153,
+        76,
+        0
+      ],
+      "symbol": "=",
+      "info": "This is a simple beam timber bridge made of wood beams and wood planks. It is in good condition but creaks when you walk over it and would likely collapse if too much weight was placed over it.",
+      "blobSize": 0,
+      "lightPermittivity": 1,
+      "spawners": [
+        {
+          "id": "HARPY",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 24
+        }
+      ],
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "TOME_OF_UNVEIL",
+          "probability": 0.15
+        },
+        {
+          "id": "DAGGER",
+          "probability": 0.2
+        },
+        {
+          "id": "CORVUS_EDGE",
+          "probability": 0.1
+        }
+      ],
+      "blockedEntrances": [
+        "U",
+        "N",
+        "D",
+        "S"
+      ]
+    },
+    {
+      "id": "LOG_BRIDGE",
+      "type": "BRIDGE",
+      "name": {
+        "singular": "Log Bridge"
+      },
+      "color": [
+        153,
+        76,
+        0
+      ],
+      "symbol": "-",
+      "info": "This is simply a long wood log felled over the river. It has signs of rot and looks like it is infested by wood-eating insects.",
+      "blobSize": 0,
+      "lightPermittivity": 1,
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "STICK",
+          "probability": 0.3
+        },
+        {
+          "id": "TOME_OF_FINGER_OF_DEATH",
+          "probability": 0.1
+        }
+      ],
+      "blockedEntrances": [
+        "U",
+        "N",
+        "D",
+        "S"
+      ]
+    },
+    {
+      "id": "RIVER",
+      "type": "RIVER",
+      "name": {
+        "singular": "River"
+      },
+      "color": [
+        51,
+        51,
+        255
+      ],
+      "symbol": "|",
+      "info": "This is a wide stream of blue water.",
+      "blobSize": 0,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "E",
+        "D",
+        "W"
+      ]
+    },
+    {
+      "id": "DUNGEON_ENTRANCE",
+      "type": "DUNGEON_ENTRANCE",
+      "name": {
+        "singular": "Dungeon Entrance"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "D",
+      "info": "A fairly large passage opens in front of you and leads down for what seems like a dungeon.",
+      "blobSize": 0,
+      "lightPermittivity": 0.9,
+      "blockedEntrances": [
+        "U"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "SWORD",
+          "probability": 0.5
+        },
+        {
+          "id": "HISTORY_OF_THE_THIRD_ERA",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DUNGEON_STAIRWAY",
+      "type": "DUNGEON_STAIRWAY",
+      "name": {
+        "singular": "Dungeon Stairway"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "S",
+      "info": "A set of stone steps.",
+      "blobSize": 0,
+      "lightPermittivity": 0.2,
+      "blockedEntrances": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "id": "DUNGEON_ROOM_1",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dimly illuminated dungeon room with walls made of stone.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "ETHEREAL_FLAIL",
+          "probability": 0.05
+        },
+        {
+          "id": "POTION_OF_THE_WARRIOR",
+          "probability": 0.25
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        },
+        {
+          "id": "TOME_OF_DISPLACE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DUNGEON_ROOM_2",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dark dungeon room with walls made of stone.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+      ],
+      "spawners": [
+        {
+          "id": "SKELETON",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 12
+        },
+        {
+          "id": "ZOMBIE",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 0.8
+        },
+        {
+          "id": "TORCH",
+          "probability": 0.5
+        },
+        {
+          "id": "AXE",
+          "probability": 0.05
+        },
+        {
+          "id": "TOME_OF_FINGER_OF_DEATH",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "ANCIENT_DUNGEON_ROOM",
+      "type": "DUNGEON_ROOM",
+      "name": {
+        "singular": "Ancient Dungeon Room"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "R",
+      "info": "A gloomy and dimly illuminated dungeon room with several hieroglyphs carved on the floor. In the center of the room there is a stone plinth whose purpose is unknown to you.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+      ],
+      "spawners": [
+        {
+          "id": "RADIANT_GHOUL",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 12
+        },
+        {
+          "id": "GHOUL",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 10
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DUNGEON_CORRIDOR",
+      "type": "DUNGEON_CORRIDOR",
+      "name": {
+        "singular": "Dungeon Corridor"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "=",
+      "info": "A dark corridor with stone walls.",
+      "blobSize": 0,
+      "lightPermittivity": 0.0,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "TORCH",
+          "probability": 1.0
+        },
+        {
+          "id": "HEALING_POTION",
+          "probability": 0.6
+        },
+        {
+          "id": "HEALING_DRAUGHT",
+          "probability": 0.4
+        },
+        {
+          "id": "GLASS_SWORD",
+          "probability": 0.2
+        },
+        {
+          "id": "RED_ONYX_WATCH",
+          "probability": 0.1
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "CLEARING",
+      "type": "LAND",
+      "name": {
+        "singular": "Clearing"
+      },
+      "color": [
+        102,
+        204,
+        0
+      ],
+      "symbol": "C",
+      "info": "This is a wide and open grassy land area.",
+      "blobSize": 2,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "FOX",
+          "population": {
+            "minimum": 2,
+            "maximum": 6
+          },
+          "delay": 4
+        },
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "RABBIT",
+          "population": {
+            "minimum": 2,
+            "maximum": 10
+          },
+          "delay": 1
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 4
+        },
+        {
+          "id": "COW",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 20
+        },
+        {
+          "id": "FARMER",
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
+          "delay": 18
+        }
+      ],
+      "items": [
+        {
+          "id": "HISTORY_OF_THE_THIRD_ERA",
+          "probability": 0.025
+        },
+        {
+          "id": "PAGE_FROM_VOLUND_LOKE_FREY_S_DIARY",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "DESERT",
+      "type": "LAND",
+      "name": {
+        "singular": "Desert"
+      },
+      "color": [
+        255,
+        153,
+        51
+      ],
+      "symbol": "D",
+      "info": "This is an area of very dry land where the living conditions seem to be hostile for most plant and animal life.",
+      "blobSize": 50,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "BOAR",
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
+          "delay": 8
+        },
+        {
+          "id": "GIANT_RAT",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 2
+        },
+        {
+          "id": "SNAKE",
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
+          "delay": 4
+        },
+        {
+          "id": "ZOMBIE",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "DAGGER",
+          "probability": 0.15
+        },
+        {
+          "id": "MACE",
+          "probability": 0.1
+        },
+        {
+          "id": "SPEAR",
+          "probability": 0.1
+        },
+        {
+          "id": "STAFF",
+          "probability": 0.2
+        },
+        {
+          "id": "SWORD",
+          "probability": 0.25
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "FOREST",
+      "type": "LAND",
+      "name": {
+        "singular": "Forest"
+      },
+      "color": [
+        0,
+        153,
+        0
+      ],
+      "symbol": "F",
+      "info": "This is a piece of land where tall trees grow and animal life seems abundant. It is hard to see much further due to the tree density. The canopy is the only thing you see when you look up.",
+      "blobSize": 25,
+      "lightPermittivity": 0.7,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "BEAR",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 12
+        },
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "FRUIT_BAT",
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "RABBIT",
+          "population": {
+            "minimum": 4,
+            "maximum": 12
+          },
+          "delay": 1
+        },
+        {
+          "id": "WHITE_TIGER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 24
+        }
+      ],
+      "items": [
+        {
+          "id": "AXE",
+          "probability": 0.2
+        },
+        {
+          "id": "POCKET_WATCH",
+          "probability": 0.03
+        },
+        {
+          "id": "SWORD",
+          "probability": 0.15
+        },
+        {
+          "id": "TOME_OF_HEAL",
+          "probability": 0.1
+        }
+      ]
+    },
+    {
+      "id": "YOUNG_FOREST",
+      "type": "LAND",
+      "name": {
+        "singular": "Young Forest"
+      },
+      "color": [
+        0,
+        127,
+        0
+      ],
+      "symbol": "F",
+      "info": "This is a place where many young trees grow and animal life seems abundant. The canopy is not much above your head.",
+      "blobSize": 20,
+      "lightPermittivity": 0.85,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 2
+        },
+        {
+          "id": "FRUIT_BAT",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 2
+        },
+        {
+          "id": "RABBIT",
+          "population": {
+            "minimum": 4,
+            "maximum": 10
+          },
+          "delay": 1
+        },
+        {
+          "id": "WHITE_TIGER",
+          "population": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "delay": 24
+        },
+        {
+          "id": "BOAR",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 10
+        },
+        {
+          "id": "FOX",
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
+          "delay": 6
+        },
+        {
+          "id": "MERCHANT",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 36
+        }
+      ],
+      "items": [
+        {
+          "id": "AXE",
+          "probability": 0.05
+        },
+        {
+          "id": "WRIST_WATCH",
+          "probability": 0.05
+        },
+        {
+          "id": "TOME_OF_VEIL_OF_DARKNESS",
+          "probability": 0.05
+        },
+        {
+          "id": "DAGGER_OF_INFINITY",
+          "probability": 0.05
+        }
+      ]
+    },
+    {
+      "id": "GRAVEYARD",
+      "type": "LAND",
+      "name": {
+        "singular": "Graveyard"
+      },
+      "color": [
+        192,
+        192,
+        192
+      ],
+      "symbol": "G",
+      "info": "This is an eerie place where rows of tombstones stand erect in silence to the left and right, in front and behind, like a sea of the dead. Some of these tombstones are laid on the ground as if something overturned them. They all seem crumbled with the weathering of centuries, and most of them are overgrown and unkempt, for now even their mourners had joined them under the clay soil.",
+      "blobSize": 1,
+      "lightPermittivity": 0.9,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "RADIANT_GHOUL",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 18
+        },
+        {
+          "id": "BAT",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 6
+        },
+        {
+          "id": "ORC",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 2
+        },
+        {
+          "id": "SKELETON",
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
+          "delay": 12
+        },
+        {
+          "id": "ZOMBIE",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 4
+        }
+      ],
+      "items": [
+        {
+          "id": "LONGSWORD",
+          "probability": 0.15
+        },
+        {
+          "id": "TOME_OF_PERCEIVE",
+          "probability": 0.1
+        },
+        {
+          "id": "WRIST_WATCH",
+          "probability": 0.025
+        },
+        {
+          "id": "THE_SUN_BLADE",
+          "probability": 0.025
+        }
+      ]
+    },
+    {
+      "id": "MEADOW",
+      "type": "LAND",
+      "name": {
+        "singular": "Meadow"
+      },
+      "color": [
+        0,
+        204,
+        0
+      ],
+      "symbol": "M",
+      "info": "This is a field vegetated by primarily grass. This open, sunny area seems to attract and support flora and fauna that couldn't thrive in other conditions.",
+      "blobSize": 2,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "WHITE_TIGER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 24
+        },
+        {
+          "id": "WOLF",
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
+          "delay": 12
+        },
+        {
+          "id": "FARMER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 24
+        },
+        {
+          "id": "TRAVELER",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 48
+        }
+      ],
+      "items": [
+        {
+          "id": "STONE",
+          "probability": 0.8
+        }
+      ]
+    },
+    {
+      "id": "POND",
+      "type": "LAND",
+      "name": {
+        "singular": "Pond"
+      },
+      "color": [
+        0,
+        204,
+        204
+      ],
+      "symbol": "P",
+      "info": "This is a reasonably small body of standing water in a depression. The air seems fresher here and some wild creatures seem to enjoy this place.",
+      "blobSize": 1,
+      "lightPermittivity": 0.95,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "CROCODILE",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 6
+        },
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 1,
+            "maximum": 5
+          },
+          "delay": 2
+        },
+        {
+          "id": "GREEN_IGUANA",
+          "population": {
+            "minimum": 2,
+            "maximum": 2
+          },
+          "delay": 32
+        },
+        {
+          "id": "MERCHANT",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 36
+        }
+      ],
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "SPEAR",
+          "probability": 0.3
+        }
+      ]
+    },
+    {
+      "id": "SAVANNAH",
+      "type": "LAND",
+      "name": {
+        "singular": "Savannah"
+      },
+      "color": [
+        204,
+        204,
+        0
+      ],
+      "symbol": "S",
+      "info": "This is an area on which the trees are sufficiently widely spaced so that the canopy does not close. The open canopy allows sufficient light to reach the ground to support an unbroken herbaceous layer consisting primarily of grasses. You notice that these trees are more regularly spaced than the trees of a forest.",
+      "blobSize": 5,
+      "lightPermittivity": 0.95,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "BOAR",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 8
+        },
+        {
+          "id": "SNAKE",
+          "population": {
+            "minimum": 1,
+            "maximum": 4
+          },
+          "delay": 4
+        },
+        {
+          "id": "WHITE_TIGER",
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
+          "delay": 24
+        },
+        {
+          "id": "KOMODO_DRAGON",
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
+          "delay": 12
+        }
+      ],
+      "items": [
+        {
+          "id": "AXE",
+          "probability": 0.3
+        }
+      ]
+    },
+    {
+      "id": "SWAMP",
+      "type": "LAND",
+      "name": {
+        "singular": "Swamp"
+      },
+      "color": [
+        153,
+        153,
+        0
+      ],
+      "symbol": "S",
+      "info": "This is an area of low-lying, uncultivated ground where water collects. The murky water you step into is shallow and stagnant.",
+      "blobSize": 10,
+      "lightPermittivity": 0.8,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "CROCODILE",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 6
+        },
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 2,
+            "maximum": 4
+          },
+          "delay": 2
+        },
+        {
+          "id": "SNAKE",
+          "population": {
+            "minimum": 1,
+            "maximum": 6
+          },
+          "delay": 4
+        }
+      ],
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "CLUB",
+          "probability": 0.4
+        }
+      ]
+    },
+    {
+      "id": "BARREN",
+      "type": "LAND",
+      "name": {
+        "singular": "Barren"
+      },
+      "color": [
+        225,
+        225,
+        0
+      ],
+      "symbol": "B",
+      "info": "This is an area of tundra. Something here hinders the growth of trees and big vegetation, you suspect it is some sort of curse.",
+      "blobSize": 10,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "GIANT_RAT",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 2
+        },
+        {
+          "id": "SNAKE",
+          "population": {
+            "minimum": 2,
+            "maximum": 3
+          },
+          "delay": 4
+        },
+        {
+          "id": "HUGE_SPIDER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 4
+        },
+        {
+          "id": "KOMODO_DRAGON",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 12
+        },
+        {
+          "id": "TRAVELER",
+          "population": {
+            "minimum": 2,
+            "maximum": 3
+          },
+          "delay": 48
+        }
+      ],
+      "items": [
+        {
+          "id": "STONE",
+          "probability": 0.3
+        },
+        {
+          "id": "TOME_OF_REPAIR",
+          "probability": 0.05
+        }
+      ]
+    }
+  ]
+}

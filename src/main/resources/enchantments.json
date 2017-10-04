@@ -1,0 +1,52 @@
+{
+  "enchantments": [
+    {
+      "id": "CORROSIVE_LASH",
+      "name": "Corrosive Lash",
+      "damage": {
+        "type": "ACID",
+        "amount": 5
+      }
+    },
+    {
+      "id": "FREEZING_LASH",
+      "name": "Freezing Lash",
+      "damage": {
+        "type": "COLD",
+        "amount": 5
+      }
+    },
+    {
+      "id": "SHOCKING_LASH",
+      "name": "Shocking Lash",
+      "damage": {
+        "type": "ELECTRICITY",
+        "amount": 5
+      }
+    },
+    {
+      "id": "BURNING_LASH",
+      "name": "Burning Lash",
+      "damage": {
+        "type": "FIRE",
+        "amount": 5
+      }
+    },
+    {
+      "id": "POISONING_LASH",
+      "name": "Poisoning Lash",
+      "damage": {
+        "type": "POISON",
+        "amount": 5
+      }
+    },
+    {
+      "id": "THUNDERING_LASH",
+      "name": "Thundering Lash",
+      "damage": {
+        "type": "SONIC",
+        "amount": 5
+      }
+    }
+  ]
+}
