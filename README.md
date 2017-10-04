@@ -6,6 +6,10 @@
 [![codecov.io](http://codecov.io/github/mafagafogigante/dungeon/coverage.svg?branch=master)](http://codecov.io/github/mafagafogigante/dungeon?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mafagafogigante/dungeon)
 
+Ibrahim Burak Şahin has been added to the Project.
+Mithat Kurt has been added to the Project.
+
+
 Dungeon is a text-based open-world role-playing-game. You are in control of the
 life of a character that wakes up with a headache and can't remember exactly
 what happened to him. You need to do your best to equip yourself to explore
@@ -17,11 +21,11 @@ found in the world to learn about its history and the lives of some of the
 Commons (the human-like race of Darrowmere) that lived there. Some books may
 even teach your character magical spells that give him some advantage when
 dealing with the aberrations roaming the land.
-
 The world is randomly generated, making each and every experience unique. There
 is also an in-game wiki with a lot of information about the different facets of
 the game. You can also [browse the wiki
 online](https://github.com/mafagafogigante/dungeon/wiki).
+online](https://github.com/mafagafogigante/dungeon/wiki). 
 
 ## Screenshots
 
