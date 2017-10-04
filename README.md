@@ -59,7 +59,7 @@ to see what could be done or figure out something you would like to do and start
 working on it.
 
 Discussing your ideas on the tracker before coding is a good way to increase
-the chance of your changes being accepted.
+the chance of your changes being accepted.----
 
 Do not forget to also read [Dungeon's contributing
 guide](https://github.com/mafagafogigante/dungeon/blob/master/CONTRIBUTING.md).
