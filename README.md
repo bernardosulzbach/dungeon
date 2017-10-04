@@ -19,7 +19,6 @@ found in the world to learn about its history and the lives of some of the
 Commons (the human-like race of Darrowmere) that lived there. Some books may
 even teach your character magical spells that give him some advantage when
 dealing with the aberrations roaming the land.
-qqqqqqqqqqqqqqqq
 The world is randomly generated, making each and every experience unique. There
 is also an in-game wiki with a lot of information about the different facets of
 the game. You can also [browse the wiki
