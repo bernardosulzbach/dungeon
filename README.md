@@ -78,3 +78,4 @@ Dungeon uses [semantic versioning](http://semver.org/spec/v2.0.0.html).
 ## License
 
 [BSD 3-Clause](https://github.com/mafagafogigante/dungeon/blob/master/LICENSE.txt).
+New Contributor : Ensar Can Yamak, Servet ÖZBÖKE 13 October 2017
