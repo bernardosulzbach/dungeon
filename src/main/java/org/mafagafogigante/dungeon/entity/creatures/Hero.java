@@ -438,6 +438,17 @@ public class Hero extends Creature {
     Writer.getDefaultWriter().write(text);
   }
 
+  private double adjustHealingForFreshness(Item item, double healing) {
+    if (!item.hasTag(Item.Tag.DECOMPOSES)) {
+      return healing;
+    }
+    long age = item.getAge();
+    long decompositionPeriod = item.getDecompositionPeriod();
+    double x = age / (double) decompositionPeriod;
+    double f = Math.min(1.0, 4 * Math.pow(1 - x, 2));
+    return f * healing;
+  }
+
   /**
    * Attempts to eat an item.
    */
@@ -449,12 +460,11 @@ public class Hero extends Creature {
         if (getInventory().hasItem(selectedItem)) {
           FoodComponent food = selectedItem.getFoodComponent();
           double remainingBites = selectedItem.getIntegrity().getCurrent() / (double) food.getIntegrityDecrementOnEat();
-          int healthChange;
+          double healthChange;
           if (remainingBites >= 1.0) {
             healthChange = food.getNutrition();
           } else {
-            // The absolute value of the healthChange will never be equal to nutrition, only smaller.
-            healthChange = (int) (food.getNutrition() * remainingBites);
+            healthChange = food.getNutrition() * remainingBites;
           }
           selectedItem.decrementIntegrityByEat();
           if (selectedItem.isBroken() && !selectedItem.hasTag(Item.Tag.REPAIRABLE)) {
@@ -462,7 +472,8 @@ public class Hero extends Creature {
           } else {
             Writer.getDefaultWriter().write("You ate a bit of " + selectedItem.getName() + ".");
           }
-          addHealth(healthChange);
+          int healingAmount = (int) adjustHealingForFreshness(selectedItem, healthChange);
+          addHealth(healingAmount);
           if (healthChange > 0) {
             WELL_FED_EFFECT.affect(this);
           }
