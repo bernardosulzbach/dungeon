@@ -33,6 +33,12 @@ online](https://github.com/mafagafogigante/dungeon/wiki).
 
 You only need an updated version of Java to play this game.
 
+## Awards
+
+In 2017 this project won Yegor Bugayenko's Software Quality Award.
+
+[![Software Quality Award](www.yegor256.com/2016/10/23/award-2017.html)](images/software-quality-award.png)
+
 ## Tools
 
 ### YourKit
