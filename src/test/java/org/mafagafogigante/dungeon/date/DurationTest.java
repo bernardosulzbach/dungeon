@@ -7,10 +7,10 @@ public class DurationTest {
 
   @Test
   public void testToString() throws Exception {
-    Date start = new Date(2014, DungeonTimeUnit.YEAR.as(DungeonTimeUnit.MONTH), DungeonTimeUnit.MONTH.as(
-        DungeonTimeUnit.DAY), 0, 0, 0);
-    Date end = new Date(2014, DungeonTimeUnit.YEAR.as(DungeonTimeUnit.MONTH), DungeonTimeUnit.MONTH.as(
-        DungeonTimeUnit.DAY), 0, 0, 0);
+    long yearAsMonth = DungeonTimeUnit.YEAR.as(DungeonTimeUnit.MONTH);
+    long monthAsDay = DungeonTimeUnit.MONTH.as(DungeonTimeUnit.DAY);
+    Date start = new Date(2014, yearAsMonth, monthAsDay, 0, 0, 0);
+    Date end = new Date(2014, yearAsMonth, monthAsDay, 0, 0, 0);
 
     end = end.plus(1, DungeonTimeUnit.DAY);
     Assert.assertEquals("1 day", new Duration(start, end).toString());
