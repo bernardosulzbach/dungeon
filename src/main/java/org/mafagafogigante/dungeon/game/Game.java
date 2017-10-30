@@ -124,7 +124,7 @@ public class Game {
     gameState = state;
     DungeonLogger.info("Set the GameState field in Game to a GameState.");
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
-    Engine.refresh();
+    state.getEngine().refresh();
     Writer.getDefaultWriter().write(new RichStringSequence("\n")); // Improves readability.
     gameState.getHero().look();
   }
@@ -151,7 +151,7 @@ public class Game {
         unsetGameState();
         setGameState(getAfterDeathGameState());
       } else {
-        Engine.endTurn();
+        getGameState().getEngine().endTurn();
       }
     }
     DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "finished renderTurn", stopWatch);

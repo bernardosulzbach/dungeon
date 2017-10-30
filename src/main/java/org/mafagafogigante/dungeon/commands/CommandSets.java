@@ -9,7 +9,6 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Id;
@@ -511,7 +510,7 @@ final class CommandSets {
                 Writer.getDefaultWriter()
                     .write("Item could not be added to your inventory. Thus, it was added to the current location.");
               }
-              Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
+              Game.getGameState().getEngine().refresh();
             } else {
               Writer.getDefaultWriter().write("Item could not be created due to a restriction.");
             }
@@ -544,7 +543,7 @@ final class CommandSets {
             if (creature != null) {
               Game.getGameState().getHero().getLocation().addCreature(creature);
               Writer.getDefaultWriter().write("Spawned a " + creature.getName() + ".");
-              Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
+              Game.getGameState().getEngine().refresh();
             } else {
               Writer.getDefaultWriter().write(givenId + " does not match any known creature.");
             }

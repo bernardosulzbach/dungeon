@@ -14,7 +14,6 @@ import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResu
 import org.mafagafogigante.dungeon.entity.items.DrinkableComponent;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
@@ -131,7 +130,7 @@ public class Hero extends Creature {
       // Add a randomizing factor to make this more realistic.
       timeResting += nextRandomTimeChunk();
       statistics.getHeroStatistics().incrementRestingTime(timeResting);
-      Engine.rollDateAndRefresh(timeResting);
+      Game.getGameState().getEngine().rollDateAndRefresh(timeResting);
       Writer.getDefaultWriter().write("Resting...");
       getHealth().incrementBy(healthRecovered);
       Writer.getDefaultWriter().write("You feel rested.");
@@ -155,7 +154,7 @@ public class Hero extends Creature {
       statistics.getHeroStatistics().incrementSleepingTime(seconds);
       while (seconds > 0) {
         final int cycleDuration = Math.min(DREAM_DURATION_IN_SECONDS, seconds);
-        Engine.rollDateAndRefresh(cycleDuration);
+        Game.getGameState().getEngine().rollDateAndRefresh(cycleDuration);
         // Cast to long because it is considered best practice. We are going to end with a long anyway, so start doing
         // long arithmetic at the first multiplication. Reported by ICAST_INTEGER_MULTIPLY_CAST_TO_LONG in FindBugs.
         long timeForSleep = (long) MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND);
@@ -264,7 +263,7 @@ public class Hero extends Creature {
   public void attackTarget(String[] arguments) {
     Creature target = selectTarget(arguments);
     if (target != null) {
-      Engine.battle(this, target);
+      Game.getGameState().getEngine().battle(this, target);
     }
   }
 
@@ -333,7 +332,7 @@ public class Hero extends Creature {
           // This may not be ideal, as there may be a selection which has lighter items after this item.
           break;
         } else if (result == SimulationResult.SUCCESSFUL) {
-          Engine.rollDateAndRefresh(SECONDS_TO_PICK_UP_AN_ITEM);
+          Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_PICK_UP_AN_ITEM);
           if (getLocation().getInventory().hasItem(item)) {
             getLocation().removeItem(item);
             addItem(item);
@@ -387,7 +386,7 @@ public class Hero extends Creature {
         unsetWeapon(); // Just unset the weapon, it does not need to be moved to the inventory before being dropped.
       }
       // Take the time to drop the item.
-      Engine.rollDateAndRefresh(SECONDS_TO_DROP_AN_ITEM);
+      Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_DROP_AN_ITEM);
       if (getInventory().hasItem(item)) { // The item may have disappeared while dropping.
         dropItem(item); // Just drop it if has not disappeared.
       }
@@ -456,7 +455,7 @@ public class Hero extends Creature {
     Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.FOOD)) {
-        Engine.rollDateAndRefresh(SECONDS_TO_EAT_AN_ITEM);
+        Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_EAT_AN_ITEM);
         if (getInventory().hasItem(selectedItem)) {
           FoodComponent food = selectedItem.getFoodComponent();
           double remainingBites = selectedItem.getIntegrity().getCurrent() / (double) food.getIntegrityDecrementOnEat();
@@ -492,7 +491,7 @@ public class Hero extends Creature {
   public void fish() {
     if (getLocation().getTagSet().hasTag(Location.Tag.FISHABLE)) {
       Writer.getDefaultWriter().write("You started trying to fish.");
-      Engine.rollDateAndRefresh(SECONDS_TO_FISH);
+      Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_FISH);
       Sleeper.sleep(MILLISECONDS_TO_FISH);
       if (Random.roll(getFishingProficiency())) {
         Writer.getDefaultWriter().write("You caught a fish!");
@@ -523,7 +522,7 @@ public class Hero extends Creature {
     Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
       if (selectedItem.hasTag(Item.Tag.DRINKABLE)) {
-        Engine.rollDateAndRefresh(SECONDS_TO_DRINK_AN_ITEM);
+        Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_DRINK_AN_ITEM);
         if (getInventory().hasItem(selectedItem)) {
           DrinkableComponent component = selectedItem.getDrinkableComponent();
           if (!component.isDepleted()) {
@@ -620,7 +619,7 @@ public class Hero extends Creature {
   }
 
   private void milk(Creature creature) {
-    Engine.rollDateAndRefresh(SECONDS_TO_MILK_A_CREATURE);
+    Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_MILK_A_CREATURE);
     Writer.getDefaultWriter().write("You drink milk directly from " + creature.getName().getSingular() + ".");
     addHealth(MILK_NUTRITION);
   }
@@ -633,7 +632,7 @@ public class Hero extends Creature {
     if (selectedItem != null) {
       BookComponent book = selectedItem.getBookComponent();
       if (book != null) {
-        Engine.rollDateAndRefresh(book.getTimeToRead());
+        Game.getGameState().getEngine().rollDateAndRefresh(book.getTimeToRead());
         if (getInventory().hasItem(selectedItem)) { // Just in case if a readable item eventually decomposes.
           RichStringSequence string = new RichStringSequence(book.getText());
           string.append("\n\n");
@@ -679,7 +678,7 @@ public class Hero extends Creature {
         if (hasWeapon() && !getWeapon().isBroken()) {
           getWeapon().decrementIntegrityByHit();
         }
-        Engine.rollDateAndRefresh(SECONDS_TO_HIT_AN_ITEM);
+        Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_HIT_AN_ITEM);
       }
       String verb = target.hasTag(Item.Tag.REPAIRABLE) ? "crashed" : "destroyed";
       Writer.getDefaultWriter().write(getName() + " " + verb + " " + nameBeforeAction + ".");
@@ -708,7 +707,7 @@ public class Hero extends Creature {
         unequipWeapon();
       }
     }
-    Engine.rollDateAndRefresh(SECONDS_TO_EQUIP);
+    Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_EQUIP);
     if (getInventory().hasItem(weapon)) {
       setWeapon(weapon);
       RichStringSequence string = new RichStringSequence();
@@ -725,7 +724,7 @@ public class Hero extends Creature {
    */
   public void unequipWeapon() {
     if (hasWeapon()) {
-      Engine.rollDateAndRefresh(SECONDS_TO_UNEQUIP);
+      Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_UNEQUIP);
     }
     if (hasWeapon()) { // The weapon may have disappeared.
       Item equippedWeapon = getWeapon();
@@ -792,7 +791,7 @@ public class Hero extends Creature {
     if (clock != null) {
       Writer.getDefaultWriter().write(clock.getClockComponent().getTimeString());
       // Assume that the hero takes the same time to read the clock and to put it back where it was.
-      Engine.rollDateAndRefresh(getTimeToReadFromClock(clock));
+      Game.getGameState().getEngine().rollDateAndRefresh(getTimeToReadFromClock(clock));
     }
     World world = getLocation().getWorld();
     Date worldDate = getLocation().getWorld().getWorldDate();
@@ -857,7 +856,7 @@ public class Hero extends Creature {
       }
     }
     if (clock != null) {
-      Engine.rollDateAndRefresh(getTimeToReadFromClock(clock));
+      Game.getGameState().getEngine().rollDateAndRefresh(getTimeToReadFromClock(clock));
     }
     return clock;
   }

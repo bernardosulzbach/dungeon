@@ -6,7 +6,7 @@ import org.mafagafogigante.dungeon.entity.creatures.HeroUtils;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.BlockedEntrances;
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.Engine;
+import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Point;
@@ -33,13 +33,13 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Engine.rollDateAndRefresh(SECONDS_TO_CAST_HEAL);
+          Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_HEAL);
           hero.getHealth().incrementBy(HEALING_VALUE);
           writeHealCastOnSelf(hero);
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
-            Engine.rollDateAndRefresh(SECONDS_TO_CAST_HEAL);
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_HEAL);
             if (hero == target) { // The player used cast ... on <character name>.
               writeHealCastOnSelf(hero);
             } else {
@@ -89,7 +89,7 @@ public final class SpellData {
         if (!item.hasTag(Item.Tag.REPAIRABLE)) {
           Writer.getDefaultWriter().write(item.getName().getSingular() + " is not repairable.");
         } else {
-          Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR); // Time passes before casting.
+          Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_REPAIR); // Time passes before casting.
           if (!hero.getInventory().hasItem(item)) { // If the item disappeared.
             Writer.getDefaultWriter().write(item.getName().getSingular() + " disappeared before you finished casting.");
           } else {
@@ -112,7 +112,7 @@ public final class SpellData {
 
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
-        Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
+        Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
         List<Creature> creatureList = new ArrayList<>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
         RichStringSequence string = new RichStringSequence();
@@ -132,7 +132,7 @@ public final class SpellData {
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
-            Engine.rollDateAndRefresh(SECONDS_TO_CAST_FINGER_OF_DEATH);
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_FINGER_OF_DEATH);
             RichStringSequence string = new RichStringSequence();
             string.append("You casted ");
             string.append(getName().getSingular());
@@ -161,7 +161,7 @@ public final class SpellData {
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
-            Engine.rollDateAndRefresh(SECONDS_TO_CAST_VEIL_OF_DARKNESS);
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_VEIL_OF_DARKNESS);
             target.getLightSource().disable();
             Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
@@ -179,7 +179,7 @@ public final class SpellData {
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
-            Engine.rollDateAndRefresh(SECONDS_TO_CAST_UNVEIL);
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_UNVEIL);
             target.getLightSource().enable();
             Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
@@ -198,7 +198,7 @@ public final class SpellData {
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
-            Engine.rollDateAndRefresh(SECONDS_TO_CAST_DISPLACE);
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_DISPLACE);
             if (Random.roll(DISPLACE_PROBABILITY)) {
               Location targetLocation = target.getLocation();
               BlockedEntrances blockedEntrances = targetLocation.getBlockedEntrances();

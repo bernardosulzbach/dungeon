@@ -2,7 +2,6 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.RichStringSequence;
@@ -89,7 +88,7 @@ class DebugWaitParser {
   }
 
   private static void rollDate(long seconds) {
-    Engine.rollDateAndRefresh(seconds);
+    Game.getGameState().getEngine().rollDateAndRefresh(seconds);
     Writer.getDefaultWriter().write("Waited for " + seconds + " seconds.");
   }
 

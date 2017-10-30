@@ -1,7 +1,6 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Point;
@@ -54,15 +53,15 @@ class Walker implements Serializable {
     // This order is important. Calling .getLocation may trigger location creation, so avoid creating a location that we
     // don't need if we can't get there.
     if (world.getLocation(point).isBlocked(dir) || world.getLocation(destinationPoint).isBlocked(dir.invert())) {
-      Engine.rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
+      gameState.getEngine().rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
       Writer.getDefaultWriter().write("You cannot go " + dir + ".");
     } else {
       Hero hero = gameState.getHero();
-      Engine.rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
+      gameState.getEngine().rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.
       hero.getLocation().removeCreature(hero);
       world.getLocation(destinationPoint).addCreature(hero);
       gameState.setHeroPosition(destinationPoint);
-      Engine.refresh(); // Hero arrived in a new location, refresh the game.
+      gameState.getEngine().refresh(); // Hero arrived in a new location, refresh the game.
       hero.look();
       updateExplorationStatistics(destinationPoint);
     }
