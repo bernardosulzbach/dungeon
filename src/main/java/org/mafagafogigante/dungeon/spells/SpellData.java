@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.spells;
 
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
+import org.mafagafogigante.dungeon.entity.creatures.HealthState;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.entity.creatures.HeroUtils;
 import org.mafagafogigante.dungeon.entity.items.Item;
@@ -182,6 +183,43 @@ public final class SpellData {
             Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST_UNVEIL);
             target.getLightSource().enable();
             Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+          }
+        }
+      }
+    });
+    putSpell(new Spell("BANISH", "Banish") {
+
+      static final int SECONDS_TO_CAST = 10;
+
+      @Override
+      public void operate(Hero hero, String[] targetMatcher) {
+        if (targetMatcher.length == 0) {
+          Writer.getDefaultWriter().write("Provide a target.");
+        } else {
+          Creature target = hero.findCreature(targetMatcher);
+          if (target != null) {
+            if (target == hero) {
+              Writer.getDefaultWriter().write("You cannot cast banish on yourself.");
+              return;
+            }
+            Game.getGameState().getEngine().rollDateAndRefresh(SECONDS_TO_CAST);
+            Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+            if (target.getHealth().getHealthState() == HealthState.DEAD) {
+              Writer.getDefaultWriter().write("Your target seems to be already dead.");
+            } else {
+              double missingRatio = 1.0 - target.getHealth().getCurrent() / (double) target.getHealth().getMaximum();
+              double successProbability = 0.1 + Math.pow(Math.sqrt(0.9) * missingRatio, 2);
+              if (Random.roll(successProbability)) {
+                hero.getLocation().removeCreature(target);
+                Writer.getDefaultWriter().write("You banished " + target.getName().getSingular() + "!");
+              } else {
+                RichStringSequence stringSequence = new RichStringSequence();
+                stringSequence.append("You failed to banish " + target.getName().getSingular() + ".");
+                stringSequence.append("\n");
+                stringSequence.append("Try damaging " + target.getName().getSingular() + " so it is less resistant.");
+                Writer.getDefaultWriter().write(stringSequence);
+              }
+            }
           }
         }
       }

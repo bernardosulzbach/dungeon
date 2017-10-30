@@ -69,6 +69,10 @@
           "probability": 0.15
         },
         {
+          "id": "TOME_OF_BANISH",
+          "probability": 0.15
+        },
+        {
           "id": "DAGGER",
           "probability": 0.2
         },
