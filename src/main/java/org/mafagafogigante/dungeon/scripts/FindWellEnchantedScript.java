@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,7 +14,7 @@ public class FindWellEnchantedScript implements Script {
   }
 
   @Override
-  public DungeonString execute(CommandExecutor executor) {
+  public RichStringSequence execute(CommandExecutor executor) {
     // Go north until we find a enchanted item.
     boolean foundMultiplyEnchanted = false;
     do {

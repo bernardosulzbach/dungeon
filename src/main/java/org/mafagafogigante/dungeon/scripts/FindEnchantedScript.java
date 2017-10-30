@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 
 import java.util.Locale;
 
@@ -12,7 +12,7 @@ public class FindEnchantedScript implements Script {
   }
 
   @Override
-  public DungeonString execute(CommandExecutor executor) {
+  public RichStringSequence execute(CommandExecutor executor) {
     // Go north until we find a enchanted item.
     boolean foundEnchanted;
     do {

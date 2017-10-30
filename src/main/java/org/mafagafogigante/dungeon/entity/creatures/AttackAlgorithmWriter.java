@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 
 import java.awt.Color;
@@ -26,7 +26,7 @@ final class AttackAlgorithmWriter {
    * @param criticalHit a boolean indicating if the attack was a critical hit or not
    */
   static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.setColor(attacker.getId().equals(Game.getGameState().getHero().getId()) ? Color.GREEN : Color.RED);
     string.append(attacker.getName().getSingular());
     string.append(" inflicted ");
@@ -49,7 +49,7 @@ final class AttackAlgorithmWriter {
    * @param attacker the attacker creature
    */
   static void writeMiss(Creature attacker) {
-    Writer.getDefaultWriter().writeAndWait(new DungeonString(attacker.getName() + " missed.\n", Color.YELLOW));
+    Writer.getDefaultWriter().writeAndWait(new RichStringSequence(attacker.getName() + " missed.\n", Color.YELLOW));
   }
 
   /**
@@ -61,7 +61,7 @@ final class AttackAlgorithmWriter {
     if (!weapon.isBroken()) {
       throw new IllegalArgumentException("weapon is not broken.");
     }
-    Writer.getDefaultWriter().write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
+    Writer.getDefaultWriter().write(new RichStringSequence(weapon.getName() + " broke!\n", Color.RED));
   }
 
 }

@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
@@ -36,7 +36,7 @@ public final class Writer {
    * @param text the string of text to be written.
    */
   public void write(String text) {
-    DungeonString string = new DungeonString(text);
+    RichStringSequence string = new RichStringSequence(text);
     string.append("\n");
     write(string);
   }

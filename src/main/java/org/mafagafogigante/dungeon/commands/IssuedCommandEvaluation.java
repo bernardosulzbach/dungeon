@@ -23,10 +23,7 @@ public class IssuedCommandEvaluation {
 
   @Override
   public String toString() {
-    return "IssuedCommandEvaluation{" +
-        "valid=" + valid +
-        ", suggestions=" + suggestions +
-        '}';
+    return "IssuedCommandEvaluation{" + "valid=" + valid + ", suggestions=" + suggestions + '}';
   }
 
 }

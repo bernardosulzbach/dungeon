@@ -42,11 +42,7 @@ public class LocationDescription implements Examinable, Serializable {
 
   @Override
   public String toString() {
-    return "LocationDescription{" +
-        "symbol=" + symbol +
-        ", color=" + color +
-        ", info='" + info + '\'' +
-        '}';
+    return "LocationDescription{" + "symbol=" + symbol + ", color=" + color + ", info='" + info + '\'' + '}';
   }
 
 }

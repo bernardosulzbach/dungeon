@@ -6,12 +6,12 @@ import org.mafagafogigante.dungeon.entity.creatures.HeroUtils;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.BlockedEntrances;
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.TypeOfCauseOfDeath;
@@ -115,7 +115,7 @@ public final class SpellData {
         Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
         List<Creature> creatureList = new ArrayList<>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
-        DungeonString string = new DungeonString();
+        RichStringSequence string = new RichStringSequence();
         string.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
         hero.getObserver().writeCreatureSight(creatureList, string);
         hero.getObserver().writeItemSight(hero.getLocation().getItemList(), string);
@@ -133,7 +133,7 @@ public final class SpellData {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_FINGER_OF_DEATH);
-            DungeonString string = new DungeonString();
+            RichStringSequence string = new RichStringSequence();
             string.append("You casted ");
             string.append(getName().getSingular());
             string.append(" on ");

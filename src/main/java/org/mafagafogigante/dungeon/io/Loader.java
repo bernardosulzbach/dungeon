@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.StopWatch;
@@ -86,7 +86,7 @@ public final class Loader {
    */
   public static GameState newGame() {
     GameState gameState = new GameState();
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.append("Created a new game.\n\n");
     string.append(gameState.getPreface());
     string.append("\n");

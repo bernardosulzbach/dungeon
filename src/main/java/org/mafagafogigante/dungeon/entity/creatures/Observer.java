@@ -2,12 +2,12 @@ package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.Luminosity;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.ColoredString;
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Point;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
@@ -68,26 +68,26 @@ public class Observer implements Serializable {
   }
 
   /**
-   * Appends to a DungeonString the creatures that can be seen.
+   * Appends to a RichStringSequence the creatures that can be seen.
    */
-  public void writeCreatureSight(List<Creature> creatures, DungeonString dungeonString) {
+  public void writeCreatureSight(List<Creature> creatures, RichStringSequence richStringSequence) {
     if (creatures.isEmpty()) {
-      dungeonString.append("\nYou don't see anyone here.\n");
+      richStringSequence.append("\nYou don't see anyone here.\n");
     } else {
-      dungeonString.append("\nHere you can see ");
-      dungeonString.append(Utils.enumerateEntities(creatures));
-      dungeonString.append(".\n");
+      richStringSequence.append("\nHere you can see ");
+      richStringSequence.append(Utils.enumerateEntities(creatures));
+      richStringSequence.append(".\n");
     }
   }
 
   /**
-   * Appends to a DungeonString the items that can be seen.
+   * Appends to a RichStringSequence the items that can be seen.
    */
-  public void writeItemSight(List<Item> items, DungeonString dungeonString) {
+  public void writeItemSight(List<Item> items, RichStringSequence richStringSequence) {
     if (!items.isEmpty()) {
-      dungeonString.append("\nHere you can find ");
-      dungeonString.append(Utils.enumerateEntities(items));
-      dungeonString.append(".\n");
+      richStringSequence.append("\nHere you can find ");
+      richStringSequence.append(Utils.enumerateEntities(items));
+      richStringSequence.append(".\n");
     }
   }
 
@@ -95,7 +95,7 @@ public class Observer implements Serializable {
    * Prints the name of the player's current location and lists all creatures and items the character sees.
    */
   public void look() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     Location location = creature.getLocation(); // Avoid multiple calls to the getter.
     string.append("You are at ");
     string.setColor(location.getDescription().getColor());
@@ -130,32 +130,32 @@ public class Observer implements Serializable {
    * Looks to the Locations adjacent to the one the Hero is in, informing if the Hero cannot see the adjacent
    * Locations.
    */
-  private void lookLocations(DungeonString dungeonString) {
-    dungeonString.append("\n");
+  private void lookLocations(RichStringSequence richStringSequence) {
+    richStringSequence.append("\n");
     World world = creature.getLocation().getWorld();
     Point point = creature.getLocation().getPoint();
-    lookUpwardsAndDownwards(dungeonString, world, point);
+    lookUpwardsAndDownwards(richStringSequence, world, point);
     if (areThereAdjacentLocations()) {
       if (canSeeAdjacentLocations()) {
-        lookToTheSides(dungeonString, world, point);
+        lookToTheSides(richStringSequence, world, point);
       } else {
-        dungeonString.append("You can't clearly see the adjacent locations.\n");
+        richStringSequence.append("You can't clearly see the adjacent locations.\n");
       }
     }
   }
 
-  private void lookToVerticalDirection(DungeonString dungeonString, World world, Point up, String adverb) {
+  private void lookToVerticalDirection(RichStringSequence richStringSequence, World world, Point up, String adverb) {
     if (world.alreadyHasLocationAt(up)) {
-      dungeonString.append(adverb);
-      dungeonString.append(" you see ");
-      dungeonString.append(world.getLocation(up).getName().getSingular());
-      dungeonString.append(".\n");
+      richStringSequence.append(adverb);
+      richStringSequence.append(" you see ");
+      richStringSequence.append(world.getLocation(up).getName().getSingular());
+      richStringSequence.append(".\n");
     }
   }
 
-  private void lookUpwardsAndDownwards(DungeonString dungeonString, World world, Point point) {
-    lookToVerticalDirection(dungeonString, world, new Point(point, Direction.UP), "Upwards");
-    lookToVerticalDirection(dungeonString, world, new Point(point, Direction.DOWN), "Downwards");
+  private void lookUpwardsAndDownwards(RichStringSequence richStringSequence, World world, Point point) {
+    lookToVerticalDirection(richStringSequence, world, new Point(point, Direction.UP), "Upwards");
+    lookToVerticalDirection(richStringSequence, world, new Point(point, Direction.DOWN), "Downwards");
   }
 
   /**
@@ -174,8 +174,8 @@ public class Observer implements Serializable {
     return ADJACENT_LOCATIONS_VISIBILITY.isMetBy(this);
   }
 
-  private void lookToTheSides(DungeonString dungeonString, World world, Point point) {
-    Map<ColoredString, ArrayList<Direction>> visibleLocations = new HashMap<>();
+  private void lookToTheSides(RichStringSequence richStringSequence, World world, Point point) {
+    Map<RichString, ArrayList<Direction>> visibleLocations = new HashMap<>();
     // Don't print the Location you just left.
     Collection<Direction> directions = getHorizontalDirections();
     for (Direction dir : directions) {
@@ -186,7 +186,7 @@ public class Observer implements Serializable {
         explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
         String name = adjacentLocation.getName().getSingular();
         Color color = adjacentLocation.getDescription().getColor();
-        ColoredString locationName = new ColoredString(name, color);
+        RichString locationName = new RichString(name, color);
         if (!visibleLocations.containsKey(locationName)) {
           visibleLocations.put(locationName, new ArrayList<Direction>());
         }
@@ -194,12 +194,12 @@ public class Observer implements Serializable {
       }
     }
     if (!visibleLocations.isEmpty()) {
-      for (Entry<ColoredString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
-        dungeonString.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
-        dungeonString.setColor(entry.getKey().getColor());
-        dungeonString.append(String.format("%s", entry.getKey().getString()));
-        dungeonString.resetColor();
-        dungeonString.append(".\n");
+      for (Entry<RichString, ArrayList<Direction>> entry : visibleLocations.entrySet()) {
+        richStringSequence.append(String.format("To %s you see ", Utils.enumerate(entry.getValue())));
+        richStringSequence.setColor(entry.getKey().getColor());
+        richStringSequence.append(String.format("%s", entry.getKey().getString()));
+        richStringSequence.resetColor();
+        richStringSequence.append(".\n");
       }
     }
   }
@@ -215,7 +215,7 @@ public class Observer implements Serializable {
   /**
    * Prints a human-readable description of what Creatures the Hero sees.
    */
-  private void lookCreatures(DungeonString builder) {
+  private void lookCreatures(RichStringSequence builder) {
     List<Creature> creatures = new ArrayList<>(creature.getLocation().getCreatures());
     creatures.remove(creature);
     creatures = creature.filterByVisibility(creatures);
@@ -225,7 +225,7 @@ public class Observer implements Serializable {
   /**
    * Prints a human-readable description of what the Hero sees on the ground.
    */
-  private void lookItems(DungeonString builder) {
+  private void lookItems(RichStringSequence builder) {
     List<Item> items = creature.getLocation().getItemList();
     items = creature.filterByVisibility(items);
     writeItemSight(items, builder);

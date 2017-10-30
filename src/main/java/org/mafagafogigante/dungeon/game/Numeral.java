@@ -7,7 +7,12 @@ import org.mafagafogigante.dungeon.logging.DungeonLogger;
  */
 public enum Numeral {
 
-  ONE("One"), TWO("Two"), THREE("Three"), FOUR("Four"), FIVE("Five"), MORE_THAN_FIVE("A few");
+  ONE("One"),
+  TWO("Two"),
+  THREE("Three"),
+  FOUR("Four"),
+  FIVE("Five"),
+  MORE_THAN_FIVE("A few");
 
   final String stringRepresentation;
 

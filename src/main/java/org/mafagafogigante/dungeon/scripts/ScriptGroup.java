@@ -1,7 +1,6 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Writable;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
@@ -25,7 +24,7 @@ public class ScriptGroup {
     return scripts.containsKey(identifier);
   }
 
-  public DungeonString executeScript(ScriptIdentifier identifier, CommandExecutor executor) {
+  public RichStringSequence executeScript(ScriptIdentifier identifier, CommandExecutor executor) {
     return scripts.get(identifier).execute(executor);
   }
 

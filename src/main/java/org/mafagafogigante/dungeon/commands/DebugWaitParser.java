@@ -2,10 +2,10 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.PartOfDay;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
@@ -47,7 +47,7 @@ class DebugWaitParser {
   }
 
   private static void writeDebugWaitSyntax() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.append("Usage: wait ");
     final Color highlightColor = Color.ORANGE;
     string.setColor(highlightColor);
@@ -93,6 +93,10 @@ class DebugWaitParser {
     Writer.getDefaultWriter().write("Waited for " + seconds + " seconds.");
   }
 
-  private enum Syntax {FOR, UNTIL, INVALID}
+  private enum Syntax {
+    FOR,
+    UNTIL,
+    INVALID
+  }
 
 }

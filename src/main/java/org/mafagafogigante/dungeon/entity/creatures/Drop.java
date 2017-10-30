@@ -31,10 +31,7 @@ class Drop implements Serializable {
 
   @Override
   public String toString() {
-    return "Drop{" +
-        "itemId=" + itemId +
-        ", probability=" + probability +
-        '}';
+    return "Drop{" + "itemId=" + itemId + ", probability=" + probability + '}';
   }
 
 }

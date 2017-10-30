@@ -4,15 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
-/**
- * A colored string, this is, a pair of a string and a color.
- */
-public class ColoredString {
+public class RichString {
 
   private final String string;
   private final Color color;
 
-  public ColoredString(@NotNull String string, @NotNull Color color) {
+  public RichString(@NotNull String string, @NotNull Color color) {
     this.string = string;
     this.color = color;
   }
@@ -29,7 +26,7 @@ public class ColoredString {
 
   @Override
   public String toString() {
-    return "ColoredString{" + "string='" + string + '\'' + ", color=" + color + '}';
+    return "RichString{" + "string='" + string + '\'' + ", color=" + color + '}';
   }
 
 }

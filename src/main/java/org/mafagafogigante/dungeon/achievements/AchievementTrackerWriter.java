@@ -3,8 +3,8 @@ package org.mafagafogigante.dungeon.achievements;
 import org.mafagafogigante.dungeon.achievements.comparators.UnlockedAchievementComparators;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 
 import java.awt.Color;
@@ -57,7 +57,7 @@ public class AchievementTrackerWriter {
   private static void writeAchievementTracker(AchievementTracker tracker, Comparator<UnlockedAchievement> comparator) {
     List<UnlockedAchievement> unlockedAchievements = tracker.getUnlockedAchievements(comparator);
     Date now = Game.getGameState().getWorld().getWorldDate();
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
       Duration sinceUnlock = new Duration(unlockedAchievement.getDate(), now);
       string.setColor(Color.ORANGE);

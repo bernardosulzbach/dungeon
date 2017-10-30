@@ -9,8 +9,6 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
@@ -20,6 +18,8 @@ import org.mafagafogigante.dungeon.game.LocationPreset;
 import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
@@ -284,12 +284,15 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         List<String> alphabet = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
-        DungeonString dungeonString = new DungeonString();
+        RichStringSequence richStringSequence = new RichStringSequence();
         for (int i = 0; i < 10000; i++) {
-          dungeonString.setColor(new Color(Random.nextInteger(256), Random.nextInteger(256), Random.nextInteger(256)));
-          dungeonString.append(Random.select(alphabet));
+          int red = Random.nextInteger(256);
+          int green = Random.nextInteger(256);
+          int blue = Random.nextInteger(256);
+          richStringSequence.setColor(new Color(red, green, blue));
+          richStringSequence.append(Random.select(alphabet));
         }
-        Writer.getDefaultWriter().write(dungeonString);
+        Writer.getDefaultWriter().write(richStringSequence);
       }
     });
     commandSet.addCommand(new Command("hint", "Displays a random hint of the game.") {
@@ -326,15 +329,15 @@ final class CommandSets {
         }
         Writer.getDefaultWriter().write("Running the script.");
         Writer.getDefaultWriter().disableForwarding();
-        DungeonString result = scriptGroup.executeScript(identifier, new CommandExecutor() {
+        RichStringSequence result = scriptGroup.executeScript(identifier, new CommandExecutor() {
           @Override
-          public DungeonString execute(String command) {
-            DungeonString result = new DungeonString();
+          public RichStringSequence execute(String command) {
+            RichStringSequence result = new RichStringSequence();
             if (IssuedCommand.isValidSource(command)) {
               Writer.getDefaultWriter().clearWrittenStrings();
               Game.renderTurn(new IssuedCommand(command), new StopWatch());
               for (Writable writtenString : Writer.getDefaultWriter().getWrittenStrings()) {
-                for (ColoredString coloredString : writtenString.toColoredStringList()) {
+                for (RichString coloredString : writtenString.toRichStrings()) {
                   result.setColor(coloredString.getColor());
                   result.append(coloredString.getString());
                 }
@@ -451,36 +454,36 @@ final class CommandSets {
         final int width = 40;  // The width of the row's "tag".
         Location heroLocation = Game.getGameState().getHero().getLocation();
         Point heroPosition = heroLocation.getPoint();
-        DungeonString dungeonString = new DungeonString();
-        dungeonString.append(StringUtils.rightPad("Point:", width));
-        dungeonString.append(heroPosition.toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Creatures (" + heroLocation.getCreatureCount() + "):", width));
-        dungeonString.append("\n");
+        RichStringSequence richStringSequence = new RichStringSequence();
+        richStringSequence.append(StringUtils.rightPad("Point:", width));
+        richStringSequence.append(heroPosition.toString());
+        richStringSequence.append("\n");
+        richStringSequence.append(StringUtils.rightPad("Creatures (" + heroLocation.getCreatureCount() + "):", width));
+        richStringSequence.append("\n");
         for (Creature creature : heroLocation.getCreatures()) {
-          dungeonString.append("  " + creature.getName());
-          dungeonString.append("\n");
+          richStringSequence.append("  " + creature.getName());
+          richStringSequence.append("\n");
         }
         if (!heroLocation.getItemList().isEmpty()) {
-          dungeonString.append(StringUtils.rightPad("Items (" + heroLocation.getItemList().size() + "):", width));
-          dungeonString.append("\n");
+          richStringSequence.append(StringUtils.rightPad("Items (" + heroLocation.getItemList().size() + "):", width));
+          richStringSequence.append("\n");
           for (Item item : heroLocation.getItemList()) {
-            dungeonString.append("  " + item.getQualifiedName());
-            dungeonString.append("\n");
+            richStringSequence.append("  " + item.getQualifiedName());
+            richStringSequence.append("\n");
           }
         } else {
-          dungeonString.append("No items.\n");
+          richStringSequence.append("No items.\n");
         }
-        dungeonString.append(StringUtils.rightPad("Luminosity:", width));
-        dungeonString.append(heroLocation.getLuminosity().toPercentage().toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Permittivity:", width));
-        dungeonString.append(heroLocation.getLightPermittivity().toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Blocked Entrances:", width));
-        dungeonString.append(heroLocation.getBlockedEntrances().toString());
-        dungeonString.append("\n");
-        Writer.getDefaultWriter().write(dungeonString);
+        richStringSequence.append(StringUtils.rightPad("Luminosity:", width));
+        richStringSequence.append(heroLocation.getLuminosity().toPercentage().toString());
+        richStringSequence.append("\n");
+        richStringSequence.append(StringUtils.rightPad("Permittivity:", width));
+        richStringSequence.append(heroLocation.getLightPermittivity().toString());
+        richStringSequence.append("\n");
+        richStringSequence.append(StringUtils.rightPad("Blocked Entrances:", width));
+        richStringSequence.append(heroLocation.getBlockedEntrances().toString());
+        richStringSequence.append("\n");
+        Writer.getDefaultWriter().write(richStringSequence);
       }
     });
     commandSet.addCommand(new Command("map", "Produces a map as complete as possible.") {

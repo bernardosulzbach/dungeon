@@ -14,7 +14,6 @@ import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResu
 import org.mafagafogigante.dungeon.entity.items.DrinkableComponent;
 import org.mafagafogigante.dungeon.entity.items.FoodComponent;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.Id;
@@ -24,6 +23,7 @@ import org.mafagafogigante.dungeon.game.NameFactory;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.QuantificationMode;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Sleeper;
 import org.mafagafogigante.dungeon.io.Version;
@@ -425,7 +425,7 @@ public class Hero extends Creature {
     if (getInventory().getItemCount() == 0) {
       throw new IllegalStateException("inventory item count is 0.");
     }
-    DungeonString text = new DungeonString("You are carrying:");
+    RichStringSequence text = new RichStringSequence("You are carrying:");
     text.append("\n");
     for (Item item : getInventory().getItems()) {
       text.setColor(item.getRarity().getColor());
@@ -569,7 +569,7 @@ public class Hero extends Creature {
   public void examineItem(String[] arguments) {
     Item selectedItem = selectInventoryItem(arguments);
     if (selectedItem != null) {
-      DungeonString text = new DungeonString();
+      RichStringSequence text = new RichStringSequence();
       text.setColor(selectedItem.getRarity().getColor());
       text.append(selectedItem.getQualifiedName());
       text.append(" ");
@@ -624,7 +624,7 @@ public class Hero extends Creature {
       if (book != null) {
         Engine.rollDateAndRefresh(book.getTimeToRead());
         if (getInventory().hasItem(selectedItem)) { // Just in case if a readable item eventually decomposes.
-          DungeonString string = new DungeonString(book.getText());
+          RichStringSequence string = new RichStringSequence(book.getText());
           string.append("\n\n");
           Writer.getDefaultWriter().write(string);
           if (book.isDidactic()) {
@@ -700,7 +700,7 @@ public class Hero extends Creature {
     Engine.rollDateAndRefresh(SECONDS_TO_EQUIP);
     if (getInventory().hasItem(weapon)) {
       setWeapon(weapon);
-      DungeonString string = new DungeonString();
+      RichStringSequence string = new RichStringSequence();
       string.append(getName() + " equipped " + weapon.getQualifiedName() + ".");
       string.append(" " + "Your total damage is now " + getTotalDamage() + ".");
       Writer.getDefaultWriter().write(string);
@@ -729,7 +729,7 @@ public class Hero extends Creature {
    * Prints a message with the current status of the Hero.
    */
   public void printAllStatus() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.append("Your name is ");
     string.append(getName().getSingular());
     string.append(".");
@@ -766,7 +766,7 @@ public class Hero extends Creature {
    * Prints the Hero's age.
    */
   public void printAge() {
-    Writer.getDefaultWriter().write(new DungeonString("You are " + getAgeString() + " old.", Color.CYAN));
+    Writer.getDefaultWriter().write(new RichStringSequence("You are " + getAgeString() + " old.", Color.CYAN));
   }
 
   private String getAgeString() {
@@ -859,7 +859,7 @@ public class Hero extends Creature {
    * Writes a list of all the Spells that the Hero knows.
    */
   public void writeSpellList() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     if (getSpellcaster().getSpellList().isEmpty()) {
       string.append("You have not learned any spells yet.");
     } else {
@@ -876,7 +876,7 @@ public class Hero extends Creature {
   public void writeConditions() {
     Date worldDate = getLocation().getWorld().getWorldDate();
     List<Condition> conditions = getConditions();
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     if (conditions.isEmpty()) {
       string.append("There are no active conditions.");
     } else {

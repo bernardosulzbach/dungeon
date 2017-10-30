@@ -1,9 +1,9 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 
 public interface CommandExecutor {
 
-  DungeonString execute(String command);
+  RichStringSequence execute(String command);
 
 }

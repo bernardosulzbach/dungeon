@@ -1,11 +1,11 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Point;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
@@ -36,7 +36,7 @@ class Walker implements Serializable {
       }
       Writer.getDefaultWriter().write("Invalid input.");
     } else {
-      Writer.getDefaultWriter().write(new DungeonString("To where?", Color.ORANGE));
+      Writer.getDefaultWriter().write(new RichStringSequence("To where?", Color.ORANGE));
     }
   }
 

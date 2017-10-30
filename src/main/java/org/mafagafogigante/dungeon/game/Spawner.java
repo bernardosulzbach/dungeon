@@ -74,13 +74,8 @@ class Spawner implements Serializable {
 
   @Override
   public String toString() {
-    return "Spawner{" +
-        "id=" + id +
-        ", populationLimit=" + populationLimit +
-        ", spawnDelay=" + spawnDelay +
-        ", location=" + location +
-        ", lastChange=" + lastChange +
-        '}';
+    return "Spawner{" + "id=" + id + ", populationLimit=" + populationLimit + ", spawnDelay=" + spawnDelay +
+        ", location=" + location + ", lastChange=" + lastChange + '}';
   }
 
 }
