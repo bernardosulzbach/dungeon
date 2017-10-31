@@ -1,8 +1,5 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.RichString;
-import org.mafagafogigante.dungeon.game.RichStringSequence;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Converter;
 
 import java.text.SimpleDateFormat;
@@ -15,9 +12,9 @@ import java.util.List;
  *
  * <p>The information is generated at construction time, therefore the caller should not cache objects of this class.
  */
-public final class SystemInformation extends Writable {
+public final class SystemInformation implements Writable {
 
-  private final RichStringSequence information = compileInformation();
+  private final RichText information = compileInformation();
 
   private static String getUserString() {
     return System.getProperty("user.name");
@@ -41,20 +38,20 @@ public final class SystemInformation extends Writable {
     return String.format("%s (%s) %s", name, arch, version);
   }
 
-  private RichStringSequence compileInformation() {
+  private RichText compileInformation() {
     Date currentDate = new Date();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String time = timeFormat.format(currentDate);
     String date = dateFormat.format(currentDate);
-    RichStringSequence richStringSequence = new RichStringSequence();
-    richStringSequence.append("User: ", getUserString(), "\n");
-    richStringSequence.append("Time: ", time, "\n");
-    richStringSequence.append("Date: ", date, "\n");
-    richStringSequence.append("Java: ", getJavaVersionString(), "\n");
-    richStringSequence.append("Heap: ", getMemoryInformation(), "\n");
-    richStringSequence.append("OS: ", getOsVersionString());
-    return richStringSequence;
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append("User: ").append(getUserString()).append("\n");
+    builder.append("Time: ").append(time).append("\n");
+    builder.append("Date: ").append(date).append("\n");
+    builder.append("Java: ").append(getJavaVersionString()).append("\n");
+    builder.append("Heap: ").append(getMemoryInformation()).append("\n");
+    builder.append("OS: ").append(getOsVersionString());
+    return builder.toRichText();
   }
 
   @Override
@@ -64,7 +61,7 @@ public final class SystemInformation extends Writable {
 
   @Override
   public String toString() {
-    return toJavaString();
+    return compileInformation().toString();
   }
 
 }

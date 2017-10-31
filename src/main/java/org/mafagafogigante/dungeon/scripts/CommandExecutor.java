@@ -1,9 +1,9 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.RichStringSequence;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 public interface CommandExecutor {
 
-  RichStringSequence execute(String command);
+  StandardRichTextBuilder execute(String command);
 
 }

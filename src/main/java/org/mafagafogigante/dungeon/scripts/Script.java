@@ -1,11 +1,11 @@
 package org.mafagafogigante.dungeon.scripts;
 
-import org.mafagafogigante.dungeon.game.RichStringSequence;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 public interface Script {
 
   ScriptIdentifier getIdentifier();
 
-  RichStringSequence execute(CommandExecutor executor);
+  StandardRichTextBuilder execute(CommandExecutor executor);
 
 }

@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
-import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,8 +14,9 @@ public class DummyAttackAlgorithm implements AttackAlgorithm {
 
   @Override
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
-    RichStringSequence string = new RichStringSequence(attacker.getName() + " stands still.\n", Color.YELLOW);
-    Writer.getDefaultWriter().writeAndWait(string);
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.setColor(Color.YELLOW).append(attacker.getName().toString()).append(" stands still.\n");
+    Writer.getDefaultWriter().writeAndWait(builder.toRichText());
   }
 
 }

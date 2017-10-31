@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.game.Name;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +58,7 @@ public final class HeroUtils {
   public static List<Item> findItems(List<Item> items, String[] tokens) {
     Matches<Item> matches = Matches.findBestCompleteMatches(items, tokens);
     if (matches.size() == 0) {
-      Writer.getDefaultWriter().write("Item not found.");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("Item not found.").toRichText());
     } else if (matches.isDisjoint()) {
       // Matches are disjoint, if there is more than one different name, the results are ambiguous.
       if (matches.size() == 1 || matches.getDifferentNames() == 1) {
@@ -85,11 +86,15 @@ public final class HeroUtils {
   }
 
   static void writeNoLongerInInventoryMessage(Item item) {
-    Writer.getDefaultWriter().write(item.getQualifiedName() + " is no longer in the inventory.");
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append(item.getQualifiedName()).append(" is no longer in the inventory.");
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   static void writeNoLongerInLocationMessage(Item item) {
-    Writer.getDefaultWriter().write(item.getQualifiedName() + " is no longer in this location.");
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append(item.getQualifiedName()).append(" is no longer in this location.");
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
 }

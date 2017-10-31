@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.gui;
 
-import org.mafagafogigante.dungeon.game.RichString;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.util.RichString;
+import org.mafagafogigante.dungeon.util.Writable;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;

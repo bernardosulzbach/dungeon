@@ -1,9 +1,9 @@
 package org.mafagafogigante.dungeon.wiki;
 
-import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.Matches;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,16 +29,17 @@ public final class WikiSearcher {
       if (matches.size() == 0) {
         deepSearch(arguments);
       } else if (matches.size() == 1) {
-        Writer.getDefaultWriter().write(matches.getMatch(0).toString());
+        String matchString = matches.getMatch(0).toString();
+        Writer.getDefaultWriter().write(new StandardRichTextBuilder().append(matchString).toRichText());
       } else {
-        RichStringSequence string = new RichStringSequence();
-        string.append("The following article titles match your query:\n");
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
+        builder.append("The following article titles match your query:\n");
         for (int i = 0; i < matches.size(); i++) {
-          string.append(toArticleListingEntry(matches.getMatch(i)));
-          string.append("\n");
+          builder.append(toArticleListingEntry(matches.getMatch(i)));
+          builder.append("\n");
         }
-        string.append("Be more specific.");
-        Writer.getDefaultWriter().write(string);
+        builder.append("Be more specific.");
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     } else {
       writeArticleList();
@@ -63,32 +64,32 @@ public final class WikiSearcher {
         counter.incrementCounter(article, matches);
       }
     }
-    RichStringSequence string = new RichStringSequence();
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
     if (counter.isNotEmpty()) {
-      string.append("The following articles contain text that matches your query:\n");
+      builder.append("The following articles contain text that matches your query:\n");
       for (Article article : counter) {
         String matchCount = counter.getCounter(article) + (counter.getCounter(article) > 1 ? " matches" : " match");
-        string.append(toArticleListingEntry(article) + " (" + matchCount + ")\n");
+        builder.append(toArticleListingEntry(article) + " (" + matchCount + ")\n");
       }
     } else {
-      string.append("No article matches your query.");
+      builder.append("No article matches your query.");
     }
-    Writer.getDefaultWriter().write(string);
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   /**
    * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
    */
   private static void writeArticleList() {
-    RichStringSequence string = new RichStringSequence();
-    string.append("The wiki has the following ");
-    string.append(String.valueOf(Wiki.getArticles().size()));
-    string.append(" articles:\n");
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append("The wiki has the following ");
+    builder.append(String.valueOf(Wiki.getArticles().size()));
+    builder.append(" articles:\n");
     for (Article article : Wiki.getArticles()) {
-      string.append(toArticleListingEntry(article));
-      string.append("\n");
+      builder.append(toArticleListingEntry(article));
+      builder.append("\n");
     }
-    Writer.getDefaultWriter().write(string);
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   private static String toArticleListingEntry(Article article) {

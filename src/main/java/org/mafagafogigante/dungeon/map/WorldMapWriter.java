@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.map;
 
-import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,19 +34,19 @@ public final class WorldMapWriter {
    * @param map a WorldMap, not null
    */
   private static void renderMap(@NotNull WorldMap map) {
-    RichStringSequence string = new RichStringSequence();
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
     WorldMapSymbol[][] worldMapSymbolMatrix = map.getSymbolMatrix();
     for (int i = 0; i < worldMapSymbolMatrix.length; i++) {
       for (WorldMapSymbol symbol : worldMapSymbolMatrix[i]) {
         // OK as setColor verifies if the color change is necessary (does not replace a color by itself).
-        string.setColor(symbol.getColor());
-        string.append(symbol.getCharacterAsString());
+        builder.setColor(symbol.getColor());
+        builder.append(symbol.getCharacterAsString());
       }
       if (i < worldMapSymbolMatrix.length - 1) {
-        string.append("\n");
+        builder.append("\n");
       }
     }
-    Writer.getDefaultWriter().write(string);
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
 }

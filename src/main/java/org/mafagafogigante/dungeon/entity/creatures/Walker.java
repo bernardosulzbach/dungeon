@@ -4,11 +4,12 @@ import org.mafagafogigante.dungeon.game.Direction;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Point;
-import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
+import org.mafagafogigante.dungeon.util.RichText;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ class Walker implements Serializable {
   /**
    * Parses an issued command to move the player.
    */
-  public void parseHeroWalk(String[] arguments) {
+  void parseHeroWalk(String[] arguments) {
     if (arguments.length != 0) {
       for (Direction dir : Direction.values()) {
         if (dir.equalsIgnoreCase(arguments[0])) {
@@ -33,9 +34,10 @@ class Walker implements Serializable {
           return;
         }
       }
-      Writer.getDefaultWriter().write("Invalid input.");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("Invalid input.").toRichText());
     } else {
-      Writer.getDefaultWriter().write(new RichStringSequence("To where?", Color.ORANGE));
+      RichText text = new StandardRichTextBuilder().setColor(Color.ORANGE).append("To where?").toRichText();
+      Writer.getDefaultWriter().write(text);
     }
   }
 
@@ -54,7 +56,7 @@ class Walker implements Serializable {
     // don't need if we can't get there.
     if (world.getLocation(point).isBlocked(dir) || world.getLocation(destinationPoint).isBlocked(dir.invert())) {
       gameState.getEngine().rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
-      Writer.getDefaultWriter().write("You cannot go " + dir + ".");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("You cannot go " + dir + ".").toRichText());
     } else {
       Hero hero = gameState.getHero();
       gameState.getEngine().rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.

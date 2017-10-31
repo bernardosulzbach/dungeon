@@ -6,6 +6,8 @@ import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.spells.Spell;
 import org.mafagafogigante.dungeon.util.Matches;
+import org.mafagafogigante.dungeon.util.RichText;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
   private final Hero hero;
   private final List<Spell> spellList = new ArrayList<>();
 
-  public HeroSpellcaster(Hero hero) {
+  HeroSpellcaster(Hero hero) {
     this.hero = hero;
   }
 
@@ -55,17 +57,20 @@ public class HeroSpellcaster implements Serializable, Spellcaster {
       String[] targetMatcherArray = targetMatcher.toArray(new String[targetMatcher.size()]);
       Matches<Spell> matches = Matches.findBestCompleteMatches(spellList, spellMatcherArray);
       if (matches.size() == 0) {
-        Writer.getDefaultWriter().write("That did not match any spell you know.");
+        RichText text = new StandardRichTextBuilder().append("That did not match any spell you know.").toRichText();
+        Writer.getDefaultWriter().write(text);
       }
       if (matches.getDifferentNames() == 1) {
         Spell spell = matches.getMatch(0);
         DungeonLogger.info("Casted " + spell.getName().getSingular() + ".");
         spell.operate(hero, targetMatcherArray);
       } else if (matches.getDifferentNames() > 1) {
-        Writer.getDefaultWriter().write("Provided input is ambiguous in respect to spell.");
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
+        RichText text = builder.append("Provided input is ambiguous in respect to spell.").toRichText();
+        Writer.getDefaultWriter().write(text);
       }
     } else {
-      Writer.getDefaultWriter().write("Cast what?");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("Cast what?").toRichText());
     }
   }
 

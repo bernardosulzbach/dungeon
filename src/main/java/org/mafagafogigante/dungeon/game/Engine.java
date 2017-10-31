@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 import org.mafagafogigante.dungeon.util.Utils;
 
 import java.awt.Color;
@@ -24,9 +25,9 @@ public class Engine implements Serializable {
   /**
    * Refreshes the game.
    *
-   * This method should be called whenever the state of the game is changed and the engine should be updated.
+   * <p>This method should be called whenever the state of the game is changed and the engine should be updated.
    *
-   * If time passed, use {@link Engine#rollDateAndRefresh(long)}.
+   * <p>If time passed, use {@link Engine#rollDateAndRefresh(long)}.
    */
   public void refresh() {
     effectivelyUpdate(0);
@@ -35,9 +36,9 @@ public class Engine implements Serializable {
   /**
    * Rolls the world date forward and refreshes the game.
    *
-   * This method should be called whenever the state of the game is changed and the engine should be updated.
+   * <p>This method should be called whenever the state of the game is changed and the engine should be updated.
    *
-   * If no time passed, use {@link Engine#refresh()}.
+   * <p>If no time passed, use {@link Engine#refresh()}.
    *
    * @param seconds how many seconds to roll the date forward, a positive integer
    */
@@ -108,7 +109,7 @@ public class Engine implements Serializable {
    */
   public void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      Writer.getDefaultWriter().write(new RichStringSequence("You cannot attempt suicide."));
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("You cannot attempt suicide.").toRichText());
       return;
     }
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
@@ -125,13 +126,13 @@ public class Engine implements Serializable {
     Creature defeated = (survivor == hero) ? foe : hero;
     // Imagine if a third factor (such as hunger) could kill one of the creatures.
     // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
-    RichStringSequence richStringSequence = new RichStringSequence();
-    richStringSequence.setColor(Color.CYAN);
-    richStringSequence.append(survivor.getName().getSingular());
-    richStringSequence.append(" managed to kill ");
-    richStringSequence.append(defeated.getName().getSingular());
-    richStringSequence.append(".\n");
-    Writer.getDefaultWriter().write(richStringSequence);
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.setColor(Color.CYAN);
+    builder.append(survivor.getName().getSingular());
+    builder.append(" managed to kill ");
+    builder.append(defeated.getName().getSingular());
+    builder.append(".\n");
+    Writer.getDefaultWriter().write(builder.toRichText());
     writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(gameState.getWorld().getWorldDate());
@@ -151,11 +152,11 @@ public class Engine implements Serializable {
    */
   private void writeDrops(Creature source) {
     if (!source.getDroppedItemsList().isEmpty()) {
-      RichStringSequence string = new RichStringSequence();
-      string.append(source.getName().getSingular() + " dropped ");
-      string.append(Utils.enumerateEntities(source.getDroppedItemsList()));
-      string.append(".\n");
-      Writer.getDefaultWriter().write(string);
+      StandardRichTextBuilder builder = new StandardRichTextBuilder();
+      builder.append(source.getName().getSingular() + " dropped ");
+      builder.append(Utils.enumerateEntities(source.getDroppedItemsList()));
+      builder.append(".\n");
+      Writer.getDefaultWriter().write(builder.toRichText());
     }
   }
 

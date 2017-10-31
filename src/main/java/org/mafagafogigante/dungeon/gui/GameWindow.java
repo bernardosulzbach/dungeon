@@ -4,11 +4,11 @@ import org.mafagafogigante.dungeon.commands.CommandHistory;
 import org.mafagafogigante.dungeon.commands.IssuedCommand;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.StopWatch;
+import org.mafagafogigante.dungeon.util.Writable;
 
 import org.jetbrains.annotations.NotNull;
 
