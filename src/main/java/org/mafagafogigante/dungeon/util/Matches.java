@@ -3,7 +3,6 @@ package org.mafagafogigante.dungeon.util;
 import org.mafagafogigante.dungeon.game.Name;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,11 +71,11 @@ public class Matches<T extends Selectable> {
 
   private static double calculateSimilarity(String[] nameWords, String[] tokens, boolean full) {
     if (!full || nameWords.length >= tokens.length) {
-      int matches = countMatches(tokens, nameWords);
-      SummaryStatistics statistics = new SummaryStatistics();
-      statistics.addValue(matches / (double) nameWords.length);
-      statistics.addValue(matches / (double) tokens.length);
-      return statistics.getMean();
+      double matchesAsDouble = countMatches(tokens, nameWords);
+      // We want the average of matches over name words and matches over tokens.
+      // If the user gives one token and it matches with two names, we consider the shorter name to be more similar.
+      // This is guaranteed to be between zero and one.
+      return (matchesAsDouble / nameWords.length + matchesAsDouble / tokens.length) / 2.0;
     } else {
       return 0.0;
     }
