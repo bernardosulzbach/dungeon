@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.io;
 
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.util.library.Poem;
 
@@ -22,7 +23,7 @@ public final class PoemWriter {
    */
   public static void parsePoemCommand(String[] arguments) {
     if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
-      Writer.getDefaultWriter().write("No poems were loaded.");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("No poems were loaded.").toRichText());
     } else {
       if (arguments.length != 0) {
         try {
@@ -35,7 +36,7 @@ public final class PoemWriter {
         } catch (NumberFormatException ignore) {
           // This exception reproduces the same error message an invalid index does.
         }
-        Writer.getDefaultWriter().write("Invalid poem index.");
+        Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("Invalid poem index.").toRichText());
       } else {
         writePoem(Libraries.getPoetryLibrary().getNextPoem());
       }

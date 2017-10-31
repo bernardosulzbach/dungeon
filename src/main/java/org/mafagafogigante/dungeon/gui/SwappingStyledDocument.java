@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.gui;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.util.RichString;
+import org.mafagafogigante.dungeon.util.Writable;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -46,11 +46,11 @@ final class SwappingStyledDocument {
   }
 
   private void writeToDocument(StyledDocument inactiveDocument, Writable writable) {
-    for (ColoredString coloredString : writable.toColoredStringList()) {
+    for (RichString richString : writable.toRichStrings()) {
       MutableAttributeSet attributeSet = new SimpleAttributeSet();
-      StyleConstants.setForeground(attributeSet, coloredString.getColor());
+      StyleConstants.setForeground(attributeSet, richString.getColor());
       try {
-        inactiveDocument.insertString(inactiveDocument.getLength(), coloredString.getString(), attributeSet);
+        inactiveDocument.insertString(inactiveDocument.getLength(), richString.getString(), attributeSet);
       } catch (BadLocationException warn) {
         DungeonLogger.warning("insertString resulted in a BadLocationException.");
       }

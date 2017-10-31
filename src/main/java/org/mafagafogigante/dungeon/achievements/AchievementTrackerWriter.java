@@ -3,9 +3,9 @@ package org.mafagafogigante.dungeon.achievements;
 import org.mafagafogigante.dungeon.achievements.comparators.UnlockedAchievementComparators;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import java.awt.Color;
 import java.util.Comparator;
@@ -57,27 +57,27 @@ public class AchievementTrackerWriter {
   private static void writeAchievementTracker(AchievementTracker tracker, Comparator<UnlockedAchievement> comparator) {
     List<UnlockedAchievement> unlockedAchievements = tracker.getUnlockedAchievements(comparator);
     Date now = Game.getGameState().getWorld().getWorldDate();
-    DungeonString string = new DungeonString();
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
     for (UnlockedAchievement unlockedAchievement : unlockedAchievements) {
       Duration sinceUnlock = new Duration(unlockedAchievement.getDate(), now);
-      string.setColor(Color.ORANGE);
-      string.append(String.format("%s (%s ago)%n", unlockedAchievement.getName(), sinceUnlock));
-      string.setColor(Color.YELLOW);
-      string.append(String.format(" %s%n", unlockedAchievement.getInfo()));
+      builder.setColor(Color.ORANGE);
+      builder.append(String.format("%s (%s ago)%n", unlockedAchievement.getName(), sinceUnlock));
+      builder.setColor(Color.YELLOW);
+      builder.append(String.format(" %s%n", unlockedAchievement.getInfo()));
     }
     int total = AchievementStoreFactory.getDefaultStore().getAchievements().size();
-    string.setColor(Color.CYAN);
-    string.append(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total));
-    Writer.getDefaultWriter().write(string);
+    builder.setColor(Color.CYAN);
+    builder.append(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total));
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   /**
    * Writes a listing of valid UnlockedAchievement orderings to the screen.
    */
   private static void writeValidOrderings() {
-    Writer.getDefaultWriter().write("Valid orderings:");
+    Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("Valid orderings:").toRichText());
     for (String comparatorName : UnlockedAchievementComparators.getComparatorMap().keySet()) {
-      Writer.getDefaultWriter().write(" " + comparatorName);
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append(" ").append(comparatorName).toRichText());
     }
   }
 

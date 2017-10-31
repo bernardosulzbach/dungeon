@@ -8,6 +8,7 @@ import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 import org.mafagafogigante.dungeon.util.StopWatch;
 import org.mafagafogigante.dungeon.util.Utils;
 
@@ -74,7 +75,7 @@ public class Game {
       gameState = Loader.newGame();
       // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
       // So check for any save in the folder.
-      if (!Loader.checkForSave()) { // Suggest the tutorial only if no saved game exists.
+      if (!Loader.checkForSave()) {
         suggestTutorial();
       }
     }
@@ -82,7 +83,9 @@ public class Game {
   }
 
   private static void suggestTutorial() {
-    Writer.getDefaultWriter().write(new DungeonString("\nYou may want to issue 'tutorial' to learn the basics.\n"));
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append("\nYou may want to issue 'tutorial' to learn the basics.\n");
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   /**
@@ -123,8 +126,8 @@ public class Game {
     gameState = state;
     DungeonLogger.info("Set the GameState field in Game to a GameState.");
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
-    Engine.refresh();
-    Writer.getDefaultWriter().write(new DungeonString("\n")); // Improves readability.
+    state.getEngine().refresh();
+    Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("\n").toRichText());
     gameState.getHero().look();
   }
 
@@ -146,11 +149,11 @@ public class Game {
     if (wasSuccessful) {
       if (getGameState().getHero().getHealth().isDead()) {
         getGameWindow().clearTextPane();
-        Writer.getDefaultWriter().write("You died.");
+        Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("You died.").toRichText());
         unsetGameState();
         setGameState(getAfterDeathGameState());
       } else {
-        Engine.endTurn();
+        getGameState().getEngine().endTurn();
       }
     }
     DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "finished renderTurn", stopWatch);
@@ -172,19 +175,19 @@ public class Game {
       IssuedCommandProcessor.prepareIssuedCommand(issuedCommand).execute();
       return true;
     } else {
-      DungeonString string = new DungeonString();
-      string.setColor(Color.RED);
-      string.append("That is not a valid command.\n");
-      string.append("But it is similar to ");
+      StandardRichTextBuilder builder = new StandardRichTextBuilder();
+      builder.setColor(Color.RED);
+      builder.append("That is not a valid command.\n");
+      builder.append("But it is similar to ");
       List<String> suggestionsBetweenCommas = new ArrayList<>();
       for (String suggestion : evaluation.getSuggestions()) {
         suggestionsBetweenCommas.add(StringUtils.wrap(suggestion, '"'));
       }
-      string.append(Utils.enumerate(suggestionsBetweenCommas));
-      string.append(".\n");
-      string.setColor(Color.ORANGE);
-      string.append("See 'commands' for a complete list of commands.");
-      Writer.getDefaultWriter().write(string);
+      builder.append(Utils.enumerate(suggestionsBetweenCommas));
+      builder.append(".\n");
+      builder.setColor(Color.ORANGE);
+      builder.append("See 'commands' for a complete list of commands.");
+      Writer.getDefaultWriter().write(builder.toRichText());
       return false;
     }
   }

@@ -78,10 +78,7 @@ public class ItemIntegrity implements Serializable {
 
   @Override
   public String toString() {
-    return "ItemIntegrity{" +
-        "integrity=" + integrity +
-        ", item=" + item +
-        '}';
+    return "ItemIntegrity{" + "integrity=" + integrity + ", item=" + item + '}';
   }
 
 }

@@ -104,6 +104,11 @@ public class CreatureInventory extends BaseInventory implements LimitedInventory
     DungeonLogger.fine(String.format(format, item.getQualifiedName(), owner));
   }
 
-  public enum SimulationResult {ALREADY_IN_THE_INVENTORY, AMOUNT_LIMIT, WEIGHT_LIMIT, SUCCESSFUL}
+  public enum SimulationResult {
+    ALREADY_IN_THE_INVENTORY,
+    AMOUNT_LIMIT,
+    WEIGHT_LIMIT,
+    SUCCESSFUL
+  }
 
 }

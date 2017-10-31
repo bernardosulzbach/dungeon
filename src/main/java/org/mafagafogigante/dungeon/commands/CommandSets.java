@@ -9,9 +9,6 @@ import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.Hero;
 import org.mafagafogigante.dungeon.entity.items.CreatureInventory.SimulationResult;
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Id;
@@ -21,7 +18,6 @@ import org.mafagafogigante.dungeon.game.LocationPresetStore;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
 import org.mafagafogigante.dungeon.game.World;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
 import org.mafagafogigante.dungeon.io.Loader;
 import org.mafagafogigante.dungeon.io.PoemWriter;
@@ -38,10 +34,14 @@ import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.ColumnAlignment;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.Messenger;
+import org.mafagafogigante.dungeon.util.RichString;
+import org.mafagafogigante.dungeon.util.RichText;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 import org.mafagafogigante.dungeon.util.StopWatch;
 import org.mafagafogigante.dungeon.util.SystemInformation;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Tutorial;
+import org.mafagafogigante.dungeon.util.Writable;
 import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.wiki.WikiSearcher;
 
@@ -284,18 +284,22 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         List<String> alphabet = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
-        DungeonString dungeonString = new DungeonString();
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
         for (int i = 0; i < 10000; i++) {
-          dungeonString.setColor(new Color(Random.nextInteger(256), Random.nextInteger(256), Random.nextInteger(256)));
-          dungeonString.append(Random.select(alphabet));
+          int red = Random.nextInteger(256);
+          int green = Random.nextInteger(256);
+          int blue = Random.nextInteger(256);
+          builder.setColor(new Color(red, green, blue));
+          builder.append(Random.select(alphabet));
         }
-        Writer.getDefaultWriter().write(dungeonString);
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     });
     commandSet.addCommand(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.getDefaultWriter().write(Libraries.getHintLibrary().next());
+        RichText text = new StandardRichTextBuilder().append(Libraries.getHintLibrary().next()).toRichText();
+        Writer.getDefaultWriter().write(text);
       }
     });
     commandSet.addCommand(new Command("poem", "Prints a poem from the poem library.") {
@@ -308,7 +312,8 @@ final class CommandSets {
       @Override
       public void execute(@NotNull String[] arguments) {
         if (arguments.length == 0) {
-          Writer.getDefaultWriter().write("Should provide a script identifier.");
+          RichText text = new StandardRichTextBuilder().append("Should provide a script identifier.").toRichText();
+          Writer.getDefaultWriter().write(text);
           return;
         }
         String argument = arguments[0];
@@ -316,25 +321,29 @@ final class CommandSets {
         try {
           identifier = new ScriptIdentifier(argument);
         } catch (IllegalArgumentException ignored) {
-          Writer.getDefaultWriter().write("The provided argument is not a valid script identifier.");
+          StandardRichTextBuilder builder = new StandardRichTextBuilder();
+          RichText text = builder.append("The provided argument is not a valid script identifier.").toRichText();
+          Writer.getDefaultWriter().write(text);
           return;
         }
         ScriptGroup scriptGroup = ScriptGroupFactory.makeScriptGroup();
         if (!scriptGroup.hasScript(identifier)) {
-          Writer.getDefaultWriter().write("There is no such script.");
+          RichText text = new StandardRichTextBuilder().append("There is no such script.").toRichText();
+          Writer.getDefaultWriter().write(text);
           return;
         }
-        Writer.getDefaultWriter().write("Running the script.");
+        RichText text = new StandardRichTextBuilder().append("Running the script.").toRichText();
+        Writer.getDefaultWriter().write(text);
         Writer.getDefaultWriter().disableForwarding();
-        DungeonString result = scriptGroup.executeScript(identifier, new CommandExecutor() {
+        StandardRichTextBuilder builder = scriptGroup.executeScript(identifier, new CommandExecutor() {
           @Override
-          public DungeonString execute(String command) {
-            DungeonString result = new DungeonString();
+          public StandardRichTextBuilder execute(String command) {
+            StandardRichTextBuilder result = new StandardRichTextBuilder();
             if (IssuedCommand.isValidSource(command)) {
               Writer.getDefaultWriter().clearWrittenStrings();
               Game.renderTurn(new IssuedCommand(command), new StopWatch());
               for (Writable writtenString : Writer.getDefaultWriter().getWrittenStrings()) {
-                for (ColoredString coloredString : writtenString.toColoredStringList()) {
+                for (RichString coloredString : writtenString.toRichStrings()) {
                   result.setColor(coloredString.getColor());
                   result.append(coloredString.getString());
                 }
@@ -344,19 +353,19 @@ final class CommandSets {
           }
         });
         Writer.getDefaultWriter().enableForwarding();
-        Writer.getDefaultWriter().write(result);
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     });
     commandSet.addCommand(new Command("scripts", "Lists the available scripts.") {
       @Override
       public void execute(@NotNull String[] arguments) {
         ScriptGroup scriptGroup = ScriptGroupFactory.makeScriptGroup();
-        StringBuilder builder = new StringBuilder();
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
         for (ScriptIdentifier identifier : scriptGroup.getIdentifiers()) {
           builder.append(identifier.asString());
-          builder.append('\n');
+          builder.append("\n");
         }
-        Writer.getDefaultWriter().write(builder.toString());
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     });
     commandSet.addCommand(new Command("statistics", "Displays all available game statistics.") {
@@ -374,7 +383,11 @@ final class CommandSets {
     commandSet.addCommand(new Command("version", "Displays the game version.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.getDefaultWriter().write("Dungeon version " + Version.getCurrentVersion() + ".");
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
+        builder.append("Dungeon version ");
+        builder.append(Version.getCurrentVersion().toString());
+        builder.append(".");
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     });
     return commandSet;
@@ -393,7 +406,8 @@ final class CommandSets {
           }
         }
         if (notYetUnlockedAchievementList.isEmpty()) {
-          Writer.getDefaultWriter().write("All achievements have been unlocked.");
+          RichText text = new StandardRichTextBuilder().append("All achievements have been unlocked.").toRichText();
+          Writer.getDefaultWriter().write(text);
         } else {
           Collections.sort(notYetUnlockedAchievementList, new Comparator<Achievement>() {
             @Override
@@ -401,9 +415,14 @@ final class CommandSets {
               return o1.getName().compareTo(o2.getName());
             }
           });
+          StandardRichTextBuilder builder = new StandardRichTextBuilder();
           for (Achievement achievement : notYetUnlockedAchievementList) {
-            Writer.getDefaultWriter().write(String.format("%s : %s", achievement.getName(), achievement.getInfo()));
+            builder.append(achievement.getName());
+            builder.append(" : ");
+            builder.append(achievement.getInfo());
+            builder.append("\n");
           }
+          Writer.getDefaultWriter().write(builder.toRichText());
         }
       }
     });
@@ -441,7 +460,9 @@ final class CommandSets {
           }
           Writer.getDefaultWriter().write(table);
         } else {
-          Writer.getDefaultWriter().write("You haven't killed anything yet. Go kill something!");
+          StandardRichTextBuilder builder = new StandardRichTextBuilder();
+          RichText text = builder.append("You haven't killed anything yet. Go kill something!").toRichText();
+          Writer.getDefaultWriter().write(text);
         }
       }
     });
@@ -451,36 +472,36 @@ final class CommandSets {
         final int width = 40;  // The width of the row's "tag".
         Location heroLocation = Game.getGameState().getHero().getLocation();
         Point heroPosition = heroLocation.getPoint();
-        DungeonString dungeonString = new DungeonString();
-        dungeonString.append(StringUtils.rightPad("Point:", width));
-        dungeonString.append(heroPosition.toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Creatures (" + heroLocation.getCreatureCount() + "):", width));
-        dungeonString.append("\n");
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
+        builder.append(StringUtils.rightPad("Point:", width));
+        builder.append(heroPosition.toString());
+        builder.append("\n");
+        builder.append(StringUtils.rightPad("Creatures (" + heroLocation.getCreatureCount() + "):", width));
+        builder.append("\n");
         for (Creature creature : heroLocation.getCreatures()) {
-          dungeonString.append("  " + creature.getName());
-          dungeonString.append("\n");
+          builder.append("  " + creature.getName());
+          builder.append("\n");
         }
         if (!heroLocation.getItemList().isEmpty()) {
-          dungeonString.append(StringUtils.rightPad("Items (" + heroLocation.getItemList().size() + "):", width));
-          dungeonString.append("\n");
+          builder.append(StringUtils.rightPad("Items (" + heroLocation.getItemList().size() + "):", width));
+          builder.append("\n");
           for (Item item : heroLocation.getItemList()) {
-            dungeonString.append("  " + item.getQualifiedName());
-            dungeonString.append("\n");
+            builder.append("  " + item.getQualifiedName());
+            builder.append("\n");
           }
         } else {
-          dungeonString.append("No items.\n");
+          builder.append("No items.\n");
         }
-        dungeonString.append(StringUtils.rightPad("Luminosity:", width));
-        dungeonString.append(heroLocation.getLuminosity().toPercentage().toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Permittivity:", width));
-        dungeonString.append(heroLocation.getLightPermittivity().toString());
-        dungeonString.append("\n");
-        dungeonString.append(StringUtils.rightPad("Blocked Entrances:", width));
-        dungeonString.append(heroLocation.getBlockedEntrances().toString());
-        dungeonString.append("\n");
-        Writer.getDefaultWriter().write(dungeonString);
+        builder.append(StringUtils.rightPad("Luminosity:", width));
+        builder.append(heroLocation.getLuminosity().toPercentage().toString());
+        builder.append("\n");
+        builder.append(StringUtils.rightPad("Permittivity:", width));
+        builder.append(heroLocation.getLightPermittivity().toString());
+        builder.append("\n");
+        builder.append(StringUtils.rightPad("Blocked Entrances:", width));
+        builder.append(heroLocation.getBlockedEntrances().toString());
+        builder.append("\n");
+        Writer.getDefaultWriter().write(builder.toRichText());
       }
     });
     commandSet.addCommand(new Command("map", "Produces a map as complete as possible.") {
@@ -499,21 +520,28 @@ final class CommandSets {
             Id id = new Id(arguments[0].toUpperCase(Locale.ENGLISH));
             if (world.getItemFactory().canMakeItem(id)) {
               Item item = world.getItemFactory().makeItem(id, date);
-              Writer.getDefaultWriter().write("Item successfully created.");
+              RichText text = new StandardRichTextBuilder().append("Item successfully created.").toRichText();
+              Writer.getDefaultWriter().write(text);
               Hero hero = Game.getGameState().getHero();
               if (hero.getInventory().simulateItemAddition(item) == SimulationResult.SUCCESSFUL) {
                 hero.addItem(item);
               } else {
                 hero.getLocation().addItem(item);
-                Writer.getDefaultWriter()
-                    .write("Item could not be added to your inventory. Thus, it was added to the current location.");
+                StandardRichTextBuilder builder = new StandardRichTextBuilder();
+                builder.append("Item could not be added to your inventory.");
+                builder.append(" ");
+                builder.append("Thus, it was added to the current location.");
+                Writer.getDefaultWriter().write(builder.toRichText());
               }
-              Engine.refresh(); // Set the game state to unsaved after adding an item to the world.
+              Game.getGameState().getEngine().refresh();
             } else {
-              Writer.getDefaultWriter().write("Item could not be created due to a restriction.");
+              StandardRichTextBuilder builder = new StandardRichTextBuilder();
+              RichText text = builder.append("Item could not be created due to a restriction.").toRichText();
+              Writer.getDefaultWriter().write(text);
             }
           } catch (IllegalArgumentException invalidPreset) {
-            Writer.getDefaultWriter().write("Item could not be created.");
+            StandardRichTextBuilder builder = new StandardRichTextBuilder();
+            Writer.getDefaultWriter().write(builder.append("Item could not be created.").toRichText());
           }
         } else {
           Messenger.printMissingArgumentsMessage();
@@ -523,10 +551,11 @@ final class CommandSets {
     commandSet.addCommand(new Command("saved", "Tests if the game is saved or not.") {
       @Override
       public void execute(@NotNull String[] arguments) {
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
         if (Game.getGameState().isSaved()) {
-          Writer.getDefaultWriter().write("The game is saved.");
+          Writer.getDefaultWriter().write(builder.append("The game is saved.").toRichText());
         } else {
-          Writer.getDefaultWriter().write("This game state is not saved.");
+          Writer.getDefaultWriter().write(builder.append("This game state is not saved.").toRichText());
         }
       }
     });
@@ -540,10 +569,15 @@ final class CommandSets {
             Creature creature = world.getCreatureFactory().makeCreature(givenId, world);
             if (creature != null) {
               Game.getGameState().getHero().getLocation().addCreature(creature);
-              Writer.getDefaultWriter().write("Spawned a " + creature.getName() + ".");
-              Engine.refresh(); // Set the game state to unsaved after adding a creature to the world.
+              StandardRichTextBuilder builder = new StandardRichTextBuilder();
+              builder.append("Spawned a ").append(creature.getName().toString()).append(".");
+              Writer.getDefaultWriter().write(builder.toRichText());
+              Game.getGameState().getEngine().refresh();
             } else {
-              Writer.getDefaultWriter().write(givenId + " does not match any known creature.");
+              StandardRichTextBuilder builder = new StandardRichTextBuilder();
+              builder.append(givenId.toString());
+              builder.append(" does not match any known creature.");
+              Writer.getDefaultWriter().write(builder.toRichText());
             }
           }
         } else {
@@ -554,7 +588,9 @@ final class CommandSets {
     commandSet.addCommand(new Command("time", "Writes information about the current time.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.getDefaultWriter().write(Game.getGameState().getWorld().getWorldDate().toString());
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
+        RichText text = builder.append(Game.getGameState().getWorld().getWorldDate().toString()).toRichText();
+        Writer.getDefaultWriter().write(text);
       }
     });
     commandSet.addCommand(new Command("wait", "Makes time pass.") {

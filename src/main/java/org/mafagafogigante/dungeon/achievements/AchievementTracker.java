@@ -1,12 +1,12 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.date.Date;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.stats.Statistics;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class AchievementTracker implements Serializable {
   /**
    * Writes an achievement unlocked message with some information about the unlocked achievement.
    */
-  private static void writeAchievementUnlock(Achievement achievement, DungeonString builder) {
+  private static void writeAchievementUnlock(Achievement achievement, StandardRichTextBuilder builder) {
     String format = "You unlocked the achievement %s because you %s.";
     builder.append(String.format(format, achievement.getName(), achievement.getText()));
   }
@@ -53,7 +53,7 @@ public class AchievementTracker implements Serializable {
    *
    * @param achievement the Achievement to be unlocked.
    */
-  private void unlock(Achievement achievement, Date date, DungeonString builder) {
+  private void unlock(Achievement achievement, Date date, StandardRichTextBuilder builder) {
     if (hasNotBeenUnlocked(achievement)) {
       unlockedAchievements.put(achievement.getId(), new UnlockedAchievement(achievement, date));
       writeAchievementUnlock(achievement, builder);
@@ -98,20 +98,20 @@ public class AchievementTracker implements Serializable {
    * <p>Before writing the first achievement unlock message, if there is one, a new line is written.
    */
   public void update(AchievementStore achievementStore, Date date) {
-    DungeonString dungeonString = new DungeonString();
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
     boolean wroteNewLine = false; // If we are going to write anything at all, we must start with a blank line.
     for (Achievement achievement : achievementStore.getAchievements()) {
       if (hasNotBeenUnlocked(achievement) && achievement.isFulfilled(statistics)) {
         if (!wroteNewLine) {
-          dungeonString.append("\n");
+          builder.append("\n");
           wroteNewLine = true;
         }
-        unlock(achievement, date, dungeonString);
-        dungeonString.append("\n");
+        unlock(achievement, date, builder);
+        builder.append("\n");
       }
     }
-    if (dungeonString.getLength() != 0) {
-      Writer.getDefaultWriter().write(dungeonString);
+    if (builder.getLength() != 0) {
+      Writer.getDefaultWriter().write(builder.toRichText());
     }
   }
 

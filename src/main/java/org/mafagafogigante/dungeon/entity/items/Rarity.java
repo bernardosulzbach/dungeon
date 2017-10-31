@@ -4,8 +4,12 @@ import java.awt.Color;
 
 public enum Rarity {
 
-  POOR("Poor", Palette.POOR), COMMON("Common", Palette.COMMON), UNCOMMON("Uncommon", Palette.UNCOMMON),
-  RARE("Rare", Palette.RARE), LEGENDARY("Legendary", Palette.LEGENDARY), UNIQUE("Unique", Palette.UNIQUE);
+  POOR("Poor", Palette.POOR),
+  COMMON("Common", Palette.COMMON),
+  UNCOMMON("Uncommon", Palette.UNCOMMON),
+  RARE("Rare", Palette.RARE),
+  LEGENDARY("Legendary", Palette.LEGENDARY),
+  UNIQUE("Unique", Palette.UNIQUE);
 
   private final String name;
   private final Color color;

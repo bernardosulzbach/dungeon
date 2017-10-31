@@ -213,6 +213,8 @@ public class Location implements Serializable {
     return name.getSingular();
   }
 
-  public enum Tag {FISHABLE}
+  public enum Tag {
+    FISHABLE
+  }
 
 }

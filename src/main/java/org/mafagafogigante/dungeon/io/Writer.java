@@ -1,9 +1,8 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
+import org.mafagafogigante.dungeon.util.Writable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,17 +27,6 @@ public final class Writer {
 
   public static Writer getDefaultWriter() {
     return defaultWriter;
-  }
-
-  /**
-   * Writes a string of text using the default output color.
-   *
-   * @param text the string of text to be written.
-   */
-  public void write(String text) {
-    DungeonString string = new DungeonString(text);
-    string.append("\n");
-    write(string);
   }
 
   /**

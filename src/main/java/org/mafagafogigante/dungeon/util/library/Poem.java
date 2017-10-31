@@ -1,15 +1,15 @@
 package org.mafagafogigante.dungeon.util.library;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Writable;
+import org.mafagafogigante.dungeon.util.RichString;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
+import org.mafagafogigante.dungeon.util.Writable;
 
 import java.util.List;
 
 /**
  * Poem class that defines a poem storage data structure.
  */
-public final class Poem extends Writable {
+public final class Poem implements Writable {
 
   private final String title;
   private final String author;
@@ -21,9 +21,8 @@ public final class Poem extends Writable {
     this.content = content;
   }
 
-  public List<ColoredString> toColoredStringList() {
-    DungeonString builder = new DungeonString(toString());
-    return builder.toColoredStringList();
+  public List<RichString> toRichStrings() {
+    return new StandardRichTextBuilder().append(toString()).toRichText().toRichStrings();
   }
 
   @Override

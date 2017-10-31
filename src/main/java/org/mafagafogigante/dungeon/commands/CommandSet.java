@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.commands;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -34,28 +34,30 @@ public final class CommandSet {
       public void execute(@NotNull String[] arguments) {
         String filter = arguments.length == 0 ? null : arguments[0];
         List<CommandDescription> descriptions = commandSet.getCommandDescriptions();
-        DungeonString dungeonString = new DungeonString();
+        StandardRichTextBuilder builder = new StandardRichTextBuilder();
         int count = 0;
         for (CommandDescription description : descriptions) {
           if (filter == null || StringUtils.startsWithIgnoreCase(description.getName(), filter)) {
             count++;
-            dungeonString.append(StringUtils.rightPad(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
-            dungeonString.append(description.getInfo());
-            dungeonString.append("\n");
+            builder.append(StringUtils.rightPad(description.getName(), COMMAND_NAME_COLUMN_WIDTH));
+            builder.append(description.getInfo());
+            builder.append("\n");
           }
         }
         if (count == 0 && filter != null) {
-          Writer.getDefaultWriter().write("No command starts with '" + filter + "'.");
+          builder.append("No command starts with '").append(filter).append("'.");
+          Writer.getDefaultWriter().write(builder.toRichText());
         } else {
           if (count > 1) {
-            dungeonString.append("\nListed ");
-            dungeonString.append(String.valueOf(count));
-            dungeonString.append(" commands.");
+            builder.append("\nListed ");
+            builder.append(String.valueOf(count));
+            builder.append(" commands.");
             if (filter == null) {
-              dungeonString.append("\nYou can filter the output of this command by typing the beginning of a command.");
+              String string = "\nYou can filter the output of this command by typing the beginning of a command.";
+              builder.append(string);
             }
           }
-          Writer.getDefaultWriter().write(dungeonString);
+          Writer.getDefaultWriter().write(builder.toRichText());
         }
       }
     });

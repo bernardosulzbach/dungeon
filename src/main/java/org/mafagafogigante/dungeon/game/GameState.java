@@ -16,6 +16,7 @@ public class GameState implements Serializable {
   private final CommandHistory commandHistory;
   private final World world;
   private final Statistics statistics = new Statistics();
+  private Engine engine;
   private Hero hero;
   private Point heroPosition;
   private Version gameVersion = Version.getCurrentVersion();
@@ -27,6 +28,7 @@ public class GameState implements Serializable {
    */
   public GameState() {
     commandHistory = new CommandHistory();
+    engine = new Engine(this);
     world = new World(statistics.getWorldStatistics());
     createHeroAndStartingLocation();
   }
@@ -83,6 +85,10 @@ public class GameState implements Serializable {
 
   public void setGameVersion(Version version) {
     this.gameVersion = version;
+  }
+
+  public Engine getEngine() {
+    return engine;
   }
 
 }

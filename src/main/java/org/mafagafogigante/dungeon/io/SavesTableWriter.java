@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.io;
 
 import org.mafagafogigante.dungeon.util.ColumnAlignment;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Utils;
 
@@ -53,7 +54,7 @@ public final class SavesTableWriter {
       }
       Writer.getDefaultWriter().write(table);
     } else {
-      Writer.getDefaultWriter().write("There are no saved files.");
+      Writer.getDefaultWriter().write(new StandardRichTextBuilder().append("There are no saved files.").toRichText());
     }
   }
 

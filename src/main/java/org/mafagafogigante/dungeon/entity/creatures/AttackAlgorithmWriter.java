@@ -1,9 +1,10 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.entity.items.Item;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.io.Writer;
+import org.mafagafogigante.dungeon.util.RichText;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import java.awt.Color;
 import java.util.Locale;
@@ -26,21 +27,21 @@ final class AttackAlgorithmWriter {
    * @param criticalHit a boolean indicating if the attack was a critical hit or not
    */
   static void writeInflictedDamage(Creature attacker, int hitDamage, Creature defender, boolean criticalHit) {
-    DungeonString string = new DungeonString();
-    string.setColor(attacker.getId().equals(Game.getGameState().getHero().getId()) ? Color.GREEN : Color.RED);
-    string.append(attacker.getName().getSingular());
-    string.append(" inflicted ");
-    string.append(String.valueOf(hitDamage));
-    string.append(" damage points to ");
-    string.append(defender.getName().getSingular());
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.setColor(attacker.getId().equals(Game.getGameState().getHero().getId()) ? Color.GREEN : Color.RED);
+    builder.append(attacker.getName().getSingular());
+    builder.append(" inflicted ");
+    builder.append(String.valueOf(hitDamage));
+    builder.append(" damage points to ");
+    builder.append(defender.getName().getSingular());
     if (criticalHit) {
-      string.append(" with a critical hit");
+      builder.append(" with a critical hit");
     }
-    string.append(".");
-    string.append(" It looks ");
-    string.append(defender.getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
-    string.append(".\n");
-    Writer.getDefaultWriter().writeAndWait(string);
+    builder.append(".");
+    builder.append(" It looks ");
+    builder.append(defender.getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
+    builder.append(".\n");
+    Writer.getDefaultWriter().writeAndWait(builder.toRichText());
   }
 
   /**
@@ -49,7 +50,10 @@ final class AttackAlgorithmWriter {
    * @param attacker the attacker creature
    */
   static void writeMiss(Creature attacker) {
-    Writer.getDefaultWriter().writeAndWait(new DungeonString(attacker.getName() + " missed.\n", Color.YELLOW));
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.setColor(Color.YELLOW);
+    RichText text = builder.append(attacker.getName().toString()).append(" missed.\n").toRichText();
+    Writer.getDefaultWriter().writeAndWait(text);
   }
 
   /**
@@ -61,7 +65,10 @@ final class AttackAlgorithmWriter {
     if (!weapon.isBroken()) {
       throw new IllegalArgumentException("weapon is not broken.");
     }
-    Writer.getDefaultWriter().write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.setColor(Color.RED);
+    RichText text = builder.append(weapon.getName().toString()).append(" broke!\n").toRichText();
+    Writer.getDefaultWriter().write(text);
   }
 
 }

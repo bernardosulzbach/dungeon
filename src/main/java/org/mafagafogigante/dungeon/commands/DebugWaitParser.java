@@ -2,13 +2,12 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
+import org.mafagafogigante.dungeon.util.StandardRichTextBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -47,18 +46,18 @@ class DebugWaitParser {
   }
 
   private static void writeDebugWaitSyntax() {
-    DungeonString string = new DungeonString();
-    string.append("Usage: wait ");
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append("Usage: wait ");
     final Color highlightColor = Color.ORANGE;
-    string.setColor(highlightColor);
-    string.append("for");
-    string.resetColor();
-    string.append(" [amount of time] or wait ");
-    string.setColor(highlightColor);
-    string.append("until next");
-    string.resetColor();
-    string.append(" [part of the day].");
-    Writer.getDefaultWriter().write(string);
+    builder.setColor(highlightColor);
+    builder.append("for");
+    builder.resetColor();
+    builder.append(" [amount of time] or wait ");
+    builder.setColor(highlightColor);
+    builder.append("until next");
+    builder.resetColor();
+    builder.append(" [part of the day].");
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
   static void parseDebugWait(@NotNull String[] arguments) {
@@ -72,13 +71,16 @@ class DebugWaitParser {
           Duration duration = DungeonTimeParser.parseDuration(timeString);
           rollDate(duration.getSeconds());
         } catch (IllegalArgumentException badArgument) {
-          String message = "Provide small positive multipliers and units such as: '2 minutes and 10 seconds'";
-          Writer.getDefaultWriter().write(message);
+          StandardRichTextBuilder builder = new StandardRichTextBuilder();
+          builder.append("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
+          Writer.getDefaultWriter().write(builder.toRichText());
         }
       } else if (syntax == Syntax.UNTIL) {
         Matches<PartOfDay> matches = Matches.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), arguments[2]);
         if (matches.size() == 0) {
-          Writer.getDefaultWriter().write("That did not match any part of the day.");
+          StandardRichTextBuilder builder = new StandardRichTextBuilder();
+          builder.append("That did not match any part of the day.");
+          Writer.getDefaultWriter().write(builder.toRichText());
         } else if (matches.size() == 1) {
           rollDate(PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0)));
         } else {
@@ -89,10 +91,18 @@ class DebugWaitParser {
   }
 
   private static void rollDate(long seconds) {
-    Engine.rollDateAndRefresh(seconds);
-    Writer.getDefaultWriter().write("Waited for " + seconds + " seconds.");
+    Game.getGameState().getEngine().rollDateAndRefresh(seconds);
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
+    builder.append("Waited for ");
+    builder.append(String.valueOf(seconds));
+    builder.append(" seconds.");
+    Writer.getDefaultWriter().write(builder.toRichText());
   }
 
-  private enum Syntax {FOR, UNTIL, INVALID}
+  private enum Syntax {
+    FOR,
+    UNTIL,
+    INVALID
+  }
 
 }

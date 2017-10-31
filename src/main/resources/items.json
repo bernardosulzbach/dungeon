@@ -1158,6 +1158,30 @@
       "integrityDecrementOnEat": 10
     },
     {
+      "id": "TOME_OF_BANISH",
+      "type": "Book",
+      "name": {
+        "singular": "Tome of Banish",
+        "plural": "Tomes of Banish"
+      },
+      "rarity": "UNCOMMON",
+      "tags": [
+        "WEAPON",
+        "BOOK"
+      ],
+      "integrity": {
+        "current": 20,
+        "maximum": 20
+      },
+      "weight": 0.6,
+      "visibility": "60.00%",
+      "damage": 6,
+      "hitRate": "70.00%",
+      "integrityDecrementOnHit": 4,
+      "text": "The Banish spell permanently banishes a weak creature from this plane.",
+      "spell": "BANISH"
+    },
+    {
       "id": "TOME_OF_HEAL",
       "type": "Book",
       "name": {

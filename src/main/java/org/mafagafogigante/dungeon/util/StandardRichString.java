@@ -1,27 +1,26 @@
-package org.mafagafogigante.dungeon.game;
+package org.mafagafogigante.dungeon.util;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
-/**
- * A colored string, this is, a pair of a string and a color.
- */
-public class ColoredString {
+public class StandardRichString implements RichString {
 
   private final String string;
   private final Color color;
 
-  public ColoredString(@NotNull String string, @NotNull Color color) {
+  public StandardRichString(@NotNull String string, @NotNull Color color) {
     this.string = string;
     this.color = color;
   }
 
+  @Override
   @NotNull
   public String getString() {
     return string;
   }
 
+  @Override
   @NotNull
   public Color getColor() {
     return color;
@@ -29,7 +28,7 @@ public class ColoredString {
 
   @Override
   public String toString() {
-    return "ColoredString{" + "string='" + string + '\'' + ", color=" + color + '}';
+    return string;
   }
 
 }

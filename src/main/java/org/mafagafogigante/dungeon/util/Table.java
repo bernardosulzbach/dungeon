@@ -1,8 +1,5 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
@@ -16,7 +13,7 @@ import java.util.List;
  * <p>Only allows for data addition, you cannot query or update a Table in any way. This class is used for data
  * visualization, not organization or storage.
  */
-public class Table extends Writable {
+public class Table implements Writable {
 
   private static final char HORIZONTAL_BAR = '-';
   private static final String VERTICAL_BAR = "|";
@@ -103,9 +100,9 @@ public class Table extends Writable {
   }
 
   /**
-   * Appends a row to a DungeonString.
+   * Appends a row to a StandardRichTextBuilder.
    */
-  private void appendRow(DungeonString builder, boolean header, List<Integer> widths, String... values) {
+  private void appendRow(StandardRichTextBuilder builder, boolean header, List<Integer> widths, String... values) {
     for (int i = 0; i < values.length; i++) {
       int columnWidth = widths.get(i);
       String currentValue = values[i];
@@ -138,9 +135,9 @@ public class Table extends Writable {
   }
 
   /**
-   * Append a horizontal separator made up of dashes to a DungeonString.
+   * Append a horizontal separator made up of dashes to a StandardRichTextBuilder.
    */
-  private void appendHorizontalSeparator(DungeonString builder, List<Integer> columnWidths, int columnCount) {
+  private void appendHorizontalSeparator(StandardRichTextBuilder builder, List<Integer> columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
     for (int i = 0; i < columnWidths.size(); i++) {
       pseudoRow[i] = makeRepeatedCharacterString(columnWidths.get(i), HORIZONTAL_BAR);
@@ -211,41 +208,41 @@ public class Table extends Writable {
   }
 
   @Override
-  public List<ColoredString> toColoredStringList() {
-    DungeonString string = new DungeonString();
+  public List<RichString> toRichStrings() {
+    StandardRichTextBuilder builder = new StandardRichTextBuilder();
     List<Integer> columnWidths;
     try {
-      // You likely don't want toColoredStringList to be throwing exceptions, so catch them early.
+      // You likely don't want toRichStrings to be throwing exceptions, so catch them early.
       columnWidths = calculateColumnWidths();
     } catch (RuntimeException log) {
       DungeonLogger.warning(log.getMessage());
-      string.append("Failed to generate a visual representation of the table.");
-      return string.toColoredStringList();
+      builder.append("Failed to generate a visual representation of the table.");
+      return builder.toRichText().toRichStrings();
     }
     String[] currentRow = new String[columns.size()];
     // Insert headers
     for (int i = 0; i < columns.size(); i++) {
       currentRow[i] = columns.get(i).header;
     }
-    appendRow(string, true, columnWidths, currentRow);
+    appendRow(builder, true, columnWidths, currentRow);
     // A horizontal separator.
-    appendHorizontalSeparator(string, columnWidths, columns.size());
+    appendHorizontalSeparator(builder, columnWidths, columns.size());
     int rowCount = columns.get(0).rows.size();
     // Insert table body.
     for (int rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
       if (separators != null) {
         for (int remaining = separators.getCounter(rowIndex); remaining > 0; remaining--) {
-          appendHorizontalSeparator(string, columnWidths, columns.size());
+          appendHorizontalSeparator(builder, columnWidths, columns.size());
         }
       }
       if (rowIndex != rowCount) {
         for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
           currentRow[columnIndex] = columns.get(columnIndex).rows.get(rowIndex);
         }
-        appendRow(string, false, columnWidths, currentRow);
+        appendRow(builder, false, columnWidths, currentRow);
       }
     }
-    return string.toColoredStringList();
+    return builder.toRichText().toRichStrings();
   }
 
   private static class Column {

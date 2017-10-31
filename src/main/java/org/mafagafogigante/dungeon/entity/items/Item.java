@@ -91,7 +91,7 @@ public final class Item extends Entity {
    *
    * @return a long representing an amount of seconds
    */
-  long getAge() {
+  public long getAge() {
     Duration existence = new Duration(dateOfCreation, Game.getGameState().getWorld().getWorldDate());
     return existence.getSeconds();
   }
@@ -180,7 +180,7 @@ public final class Item extends Entity {
     return IntegrityState.getIntegrityState(getIntegrity().getCurrent(), getIntegrity().getMaximum()).toString();
   }
 
-  long getDecompositionPeriod() {
+  public long getDecompositionPeriod() {
     return decompositionPeriod;
   }
 
@@ -194,6 +194,15 @@ public final class Item extends Entity {
     return getName().toString();
   }
 
-  public enum Tag {WEAPON, FOOD, DRINKABLE, CLOCK, BOOK, DECOMPOSES, REPAIRABLE, WEIGHT_PROPORTIONAL_TO_INTEGRITY}
+  public enum Tag {
+    WEAPON,
+    FOOD,
+    DRINKABLE,
+    CLOCK,
+    BOOK,
+    DECOMPOSES,
+    REPAIRABLE,
+    WEIGHT_PROPORTIONAL_TO_INTEGRITY
+  }
 
 }
