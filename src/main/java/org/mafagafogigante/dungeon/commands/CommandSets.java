@@ -42,7 +42,6 @@ import org.mafagafogigante.dungeon.util.StopWatch;
 import org.mafagafogigante.dungeon.util.SystemInformation;
 import org.mafagafogigante.dungeon.util.Table;
 import org.mafagafogigante.dungeon.util.Tutorial;
-import org.mafagafogigante.dungeon.util.library.Libraries;
 import org.mafagafogigante.dungeon.wiki.WikiSearcher;
 
 import org.apache.commons.lang3.StringUtils;
@@ -295,7 +294,7 @@ final class CommandSets {
     commandSet.addCommand(new Command("hint", "Displays a random hint of the game.") {
       @Override
       public void execute(@NotNull String[] arguments) {
-        Writer.getDefaultWriter().write(Libraries.getHintLibrary().next());
+        Writer.getDefaultWriter().write(Game.getGameState().getHintLibrary().next());
       }
     });
     commandSet.addCommand(new Command("poem", "Prints a poem from the poem library.") {

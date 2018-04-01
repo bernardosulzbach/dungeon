@@ -7,6 +7,8 @@ import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import org.mafagafogigante.dungeon.io.ResourceNameResolver;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.stats.Statistics;
+import org.mafagafogigante.dungeon.util.PoetryLibrary;
+import org.mafagafogigante.dungeon.util.ShuffledStringLibrary;
 
 import java.io.Serializable;
 
@@ -16,10 +18,14 @@ public class GameState implements Serializable {
   private final CommandHistory commandHistory;
   private final World world;
   private final Statistics statistics = new Statistics();
+  private final String dreamsFilename = ResourceNameResolver.resolveName(DungeonResource.DREAMS);
+  private final ShuffledStringLibrary dreamLibrary = new ShuffledStringLibrary(dreamsFilename);
+  private final String hintsFilename = ResourceNameResolver.resolveName(DungeonResource.HINTS);
+  private final ShuffledStringLibrary hintLibrary = new ShuffledStringLibrary(hintsFilename);
+  private final PoetryLibrary poetryLibrary = new PoetryLibrary();
   private Hero hero;
   private Point heroPosition;
   private Version gameVersion = Version.getCurrentVersion();
-
   private transient boolean saved = false;
 
   /**
@@ -37,6 +43,18 @@ public class GameState implements Serializable {
   public String getPreface() {
     String filename = ResourceNameResolver.resolveName(DungeonResource.PREFACE);
     return String.format(JsonObjectFactory.makeJsonObject(filename).get("format").asString(), hero.getLocation());
+  }
+
+  public ShuffledStringLibrary getDreamLibrary() {
+    return dreamLibrary;
+  }
+
+  public ShuffledStringLibrary getHintLibrary() {
+    return hintLibrary;
+  }
+
+  public PoetryLibrary getPoetryLibrary() {
+    return poetryLibrary;
   }
 
   /**

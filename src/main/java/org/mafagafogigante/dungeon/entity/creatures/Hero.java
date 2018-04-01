@@ -35,7 +35,6 @@ import org.mafagafogigante.dungeon.util.DungeonMath;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
 import org.mafagafogigante.dungeon.util.Utils;
-import org.mafagafogigante.dungeon.util.library.Libraries;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -161,7 +160,7 @@ public class Hero extends Creature {
         long timeForSleep = (long) MILLISECONDS_TO_SLEEP_AN_HOUR * cycleDuration / HOUR.as(SECOND);
         Sleeper.sleep(timeForSleep);
         if (cycleDuration == DREAM_DURATION_IN_SECONDS) {
-          Writer.getDefaultWriter().write(Libraries.getDreamLibrary().next());
+          Writer.getDefaultWriter().write(Game.getGameState().getDreamLibrary().next());
         }
         seconds -= cycleDuration;
         if (!getHealth().isFull()) {

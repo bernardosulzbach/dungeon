@@ -1,26 +1,29 @@
-package org.mafagafogigante.dungeon.util.library;
+package org.mafagafogigante.dungeon.util;
 
 import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
 import org.mafagafogigante.dungeon.io.ResourceNameResolver;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A Library of Poems.
  */
-public final class PoetryLibrary {
+public final class PoetryLibrary implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final ArrayList<Poem> poems = new ArrayList<>();
-  private final AutomaticShuffledRange automaticShuffledRange;
+  private final InfiniteShuffledRange infiniteShuffledRange;
 
-  PoetryLibrary() {
+  public PoetryLibrary() {
     loadPoems();
-    automaticShuffledRange = new AutomaticShuffledRange(poems.size());
+    infiniteShuffledRange = new InfiniteShuffledRange(poems.size());
   }
 
   private void loadPoems() {
@@ -55,10 +58,10 @@ public final class PoetryLibrary {
   }
 
   /**
-   * Returns the next poem according to the underlying {@code AutomaticShuffledRange}.
+   * Returns the next poem according to the underlying {@code InfiniteShuffledRange}.
    */
   public Poem getNextPoem() {
-    return poems.get(automaticShuffledRange.getNext());
+    return poems.get(infiniteShuffledRange.getNext());
   }
 
 }
