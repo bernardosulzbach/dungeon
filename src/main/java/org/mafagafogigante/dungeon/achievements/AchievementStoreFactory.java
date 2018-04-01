@@ -21,14 +21,10 @@ import java.util.Collection;
  */
 public class AchievementStoreFactory {
 
-  private AchievementStoreFactory() {
-    throw new AssertionError();
-  }
-
   /**
    * Makes a locked AchievementStore with the specified Achievements.
    */
-  public static AchievementStore makeAchievementStore(Collection<Achievement> achievements) {
+  public AchievementStore makeAchievementStore(Collection<Achievement> achievements) {
     AchievementStore achievementStore = new AchievementStore();
     for (Achievement achievement : achievements) {
       achievementStore.addAchievement(achievement);
@@ -40,19 +36,19 @@ public class AchievementStoreFactory {
   /**
    * Retrieves the default AchievementStore of the application.
    */
-  public static AchievementStore getDefaultStore() {
+  public AchievementStore getDefaultStore() {
     AchievementStore achievementStore = makeDefaultStore();
     achievementStore.lock();
     return achievementStore;
   }
 
-  private static AchievementStore makeDefaultStore() {
+  private AchievementStore makeDefaultStore() {
     AchievementStore store = new AchievementStore();
     loadAchievements(store);
     return store;
   }
 
-  private static CounterMap<Id> idCounterMapFromJsonObject(JsonObject jsonObject) {
+  private CounterMap<Id> idCounterMapFromJsonObject(JsonObject jsonObject) {
     CounterMap<Id> counterMap = new CounterMap<>();
     for (Member member : jsonObject) {
       counterMap.incrementCounter(new Id(member.getName()), member.getValue().asInt());
@@ -65,7 +61,7 @@ public class AchievementStoreFactory {
    *
    * <p>Throws an IllegalStateException if the AchievementStore is not empty when this method is called
    */
-  private static void loadAchievements(AchievementStore store) {
+  private void loadAchievements(AchievementStore store) {
     if (!store.getAchievements().isEmpty()) {
       throw new IllegalStateException("called loadAchievements on a not empty AchievementStore");
     }

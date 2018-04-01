@@ -387,7 +387,7 @@ final class CommandSets {
       public void execute(@NotNull String[] arguments) {
         AchievementTracker tracker = Game.getGameState().getHero().getAchievementTracker();
         List<Achievement> notYetUnlockedAchievementList = new ArrayList<>();
-        for (Achievement achievement : AchievementStoreFactory.getDefaultStore().getAchievements()) {
+        for (Achievement achievement : new AchievementStoreFactory().getDefaultStore().getAchievements()) {
           if (tracker.hasNotBeenUnlocked(achievement)) {
             notYetUnlockedAchievementList.add(achievement);
           }

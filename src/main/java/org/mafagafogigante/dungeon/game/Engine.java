@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.achievements.AchievementStore;
 import org.mafagafogigante.dungeon.achievements.AchievementStoreFactory;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
@@ -99,7 +100,8 @@ public final class Engine {
    */
   private static void refreshAchievements() {
     Date worldDate = Game.getGameState().getWorld().getWorldDate();
-    Game.getGameState().getHero().getAchievementTracker().update(AchievementStoreFactory.getDefaultStore(), worldDate);
+    AchievementStore achievementStore = new AchievementStoreFactory().getDefaultStore();
+    Game.getGameState().getHero().getAchievementTracker().update(achievementStore, worldDate);
   }
 
   /**
