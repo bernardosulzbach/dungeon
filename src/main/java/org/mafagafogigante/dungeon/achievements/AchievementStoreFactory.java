@@ -21,10 +21,8 @@ import java.util.Collection;
  */
 public class AchievementStoreFactory {
 
-  private static volatile AchievementStore defaultStore;
-
   private AchievementStoreFactory() {
-    throw new AssertionError(); // Shouldn't be instantiated.
+    throw new AssertionError();
   }
 
   /**
@@ -43,16 +41,9 @@ public class AchievementStoreFactory {
    * Retrieves the default AchievementStore of the application.
    */
   public static AchievementStore getDefaultStore() {
-    if (defaultStore == null) {
-      synchronized (AchievementStoreFactory.class) {
-        if (defaultStore == null) {
-          AchievementStore achievementStore = makeDefaultStore();
-          achievementStore.lock();
-          defaultStore = achievementStore;
-        }
-      }
-    }
-    return defaultStore;
+    AchievementStore achievementStore = makeDefaultStore();
+    achievementStore.lock();
+    return achievementStore;
   }
 
   private static AchievementStore makeDefaultStore() {

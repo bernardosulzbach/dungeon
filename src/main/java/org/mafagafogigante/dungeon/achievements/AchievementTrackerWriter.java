@@ -67,7 +67,7 @@ public class AchievementTrackerWriter {
     }
     int total = AchievementStoreFactory.getDefaultStore().getAchievements().size();
     string.setColor(Color.CYAN);
-    string.append(String.format("Progress: %d/%d", tracker.getUnlockedCount(), total));
+    string.append(String.format("Unlocked %d out of %d.", tracker.getUnlockedCount(), total));
     Writer.getDefaultWriter().write(string);
   }
 

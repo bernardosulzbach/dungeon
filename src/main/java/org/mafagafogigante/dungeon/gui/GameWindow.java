@@ -53,13 +53,10 @@ public class GameWindow extends JFrame {
   private static final int ROWS = 30;
   private static final int COLUMNS = 100;
   private static final int FONT_SIZE = 15;
+  private static final int MARGIN = 5;
   private static final Font FONT = getMonospacedFont();
   private static final String WINDOW_TITLE = "Dungeon";
 
-  /**
-   * The border, in pixels.
-   */
-  private static final int MARGIN = 5;
   private transient SwappingStyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
