@@ -289,13 +289,13 @@ public class GameWindow extends JFrame {
           @Override
           protected Void doInBackground() {
             if (IssuedCommand.isValidSource(text)) {
-              DungeonLogger.logCommandRenderingReport(text, "started doInBackGround", stopWatch);
+              DungeonLogger.logCommandRenderingReport(text, "started doInBackground", stopWatch);
               try {
                 Game.renderTurn(new IssuedCommand(text), stopWatch);
               } catch (Throwable throwable) {
                 logExecutionExceptionAndExit(throwable);
               }
-              DungeonLogger.logCommandRenderingReport(text, "finished doInBackGround", stopWatch);
+              DungeonLogger.logCommandRenderingReport(text, "finished doInBackground", stopWatch);
             } else {
               DungeonLogger.warning("Input is not a valid command source.");
             }
