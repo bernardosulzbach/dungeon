@@ -14,7 +14,7 @@ public class TagSetParser<E extends Enum<E>> {
   private final JsonValue jsonValue;
 
   /**
-   * Creates a TagSetParser for a JsonObject which must be either null or a JsonArray of uppercase strings.
+   * Creates a TagSetParser for a JsonObject which must be either null or a JsonArray of uppercase writtenStrings.
    */
   public TagSetParser(Class<E> enumClass, JsonValue jsonValue) {
     this.enumClass = enumClass;

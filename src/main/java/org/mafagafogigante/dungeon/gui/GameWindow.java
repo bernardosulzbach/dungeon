@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Loader;
+import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 import org.mafagafogigante.dungeon.util.StopWatch;
 
@@ -52,13 +53,10 @@ public class GameWindow extends JFrame {
   private static final int ROWS = 30;
   private static final int COLUMNS = 100;
   private static final int FONT_SIZE = 15;
+  private static final int MARGIN = 5;
   private static final Font FONT = getMonospacedFont();
   private static final String WINDOW_TITLE = "Dungeon";
 
-  /**
-   * The border, in pixels.
-   */
-  private static final int MARGIN = 5;
   private transient SwappingStyledDocument document;
   private JTextField textField;
   private JTextPane textPane;
@@ -233,11 +231,10 @@ public class GameWindow extends JFrame {
         }
       }
     });
-
     add(panel);
-
     setResizable(false);
     resize();
+    Writer.getDefaultWriter().subscribe(this);
   }
 
   private void setGameWindowTitle(String title) {
@@ -292,13 +289,13 @@ public class GameWindow extends JFrame {
           @Override
           protected Void doInBackground() {
             if (IssuedCommand.isValidSource(text)) {
-              DungeonLogger.logCommandRenderingReport(text, "started doInBackGround", stopWatch);
+              DungeonLogger.logCommandRenderingReport(text, "started doInBackground", stopWatch);
               try {
                 Game.renderTurn(new IssuedCommand(text), stopWatch);
               } catch (Throwable throwable) {
                 logExecutionExceptionAndExit(throwable);
               }
-              DungeonLogger.logCommandRenderingReport(text, "finished doInBackGround", stopWatch);
+              DungeonLogger.logCommandRenderingReport(text, "finished doInBackground", stopWatch);
             } else {
               DungeonLogger.warning("Input is not a valid command source.");
             }

@@ -40,7 +40,7 @@ final class AttackAlgorithmWriter {
     string.append(" It looks ");
     string.append(defender.getHealth().getHealthState().toString().toLowerCase(Locale.ENGLISH));
     string.append(".\n");
-    Writer.writeAndWait(string);
+    Writer.getDefaultWriter().writeAndWait(string);
   }
 
   /**
@@ -49,7 +49,7 @@ final class AttackAlgorithmWriter {
    * @param attacker the attacker creature
    */
   static void writeMiss(Creature attacker) {
-    Writer.writeAndWait(new DungeonString(attacker.getName() + " missed.\n", Color.YELLOW));
+    Writer.getDefaultWriter().writeAndWait(new DungeonString(attacker.getName() + " missed.\n", Color.YELLOW));
   }
 
   /**
@@ -61,7 +61,7 @@ final class AttackAlgorithmWriter {
     if (!weapon.isBroken()) {
       throw new IllegalArgumentException("weapon is not broken.");
     }
-    Writer.write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
+    Writer.getDefaultWriter().write(new DungeonString(weapon.getName() + " broke!\n", Color.RED));
   }
 
 }

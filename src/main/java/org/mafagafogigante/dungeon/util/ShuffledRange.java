@@ -1,16 +1,19 @@
 package org.mafagafogigante.dungeon.util;
 
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * ShuffledRange class that provides a List of shuffled non-repeating integers from a lower bound up to an upper bound.
  */
-public final class ShuffledRange {
+public final class ShuffledRange implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private ArrayList<Integer> integers;
 
   /**

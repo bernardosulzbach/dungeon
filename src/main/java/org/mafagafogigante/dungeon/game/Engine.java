@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.game;
 
+import org.mafagafogigante.dungeon.achievements.AchievementStore;
 import org.mafagafogigante.dungeon.achievements.AchievementStoreFactory;
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
@@ -99,7 +100,8 @@ public final class Engine {
    */
   private static void refreshAchievements() {
     Date worldDate = Game.getGameState().getWorld().getWorldDate();
-    Game.getGameState().getHero().getAchievementTracker().update(AchievementStoreFactory.getDefaultStore(), worldDate);
+    AchievementStore achievementStore = new AchievementStoreFactory().getDefaultStore();
+    Game.getGameState().getHero().getAchievementTracker().update(achievementStore, worldDate);
   }
 
   /**
@@ -110,7 +112,7 @@ public final class Engine {
    */
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      Writer.write(new DungeonString("You cannot attempt suicide."));
+      Writer.getDefaultWriter().write(new DungeonString("You cannot attempt suicide."));
       return;
     }
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
@@ -133,7 +135,7 @@ public final class Engine {
     dungeonString.append(" managed to kill ");
     dungeonString.append(defeated.getName().getSingular());
     dungeonString.append(".\n");
-    Writer.write(dungeonString);
+    Writer.getDefaultWriter().write(dungeonString);
     writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
@@ -157,7 +159,7 @@ public final class Engine {
       string.append(source.getName().getSingular() + " dropped ");
       string.append(Utils.enumerateEntities(source.getDroppedItemsList()));
       string.append(".\n");
-      Writer.write(string);
+      Writer.getDefaultWriter().write(string);
     }
   }
 

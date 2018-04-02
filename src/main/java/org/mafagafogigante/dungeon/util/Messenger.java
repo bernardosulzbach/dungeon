@@ -15,18 +15,18 @@ public class Messenger {
    * Prints a warning that a command requires arguments.
    */
   public static void printMissingArgumentsMessage() {
-    Writer.write("This command requires arguments.");
+    Writer.getDefaultWriter().write("This command requires arguments.");
   }
 
   public static void printAmbiguousSelectionMessage() {
-    Writer.write("Provided input is ambiguous.");
+    Writer.getDefaultWriter().write("Provided input is ambiguous.");
   }
 
   /**
    * Prints a warning that a directory creation failed.
    */
   public static void printFailedToCreateDirectoryMessage(String directory) {
-    Writer.write("Failed to create the '" + directory + "' directory.");
+    Writer.getDefaultWriter().write("Failed to create the '" + directory + "' directory.");
   }
 
 }

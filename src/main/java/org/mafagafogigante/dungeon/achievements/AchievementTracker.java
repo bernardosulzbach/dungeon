@@ -111,7 +111,7 @@ public class AchievementTracker implements Serializable {
       }
     }
     if (dungeonString.getLength() != 0) {
-      Writer.write(dungeonString);
+      Writer.getDefaultWriter().write(dungeonString);
     }
   }
 

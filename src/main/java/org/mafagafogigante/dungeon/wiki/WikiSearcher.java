@@ -29,7 +29,7 @@ public final class WikiSearcher {
       if (matches.size() == 0) {
         deepSearch(arguments);
       } else if (matches.size() == 1) {
-        Writer.write(matches.getMatch(0).toString());
+        Writer.getDefaultWriter().write(matches.getMatch(0).toString());
       } else {
         DungeonString string = new DungeonString();
         string.append("The following article titles match your query:\n");
@@ -38,7 +38,7 @@ public final class WikiSearcher {
           string.append("\n");
         }
         string.append("Be more specific.");
-        Writer.write(string);
+        Writer.getDefaultWriter().write(string);
       }
     } else {
       writeArticleList();
@@ -73,7 +73,7 @@ public final class WikiSearcher {
     } else {
       string.append("No article matches your query.");
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   /**
@@ -88,7 +88,7 @@ public final class WikiSearcher {
       string.append(toArticleListingEntry(article));
       string.append("\n");
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   private static String toArticleListingEntry(Article article) {

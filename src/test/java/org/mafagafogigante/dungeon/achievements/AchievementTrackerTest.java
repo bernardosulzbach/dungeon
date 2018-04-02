@@ -28,7 +28,7 @@ public class AchievementTrackerTest {
     AchievementBuilder achievementBuilder = new AchievementBuilder();
     achievementBuilder.setId("ACHIEVEMENT");
     List<Achievement> achievements = Collections.singletonList(achievementBuilder.createAchievement());
-    AchievementStore achievementStore = AchievementStoreFactory.makeAchievementStore(achievements);
+    AchievementStore achievementStore = new AchievementStoreFactory().makeAchievementStore(achievements);
     AchievementTracker achievementTracker = new AchievementTracker(new Statistics());
     Assert.assertEquals(0, achievementTracker.getUnlockedCount());
     achievementTracker.update(achievementStore, new Date(1, 1, 1));
@@ -44,7 +44,7 @@ public class AchievementTrackerTest {
     achievementBuilder.setName(name);
     achievementBuilder.setInfo(info);
     List<Achievement> achievements = Collections.singletonList(achievementBuilder.createAchievement());
-    AchievementStore achievementStore = AchievementStoreFactory.makeAchievementStore(achievements);
+    AchievementStore achievementStore = new AchievementStoreFactory().makeAchievementStore(achievements);
 
     AchievementTracker tracker = new AchievementTracker(new Statistics());
     final Date date = new Date(1, 1, 1);
@@ -76,7 +76,7 @@ public class AchievementTrackerTest {
     achievementBuilder.setVisitedLocations(counterMap);
     Achievement achievement = achievementBuilder.createAchievement();
     List<Achievement> achievements = Collections.singletonList(achievement);
-    AchievementStore achievementStore = AchievementStoreFactory.makeAchievementStore(achievements);
+    AchievementStore achievementStore = new AchievementStoreFactory().makeAchievementStore(achievements);
     final Date date = new Date(1, 1, 1);
     tracker.update(achievementStore, date);
 

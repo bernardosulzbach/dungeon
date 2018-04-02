@@ -51,9 +51,9 @@ public final class SavesTableWriter {
         table.insertSeparator();
         table.insertRow("Sum of these " + fileCount + " files", Converter.bytesToHuman((byteCount)), "", "");
       }
-      Writer.write(table);
+      Writer.getDefaultWriter().write(table);
     } else {
-      Writer.write("There are no saved files.");
+      Writer.getDefaultWriter().write("There are no saved files.");
     }
   }
 

@@ -16,9 +16,11 @@ public class CritterAttackAlgorithm implements AttackAlgorithm {
   @Override
   public void renderAttack(@NotNull Creature attacker, @NotNull Creature defender) {
     if (Random.nextBoolean()) {
-      Writer.writeAndWait(new DungeonString(attacker.getName() + " does nothing.\n", Color.YELLOW));
+      String message = attacker.getName() + " does nothing.\n";
+      Writer.getDefaultWriter().writeAndWait(new DungeonString(message, Color.YELLOW));
     } else {
-      Writer.writeAndWait(new DungeonString(attacker.getName() + " tries to run away.\n", Color.YELLOW));
+      String message = attacker.getName() + " tries to run away.\n";
+      Writer.getDefaultWriter().writeAndWait(new DungeonString(message, Color.YELLOW));
     }
   }
 

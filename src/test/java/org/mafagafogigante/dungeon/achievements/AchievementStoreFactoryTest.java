@@ -12,7 +12,7 @@ public class AchievementStoreFactoryTest {
     AchievementBuilder achievementBuilder = new AchievementBuilder();
     achievementBuilder.setId("ACHIEVEMENT");
     List<Achievement> emptyList = Collections.emptyList();
-    AchievementStore achievementStore = AchievementStoreFactory.makeAchievementStore(emptyList);
+    AchievementStore achievementStore = new AchievementStoreFactory().makeAchievementStore(emptyList);
     achievementStore.addAchievement(achievementBuilder.createAchievement());
   }
 
@@ -20,7 +20,7 @@ public class AchievementStoreFactoryTest {
   public void testDefaultStoreShouldBeLocked() throws Exception {
     AchievementBuilder achievementBuilder = new AchievementBuilder();
     achievementBuilder.setId("ACHIEVEMENT");
-    AchievementStore defaultStore = AchievementStoreFactory.getDefaultStore();
+    AchievementStore defaultStore = new AchievementStoreFactory().getDefaultStore();
     defaultStore.addAchievement(achievementBuilder.createAchievement());
   }
 

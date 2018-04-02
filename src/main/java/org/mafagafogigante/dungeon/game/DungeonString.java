@@ -50,11 +50,22 @@ public final class DungeonString extends Writable {
   }
 
   /**
+   * Returns only the text of the string.
+   */
+  public String getString() {
+    StringBuilder builder = new StringBuilder();
+    for (ColoredString coloredString : toColoredStringList()) {
+      builder.append(coloredString.getString());
+    }
+    return builder.toString();
+  }
+
+  /**
    * Returns the total length of the string.
    */
   public int getLength() {
     int sum = 0;
-    for (ColoredString coloredString : coloredStringList) {
+    for (ColoredString coloredString : toColoredStringList()) {
       sum += coloredString.getString().length();
     }
     sum += builder.length();
@@ -63,8 +74,6 @@ public final class DungeonString extends Writable {
 
   /**
    * Returns an unmodifiable list of ColoredStrings that are equivalent to the contents of this DungeonString.
-   *
-   * @return an unmodifiable list of ColoredStrings
    */
   public List<ColoredString> toColoredStringList() {
     addBuilderContentToList();
@@ -117,10 +126,7 @@ public final class DungeonString extends Writable {
 
   @Override
   public String toString() {
-    return "DungeonString{" +
-        "coloredStringList=" + toColoredStringList() +
-        ", currentColor=" + currentColor +
-        '}';
+    return "DungeonString{" + "coloredStringList=" + toColoredStringList() + ", currentColor=" + currentColor + '}';
   }
 
 }

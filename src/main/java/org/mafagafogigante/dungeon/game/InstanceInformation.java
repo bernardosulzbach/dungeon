@@ -10,7 +10,7 @@ class InstanceInformation {
   private final long startingTimeMillis;
   private int acceptedCommandCount;
 
-  public InstanceInformation() {
+  InstanceInformation() {
     this.startingTimeMillis = System.currentTimeMillis();
   }
 

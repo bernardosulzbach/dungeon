@@ -73,7 +73,7 @@ public final class Statistics implements Serializable {
     insertHeroStatistics(statistics);
     statistics.insertSeparator();
     insertWorldStatistics(statistics);
-    Writer.write(statistics);
+    Writer.getDefaultWriter().write(statistics);
   }
 
   private void insertHeroStatistics(Table statistics) {

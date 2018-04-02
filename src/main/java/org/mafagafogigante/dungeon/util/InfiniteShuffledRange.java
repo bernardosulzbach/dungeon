@@ -1,25 +1,26 @@
-package org.mafagafogigante.dungeon.util.library;
+package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.util.ShuffledRange;
+import org.mafagafogigante.dungeon.io.Version;
+
+import java.io.Serializable;
 
 /**
- * An automated ShuffledRange.
- *
- * <p>Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}. When the
+ * Objects of this class wrap a {@code ShuffledRange} and allow infinitely many calls to {@code getNext}. When the
  * end of the underlying {@code ShuffledRange} is reached, the index is reset and {@code shuffle} is called on the
  * {@code ShuffledRange}.
  */
-class AutomaticShuffledRange {
+class InfiniteShuffledRange implements Serializable {
 
+  private static final long serialVersionUID = Version.MAJOR;
   private final ShuffledRange shuffledRange;
   private int index;
 
   /**
-   * Constructs a new {@code AutomaticShuffledRange} of lower bound 0 given an upper bound.
+   * Constructs a new {@code InfiniteShuffledRange} of lower bound 0 given an upper bound.
    *
    * @param end the higher bound (exclusive)
    */
-  AutomaticShuffledRange(int end) {
+  InfiniteShuffledRange(int end) {
     shuffledRange = new ShuffledRange(0, end);
   }
 
