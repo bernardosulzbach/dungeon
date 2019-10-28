@@ -37,7 +37,7 @@ You only need an updated version of Java to play this game.
 
 In 2017 this project won Yegor Bugayenko's Software Quality Award.
 
-[![Software Quality Award](images/software-quality-award.png)](www.yegor256.com/2016/10/23/award-2017.html)
+[![Software Quality Award](images/software-quality-award.png)](https://www.yegor256.com/2016/10/23/award-2017.html)
 
 ## Tools
 
