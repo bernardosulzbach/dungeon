@@ -58,4 +58,13 @@ final class RiverGenerator implements Serializable {
     return river != null && river.isBridge(point.getY());
   }
 
+  /**
+   * Returns if in this point there should be a riverside.
+   */
+  boolean isRiverside(Point point) {
+    River leftOfRiver = rivers.get(point.getX() - 1);
+    River rightOfRiver = rivers.get(point.getX() + 1);
+    return leftOfRiver != null || rightOfRiver != null;
+  }
+
 }
