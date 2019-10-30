@@ -1157,6 +1157,69 @@
           "probability": 0.05
         }
       ]
+    },
+    {
+      "id": "RIVERSIDE",
+      "type": "RIVERSIDE",
+      "name": {
+        "singular": "Riverside"
+      },
+      "color": [
+        100,
+        250,
+        200
+      ],
+      "symbol": "R",
+      "info": "The is an area with a flowing river. The river seems to be brimming with fish.",
+      "blobSize": 0,
+      "lightPermittivity": 1,
+      "blockedEntrances": [
+        "U",
+        "D"
+      ],
+      "spawners": [
+        {
+          "id": "FROG",
+          "population": {
+            "minimum": 1,
+            "maximum": 3
+          },
+          "delay": 2
+        },
+        {
+          "id": "GREEN_IGUANA",
+          "population": {
+            "minimum": 2,
+            "maximum": 2
+          },
+          "delay": 32
+        },
+        {
+          "id": "TRAVELER",
+          "population": {
+            "minimum": 1,
+            "maximum": 2
+          },
+          "delay": 36
+        }
+      ],
+      "tags": [
+        "FISHABLE"
+      ],
+      "items": [
+        {
+          "id": "STONE",
+          "probability": 0.3
+        },
+        {
+          "id": "SPEAR",
+          "probability": 0.1
+        },
+        {
+          "id": "STICK",
+          "probability": 0.3
+        }
+      ]
     }
   ]
 }

@@ -646,6 +646,17 @@
       }
     },
     {
+      "id": "DOWN_BY_THE_RIVERSIDE",
+      "name": "Down By the Riverside",
+      "info": "Visit 10 different riversides.",
+      "text": "visited ten different riversides",
+      "explorationRequirements": {
+        "visitedLocations": {
+          "RIVERSIDE": 10
+        }
+      }
+    },
+    {
       "id": "REAPER",
       "name": "Reaper",
       "info": "Visit 10 distinct graveyards.",

@@ -20,6 +20,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String QUERY_FIELD = "query";
   private static final String FOREST_FIELD = "FOREST";
   private static final String DESERT_FIELD = "DESERT";
+  private static final String RIVERSIDE_FIELD = "RIVERSIDE";
   private static final String GRAVEYARD_FIELD = "GRAVEYARD";
   private static final String PART_OF_DAY_FIELD = "partOfDay";
   private static final String ACHIEVEMENTS_FIELD = "achievements";
@@ -121,6 +122,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     Map<String, JsonRule> visitedLocationsRules = new HashMap<>();
     JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
     visitedLocationsRules.put(DESERT_FIELD, optionalIntegerRule);
+    visitedLocationsRules.put(RIVERSIDE_FIELD, optionalIntegerRule);
     visitedLocationsRules.put(GRAVEYARD_FIELD, optionalIntegerRule);
     return JsonRuleFactory.makeObjectRule(visitedLocationsRules);
   }

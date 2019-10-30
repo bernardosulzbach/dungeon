@@ -47,6 +47,11 @@ class WorldGenerator implements Serializable {
     return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.BRIDGE)), world, point);
   }
 
+  private Location createRiversideLocation(@NotNull final Point point) {
+    LocationPresetStore locationPresetStore = LocationPresetStore.getDefaultLocationPresetStore();
+    return new Location(Random.select(locationPresetStore.getLocationPresetsByType(Type.RIVERSIDE)), world, point);
+  }
+
   public void expand(Point point) {
     riverGenerator.expand(point, chunkSide);
     Point currentPoint;
@@ -66,6 +71,8 @@ class WorldGenerator implements Serializable {
             world.addLocation(createRandomRiverLocation(currentPoint), currentPoint);
           } else if (riverGenerator.isBridge(currentPoint)) {
             world.addLocation(createRandomBridgeLocation(currentPoint), currentPoint);
+          } else if (riverGenerator.isRiverside(currentPoint)) {
+            world.addLocation(createRiversideLocation(currentPoint), currentPoint);
           } else if (dungeonDistributor.rollForDungeon(currentPoint)) {
             dungeonCreator.createDungeon(world, currentPoint);
           } else {
