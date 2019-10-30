@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.util.library;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
 
 import java.util.List;
@@ -21,9 +21,9 @@ public final class Poem extends Writable {
     this.content = content;
   }
 
-  public List<ColoredString> toColoredStringList() {
-    DungeonString builder = new DungeonString(toString());
-    return builder.toColoredStringList();
+  public List<RichString> toRichStrings() {
+    RichStringSequence builder = new RichStringSequence(toString());
+    return builder.toRichStrings();
   }
 
   @Override

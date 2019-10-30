@@ -2,10 +2,10 @@ package org.mafagafogigante.dungeon.commands;
 
 import org.mafagafogigante.dungeon.date.DungeonTimeParser;
 import org.mafagafogigante.dungeon.date.Duration;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.PartOfDay;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.Matches;
 import org.mafagafogigante.dungeon.util.Messenger;
@@ -47,7 +47,7 @@ class DebugWaitParser {
   }
 
   private static void writeDebugWaitSyntax() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.append("Usage: wait ");
     final Color highlightColor = Color.ORANGE;
     string.setColor(highlightColor);
@@ -58,7 +58,7 @@ class DebugWaitParser {
     string.append("until next");
     string.resetColor();
     string.append(" [part of the day].");
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   static void parseDebugWait(@NotNull String[] arguments) {
@@ -72,12 +72,13 @@ class DebugWaitParser {
           Duration duration = DungeonTimeParser.parseDuration(timeString);
           rollDate(duration.getSeconds());
         } catch (IllegalArgumentException badArgument) {
-          Writer.write("Provide small positive multipliers and units such as: '2 minutes and 10 seconds'");
+          String message = "Provide small positive multipliers and units such as: '2 minutes and 10 seconds'";
+          Writer.getDefaultWriter().write(message);
         }
       } else if (syntax == Syntax.UNTIL) {
         Matches<PartOfDay> matches = Matches.findBestCompleteMatches(Arrays.asList(PartOfDay.values()), arguments[2]);
         if (matches.size() == 0) {
-          Writer.write("That did not match any part of the day.");
+          Writer.getDefaultWriter().write("That did not match any part of the day.");
         } else if (matches.size() == 1) {
           rollDate(PartOfDay.getSecondsToNext(Game.getGameState().getWorld().getWorldDate(), matches.getMatch(0)));
         } else {
@@ -89,9 +90,13 @@ class DebugWaitParser {
 
   private static void rollDate(long seconds) {
     Engine.rollDateAndRefresh(seconds);
-    Writer.write("Waited for " + seconds + " seconds.");
+    Writer.getDefaultWriter().write("Waited for " + seconds + " seconds.");
   }
 
-  private enum Syntax {FOR, UNTIL, INVALID}
+  private enum Syntax {
+    FOR,
+    UNTIL,
+    INVALID
+  }
 
 }

@@ -5,7 +5,10 @@ package org.mafagafogigante.dungeon.stats;
  */
 public enum TypeOfCauseOfDeath {
 
-  UNARMED("Unarmed"), WEAPON("Weapon"), BROKEN_WEAPON("Broken Weapon"), SPELL("Spell");
+  UNARMED("Unarmed"),
+  WEAPON("Weapon"),
+  BROKEN_WEAPON("Broken Weapon"),
+  SPELL("Spell");
 
   private final String stringRepresentation;
 

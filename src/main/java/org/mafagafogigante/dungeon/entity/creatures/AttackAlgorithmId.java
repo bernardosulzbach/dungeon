@@ -5,6 +5,10 @@ package org.mafagafogigante.dungeon.entity.creatures;
  */
 public enum AttackAlgorithmId {
 
-  BAT, CRITTER, DUMMY, ORC, SIMPLE
+  BAT,
+  CRITTER,
+  DUMMY,
+  ORC,
+  SIMPLE
 
 }

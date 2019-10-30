@@ -5,8 +5,12 @@ package org.mafagafogigante.dungeon.date;
  */
 public enum DungeonTimeUnit {
 
-  MILLISECOND(1), SECOND(1000 * MILLISECOND.milliseconds), MINUTE(60 * SECOND.milliseconds),
-  HOUR(60 * MINUTE.milliseconds), DAY(24 * HOUR.milliseconds), MONTH(10 * DAY.milliseconds),
+  MILLISECOND(1),
+  SECOND(1000 * MILLISECOND.milliseconds),
+  MINUTE(60 * SECOND.milliseconds),
+  HOUR(60 * MINUTE.milliseconds),
+  DAY(24 * HOUR.milliseconds),
+  MONTH(10 * DAY.milliseconds),
   YEAR(10 * MONTH.milliseconds);
 
   public final long milliseconds;

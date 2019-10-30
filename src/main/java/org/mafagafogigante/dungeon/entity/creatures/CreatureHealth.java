@@ -83,9 +83,7 @@ public class CreatureHealth implements Serializable {
 
   @Override
   public String toString() {
-    return "CreatureHealth{" +
-        "integrity=" + integrity +
-        '}';
+    return "CreatureHealth{" + "integrity=" + integrity + '}';
   }
 
 }

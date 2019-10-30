@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.wiki;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.util.CounterMap;
 import org.mafagafogigante.dungeon.util.Matches;
@@ -29,16 +29,16 @@ public final class WikiSearcher {
       if (matches.size() == 0) {
         deepSearch(arguments);
       } else if (matches.size() == 1) {
-        Writer.write(matches.getMatch(0).toString());
+        Writer.getDefaultWriter().write(matches.getMatch(0).toString());
       } else {
-        DungeonString string = new DungeonString();
+        RichStringSequence string = new RichStringSequence();
         string.append("The following article titles match your query:\n");
         for (int i = 0; i < matches.size(); i++) {
           string.append(toArticleListingEntry(matches.getMatch(i)));
           string.append("\n");
         }
         string.append("Be more specific.");
-        Writer.write(string);
+        Writer.getDefaultWriter().write(string);
       }
     } else {
       writeArticleList();
@@ -63,7 +63,7 @@ public final class WikiSearcher {
         counter.incrementCounter(article, matches);
       }
     }
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     if (counter.isNotEmpty()) {
       string.append("The following articles contain text that matches your query:\n");
       for (Article article : counter) {
@@ -73,14 +73,14 @@ public final class WikiSearcher {
     } else {
       string.append("No article matches your query.");
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   /**
    * Writes the article count and a list with the titles of the {@code Articles} in the {@code articleList}.
    */
   private static void writeArticleList() {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     string.append("The wiki has the following ");
     string.append(String.valueOf(Wiki.getArticles().size()));
     string.append(" articles:\n");
@@ -88,7 +88,7 @@ public final class WikiSearcher {
       string.append(toArticleListingEntry(article));
       string.append("\n");
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
   private static String toArticleListingEntry(Article article) {

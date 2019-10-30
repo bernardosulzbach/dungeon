@@ -5,6 +5,7 @@ package org.mafagafogigante.dungeon.game;
  */
 public enum QuantificationMode {
 
-  WORD, NUMBER
+  WORD,
+  NUMBER
 
 }

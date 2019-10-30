@@ -6,12 +6,12 @@ import org.mafagafogigante.dungeon.entity.creatures.HeroUtils;
 import org.mafagafogigante.dungeon.entity.items.Item;
 import org.mafagafogigante.dungeon.game.BlockedEntrances;
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.game.Random;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.io.Writer;
 import org.mafagafogigante.dungeon.stats.CauseOfDeath;
 import org.mafagafogigante.dungeon.stats.TypeOfCauseOfDeath;
@@ -51,16 +51,16 @@ public final class SpellData {
       }
 
       private void writeHealCastOnSelf(Hero hero) {
-        Writer.write("You casted " + getName() + " on yourself.");
+        Writer.getDefaultWriter().write("You casted " + getName() + " on yourself.");
         if (hero.getHealth().isFull()) {
-          Writer.write("You are completely healed.");
+          Writer.getDefaultWriter().write("You are completely healed.");
         }
       }
 
       private void writeHealCastOnTarget(Creature target) {
-        Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+        Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
         if (target.getHealth().isFull()) {
-          Writer.write(target.getName() + " is completely healed.");
+          Writer.getDefaultWriter().write(target.getName() + " is completely healed.");
         }
       }
     });
@@ -73,7 +73,7 @@ public final class SpellData {
         List<Item> selectedItems = new ArrayList<>();
         if (targetMatcher.length == 0) {
           if (hero.getWeapon() == null) {
-            Writer.write("You are not equipping anything.");
+            Writer.getDefaultWriter().write("You are not equipping anything.");
           } else {
             selectedItems.add(hero.getWeapon());
           }
@@ -87,20 +87,20 @@ public final class SpellData {
 
       private void effectivelyOperate(Hero hero, Item item) {
         if (!item.hasTag(Item.Tag.REPAIRABLE)) {
-          Writer.write(item.getName().getSingular() + " is not repairable.");
+          Writer.getDefaultWriter().write(item.getName().getSingular() + " is not repairable.");
         } else {
           Engine.rollDateAndRefresh(SECONDS_TO_CAST_REPAIR); // Time passes before casting.
           if (!hero.getInventory().hasItem(item)) { // If the item disappeared.
-            Writer.write(item.getName().getSingular() + " disappeared before you finished casting.");
+            Writer.getDefaultWriter().write(item.getName().getSingular() + " disappeared before you finished casting.");
           } else {
             boolean wasCompletelyRepaired = item.getIntegrity().isPerfect();
             item.getIntegrity().incrementBy(REPAIR_VALUE);
-            Writer.write("You casted " + getName() + " on " + item.getName().getSingular() + ".");
+            Writer.getDefaultWriter().write("You casted " + getName() + " on " + item.getName().getSingular() + ".");
             if (wasCompletelyRepaired) {
-              Writer.write(item.getName().getSingular() + " was already completely repaired.");
+              Writer.getDefaultWriter().write(item.getName().getSingular() + " was already completely repaired.");
             } else {
               if (item.getIntegrity().isPerfect()) { // The item became completely repaired.
-                Writer.write(item.getName().getSingular() + " is now completely repaired.");
+                Writer.getDefaultWriter().write(item.getName().getSingular() + " is now completely repaired.");
               }
             }
           }
@@ -115,11 +115,11 @@ public final class SpellData {
         Engine.rollDateAndRefresh(SECONDS_TO_CAST_PERCEIVE);
         List<Creature> creatureList = new ArrayList<>(hero.getLocation().getCreatures());
         creatureList.remove(hero);
-        DungeonString string = new DungeonString();
+        RichStringSequence string = new RichStringSequence();
         string.append("You concentrate and allow your spells to show you what your eyes may have missed...\n");
         hero.getObserver().writeCreatureSight(creatureList, string);
         hero.getObserver().writeItemSight(hero.getLocation().getItemList(), string);
-        Writer.write(string);
+        Writer.getDefaultWriter().write(string);
       }
     });
     putSpell(new Spell("FINGER_OF_DEATH", "Finger of Death") {
@@ -128,12 +128,12 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.write("Provide a target.");
+          Writer.getDefaultWriter().write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_FINGER_OF_DEATH);
-            DungeonString string = new DungeonString();
+            RichStringSequence string = new RichStringSequence();
             string.append("You casted ");
             string.append(getName().getSingular());
             string.append(" on ");
@@ -146,7 +146,7 @@ public final class SpellData {
             } else {
               string.append("\nBut it is still alive.");
             }
-            Writer.write(string);
+            Writer.getDefaultWriter().write(string);
           }
         }
       }
@@ -157,13 +157,13 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.write("Provide a target.");
+          Writer.getDefaultWriter().write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_VEIL_OF_DARKNESS);
             target.getLightSource().disable();
-            Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+            Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
         }
       }
@@ -175,13 +175,13 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.write("Provide a target.");
+          Writer.getDefaultWriter().write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
             Engine.rollDateAndRefresh(SECONDS_TO_CAST_UNVEIL);
             target.getLightSource().enable();
-            Writer.write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
+            Writer.getDefaultWriter().write("You casted " + getName() + " on " + target.getName().getSingular() + ".");
           }
         }
       }
@@ -194,7 +194,7 @@ public final class SpellData {
       @Override
       public void operate(Hero hero, String[] targetMatcher) {
         if (targetMatcher.length == 0) {
-          Writer.write("Provide a target.");
+          Writer.getDefaultWriter().write("Provide a target.");
         } else {
           Creature target = hero.findCreature(targetMatcher);
           if (target != null) {
@@ -210,17 +210,19 @@ public final class SpellData {
               }
               String prefix = "You casted " + getName() + " on " + target.getName().getSingular() + " successfully ";
               if (unblockedDirections.isEmpty()) {
-                Writer.write(prefix + "but it could not be displaced as all directions are blocked.");
+                String message = prefix + "but it could not be displaced as all directions are blocked.";
+                Writer.getDefaultWriter().write(message);
               } else {
                 Direction direction = Random.select(unblockedDirections);
                 Point destinationPoint = new Point(targetLocation.getPoint(), direction);
                 Location destinationLocation = targetLocation.getWorld().getLocation(destinationPoint);
                 targetLocation.removeCreature(target);
                 destinationLocation.addCreature(target);
-                Writer.write(prefix + "and it was displaced " + direction.toString() + ".");
+                Writer.getDefaultWriter().write(prefix + "and it was displaced " + direction.toString() + ".");
               }
             } else {
-              Writer.write("You failed to cast " + getName() + " on " + target.getName().getSingular() + ".");
+              String message = "You failed to cast " + getName() + " on " + target.getName().getSingular() + ".";
+              Writer.getDefaultWriter().write(message);
             }
           }
         }

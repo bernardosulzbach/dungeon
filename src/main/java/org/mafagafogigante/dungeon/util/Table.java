@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.logging.DungeonLogger;
@@ -103,9 +103,9 @@ public class Table extends Writable {
   }
 
   /**
-   * Appends a row to a DungeonString.
+   * Appends a row to a RichStringSequence.
    */
-  private void appendRow(DungeonString builder, boolean header, List<Integer> widths, String... values) {
+  private void appendRow(RichStringSequence builder, boolean header, List<Integer> widths, String... values) {
     for (int i = 0; i < values.length; i++) {
       int columnWidth = widths.get(i);
       String currentValue = values[i];
@@ -138,9 +138,9 @@ public class Table extends Writable {
   }
 
   /**
-   * Append a horizontal separator made up of dashes to a DungeonString.
+   * Append a horizontal separator made up of dashes to a RichStringSequence.
    */
-  private void appendHorizontalSeparator(DungeonString builder, List<Integer> columnWidths, int columnCount) {
+  private void appendHorizontalSeparator(RichStringSequence builder, List<Integer> columnWidths, int columnCount) {
     String[] pseudoRow = new String[columnCount];
     for (int i = 0; i < columnWidths.size(); i++) {
       pseudoRow[i] = makeRepeatedCharacterString(columnWidths.get(i), HORIZONTAL_BAR);
@@ -211,16 +211,16 @@ public class Table extends Writable {
   }
 
   @Override
-  public List<ColoredString> toColoredStringList() {
-    DungeonString string = new DungeonString();
+  public List<RichString> toRichStrings() {
+    RichStringSequence string = new RichStringSequence();
     List<Integer> columnWidths;
     try {
-      // You likely don't want toColoredStringList to be throwing exceptions, so catch them early.
+      // You likely don't want toRichStrings to be throwing exceptions, so catch them early.
       columnWidths = calculateColumnWidths();
     } catch (RuntimeException log) {
       DungeonLogger.warning(log.getMessage());
       string.append("Failed to generate a visual representation of the table.");
-      return string.toColoredStringList();
+      return string.toRichStrings();
     }
     String[] currentRow = new String[columns.size()];
     // Insert headers
@@ -245,7 +245,7 @@ public class Table extends Writable {
         appendRow(string, false, columnWidths, currentRow);
       }
     }
-    return string.toColoredStringList();
+    return string.toRichStrings();
   }
 
   private static class Column {

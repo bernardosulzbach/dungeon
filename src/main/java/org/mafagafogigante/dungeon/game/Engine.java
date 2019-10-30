@@ -110,7 +110,7 @@ public final class Engine {
    */
   public static void battle(Hero hero, Creature foe) {
     if (hero == foe) {
-      Writer.write(new DungeonString("You cannot attempt suicide."));
+      Writer.getDefaultWriter().write(new RichStringSequence("You cannot attempt suicide."));
       return;
     }
     while (hero.getHealth().isAlive() && foe.getHealth().isAlive()) {
@@ -127,13 +127,13 @@ public final class Engine {
     Creature defeated = (survivor == hero) ? foe : hero;
     // Imagine if a third factor (such as hunger) could kill one of the creatures.
     // I think it still makes sense to say that the survivor managed to kill the defeated, but that's just me.
-    DungeonString dungeonString = new DungeonString();
-    dungeonString.setColor(Color.CYAN);
-    dungeonString.append(survivor.getName().getSingular());
-    dungeonString.append(" managed to kill ");
-    dungeonString.append(defeated.getName().getSingular());
-    dungeonString.append(".\n");
-    Writer.write(dungeonString);
+    RichStringSequence richStringSequence = new RichStringSequence();
+    richStringSequence.setColor(Color.CYAN);
+    richStringSequence.append(survivor.getName().getSingular());
+    richStringSequence.append(" managed to kill ");
+    richStringSequence.append(defeated.getName().getSingular());
+    richStringSequence.append(".\n");
+    Writer.getDefaultWriter().write(richStringSequence);
     writeDrops(defeated);
     if (hero == survivor) {
       PartOfDay partOfDay = PartOfDay.getCorrespondingConstant(Game.getGameState().getWorld().getWorldDate());
@@ -153,11 +153,11 @@ public final class Engine {
    */
   private static void writeDrops(Creature source) {
     if (!source.getDroppedItemsList().isEmpty()) {
-      DungeonString string = new DungeonString();
+      RichStringSequence string = new RichStringSequence();
       string.append(source.getName().getSingular() + " dropped ");
       string.append(Utils.enumerateEntities(source.getDroppedItemsList()));
       string.append(".\n");
-      Writer.write(string);
+      Writer.getDefaultWriter().write(string);
     }
   }
 

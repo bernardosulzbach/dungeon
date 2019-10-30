@@ -44,10 +44,7 @@ class WorldMapSymbol {
 
   @Override
   public String toString() {
-    return "WorldMapSymbol{" +
-        "character='" + character + '\'' +
-        ", color=" + color +
-        '}';
+    return "WorldMapSymbol{" + "character='" + character + '\'' + ", color=" + color + '}';
   }
 
 }

@@ -1,6 +1,6 @@
 package org.mafagafogigante.dungeon.map;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.io.Writer;
 
@@ -34,7 +34,7 @@ public final class WorldMapWriter {
    * @param map a WorldMap, not null
    */
   private static void renderMap(@NotNull WorldMap map) {
-    DungeonString string = new DungeonString();
+    RichStringSequence string = new RichStringSequence();
     WorldMapSymbol[][] worldMapSymbolMatrix = map.getSymbolMatrix();
     for (int i = 0; i < worldMapSymbolMatrix.length; i++) {
       for (WorldMapSymbol symbol : worldMapSymbolMatrix[i]) {
@@ -46,7 +46,7 @@ public final class WorldMapWriter {
         string.append("\n");
       }
     }
-    Writer.write(string);
+    Writer.getDefaultWriter().write(string);
   }
 
 }

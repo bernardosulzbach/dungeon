@@ -1,9 +1,15 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.mafagafogigante.dungeon.game.DungeonString;
-import org.mafagafogigante.dungeon.game.Game;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
+import org.mafagafogigante.dungeon.gui.GameWindow;
 import org.mafagafogigante.dungeon.gui.WritingSpecifications;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Writer class that encapsulates all Input/Output operations. This is the only class that should call the writing
@@ -15,9 +21,13 @@ public final class Writer {
    * For how many milliseconds the game sleeps after writing a string of battle output.
    */
   private static final int DEFAULT_WAIT_INTERVAL = 300;
+  private static final Writer defaultWriter = new Writer();
+  private final List<Writable> writtenStrings = new ArrayList<>();
+  private final Set<GameWindow> subscribers = new HashSet<>();
+  private boolean forwarding = true;
 
-  private Writer() { // Ensure that this class cannot be instantiated.
-    throw new AssertionError();
+  public static Writer getDefaultWriter() {
+    return defaultWriter;
   }
 
   /**
@@ -25,8 +35,8 @@ public final class Writer {
    *
    * @param text the string of text to be written.
    */
-  public static void write(String text) {
-    DungeonString string = new DungeonString(text);
+  public void write(String text) {
+    RichStringSequence string = new RichStringSequence(text);
     string.append("\n");
     write(string);
   }
@@ -36,7 +46,7 @@ public final class Writer {
    *
    * @param writable a Writable object, not empty
    */
-  public static void write(Writable writable) {
+  public void write(Writable writable) {
     write(writable, new WritingSpecifications(true, 0));
   }
 
@@ -46,9 +56,13 @@ public final class Writer {
    * @param writable a Writable object, not empty
    * @param specifications a WritingSpecifications object
    */
-  public static void write(Writable writable, WritingSpecifications specifications) {
-    if (Game.getGameWindow() != null) { // There will be no window when running the tests, so check to prevent a NPE.
-      Game.getGameWindow().scheduleWriteToTextPane(writable, specifications);
+  public void write(Writable writable, WritingSpecifications specifications) {
+    writtenStrings.add(writable);
+    if (!forwarding) {
+      return;
+    }
+    for (GameWindow window : subscribers) {
+      window.scheduleWriteToTextPane(writable, specifications);
       if (specifications.shouldWait()) {
         Sleeper.sleep(specifications.getWait());
       }
@@ -58,8 +72,30 @@ public final class Writer {
   /**
    * Writes a Writable and waits for the default waiting interval.
    */
-  public static void writeAndWait(Writable writable) {
+  public void writeAndWait(Writable writable) {
     write(writable, new WritingSpecifications(true, DEFAULT_WAIT_INTERVAL));
+  }
+
+  public void subscribe(GameWindow window) {
+    if (!subscribers.contains(window)) {
+      subscribers.add(window);
+    }
+  }
+
+  public void enableForwarding() {
+    forwarding = true;
+  }
+
+  public void disableForwarding() {
+    forwarding = false;
+  }
+
+  public void clearWrittenStrings() {
+    writtenStrings.clear();
+  }
+
+  public List<Writable> getWrittenStrings() {
+    return Collections.unmodifiableList(writtenStrings);
   }
 
 }

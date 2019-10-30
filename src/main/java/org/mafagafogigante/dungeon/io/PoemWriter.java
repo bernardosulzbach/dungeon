@@ -22,7 +22,7 @@ public final class PoemWriter {
    */
   public static void parsePoemCommand(String[] arguments) {
     if (Libraries.getPoetryLibrary().getPoemCount() == 0) {
-      Writer.write("No poems were loaded.");
+      Writer.getDefaultWriter().write("No poems were loaded.");
     } else {
       if (arguments.length != 0) {
         try {
@@ -35,7 +35,7 @@ public final class PoemWriter {
         } catch (NumberFormatException ignore) {
           // This exception reproduces the same error message an invalid index does.
         }
-        Writer.write("Invalid poem index.");
+        Writer.getDefaultWriter().write("Invalid poem index.");
       } else {
         writePoem(Libraries.getPoetryLibrary().getNextPoem());
       }
@@ -43,7 +43,7 @@ public final class PoemWriter {
   }
 
   private static void writePoem(Poem poem) {
-    Writer.write(poem, new WritingSpecifications(false, 0));
+    Writer.getDefaultWriter().write(poem, new WritingSpecifications(false, 0));
   }
 
 }

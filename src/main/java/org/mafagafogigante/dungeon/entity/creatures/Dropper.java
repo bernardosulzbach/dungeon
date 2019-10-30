@@ -33,10 +33,11 @@ class Dropper implements Serializable {
   }
 
   /**
-   * Drops everything that is in the Creature's inventory on the ground. Also rolls for each drop law and creates the
-   * items that must be created.
+   * Drops everything that is in the Creature's inventory on the ground.
+   *
+   * <p>Also rolls for each drop law and creates the items that must be created.
    */
-  public void dropEverything() {
+  void dropEverything() {
     if (!hasAlreadyCalledDropEverything) {
       hasAlreadyCalledDropEverything = true;
       dropInventory();
@@ -68,11 +69,7 @@ class Dropper implements Serializable {
 
   @Override
   public String toString() {
-    return "Dropper{" +
-        "creature=" + creature +
-        ", dropList=" + dropList +
-        ", droppedItemsList=" + droppedItemsList +
-        '}';
+    return "Dropper{" + "creature=" + creature + ", dropList=" + dropList + ", droppedItemsList=" + droppedItemsList +
+        ", hasAlreadyCalledDropEverything=" + hasAlreadyCalledDropEverything + '}';
   }
-
 }

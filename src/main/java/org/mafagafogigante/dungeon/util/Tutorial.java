@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.DungeonResource;
 import org.mafagafogigante.dungeon.io.JsonObjectFactory;
@@ -18,8 +18,8 @@ public class Tutorial extends Writable {
   private static final String text = JsonObjectFactory.makeJsonObject(FILENAME).get("tutorial").asString();
 
   @Override
-  public List<ColoredString> toColoredStringList() {
-    return new DungeonString(text).toColoredStringList();
+  public List<RichString> toRichStrings() {
+    return new RichStringSequence(text).toRichStrings();
   }
 
 }

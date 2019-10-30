@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.mafagafogigante.dungeon.game.ColoredString;
-import org.mafagafogigante.dungeon.game.DungeonString;
+import org.mafagafogigante.dungeon.game.RichString;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.Writable;
 import org.mafagafogigante.dungeon.io.Converter;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public final class SystemInformation extends Writable {
 
-  private final DungeonString information = compileInformation();
+  private final RichStringSequence information = compileInformation();
 
   private static String getUserString() {
     return System.getProperty("user.name");
@@ -41,25 +41,25 @@ public final class SystemInformation extends Writable {
     return String.format("%s (%s) %s", name, arch, version);
   }
 
-  private DungeonString compileInformation() {
+  private RichStringSequence compileInformation() {
     Date currentDate = new Date();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String time = timeFormat.format(currentDate);
     String date = dateFormat.format(currentDate);
-    DungeonString dungeonString = new DungeonString();
-    dungeonString.append("User: ", getUserString(), "\n");
-    dungeonString.append("Time: ", time, "\n");
-    dungeonString.append("Date: ", date, "\n");
-    dungeonString.append("Java: ", getJavaVersionString(), "\n");
-    dungeonString.append("Heap: ", getMemoryInformation(), "\n");
-    dungeonString.append("OS: ", getOsVersionString());
-    return dungeonString;
+    RichStringSequence richStringSequence = new RichStringSequence();
+    richStringSequence.append("User: ", getUserString(), "\n");
+    richStringSequence.append("Time: ", time, "\n");
+    richStringSequence.append("Date: ", date, "\n");
+    richStringSequence.append("Java: ", getJavaVersionString(), "\n");
+    richStringSequence.append("Heap: ", getMemoryInformation(), "\n");
+    richStringSequence.append("OS: ", getOsVersionString());
+    return richStringSequence;
   }
 
   @Override
-  public List<ColoredString> toColoredStringList() {
-    return information.toColoredStringList();
+  public List<RichString> toRichStrings() {
+    return information.toRichStrings();
   }
 
   @Override

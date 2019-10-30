@@ -1,11 +1,11 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
 import org.mafagafogigante.dungeon.game.Direction;
-import org.mafagafogigante.dungeon.game.DungeonString;
 import org.mafagafogigante.dungeon.game.Engine;
 import org.mafagafogigante.dungeon.game.Game;
 import org.mafagafogigante.dungeon.game.GameState;
 import org.mafagafogigante.dungeon.game.Point;
+import org.mafagafogigante.dungeon.game.RichStringSequence;
 import org.mafagafogigante.dungeon.game.World;
 import org.mafagafogigante.dungeon.io.Version;
 import org.mafagafogigante.dungeon.io.Writer;
@@ -34,9 +34,9 @@ class Walker implements Serializable {
           return;
         }
       }
-      Writer.write("Invalid input.");
+      Writer.getDefaultWriter().write("Invalid input.");
     } else {
-      Writer.write(new DungeonString("To where?", Color.ORANGE));
+      Writer.getDefaultWriter().write(new RichStringSequence("To where?", Color.ORANGE));
     }
   }
 
@@ -55,7 +55,7 @@ class Walker implements Serializable {
     // don't need if we can't get there.
     if (world.getLocation(point).isBlocked(dir) || world.getLocation(destinationPoint).isBlocked(dir.invert())) {
       Engine.rollDateAndRefresh(WALK_BLOCKED); // The hero tries to go somewhere.
-      Writer.write("You cannot go " + dir + ".");
+      Writer.getDefaultWriter().write("You cannot go " + dir + ".");
     } else {
       Hero hero = gameState.getHero();
       Engine.rollDateAndRefresh(WALK_SUCCESS); // Time spent walking.

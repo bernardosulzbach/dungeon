@@ -74,7 +74,7 @@ public class Game {
       gameState = Loader.newGame();
       // Note that loadedGameState may be null even if a save exists (if the player declined to load it).
       // So check for any save in the folder.
-      if (!Loader.checkForSave()) { // Suggest the tutorial only if no saved game exists.
+      if (!Loader.checkForSave()) {
         suggestTutorial();
       }
     }
@@ -82,7 +82,8 @@ public class Game {
   }
 
   private static void suggestTutorial() {
-    Writer.write(new DungeonString("\nYou may want to issue 'tutorial' to learn the basics.\n"));
+    RichStringSequence writable = new RichStringSequence("\nYou may want to issue 'tutorial' to learn the basics.\n");
+    Writer.getDefaultWriter().write(writable);
   }
 
   /**
@@ -124,7 +125,7 @@ public class Game {
     DungeonLogger.info("Set the GameState field in Game to a GameState.");
     // This is a new GameState that must be refreshed in order to have spawned creatures at the beginning.
     Engine.refresh();
-    Writer.write(new DungeonString("\n")); // Improves readability.
+    Writer.getDefaultWriter().write(new RichStringSequence("\n")); // Improves readability.
     gameState.getHero().look();
   }
 
@@ -135,8 +136,6 @@ public class Game {
 
   /**
    * Renders a turn based on the last IssuedCommand.
-   *
-   * @param issuedCommand the last IssuedCommand.
    */
   public static void renderTurn(IssuedCommand issuedCommand, StopWatch stopWatch) {
     DungeonLogger.logCommandRenderingReport(issuedCommand.toString(), "started renderTurn", stopWatch);
@@ -148,7 +147,7 @@ public class Game {
     if (wasSuccessful) {
       if (getGameState().getHero().getHealth().isDead()) {
         getGameWindow().clearTextPane();
-        Writer.write("You died.");
+        Writer.getDefaultWriter().write("You died.");
         unsetGameState();
         setGameState(getAfterDeathGameState());
       } else {
@@ -174,7 +173,7 @@ public class Game {
       IssuedCommandProcessor.prepareIssuedCommand(issuedCommand).execute();
       return true;
     } else {
-      DungeonString string = new DungeonString();
+      RichStringSequence string = new RichStringSequence();
       string.setColor(Color.RED);
       string.append("That is not a valid command.\n");
       string.append("But it is similar to ");
@@ -186,7 +185,7 @@ public class Game {
       string.append(".\n");
       string.setColor(Color.ORANGE);
       string.append("See 'commands' for a complete list of commands.");
-      Writer.write(string);
+      Writer.getDefaultWriter().write(string);
       return false;
     }
   }

@@ -63,6 +63,9 @@ class Record implements Serializable {
     }
   }
 
-  public enum Type {MAXIMUM, MINIMUM}
+  public enum Type {
+    MAXIMUM,
+    MINIMUM
+  }
 
 }
