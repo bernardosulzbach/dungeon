@@ -134,16 +134,17 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.3</version>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>3.1.12.2</version>
                 <configuration>
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
                 </configuration>
                 <executions>
-                    <!-- Ensures that FindBugs inspects source code when project is compiled. -->
+                    <!-- Ensures that SpotBugs inspects source code when project is compiled. -->
+                    <!-- This may no longer be needed, it was for FindBugs. -->
                     <execution>
                         <id>analyze-compile</id>
                         <phase>compile</phase>
