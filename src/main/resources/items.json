@@ -207,6 +207,87 @@
       "integrityDecrementOnEat": 10
     },
     {
+      "id": "CYAN_FUNGUS",
+      "type": "Food",
+      "name": {
+        "singular": "Cyan Fungus",
+        "plural": "Cyan Fungi"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 5,
+        "maximum": 5
+      },
+      "weight": 0.05,
+      "visibility": "60.00%",
+      "decompositionPeriod": "7 days",
+      "damage": 3,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 5,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "AMBER_FUNGUS",
+      "type": "Food",
+      "name": {
+        "singular": "Amber Fungus",
+        "plural": "Amber Fungi"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 5,
+        "maximum": 5
+      },
+      "weight": 0.05,
+      "visibility": "60.00%",
+      "decompositionPeriod": "7 days",
+      "damage": 3,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": 8,
+      "integrityDecrementOnEat": 5
+    },
+    {
+      "id": "TOXIC_AMBER_FUNGUS",
+      "type": "Food",
+      "name": {
+        "singular": "Amber Fungus",
+        "plural": "Amber Fungi"
+      },
+      "rarity": "COMMON",
+      "tags": [
+        "WEAPON",
+        "FOOD",
+        "DECOMPOSES",
+        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
+      ],
+      "integrity": {
+        "current": 5,
+        "maximum": 5
+      },
+      "weight": 0.05,
+      "visibility": "60.00%",
+      "decompositionPeriod": "7 days",
+      "damage": 3,
+      "hitRate": "60.00%",
+      "integrityDecrementOnHit": 5,
+      "nutrition": -3,
+      "integrityDecrementOnEat": 5
+    },
+    {
       "id": "HEALING_POTION",
       "type": "Potion",
       "name": {

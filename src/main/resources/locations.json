@@ -185,6 +185,18 @@
         {
           "id": "HISTORY_OF_THE_THIRD_ERA",
           "probability": 0.05
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.3
         }
       ]
     },
@@ -265,6 +277,18 @@
         {
           "id": "TOME_OF_DISPLACE",
           "probability": 0.05
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.3
         }
       ]
     },
@@ -319,6 +343,18 @@
         {
           "id": "TOME_OF_FINGER_OF_DEATH",
           "probability": 0.05
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.3
         }
       ]
     },
@@ -365,6 +401,18 @@
         {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.5
         }
       ]
     },
@@ -429,6 +477,18 @@
         {
           "id": "TOME_OF_PERCEIVE",
           "probability": 0.05
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.5
         }
       ]
     },
@@ -1083,6 +1143,18 @@
         {
           "id": "CLUB",
           "probability": 0.4
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.5
+        },
+        {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.5
+        },
+        {
+          "id": "TOXIC_AMBER_FUNGUS",
+          "probability": 0.5
         }
       ]
     },
