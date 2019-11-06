@@ -1083,6 +1083,14 @@
         {
           "id": "CLUB",
           "probability": 0.4
+        },
+        {
+          "id": "CYAN_FUNGUS",
+          "probability": 0.5
+        },
+        {
+          "id": "CYAN_FUNGUS2",
+          "probability": 0.5
         }
       ]
     },
