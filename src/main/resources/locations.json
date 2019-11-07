@@ -191,6 +191,10 @@
           "probability": 0.3
         },
         {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
           "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
@@ -279,6 +283,10 @@
           "probability": 0.3
         },
         {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
           "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
@@ -341,6 +349,10 @@
           "probability": 0.3
         },
         {
+          "id": "AMBER_FUNGUS",
+          "probability": 0.3
+        },
+        {
           "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
@@ -392,6 +404,10 @@
         },
         {
           "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
           "probability": 0.3
         },
         {
@@ -464,6 +480,10 @@
         },
         {
           "id": "CYAN_FUNGUS",
+          "probability": 0.3
+        },
+        {
+          "id": "AMBER_FUNGUS",
           "probability": 0.3
         },
         {
@@ -1126,6 +1146,10 @@
         },
         {
           "id": "CYAN_FUNGUS",
+          "probability": 0.5
+        },
+        {
+          "id": "AMBER_FUNGUS",
           "probability": 0.5
         },
         {
