@@ -191,7 +191,7 @@
           "probability": 0.3
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
       ]
@@ -279,7 +279,7 @@
           "probability": 0.3
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
       ]
@@ -341,7 +341,7 @@
           "probability": 0.3
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.3
         }
       ]
@@ -395,7 +395,7 @@
           "probability": 0.3
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.5
         }
       ]
@@ -467,7 +467,7 @@
           "probability": 0.3
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.5
         }
       ]
@@ -1129,7 +1129,7 @@
           "probability": 0.5
         },
         {
-          "id": "CYAN_FUNGUS2",
+          "id": "AMBER_FUNGUS2",
           "probability": 0.5
         }
       ]
