@@ -234,11 +234,11 @@
       "integrityDecrementOnEat": 5
     },
     {
-      "id": "CYAN_FUNGUS2",
+      "id": "AMBER_FUNGUS2",
       "type": "Food",
       "name": {
-        "singular": "Cyan fungus",
-        "plural": "Cyan fungi"
+        "singular": "Amber Fungus",
+        "plural": "Amber Fungi"
       },
       "rarity": "COMMON",
       "tags": [
