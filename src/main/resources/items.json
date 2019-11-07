@@ -261,34 +261,6 @@
       "integrityDecrementOnEat": 5
     },
     {
-      "id": "GLOWING_MOSS",
-      "type": "Food",
-      "name": {
-        "singular": "Glowing Moss",
-        "plural": "Glowing Mosses"
-      },
-      "rarity": "COMMON",
-      "tags": [
-        "WEAPON",
-        "FOOD",
-        "DECOMPOSES",
-        "WEIGHT_PROPORTIONAL_TO_INTEGRITY"
-      ],
-      "integrity": {
-        "current": 5,
-        "maximum": 5
-      },
-      "weight": 0.01,
-      "visibility": "50.00%",
-      "decompositionPeriod": "1 month",
-      "damage": 1,
-      "hitRate": "35.00%",
-      "integrityDecrementOnHit": 2,
-      "nutrition": 3,
-      "integrityDecrementOnEat": 5,
-      "luminosity": "30.00%"
-    },
-    {
       "id": "HEALING_POTION",
       "type": "Potion",
       "name": {
