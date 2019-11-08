@@ -261,7 +261,7 @@
       "integrityDecrementOnEat": 5
     },
     {
-      "id": "AMBER_FUNGUS2",
+      "id": "TOXIC_AMBER_FUNGUS",
       "type": "Food",
       "name": {
         "singular": "Amber Fungus",
