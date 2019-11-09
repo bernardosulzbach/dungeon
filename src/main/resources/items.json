@@ -210,8 +210,8 @@
       "id": "CYAN_FUNGUS",
       "type": "Food",
       "name": {
-        "singular": "Cyan fungus",
-        "plural": "Cyan fungi"
+        "singular": "Cyan Fungus",
+        "plural": "Cyan Fungi"
       },
       "rarity": "COMMON",
       "tags": [
