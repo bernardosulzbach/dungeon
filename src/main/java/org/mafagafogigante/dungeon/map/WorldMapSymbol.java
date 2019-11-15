@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.map;
 
 import org.mafagafogigante.dungeon.game.Location;
+import org.mafagafogigante.dungeon.game.LocationDescription;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,19 +12,25 @@ import java.awt.Color;
  */
 class WorldMapSymbol {
 
-  private static final WorldMapSymbol HERO_SYMBOL = new WorldMapSymbol('@', Color.WHITE);
-  private static final WorldMapSymbol NOT_YET_GENERATED_SYMBOL = new WorldMapSymbol('~', Color.GRAY);
+  private static final WorldMapSymbol HERO_SYMBOL = new WorldMapSymbol("You", '@', Color.WHITE);
+  private static final WorldMapSymbol NOT_YET_GENERATED_SYMBOL = new WorldMapSymbol("Unknown", '~', Color.GRAY);
 
+  private final String name;
   private final String character;
   private final Color color;
 
-  private WorldMapSymbol(char character, @NotNull Color color) {
+  private WorldMapSymbol(String name, char character, @NotNull Color color) {
+    this.name = name;
     this.character = String.valueOf(character);
     this.color = color;
   }
 
   public static WorldMapSymbol makeSymbol(@NotNull Location location) {
-    return new WorldMapSymbol(location.getDescription().getSymbol(), location.getDescription().getColor());
+    String singular = location.getName().getSingular();
+    LocationDescription description = location.getDescription();
+    final char symbol = description.getSymbol();
+    Color color = description.getColor();
+    return new WorldMapSymbol(singular, symbol, color);
   }
 
   public static WorldMapSymbol getHeroSymbol() {
@@ -32,6 +39,10 @@ class WorldMapSymbol {
 
   public static WorldMapSymbol getNotYetGeneratedSymbol() {
     return NOT_YET_GENERATED_SYMBOL;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public String getCharacterAsString() {
@@ -45,9 +56,10 @@ class WorldMapSymbol {
   @Override
   public String toString() {
     return "WorldMapSymbol{" +
-        "character='" + character + '\'' +
-        ", color=" + color +
-        '}';
+            "name='" + name + '\'' +
+            ", character='" + character + '\'' +
+            ", color=" + color +
+            '}';
   }
 
 }

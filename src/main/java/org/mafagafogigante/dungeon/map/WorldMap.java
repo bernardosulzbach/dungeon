@@ -36,7 +36,6 @@ class WorldMap {
       return renderWorldMap(new WorldMapSymbolFactory(world, heroPosition, explorationStatistics), rows, columns);
     } else {
       return renderWorldMap(new WorldMapSymbolFactory(world, heroPosition), rows, columns);
-
     }
   }
 
