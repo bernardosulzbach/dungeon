@@ -54,6 +54,24 @@ class WorldMapSymbol {
   }
 
   @Override
+  public boolean equals(Object object) {
+    if (this == object) {
+      return true;
+    }
+    if (object == null || getClass() != object.getClass()) {
+      return false;
+    }
+
+    WorldMapSymbol that = (WorldMapSymbol) object;
+    return name.equals(that.name) && character.equals(that.character) && color.equals(that.color);
+  }
+
+  @Override
+  public int hashCode() {
+    return 31 * name.hashCode() + character.hashCode() + color.hashCode();
+  }
+
+  @Override
   public String toString() {
     return "WorldMapSymbol{" +
             "name='" + name + '\'' +

@@ -6,9 +6,6 @@ import org.mafagafogigante.dungeon.io.Writer;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class WorldMapWriter {
 
   private WorldMapWriter() {
@@ -31,29 +28,6 @@ public final class WorldMapWriter {
     return GameWindow.getColumns();
   }
 
-  private static void renderLegend(@NotNull WorldMapSymbol[][] worldMapSymbolMatrix, @NotNull DungeonString string) {
-    List<WorldMapSymbol> symbols = new ArrayList<>();
-    int centerI = (worldMapSymbolMatrix.length - 2) / 2 + 1;
-    int centerJ = worldMapSymbolMatrix[centerI].length / 2 - 1;
-    symbols.add(worldMapSymbolMatrix[centerI - 1][centerJ]);
-    symbols.add(worldMapSymbolMatrix[centerI][centerJ - 1]);
-    symbols.add(worldMapSymbolMatrix[centerI][centerJ + 1]);
-    symbols.add(worldMapSymbolMatrix[centerI + 1][centerJ]);
-    for (int i = 0; i < symbols.size(); i++) {
-      if (i % 2 == 0) {
-        string.append(String.format("%-16s", ""));
-      }
-      WorldMapSymbol symbol = symbols.get(i);
-      string.setColor(symbol.getColor());
-      string.append(symbol.getCharacterAsString());
-      string.resetColor();
-      string.append(String.format(" - %-32s", symbol.getName()));
-      if (i % 2 != 0) {
-        string.append("\n");
-      }
-    }
-  }
-
   /**
    * Writes a WorldMap to the screen. This erases all the content currently on the screen.
    *
@@ -72,7 +46,7 @@ public final class WorldMapWriter {
         string.append("\n");
       }
     }
-    renderLegend(worldMapSymbolMatrix, string);
+    WorldMapLegend.renderLegend(worldMapSymbolMatrix, string);
     Writer.write(string);
   }
 
