@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-public final class WorldMapLegend {
+final class WorldMapLegend {
   /**
    * Setting the amount of locations to display. MAX_LEGEND_LOCATIONS needs to be an even number for proper formatting.
    */
