@@ -6,6 +6,7 @@ import org.mafagafogigante.dungeon.game.LocationDescription;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
+import java.util.Objects;
 
 /**
  * A symbol in a WorldMap.
@@ -54,21 +55,23 @@ class WorldMapSymbol {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (object == null || getClass() != object.getClass()) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
-    WorldMapSymbol that = (WorldMapSymbol) object;
-    return name.equals(that.name) && character.equals(that.character) && color.equals(that.color);
+    WorldMapSymbol that = (WorldMapSymbol) o;
+    final boolean nameEquals = Objects.equals(name, that.name);
+    final boolean characterEquals = Objects.equals(character, that.character);
+    final boolean colorEquals = Objects.equals(color, that.color);
+    return nameEquals && characterEquals && colorEquals;
   }
 
   @Override
   public int hashCode() {
-    return 31 * name.hashCode() + character.hashCode() + color.hashCode();
+    return Objects.hash(name, character, color);
   }
 
   @Override
