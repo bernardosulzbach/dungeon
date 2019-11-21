@@ -23,12 +23,12 @@ final class WorldMapLegend {
 
   static void renderLegend(@NotNull WorldMapSymbol[][] worldMapSymbolMatrix, @NotNull DungeonString string) {
     Set<WorldMapSymbol> symbols = new HashSet<>();
-    int centerI = (worldMapSymbolMatrix.length - 2) / 2 + 1;
-    int centerJ = worldMapSymbolMatrix[centerI].length / 2 - 1;
-    symbols.add(worldMapSymbolMatrix[centerI - 1][centerJ]);
+    final int centerI = (worldMapSymbolMatrix.length - 2) / 2 + 1;
+    final int centerJ = worldMapSymbolMatrix[centerI].length / 2 - 1;
     symbols.add(worldMapSymbolMatrix[centerI - 1][centerJ - 1]);
-    symbols.add(worldMapSymbolMatrix[centerI][centerJ - 1]);
+    symbols.add(worldMapSymbolMatrix[centerI - 1][centerJ]);
     symbols.add(worldMapSymbolMatrix[centerI - 1][centerJ + 1]);
+    symbols.add(worldMapSymbolMatrix[centerI][centerJ - 1]);
     symbols.add(worldMapSymbolMatrix[centerI][centerJ + 1]);
     symbols.add(worldMapSymbolMatrix[centerI + 1][centerJ - 1]);
     symbols.add(worldMapSymbolMatrix[centerI + 1][centerJ]);
