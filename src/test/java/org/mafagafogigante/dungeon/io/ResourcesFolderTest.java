@@ -26,12 +26,12 @@ public class ResourcesFolderTest {
    * Try to initialize the resources directory.
    */
   @Before
-  public void initialize() {
+  public void initialize() throws Exception {
     URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
     if (resourcesUrl != null) {
-      resourcesDir = new File(resourcesUrl.getFile());
+      resourcesDir = new File(resourcesUrl.toURI().getPath());
       if (!resourcesDir.isDirectory()) {
-        Assert.fail("Resources file should be a directory");
+        Assert.fail("Resources file: " + resourcesDir.toString() +  " should be a directory");
       }
     } else {
       Assert.fail("Unable to find resources folder");
