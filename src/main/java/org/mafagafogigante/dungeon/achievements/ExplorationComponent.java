@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
@@ -24,11 +25,14 @@ final class ExplorationComponent {
    */
   private final CounterMap<Id> maximumNumberOfVisits;
 
+  private final CounterMap<PartOfDay> partOfDays;
+
   ExplorationComponent(CounterMap<Id> killsByLocationId, CounterMap<Id> visitedLocations,
-      CounterMap<Id> maximumNumberOfVisits) {
+      CounterMap<Id> maximumNumberOfVisits, CounterMap<PartOfDay> partOfDays) {
     this.killsByLocationId = killsByLocationId;
     this.visitedLocations = visitedLocations;
     this.maximumNumberOfVisits = maximumNumberOfVisits;
+    this.partOfDays = partOfDays;
   }
 
   /**
@@ -52,6 +56,13 @@ final class ExplorationComponent {
     if (maximumNumberOfVisits != null) {
       for (Id locationId : maximumNumberOfVisits.keySet()) {
         if (explorationStatistics.getMaximumNumberOfVisits(locationId) < maximumNumberOfVisits.getCounter(locationId)) {
+          return false;
+        }
+      }
+    }
+    if (partOfDays != null) {
+      for (PartOfDay partOfDay : partOfDays.keySet()) {
+        if (explorationStatistics.getVisitsByPartOfDay(partOfDay) < partOfDays.getCounter(partOfDay)) {
           return false;
         }
       }

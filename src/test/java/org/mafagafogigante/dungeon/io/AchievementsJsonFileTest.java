@@ -23,6 +23,8 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String RIVERSIDE_FIELD = "RIVERSIDE";
   private static final String GRAVEYARD_FIELD = "GRAVEYARD";
   private static final String PART_OF_DAY_FIELD = "partOfDay";
+  private static final String MIDNIGHT_FIELD = "MIDNIGHT";
+  private static final String MORNING_FIELD = "MORNING";
   private static final String ACHIEVEMENTS_FIELD = "achievements";
   private static final String STONE_BRIDGE_FIELD = "STONE_BRIDGE";
   private static final String CAUSE_OF_DEATH_FIELD = "causeOfDeath";
@@ -31,6 +33,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String BATTLE_REQUIREMENTS_FIELD = "battleRequirements";
   private static final String KILLS_BY_LOCATION_ID_FIELD = "killsByLocationID";
   private static final String MAXIMUM_NUMBER_OF_VISITS_FIELD = "maximumNumberOfVisits";
+  private static final String VISITS_BY_PART_OF_DAY = "partOfDay";
   private static final String EXPLORATION_REQUIREMENTS_FIELD = "explorationRequirements";
 
   @Test
@@ -41,6 +44,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     JsonRule visitedLocationsRule = getVisitedLocationsRule();
     JsonRule maximumNumberOfVisitsRule = getMaximumNumberOfVisitsRule();
     JsonRule killsByLocationIdRule = getKillsByLocationIdRule();
+    JsonRule visitedByPartOfDayRule = getVisitedByPartOfDayRule();
     Map<String, JsonRule> explorationRequirementsRules = new HashMap<>();
     JsonRule optionalKillsByLocationRule = JsonRuleFactory.makeOptionalRule(killsByLocationIdRule);
     explorationRequirementsRules.put(KILLS_BY_LOCATION_ID_FIELD, optionalKillsByLocationRule);
@@ -48,6 +52,8 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     explorationRequirementsRules.put(MAXIMUM_NUMBER_OF_VISITS_FIELD, optionalMaximumNumberRule);
     JsonRule optionalVisitedLocationsRule = JsonRuleFactory.makeOptionalRule(visitedLocationsRule);
     explorationRequirementsRules.put(VISITED_LOCATIONS_FIELD, optionalVisitedLocationsRule);
+    JsonRule optionalVisitedByPartOfDayRule = JsonRuleFactory.makeOptionalRule(visitedByPartOfDayRule);
+    explorationRequirementsRules.put(VISITS_BY_PART_OF_DAY, optionalVisitedByPartOfDayRule);
     JsonRule explorationRequirementsRule = JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
     JsonRule achievementRule = makeAchievementsRule(explorationRequirementsRule, battleRequirementsRule);
     JsonRule achievementsFileRule = getAchievementsFileRule(achievementRule);
@@ -125,6 +131,14 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     visitedLocationsRules.put(RIVERSIDE_FIELD, optionalIntegerRule);
     visitedLocationsRules.put(GRAVEYARD_FIELD, optionalIntegerRule);
     return JsonRuleFactory.makeObjectRule(visitedLocationsRules);
+  }
+
+  private JsonRule getVisitedByPartOfDayRule() {
+    Map<String, JsonRule> visitedByPartOfDayRules = new HashMap<>();
+    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
+    visitedByPartOfDayRules.put(MIDNIGHT_FIELD, optionalIntegerRule);
+    visitedByPartOfDayRules.put(MORNING_FIELD, optionalIntegerRule);
+    return JsonRuleFactory.makeObjectRule(visitedByPartOfDayRules);
   }
 
 }
