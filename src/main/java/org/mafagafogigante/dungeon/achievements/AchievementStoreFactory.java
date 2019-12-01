@@ -69,6 +69,14 @@ public class AchievementStoreFactory {
     return counterMap;
   }
 
+  private static CounterMap<PartOfDay> partOfDayCounterMapFromJsonObject(JsonObject jsonObject) {
+    CounterMap<PartOfDay> counterMap = new CounterMap<>();
+    for (Member member : jsonObject) {
+      counterMap.incrementCounter(PartOfDay.getPartOfDayByName(member.getName()), member.getValue().asInt());
+    }
+    return counterMap;
+  }
+
   /**
    * Loads all provided achievements into the provided AchievementStore.
    *
@@ -130,6 +138,10 @@ public class AchievementStoreFactory {
         JsonValue visitedLocations = explorationRequirements.asObject().get("visitedLocations");
         if (visitedLocations != null) {
           builder.setVisitedLocations(idCounterMapFromJsonObject(visitedLocations.asObject()));
+        }
+        JsonValue partOfDays = explorationRequirements.asObject().get("partOfDay");
+        if (partOfDays != null) {
+          builder.setVisitedPartOfDay(partOfDayCounterMapFromJsonObject(partOfDays.asObject()));
         }
       }
       store.addAchievement(builder.createAchievement());

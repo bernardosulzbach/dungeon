@@ -1,5 +1,6 @@
 package org.mafagafogigante.dungeon.achievements;
 
+import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.entity.creatures.Creature;
 import org.mafagafogigante.dungeon.entity.creatures.CreaturePreset;
 import org.mafagafogigante.dungeon.game.Id;
@@ -55,11 +56,14 @@ public class AchievementTest {
 
     Statistics statistics = new Statistics();
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertTrue(achievement.isFulfilled(statistics));
   }
 
@@ -75,11 +79,14 @@ public class AchievementTest {
 
     Statistics statistics = new Statistics();
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
     Assert.assertTrue(achievement.isFulfilled(statistics));
   }
 

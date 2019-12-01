@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ class AchievementBuilder {
   private CounterMap<Id> killsByLocationId;
   private CounterMap<Id> visitedLocations;
   private CounterMap<Id> maximumNumberOfVisits;
+  private CounterMap<PartOfDay> partOfDays;
 
   public void setId(String id) {
     this.id = id;
@@ -55,9 +57,15 @@ class AchievementBuilder {
     }
   }
 
+  public void setVisitedPartOfDay(CounterMap<PartOfDay> partOfDays) {
+    if (partOfDays.isNotEmpty()) {
+      this.partOfDays = partOfDays;
+    }
+  }
+
   public Achievement createAchievement() {
     return new Achievement(id, name, info, text, requirements, killsByLocationId, visitedLocations,
-        maximumNumberOfVisits);
+        maximumNumberOfVisits, partOfDays);
   }
 
 }

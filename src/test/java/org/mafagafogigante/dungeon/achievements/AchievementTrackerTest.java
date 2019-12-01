@@ -4,6 +4,7 @@ import org.mafagafogigante.dungeon.achievements.comparators.UnlockedAchievementC
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
@@ -82,7 +83,8 @@ public class AchievementTrackerTest {
 
     Assert.assertTrue(tracker.hasNotBeenUnlocked(achievement));
 
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("PLACE"));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("PLACE"),
+        new Date(PartOfDay.DAWN.getStartingHour()));
 
     Assert.assertTrue(tracker.hasNotBeenUnlocked(achievement));
 

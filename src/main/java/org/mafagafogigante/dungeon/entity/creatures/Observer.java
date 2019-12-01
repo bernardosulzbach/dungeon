@@ -182,7 +182,7 @@ public class Observer implements Serializable {
       if (world.hasLocationAt(adjacentPoint)) {
         Location adjacentLocation = world.getLocation(adjacentPoint);
         ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-        explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId());
+        explorationStatistics.createEntryIfNotExists(adjacentPoint, adjacentLocation.getId(), world.getWorldDate());
         String name = adjacentLocation.getName().getSingular();
         Color color = adjacentLocation.getDescription().getColor();
         ColoredString locationName = new ColoredString(name, color);

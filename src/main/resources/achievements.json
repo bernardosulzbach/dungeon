@@ -666,6 +666,28 @@
           "GRAVEYARD": 10
         }
       }
+    },
+    {
+      "id": "I_DONT_NEED_NO_SUNLIGHT",
+      "name": "I don't need no sunlight",
+      "info": "Discover 10 new locations at midnight.",
+      "text": "discovered 10 new locations at midnight",
+      "explorationRequirements": {
+        "partOfDay": {
+          "MIDNIGHT": 10
+        }
+      }
+    },
+    {
+      "id": "MORNING_WALK",
+      "name": "Morning Walk",
+      "info": "Discover 10 new locations at morning.",
+      "text": "discovered 10 new locations at morning",
+      "explorationRequirements": {
+        "partOfDay": {
+          "MORNING": 10
+        }
+      }
     }
   ]
 }

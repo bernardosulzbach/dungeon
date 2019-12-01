@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.achievements;
 
 import org.mafagafogigante.dungeon.game.Id;
+import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.stats.BattleStatistics;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.stats.Statistics;
@@ -29,13 +30,13 @@ public class Achievement {
    */
   Achievement(String id, String name, String info, String text,
       Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<Id> killsByLocationId,
-      CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits) {
+      CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits, CounterMap<PartOfDay> partOfDays) {
     this.id = new Id(id);
     this.name = name;
     this.info = info;
     this.text = text;
     battle = new BattleComponent(battleRequirements);
-    exploration = new ExplorationComponent(killsByLocationId, visitedLocations, maximumNumberOfVisits);
+    exploration = new ExplorationComponent(killsByLocationId, visitedLocations, maximumNumberOfVisits, partOfDays);
   }
 
   public Id getId() {
