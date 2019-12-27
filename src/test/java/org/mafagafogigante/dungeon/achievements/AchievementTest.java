@@ -56,14 +56,12 @@ public class AchievementTest {
 
     Statistics statistics = new Statistics();
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    Date startOfDawn = new Date(PartOfDay.DAWN.getStartingHour());
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"), startOfDawn);
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"), startOfDawn);
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"), startOfDawn);
     Assert.assertTrue(achievement.isFulfilled(statistics));
   }
 
@@ -79,14 +77,12 @@ public class AchievementTest {
 
     Statistics statistics = new Statistics();
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    Date startOfDawn = new Date(PartOfDay.DAWN.getStartingHour());
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"), startOfDawn);
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    statistics.getExplorationStatistics().addVisit(new Point(1, 1, 1), new Id("DESERT"), startOfDawn);
     Assert.assertFalse(achievement.isFulfilled(statistics));
-    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+    statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("DESERT"), startOfDawn);
     Assert.assertTrue(achievement.isFulfilled(statistics));
   }
 

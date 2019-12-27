@@ -668,24 +668,78 @@
       }
     },
     {
-      "id": "I_DONT_NEED_NO_SUNLIGHT",
-      "name": "I don't need no sunlight",
+      "id": "I_NEED_NO_SUNLIGHT",
+      "name": "I need no sunlight",
       "info": "Discover 10 new locations at midnight.",
       "text": "discovered 10 new locations at midnight",
       "explorationRequirements": {
-        "partOfDay": {
-          "MIDNIGHT": 10
+        "discovery": {
+          "parts": [
+            "MIDNIGHT"
+          ],
+          "count": 10
         }
       }
     },
     {
       "id": "MORNING_WALK",
       "name": "Morning Walk",
-      "info": "Discover 10 new locations at morning.",
-      "text": "discovered 10 new locations at morning",
+      "info": "Discover 10 new locations in the morning.",
+      "text": "discovered 10 new locations in the morning",
       "explorationRequirements": {
-        "partOfDay": {
-          "MORNING": 10
+        "discovery": {
+          "parts": [
+            "MORNING"
+          ],
+          "count": 10
+        }
+      }
+    },
+    {
+      "id": "CHILD_OF_THE_NIGHT",
+      "name": "Child of the night",
+      "info": "Discover 20 new locations during the nighttime.",
+      "text": "discovered 20 new locations during the nighttime",
+      "explorationRequirements": {
+        "discovery": {
+          "parts": [
+            "DUSK",
+            "EVENING",
+            "MIDNIGHT",
+            "NIGHT"
+          ],
+          "count": 20
+        }
+      }
+    },
+    {
+      "id": "CHILD_OF_THE_LIGHT",
+      "name": "Child of the light",
+      "info": "Discover 20 new locations during the daytime.",
+      "text": "discovered 20 new locations during the daytime",
+      "explorationRequirements": {
+        "discovery": {
+          "parts": [
+            "DAWN",
+            "MORNING",
+            "NOON",
+            "AFTERNOON"
+          ],
+          "count": 20
+        }
+      }
+    },
+    {
+      "id": "INSOMNIAC",
+      "name": "Insomniac",
+      "info": "Discover 10 new locations in the night.",
+      "text": "discovered 10 new locations in the night",
+      "explorationRequirements": {
+        "discovery": {
+          "parts": [
+            "NIGHT"
+          ],
+          "count": 10
         }
       }
     }

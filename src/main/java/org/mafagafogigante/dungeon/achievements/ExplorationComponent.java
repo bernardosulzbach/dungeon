@@ -5,6 +5,8 @@ import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.stats.ExplorationStatistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
+import java.util.Set;
+
 /**
  * The exploration component of an achievement.
  */
@@ -25,14 +27,16 @@ final class ExplorationComponent {
    */
   private final CounterMap<Id> maximumNumberOfVisits;
 
-  private final CounterMap<PartOfDay> partOfDays;
+  private final Set<PartOfDay> partsOfDayOfDiscovery;
+  private final int discoveryCount;
 
   ExplorationComponent(CounterMap<Id> killsByLocationId, CounterMap<Id> visitedLocations,
-      CounterMap<Id> maximumNumberOfVisits, CounterMap<PartOfDay> partOfDays) {
+                       CounterMap<Id> maximumNumberOfVisits, Set<PartOfDay> partsOfDayOfDiscovery, int discoveryCount) {
     this.killsByLocationId = killsByLocationId;
     this.visitedLocations = visitedLocations;
     this.maximumNumberOfVisits = maximumNumberOfVisits;
-    this.partOfDays = partOfDays;
+    this.partsOfDayOfDiscovery = partsOfDayOfDiscovery;
+    this.discoveryCount = discoveryCount;
   }
 
   /**
@@ -60,12 +64,12 @@ final class ExplorationComponent {
         }
       }
     }
-    if (partOfDays != null) {
-      for (PartOfDay partOfDay : partOfDays.keySet()) {
-        if (explorationStatistics.getVisitsByPartOfDay(partOfDay) < partOfDays.getCounter(partOfDay)) {
-          return false;
-        }
+    if (discoveryCount > 0) {
+      int count = 0;
+      for (PartOfDay partOfDay : partsOfDayOfDiscovery) {
+        count += explorationStatistics.getLocationsDiscoveredDuringPartOfDay(partOfDay);
       }
+      return count >= discoveryCount;
     }
     return true;
   }

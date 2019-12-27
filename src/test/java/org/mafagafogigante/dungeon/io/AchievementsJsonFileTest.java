@@ -18,13 +18,12 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String TYPE_FIELD = "type";
   private static final String COUNT_FIELD = "count";
   private static final String QUERY_FIELD = "query";
+  private static final String PARTS_FIELD = "parts";
   private static final String FOREST_FIELD = "FOREST";
   private static final String DESERT_FIELD = "DESERT";
   private static final String RIVERSIDE_FIELD = "RIVERSIDE";
   private static final String GRAVEYARD_FIELD = "GRAVEYARD";
   private static final String PART_OF_DAY_FIELD = "partOfDay";
-  private static final String MIDNIGHT_FIELD = "MIDNIGHT";
-  private static final String MORNING_FIELD = "MORNING";
   private static final String ACHIEVEMENTS_FIELD = "achievements";
   private static final String STONE_BRIDGE_FIELD = "STONE_BRIDGE";
   private static final String CAUSE_OF_DEATH_FIELD = "causeOfDeath";
@@ -33,8 +32,8 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
   private static final String BATTLE_REQUIREMENTS_FIELD = "battleRequirements";
   private static final String KILLS_BY_LOCATION_ID_FIELD = "killsByLocationID";
   private static final String MAXIMUM_NUMBER_OF_VISITS_FIELD = "maximumNumberOfVisits";
-  private static final String VISITS_BY_PART_OF_DAY = "partOfDay";
   private static final String EXPLORATION_REQUIREMENTS_FIELD = "explorationRequirements";
+  private static final String DISCOVERY_FIELD = "discovery";
 
   @Test
   public void testIsFileHasValidStructure() {
@@ -44,7 +43,7 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     JsonRule visitedLocationsRule = getVisitedLocationsRule();
     JsonRule maximumNumberOfVisitsRule = getMaximumNumberOfVisitsRule();
     JsonRule killsByLocationIdRule = getKillsByLocationIdRule();
-    JsonRule visitedByPartOfDayRule = getVisitedByPartOfDayRule();
+    JsonRule discoveryRule = getDiscoveryRule();
     Map<String, JsonRule> explorationRequirementsRules = new HashMap<>();
     JsonRule optionalKillsByLocationRule = JsonRuleFactory.makeOptionalRule(killsByLocationIdRule);
     explorationRequirementsRules.put(KILLS_BY_LOCATION_ID_FIELD, optionalKillsByLocationRule);
@@ -52,8 +51,8 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     explorationRequirementsRules.put(MAXIMUM_NUMBER_OF_VISITS_FIELD, optionalMaximumNumberRule);
     JsonRule optionalVisitedLocationsRule = JsonRuleFactory.makeOptionalRule(visitedLocationsRule);
     explorationRequirementsRules.put(VISITED_LOCATIONS_FIELD, optionalVisitedLocationsRule);
-    JsonRule optionalVisitedByPartOfDayRule = JsonRuleFactory.makeOptionalRule(visitedByPartOfDayRule);
-    explorationRequirementsRules.put(VISITS_BY_PART_OF_DAY, optionalVisitedByPartOfDayRule);
+    JsonRule optionalDiscoveryRule = JsonRuleFactory.makeOptionalRule(discoveryRule);
+    explorationRequirementsRules.put(DISCOVERY_FIELD, optionalDiscoveryRule);
     JsonRule explorationRequirementsRule = JsonRuleFactory.makeObjectRule(explorationRequirementsRules);
     JsonRule achievementRule = makeAchievementsRule(explorationRequirementsRule, battleRequirementsRule);
     JsonRule achievementsFileRule = getAchievementsFileRule(achievementRule);
@@ -133,11 +132,10 @@ public class AchievementsJsonFileTest extends ResourcesTypeTest {
     return JsonRuleFactory.makeObjectRule(visitedLocationsRules);
   }
 
-  private JsonRule getVisitedByPartOfDayRule() {
+  private JsonRule getDiscoveryRule() {
     Map<String, JsonRule> visitedByPartOfDayRules = new HashMap<>();
-    JsonRule optionalIntegerRule = JsonRuleFactory.makeOptionalRule(JsonRuleFactory.makeIntegerRule());
-    visitedByPartOfDayRules.put(MIDNIGHT_FIELD, optionalIntegerRule);
-    visitedByPartOfDayRules.put(MORNING_FIELD, optionalIntegerRule);
+    visitedByPartOfDayRules.put(PARTS_FIELD, JsonRuleFactory.makeVariableArrayRule(JsonRuleFactory.makeStringRule()));
+    visitedByPartOfDayRules.put(COUNT_FIELD, JsonRuleFactory.makeIntegerRule());
     return JsonRuleFactory.makeObjectRule(visitedByPartOfDayRules);
   }
 

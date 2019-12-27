@@ -2,13 +2,11 @@ package org.mafagafogigante.dungeon.stats;
 
 import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.game.Id;
-import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.PartOfDay;
 import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.io.Version;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,11 +16,9 @@ public class ExplorationStatistics implements Serializable {
 
   private static final long serialVersionUID = Version.MAJOR;
   private final HashMap<Point, ExplorationStatisticsEntry> entries;
-  private final HashMap<Point, ExplorationStatisticsEntry> distinctLocations;
 
   public ExplorationStatistics() {
     this.entries = new HashMap<>();
-    this.distinctLocations = new HashMap<>();
   }
 
   /**
@@ -47,29 +43,6 @@ public class ExplorationStatistics implements Serializable {
   public void addVisit(Point point, Id locationId, Date discoveredDate) {
     createEntryIfNotExists(point, locationId, discoveredDate);
     entries.get(point).addVisit();
-    addDistinctLocationByPartOfDay(point);
-  }
-
-  /**
-   * Records a distinct location corresponding to partOfDay.
-   *
-   * @param point the visited Point
-   */
-  public void addDistinctLocationByPartOfDay(Point point) {
-    boolean distinct = true;
-    for (ExplorationStatisticsEntry location : distinctLocations.values()) {
-      PartOfDay day = PartOfDay.getCorrespondingConstant(entries.get(point).getDiscoveredDate());
-      String entryName = day.getName().getSingular();
-      String distinctName = PartOfDay.getCorrespondingConstant(location.getDiscoveredDate()).toString();
-      if (location.getLocationId() == entries.get(point).getLocationId() && entryName.equalsIgnoreCase(distinctName)) {
-        distinct = false;
-        break;
-      }
-    }
-
-    if (distinct) {
-      distinctLocations.put(point, entries.get(point));
-    }
   }
 
   /**
@@ -143,17 +116,16 @@ public class ExplorationStatistics implements Serializable {
   }
 
   /**
-   * Returns the number of visits for distinct Locations from a specific part of day.
+   * Returns the number of visits to distinct locations at a specific part of the day.
    *
    * @param partOfDay the PartOfDay of when the location was discovered
    * @return a nonnegative integer
    */
-  public int getVisitsByPartOfDay(PartOfDay partOfDay) {
+  public int getLocationsDiscoveredDuringPartOfDay(PartOfDay partOfDay) {
     int count = 0;
-    for (ExplorationStatisticsEntry location : distinctLocations.values()) {
-      PartOfDay day = PartOfDay.getCorrespondingConstant(location.getDiscoveredDate());
-      String locationName = day.getName().getSingular();
-      if (locationName.equalsIgnoreCase(partOfDay.getName().getSingular())) {
+    for (ExplorationStatisticsEntry location : entries.values()) {
+      PartOfDay partOfDayOfDiscovery = PartOfDay.getCorrespondingConstant(location.getDiscoveredDate());
+      if (partOfDayOfDiscovery == partOfDay) {
         count++;
       }
     }

@@ -6,6 +6,8 @@ import org.mafagafogigante.dungeon.util.CounterMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Set;
 
 class AchievementBuilder {
 
@@ -17,7 +19,8 @@ class AchievementBuilder {
   private CounterMap<Id> killsByLocationId;
   private CounterMap<Id> visitedLocations;
   private CounterMap<Id> maximumNumberOfVisits;
-  private CounterMap<PartOfDay> partOfDays;
+  private Set<PartOfDay> partsOfDayOfDiscovery;
+  private int discoveryCount;
 
   public void setId(String id) {
     this.id = id;
@@ -57,15 +60,20 @@ class AchievementBuilder {
     }
   }
 
-  public void setVisitedPartOfDay(CounterMap<PartOfDay> partOfDays) {
-    if (partOfDays.isNotEmpty()) {
-      this.partOfDays = partOfDays;
+  public void addPartOfDayOfDiscovery(PartOfDay partOfDay) {
+    if (partsOfDayOfDiscovery == null) {
+      partsOfDayOfDiscovery = EnumSet.noneOf(PartOfDay.class);
     }
+    partsOfDayOfDiscovery.add(partOfDay);
+  }
+
+  public void setDiscoveryCount(int discoveryCount) {
+    this.discoveryCount = discoveryCount;
   }
 
   public Achievement createAchievement() {
     return new Achievement(id, name, info, text, requirements, killsByLocationId, visitedLocations,
-        maximumNumberOfVisits, partOfDays);
+            maximumNumberOfVisits, partsOfDayOfDiscovery, discoveryCount);
   }
 
 }

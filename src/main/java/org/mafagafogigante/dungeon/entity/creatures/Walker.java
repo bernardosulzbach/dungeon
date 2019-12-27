@@ -70,8 +70,8 @@ class Walker implements Serializable {
 
   private void updateExplorationStatistics(Point destination) {
     ExplorationStatistics explorationStatistics = Game.getGameState().getStatistics().getExplorationStatistics();
-    explorationStatistics.addVisit(destination, Game.getGameState().getWorld().getLocation(destination).getId(),
-        Game.getGameState().getWorld().getWorldDate());
+    World world = Game.getGameState().getWorld();
+    explorationStatistics.addVisit(destination, world.getLocation(destination).getId(), world.getWorldDate());
   }
 
 }

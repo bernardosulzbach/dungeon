@@ -70,23 +70,6 @@ public enum PartOfDay implements Selectable {
   }
 
   /**
-   * Returns the PartOfDay constant corresponding to a given name.
-   *
-   * @param name a name corresponding to PartOfDay enum.
-   * @return a PartOfDay constant.
-   */
-  @NotNull
-  public static PartOfDay getPartOfDayByName(@NotNull String name) {
-    PartOfDay[] podArray = values();
-    for (int i = podArray.length - 1; i >= 0; i--) {
-      if (podArray[i].name().equalsIgnoreCase(name)) {
-        return podArray[i];
-      }
-    }
-    throw new AssertionError(); // Execution should never reach this line.
-  }
-
-  /**
    * @param cur the current time.
    * @param pod a part of the day.
    * @return the number of seconds between the current time and the start of the part of the day.

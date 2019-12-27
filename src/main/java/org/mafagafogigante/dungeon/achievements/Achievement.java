@@ -8,6 +8,7 @@ import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Achievement class.
@@ -29,14 +30,16 @@ public class Achievement {
    * @param text the String used to explain why the character unlocked the achievement
    */
   Achievement(String id, String name, String info, String text,
-      Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<Id> killsByLocationId,
-      CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits, CounterMap<PartOfDay> partOfDays) {
+              Collection<BattleStatisticsRequirement> battleRequirements, CounterMap<Id> killsByLocationId,
+              CounterMap<Id> visitedLocations, CounterMap<Id> maximumNumberOfVisits,
+              Set<PartOfDay> partsOfDayOfDiscovery, int discoveryCount) {
     this.id = new Id(id);
     this.name = name;
     this.info = info;
     this.text = text;
     battle = new BattleComponent(battleRequirements);
-    exploration = new ExplorationComponent(killsByLocationId, visitedLocations, maximumNumberOfVisits, partOfDays);
+    exploration = new ExplorationComponent(killsByLocationId, visitedLocations, maximumNumberOfVisits,
+            partsOfDayOfDiscovery, discoveryCount);
   }
 
   public Id getId() {
