@@ -141,6 +141,7 @@
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
+                    <excludeFilterFile>spotbugs-filter.xml</excludeFilterFile>
                 </configuration>
                 <executions>
                     <!-- Ensures that SpotBugs inspects source code when project is compiled. -->
