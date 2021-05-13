@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,16 +11,16 @@ public class SplitTest {
 
   @Test
   public void splitOnOnWithEmptyListShouldProduceTwoEmptyLists() throws Exception {
-    Assert.assertEquals(Collections.<String>emptyList(), Split.splitOnOn(Collections.<String>emptyList()).getBefore());
-    Assert.assertEquals(Collections.<String>emptyList(), Split.splitOnOn(Collections.<String>emptyList()).getAfter());
+    Assertions.assertEquals(Collections.<String>emptyList(), Split.splitOnOn(Collections.emptyList()).getBefore());
+    Assertions.assertEquals(Collections.<String>emptyList(), Split.splitOnOn(Collections.emptyList()).getAfter());
   }
 
   @Test
   public void splitOnOnWithOnListShouldProduceTwoEmptyLists() throws Exception {
     List<String> emptyList = Collections.emptyList();
     List<String> onList = Collections.singletonList("on");
-    Assert.assertEquals(emptyList, Split.splitOnOn(onList).getBefore());
-    Assert.assertEquals(emptyList, Split.splitOnOn(onList).getAfter());
+    Assertions.assertEquals(emptyList, Split.splitOnOn(onList).getBefore());
+    Assertions.assertEquals(emptyList, Split.splitOnOn(onList).getAfter());
   }
 
   @Test
@@ -28,8 +28,8 @@ public class SplitTest {
     List<String> emptyList = Collections.emptyList();
     List<String> onList = Collections.singletonList("on");
     List<String> onOnList = Arrays.asList("on", "on");
-    Assert.assertEquals(emptyList, Split.splitOnOn(onOnList).getBefore());
-    Assert.assertEquals(onList, Split.splitOnOn(onOnList).getAfter());
+    Assertions.assertEquals(emptyList, Split.splitOnOn(onOnList).getBefore());
+    Assertions.assertEquals(onList, Split.splitOnOn(onOnList).getAfter());
   }
 
   @Test
@@ -37,8 +37,8 @@ public class SplitTest {
     List<String> fooList = Collections.singletonList("foo");
     List<String> barList = Collections.singletonList("bar");
     List<String> sourceList = Arrays.asList("foo", "on", "bar");
-    Assert.assertEquals(fooList, Split.splitOnOn(sourceList).getBefore());
-    Assert.assertEquals(barList, Split.splitOnOn(sourceList).getAfter());
+    Assertions.assertEquals(fooList, Split.splitOnOn(sourceList).getBefore());
+    Assertions.assertEquals(barList, Split.splitOnOn(sourceList).getAfter());
   }
 
 }

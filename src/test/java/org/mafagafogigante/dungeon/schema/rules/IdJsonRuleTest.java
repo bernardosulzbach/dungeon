@@ -4,22 +4,27 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class IdJsonRuleTest {
 
   private static final JsonRule idJsonRule = new IdJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void idJsonRuleShouldFailNonStringType() {
     JsonValue jsonValue = Json.value(true);
-    idJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      idJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void idJsonRuleShouldFailLowercaseChar() {
     JsonValue jsonValue = Json.value("mONSTER");
-    idJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      idJsonRule.validate(jsonValue);
+    });
   }
 
   @Test

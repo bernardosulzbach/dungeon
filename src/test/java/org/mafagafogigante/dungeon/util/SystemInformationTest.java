@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SystemInformationTest {
 
@@ -10,7 +10,8 @@ public class SystemInformationTest {
     SystemInformation systemInformation = new SystemInformation();
     String string = systemInformation.toString();
     String expectedRegexp = "User: .*\nTime: .*\nDate: .*\nJava: .*\nHeap: .*\nOS: .*";
-    Assert.assertTrue("SystemInformation string does not match the expected format", string.matches(expectedRegexp));
+    Assertions.assertTrue(string.matches(expectedRegexp),
+            "SystemInformation string does not match the expected format");
   }
 
 }

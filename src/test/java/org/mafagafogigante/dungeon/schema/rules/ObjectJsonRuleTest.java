@@ -5,7 +5,8 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,22 +27,26 @@ public class ObjectJsonRuleTest {
     rule.validate(object);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void shouldFailOnNonObjectValue() {
     JsonValue value = Json.value(true);
     Map<String, JsonRule> rules = new HashMap<>();
     JsonRule rule = new ObjectJsonRule(rules);
-    rule.validate(value);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      rule.validate(value);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void shouldFailOnObjectWithInvalidAttributes() {
     JsonObject object = new JsonObject();
     object.add("id", "john");
     Map<String, JsonRule> rules = new HashMap<>();
     rules.put("id", new UppercaseStringJsonRule());
     JsonRule rule = new ObjectJsonRule(rules);
-    rule.validate(object);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      rule.validate(object);
+    });
   }
 
 }

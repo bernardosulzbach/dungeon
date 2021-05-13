@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.commands;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class CommandSetTest {
 
@@ -15,19 +15,19 @@ public class CommandSetTest {
       }
     };
     commandSet.addCommand(command);
-    Assert.assertEquals(command, commandSet.getCommand("go"));
+    Assertions.assertEquals(command, commandSet.getCommand("go"));
   }
 
   @Test
   public void shouldGetNullWhenRetrievingANonexistentCommand() throws Exception {
     CommandSet commandSet = CommandSet.emptyCommandSet();
-    Assert.assertNull(commandSet.getCommand("go"));
+    Assertions.assertNull(commandSet.getCommand("go"));
   }
 
   @Test
   public void shouldNotGetNullWhenRetrievingTheCommandsCommand() throws Exception {
     CommandSet commandSet = CommandSet.emptyCommandSet();
-    Assert.assertNotNull(commandSet.getCommand("commands"));
+    Assertions.assertNotNull(commandSet.getCommand("commands"));
   }
 
 }

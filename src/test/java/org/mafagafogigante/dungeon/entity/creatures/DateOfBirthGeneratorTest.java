@@ -4,8 +4,8 @@ import org.mafagafogigante.dungeon.date.Date;
 import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
 import org.mafagafogigante.dungeon.date.Duration;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DateOfBirthGeneratorTest {
 
@@ -18,7 +18,7 @@ public class DateOfBirthGeneratorTest {
         Date dateOfBirth = dateOfBirthGenerator.generateDateOfBirth();
         Duration duration = new Duration(dateOfBirth, now);
         long maximumSeconds = (age + 1) * DungeonTimeUnit.YEAR.as(DungeonTimeUnit.SECOND);
-        Assert.assertTrue(duration.getSeconds() < maximumSeconds);
+        Assertions.assertTrue(duration.getSeconds() < maximumSeconds);
       }
     }
   }

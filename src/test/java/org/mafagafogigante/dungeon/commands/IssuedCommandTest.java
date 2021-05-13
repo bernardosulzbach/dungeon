@@ -1,18 +1,23 @@
 package org.mafagafogigante.dungeon.commands;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class IssuedCommandTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowExceptionOnInputTooBig() throws Exception {
-    new IssuedCommand(StringUtils.repeat('A', 65536));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new IssuedCommand(StringUtils.repeat('A', 65536));
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowExceptionOnInputWithoutTokens() throws Exception {
-    new IssuedCommand(StringUtils.repeat(' ', 128));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new IssuedCommand(StringUtils.repeat(' ', 128));
+    });
   }
 
 }

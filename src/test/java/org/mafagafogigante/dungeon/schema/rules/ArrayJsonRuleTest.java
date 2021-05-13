@@ -5,16 +5,19 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ArrayJsonRuleTest {
 
   private static final JsonRule arrayJsonRule = new ArrayJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void arrayJsonRuleShouldFailNonArrayType() {
     JsonValue jsonValue = Json.value(true);
-    arrayJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      arrayJsonRule.validate(jsonValue);
+    });
   }
 
   @Test

@@ -4,16 +4,19 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BooleanJsonRuleTest {
 
   private static final JsonRule booleanJsonRule = new BooleanJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void booleanJsonRuleShouldFailNonBooleanType() {
     JsonValue jsonValue = Json.value("string");
-    booleanJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      booleanJsonRule.validate(jsonValue);
+    });
   }
 
   @Test

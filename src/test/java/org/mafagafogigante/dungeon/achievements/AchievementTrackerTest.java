@@ -9,8 +9,8 @@ import org.mafagafogigante.dungeon.game.Point;
 import org.mafagafogigante.dungeon.stats.Statistics;
 import org.mafagafogigante.dungeon.util.CounterMap;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,7 +21,7 @@ public class AchievementTrackerTest {
   @Test
   public void testGetUnlockedCountShouldReturnZeroInNewAchievementTracker() throws Exception {
     AchievementTracker achievementTracker = new AchievementTracker(new Statistics());
-    Assert.assertEquals(0, achievementTracker.getUnlockedCount());
+    Assertions.assertEquals(0, achievementTracker.getUnlockedCount());
   }
 
   @Test
@@ -31,9 +31,9 @@ public class AchievementTrackerTest {
     List<Achievement> achievements = Collections.singletonList(achievementBuilder.createAchievement());
     AchievementStore achievementStore = AchievementStoreFactory.makeAchievementStore(achievements);
     AchievementTracker achievementTracker = new AchievementTracker(new Statistics());
-    Assert.assertEquals(0, achievementTracker.getUnlockedCount());
+    Assertions.assertEquals(0, achievementTracker.getUnlockedCount());
     achievementTracker.update(achievementStore, new Date(1, 1, 1));
-    Assert.assertEquals(1, achievementTracker.getUnlockedCount());
+    Assertions.assertEquals(1, achievementTracker.getUnlockedCount());
   }
 
   @Test
@@ -54,9 +54,9 @@ public class AchievementTrackerTest {
     Comparator<UnlockedAchievement> defaultComparator = UnlockedAchievementComparators.getDefaultComparator();
     List<UnlockedAchievement> unlocked = tracker.getUnlockedAchievements(defaultComparator);
     for (UnlockedAchievement unlockedAchievement : unlocked) {
-      Assert.assertEquals(name, unlockedAchievement.getName());
-      Assert.assertEquals(info, unlockedAchievement.getInfo());
-      Assert.assertEquals(date, unlockedAchievement.getDate());
+      Assertions.assertEquals(name, unlockedAchievement.getName());
+      Assertions.assertEquals(info, unlockedAchievement.getInfo());
+      Assertions.assertEquals(date, unlockedAchievement.getDate());
     }
   }
 
@@ -81,15 +81,15 @@ public class AchievementTrackerTest {
     final Date date = new Date(1, 1, 1);
     tracker.update(achievementStore, date);
 
-    Assert.assertTrue(tracker.hasNotBeenUnlocked(achievement));
+    Assertions.assertTrue(tracker.hasNotBeenUnlocked(achievement));
 
     statistics.getExplorationStatistics().addVisit(new Point(0, 0, 0), new Id("PLACE"),
-        new Date(PartOfDay.DAWN.getStartingHour()));
+            new Date(PartOfDay.DAWN.getStartingHour()));
 
-    Assert.assertTrue(tracker.hasNotBeenUnlocked(achievement));
+    Assertions.assertTrue(tracker.hasNotBeenUnlocked(achievement));
 
     tracker.update(achievementStore, date.plus(1, DungeonTimeUnit.SECOND));
-    Assert.assertFalse(tracker.hasNotBeenUnlocked(achievement));
+    Assertions.assertFalse(tracker.hasNotBeenUnlocked(achievement));
   }
 
 }

@@ -8,8 +8,8 @@ import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,9 +132,7 @@ public class LocationsJsonFileTest extends ResourcesTypeTest {
   }
 
   private List<Id> extractIds(JsonObject object) {
-    if (object.names().size() != 1) {
-      Assert.fail();
-    }
+    Assertions.assertEquals(1, object.names().size());
     JsonArray values = object.get(object.names().get(0)).asArray();
     List<Id> ids = new ArrayList<>();
     for (JsonValue value : values) {

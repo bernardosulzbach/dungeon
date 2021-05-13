@@ -5,23 +5,23 @@ import org.mafagafogigante.dungeon.entity.creatures.Observer;
 import org.mafagafogigante.dungeon.game.Location;
 import org.mafagafogigante.dungeon.game.World;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class WeatherConditionVisibilityCriterionTest {
 
-  private Observer observer = Mockito.mock(Observer.class);
-  private Location location = Mockito.mock(Location.class);
-  private World world = Mockito.mock(World.class);
+  private final Observer observer = Mockito.mock(Observer.class);
+  private final Location location = Mockito.mock(Location.class);
+  private final World world = Mockito.mock(World.class);
 
-  private Weather weather = Mockito.mock(Weather.class);
+  private final Weather weather = Mockito.mock(Weather.class);
 
   /**
    * Initialize the Mockito stubs.
    */
-  @Before
+  @BeforeEach
   public void initialize() {
     Mockito.when(observer.getObserverLocation()).thenReturn(location);
     Mockito.when(location.getWorld()).thenReturn(world);
@@ -36,8 +36,8 @@ public class WeatherConditionVisibilityCriterionTest {
       WeatherConditionVisibilityCriterion criterion = new WeatherConditionVisibilityCriterion(minimum, maximum);
       for (int j = 0; j < i; j++) {
         WeatherCondition belowMinimum = WeatherCondition.values()[j];
-        Mockito.when(weather.getCurrentCondition(Mockito.any(Date.class))).thenReturn(belowMinimum);
-        Assert.assertFalse(criterion.isMetBy(observer));
+        Mockito.when(weather.getCurrentCondition(Mockito.nullable(Date.class))).thenReturn(belowMinimum);
+        Assertions.assertFalse(criterion.isMetBy(observer));
       }
     }
   }
@@ -49,8 +49,8 @@ public class WeatherConditionVisibilityCriterionTest {
         WeatherCondition minimum = WeatherCondition.values()[i];
         WeatherCondition maximum = WeatherCondition.values()[j];
         WeatherConditionVisibilityCriterion criterion = new WeatherConditionVisibilityCriterion(minimum, maximum);
-        Mockito.when(weather.getCurrentCondition(Mockito.any(Date.class))).thenReturn(minimum);
-        Assert.assertTrue(criterion.isMetBy(observer));
+        Mockito.when(weather.getCurrentCondition(Mockito.nullable(Date.class))).thenReturn(minimum);
+        Assertions.assertTrue(criterion.isMetBy(observer));
       }
     }
   }
@@ -58,9 +58,9 @@ public class WeatherConditionVisibilityCriterionTest {
   @Test
   public void testWeatherConditionVisibilityCriterionIsMetInBetweenMinimumAndMaximum() {
     WeatherConditionVisibilityCriterion criterion =
-        new WeatherConditionVisibilityCriterion(WeatherCondition.CLEAR, WeatherCondition.STORM);
-    Mockito.when(weather.getCurrentCondition(Mockito.any(Date.class))).thenReturn(WeatherCondition.CLOUDY);
-    Assert.assertTrue(criterion.isMetBy(observer));
+            new WeatherConditionVisibilityCriterion(WeatherCondition.CLEAR, WeatherCondition.STORM);
+    Mockito.when(weather.getCurrentCondition(Mockito.nullable(Date.class))).thenReturn(WeatherCondition.CLOUDY);
+    Assertions.assertTrue(criterion.isMetBy(observer));
   }
 
   @Test
@@ -70,8 +70,8 @@ public class WeatherConditionVisibilityCriterionTest {
         WeatherCondition minimum = WeatherCondition.values()[i];
         WeatherCondition maximum = WeatherCondition.values()[j];
         WeatherConditionVisibilityCriterion criterion = new WeatherConditionVisibilityCriterion(minimum, maximum);
-        Mockito.when(weather.getCurrentCondition(Mockito.any(Date.class))).thenReturn(maximum);
-        Assert.assertTrue(criterion.isMetBy(observer));
+        Mockito.when(weather.getCurrentCondition(Mockito.nullable(Date.class))).thenReturn(maximum);
+        Assertions.assertTrue(criterion.isMetBy(observer));
       }
     }
   }
@@ -84,8 +84,8 @@ public class WeatherConditionVisibilityCriterionTest {
       WeatherConditionVisibilityCriterion criterion = new WeatherConditionVisibilityCriterion(minimum, maximum);
       for (int j = i + 1; j < WeatherCondition.values().length; j++) {
         WeatherCondition aboveMaximum = WeatherCondition.values()[j];
-        Mockito.when(weather.getCurrentCondition(Mockito.any(Date.class))).thenReturn(aboveMaximum);
-        Assert.assertFalse(criterion.isMetBy(observer));
+        Mockito.when(weather.getCurrentCondition(Mockito.nullable(Date.class))).thenReturn(aboveMaximum);
+        Assertions.assertFalse(criterion.isMetBy(observer));
       }
     }
   }
@@ -97,9 +97,11 @@ public class WeatherConditionVisibilityCriterionTest {
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWeatherConditionVisibilityCriterionConstructorDoesNotAllowForMinimumHeavierThanMaximum() {
-    new WeatherConditionVisibilityCriterion(WeatherCondition.STORM, WeatherCondition.CLEAR);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new WeatherConditionVisibilityCriterion(WeatherCondition.STORM, WeatherCondition.CLEAR);
+    });
   }
 
 }

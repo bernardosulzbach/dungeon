@@ -1,6 +1,7 @@
 package org.mafagafogigante.dungeon.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TableTest {
 
@@ -12,26 +13,34 @@ public class TableTest {
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowAnExceptionIfThereAreNoArguments() throws Exception {
-    new Table();
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Table();
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowAnExceptionIfThereAreTooManyArguments() throws Exception {
-    new Table("A", "B", "C", "D", "E", "F", "G");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Table("A", "B", "C", "D", "E", "F", "G");
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void insertRowShouldThrowAnExceptionWithTooFewArguments() throws Exception {
     Table table = new Table("A", "B");
-    table.insertRow("1");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      table.insertRow("1");
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void insertRowShouldThrowAnExceptionWithTooManyArguments() throws Exception {
     Table table = new Table("A", "B");
-    table.insertRow("1", "2", "3");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      table.insertRow("1", "2", "3");
+    });
   }
 
 }

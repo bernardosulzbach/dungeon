@@ -4,16 +4,19 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PeriodJsonRuleTest {
 
   private static final JsonRule periodJsonRule = new PeriodJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void periodJsonRuleShouldFailOnInvalidPeriodFormat() {
     JsonValue jsonValue = Json.value("1 monthss");
-    periodJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      periodJsonRule.validate(jsonValue);
+    });
   }
 
   @Test

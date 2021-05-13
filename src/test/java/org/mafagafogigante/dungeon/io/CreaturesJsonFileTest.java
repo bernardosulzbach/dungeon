@@ -6,7 +6,7 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 import org.mafagafogigante.dungeon.schema.rules.JsonRuleFactory;
 
 import com.eclipsesource.json.JsonObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

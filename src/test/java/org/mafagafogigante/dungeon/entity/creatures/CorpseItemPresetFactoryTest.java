@@ -6,8 +6,8 @@ import org.mafagafogigante.dungeon.entity.items.ItemPreset;
 import org.mafagafogigante.dungeon.game.Id;
 import org.mafagafogigante.dungeon.game.NameFactory;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class CorpseItemPresetFactoryTest {
         return Collections.singleton(creaturePreset);
       }
     });
-    Assert.assertNotNull(new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next());
+    Assertions.assertNotNull(new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next());
   }
 
   @Test
@@ -46,7 +46,7 @@ public class CorpseItemPresetFactoryTest {
         return Collections.singleton(creaturePreset);
       }
     });
-    Assert.assertTrue(new CorpseItemPresetFactory(creatureFactory).getItemPresets().isEmpty());
+    Assertions.assertTrue(new CorpseItemPresetFactory(creatureFactory).getItemPresets().isEmpty());
   }
 
   @Test
@@ -66,12 +66,12 @@ public class CorpseItemPresetFactoryTest {
       }
     });
     ItemPreset corpsePreset = new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next();
-    Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
-    Assert.assertEquals("CORPSE", corpsePreset.getType());
-    Assert.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
-    Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
-    Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
-    Assert.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
+    Assertions.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
+    Assertions.assertEquals("CORPSE", corpsePreset.getType());
+    Assertions.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
+    Assertions.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    Assertions.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
+    Assertions.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
   }
 
   @Test
@@ -91,12 +91,12 @@ public class CorpseItemPresetFactoryTest {
       }
     });
     ItemPreset corpsePreset = new CorpseItemPresetFactory(creatureFactory).getItemPresets().iterator().next();
-    Assert.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
-    Assert.assertEquals("CORPSE", corpsePreset.getType());
-    Assert.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
-    Assert.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
-    Assert.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
-    Assert.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
+    Assertions.assertEquals(new Id("TESTER_CORPSE"), corpsePreset.getId());
+    Assertions.assertEquals("CORPSE", corpsePreset.getType());
+    Assertions.assertEquals(NameFactory.newInstance("Tester Corpse"), corpsePreset.getName());
+    Assertions.assertTrue(corpsePreset.getIntegrity().getMaximum() > 0);
+    Assertions.assertTrue(corpsePreset.getIntegrity().getCurrent() > 0);
+    Assertions.assertTrue(corpsePreset.getIntegrityDecrementOnHit() > 0);
   }
 
 }

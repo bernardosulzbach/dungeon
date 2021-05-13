@@ -2,11 +2,9 @@ package org.mafagafogigante.dungeon.game;
 
 import org.mafagafogigante.dungeon.io.Version;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.IsNot;
-import org.hamcrest.text.IsEmptyString;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,7 @@ public class VersionTest {
 
   @Test
   public void versionStringShouldNotBeEmpty() {
-    Assert.assertThat(Version.getCurrentVersion().toString(), new IsNot<>(new IsEmptyString()));
+    MatcherAssert.assertThat(Version.getCurrentVersion().toString(), Matchers.is(Matchers.not(Matchers.emptyString())));
   }
 
   @Test
@@ -35,11 +33,11 @@ public class VersionTest {
       for (int j = 0; j < versions.size(); j++) {
         final Version right = versions.get(j);
         if (i < j) {
-          Assert.assertThat(left, Matchers.lessThan(right));
+          MatcherAssert.assertThat(left, Matchers.lessThan(right));
         } else if (i == j) {
-          Assert.assertThat(left, Matchers.equalTo(right));
+          MatcherAssert.assertThat(left, Matchers.equalTo(right));
         } else {
-          Assert.assertThat(left, Matchers.greaterThan(right));
+          MatcherAssert.assertThat(left, Matchers.greaterThan(right));
         }
       }
     }

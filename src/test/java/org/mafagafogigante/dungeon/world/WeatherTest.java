@@ -5,8 +5,9 @@ import org.mafagafogigante.dungeon.date.DungeonTimeUnit;
 import org.mafagafogigante.dungeon.date.Duration;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class WeatherTest {
       conditionSet.add(weather.getCurrentCondition(date));
       date = date.plus(1, DungeonTimeUnit.HOUR); // Check the condition hourly.
     }
-    Assert.assertThat(conditionSet, CoreMatchers.hasItems(WeatherCondition.values()));
+    MatcherAssert.assertThat(conditionSet, CoreMatchers.hasItems(WeatherCondition.values()));
   }
 
   @Test
@@ -41,7 +42,7 @@ public class WeatherTest {
         lastCondition = weather.getCurrentCondition(date);
         lastConditionChange = date;
       }
-      Assert.assertTrue(new Duration(lastConditionChange, date).compareTo(oneMonth) < 0);
+      Assertions.assertTrue(new Duration(lastConditionChange, date).compareTo(oneMonth) < 0);
       date = date.plus(1, DungeonTimeUnit.HOUR); // Check the condition hourly.
     }
   }

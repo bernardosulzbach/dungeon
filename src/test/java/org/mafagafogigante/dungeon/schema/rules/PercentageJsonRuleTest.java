@@ -4,28 +4,35 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PercentageJsonRuleTest {
 
   private static final JsonRule percentJsonRule = new PercentageJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void percentageJsonRuleShouldFailOnInvalidPercentageFormat() {
     JsonValue jsonValue = Json.value("A%");
-    percentJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      percentJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void percentageJsonRuleShouldFailOnValueBelowValidRange() {
     JsonValue jsonValue = Json.value("-1.0%");
-    percentJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      percentJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void percentageJsonRuleShouldFailOnValueAboveValidRange() {
     JsonValue jsonValue = Json.value("101.0%");
-    percentJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      percentJsonRule.validate(jsonValue);
+    });
   }
 
   @Test
