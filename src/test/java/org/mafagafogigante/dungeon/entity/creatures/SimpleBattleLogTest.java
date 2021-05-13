@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.entity.creatures;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SimpleBattleLogTest {
 
@@ -12,10 +12,10 @@ public class SimpleBattleLogTest {
     long receivedDamage = 2L;
     simpleBattleLog.incrementInflicted(inflictedDamage);
     simpleBattleLog.incrementTaken(receivedDamage);
-    Assert.assertEquals(inflictedDamage, simpleBattleLog.getAndResetInflicted());
-    Assert.assertEquals(0L, simpleBattleLog.getAndResetInflicted());
-    Assert.assertEquals(receivedDamage, simpleBattleLog.getAndResetTaken());
-    Assert.assertEquals(0L, simpleBattleLog.getAndResetTaken());
+    Assertions.assertEquals(inflictedDamage, simpleBattleLog.getAndResetInflicted());
+    Assertions.assertEquals(0L, simpleBattleLog.getAndResetInflicted());
+    Assertions.assertEquals(receivedDamage, simpleBattleLog.getAndResetTaken());
+    Assertions.assertEquals(0L, simpleBattleLog.getAndResetTaken());
   }
 
 }

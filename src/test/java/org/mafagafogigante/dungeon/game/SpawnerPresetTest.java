@@ -1,17 +1,22 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SpawnerPresetTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSpawnerPresetConstructorThrowsIllegalArgumentExceptionWhenMinimumIsNegative() {
-    new SpawnerPreset("ID", -1, 2, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new SpawnerPreset("ID", -1, 2, 1);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSpawnerPresetConstructorThrowsIllegalArgumentExceptionWhenMinimumIsZero() {
-    new SpawnerPreset("ID", 0, 2, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new SpawnerPreset("ID", 0, 2, 1);
+    });
   }
 
   @Test
@@ -24,9 +29,11 @@ public class SpawnerPresetTest {
     new SpawnerPreset("ID", 2, 2, 1);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSpawnerPresetConstructorThrowsIllegalArgumentExceptionWhenMinimumIsGreaterThanMaximum() {
-    new SpawnerPreset("ID", 3, 2, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new SpawnerPreset("ID", 3, 2, 1);
+    });
   }
 
 }

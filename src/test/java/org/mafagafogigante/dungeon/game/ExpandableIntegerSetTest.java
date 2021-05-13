@@ -1,22 +1,29 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ExpandableIntegerSetTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorThrowsIllegalArgumentExceptionIfMinimumDifferenceIsNegative() {
-    new ExpandableIntegerSet(-1, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new ExpandableIntegerSet(-1, 1);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorThrowsIllegalArgumentExceptionIfMinimumDifferenceIsZero() {
-    new ExpandableIntegerSet(0, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new ExpandableIntegerSet(0, 1);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorThrowsIllegalArgumentExceptionOnMaximumDifferenceNotBiggerThanMinimumDifference() {
-    new ExpandableIntegerSet(1, 1);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new ExpandableIntegerSet(1, 1);
+    });
   }
 
 }

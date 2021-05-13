@@ -4,16 +4,19 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class NumberJsonRuleTest {
 
   private static final JsonRule numberJsonRule = new NumberJsonRule();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void numberJsonRuleShouldFailNonNumberType() {
     JsonValue jsonValue = Json.value("string");
-    numberJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      numberJsonRule.validate(jsonValue);
+    });
   }
 
   @Test

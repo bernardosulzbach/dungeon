@@ -21,6 +21,7 @@ dungeon.wiki/
 
 # Maven
 target/
+pom.xml.versionsBackup
 
 # Dungeon
 saves/

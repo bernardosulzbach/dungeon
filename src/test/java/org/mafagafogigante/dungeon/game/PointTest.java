@@ -1,26 +1,26 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PointTest {
 
   @Test
   public void equalsShouldReturnTrueToEqualPoints() throws Exception {
-    Assert.assertTrue(new Point(0, 0, 0).equals(new Point(0, 0, 0)));
-    Assert.assertTrue(new Point(1, 0, 0).equals(new Point(1, 0, 0)));
-    Assert.assertTrue(new Point(0, 1, 0).equals(new Point(0, 1, 0)));
-    Assert.assertTrue(new Point(0, 0, 1).equals(new Point(0, 0, 1)));
+    Assertions.assertEquals(new Point(0, 0, 0), new Point(0, 0, 0));
+    Assertions.assertEquals(new Point(1, 0, 0), new Point(1, 0, 0));
+    Assertions.assertEquals(new Point(0, 1, 0), new Point(0, 1, 0));
+    Assertions.assertEquals(new Point(0, 0, 1), new Point(0, 0, 1));
   }
 
   @Test
   public void equalsShouldReturnFalseToDifferentPoints() throws Exception {
-    Assert.assertFalse(new Point(1, 0, 0).equals(new Point(0, 0, 0)));
-    Assert.assertFalse(new Point(0, 1, 0).equals(new Point(0, 0, 0)));
-    Assert.assertFalse(new Point(0, 0, 1).equals(new Point(0, 0, 0)));
-    Assert.assertFalse(new Point(0, 0, 0).equals(new Point(1, 0, 0)));
-    Assert.assertFalse(new Point(0, 0, 0).equals(new Point(0, 1, 0)));
-    Assert.assertFalse(new Point(0, 0, 0).equals(new Point(0, 0, 1)));
+    Assertions.assertNotEquals(new Point(1, 0, 0), new Point(0, 0, 0));
+    Assertions.assertNotEquals(new Point(0, 1, 0), new Point(0, 0, 0));
+    Assertions.assertNotEquals(new Point(0, 0, 1), new Point(0, 0, 0));
+    Assertions.assertNotEquals(new Point(0, 0, 0), new Point(1, 0, 0));
+    Assertions.assertNotEquals(new Point(0, 0, 0), new Point(0, 1, 0));
+    Assertions.assertNotEquals(new Point(0, 0, 0), new Point(0, 0, 1));
   }
 
 }

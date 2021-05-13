@@ -2,8 +2,8 @@ package org.mafagafogigante.dungeon.gui;
 
 import org.mafagafogigante.dungeon.game.DungeonString;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.swing.JTextPane;
 import javax.swing.text.Document;
@@ -19,8 +19,8 @@ public class SwappingStyledDocumentTest {
     Document secondDocument = jTextPane.getStyledDocument();
     swappingStyledDocument.write(new DungeonString("B"), new WritingSpecifications(false, 0));
     Document thirdDocument = jTextPane.getStyledDocument();
-    Assert.assertNotEquals(firstDocument, secondDocument);
-    Assert.assertEquals(firstDocument, thirdDocument);
+    Assertions.assertNotEquals(firstDocument, secondDocument);
+    Assertions.assertEquals(firstDocument, thirdDocument);
   }
 
   @Test
@@ -28,9 +28,9 @@ public class SwappingStyledDocumentTest {
     JTextPane jTextPane = new JTextPane();
     SwappingStyledDocument swappingStyledDocument = new SwappingStyledDocument(jTextPane);
     swappingStyledDocument.write(new DungeonString("."), new WritingSpecifications(false, 0));
-    Assert.assertNotEquals(jTextPane.getText().length(), 0);
+    Assertions.assertNotEquals(jTextPane.getText().length(), 0);
     swappingStyledDocument.clear();
-    Assert.assertEquals(jTextPane.getText().length(), 0);
+    Assertions.assertEquals(jTextPane.getText().length(), 0);
   }
 
 }

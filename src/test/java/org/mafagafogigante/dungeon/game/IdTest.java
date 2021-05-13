@@ -1,22 +1,38 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class IdTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowExceptionOnNull() throws Exception {
-    new Id(null);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id(null);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowExceptionOnEmptyString() throws Exception {
-    new Id("");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id("");
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void constructorShouldThrowExceptionOnStringWithSpaces() throws Exception {
-    new Id(" ");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id(" ");
+    });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id("A ");
+    });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id(" A");
+    });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new Id("A A");
+    });
   }
 
   @Test

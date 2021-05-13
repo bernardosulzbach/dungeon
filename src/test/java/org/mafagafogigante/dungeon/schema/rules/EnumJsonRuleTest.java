@@ -4,7 +4,8 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class EnumJsonRuleTest {
 
@@ -18,28 +19,36 @@ public class EnumJsonRuleTest {
     enumJsonRule.validate(jsonValue);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void enumJsonRuleShouldFailOnNonExistentEnumValue() {
     JsonValue jsonValue = Json.value(INVALID_ENUM_VALUE_UPPERCASE);
-    enumJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      enumJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void enumJsonRuleShouldFailOnNonStringValue() {
     JsonValue jsonValue = Json.value(true);
-    enumJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      enumJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void enumJsonRuleShouldFailOnLowercaseValue() {
     JsonValue jsonValue = Json.value(INVALID_ENUM_VALUE_LOWERCASE);
-    enumJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      enumJsonRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void enumJsonRuleShouldFailOnEmptyValue() {
     JsonValue jsonValue = Json.value("");
-    enumJsonRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      enumJsonRule.validate(jsonValue);
+    });
   }
 
   private enum TestEnum {

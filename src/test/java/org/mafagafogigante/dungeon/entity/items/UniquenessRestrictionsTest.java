@@ -2,8 +2,8 @@ package org.mafagafogigante.dungeon.entity.items;
 
 import org.mafagafogigante.dungeon.game.Id;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,29 +17,31 @@ public class UniquenessRestrictionsTest {
   @Test
   public void testUniquenessRestrictionsShouldNeverBanNonUniqueItems() throws Exception {
     ItemFactoryRestrictions restrictions = new UniquenessRestrictions(uniqueIds);
-    Assert.assertTrue(restrictions.canMakeItem(NON_UNIQUE_ID));
+    Assertions.assertTrue(restrictions.canMakeItem(NON_UNIQUE_ID));
     restrictions.registerItem(NON_UNIQUE_ID);
-    Assert.assertTrue(restrictions.canMakeItem(NON_UNIQUE_ID));
+    Assertions.assertTrue(restrictions.canMakeItem(NON_UNIQUE_ID));
   }
 
   @Test
   public void testUniquenessRestrictionsShouldNotBanUniqueItemsBeforeTheyHaveBeenCreated() throws Exception {
     ItemFactoryRestrictions restrictions = new UniquenessRestrictions(uniqueIds);
-    Assert.assertTrue(restrictions.canMakeItem(UNIQUE_ID));
+    Assertions.assertTrue(restrictions.canMakeItem(UNIQUE_ID));
   }
 
   @Test
   public void testUniquenessRestrictionsShouldBanUniqueItemsAfterTheyHaveBeenCreated() throws Exception {
     ItemFactoryRestrictions restrictions = new UniquenessRestrictions(uniqueIds);
     restrictions.registerItem(UNIQUE_ID);
-    Assert.assertFalse(restrictions.canMakeItem(UNIQUE_ID));
+    Assertions.assertFalse(restrictions.canMakeItem(UNIQUE_ID));
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testUniquenessRestrictionsShouldThrowExceptionWhenRegisteringBannedItems() throws Exception {
     ItemFactoryRestrictions restrictions = new UniquenessRestrictions(uniqueIds);
     restrictions.registerItem(UNIQUE_ID);
-    restrictions.registerItem(UNIQUE_ID);
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      restrictions.registerItem(UNIQUE_ID);
+    });
   }
 
 }

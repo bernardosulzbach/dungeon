@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 
@@ -10,29 +10,27 @@ public class DungeonStringTest {
   @Test
   public void testGetLengthShouldWorkWithDefaultColor() throws Exception {
     DungeonString dungeonString = new DungeonString();
-    Assert.assertEquals(0, dungeonString.getLength());
-    dungeonString.append("A");
-    Assert.assertEquals(1, dungeonString.getLength());
-    dungeonString.append("A");
-    Assert.assertEquals(2, dungeonString.getLength());
-    dungeonString.append("A");
-    Assert.assertEquals(3, dungeonString.getLength());
+    Assertions.assertEquals(0, dungeonString.getLength());
+    for (int i = 0; i < 10; i++) {
+      dungeonString.append("A");
+      Assertions.assertEquals(i + 1, dungeonString.getLength());
+    }
   }
 
   @Test
   public void testGetLengthShouldWorkWithMultipleColors() throws Exception {
     DungeonString dungeonString = new DungeonString();
-    Assert.assertEquals(0, dungeonString.getLength());
+    Assertions.assertEquals(0, dungeonString.getLength());
     dungeonString.append("A");
-    Assert.assertEquals(1, dungeonString.getLength());
+    Assertions.assertEquals(1, dungeonString.getLength());
     dungeonString.setColor(Color.BLUE);
-    Assert.assertEquals(1, dungeonString.getLength());
+    Assertions.assertEquals(1, dungeonString.getLength());
     dungeonString.append("A");
-    Assert.assertEquals(2, dungeonString.getLength());
+    Assertions.assertEquals(2, dungeonString.getLength());
     dungeonString.setColor(Color.RED);
-    Assert.assertEquals(2, dungeonString.getLength());
+    Assertions.assertEquals(2, dungeonString.getLength());
     dungeonString.append("A");
-    Assert.assertEquals(3, dungeonString.getLength());
+    Assertions.assertEquals(3, dungeonString.getLength());
   }
 
 }

@@ -5,7 +5,8 @@ import org.mafagafogigante.dungeon.schema.JsonRule;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,33 +15,41 @@ public class FixedArrayJsonRuleTest {
 
   private static final JsonRule stringRule = new StringJsonRule();
   private static final JsonRule integerRule = new IntegerJsonRule();
-  private static final JsonRule emptyArrayRule = new FixedArrayJsonRule(Collections.<JsonRule>emptyList());
+  private static final JsonRule emptyArrayRule = new FixedArrayJsonRule(Collections.emptyList());
   private static final JsonRule stringArrayRule = new FixedArrayJsonRule(Collections.singletonList(stringRule));
   private static final JsonRule integerArrayRule = new FixedArrayJsonRule(Collections.singletonList(integerRule));
   private static final JsonRule stringIntegerArrayRule = new FixedArrayJsonRule(Arrays.asList(stringRule, integerRule));
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedEmptyArrayRuleShouldFailOnNonArrayType() {
     JsonValue jsonValue = Json.value(true);
-    emptyArrayRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      emptyArrayRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedStringArrayRuleShouldFailOnNonArrayType() {
     JsonValue jsonValue = Json.value(true);
-    stringArrayRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      stringArrayRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedIntegerArrayRuleShouldFailOnNonArrayType() {
     JsonValue jsonValue = Json.value(true);
-    integerArrayRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      integerArrayRule.validate(jsonValue);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedStringIntegerArrayRuleShouldFailOnNonArrayType() {
     JsonValue jsonValue = Json.value(true);
-    stringIntegerArrayRule.validate(jsonValue);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      stringIntegerArrayRule.validate(jsonValue);
+    });
   }
 
   @Test
@@ -49,11 +58,13 @@ public class FixedArrayJsonRuleTest {
     emptyArrayRule.validate(jsonArray);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedEmptyArrayRuleShouldFailOnInvalidArray() {
     JsonArray jsonArray = new JsonArray();
     jsonArray.add("A");
-    emptyArrayRule.validate(jsonArray);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      emptyArrayRule.validate(jsonArray);
+    });
   }
 
   @Test
@@ -63,11 +74,13 @@ public class FixedArrayJsonRuleTest {
     stringArrayRule.validate(jsonArray);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedStringArrayRuleShouldFailOnInvalidArray() {
     JsonArray jsonArray = new JsonArray();
     jsonArray.add(0);
-    stringArrayRule.validate(jsonArray);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      stringArrayRule.validate(jsonArray);
+    });
   }
 
   @Test
@@ -77,11 +90,13 @@ public class FixedArrayJsonRuleTest {
     integerArrayRule.validate(jsonArray);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedIntegerArrayRuleShouldFailOnInvalidArray() {
     JsonArray jsonArray = new JsonArray();
     jsonArray.add("A");
-    integerArrayRule.validate(jsonArray);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      integerArrayRule.validate(jsonArray);
+    });
   }
 
   @Test
@@ -92,12 +107,15 @@ public class FixedArrayJsonRuleTest {
     stringIntegerArrayRule.validate(jsonArray);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void fixedStringIntegerArrayRuleShouldFailOnInvalidArray() {
     JsonArray jsonArray = new JsonArray();
     jsonArray.add(0);
     jsonArray.add("A");
-    stringIntegerArrayRule.validate(jsonArray);
+
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      stringIntegerArrayRule.validate(jsonArray);
+    });
   }
 
 }

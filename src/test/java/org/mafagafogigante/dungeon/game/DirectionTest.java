@@ -1,24 +1,24 @@
 package org.mafagafogigante.dungeon.game;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DirectionTest {
 
   @Test
   public void invertShouldCorrectlyInvertTheDirection() throws Exception {
-    Assert.assertEquals(Direction.UP, Direction.DOWN.invert());
-    Assert.assertEquals(Direction.NORTH, Direction.SOUTH.invert());
-    Assert.assertEquals(Direction.EAST, Direction.WEST.invert());
-    Assert.assertEquals(Direction.DOWN, Direction.UP.invert());
-    Assert.assertEquals(Direction.SOUTH, Direction.NORTH.invert());
-    Assert.assertEquals(Direction.WEST, Direction.EAST.invert());
+    Assertions.assertEquals(Direction.UP, Direction.DOWN.invert());
+    Assertions.assertEquals(Direction.NORTH, Direction.SOUTH.invert());
+    Assertions.assertEquals(Direction.EAST, Direction.WEST.invert());
+    Assertions.assertEquals(Direction.DOWN, Direction.UP.invert());
+    Assertions.assertEquals(Direction.SOUTH, Direction.NORTH.invert());
+    Assertions.assertEquals(Direction.WEST, Direction.EAST.invert());
   }
 
   @Test
   public void invertTwiceShouldNotModifyTheDirection() throws Exception {
     for (Direction direction : Direction.values()) {
-      Assert.assertEquals(direction, direction.invert().invert());
+      Assertions.assertEquals(direction, direction.invert().invert());
     }
   }
 

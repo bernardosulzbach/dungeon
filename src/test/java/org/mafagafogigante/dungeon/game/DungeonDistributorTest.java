@@ -1,8 +1,9 @@
 package org.mafagafogigante.dungeon.game;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class DungeonDistributorTest {
   public void makeNoEntrancesZonePointListShouldNotIncludeTheStartingPoint() throws Exception {
     List<Point> list = DungeonDistributor.makeNoEntrancesZonePointList(origin, new MinimumBoundingRectangle(1, 1));
     for (Point point : list) {
-      Assert.assertThat(point, CoreMatchers.not(origin));
+      MatcherAssert.assertThat(point, CoreMatchers.not(origin));
     }
   }
 
@@ -32,8 +33,8 @@ public class DungeonDistributorTest {
     expectedList.add(new Point(-1, -1, 0));
     expectedList.add(new Point(0, -1, 0));
     expectedList.add(new Point(1, -1, 0));
-    Assert.assertTrue(expectedList.containsAll(list));
-    Assert.assertTrue(list.containsAll(expectedList));
+    Assertions.assertTrue(expectedList.containsAll(list));
+    Assertions.assertTrue(list.containsAll(expectedList));
   }
 
   @Test
@@ -50,20 +51,17 @@ public class DungeonDistributorTest {
         }
       }
     }
-    Assert.assertTrue(expectedList.containsAll(returnedList));
-    Assert.assertTrue(returnedList.containsAll(expectedList));
+    Assertions.assertTrue(expectedList.containsAll(returnedList));
+    Assertions.assertTrue(returnedList.containsAll(expectedList));
   }
 
   @Test
   public void dungeonDistributorShouldThrowExceptionIfTheSameEntranceIsRegisteredTwice() throws Exception {
     DungeonDistributor first = new DungeonDistributor();
     first.registerDungeonEntrance(new Point(0, 0, 0));
-    try {
+    Assertions.assertThrows(IllegalStateException.class, () -> {
       first.registerDungeonEntrance(new Point(0, 0, 0));
-      Assert.fail("Expected an IllegalStateException from the DungeonDistributor.");
-    } catch (IllegalStateException expected) {
-      // Expected.
-    }
+    });
   }
 
   @Test

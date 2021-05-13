@@ -1,7 +1,7 @@
 package org.mafagafogigante.dungeon.commands;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
@@ -56,19 +56,21 @@ public class StringDistanceMetricsTest {
       String shuffled = replaceLetterByDash(input);
       int expectedDistance = countCharacters(shuffled, '-');
       int distance = StringDistanceMetrics.levenshteinDistance(input, shuffled);
-      Assert.assertEquals(expectedDistance, distance);
+      Assertions.assertEquals(expectedDistance, distance);
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void levenshteinDistanceShouldNotRunOutOfMemory() throws Exception {
     for (int inputSize = STRESS_INPUT_MINIMUM_SIZE; inputSize <= STRESS_INPUT_MAXIMUM_SIZE; inputSize *= 2) {
       String input = makeRandomString(inputSize);
       String shuffled = replaceLetterByDash(input);
       int expectedDistance = countCharacters(shuffled, '-');
-      // Either this works and we must get a correct result, or this produces an IllegalArgumentException.
-      int distance = StringDistanceMetrics.levenshteinDistance(input, shuffled);
-      Assert.assertEquals(expectedDistance, distance);
+      try {
+        Assertions.assertEquals(expectedDistance, StringDistanceMetrics.levenshteinDistance(input, shuffled));
+      } catch (IllegalArgumentException ignored) {
+        // Either this works and we must get a correct result, or this produces an IllegalArgumentException.
+      }
     }
   }
 

@@ -2,8 +2,8 @@ package org.mafagafogigante.dungeon.entity;
 
 import org.mafagafogigante.dungeon.util.Percentage;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class WeightTest {
 
@@ -21,8 +21,8 @@ public class WeightTest {
   public void addingZeroShouldNotModifyWeights() throws Exception {
     for (final double value : WEIGHTS) {
       final Weight valueWeight = Weight.newInstance(value);
-      Assert.assertEquals(valueWeight, Weight.ZERO.add(valueWeight));
-      Assert.assertEquals(valueWeight, valueWeight.add(Weight.ZERO));
+      Assertions.assertEquals(valueWeight, Weight.ZERO.add(valueWeight));
+      Assertions.assertEquals(valueWeight, valueWeight.add(Weight.ZERO));
     }
   }
 
@@ -32,8 +32,8 @@ public class WeightTest {
       for (final double second : WEIGHTS) {
         final Weight firstWeight = Weight.newInstance(first);
         final Weight secondWeight = Weight.newInstance(second);
-        Assert.assertEquals(Weight.newInstance(first + second), firstWeight.add(secondWeight));
-        Assert.assertEquals(Weight.newInstance(first + second), secondWeight.add(firstWeight));
+        Assertions.assertEquals(Weight.newInstance(first + second), firstWeight.add(secondWeight));
+        Assertions.assertEquals(Weight.newInstance(first + second), secondWeight.add(firstWeight));
       }
     }
   }
@@ -43,7 +43,7 @@ public class WeightTest {
     for (final double weight : WEIGHTS) {
       for (final double fraction : FRACTIONS) {
         final Weight expected = Weight.newInstance(weight * fraction);
-        Assert.assertEquals(expected, Weight.newInstance(weight).multiply(new Percentage(fraction)));
+        Assertions.assertEquals(expected, Weight.newInstance(weight).multiply(new Percentage(fraction)));
       }
     }
   }

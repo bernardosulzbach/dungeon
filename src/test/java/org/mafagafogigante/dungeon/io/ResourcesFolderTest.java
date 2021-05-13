@@ -1,8 +1,8 @@
 package org.mafagafogigante.dungeon.io;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -25,35 +25,35 @@ public class ResourcesFolderTest {
   /**
    * Try to initialize the resources directory.
    */
-  @Before
+  @BeforeEach
   public void initialize() throws Exception {
     URL resourcesUrl = this.getClass().getClassLoader().getResource(RESOURCES_TARGET_PATH);
     if (resourcesUrl != null) {
       resourcesDir = new File(resourcesUrl.toURI().getPath());
       if (!resourcesDir.isDirectory()) {
-        Assert.fail("Resources file: " + resourcesDir.toString() +  " should be a directory");
+        Assertions.fail("Resources file: " + resourcesDir.toString() + " should be a directory");
       }
     } else {
-      Assert.fail("Unable to find resources folder");
+      Assertions.fail("Unable to find resources folder");
     }
   }
 
   @Test
   public void testResourcesFolderContainsTheCorrectNumberOfJsonFiles() {
     List<File> jsonFiles = findFilesByFileFilter(getEndWithFileFilter(JSON_FILE_EXTENSION));
-    Assert.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
+    Assertions.assertEquals(JSON_FILES_NUMBER, jsonFiles.size());
   }
 
   @Test
   public void testResourcesFolderContainsTheCorrectNumberOfFontFiles() {
     List<File> fontFiles = findFilesByFileFilter(getEndWithFileFilter(FONT_FILE_EXTENSION));
-    Assert.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
+    Assertions.assertEquals(FONT_FILES_NUMBER, fontFiles.size());
   }
 
   @Test
   public void testResourcesFolderContainsTheSplashScreenFile() {
     List<File> splashScreenFile = findFilesByFileFilter(getEndWithFileFilter(SPLASH_SCREEN_FILE_NAME));
-    Assert.assertEquals(1, splashScreenFile.size());
+    Assertions.assertEquals(1, splashScreenFile.size());
   }
 
   private FileFilter getEndWithFileFilter(final String endWithExpression) {
